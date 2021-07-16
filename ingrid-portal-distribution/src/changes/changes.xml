@@ -6,6 +6,96 @@
     </properties>
 
     <body>
+        <release version="5.9.0" date="2021-07-16" description="Release 5.9.0">
+          <action type="add" dev="wemove" issue="2598">
+            MapClient: MetaVer-Kartenclient alle geladene Layer deaktiviren / alle geladenen Layer löschen
+          </action>
+          <action type="update" dev="wemove" issue="2594">
+            MapClient: Aktualsierung auf den aktuellsten mf-geoadmin3 (2021-07-29)
+          </action>
+          <action type="add" dev="wemove" issue="2274">
+            MetaVer-Kartenclient - nach dem Laden eines WMS die Struktur der Layer anzeigen
+          </action>
+          <action type="fix" dev="wemove" issue="1290">
+            Portal: Fix use constraints layout
+          </action>
+          <action type="add" dev="wemove" issue="2544">
+            Ergebnisliste (neues Layout): Anbieter und Quelle nach Detaildarstellung übertragen
+          </action>
+          <action type="update" dev="wemove" issue="2506">
+            Portal: Austausch von Länderwappen PNG Icons durch SVG-basierte Icons
+          </action>
+          <action type="fix" dev="wemove" issue="2563">
+            Mapclient: Fix tooltip
+          </action>
+          <action type="fix" dev="wemove">
+            Portal: Fix RSS URL rewrite rule
+          </action>
+          <action type="add" dev="wemove" issue="2519">
+            Mapclient: GPX import - Beschreibung fehlt
+          </action>
+          <action type="add" dev="wemove" issue="2407">
+            Portal: QS Umsetzung und Anmerkungen der Verbundpartner
+          </action>
+          <action type="add" dev="wemove" issue="1358">
+            Portal: Umsetzung der Konzeption der Darstellung von Detaildaten im Portal
+          </action>
+          <action type="update" dev="wemove" issue="1564">
+            Portal: ReDesign MetaVer
+          </action>
+          <action type="update" dev="wemove" issue="2461">
+            Portal: Anpassung Kontakt-Formular MetaVer Test für Zammad
+          </action>
+          <action type="fix" dev="wemove" issue="2460">
+            Mapclient: Identifier der Datenquelle in Verbindung mit Anzeige des Kartenlayers
+          </action>
+          <action type="update" dev="wemove" issue="2300">
+            Portal (BKG): Add facet for application.
+          </action>
+          <action type="fix" dev="wemove" issue="2463">
+            IGE: Fix wrong locale for thesaurus analysis.
+          </action>
+          <action type="update" dev="wemove" issue="2281">
+            Remove gml entry requirement from inspire dataformat
+          </action>
+          <action type="fix" dev="wemove" issue="2462">
+            Portal: Anmeldeseite wird von Suchmaschinen indexiert
+          </action>
+          <action type="add" dev="wemove" issue="2381">
+            IGE: Support WCS 2.0.1 GetCapabilities
+          </action>
+          <action type="update" dev="wemove" issue="1876">
+            IGE/Portal: Update gml namespace to version 3.2
+          </action>
+          <action type="fix" dev="wemove" issue="2409">
+            IGE: Fix helplanguage detection when no session is set
+          </action>
+          <action type="add" dev="wemove" issue="1523">
+            IGE: Add hmdk profile specific email templates
+          </action>
+          <action type="fix" dev="wemove" issue="1523">
+            IGE: Fix hmdk checkbox behaviour
+          </action>
+          <action type="fix" dev="wemove" issue="2526">
+            IGE: Fix archiving of wrong files
+          </action>
+          <action type="fix" dev="wemove" issue="2543">
+            IGE: Fix name and description of a behaviour
+          </action>
+          <action type="fix" dev="wemove" issue="2521">
+            IGE: Make digital representation mandatory for not conform INSPIRE datasets
+          </action>
+          <action type="update" dev="wemove" issue="1667">
+            IGE: Add upload function for preview images
+          </action>
+          <action type="update" dev="wemove" issue="2446">
+            IGE: Fix UTF-8 problem in expire dialog
+          </action>
+          <action type="fix" dev="wemove" issue="2564">
+            IGE: Fix update searchterms if no inspire topics are found
+          </action>
+        </release>
+
         <release version="5.8.0" date="2021-04-16" description="Release 5.8.0">
           <action type="update" dev="wemove">
             Portal: Update measurement client to version 1.0.22.
@@ -36,7 +126,7 @@
           </action>
           <action type="add" dev="wemove" issue="582">
             Portal: Add RSS Page to UVP-NI profile
-          </action>
+         </action>
           <action type="fix" dev="wemove" issue="2373">
             Portal: Facetten überlagen Footer
           </action>
@@ -75,6 +165,9 @@
           </action>
           <action type="fix" dev="wemove" issue="2184">
             IGE: Fix title of context help of temporal fields
+          </action>
+          <action type="fix" dev="wemove" issue="2331">
+            IGE: Change umlauts in statistic mouseover
           </action>
           <action type="fix" dev="wemove">
             Catch all errors in Communication
@@ -172,9 +265,6 @@
           </action>
           <action type="fix" dev="wemove" issue="2283">
             Set DB_PASSWORD only with environment variable
-          </action>
-          <action type="fix" dev="wemove" issue="2331">
-            ÎGE: Change umlauts in statistic mouseover
           </action>
         </release>
 

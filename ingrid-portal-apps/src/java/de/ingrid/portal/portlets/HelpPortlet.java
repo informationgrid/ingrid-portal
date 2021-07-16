@@ -137,7 +137,7 @@ public class HelpPortlet extends GenericVelocityPortlet {
                 DocumentSource source = new DocumentSource( DocumentHelper.parseText(subtree) );
                 
                 transformer.transform(source, result);
-                String helpContent = result.getDocument().asXML();
+                String helpContent = result.getDocument().asXML().replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
                 context.put("help_content", helpContent);
                 
                 if(menuObj != null) {
@@ -150,7 +150,7 @@ public class HelpPortlet extends GenericVelocityPortlet {
                         subtree = obj.asXML();
                         source = new DocumentSource( DocumentHelper.parseText(subtree) );
                         transformer.transform(source, result);
-                        menuContent += result.getDocument().asXML();
+                        menuContent += result.getDocument().asXML().replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
                     }
                     context.put("menu_content", menuContent);
                 }

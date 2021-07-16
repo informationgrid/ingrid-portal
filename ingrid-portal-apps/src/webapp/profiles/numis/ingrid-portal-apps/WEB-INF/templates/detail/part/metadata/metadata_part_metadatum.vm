@@ -1,6 +1,0 @@
-## Ansprechpartner (Metadatum)
-    #set($tmp = $TOOL.getValueFromXPath('./gmd:contact/*/gmd:role/gmd:CI_RoleCode/@codeListValue', '505'))
-    #set($tmp2 = $TOOL.getNodeListFromXPath("./gmd:contact"))
-    #renderMultiLineAddresses("$tmp ($MESSAGES.getString('pointofcontact_metadata'))" $tmp2 true)
-    #set($tmp = "")
-    #set($tmp2 = "")

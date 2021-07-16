@@ -75,7 +75,7 @@ public class WcsCapabilitiesParser extends GeneralCapabilitiesParser implements 
         
         // General settings
         result.setServiceType("WCS");
-        result.setDataServiceType(6); // other
+        result.setDataServiceType(3); // download
         result.setTitle(xPathUtils.getString(doc, XPATH_EXP_WCS_TITLE));
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_WCS_ABSTRACT));
         result.setVersions(getNodesContentAsList(doc, XPATH_EXP_WCS_VERSION));

@@ -48,8 +48,9 @@
             "dojo/keys",
             "dojo/dom-style",
             "dojo/dom-class",
-            "dijit/registry"
-        ], function(lang, on, dom, keys, style, domClass, registry) {
+            "dijit/registry",
+            "ingrid/utils/Catalog",
+        ], function(lang, on, dom, keys, style, domClass, registry, catalog) {
 
             var radioButtonArray = [];
             on(_container_, "Load", init);
@@ -141,6 +142,7 @@
             // This function queries the SNSService for location topics
             function findLocationTopics(){
                 var queryTerm = registry.byId("locationTextBox").getValue();
+                var catLocale = catalog.getCatalogLanguage();
                 
                 // If input is blank, do nothing
                 queryTerm = lang.trim(queryTerm);
@@ -150,7 +152,7 @@
                 resetResultDiv();
                 showLoading();
                 
-                SNSService.getLocationTopics(queryTerm, "exact", "/location/admin", userLocale, {
+                SNSService.getLocationTopics(queryTerm, "exact", "/location/admin", catLocale, {
                     preHook: function() {
                         showLoadingZone();
                         disableUiElements();

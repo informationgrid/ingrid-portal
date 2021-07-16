@@ -1,6 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
+    #parse ('/WEB-INF/templates/category_teaser/parts/category_teaser_title.vm')
     #if($facetsTyp.size() > 1)
-        <ul class="tabs" data-tabs="" id="uvp-tabs" role="tablist" data-e="">
+        <ul class="tabs" data-tabs id="uvp-tabs" role="tablist" >
         #set($isActive = "")
         #foreach ($cf in $config)
             #set($facetParent = $cf.getId())
@@ -42,7 +43,10 @@
 
 #macro (getTabs $facetName $facetList $parentFacet $isActive)
     <li class="tabs-title #if($isActive)is-active#end" role="presentation">
-        <a href="#panel-${parentFacet}" aria-selected="$isActive" role="tab" id="panel-${parentFacet}-label" tabindex="0">$MESSAGES.getString($facetName)</a><span class="pointer"></span>
+        <a href="#panel-${parentFacet}" aria-selected="$isActive" role="tab" id="panel-${parentFacet}-label" tabindex="0">
+            <span class="text">$MESSAGES.getString($facetName)</span>
+        </a>
+        <span class="pointer"></span>
     </li>
 #end
 
@@ -114,11 +118,11 @@
                         $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
                     #else
                         #if($hasMobileName)
-                            $MESSAGES.getString($facet.getMobileName())
+                            <span class="text">$MESSAGES.getString($facet.getMobileName())</span>
                         #elseif($hasShortName)
-                            $MESSAGES.getString($facet.getShortName())
+                            <span class="text">$MESSAGES.getString($facet.getShortName())</span>
                         #else
-                            $MESSAGES.getString($facet.getName())
+                            <span class="text">$MESSAGES.getString($facet.getName())</span>
                         #end
                     #end
                         #if($facet.getQuery())
@@ -174,6 +178,12 @@ $( ".tab__content" ).each(function( i ) {
       if(height != 0){
         elem.height(height);
       }
+    });
+});
+$(document).ready(function() { 
+    $( ".tabs-title" ).each(function( i ) {
+        var tabsTitle = $( this );
+        $( this ).find('a').attr("tabindex", "0");
     });
 });
 </script>

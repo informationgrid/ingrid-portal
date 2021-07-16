@@ -203,7 +203,15 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_SEARCH_HIT_PARTNER_LOGO = "portal.search.hit.partner.logo";
     
     public static final String PORTAL_SEARCH_HIT_CUT_TITLE = "portal.search.hit.cut.title";
-    
+
+    public static final String PORTAL_SEARCH_HIT_CUT_SUMMARY = "portal.search.hit.cut.summary";
+
+    public static final String PORTAL_SEARCH_HIT_CUT_SUMMARY_LENGTH = "portal.search.hit.cut.summary.length";
+
+    public static final String PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL = "portal.search.hit.transform.coupled.csw.url";
+
+    public static final String PORTAL_SEARCH_HIT_SUMMARY_ABSTRACT_FIELD = "portal.search.hit.summary.abstract.field";
+
     public static final String PORTAL_ADMIN_NUMBER_ROW_PROVIDER = "portal.admin.number.row.provider";
     
     public static final String PORTAL_ADMIN_NUMBER_ROW_PARTNER = "portal.admin.number.row.partner";
@@ -221,6 +229,9 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS = "portal.detail.view.hidden.keywords";
     
     public static final String PORTAL_DETAIL_VIEW_LIMIT_REFERENCES = "portal.detail.view.limit.references";
+    
+    public static final String PORTAL_DETAIL_REFERENCE_SYSTEM_LINK = "portal.detail.reference.system.link";
+    public static final String PORTAL_DETAIL_REFERENCE_SYSTEM_LINK_REPLACE = "portal.detail.reference.system.link.replace";
     
     public static final String PORTAL_SEARCH_EMPTY_QUERY = "portal.search.empty.query";
 

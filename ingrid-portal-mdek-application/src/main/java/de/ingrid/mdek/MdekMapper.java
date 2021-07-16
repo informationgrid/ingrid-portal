@@ -1706,6 +1706,9 @@ public class MdekMapper implements DataMapperInterface {
                 if (kvp.getValue() != null || kvp.getKey() != -1) {
                     result.put(MdekKeys.SERVICE_OPERATION_NAME, kvp.getValue());
                     result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, kvp.getKey());
+                } else if (kvp.getKey() == -1) {
+                    result.put(MdekKeys.SERVICE_OPERATION_NAME, op.getName());
+                    result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, -1);
                 }
             }
             result.put(MdekKeys.SERVICE_OPERATION_DESCRIPTION, op.getDescription());
@@ -2386,7 +2389,9 @@ public class MdekMapper implements DataMapperInterface {
             return resultList;
         for (IngridDocument operation : opList) {
             OperationBean op = new OperationBean();
-            if (serviceType == null || serviceType == 5 || serviceType == 6) {
+            Integer key = (Integer) operation.get(MdekKeys.SERVICE_OPERATION_NAME_KEY);
+            
+            if (serviceType == null || serviceType == 5 || serviceType == 6 || (key != null && key == -1)) {
                 op.setName((String) operation.get(MdekKeys.SERVICE_OPERATION_NAME));
             } else {
                 String val = sysListMapper.getValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, (Integer) operation.get(MdekKeys.SERVICE_OPERATION_NAME_KEY), false);

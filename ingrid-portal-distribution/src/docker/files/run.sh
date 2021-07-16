@@ -130,7 +130,7 @@ else
         fi
 
         # PortalU-RLP extends UVP layout
-        if [ "$PORTAL_PROFILE" == "portalu_rp" ] || [ "$PORTAL_PROFILE" == "up_sh" ]; then
+        if [ "$PORTAL_PROFILE" == "portalu_rp" ] || [ "$PORTAL_PROFILE" == "up_sh" ] || [ "$PORTAL_PROFILE" == "metaver_md" ]; then
             echo "Copying profile files from parent (uvp) into portal directories ..."
             cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
             cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
@@ -218,7 +218,7 @@ else
     if [ "$TOYBOX_TOKEN" ]; then
         echo "Update toybox"
         cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid/header.vm
-        cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid-untitled/header.vm
+        cat webapps/ROOT/decorations/layout/ingrid-untitled/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid-untitled/header.vm
     fi
 
     # Change measure client elasticsearch URL if MEASURECLIENT_ES_URL is define

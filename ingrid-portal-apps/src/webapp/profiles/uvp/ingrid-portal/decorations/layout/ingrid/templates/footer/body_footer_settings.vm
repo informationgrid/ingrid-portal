@@ -1,0 +1,3 @@
+#set($footerCssClassLogo = "xsmall-24 small-24 medium-24 large-24 xlarge-24 columns")
+#set($footerCssClassMenu = "xsmall-24 small-24 medium-24 large-24 xlarge-24 columns")
+#set($footerHasHrLine    = false)

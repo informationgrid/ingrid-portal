@@ -22,11 +22,14 @@
  */
 package de.ingrid.portal.portlets;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,10 +50,12 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.generic.EscapeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,6 +66,8 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UniversalSorter;
+import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsMimeType;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
@@ -93,52 +100,96 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
+        String paramURL = request.getParameter( "url" );
         
-        try {
+        if(paramURL != null){
             if (resourceID.equals( "httpURL" )) {
-                String paramURL = request.getParameter( "url" );
-                if(paramURL != null){
-                    URL url = new URL(paramURL);
-                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("HEAD");
-                    response.setContentType( "application/javascript" );
-                    StringBuilder s = new StringBuilder();
-                    response.getWriter().write( "{" );
-                    if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
-                        s.append( "\"contentLength\":");
-                        s.append( "\"" + con.getContentLength() + "\"" );
+                URL url = new URL(paramURL);
+                java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                con.setRequestMethod("HEAD");
+                response.setContentType( "application/javascript" );
+                StringBuilder s = new StringBuilder();
+                response.getWriter().write( "{" );
+                if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
+                    s.append( "\"contentLength\":");
+                    s.append( "\"" + con.getContentLength() + "\"" );
+                }
+                response.getWriter().write( s.toString() );
+                response.getWriter().write( "}" );
+            }
+
+            if (resourceID.equals( "httpURLDataType" )) {
+                String extension = null;
+                if(paramURL != null) {
+                    if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
+                        extension = "csw";
+                    } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
+                        extension = "wms";
+                    } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
+                        extension = "wfs";
+                    } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
+                        extension = "wmts";
                     }
-                    response.getWriter().write( s.toString() );
-                    response.getWriter().write( "}" );
+                    if(extension == null) {
+                        URL url = new URL(paramURL);
+                        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                        con.setRequestMethod("HEAD");
+
+                        String contentType = con.getContentType();
+
+                        if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
+                            url = new URL(paramURL.replace("http://", "https://"));
+                            con = (java.net.HttpURLConnection) url.openConnection();
+                            con.setRequestMethod("HEAD");
+                        }
+
+                        extension = UtilsMimeType.getFileExtensionOfMimeType(con.getContentType().split(";")[0]);
+                    }
+                    response.setContentType( "text/plain" );
+                    response.getWriter().write( extension );
                 }
             }
 
             if (resourceID.equals( "httpURLImage" )) {
-                String paramURL = request.getParameter( "url" );
-                if(paramURL != null){
-                    URL url = new URL(paramURL);
-                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                    InputStream inStreamConvert = con.getInputStream();
-                    ByteArrayOutputStream os = new ByteArrayOutputStream();
-                    if (null != con.getContentType()) {
-                        byte[] chunk = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                            os.write(chunk, 0, bytesRead);
+                try {
+                    getURLResponse(paramURL, response);
+                } catch (Exception e) {
+                    log.error( "Error creating resource for resource ID: " + resourceID, e );
+                    if (resourceID.equals( "httpURLImage" )) {
+                        log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
+                        String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
+                        log.error( "Try https URL: " + httpsUrl);
+                        try {
+                            getURLResponse(httpsUrl, response);
+                            log.error( "Try https URL: " + httpsUrl);
+                        } catch (Exception e1) {
+                            log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
+                            response.getWriter().write(paramURL);
                         }
-                        os.flush();
-                        URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                                Base64.getEncoder().encodeToString(os.toByteArray()));
-                        response.getWriter().write(dataUri.toString());
                     }
                 }
             }
-
-        } catch (Exception e) {
-            log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
     }
-    
+
+    private void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
+        URL url = new URL(paramURL);
+        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+        InputStream inStreamConvert = con.getInputStream();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        if (null != con.getContentType()) {
+            byte[] chunk = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                os.write(chunk, 0, bytesRead);
+            }
+            os.flush();
+            URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                    Base64.getEncoder().encodeToString(os.toByteArray()));
+            response.getWriter().write(dataUri.toString());
+        }
+    }
+
     @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
@@ -192,7 +243,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
         context.put("stringTool", new UtilsString());
+        context.put("escTool", new EscapeTool());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
+
+        context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 
         context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)); 
         
@@ -221,6 +275,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         restUrl.setResourceID( "httpURLImage" );
         request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
 
+        restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLDataType" );
+        request.setAttribute( "restUrlHttpGetDataType", restUrl.toString() );
+
         try {
         	// check whether we come from google (no IngridSessionPreferences)
         	boolean noIngridSession = false;
@@ -228,12 +286,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     			(IngridSessionPreferences) request.getPortletSession().getAttribute(
     				IngridSessionPreferences.SESSION_KEY, PortletSession.APPLICATION_SCOPE);
     		if (ingridPrefs == null) {
-            	noIngridSession = true;    			
+            	noIngridSession = true;
     		}
             context.put("noIngridSession", noIngridSession);
             	
             String testIDF = request.getParameter("testIDF");
-            
+            String cswURL = request.getParameter("cswURL");
             String docUuid = request.getParameter("docuuid");
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
@@ -254,6 +312,33 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            
 	            plugDescription = ibus.getIPlug(iplugId);
 	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+	            
+	            String[] partners = plugDescription.getPartners();
+	            String plugPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER, "bund");
+	            if(partners != null && partners.length > 0) {
+	                if(partners.length > 1) {
+	                    List<String> tmpPartners = new ArrayList<String>(Arrays.asList(partners));
+	                    tmpPartners.remove("bund");
+	                    partners = tmpPartners.toArray(new String[0]);
+	                }
+	                plugPartner = partners[0];
+	                context.put("plugPartner", plugPartner);
+	            }
+	            
+	            if(plugDescription.getProviders() != null) {
+	                ArrayList<String> plugProviders = new ArrayList<>();
+	                for (String provider : plugDescription.getProviders()) {
+	                    String dbProvider = UtilsDB.getProviderFromKey(provider);
+	                    if(dbProvider != null) {
+	                        plugProviders.add(dbProvider);
+	                    }
+                    }
+	                context.put("plugProviders", plugProviders);
+	            }
+
+	            if(plugDescription.getDataSourceName() != null) {
+                    context.put("plugDataSourceName", plugDescription.getDataSourceName());
+                }
 	            
 	            // try to get the result for a objects UUID
 	            if (docUuid != null && docUuid.length() > 0) {
@@ -416,10 +501,13 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            record = ibus.getRecord(hit);
             // TODO: remove code after the iplugs deliver IDF records
             } else if (testIDF != null) {
-            	// create IDF record, see below how the record will be filled
-            	record = new Record();
-            	iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;	
-           	}
+                // create IDF record, see below how the record will be filled
+                record = new Record();
+                iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;	
+            } else if (cswURL != null) {
+                record = new Record();
+                iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;  
+            }
             
             if (record == null) {
                	log.error("No record found for document id:" + (hit != null ? hit.getDocumentId() : null) + " using iplug: " + iplugId + " for request: " + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getRequestURL() + "?" + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getQueryString());
@@ -475,7 +563,18 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     
                     DetailDataPreparer detailPreparer; 
                     detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT);
-                	detailPreparer.prepare(record);
+                    detailPreparer.prepare(record);
+                } else if (cswURL != null) {
+                    URL url = new URL(cswURL);
+                    java.net.HttpURLConnection conn = (java.net.HttpURLConnection) url.openConnection();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    if(br != null) {
+                        record.put("data", IOUtils.toString(br));
+                        record.put("compressed", "false");
+                    }
+                    DetailDataPreparer detailPreparer; 
+                    detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT);
+                    detailPreparer.prepare(record);
                 } else {
                     long startTimer2 = 0;
                     if (log.isDebugEnabled()) {

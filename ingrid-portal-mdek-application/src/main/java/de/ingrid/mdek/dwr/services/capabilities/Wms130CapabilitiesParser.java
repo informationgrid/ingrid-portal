@@ -34,6 +34,7 @@ import java.util.Set;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import de.ingrid.mdek.dwr.services.CatalogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -78,10 +79,12 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private static final String XPATH_EXP_WMS_EXTENDED_CAPABILITIES = "/wms:WMS_Capabilities/wms:Capability/inspire_vs:ExtendedCapabilities";
 
     private Map<String, Integer> versionSyslistMap;
+    private CatalogService catalogService;
     
-    public Wms130CapabilitiesParser(SysListCache syslistCache) {
+    public Wms130CapabilitiesParser(SysListCache syslistCache, CatalogService catalogService) {
         super(new XPathUtils(new Wms130NamespaceContext()), syslistCache);
-        
+
+        this.catalogService = catalogService;
         versionSyslistMap = new HashMap<>();
         versionSyslistMap.put( "1.1.1", 1 );
         versionSyslistMap.put( "1.3.0", 2 );
@@ -134,7 +137,11 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         LocationBean unionOfBoundingBoxes = null; 
         if ( !boundingBoxesFromLayers.isEmpty() ) {
             unionOfBoundingBoxes = getUnionOfBoundingBoxes(boundingBoxesFromLayers);
-            unionOfBoundingBoxes.setName("Raumbezug von: " + result.getTitle());
+            if ( catalogService.getCatalogData().getLanguageShort().equals("de") ){
+                unionOfBoundingBoxes.setName("Raumbezug von: " + result.getTitle());
+            } else {
+                unionOfBoundingBoxes.setName("spatial extent from: " + result.getTitle());
+            }
             List<LocationBean> union = new ArrayList<>();
             union.add(unionOfBoundingBoxes);
             result.setBoundingBoxes(union);            

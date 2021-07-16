@@ -1,10 +1,10 @@
 #set ($action = $renderResponse.createActionURL())
-<ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-    <li class="accordion-item #if($doAddAreaAddress && $doAddAreaAddress.size() > 0)is-active#end" data-accordion-item="">
+<ul class="accordion filter-group" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
+    <li class="accordion-item #if($doAddAreaAddress && $doAddAreaAddress.size() > 0)is-active#end" data-accordion-item>
         <a href="" class="accordion-title" aria-controls="facet_area_address-accordion" role="tab" id="facet_area_address-label" #if($doAddAreaAddress && $doAddAreaAddress.size() > 0)aria-expanded="true" aria-selected="true"#end>
             <span class="text">$MESSAGES.getString("searchResult.facete.title.area.address")</span>
         </a>
-        <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="facet_area_address-label" id="facet_area_address-accordion" #if(!$doAddAreaAddress || $doAddAreaAddress.size() == 0)aria-hidden="true"#end>
+        <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="facet_area_address-label" id="facet_area_address-accordion" #if(!$doAddAreaAddress || $doAddAreaAddress.size() == 0)aria-hidden="true"#end>
             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
             <form action="$action" method="post">
                 <p>

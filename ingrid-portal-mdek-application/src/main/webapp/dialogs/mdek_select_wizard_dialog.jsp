@@ -52,8 +52,6 @@
         var thisDialog = _container_;
         var alreadyChecked = false;
 
-        var objClassTopic = null;
-
         on(_container_, "Load", function () {
             var types = Syslists.getObjectClassList();
             var assistants = [
@@ -187,7 +185,7 @@
                 createObjectByType(params.assistants[0]);
             } else if (params.types.length === 0 && params.assistants.length === 0 && params.buttons.length === 1) {
                 closeThisDialog();
-                params.buttons[0].callback(closeThisDialog);;
+                params.buttons[0].callback(closeThisDialog);
             } else {
                 return false;
             }

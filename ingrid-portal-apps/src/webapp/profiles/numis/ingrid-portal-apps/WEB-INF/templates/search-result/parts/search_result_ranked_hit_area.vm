@@ -1,0 +1,74 @@
+#if($coords.size() > 0)
+    <div id="map${mapId}" class="map-ingrid" style="height:320px; margin-bottom: 24px;"></div>
+    
+    <script>
+        $('#map${mapId}').closest('.js-expander-content').removeClass('is-hidden');
+        var coords = ${coords};
+        var bounds${mapId};
+        var boundsX1${mapId};
+        var boundsY1${mapId};
+        var boundsX2${mapId};
+        var boundsY2${mapId};
+        var y1${mapId};
+        var x1${mapId};
+        var y2${mapId};
+        var x2${mapId};
+
+        for (var coord of coords) {
+            var tmpBounds${mapId} = coord;
+            y1${mapId} = tmpBounds${mapId}[2];
+            x1${mapId} = tmpBounds${mapId}[1];
+            y2${mapId} = tmpBounds${mapId}[4];
+            x2${mapId} = tmpBounds${mapId}[3];
+
+                
+            if (y1${mapId} && x1${mapId} && y2${mapId} && x2${mapId}) {
+                if(y1${mapId} !== 0 && x1${mapId} !== 0 && y2${mapId} !== 0 && x2${mapId} !== 0) {
+                    if(!boundsX1${mapId} || x1${mapId} < boundsX1${mapId}) {
+                        boundsX1${mapId} = x1${mapId};
+                    }
+
+                    if(!boundsY1${mapId} || y1${mapId} < boundsY1${mapId}) {
+                        boundsY1${mapId} = y1${mapId};
+                    }
+
+                    if(!boundsX2${mapId} || x2${mapId} > boundsX2${mapId}) {
+                        boundsX2${mapId} = x2${mapId};
+                    }
+
+                    if(!boundsY2${mapId} || y2${mapId} > boundsY2${mapId}) {
+                        boundsY2${mapId} = y2${mapId};
+                    }
+                    var southWest${mapId} = L.latLng(boundsY1${mapId}, boundsX1${mapId});
+                    var northEast${mapId} = L.latLng(boundsY2${mapId}, boundsX2${mapId});
+                    bounds${mapId} = L.latLngBounds(southWest${mapId}, northEast${mapId});
+                }
+            }
+        }
+        var map${mapId} = addLeafletMapWithId('map${mapId}', getOSMLayer(''), bounds${mapId}, null , 10);
+        #if($isDetail)
+            map${mapId}.gestureHandling.enable();
+            addLeafletHomeControl(map${mapId}, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds${mapId}, '', '23px');
+        #else
+            disableLeafletMapTouchControl(map${mapId});
+        #end
+        if(bounds${mapId}) {
+            map${mapId}.fitBounds(bounds${mapId});
+        }
+
+        coords.forEach(function(coord) {
+            var y1Coord = coord[2];
+            var x1Coord = coord[1];
+            var y2Coord = coord[4];
+            var x2Coord = coord[3];
+            if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
+                var map${mapId}LayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
+                map${mapId}LayerBounds.bindTooltip(coord[0], {direction: 'center'});
+                map${mapId}.addLayer(map${mapId}LayerBounds);
+            }
+        });
+        #if(!$isMoreId)
+        $('#map${mapId}').closest('.js-expander-content').addClass('is-hidden');
+        #end
+    </script>
+#end

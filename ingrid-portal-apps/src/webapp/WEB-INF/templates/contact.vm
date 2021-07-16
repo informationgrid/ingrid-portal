@@ -7,22 +7,16 @@
             <h4>$MESSAGES.getString('contact.form')</h4>
             #set ($action = $renderResponse.createActionURL())
             <form action="$action" method="post" name="contact" id="contact" enctype="multipart/form-data">
-                <!-- yummy fields -->
-                <label class="yummy" for="message">message</label>
-                <input type="text" class="yummy" id="message" name="message" autocomplete="off"  />
-                <label class="yummy" for="name">name</label>
-                <input type="text" class="yummy" id="name" name="name" autocomplete="off"  />
-                <label class="yummy" for="email">email</label>
-                <input type="text" class="yummy" id="email" name="email" autocomplete="off"  />
-                <!-- real fields -->
-                #renderMessageInfo($MESSAGES.getString('contact.form.required'))
+                ## yummy fields
+                #parse ("/WEB-INF/templates/contact/contact_yummy.vm")
+                ## real fields
                 #displayFormError()
                 <div class="media">
                     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
+                        <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
                     </div>
                     <div class="media__body">
-                        <textarea name="user_message" id="bemerkungen" #addErrorFormClass('user_message')>#getFieldValue('user_message')</textarea>
+                        <textarea name="user_message" id="bemerkungen" #addErrorFormClass('user_message') tabindex="0" required="required">#getFieldValue('user_message')</textarea>
                         #addErrorFormMessage('user_message')
                     </div>
                 </div>
@@ -31,7 +25,7 @@
                         <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx2" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') autocomplete="given-name"/>
+                        <input type="text" id="xx2" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') autocomplete="given-name" tabindex="0" required="required"/>
                         #addErrorFormMessage('user_firstname')
                     </div>
                 </div>
@@ -40,7 +34,7 @@
                         <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx3" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') autocomplete="family-name"/>
+                        <input type="text" id="xx3" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') autocomplete="family-name" tabindex="0" required="required"/>
                         #addErrorFormMessage('user_lastname')
                     </div>
                 </div>
@@ -49,7 +43,7 @@
                         <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx4" name="user_company" value="#getFieldValue('user_company')" autocomplete="organization"/>
+                        <input type="text" id="xx4" name="user_company" value="#getFieldValue('user_company')" autocomplete="organization" tabindex="0"/>
                     </div>
                 </div>
                 <div class="media">
@@ -57,7 +51,7 @@
                         <label for="xx5">$MESSAGES.getString('contact.form.phone')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx5" name="user_phone" value="#getFieldValue('user_phone')" autocomplete="tel"/>
+                        <input type="text" id="xx5" name="user_phone" value="#getFieldValue('user_phone')" autocomplete="tel" tabindex="0"/>
                     </div>
                 </div>
                 <div class="media">
@@ -65,7 +59,7 @@
                         <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx6" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') autocomplete="email"/>
+                        <input type="text" id="xx6" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') autocomplete="email" tabindex="0" required="required"/>
                         #addErrorFormMessage('user_email')
                     </div>
                 </div>
@@ -75,7 +69,7 @@
                             <label >$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
                         </div>
                         <div class="media__body">
-                            <input type="file" id="upload" name="upload">
+                            <input type="file" id="upload" name="upload" tabindex="0"/>
                         </div>
                     </div>
                 #end

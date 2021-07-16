@@ -28,7 +28,7 @@ var expander = (function () {
     var expander_close = null;
     var expander_content = null;
     
-    function expand(ident) {
+    function expand(ident, isAll) {
         if(ident){
             expander_content = $('.js-expander-content.' + ident);
             expander_content.removeClass('is-hidden');
@@ -36,13 +36,82 @@ var expander = (function () {
             expander_close.removeClass('is-hidden');
             expander_open = $('#' + ident +'.js-expander');
             expander_open.addClass('is-hidden');
+            updateParams("more", ident, true, isAll);
         }
     }
 
-    function close() {
+    function close(ident, isAll) {
+        if(ident){
+          expander_content = $('.js-expander-content.' + ident);
+          expander_close = $('.js-expander-close.' + ident);
+          expander_open = $('#' + ident +'.js-expander');
+          updateParams("more", ident, false, isAll);
+        }
         expander_content.addClass('is-hidden');
         expander_close.addClass('is-hidden');
         expander_open.removeClass('is-hidden');
+    }
+
+    $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results == null){
+         return null;
+      }
+      else {
+         return decodeURI(results[1]) || 0;
+      }
+    }
+
+    function updateQueryStringParameter(uri, key, value) {
+      var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+      var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+      if (uri.match(re)) {
+        return uri.replace(re, '$1' + key + "=" + value + '$2');
+      }
+      else {
+        return uri + separator + key + "=" + value;
+      }
+    }
+
+    function updateParams(key, id , isAdd, isAll) {
+      var paramKey = $.urlParam(key);
+      if(paramKey) {
+        var paramKeys = paramKey.split(',');
+        if(paramKeys.indexOf(id) > -1){
+          if(!isAdd) {
+            paramKeys = paramKeys.filter(function(e) { return e !== id; });
+            paramKeys = paramKeys.filter(function(e) { return e !== i + "_links"; });
+          }
+        } else {
+          if(isAdd) {
+            paramKeys.push(id);
+          }
+        }
+        paramKey = ''
+        for (var i = 0; i < paramKeys.length; i++) {
+          if(i > 0) {
+            paramKey = paramKey + ',';
+          }
+          paramKey = paramKey + paramKeys[i];
+        }
+      } else {
+        paramKey = id
+      }
+      var url = "";
+      if(paramKey === '') {
+        url = updateQueryStringParameter(window.location.href, key, paramKey);
+      } else {
+        if(isAll && isAdd) {
+          url = updateQueryStringParameter(window.location.href, key, paramKey);
+        } else if(!isAll) {
+          url = updateQueryStringParameter(window.location.href, key, paramKey);
+        } else {
+          url = updateQueryStringParameter(window.location.href, key, "");
+        }
+      }
+      var urlSplit = url.split("?");
+      
+      history.replaceState(null, null, "?"+urlSplit[urlSplit.length - 1]);
     }
 
     return {
@@ -55,10 +124,80 @@ var expander = (function () {
 
 $('.js-expander').on('click', function (event) {
     event.preventDefault();
-    expander.open(this.id);
+    expander.open(this.id, false);
+    $(this).parent().addClass("is-active");
 });
 
 $('.js-expander-close').on('click', function (event) {
     event.preventDefault();
-    expander.close();
+    var id = $(event.currentTarget).prevUntil(event.currentTarget,".js-expander")[0].id;
+    expander.close(id, false);
+    $(this).parent().removeClass("is-active");
+});
+
+$('.js-toggle-all-expander-collapse').on('click', function (event) {
+  event.preventDefault();
+  $(this).addClass("is-active").siblings().removeClass('is-active');
+  var jsExpanders = $('.data .teaser-data .js-expander');
+  for (var i = 0; i < jsExpanders.length; i++) {
+    var jsExpander = jsExpanders.get(i);
+    expander.close(jsExpander.id, true);
+ }
+});
+
+$('.js-toggle-all-expander-expand').on('click', function (event) {
+  event.preventDefault();
+   $(this).addClass("is-active").siblings().removeClass('is-active');
+   var jsExpanders = $('.data .teaser-data .js-expander');
+   for (var i = 0; i < jsExpanders.length; i++) {
+     var jsExpander = jsExpanders.get(i);
+     expander.open(jsExpander.id, true);
+  }
+});
+
+
+$(function(){
+
+    $('.js-expand-box').removeClass('js-non-expand-text');
+
+    var wrapHeight = $('.js-expand-box .js-expand-text-content').height();
+    var descHeight = $('.js-expand-box').height();
+
+    if (wrapHeight <= descHeight) {
+        $('.js-expand-box .js-expand-text-fade').addClass('is-hidden');
+    } else {
+        $('.js-expand-box ~ .js-open-expand-text').removeClass('is-hidden');
+    }
+
+    $('.js-expand-box ~ .js-open-expand-text').click(function() {
+        $(this).addClass('is-hidden');
+        $('.js-expand-box').addClass('is-active');
+        $('.js-expand-box ~ .js-close-expand-text').removeClass('is-hidden');
+        $('.js-expand-box .js-expand-text-fade').addClass('is-hidden');
+    });
+
+    $('.js-expand-box ~ .js-close-expand-text').click(function() {
+        $(this).addClass('is-hidden');
+        $('.js-expand-box').removeClass('is-active');
+        $('.js-expand-box ~ .js-open-expand-text').removeClass('is-hidden');
+        $('.js-expand-box .js-expand-text-fade').removeClass('is-hidden');
+    });
+    
+    var isAllOpen = true;
+    var jsExpanders = $('.data .teaser-data .js-expander');
+    if(jsExpanders.length > 0) {
+        for (var i = 0; i < jsExpanders.length; i++) {
+            var jsExpander = jsExpanders.get(i);
+            if(!$(jsExpander).hasClass("is-hidden")){
+                isAllOpen = false;
+            }
+        }
+    } else {
+      isAllOpen = false;
+    }
+    if(isAllOpen) {
+      $('.js-toggle-all-expander-expand').addClass("is-active").siblings().removeClass('is-active');
+    } else {
+      $('.js-toggle-all-expander-collapse').addClass("is-active").siblings().removeClass('is-active');
+    }
 });

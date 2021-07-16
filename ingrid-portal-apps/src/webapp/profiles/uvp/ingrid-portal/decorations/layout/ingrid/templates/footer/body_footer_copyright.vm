@@ -1,0 +1,3 @@
+<div class="copyright">
+    <p class="copyright_text">$MESSAGES.getString("ingrid.page.copyright")</p>
+</div>

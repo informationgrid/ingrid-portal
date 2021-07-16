@@ -26,12 +26,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -43,17 +45,25 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
-import de.ingrid.portal.global.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang.StringUtils;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.generic.EscapeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.CodeListServiceFactory;
+import de.ingrid.portal.global.IngridHitsWrapper;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UniversalSorter;
+import de.ingrid.portal.global.UtilsFacete;
+import de.ingrid.portal.global.UtilsMimeType;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
 import de.ingrid.portal.search.SearchState;
@@ -85,30 +95,75 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
-        
-        try {
-            if (resourceID.equals( "httpURLImage" )) {
-                String paramURL = request.getParameter( "url" );
-                if(paramURL != null){
+        String paramURL = request.getParameter( "url" );
+
+        if(paramURL != null) {
+            if (resourceID.equals( "httpURLDataType" )) {
+                String extension = null;
+                if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
+                    extension = "csw";
+                } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
+                    extension = "wms";
+                } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
+                    extension = "wfs";
+                } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
+                    extension = "wmts";
+                }
+                if(extension == null) {
                     URL url = new URL(paramURL);
                     java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                    InputStream inStreamConvert = con.getInputStream();
-                    ByteArrayOutputStream os = new ByteArrayOutputStream();
-                    if (null != con.getContentType()) {
-                        byte[] chunk = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                            os.write(chunk, 0, bytesRead);
-                        }
-                        os.flush();
-                        URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                                Base64.getEncoder().encodeToString(os.toByteArray()));
-                        response.getWriter().write(dataUri.toString());
+                    con.setRequestMethod("HEAD");
+
+                    String contentType = con.getContentType();
+
+                    if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
+                        url = new URL(paramURL.replace("http://", "https://"));
+                        con = (java.net.HttpURLConnection) url.openConnection();
+                        con.setRequestMethod("HEAD");
+                    }
+                    if(contentType != null) {
+                        extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                    }
+                }
+                response.setContentType( "text/plain" );
+                if(extension != null) {
+                    response.getWriter().write( extension );
+                }
+            }
+
+            if (resourceID.equals( "httpURLImage" )) {
+                try {
+                    getURLResponse(paramURL, response);
+                } catch (Exception e) {
+                    log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
+                    String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
+                    log.error( "Try https URL: " + httpsUrl);
+                    try {
+                        getURLResponse(httpsUrl, response);
+                    } catch (Exception e1) {
+                        log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
+                        response.getWriter().write(paramURL);
                     }
                 }
             }
-        } catch (Exception e) {
-            log.error( "Error creating resource for resource ID: " + resourceID, e );
+        }
+    }
+
+    private void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
+        URL url = new URL(paramURL);
+        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+        InputStream inStreamConvert = con.getInputStream();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        if (null != con.getContentType()) {
+            byte[] chunk = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                os.write(chunk, 0, bytesRead);
+            }
+            os.flush();
+            URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                    Base64.getEncoder().encodeToString(os.toByteArray()));
+            response.getWriter().write(dataUri.toString());
         }
     }
 
@@ -141,8 +196,16 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
         context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
         context.put("ranking", request.getParameter(Settings.PARAM_RANKING));
+        context.put("sorter", new UniversalSorter(Locale.GERMAN) );
+        context.put("escTool", new EscapeTool());
+
+        context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 
         ResourceURL restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLDataType" );
+        request.setAttribute( "restUrlHttpGetDataType", restUrl.toString() );
+
+        restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );
         request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
 

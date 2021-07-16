@@ -28,7 +28,7 @@
                 #if($hits)
                     #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                     #foreach($hit in $hits)
-                        <div class="teaser-data">
+                        <div class="teaser-data no-padding">
                             <div class="data" >
                                 <div class="row">
                                     <div class="xsmall-24 large-13 columns">
@@ -95,7 +95,7 @@
         </div>
         <div class="row">
             <div class="columns text-center">
-                <a type="button" class="button outline" href="$renderResponse.encodeURL("/portal/main-search.psml")?rank=date" >Mehr anzeigen<span class="ic-ic-angle-down"></span></a>
+                <a class="button outline" href="$renderResponse.encodeURL("/portal/main-search.psml")?rank=date" >Mehr anzeigen<span class="ic-ic-angle-down"></span></a>
             </div>
         </div>
     </div>

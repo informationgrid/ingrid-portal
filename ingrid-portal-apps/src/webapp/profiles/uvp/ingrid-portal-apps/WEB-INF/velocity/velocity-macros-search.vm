@@ -65,7 +65,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro (renderRankedPageNavigation $pageSelector $isBottom)
-<div class="caption">
+<div class="paging caption">
     #if($isBottom)
         #renderRankedResultCounter($pageSelector)
     #end
@@ -74,13 +74,13 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #set ($pstart = 0)
     #set ($action = $renderResponse.createActionURL())
     $action.setParameter('rstart', $pstart.toString())
-    <a class="icon small-button" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+    <a class="icon small-button" #if($pageSelector.currentSelectorPage != 1) href="$action" #else href="" #end>
         <span class="ic-ic-double-arrow-left"></span>
     </a>
     
     #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
     $action.setParameter('rstart', $pstart.toString())
-    <a class="icon small-button" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+    <a class="icon small-button" #if($pageSelector.currentSelectorPage != 1) href="$action" #else href="" #end>
         <span class="ic-ic-arrow-left"></span>
     </a>
     
@@ -96,13 +96,13 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     
     #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
     $action.setParameter('rstart', $pstart.toString())
-    <a class="icon small-button" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+    <a class="icon small-button" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages) href="$action" #else href="" #end>
         <span class="ic-ic-arrow-right"></span>
     </a>
     
     #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
     $action.setParameter('rstart', $pstart.toString())
-    <a class="icon small-button" style="margin:0;" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+    <a class="icon small-button" style="margin:0;" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages) href="$action"  #else href="" #end>
         <span class="ic-ic-double-arrow-right"></span>
     </a>
     
@@ -156,7 +156,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 ## this navigation is used when "grouping by domain"
 ## -> renders pages just like with NO GROUPING and estimates starthits of oncoming pages
 #macro (renderRankedPageNavigationGroupingWithPages $pageSelector $isBottom)
-<div class="caption">
+<div class="paging caption">
     #if($isBottom)
         <p>#renderRankedResultCounterGrouping($pageSelector)</p>
     #end
@@ -443,4 +443,66 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         $title
         <span class="ic-ic-cross"></span>
     </a>
+#end
+
+#macro(renderServiceType $type)
+    #if($type && !$type.isEmpty())
+        <div class="info--right">
+            <span>
+            #if($MESSAGES.getString("common.service.type.$type") == "common.service.type.$type")
+                $type
+            #else
+                $MESSAGES.getString("common.service.type.$type")
+            #end
+            </span>
+        </div>
+    #end
+#end
+
+#macro(renderServiceTypeList $types $isTeaser $isMobile)
+    #if($types && $types.size() > 0)
+        <div class="info--right #if($isTeaser)teaser-info#end #if($isMobile)show-for-xsmall-only#else hide-for-xsmall-only #end">
+        #foreach($type in $types)
+            <span>
+                #if($MESSAGES.getString("common.service.type.$type") == "common.service.type.$type")
+                    $type
+                #else
+                    $MESSAGES.getString("common.service.type.$type")
+                #end
+            </span>
+        #end
+        </div>
+    #elseif($isTeaser)
+        <div class="info--right teaser-info #if($isMobile)show-for-xsmall-only#else hide-for-xsmall-only #end">
+        </div>
+    #end
+#end
+
+#macro(renderSearchTerm $searchterms $hasAccessConstraints)
+    #if($searchterms.contains("inspireidentifiziert") || $searchterms.contains("opendata") || $hasAccessConstraints == "Y")
+        <div class="icon--info">
+        #if($hasAccessConstraints == "Y")
+            <div class="helper icon info">
+                <span class="ic-ic-lock-closed" title="$MESSAGES.getString("common.result.hasAccessContraints")"></span>
+                <span class="text">$MESSAGES.getString("common.result.hasAccessContraints")</span>
+            </div>
+        #end
+        #if($searchterms.contains("inspireidentifiziert"))
+            <div class="helper icon info">
+                <span class="ic-ic-inspire" title="INSPIRE"></span>
+                <span class="text">INSPIRE</span>
+            </div>
+        #end
+        #if($searchterms.contains("opendata"))
+            <div class="helper icon info">
+                <span class="ic-ic-opendata" title="Opendata"></span>
+                <span class="text">Opendata</span>
+            </div>
+        #end
+        </div>
+    #end
+#end
+
+#macro (renderFactTitle $title $class)
+    <h4 #if($class)class="$class"#end>$title</h4>
 #end

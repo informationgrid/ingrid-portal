@@ -1,0 +1,58 @@
+#set($type = $TOOL.getAddressClassType())
+#set($title = $TOOL.getAddressClassTitle($type))
+#set($lang = $TOOL.getLanguage())
+#set($modTime = $TOOL.getDateValueFromXPath("./idf:last-modified"))
+
+#set($hasDetail0 = false)
+#set($hashDetail0 = "detail_overview")
+#set($hasDetail1 = false)
+#set($hashDetail1 = "detail_description")
+#set($hasDetail2 = false)
+#set($hashDetail2 = "detail_links")
+
+## Beschreibung
+#set($getAlternateTitle = $TOOL.getValueFromXPath("./gmd:alternateTitle"))
+#set($getDescription = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName/gco:CharacterString")))
+
+## Verweise und Downloads
+#### Links/Querweise
+#set($xPathRefLinks = "./idf:objectReference")
+## Untergeordnete Objekte
+#set($xPathRefSubordinated = "./idf:subordinatedParty")
+## Übergeordnetet Objekte
+#set($xPathRefSuperior = "./idf:superiorParty")
+
+#set($xPathListReferences = [
+    $xPathRefLinks,
+    $xPathRefSubordinated,
+    $xPathRefSuperior
+])
+
+#set($getLinks = $TOOL.getReference($xPathRefLinks, true))
+#set($getSubordinatedLinks = $TOOL.getReference($xPathRefSubordinated, false))
+#set($getSuperiorLinks = $TOOL.getReference($xPathRefSuperior, false))
+
+## Kontakt
+#### Addressen
+#set($xPathUsePointOfContact = ".")
+
+#set($xPathListContact = [
+    $xPathUsePointOfContact
+])
+#set($xPathUsePointOfContactNodes = $TOOL.getNodeListFromXPath("${xPathUsePointOfContact}"))
+#set($xPathUsePointOfContactSortNodes = [])
+
+#foreach($tmpXPathNodeNumber in [0..$xPathUsePointOfContactNodes.getLength()])
+    #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathUsePointOfContact}"))
+    #set($add = $xPathUsePointOfContactSortNodes.add($tmpAddresses))
+#end
+
+## Zusatzfelder
+#set($xPathAdditionalFields = "./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']")
+#set($xPathAdditionalFieldsData = "./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField")
+
+
+##FactSheet
+#set($xPathListFactSheet = [
+    $xPathUsePointOfContact
+])

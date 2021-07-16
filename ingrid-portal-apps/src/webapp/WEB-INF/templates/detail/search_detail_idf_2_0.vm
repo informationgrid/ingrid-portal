@@ -330,11 +330,14 @@
                             ## Organistation
                             #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
                             #if($TOOL.nodeExist($xPath, $node))
-                                #set($organisation = $TOOL.stringTokenizer($TOOL.getValueFromXPath($xPath, null, $node)))
-                                #set($organisationLength = $organisation.countTokens() - 1)
-                                #foreach($org in [0..$organisationLength])
-                                    $organisation.nextToken()
-                                    <br>
+                                #set($tmpValue = $TOOL.getValueFromXPath($xPath, null, $node))
+                                #if($tmpValue)
+                                    #set($organisation = $TOOL.stringTokenizer($tmpValue))
+                                    #set($organisationLength = $organisation.countTokens() - 1)
+                                    #foreach($org in [0..$organisationLength])
+                                        $organisation.nextToken()
+                                        <br>
+                                    #end
                                 #end
                             #end
                             ## Name
@@ -347,11 +350,14 @@
                         ## Organistation
                         #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
                         #if($TOOL.nodeExist($xPath, $node))
-                            #set($organisation = $TOOL.stringTokenizer($TOOL.getValueFromXPath($xPath, null, $node)))
-                            #set($organisationLength = $organisation.countTokens() - 1)
-                            #foreach($org in [0..$organisationLength])
-                                $organisation.nextToken()
-                                <br>
+                            #set($tmpValue = $TOOL.getValueFromXPath($xPath, null, $node))
+                            #if($tmpValue)
+                                #set($organisation = $TOOL.stringTokenizer($tmpValue))
+                                #set($organisationLength = $organisation.countTokens() - 1)
+                                #foreach($org in [0..$organisationLength])
+                                    $organisation.nextToken()
+                                    <br>
+                                #end
                             #end
                         #end
                         ## Name

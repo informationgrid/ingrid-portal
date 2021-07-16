@@ -615,7 +615,7 @@ table .dark a {
   border-right: 11px solid #004188;
 }
 footer .footer .row:last-of-type {
-  padding: 0 0 12px;
+  padding: 16px 0 12px;
 }
 footer .footer .columns div {
   margin: 10px auto;
@@ -1022,12 +1022,7 @@ header .logo {
   width: 17.125em;
 }
 .header-menu-close { padding: 28px 0px 0 0; }
-footer .footer .copyright span.icon:before {
-  content: '\00a9';
-  float: left;
-  margin-left: 8px;
-  margin-top: 15px;
-}
+
 footer .footer .copyright span.text {
   margin-right: 0;
   text-align: left;
@@ -1249,6 +1244,13 @@ header .logo a:hover{
   }
 }
 
+a img[title='SNS'] {
+  float: left;
+  margin-right: 15px;
+  margin-top: 4px;
+  width: 60px;
+}
+
 /* menu */
 .menu-main-links a, .header-menu a {
   font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif !important;
@@ -1267,7 +1269,7 @@ header .logo a:hover{
   font-weight: normal;
 }
 .home-wrapper {
-  background-image: url('/decorations/layout/sh/images/template/stage-overlay.svg') !important;
+  background-image: url('/decorations/layout/uvp/images/template/stage-overlay.svg') !important;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: right bottom !important;
@@ -1356,6 +1358,8 @@ footer .footer .logo a img{
 }
 .columns.button-up {
   margin-top: 0.8rem;
+  display: flex;
+  align-items: center;
 }
 .footer-menu-entries .icon span {
   font-size: 15px;
@@ -1369,9 +1373,6 @@ footer .footer .logo a img{
 footer .footer .copyright span {
   font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif;
   color: #FFFFFF;
-  text-transform: none;
-  max-width: 350px;
-  margin-top: 15px;
 }
 
 /* search result page */
@@ -1379,7 +1380,7 @@ h6 {
   color: #003064;
 }
 .search-wrapper {
-  background-image: url('/decorations/layout/sh/images/template/stage-overlay.svg') !important;
+  background-image: url('/decorations/layout/uvp/images/template/stage-overlay.svg') !important;
   background-position: 0 30% !important;
   background-size: cover;
 }
@@ -1514,7 +1515,7 @@ h6 {
   color: #ffffff;
 }
 .subpage-wrapper {
-  background-image: url('/decorations/layout/sh/images/template/stage-overlay.svg') !important;
+  background-image: url('/decorations/layout/uvp/images/template/stage-overlay.svg') !important;
   background-position: 0 30% !important;
   background-size: cover;
 }
@@ -1663,4 +1664,14 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
 .text-box p {
   font-size: 15px;
   margin-bottom: 25px;
+}
+
+/* pagination */
+.icon.small-button:not([href]){
+  margin-right: 18px;
+}
+.icon.small-button:not([href]) span:not([class]){
+  background: #003064;
+  padding: 5px 8px;
+  color: white;
 }

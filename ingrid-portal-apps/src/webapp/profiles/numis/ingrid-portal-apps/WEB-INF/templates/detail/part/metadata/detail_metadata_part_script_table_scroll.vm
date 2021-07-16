@@ -1,0 +1,9 @@
+##<script>
+##  //custom scrollbar for header burger menu
+##  $('.table:not(.table--lined) table').niceScroll({
+##    cursorcolor:"#006ec5",
+##    cursorwidth:"8px",
+##    cursorborderradius: "6px",
+##    overflowy: false
+##  });
+##</script>

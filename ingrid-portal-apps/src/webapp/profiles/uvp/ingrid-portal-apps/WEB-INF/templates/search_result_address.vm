@@ -1,3 +1,4 @@
+#parse ('/WEB-INF/templates/global/include_hit_image_error.vm')
 #macro (renderHit $hit)
     #if($hit.is_address)
         #parse ('/WEB-INF/templates/include_search_result_address_hit.vm')
@@ -48,4 +49,5 @@
 </div>
 #parse ('/WEB-INF/templates/include_search_result_admin_info.vm')
 #parse ('/WEB-INF/templates/include_search_result_map.vm')
-#parse ('/WEB-INF/templates/global/include_preview_image.vm')
+#parse ('/WEB-INF/templates/global/include_reference_list_datatype.vm')
+#parse ('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')

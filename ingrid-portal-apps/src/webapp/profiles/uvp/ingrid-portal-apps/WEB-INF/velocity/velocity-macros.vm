@@ -154,7 +154,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 ## Administration macros
 ## ------------------------------
 #macro (renderPaginationAndHint $browser $hint)
-    <div class="caption">
+    <div class="paging caption">
         #set ($action = $renderResponse.createActionURL())
         $action.setParameter('doFirst', 'first')
         <a class="icon" class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
@@ -461,46 +461,54 @@ $actionForm.getInputHTMLEscaped($field)#end
     </div>
 #end
 
-#macro(renderUDKIcon $class $title)
+#macro(renderUDKIcon $class $title $altTitle)
     #if($class == "0")
         ## Fachaufgabe
-        <span class="ic-ic-zulassungsverfahren"></span>
+        <span class="ic-ic-zulassungsverfahren" 
     #elseif($class == "1")
         ## Geodatensatz
-        <span class="ic-ic-inspire"></span>
+        <span class="ic-ic-karte" 
     #elseif($class == "2")
         ## Literatur
-        <span class="ic-ic-katalog"></span>
+        <span class="ic-ic-katalog" 
     #elseif($class == "3")
         ## Geodatendienst
-        <span class="ic-ic-dienste"></span>
+        <span class="ic-ic-dienste" 
     #elseif($class == "4")
         ## Projekt
-        <span class="ic-ic-projekt"></span>
+        <span class="ic-ic-projekt" 
     #elseif($class == "5")
         ## Datensammlung
-        <span class="ic-ic-metadaten"></span>
+        <span class="ic-ic-metadaten" 
     #elseif($class == "6")
         ## Informationssystem
-        <span class="ic-ic-chemie"></span>
+        <span class="ic-ic-chemie" 
     #end
+    #if($altTitle)
+        title="$altTitle"
+    #end
+    ></span>
     <span class="text">$title</span>
 #end
 
-#macro(renderUDKAddressIcon $class $title)
+#macro(renderUDKAddressIcon $class $title $altTitle)
     #if($class == "0")
         ## Institution
-        <span class="ic-ic-intituition"></span>
+        <span class="ic-ic-intituition" 
     #elseif($class == "1")
         ## Einheit
-        <span class="ic-ic-einheit"></span>
+        <span class="ic-ic-einheit" 
     #elseif($class == "2")
         ## Person
-        <span class="ic-ic-people"></span>
+        <span class="ic-ic-people" 
     #elseif($class == "3")
         ## Freie Adresse
-        <span class="ic-ic-mailto"></span>
+        <span class="ic-ic-mailto" 
     #end
+    #if($altTitle)
+        title="$altTitle"
+    #end
+    ></span>
     <span class="text">$title</span>
 #end
 

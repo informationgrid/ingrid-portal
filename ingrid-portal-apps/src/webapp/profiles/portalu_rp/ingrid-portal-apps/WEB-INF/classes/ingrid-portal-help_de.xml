@@ -6,33 +6,35 @@
         <section help-key="about-1">
             <header>Konzept und Aufgabe von PortalU</header>
             <content>
-                <p>PortalU, das Umweltportal Rheinland-Pfalz, bietet einen zentralen Zugriff auf umweltrelevante Informationen von öffentlichen Institutionen und Organisationen in Rheinland-Pfalz. Mit einem Mix aus aktuellen Nachrichten, Messwerten, Hintergrundinformationen und Umweltereignissen richtet sich das PortalU-Portal an interessierte Bürgerinnen und Bürger sowie "professionelle" Nutzer von Umweltinformationen, z.B. Umweltorganisationen und Ingenieurbüros. Das Informationsangebot wird kontinuierlich ausgebaut mit dem Ziel, langfristig möglichst alle behördlichen Anbieter von Umweltinformationen in Rheinland-Pfalz zu erfassen.</p>
-                <p>Bei der Konzeption des PortalU-Portals spielten die EU-Umweltinformationsrichtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=UIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_blank">Umweltinformationsgesetz</a> ) sowie die EU-INSPIRE-Richtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=GDIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_blank">nds. Geodateninfrastrukturgesetz</a>) eine wichtige Rolle. Diese Richtlinien setzen neue Maßstäbe für die öffentliche Verbreitung behördlicher Umweltinformationen bzw. den Aufbau der dafür notwendigen informationstechnischen Infrastrukturen.</p>
-                <p>PortalU und die eigens zum Aufbau des Portals entwickelte Software „InGrid®“ wurden u.a. als Werkzeuge zur Unterstützung der Behörden bei der Umsetzung der Richtlinien konzipiert.</p>
+                <p>PortalU RLP, das Umweltportal Rheinland-Pfalz, bietet einen zentralen Zugriff auf eine Vielzahl umweltrelevanter Webseiten sowie Metainformationen zu Umweltdaten und Zuständigkeiten der Behörden oder Institutionen des Landes. Mit weiteren Informationen wie Umweltmesswerten, historischen Ereignissen und Darstellung raumbezogener Daten in Karten richtet sich PortalU RLP sowohl an interessierte Laien als auch an ein versiertes Fachpublikum.</p>
+                <p>Als rechtliche Grundlage spielen auf europäischer Ebene die europäische Umweltinformationsrichtlinie (2003/4/EG) und die europäische INSPIRE-Richtlinie (2007/2/EG) für PortalU RLP eine zentrale Rolle. Diese Richtlinien setzen Maßstäbe für die öffentliche Verbreitung behördlicher Umweltinformationen bzw. den Aufbau der dafür notwendigen informationstechnischen Infrastrukturen. Hiernach sind Behörden und Organisationen dazu verpflichtet, umweltrelevante Daten und Informationen in einer klar verständlichen und einfach zugänglichen Form bereitzustellen.
+                    In Rheinland-Pfalz sichern das Landestransparenzgesetz sowie das Landesinformationsfreiheitsgesetz den Anspruch auf Zugang zu umweltbezogenen und sonstigen amtlichen Informationen.</p>
+                <p>PortalU und die eigens zum Aufbau des Portals entwickelte Software InGrid wurden speziell als Werkzeuge zur Unterstützung der Behörden bei der Umsetzung der Richtlinien konzipiert.</p>
+                <br></br>
             </content>
         </section>
         <section help-key="about-2">
-            <header>Die Betreiber von PortalU</header>
+            <header>Funktionsüberblick</header>
             <content>
-                <p>Das PortalU-Portal wird vom Ministerium für Umwelt, Energie, Ernährung und Forsten betrieben. Wir sind darum bemüht, das System kontinuierlich zu erweitern und zu verbessern. Bei Fragen und Verbesserungsvorschlägen nutzen Sie bitte unser <a href="/kontakt">Kontaktformular</a>.</p>
+                <p><b>Suche</b>: Zentrale Funktion des Portals mit (einfachen) und (erweiterten) Suchfunktionen.</p>
+                <p><b>Messwerte</b>: Abruf verschiedener Messwerte anhand einer Karte.</p>
+                <p><b>Kataloge</b>: Recherchieren Sie im Umweltdatenkatalog der Informationsanbieter aus Rheinland-Pfalz.</p>
+                <p><b>Karten</b>: Aufruf von digitalen Umweltkarten und Angabe und Raumbezüge bei der Suche.</p>
+                <br></br>
+            </content>
+        </section>
+        <section help-key="about-3">
+            <header>Wie werde ich Informationsanbieter in PortalU?</header>
+            <content>
+                <p>In PortalU können alle behördlichen Umweltinformationen aufgenommen werden.</p>
+                <p>Bietet ihre Behörde oder Institution umweltrelevante behördliche Informationen im Internet an, die noch nicht in PortalU zu finden sind? Dann sprechen Sie uns an: Verantwortliche PortalU <a href="mailto:portalu@mueef.rlp.de">portalu@mueef.rlp.de</a></p>
+                <br></br>
             </content>
         </section>
         <section help-key="about-4">
-            <header>Informationsquellen in PortalU</header>
-            <content>
-                <p>PortalU ist ein komfortables und benutzerfreundliches Tor zu Umweltinformationen im Internet. Im Gegensatz zu den meisten Portalen und Suchmaschinen erfasst PortalU nicht nur Webseiten, Textdokumente und andere Internetformate, sondern greift auch auf Datenbanken und Fachinformationssysteme zu.</p>
-            </content>
-        </section>
-        <section help-key="about-5">
-            <header>Bedingungen für Nutzung und Beteiligung an PortalU</header>
-            <content>
-                <p>Der Kreis der Informationsanbieter in PortalU beschränkt sich vorwiegend auf Behörden und behördennahe Organisationen in Deutschland. Wenn Ihre Organisation ebenfalls umweltrelevante Informationen über PortalU bereitstellen möchte, wenden Sie sich bitte an die <a href="/kontakt">Fachgruppe Umweltinformationssysteme</a> im Ministerium für Umwelt, Energie, Ernährung und Forsten.</p>
-            </content>
-        </section>
-        <section help-key="about-6">
             <header>InGrid – Die Software hinter PortalU</header>
             <content>
-                <p>Die InGrid-Softwarekomponenten werden im Rahmen des Projekts “InGrid - Pflege und Weiterentwicklung der InGrid-Softwarekomponenten zum Betrieb von Internetportalen und Metadatenkatalogen” (VKoopUIS-Projekt Nr. 50) unter dem Dach “Verwaltungskooperation Umweltinformationssysteme” (VKoopUIS) weiter entwickelt. Nähere Informationen erhalten Sie auf der <a href="http://www.ingrid-oss.eu/" target="_blank">Projekt-Webseite</a>.</p>
+                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid entwickelt. InGrid setzt auf eine modulare und flexible Systemarchitektur auf der Basis lizenzfreier OpenSource Produkte. Dadurch ist es möglich, die technische Struktur des Umweltinformationsnetzes an sich wandelnde organisatorische Vorgaben anzupassen. So können mit InGrid bei Bedarf regionale Umweltportale, z.B. für einzelne Kommunen, mit geringem technischem Aufwand erstellt werden. Dank OpenSource ist die Nachnutzung der Software lizenzfrei und kostenlos.</p>
             </content>
         </section>
     </chapter>

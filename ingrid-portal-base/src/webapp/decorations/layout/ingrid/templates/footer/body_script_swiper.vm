@@ -1,0 +1,18 @@
+<!-- swiper -->
+<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"></script>
+<script>
+  var mySwiper = new Swiper ('.swiper-container', {
+    grabCursor: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    scrollbar: {
+      el: '.swiper-scrollbar'
+    },
+  });
+</script>

@@ -1,0 +1,79 @@
+<div class="columns">
+    <div>$contactIntroPostEmail</div>
+    <div>
+        <h2>$MESSAGES.getString('contact.form')</h2>
+        #set ($action = $renderResponse.createActionURL())
+        <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
+            ## yummy fields
+            #parse ("/WEB-INF/templates/contact/contact_yummy.vm")
+            ## real fields
+            #displayFormError()
+            <div class="form-element">
+                <label for="user_subject">$MESSAGES.getString('contact.form.subject')</label>
+            </div>
+            <div class="form-element">
+                <input type="text" id="user_subject" name="user_subject" value="#getFieldValue('user_subject')" #addErrorFormClass('user_subject') #addErrorFormMessagePlaceholder('user_subject') tabindex="0" required="required"/>
+            </div>
+            <div class="form-element">
+                <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
+            </div>
+            <div class="form-element">
+                <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen" rows="10" #addErrorFormMessagePlaceholder('user_message') tabindex="0" required="required">#getFieldValue('user_message')</textarea>
+            </div>
+            <div class="form-element ">
+                <div class="control-group">
+                    <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="user_technical">
+                        <input id="user_technical" type="checkbox" name="user_technical" value="1" #getChecked('user_technical' '1') onchange="ingrid_disableElementByCheckbox('user_technical', 'user_company')" tabindex="0">
+                        <span class="control__indicator"></span>
+                        $MESSAGES.getString('contact.form.technical')
+                    </label>
+                </div>
+            </div>
+            <br>
+            <div class="form-element">
+                <label for="user_company">$MESSAGES.getString('contact.form.company')</label>
+            </div>
+            <div class="form-element">
+                <p>
+                    <select class="select2" name="user_company" id="user_company" size="1">
+                        <option value="" #getSelectedFlag('user_company' '')>---</option>
+                        #foreach($partner in $partners)
+                        <option value="$partner.getIdent()" #getSelectedFlag('user_company' '$partner.getIdent()')>$partner.getName()</option>
+                        #end
+                    </select>
+                </p>
+                <br>
+            </div>
+        <div class="form-element">
+            <label for="user_email">$MESSAGES.getString('contact.form.email')</label>
+        </div>
+        <div class="form-element">
+            <input type="text" id="user_email" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email') autocomplete="email" tabindex="0" required="required"/>
+            #addErrorFormMessagePlaceholderWithInputCheck('user_email')
+        </div>
+        <div class="form-element">
+            <label for="user_name">$MESSAGES.getString('contact.form.name')</label>
+        </div>
+        <div class="form-element">
+            <input type="text" id="user_name" name="user_name" value="#getFieldValue('user_name')" autocomplete="name" tabindex="0"/>
+        </div>
+        #if ($uploadEnable)
+            <div class="form-element">
+                <label >$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
+            </div>
+            <div class="form-element">
+                <input type="file" id="upload" name="upload" tabindex="0">
+            </div>
+        #end
+        <div class="subtext-submit">
+            <button type="submit" class="button">$MESSAGES.getString('common.form.button.submit')</button>
+        </div>
+        </form>
+    </div>
+</div>
+<script>
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('contact');
+    }
+</script>

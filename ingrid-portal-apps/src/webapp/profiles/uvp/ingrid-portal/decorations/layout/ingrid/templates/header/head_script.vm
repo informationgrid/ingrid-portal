@@ -24,3 +24,7 @@
 
 <!-- zxcvbn -->
 <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
+
+<!-- swiper -->
+<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"></script>
+

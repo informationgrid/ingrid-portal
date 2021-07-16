@@ -1,0 +1,45 @@
+## Verweise und Downloads
+################################
+#if($hasDetail2)
+<div class="section">
+    <a class="anchor" id="${hashDetail2}"></a>
+    #renderSectionTitle($MESSAGES.getString("references"))
+    ## Links
+        #if($getLinks && $getLinks.size() > 0)
+        <div class="sub-section sub-section-unlined">
+            #set($tmpTitle = $MESSAGES.getString("search.detail.dataRelations"))
+            #set($tmpCount = $getLinks.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            <a class="anchor" id="${hashDetail2}_info_links"></a>
+            #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h4" [] true)
+        </div>
+        #end
+    ## Übergeordnete Adressen
+        #if($getSuperiorLinks && $getSuperiorLinks.size() > 0)
+        <div class="sub-section sub-section-unlined">
+            #set($tmpTitle = $MESSAGES.getString("superior_address"))
+            #set($tmpCount = $getSuperiorLinks.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            <a class="anchor" id="${hashDetail2}_superior_address"></a>
+            #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h4" [] true)
+        </div>
+        #end
+    ## Untergeordnete Adressen
+        #if($getSubordinatedLinks && $getSubordinatedLinks.size() > 0)
+        <div class="sub-section sub-section-unlined">
+            #set($tmpTitle = $MESSAGES.getString("subordinated_addresses"))
+            #set($tmpCount = $getSubordinatedLinks.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            <a class="anchor" id="${hashDetail2}_subordinated_addresses"></a>
+            #renderLinkListImageLimit($tmpTitle $getSubordinatedLinks false true $getSubordinatedLinks.size() "subordinated_more" "h4" [] true)
+        </div>
+        #end
+    </div>
+</div>
+#end

@@ -125,5 +125,9 @@
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>
         </execute>
+        <!-- Delete user default-page.psml -->
+        <execute>
+            <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml']]>
+        </execute>
     </sql>
 </profile>

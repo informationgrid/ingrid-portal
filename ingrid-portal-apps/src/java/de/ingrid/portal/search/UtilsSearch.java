@@ -44,6 +44,8 @@ import de.ingrid.utils.udk.UtilsCSWDate;
 import de.ingrid.utils.udk.UtilsDate;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -245,11 +247,26 @@ public class UtilsSearch {
             result.put(Settings.RESULT_KEY_TITLE, title);
             // strip all HTML tags from summary
             String summary = detail.getSummary();
-            if (summary == null) {
-            	summary = "".intern();
+            
+            if(!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_SUMMARY_ABSTRACT_FIELD, true)) {
+                String[] summaries = (String[]) detail.getArray("summary");
+                if(summaries != null) {
+                    if(summaries.length > 0) {
+                        summary = summaries[0];
+                    }
+                }
             }
-            result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
-                    ""), 400));
+            if (summary == null) {
+                summary = "".intern();
+            }
+            
+            boolean isCutSummary = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_CUT_SUMMARY, true);
+            if(isCutSummary) {
+                int cutSummaryLength = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_HIT_CUT_SUMMARY_LENGTH, 200);
+                summary = UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
+                    ""), cutSummaryLength, cutSummaryLength, false);
+            }
+            result.put(Settings.RESULT_KEY_ABSTRACT, summary);
             String documentId = result.getHit().getDocumentId();
             if (documentId != null && !"null".equals( documentId )) {
                 result.put(Settings.RESULT_KEY_DOC_ID, documentId);
@@ -1519,5 +1536,22 @@ public class UtilsSearch {
             }
         }
         return addQueryString;
+    }
+    
+    public static String getCodeListDataValue(String codeListId, String entryId, String dataKey, Locale locale) {
+        IngridSysCodeList codelist = new IngridSysCodeList(locale);
+        return codelist.getCodeListDataKeyValue(codeListId, entryId, dataKey);
+    }
+    
+    public static String getCodeListDataStringValue(String jsonString, String dataKey) {
+        try {
+            JSONObject dataJson = new JSONObject(jsonString);
+            if(dataJson.has(dataKey)) {
+                return dataJson.getString(dataKey).trim();
+            }
+        } catch (JSONException e) {
+            return null;
+        }
+        return null;
     }
 }

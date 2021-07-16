@@ -168,6 +168,11 @@
                prefix="localhost_access_log" suffix=".txt"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
         -->
+        <!-- INGRID: Add org.apache.catalina.valves.ErrorReportValve -->
+        <Valve className="org.apache.catalina.valves.ErrorReportValve"
+            errorCode.0="webapps/ROOT/error404.html"
+            showReport="false"
+            showServerInfo="false" />
       </Host>
       <!-- INGRID: deployed Apache Portals Jetspeed/APA listener to initialize logging directory system property -->
       <Listener className="org.apache.portals.applications.logging.tomcat.LoggingPropertiesServerListener"/>

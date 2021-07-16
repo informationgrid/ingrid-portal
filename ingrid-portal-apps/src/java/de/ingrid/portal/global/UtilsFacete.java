@@ -560,6 +560,7 @@ public class UtilsFacete {
                     }
                 }
             }
+            ingridFacet.setFacetValue(null);
         }
         return config;
     }
@@ -1551,10 +1552,7 @@ public class UtilsFacete {
             for (Iterator<String> iterator = facetSelectionState.keySet().iterator(); iterator.hasNext();) {
                 String key = iterator.next();
                 if(facetSelectionState.get(key)){
-                    i=i+1;
-                    if(i>1){
-                        return true;
-                    }
+                    return true;
                 }
             }    
         }

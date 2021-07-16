@@ -16,9 +16,3 @@
 <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
 <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
 <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
-
-#if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
-    <meta name="robots" content="noindex,follow" />
-#else
-    <meta name="robots" content="index,follow" />
-#end

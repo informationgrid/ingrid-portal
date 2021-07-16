@@ -13,17 +13,11 @@ Angabe des Formats der Daten in DV-technischer Hinsicht, in welchem diese verfü
 * Kompressionstechnik: Kompression, in welcher die Daten geliefert werden (z.B. "WinZip", "keine")
 * Spezifikation: Details zur Spezifikation.
 
-Für INSPIRE-konforme Datensätze ist das Datenformat GML und dessen Version anzugeben:
-* Formatkürzel: GML
-* Version: (nur 2-stellig), z.B. "3.2"
 
 ## Beispiel:
 
 Formatkürzel: tif | Version: 6.0 | Kompression: LZW | Spezifikation: WCS
 
-Für INSPIRE-konforme Datensätze ist das Datenformat GML und dessen Version anzugeben:
-
-Formatkürzel: GML | Version: (nur 2-stellig), z.B. "3.2"
 
 # ISO Abbildung
 

@@ -1,0 +1,60 @@
+## FactSheet
+################################
+#if($hasDetail0)
+<div class="teaser-data search row is-active">
+    <div class="xsmall-24 small-24 #if($tool.hasContent($mapImage) && $tool.hasContent($mapImage.elements))medium-14 large-14 xlarge-14#end columns">
+    ## Durch die Ressource abgedeckte Zeitspanne
+        #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
+        #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
+        #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
+            #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
+                #set($tmpTitle = "time_reference_content")
+            #else
+                #set($tmpTitle = "time_reference")
+            #end
+            #if($beginTime == $endTime)
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $beginTime")
+            #elseif($beginTime && !$endTime)
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since'): $beginTime")
+            #elseif(!$beginTime && $endTime)
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.to'): $endTime")
+            #elseif($beginTime != $endTime)
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+            #end
+        #end
+    ## Downloads
+        #if($getDownloads.size() > 0)
+        <div class="sub-section sub-section-unlined">
+            #set($tmpTitle = $MESSAGES.getString("downloads"))
+            #set($tmpCount = $getDownloads.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            #renderLinkListImageLimit($tmpTitle $getDownloads false false 2 "")
+        </div>
+        #end
+    ## Links
+        #if($getLinks.size() > 0)
+        <div class="sub-section sub-section-unlined">
+            #set($tmpTitle = $MESSAGES.getString("search.detail.info.links"))
+            #set($tmpCount = $getLinks.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            #renderLinkListImageLimit($tmpTitle $getLinks false false 2 "")
+        </div>
+        #end
+    ## Lizenz
+        #if($useConstraints.size() > 0)
+            #set($tmp2 = [$useConstraints.get(0)])
+            #renderTextList($MESSAGES.getString("object_access.license") $tmp2)
+        #end
+    ## Kontakt
+        #if($xPathUsePointOfContactSortNodes.size() > 0)
+            #renderMultiLineAddresses("" $xPathUsePointOfContactSortNodes false true)
+        #end
+    </div>
+    ## Zeige in Karte
+    #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_map_image.vm")
+</div>
+#end

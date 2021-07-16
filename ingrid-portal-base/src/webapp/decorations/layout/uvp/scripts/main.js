@@ -50,8 +50,12 @@ $(function() {
   });
 
   //toggle social media links
-  $('button.social.share').click(function() {
-    $('footer .footer-buttons-bar .social-buttons a.social').fadeToggle( "slow", "linear" ).css("display","inline-block");
+  $('#share-buttons').click(function() {
+    $('footer .footer-buttons-bar .social-buttons a.social').fadeToggle( "fast", "linear" ).css("display","inline-block");
+  });
+
+  $('#login-button').click(function() {
+    $('footer .footer-buttons-bar .login-buttons .login-form').fadeToggle( "fast", "linear" ).css("display","inline-block");
   });
 
 });

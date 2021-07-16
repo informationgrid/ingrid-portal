@@ -1,0 +1,24 @@
+## Informationsystem
+################################
+<div class="sub-section">
+    <a class="anchor" id="${hashDetail5}_technical_information"></a>
+    #renderGroupTitle($MESSAGES.getString("technical_information"))
+## Klassifikation des Dienstes
+    #renderTextListTable($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
+## Art des Dienstes
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.type") $TOOL.getValueFromXPath($xPathInfo6ServiceType, "5300"))
+## Version
+    #renderTextList($MESSAGES.getString("t011_obj_serv_version.version") $TOOL.getListOfValuesFromXPath($xPathInfo6ServiceTypeVersion, "."))
+## Systemumgebung
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.environment") $TOOL.getValueFromXPath($xPathInfo6EnvironmentDescription))
+## Historie
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.history") $TOOL.getValueFromXPath($xPathInfo6LIProcessStepDescription))
+## Basisdaten
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.base") $TOOL.getValueFromXPath($xPathInfo6LISourceDescription))
+## Erläuterung zum Fachbezug
+    #renderTextTable($MESSAGES.getString("t011_obj_data.description") $TOOL.getValueFromXPath($xPathInfo6SupplementalInformation))
+## Service-URL
+    #set($headTitles = [$MESSAGES.getString("t011_obj_serv_url.name"),$MESSAGES.getString("t011_obj_serv_url.url"),$MESSAGES.getString("t011_obj_serv_url.description")])
+    #set($headXpathExpressions = ["./srv:SV_OperationMetadata/srv:operationName","./srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL","./srv:SV_OperationMetadata/srv:operationDescription"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_serv_url"), $xPathInfo6ContainsOperations, $headTitles, $headXpathExpressions))
+</div>

@@ -626,15 +626,9 @@ footer .footer .columns div {
 footer .footer .copyright span {
   font-family: Arial, sans-serif;
   color: #4A4A4A;
-  text-transform: none;
-  max-width: 350px;
-  line-height: 1.25;
-  margin-left: auto;
-  margin-right: auto;
 }
 footer .footer .logo {
   width: 2.25em;
-  display: none;
 }
 footer hr {
   margin: 0 0 16px;
@@ -1022,17 +1016,6 @@ header .menu-tab-row .menu-tab {
     width: 17.125em;
   }
   .header-menu-close { padding: 28px 0px 0 0; }
-  footer .footer .copyright span.icon:before {
-    content: '\00a9';
-    float: left;
-    margin-left: 8px;
-  }
-  footer .footer .copyright span.text {
-    margin-right: 0;
-    text-align: left;
-    float: left;
-    margin-left: 4px;
-  }
   footer .footer .logo {
     float: left;
     display: block;
@@ -1203,7 +1186,7 @@ header .logo a .vertical-line {
     left: 5px;
     top: 10px;
   }
-  a img {
+  header .logo a img {
     float: left;
     margin-right: 10px;
     width: 46px;
@@ -1223,7 +1206,7 @@ header .logo a .vertical-line {
   header .logo a {
     top: 25px;
   }
-  a img {
+  header .logo a img {
     float: left;
     margin-right: 10px;
     width: 20%;
@@ -1248,7 +1231,7 @@ header .logo a .vertical-line {
     width: 100%;
     top: 22px;
   }
-  a img {
+  header .logo a img {
     float: left;
     margin-right: 15px;
     width: 60px;

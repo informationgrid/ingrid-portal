@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -176,6 +178,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
     
     public Map<String, Object> getMapImage(){
+        return getMapImage(null, false);
+    }
+
+    public Map<String, Object> getMapImage(String partner, boolean isNewLayout){
         HashMap<String, Object> map = new HashMap<>();
         // showMap/Preview-Link
         if ( getUdkObjectClassType().equals("1") && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
@@ -197,7 +203,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }
                         
                         if(!getCapUrl.isEmpty()) {
-                            map = addBigMapLink(crossReferenceNode.getParentNode(), getCapUrl, false);
+                            map = addBigMapLink(crossReferenceNode.getParentNode(), getCapUrl, false, partner, isNewLayout);
                             if(!hasAccessConstraints(crossReferenceNode.getParentNode())) {
                                 break;
                             }
@@ -217,7 +223,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 capabilitiesUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilitiesUrl, ServiceType.WMS ) + "||";
             }
             // get it directly from the operation
-            map = addBigMapLink(capabilitiesUrl, true);
+            map = addBigMapLink(rootNode, capabilitiesUrl, true, partner, isNewLayout);
         } else {
             // show preview image (with map link information if provided)
             map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
@@ -261,8 +267,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String entryId = "";
                 String description = "";
                 String serviceUrl = null;
+                String objServiceType = null;
+                String[] graphicOverview = null;
                 String tmp = null;
-                
+                String[] tmpList = null;
+
                 xpathExpression = "./@uuid";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
@@ -302,7 +311,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 xpathExpression = "./idf:serviceType";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
-                    serviceType = tmp.trim();
+                    objServiceType = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:serviceUrl";
@@ -311,11 +320,19 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     serviceUrl = tmp.trim();
                 }
                 
+                xpathExpression = "./idf:graphicOverview";
+                tmpList = xPathUtils.getStringArray(node, xpathExpression);
+                if(tmpList != null){
+                    graphicOverview = tmpList;
+                }
+
                 HashMap<String, Object> link = new HashMap<>();
                 link.put("hasLinkIcon", true);
                 link.put("isExtern", false);
                 link.put("title", title);
                 link.put("objectClass", type);
+                link.put("serviceType", objServiceType);
+                link.put("graphicOverview", graphicOverview);
                 if (description.length() > 0) {
                     link.put("description", description);
                 }
@@ -338,7 +355,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                             StringBuilder capabilityUrl = null;
                             // get link from operation (unique one)
-                            if (serviceType != null && serviceType.trim().equals("view") && !hasAccessConstraints(node)) {
+                            if ((serviceType != null && serviceType.trim().equals("view")) || (objServiceType != null && objServiceType.trim().equals("view")) && !hasAccessConstraints(node)) {
                                 if(serviceUrl != null){
                                     capabilityUrl= new StringBuilder(serviceUrl);
                                 }
@@ -396,8 +413,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return linkList;
     }
-    
+
     public List<HashMap<String, Object>> getExternLinks(String xpathExpression) {
+        return getExternLinks(xpathExpression, false);
+    }
+
+    public List<HashMap<String, Object>> getExternLinks(String xpathExpression, boolean isDownload) {
         ArrayList<HashMap<String, Object>> linkList = new ArrayList<>();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
@@ -406,9 +427,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String name = "";
                 String description = "";
                 String attachedToField = "";
+                String applicationProfile = "";
                 String size = "";
                 float roundSize = 0;
-                
+
                 NodeList onLineList = xPathUtils.getNodeList(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine");
                 
                 for (int j=0; j<onLineList.getLength();j++){
@@ -432,6 +454,21 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         attachedToField = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
                     }
+                    
+                    if(attachedToField.isEmpty()) {
+                        xpathExpression = "./*/gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue";
+                        if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
+                            attachedToField = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
+                            if(!attachedToField.isEmpty()) {
+                                attachedToField = sysCodeList.getNameByCodeListValue("2000", attachedToField);
+                            }
+                        }
+                    }
+                    
+                    xpathExpression = "./*/gmd:applicationProfile";
+                    if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
+                        applicationProfile = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
+                    }
 
                     // also mapped by T0112_media_option !!!
                     xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:transferSize";
@@ -444,25 +481,34 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(url.length() > 0){
                         HashMap<String, Object> link = new HashMap<>();
                         link.put("hasLinkIcon", true);
-                          link.put("isExtern", true);
-                          link.put("href", url);
-
-                          if(name.length() > 0){
-                              link.put("title", name);
-                            }else{
-                                link.put("title", url);
-                          }
-                          if (description.length() > 0) {
-                              link.put("description", description);
-                          }
-                          if (attachedToField.length() > 0) {
-                              link.put("attachedToField", attachedToField);
-                          }
-                          if (size.length() > 0) {
-                              link.put("linkInfo", "[" + roundSize + " MB]");
-                          }
+                      if (isDownload) {
+                          link.put("isDownload", isDownload);
                           
-                          linkList.add(link);
+                      } else {
+                          link.put("isExtern", true);
+                      }
+
+                      if(!applicationProfile.isEmpty()) {
+                          link.put("serviceType", applicationProfile);
+                      }
+
+                      link.put("href", url);
+
+                      if(name.length() > 0){
+                          link.put("title", name);
+                        }else{
+                            link.put("title", url);
+                      }
+                      if (description.length() > 0) {
+                          link.put("description", description);
+                      }
+                      if (attachedToField.length() > 0) {
+                          link.put("attachedToField", attachedToField);
+                      }
+                      if (size.length() > 0) {
+                          link.put("linkInfo", "[" + roundSize + " MB]");
+                      }
+                      linkList.add(link);
                     }
                 }
             }
@@ -559,7 +605,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 } else if (thesaurusName.contains("Further legal basis")) {
                                     // do not used in detail view.
 
-                                } else if (thesaurusName.length() < 1 && type.length() < 1) {
+                                } else if (thesaurusName.isEmpty() && type.isEmpty()) {
                                     listSearch.add(value);
                                 } else{
                                     listSearch.add(value);
@@ -735,8 +781,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             
             ArrayList head = new ArrayList();
             head.add(messages.getString("object_conformity.specification"));
-            head.add(messages.getString("object_conformity.degree_value"));
             head.add(messages.getString("object_conformity.publication_date"));
+            head.add(messages.getString("object_conformity.degree_value"));
             head.add(messages.getString("object_conformity.explanation"));
             element.put("head", head);
             ArrayList body = new ArrayList();
@@ -754,25 +800,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     } else {
                         row.add("");
                     }
-                    
-                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass";
-                    if (xPathUtils.nodeExists(node, xpathExpression)) {
-                        String value = xPathUtils.getString(node, xpathExpression).trim();
-                        if(xPathUtils.nodeExists(node, xpathExpression + "/@gco:nilReason")){
-                            row.add(notNull(sysCodeList.getName("6000", "3")));    
-                        }else{
-                            if(value.equals("true")){
-                                row.add(notNull(sysCodeList.getName("6000", "1")));    
-                            }else if(value.equals("false")){
-                                row.add(notNull(sysCodeList.getName("6000", "2")));    
-                            }else{
-                                row.add("");
-                            }
-                        }
-                    } else {
-                        row.add("");    
-                    }
-                    
+
                     xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date";
                     if (xPathUtils.nodeExists(node, xpathExpression)) {
                         if(xPathUtils.nodeExists(node, xpathExpression + "/@gco:nilReason")){
@@ -780,6 +808,24 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }else {
                             String value = xPathUtils.getString(node, xpathExpression).trim();
                             row.add(notNull(getDateFormatValue(value)));
+                        }
+                    } else {
+                        row.add("");
+                    }
+
+                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass";
+                    if (xPathUtils.nodeExists(node, xpathExpression)) {
+                        String value = xPathUtils.getString(node, xpathExpression).trim();
+                        if(xPathUtils.nodeExists(node, xpathExpression + "/@gco:nilReason")){
+                            row.add(notNull(sysCodeList.getName("6000", "3")));
+                        }else{
+                            if(value.equals("true")){
+                                row.add(notNull(sysCodeList.getName("6000", "1")));
+                            }else if(value.equals("false")){
+                                row.add(notNull(sysCodeList.getName("6000", "2")));
+                            }else{
+                                row.add("");
+                            }
                         }
                     } else {
                         row.add("");
@@ -967,12 +1013,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         elementCapabilitiesLink.put("type", "linkLine");
                         elementCapabilitiesLink.put("hasLinkIcon", true);
                         elementCapabilitiesLink.put("isExtern", true);
-                        elementCapabilitiesLink.put("title", urlValue);
+                        elementCapabilitiesLink.put("title", messages.getString("search.detail.showGetCapabilityUrl.title"));
                         elementCapabilitiesLink.put("href", urlValue);
                           element.put("body", elementCapabilitiesLink);
 
                         if (!hasAccessConstraints()) {
-                            element.put("title", messages.getString("common.result.showGetCapabilityUrl"));
+                            element.put("title", messages.getString("search.detail.showGetCapabilityUrl"));
                             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) 
                                     && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
                                 HashMap elementMapLink = new HashMap();
@@ -980,13 +1026,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 elementMapLink.put("hasLinkIcon", true);
                                 elementMapLink.put("isExtern", false);
                                 elementMapLink.put("title", messages.getString("common.result.showMap"));
-                                elementMapLink.put("href", "portal/main-maps.psml?layers=WMS" + UtilsVelocity.urlencode( "||" + urlValue.toString() + "||" ));
-                                  element.put("link", elementMapLink);
+                                elementMapLink.put("href", UtilsVelocity.urlencode(urlValue.toString() + "||" ));
+                                element.put("link", elementMapLink);
                                 element.put("linkLeft", true);
                             }
                         } else {
                             // do not display "show in map" link if the map has access constraints
-                            element.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
+                            element.put("title", messages.getString("search.detail.showGetCapabilityUrlRestricted"));
                         }
                         // ADD FIRST ONE FOUND !!!
                         break;
@@ -1130,7 +1176,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             
                             String rowValue;
                             // "Maßeinheit"
-                            xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@gml:uom";
+                            xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@uom";
                             if(xPathUtils.nodeExists(childNode, xpathExpression)){
                                 rowValue = xPathUtils.getString(childNode, xpathExpression).trim();
                                 row.add(notNull(sysCodeList.getNameByCodeListValue("102", rowValue)));
@@ -1266,29 +1312,40 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
                 
                 String value = "";
-                if(code.length() > 0 && codeSpace.length() > 0){
+                if(!code.isEmpty() && !codeSpace.isEmpty()){
                     if(code.contains("EPSG")){
                         value = code;
                     }else{
                         value = codeSpace.concat(":" + code);
                     }
-                }else if(codeSpace.length() > 0){
+                }else if(!codeSpace.isEmpty()){
                     value = codeSpace;
-                }else if(code.length() > 0){
+                }else if(!code.isEmpty()){
                     value = code;
                 }
-                
-                if (value.length() > 0) {
+                if (!value.isEmpty()) {
+                    String[] startsWithReplaces = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_REFERENCE_SYSTEM_LINK_REPLACE);
+                    for (String startsWithReplace : startsWithReplaces) {
+                        if(value.startsWith(startsWithReplace)) {
+                            value = value.replace(startsWithReplace, "");
+                        }
+                    }
                     Map link = new HashMap();
                     link.put("title", value);
                     link.put("hasLinkIcon", true);
+
+                    Pattern p = Pattern.compile("EPSG( |:)[0-9]*");  // insert your pattern here
+                    Matcher m = p.matcher(value);
+                    if (m.find()) {
+                       value = value.substring(m.start(), m.end());
+                    }
 
                     if (value.startsWith("EPSG")) {
                         int endIndex = value.indexOf(':', 5);
                         String epsgCode = value.substring(5, endIndex == -1 ? value.length() : endIndex);
 
                         link.put("isExtern", true);
-                        link.put("href", "https://epsg.io/" + epsgCode);
+                        link.put("href", PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_REFERENCE_SYSTEM_LINK, "https://epsg.io/") + epsgCode);
                     } else {
                         link.put("noLink", true);
                     }
@@ -1350,6 +1407,20 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return htmlLink;
     }
     
+    public HashMap addLinkElementToGetXML() {
+        HashMap elementLink = null;
+        String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
+        if (!cswUrl.isEmpty()) {
+            elementLink = new HashMap();
+            elementLink.put("type", "linkLine");
+            elementLink.put("hasLinkIcon", true);
+            elementLink.put("isDownload", true);
+            elementLink.put("title", messages.getString("xml_link"));
+            elementLink.put("href", cswUrl + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + this.uuid + "&iplug=" + this.iPlugId + "&elementSetName=full");
+        }
+        return elementLink;
+    }
+
     public String getPublishId(String value) {
         if (value == null) {
             return null;
@@ -1469,39 +1540,82 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref) {
-        HashMap<String, Object> elementCapabilities = new HashMap<>();
-        elementCapabilities.put("type", "multiLineImage");
-        HashMap<String, Object> elementMapLink = new HashMap<>();
-        elementMapLink.put("type", "linkLine");
-        elementMapLink.put("isMapLink", true);
-        elementMapLink.put("isExtern", false);
+        return addBigMapLink(node, urlValue, urlEncodeHref, null, false);
+    }
 
-        if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
-            // do not render "show in map" link if the map has access constraints (no href added).
-            elementMapLink.put("title", messages.getString("preview"));
-        } else {
-            elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
-            if(urlEncodeHref){
-                elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
-            }else{
-                elementMapLink.put("href", urlValue);
-            }
-        }
+    private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref, String partner, boolean isNewLayout) {
+        HashMap<String, Object> elementCapabilities = new HashMap<>();
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 
         // use preview image if provided otherwise static image
         ArrayList<HashMap<String, String>> imageUrls = getPreviewImageUrl(null);
         if (imageUrls.isEmpty()) {
-            elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
+            HashMap<String, Object> elementMapLink = new HashMap<>();
+            elementMapLink.put("type", "linkLine");
+            elementMapLink.put("isMapLink", true);
+            elementMapLink.put("isExtern", false);
+
+            if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
+                // do not render "show in map" link if the map has access constraints (no href added).
+                if(!isNewLayout) {
+                    elementMapLink.put("title", messages.getString("preview"));
+                }
+            } else {
+                String href = urlValue;
+                if(urlEncodeHref){
+                    href = UtilsVelocity.urlencode(urlValue);
+                }
+                if(!isNewLayout) {
+                    elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                    elementMapLink.put("href", href);
+                } else {
+                   elementCapabilities.put("href", href);
+                }
+            }
+
+            if(elementCapabilities.get("href") != null || elementMapLink.get("href") != null) {
+                String mapImage = "image_map";
+                if(partner != null) {
+                    mapImage += "_" + partner;
+                }
+                mapImage += ".png";
+                elementMapLink.put("src", "/ingrid-portal-apps/images/maps/" + mapImage);
+                list.add(elementMapLink);
+            }
         } else {
-            elementMapLink.put("src", imageUrls.get(0).get("name"));
-            if(elementMapLink.get("href") == null) {
-                elementMapLink.put("href", imageUrls.get(0).get("name"));
-            } 
-            elementMapLink.put("description", imageUrls.get(0).get("description"));
+            for (HashMap<String, String> imageUrl : imageUrls) {
+                HashMap<String, Object> elementMapLink = new HashMap<>();
+                elementMapLink.put("type", "linkLine");
+                elementMapLink.put("isMapLink", true);
+                elementMapLink.put("isExtern", false);
+
+                if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
+                    // do not render "show in map" link if the map has access constraints (no href added).
+                    if(!isNewLayout) {
+                        elementMapLink.put("title", messages.getString("preview"));
+                    }
+                } else {
+                    String href = urlValue;
+                    if(urlEncodeHref){
+                        href = UtilsVelocity.urlencode(urlValue);
+                    }
+                    if(!isNewLayout) {
+                        elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                        elementMapLink.put("href", href);
+                    } else {
+                       elementCapabilities.put("href", href);
+                    }
+                }
+                elementMapLink.put("src", imageUrl.get("name"));
+                if(elementMapLink.get("href") == null) {
+                    elementMapLink.put("href", imageUrl.get("name"));
+                } 
+                elementMapLink.put("description", imageUrl.get("description"));
+                list.add(elementMapLink);
+            }
         }
-        // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
-        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
-        list.add(elementMapLink);
+        
+        elementCapabilities.put("type", "multiLineImage");
         elementCapabilities.put("elements", list);
         elementCapabilities.put("width", "full");
         return elementCapabilities;
@@ -1547,11 +1661,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return url;
     }
 
-    private boolean hasAccessConstraints() {
+    public boolean hasAccessConstraints() {
         return hasAccessConstraints(rootNode);
     }
 
-    private boolean hasAccessConstraints(Node node) {
+    public boolean hasAccessConstraints(Node node) {
         boolean hasAccessConstraints = false;
         String xpathExpression = "./idf:hasAccessConstraint";
         if (xPathUtils.nodeExists(node, xpathExpression)) {

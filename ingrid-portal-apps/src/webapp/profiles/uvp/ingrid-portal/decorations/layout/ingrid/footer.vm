@@ -6,5 +6,6 @@
         </div>
         #end
         #parse("/decorations/layout/ingrid/templates/footer/body_piwik.vm")
+        #parse("/decorations/layout/ingrid/templates/footer/body_script_shrink.vm")
     </body>
 </html>

@@ -181,7 +181,7 @@
     <span class="mq-hide-l">&nbsp;</span>
     <hr/>
     <div class="box box--fill box--small">
-        <a id="help" name="help"></a>
+        <a id="help"></a>
         <div class="box__title ob-container">
             <h4>$MESSAGES.getString('component.forms.help.header')</h4>
         </div>

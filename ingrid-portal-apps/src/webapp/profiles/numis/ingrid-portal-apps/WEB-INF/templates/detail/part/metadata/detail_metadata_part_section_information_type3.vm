@@ -1,0 +1,32 @@
+## Geodatendienst
+################################
+<div class="sub-section">
+    <a class="anchor" id="${hashDetail5}_technical_information"></a>
+    #renderGroupTitle($MESSAGES.getString("technical_information"))
+## Fachliche Grundlage
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo3LILineageStatement))
+## Klassifikation des Dienstes
+    #renderTextListTable($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
+## Typ des Dienstes
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.type") $TOOL.getValueFromXPath($xPathInfo3ServiceType, "5100"))
+## Version des Services
+    #renderTextListTable($MESSAGES.getString("t011_obj_serv_version.version") $TOOL.getListOfValuesFromXPath($xPathInfo3ServiceTypeVersion, "."))
+## Erstellungsmaßstab
+    #renderTable($TOOL.getReferenceObject($xPathInfo3MDResolution))
+## Systemumgebung
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.environment") $TOOL.getValueFromXPath($xPathInfo3EnvironmentDescription))
+## Historie
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.history") $TOOL.getValueFromXPath($xPathInfo3LIProcessStepDescription))
+## Basisdaten
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.base") $TOOL.getValueFromXPath($xPathInfo3LISourceDescription))
+## Erläuterung zum Fachbezug
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.description") $TOOL.getValueFromXPath($xPathInfo3SupplementalInformation))
+## Erläuterung zum Fachbezug (*)
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.description") $TOOL.getValueFromXPath($xPathInfo3SupplementalInformationAbstract))
+## Operationen
+    #set($headTitles = [$MESSAGES.getString("t011_obj_serv_operation.name"),$MESSAGES.getString("t011_obj_serv_operation.descr"),$MESSAGES.getString("t011_obj_serv_operation.invocation_name")])
+    #set($headXpathExpressions = ["./srv:operationName","./srv:operationDescription","./srv:invocationName"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_serv_operation"), $$xPathInfo3SVOperationMetadata, $headTitles, $headXpathExpressions))
+## Operation -> Zugriffsadresse
+    #renderTextLabelLeftLinkTable($TOOL.getConnectionPoints($xPathInfo3SVOperationMetadataConnectPoint))
+</div>

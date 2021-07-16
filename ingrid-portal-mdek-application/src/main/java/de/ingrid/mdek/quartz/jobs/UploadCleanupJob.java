@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -210,6 +210,17 @@ public class UploadCleanupJob extends QuartzJobBean {
                             }
                         }
 
+                        // get uploads from preview image table (#1667)
+                        final Map<String, List<FileReference>> previewImageUploads = this.getPreviewImageUploadsFromDataSets(plugId);
+                        for (final String key : previewImageUploads.keySet()) {
+                            if (uploads.containsKey( key )) {
+                                final List<FileReference> fileReferences = uploads.get( key );
+                                fileReferences.addAll( previewImageUploads.get( key ) );
+                            } else {
+                                uploads.put( key, previewImageUploads.get( key ) );
+                            }
+                        }
+
                         final Set<String> uploadUris = uploads.keySet();
 
                         // process uploads
@@ -239,8 +250,13 @@ public class UploadCleanupJob extends QuartzJobBean {
                                 if (expiryDate == null ||
                                         (reference.expiryDate == null || reference.expiryDate.isAfter(expiryDate))) {
                                     expiryDate = reference.expiryDate;
+
+                                    // leave loop if any reference has a indefinite date, in order to keep this file
+                                    // see also issue: https://redmine.informationgrid.eu/issues/2526
+                                    if (expiryDate == null) break;
                                 }
                             }
+
                             // handle expired files
                             // NOTE: a file might be expired in one catalog, but not in another,
                             // so if a file is added/removed by one catalog, it might be removed/added by another
@@ -280,6 +296,54 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
 
         log.info("Finished UploadCleanupJob");
+    }
+
+    private Map<String, List<FileReference>> getPreviewImageUploadsFromDataSets(String plugId) {
+        final Map<String, List<FileReference>> resultList = new HashMap<>();
+
+        final String qString = "SELECT DISTINCT obj.objName, obj.objUuid, urlRef.urlLink " +
+                "FROM ObjectNode oNode, T01Object obj, T017UrlRef urlRef " +
+                "WHERE oNode.objId = obj.id AND obj.id = urlRef.objId AND urlRef.specialRef = 9000";
+
+        final IMdekCallerQuery mdekCallerQuery = this.connectionFacade.getMdekCallerQuery();
+
+        if (mdekCallerQuery == null) {
+            return resultList;
+        }
+
+        final IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
+        if (response != null && response.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
+            final IngridDocument result = MdekUtils.getResultFromResponse(response);
+            if (result != null) {
+                @SuppressWarnings("unchecked") final List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
+                if (objs != null) {
+                    log.info("Number of datasets to examine: " + objs.size());
+                    for (final IngridDocument objEntity : objs) {
+                        final String file = objEntity.getString("urlRef.urlLink");
+
+                        // skip external links
+                        if (LINK_PATTERN.matcher(file).matches()) continue;
+
+                        final String path = "Preview Image: " + objEntity.getString("obj.objName") + "(" + objEntity.getString("obj.objUuid") + ")";
+
+                        // create file reference
+                        final FileReference reference = new FileReference(
+                                file, path, null
+                        );
+                        if (!resultList.containsKey(file)) {
+                            final List<FileReference> references = new ArrayList<>();
+                            references.add(reference);
+                            resultList.put(file, references);
+                        }
+                        else {
+                            resultList.get(file).add(reference);
+                        }
+                    }
+                }
+            }
+        }
+
+        return resultList;
     }
 
     /**

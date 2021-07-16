@@ -90,7 +90,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
     private FileSystemStorage storage;
 
     private class MockEmailService implements UploadCleanupJob.EmailService {
-        public List<String> emails = new ArrayList<String>();
+        public List<String> emails = new ArrayList<>();
         @Override
         public void sendError(String message, Exception ex) {
             emails.add(message+": "+ex.getMessage());
@@ -161,8 +161,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -193,8 +193,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(FAILING_PLUG_ID), unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(FAILING_PLUG_ID, publishedRefs, unpublishedRefs, true);
 
         // run job
@@ -225,8 +225,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(FAILING_PLUG_ID), unreferencedFileA1, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefsA = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefsA = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefsA = new ArrayList<>();
+        final List<FileReference> unpublishedRefsA = new ArrayList<>();
         this.setupFileReferences(FAILING_PLUG_ID, publishedRefsA, unpublishedRefsA, true);
 
         // set up working iplug
@@ -238,8 +238,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFileB2, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefsB = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefsB = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefsB = new ArrayList<>();
+        final List<FileReference> unpublishedRefsB = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefsB, unpublishedRefsB);
 
         // run job
@@ -270,8 +270,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -297,8 +297,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createDeletedFile(this.getFilePath(PLUG_ID), deletedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -328,7 +328,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         final String link3 = "https://test.com/document.pdf";
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 link1, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
@@ -338,7 +338,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         publishedRefs.add(this.job.new FileReference(
                 link3, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -362,8 +362,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -391,8 +391,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile2, JOB_MIN_FILE_AGE-1);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -418,11 +418,11 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -431,6 +431,69 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // test
         assertTrue(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
+        assertFalse(this.getTestAppender().hasIssues());
+    }
+
+    /**
+     * Test:
+     * - Archive a published file with expiry date in the past but another later reference with no expiry date
+     * @throws Exception
+     */
+    @Test
+    public void testKeepPublishedExpiredWhenLaterReferenceStillValid() throws Exception {
+        // set up files
+        final String referencedFile = "Referenced File Ä";
+        this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
+
+        // setup file references
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        publishedRefs.add(this.job.new FileReference(
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+        ));
+        publishedRefs.add(this.job.new FileReference(
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
+        ));
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
+        this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
+        assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
+        assertFalse(this.getTestAppender().hasIssues());
+    }
+
+    /**
+     * Test:
+     * - Archive a published file with expiry date in the past but another reference before with no expiry date
+     * @see "https://redmine.informationgrid.eu/issues/2526"
+     * @throws Exception on error
+     */
+    @Test
+    public void testKeepPublishedExpiredWhenBeforeReferenceStillValid() throws Exception {
+        // set up files
+        final String referencedFile = "Referenced File Ä";
+        this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
+
+        // setup file references
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        publishedRefs.add(this.job.new FileReference(
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
+        ));
+        publishedRefs.add(this.job.new FileReference(
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+        ));
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
+        this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
+        assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.getTestAppender().hasIssues());
     }
 
@@ -446,11 +509,11 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate()
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -474,11 +537,11 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -502,11 +565,11 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -530,14 +593,14 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -561,8 +624,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         unpublishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
@@ -589,11 +652,11 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate()
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -617,11 +680,11 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -645,11 +708,11 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -673,8 +736,8 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         unpublishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
         ));
@@ -701,11 +764,11 @@ public class UploadCleanupJobTest extends BaseJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -737,11 +800,11 @@ public class UploadCleanupJobTest extends BaseJobTest {
         Files.createDirectories(Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH));
 
         // setup file references
-        final List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> publishedRefs = new ArrayList<>();
         publishedRefs.add(this.job.new FileReference(
                 referencedDir+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate()
         ));
-        final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
@@ -779,7 +842,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
      * @param nullResults
      */
     private void setupFileReferences(final String plugId, final List<FileReference> publishedRefs, final List<FileReference> unpublishedRefs, final boolean nullResults) {
-        final List<List<FileReference>> allReferences = new ArrayList<List<FileReference>>();
+        final List<List<FileReference>> allReferences = new ArrayList<>();
         allReferences.add(publishedRefs);
         allReferences.add(unpublishedRefs);
 
@@ -788,7 +851,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         for (final List<FileReference> references : allReferences) {
             final boolean isPublished = index == 0;
 
-            final List<IngridDocument> results = new ArrayList<IngridDocument>();
+            final List<IngridDocument> results = new ArrayList<>();
             for (int i=0, count=references.size(); i<count; i++) {
                 final FileReference reference = references.get(i);
                 final IngridDocument result = new IngridDocument();
@@ -831,7 +894,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
      */
     private IngridDocument createResponse(final List<IngridDocument> results) {
         final IngridDocument response = new IngridDocument();
-        final List<Pair> pairList = new ArrayList<Pair>();
+        final List<Pair> pairList = new ArrayList<>();
         pairList.add(new Pair("ignore", response));
         response.put(IJobRepository.JOB_INVOKE_SUCCESS, true);
         response.put(IJobRepository.JOB_INVOKE_RESULTS, pairList);

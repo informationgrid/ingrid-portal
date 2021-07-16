@@ -172,4 +172,18 @@ public class IngridSysCodeList {
         return false;
     }
 
+    public String getCodeListDataKeyValue(String codeListId, String entryName, String dataKey) {
+        String data = getDataByCodeListValue(codeListId, entryName);
+        if(!data.isEmpty()) {
+            try {
+                JSONObject dataJson = new JSONObject(data);
+                if(dataJson.has(dataKey)) {
+                    return dataJson.getString(dataKey).trim();
+                }
+            } catch (JSONException e) {
+                return null;
+            }
+        }
+        return null;
+    }
 }

@@ -36,9 +36,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="NUMIS, das nieders&auml;chsische Umweltportal, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
-        <meta name="author" content="© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
+        <meta name="author" content="&copy; Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
         <meta name="keywords" lang="de" content="NUMIS, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
-        <meta name="copyright" content="© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
+        <meta name="copyright" content="&copy; Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
         <meta name="robots" content="index,follow" />
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
@@ -71,9 +71,7 @@
                     <a href="/inhaltsverzeichnis" title="Alle Inhalte von NUMIS auf einen Blick"><span class="text">Inhalt</span></a>
                     <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss"><span class="text">Impressum</span></a>
                     <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen"><span class="text">Datenschutz</span></a>
-                </div>
-                <div class="menu-sub-links">
-                    <a class="button logout" href="/log-in"><span class="text">Mein NUMIS</span><span class="ic-ic-arrow"></span></a> 
+                    <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit"><span class="text">Barrierefreiheit</span></a>
                 </div>
             </div>
             <header>
@@ -90,9 +88,9 @@
                     </div>
                     <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
                         <div class="menu-tab-row">
-                            <a class="menu-tab is-selected" href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">
+                            <a class="menu-tab" href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">
                                 <div class="link-menu-tab">
-                                    <span class="ic-ic-daten"></span>
+                                    <span class="ic-ic-lupe"></span>
                                     <span class="text">Suche</span>
                                 </div>
                             </a>
@@ -134,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="76__763" class="row content-small">
+                <div class="row content-small">
                     <div class="columns">
                         <div class="form">
                            <p>
@@ -154,43 +152,46 @@
                 <div class="footer">
                     <hr>
                     <div class="row">
-                        <div class="xsmall-24 medium-24 large-11 xlarge-12 columns">
+                        <div class="xsmall-24 medium-24 large-24 xlarge-9 columns">
                             <div class="logo">
-                                <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="NUMIS"/></a>
+                                <a href="/startseite"><img class="footer__logo" src="/decorations/layout/uvp/images/template/logo.svg" alt="NUMIS"/></a>
                             </div>
                             <div class="copyright">
                                 <span class="icon"></span>
                                 <span class="text copyright_text">Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</span>
                             </div>
                         </div>
-                        <div class="xsmall-24 small-24 large-13 xlarge-12 columns button-up">
+                        <div class="xsmall-24 small-24 large-24 xlarge-15 columns">
                             <div class="footer-menu-entries">
                                 <a href="/hilfe" title="Erläuterungen zur Nutzung von NUMIS - Neues Fenster öffnet sich" class="icon"><span class="text">Hilfe</span></a>
                                 <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an NUMIS" class="icon"><span class="text">Kontakt</span></a>
                                 <a href="/inhaltsverzeichnis" title="Alle Inhalte von NUMIS auf einen Blick" class="icon"><span class="text">Inhalt</span></a>
                                 <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" class="icon"><span class="text">Impressum</span></a>
                                 <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" class="icon"><span class="text">Datenschutz</span></a>
+                                <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit" class="icon"><span class="text">Barrierefreiheit</span></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </footer>
             <div class="popup switch-popup">
-                <button type="button" class="button round popup__close js-popup-close" data-box=".switch-popup"><span class="ic-ic-cross"></span></button>
-                <div class="popup__content text-box">
-                    <div class="list-item">
-                      <a class="switch-link numis">
-                        <span class="ic-ic-check"></span>
-                        <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS" class="hide-for-xsmall-only"/>
-                        <img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS" class="show-for-xsmall-only"/>
-                      </a>
-                    </div>
-                    <div class="list-item">
-                      <a class="switch-link uvp" href="https://uvp.niedersachsen.de">
-                        <span class=""></span>
-                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP" class="hide-for-xsmall-only"/>
-                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP" class="show-for-xsmall-only"/>
-                      </a>
+                <div class="row">
+                    <div class="popup__content text-box">
+                        <div class="list-item">
+                            <button type="button" class="button round popup__close js-popup-close" data-box=".switch-popup"><span class="ic-ic-cross"></span></button>
+                            <a class="switch-link numis">
+                                <span class="ic-ic-check"></span>
+                                <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS" class="hide-for-xsmall-only">
+                                <img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS" class="show-for-xsmall-only">
+                            </a>
+                        </div>
+                        <div class="list-item">
+                            <a class="switch-link uvp" href="https://uvp.niedersachsen.de">
+                                <span class=""></span>
+                                <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP" class="hide-for-xsmall-only">
+                                <img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP" class="show-for-xsmall-only">
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

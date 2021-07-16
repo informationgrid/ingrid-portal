@@ -367,8 +367,7 @@ $abbr-underline: 1px dotted $black !default;
 
     cursor: pointer;
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: $anchor-color-hover;
       @if $anchor-text-decoration-hover != $anchor-text-decoration {
         text-decoration: $anchor-text-decoration-hover;

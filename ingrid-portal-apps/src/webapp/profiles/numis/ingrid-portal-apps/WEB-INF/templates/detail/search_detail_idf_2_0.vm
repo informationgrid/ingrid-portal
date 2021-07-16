@@ -1,16 +1,32 @@
+#parse ('/WEB-INF/templates/global/include_hit_image_error.vm')
+#set($loadDefaultMapImage = "loadDefaultMapImage(this,&apos;${plugPartner}&apos;);")
+
 #macro (renderTitleLine $entry)
     #if($tool.hasContent($entry.title))
         <strong>$entry.title</strong>
     #end
 #end
 
-#macro (renderLinkLine $entry)
+#macro (renderSubNavigation $title $hash)
+<a class="js-anchor-target-entry" href="#${hash}">
+    <span class="text">$title</span>
+</a>
+#end
+
+#macro (renderLinkLine $entry $hasImage $displayPreview)
     #if($entry.type == "html")
         $entry.body
     #else
+        #if(!$entry.isMapLink && !$entry.isDownload)
+            #if($hasImage)
+            ##<div class="map">
+            ##    <span class="ic-ic-external"></span>
+            ##</div>
+            #end
+        #end
         #if(!$entry.hasLinkIcon)
             #if($entry.isExtern)
-                <svg class="icon"><use xlink:href="#external-link"/></svg>
+                <span class="ic-ic-external"></span>
             #elseif($entry.isMapLink)
                 #if($entry.description)
                     #set($imgAlt = $entry.description)
@@ -24,72 +40,164 @@
                 #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image is-hidden" src="./" srcset="$entry.src" alt="$imgAlt" title="$imgTitle"/>
-                        <noscript>
-                            <img class="preview_image" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
-                        </noscript>
+                        <a href="$entry.src" title="$imgTitle" target="_blank" rel="noopener noreferrer">
+                            <img class="preview_image" #if($entry.src.indexOf("https") == -1) src="./" data-src="$entry.src" #else src="$entry.src" #end title="$stringTool.htmlescape($imgTitle)" alt="img" onerror="$loadDefaultMapImage">
+                            <noscript>
+                                <img class="preview_image" src="$entry.src" title="$stringTool.htmlescape($imgTitle)" alt="img">
+                            </noscript>
+                        </a>
                     </p>
                     #if($entry.description)
-                    <p class="caption">$entry.description</p>
+                        <p class="caption">$entry.description</p>
                     #end
-                #if(!$entry.get("href"))
-                    <p class="caption">$entry.title</p>
-                #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
-                    <p class="caption">
-                        <a class="button outline" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}">
-                            $entry.title
-                            <span class="ic-ic-angle-right">
-                        </a>
-                    </p>
-                #else
-                    <p class="caption">
-                        <a class="button outline" href="${entry.get("href")}">
-                            $entry.title
-                            <span class="ic-ic-angle-right">
-                        </a>
-                    </p>
+                #if($entry.title)
+                    #if(!$entry.get("href"))
+                        <p class="caption">$entry.title</p>
+                    #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1 )
+                        <p class="caption">
+                            <a class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
+                                $entry.title
+                            </a>
+                        </p>
+                    #end
                 #end
-                    <br>
                 </div>
-            #else
-                <svg class="icon"><use xlink:href="#internal-link"/></svg>
             #end
         #end
         #if($entry.isExtern)
-            <a href="$entry.href" class="icon">
-              <span class="ic-ic-external"></span>
-              <span class="text">$entry.title</span>
-            </a>
-        #elseif($entry.objectClass)
-            <a href="$entry.href" class="icon">
-                #renderUDKIcon($entry.objectClass $entry.title)
-            </a>
-        #elseif($entry.noLink)
-            $entry.title
-        #elseif(!$entry.isMapLink)
-            <a href="$entry.href" class="icon">
-                <span class="ic-ic-karte"></span>
-                <span class="text">$entry.title</span>
-            </a>
-        #end
-        #if(!$entry.isMapLink)
-            #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField) || $tool.hasContent($entry.description))
+            <div>
+                #if($tool.hasContent($entry.serviceType))
+                    #renderServiceType($entry.serviceType)
+                #end
+                <a class="icon" href="$entry.href" title="$entry.title" target="_blank" rel="noopener noreferrer">
+                  <span class="ic-ic-external"></span>
+                  <span class="text">$entry.title</span>
+                </a>
                 #if($tool.hasContent($entry.linkInfo))
-                    <p><small>$entry.linkInfo</small></p>
+                    #if($tool.hasContent($entry.linkInfo))
+                        <small class="text">$entry.linkInfo</small>
+                    #end
                 #end
                 #if($tool.hasContent($entry.attachedToField))
-                    <p><small>(${entry.get("attachedToField")})</small></p>
+                    <small>$entry.attachedToField</small>
                 #end
                 #if($tool.hasContent($entry.description))
                     #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
-                    <p><small>${myDescription}</small></p>
+                    <small>${myDescription}</small>
+                #end
+            </div>
+        #elseif($entry.addressClass)
+            <div class="no-image">
+                <div class="helper icon">
+                    #set($udkAddrClassName = $MESSAGES.getString("udk_adr_class_name_${entry.addressClass}"))
+                    #renderUDKAddressIcon($entry.addressClass $udkAddrClassName $udkAddrClassName)
+                </div>
+                <a href="$entry.href" class="icon" title="$stringTool.htmlescape($entry.title)">
+                    <span class="text">$entry.title</span>
+                </a>
+            </div>
+        #elseif($entry.objectClass)
+            #if($tool.hasContent($entry.serviceType))
+                #renderServiceType($entry.serviceType)
+            #end
+            #if(!$hasImage)
+            <div class="no-image">
+                <a href="$entry.href" class="icon" title="$stringTool.htmlescape($entry.title)">
+                    #set($udkObjClassName = $Codelists.getCodeListValue('8000', $entry.objectClass, $request.getLocale().getLanguage()))
+                    #renderUDKIcon($entry.objectClass $entry.title $udkObjClassName)
+                </a>
+            #else
+            <div class="image">
+                <div class="helper icon">
+                    #set($udkObjClassName = $Codelists.getCodeListValue('8000', $entry.objectClass, $request.getLocale().getLanguage()))
+                    #renderUDKIcon($entry.objectClass $udkObjClassName $udkObjClassName)
+                </div>
+                <a href="$entry.href" class="icon" title="$stringTool.htmlescape($entry.title)">
+                    <span class="text">$entry.title</span>
+                </a>
+            #end
+            #if($tool.hasContent($entry.linkInfo))
+                #if($tool.hasContent($entry.linkInfo))
+                    <small class="text">$entry.linkInfo</small>
                 #end
             #end
-        #end
-        #if($tool.hasContent($entry.mapLink))
-            <a class="button pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
+            #if($displayPreview)
+                #if($tool.hasContent($entry.graphicOverview))
+                    #set($canSwipe = false)
+                    #if($entry.graphicOverview.size() > 1)
+                        #set($canSwipe = true)
+                    #end
+                    #if($canSwipe)
+                    <div class="preview">
+                        <div class="swiper-container swiper-container-background">
+                            <div class="swiper-wrapper">
+                            #foreach($graphic in $entry.graphicOverview)
+                                <div class="swiper-slide">
+                                    <p class="caption">
+                                        <a href="$graphic" title="$entry.title" target="_blank" rel="noopener noreferrer">
+                                            <img class="preview_image" #if($graphic.indexOf("https") == -1) src="./" data-src="$graphic" #else src="$graphic" #end title="$stringTool.htmlescape($entry.title)" alt="img" onerror="$loadDefaultMapImage">
+                                            <noscript>
+                                                <img class="preview_image" src="$graphic" title="$stringTool.htmlescape($entry.title)" alt="img">
+                                            </noscript>
+                                        </a>
+                                    </p>
+                                </div>
+                            #end
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                    #elseif($tool.hasContent($entry.graphicOverview.get(0)))
+                    <div class="preview">
+                        <a href="$entry.graphicOverview.get(0)" title="$entry.title" target="_blank" rel="noopener noreferrer">
+                            <img class="preview_image" #if($entry.graphicOverview.get(0).indexOf("https") == -1) src="./" data-src="$entry.graphicOverview.get(0)" #else src="$entry.graphicOverview.get(0)" #end title="$stringTool.htmlescape($entry.title)" alt="img" onerror="$loadDefaultMapImage">
+                            <noscript>
+                                <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$stringTool.htmlescape($imgTitle)" alt="img">
+                            </noscript>
+                        </a>
+                    </div>
+                    #end
+                #end
+            #end
+            #if($tool.hasContent($entry.description))
+                #set($myDescription = $stringTool.replaceAll($entry.description, '\n', ""))
+                <div class="description">
+                    <small class="description">${myDescription}</small>
+                </div>
+            #end
+            #if($tool.hasContent($entry.mapLink))
+            <a class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
                 $MESSAGES.getString('common.result.showMap')
             </a>
+            #end
+            </div>
+        #elseif($entry.noLink)
+            <div>
+                $entry.title
+            </div>
+        #elseif($entry.isDownload)
+            <div class="download">
+                #if($entry.title != $MESSAGES.getString('xml_link'))
+                    #if($tool.hasContent($entry.serviceType))
+                        #renderServiceType($entry.serviceType)
+                    #end
+                #end
+                <a href="$entry.href" class="icon" title="$stringTool.htmlescape($entry.title)" target="_blank" rel="noopener noreferrer">
+                  <span class="ic-ic-download"></span>
+                  <span class="text">$entry.title</span>
+                </a>
+                #if($tool.hasContent($entry.description))
+                    #set($myDescription = $stringTool.replaceAll($entry.description, '\n', ""))
+                    <small class="description">${myDescription}</small>
+                #end
+            </div>
+        #elseif(!$entry.isMapLink)
+            <div>
+                <a href="$entry.href" class="icon" title="$stringTool.htmlescape($entry.title)">
+                    <span class="ic-ic-karte"></span>
+                    <span class="text">$entry.title</span>
+                </a>
+            </div>
         #end
     #end
 #end
@@ -172,27 +280,36 @@
             #set($canSwipe = true)
         #end
         #if($canSwipe)
-        <div class="swiper-container">
+        <div class="swiper-container swiper-container-background">
             <div class="swiper-wrapper">
+        #else
+        <div class="swiper-container-background">
         #end
-                #foreach($e in $entry.elements)
-                    #if($e.type=="multiLine")
-                        #renderMultiLine($e)
-                    #elseif($e.type=="multiLineImage")
-                        #renderMultiLineImage($e)
-                    #elseif($e.type=="linkLine")
-                        #renderLinkLine($e true)
-                    #end
-                #end
+        #foreach($e in $entry.elements)
+            #if($e.type=="multiLine")
+                #renderMultiLine($e)
+            #elseif($e.type=="multiLineImage")
+                #renderMultiLineImage($e)
+            #elseif($e.type=="linkLine")
+                #renderLinkLine($e true)
+            #end
+        #end
         #if($canSwipe)
             </div>
             #if($entry.elements.size() > 1)
             <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
             #end
         </div>
+        #else
+        </div>
         #end
+    #end
+    #if($entry.href)
+    <p class="caption">
+        <a class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$MESSAGES.getString("common.result.showMap.tooltip.short")">
+            $MESSAGES.getString("common.result.showMap.tooltip.short")
+        </a>
+    </p>
     #end
 #end
 
@@ -224,229 +341,297 @@
 ## New Detail macros
 ## *************************
 
-#macro (renderMultiLineAddresses $title $entry $isMeta)
+#macro (renderMultiLineAddresses $title $entries $isMeta $isFactSheet $isAddress)
     #if($isMeta == true)
-        #if($tool.hasContent($title))
-            #renderSectionTitle($title)
-        #end
-        <div>
-            #set($count = 0)
-            #set($entryLength = $entry.getLength() - 1)
-            #foreach($number in [0..$entryLength])
-                #set($node = $entry.item($number))
-                #set($xPath = "./idf:idfResponsibleParty")
-                #if($TOOL.nodeExist($xPath, $node))
-                    #set($xParentPath = "./idf:idfResponsibleParty")
-                #else
-                    #set($xParentPath = "./gmd:CI_ResponsibleParty")
+        <div class="table table--lined">
+            <table>
+                <tr>
+                #if($tool.hasContent($title))
+                    <th>$title</th>
                 #end
-                #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
-                <h4>$TOOL.getNameFromCodeList("4430", "3")</h4>
-                <p><a href="mailto:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a></p>
-            #end
+                    <td>
+                        #set($count = 0)
+                        #set($entryLength = $entries.getLength() - 1)
+                        #foreach($number in [0..$entryLength])
+                            #set($node = $entries.item($number))
+                            #set($xPath = "./idf:idfResponsibleParty")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                #set($xParentPath = "./idf:idfResponsibleParty")
+                            #else
+                                #set($xParentPath = "./gmd:CI_ResponsibleParty")
+                            #end
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
+                            #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
+                            <div>
+                                <a class="icon" href="mailto:${tmpTitle.replace(" ","")}" title="$tmpTitle">
+                                    <span class="ic-ic-mailto"></span>
+                                    <span class="text">$tmpTitle</span>
+                                </a>
+                            </div>
+                        #end
+                    </td>
+                </tr>
+            </table>
         </div>
     #else
-        #if($entry)
-            <div class="row columns">
-            #if($tool.hasContent($title))
-                #if($tool.hasContent($title))
-                    <h3>$title</h3>
+        #if($entries)
+            #set($count = 0)
+            #foreach($entry in $entries)
+            #if($isFactSheet)
+                #if($count == 1)
+                    #break
                 #end
             #end
-            #set($count = 0)
-            #set($entryLength = $entry.getLength() - 1)
-            #foreach($number in [0..$entryLength])
-                #set($node = $entry.item($number))
-                #set($xPath = "")
-                #if($TOOL.nodeExist("./idf:idfResponsibleParty", $node))
-                    #set($xParentPath = "./idf:idfResponsibleParty")
-                #elseif($TOOL.nodeExist("./gmd:CI_ResponsibleParty", $node))
-                    #set($xParentPath = "./gmd:CI_ResponsibleParty")
-                #else
-                    #set($xParentPath = ".")
+            #if(!$isFactSheet)
+            <div class="sub-section">
+            <div class="table table--lined">
+            #end
+                #if($tool.hasContent($title))
+                    #if(!$isFactSheet)
+                        #renderGroupTitle($title)
+                    #elseif($isAddress)
+                        #renderGroupTitle($title)
+                    #end
                 #end
-                
-                #set($uuid = "")
+                #if(!$isFactSheet)
+                    <a class="anchor" id="${hashDetail8}_contact-${count}"></a>
+                #end
                 #set($count = $count + 1)
-                #set($xPath = "$xParentPath/gmd:role/gmd:CI_RoleCode/@codeListValue")
-                #if($TOOL.nodeExist($xPath, $node))
-                    <h4>$TOOL.getValueFromXPath($xPath, "505", $node)</h4>
-                #end
-                <p>
-                #if($xParentPath == "./idf:idfResponsibleParty" || $xParentPath == ".")
-                    #set($xPath = "$xParentPath/idf:hierarchyParty")
-                    #if($TOOL.nodeExist($xPath, $node))
-                        #set($hierarchyParty = $TOOL.getNodeListFromXPath($xPath, $node))
-                        #set($hierarchyPartyLength = $hierarchyParty.getLength() - 1)
-                        #foreach($hierarchy in [$hierarchyPartyLength..0])
-                            #set($hierarchyPartyNode = $hierarchyParty.item($hierarchy))
-                            
-                            #set($xPath = "./@uuid")
-                            #set($uuid = $TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))
-
-                            #set($xPath = "./idf:addressType")
-                            #set($t = $TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))
-                           
-                            #if($t == "2")
-                                #set($xPath = "./idf:addressIndividualName")
-                                ## Person -> Name
-                                #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
-                                    <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</a>
-                                #end
-                            #elseif($t == "3")
-                                ## Free Address -> Name or Organisation
-                                #if($TOOL.nodeExist("./idf:addressIndividualName", $hierarchyPartyNode))
-                                    <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressIndividualName", null, $hierarchyPartyNode))</a>
-                                    #if($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
-                                        <br>
-                                        $TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode))
-                                    #end
-                                #elseif($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
-                                    <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode))</a>
-                                #end
-                            #else
-                                ## Organisation
-                                #set($xPath = "./idf:addressOrganisationName")
-                                <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</a>
-                                
-                            #end
-                            <br>
-                        #end
+                    #set($node = $entry)
+                    #set($xPath = "")
+                    #if($TOOL.nodeExist("./idf:idfResponsibleParty", $node))
+                        #set($xParentPath = "./idf:idfResponsibleParty")
+                    #elseif($TOOL.nodeExist("./gmd:CI_ResponsibleParty", $node))
+                        #set($xParentPath = "./gmd:CI_ResponsibleParty")
                     #else
-                        ## Organistation
-                        #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
+                        #set($xParentPath = ".")
+                    #end
+                    
+                    #set($uuid = "")
+                    #set($xPath = "$xParentPath/gmd:role/gmd:CI_RoleCode/@codeListValue")
+                    
+                    #set($addressRole = "")
+                    #if($TOOL.nodeExist($xPath, $node))
+                        #set($addressRole = $TOOL.getValueFromXPath($xPath, "505", $node))
+                    #end
+                    
+                    #if(!$isFactSheet)
                         #if($TOOL.nodeExist($xPath, $node))
-                            #set($organisation = $TOOL.stringTokenizer($TOOL.getValueFromXPath($xPath, null, $node)))
-                            #set($organisationLength = $organisation.countTokens() - 1)
-                            #foreach($org in [0..$organisationLength])
-                                $organisation.nextToken()
-                                <br>
-                            #end
+                            <h5>$addressRole</h5>
                         #end
-                        ## Name
-                        #set($xPath = "$xParentPath/gmd:individualName")
-                        #if($TOOL.nodeExist($xPath, $node))
-                           $TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))
-                        #end
-                    #end
-                #else
-                    ## Organistation
-                    #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
-                    #if($TOOL.nodeExist($xPath, $node))
-                        #set($organisation = $TOOL.stringTokenizer($TOOL.getValueFromXPath($xPath, null, $node)))
-                        #set($organisationLength = $organisation.countTokens() - 1)
-                        #foreach($org in [0..$organisationLength])
-                            $organisation.nextToken()
-                            <br>
-                        #end
-                    #end
-                    ## Name
-                    #set($xPath = "$xParentPath/gmd:individualName")
-                    #if($TOOL.nodeExist($xPath, $node))
-                        <a class="link" href="#">$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))</a>
-                    #end
-                #end
-                </p>
-                <p>
-                    ## "Street"
-                    #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint")
-                    #if($TOOL.nodeExist($xPath, $node))
-                        #set($deliveryPoint = $TOOL.getNodeListFromXPath($xPath, $node))
-                        #set($deliveryPointLength = $deliveryPoint.getLength() - 1)
-                        #foreach($deliveryPointNumber in [0..$deliveryPointLength])
-                            #set($delivery = $TOOL.getValueFromXPath(".", null, $deliveryPoint.item($deliveryPointNumber)))
-                            #if($delivery.startsWith("Postbox"))
-                                #set($deliverySplit = $delivery.split(","))
-                                #foreach($d in $deliverySplit)
-                                    #if($d.startsWith("Postbox"))
-                                        $MESSAGES.getString("postbox_label") $d.replace("Postbox ", "")
-                                    #else
-                                        $d
-                                    #end
-                                    <br>
-                                #end
-                            #elseif($delivery.matches("\\d*"))
-                                $MESSAGES.getString("postbox_label") $delivery
-                                <br>
-                            #else
-                                #if($deliveryPointLength > 1)
-                                    <br>
-                                #end
-                                $delivery
-                            #end
-                        #end
-                        <br>
-                    #end
-                    ## "Postcode"
-                    #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode")
-                    #if($TOOL.nodeExist($xPath, $node))
-                        $TOOL.getValueFromXPath($xPath, null, $node)
-                    #end
-                    ## "City"
-                    #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city")
-                    #if($TOOL.nodeExist($xPath, $node))
-                        $TOOL.getValueFromXPath($xPath, null, $node)
-                        <br>
-                    #end
-                    ## "Country"
-                    #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country")
-                    #if($TOOL.nodeExist($xPath, $node))
-                        $TOOL.getCountryValue($TOOL.getValueFromXPath($xPath, null, $node))
-                    #end
-                </p>
-                <div class="table">
                     <table>
-                        <tr><th></th><th></th></tr>
+                    #end
+                    
+                    #if($isFactSheet)
+                        #if($TOOL.nodeExist($xPath, $node))
+                        #renderFactTitle($addressRole)
+                        #end
+                    #end
+                    #if(!$isFactSheet)
+                    <tr>
+                    <td>
+                    #end
+                        <p>
+                        #if($xParentPath == "./idf:idfResponsibleParty" || $xParentPath == ".")
+                            #set($xPath = "$xParentPath/idf:hierarchyParty")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                #set($hierarchyParty = $TOOL.getNodeListFromXPath($xPath, $node))
+                                #set($hierarchyPartyLength = $hierarchyParty.getLength() - 1)
+                                #foreach($hierarchy in [$hierarchyPartyLength..0])
+                                    #set($hierarchyPartyNode = $hierarchyParty.item($hierarchy))
+
+                                    #set($xPath = "./@uuid")
+                                    #set($uuid = $TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))
+
+                                    #set($xPath = "./idf:addressType")
+                                    #set($t = $TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))
+                                   
+                                    #if($t == "2")
+                                        #set($xPath = "./idf:addressIndividualName")
+                                        ## Person -> Name
+                                        #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
+                                            #set($tmpTitle = $TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
+                                            <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
+                                        #end
+                                    #elseif($t == "3")
+                                        ## Free Address -> Name or Organisation
+                                        #if($TOOL.nodeExist("./idf:addressIndividualName", $hierarchyPartyNode))
+                                            #set($tmpTitle = $TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressIndividualName", null, $hierarchyPartyNode)))
+                                            <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
+                                            #if($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
+                                                <br>
+                                                $TOOL.removeLocalisation("./idf:addressOrganisationName", null, $hierarchyPartyNode)
+                                            #end
+                                        #elseif($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
+                                            #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)))
+                                            <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
+                                        #end
+                                    #else
+                                        ## Organisation
+                                        #set($xPath = "./idf:addressOrganisationName")
+                                        #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
+                                        <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
+                                    #end
+                                #end
+                            #else
+                                ## Name
+                                #set($xPath = "$xParentPath/gmd:individualName")
+                                #if($TOOL.nodeExist($xPath, $node))
+                                    <strong>$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))</strong>
+                                    <br>
+                                #end
+                                ## Organisation
+                                #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
+                                #if($TOOL.nodeExist($xPath, $node))
+                                    #set($tmpValue = $TOOL.getValueFromXPath($xPath, null, $node))
+                                    #if($tmpValue)
+                                        #set($organisation = $TOOL.stringTokenizer($tmpValue))
+                                        #set($organisationLength = $organisation.countTokens() - 1)
+                                        #foreach($org in [0..$organisationLength])
+                                            $organisation.nextToken()
+                                        #end
+                                    #end
+                                #end
+                            #end
+                        #else
+                            ## Name
+                            #set($xPath = "$xParentPath/gmd:individualName")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                <strong>$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))</strong>
+                                <br>
+                            #end
+                            ## Organisation
+                            #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                #set($tmpValue = $TOOL.getValueFromXPath($xPath, null, $node))
+                                #if($tmpValue)
+                                    #set($organisation = $TOOL.stringTokenizer($tmpValue))
+                                    #set($organisationLength = $organisation.countTokens() - 1)
+                                    #foreach($org in [0..$organisationLength])
+                                        $organisation.nextToken()
+                                    #end
+                                #end
+                            #end
+                        #end
+                        </p>
+                        #if(!$isFactSheet || $isAddress)
+                        <p>
+                            ## "Street"
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                #set($deliveryPoint = $TOOL.getNodeListFromXPath($xPath, $node))
+                                #set($deliveryPointLength = $deliveryPoint.getLength() - 1)
+                                #foreach($deliveryPointNumber in [0..$deliveryPointLength])
+                                    #set($delivery = $TOOL.getValueFromXPath(".", null, $deliveryPoint.item($deliveryPointNumber)))
+                                    #if($delivery.startsWith("Postbox"))
+                                        #set($deliverySplit = $delivery.split(","))
+                                        #foreach($d in $deliverySplit)
+                                            #if($d.startsWith("Postbox"))
+                                                $MESSAGES.getString("postbox_label") $d.replace("Postbox ", "")
+                                            #else
+                                                $d
+                                            #end
+                                            <br>
+                                        #end
+                                    #elseif($delivery.matches("\\d*"))
+                                        $MESSAGES.getString("postbox_label") $delivery
+                                        <br>
+                                    #else
+                                        #if($deliveryPointLength > 1)
+                                            <br>
+                                        #end
+                                        $delivery
+                                    #end
+                                #end
+                                <br>
+                            #end
+                            ## "Postcode"
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                $TOOL.getValueFromXPath($xPath, null, $node)
+                            #end
+                            ## "City"
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                $TOOL.getValueFromXPath($xPath, null, $node)
+                                <br>
+                            #end
+                            ## "Country"
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                $TOOL.getCountryValue($TOOL.getValueFromXPath($xPath, null, $node))
+                            #end
+                        </p>
+                        #end
                         ## E-Mail
                         #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
                         #if($TOOL.nodeExist($xPath, $node))
-                            <tr>
-                                <td>$TOOL.getNameFromCodeList("4430", "3")</td>
-                                <td><a href="mailto:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a></td>
-                            </tr>
+                            ## $TOOL.getNameFromCodeList("4430", "3")
+                            #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
+                            <div>
+                                <a class="icon" href="mailto:${tmpTitle.replace(" ","")}" title="$stringTool.htmlescape($tmpTitle)">
+                                    <span class="ic-ic-mailto"></span>
+                                    <span class="text">$tmpTitle</span>
+                                </a>
+                            </div>
                         #end
                         ## Telefon
                         #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice")
                         #if($TOOL.nodeExist($xPath, $node))
-                            <tr>
-                                <td>$TOOL.getNameFromCodeList("4430", "1")</td>
-                                <td>$TOOL.getValueFromXPath($xPath, null, $node)</td>
-                            </tr>
+                            ## $TOOL.getNameFromCodeList("4430", "1")
+                            #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
+                            <div>
+                                <a class="icon" href="tel:${tmpTitle.replace(" ","")}" title="$stringTool.htmlescape($tmpTitle)">
+                                    <span class="ic-ic-phone"></span>
+                                    <span class="text">$tmpTitle</span>
+                                </a>
+                            </div>
                         #end
                         ## Fax
                         #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile")
                         #if($TOOL.nodeExist($xPath, $node))
-                            <tr>
-                                <td>$TOOL.getNameFromCodeList("4430", "2")</td>
-                                <td>$TOOL.getValueFromXPath($xPath, null, $node)</td>
-                            </tr>
+                            ## $TOOL.getNameFromCodeList("4430", "2")
+                            #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
+                            <div>
+                                <a class="icon" href="fax:${tmpTitle.replace(" ","")}" title="$stringTool.htmlescape($tmpTitle)">
+                                    <span class="ic-ic-fax"></span>
+                                    <span class="text">$tmpTitle</span>
+                                </a>
+                            </div>
                         #end
                         ## URL
                         #set($xPath = "$xParentPath//gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL")
                         #if($TOOL.nodeExist($xPath, $node))
-                            <tr>
-                                <td>$TOOL.getNameFromCodeList("4430", "4")</td>
-                                #set($url = $TOOL.getValueFromXPath($xPath, null, $node))
-                                #if($url.startsWith("http"))
-                                    #set($url = $url)
-                                #else 
-                                    #set($url = "http://$url")
-                                #end
-                                <td><a href="$url">$url</a></td>
-                            </tr>
+                            ## $TOOL.getNameFromCodeList("4430", "4")
+                            #set($url = $TOOL.getValueFromXPath($xPath, null, $node))
+                            #if($url.startsWith("http"))
+                                #set($url = $url)
+                            #else 
+                                #set($url = "http://$url")
+                            #end
+                            <div>
+                                <a class="icon" href="$url" title="$url">
+                                    <span class="ic-ic-external"></span>
+                                    <span class="text">$url</span>
+                                </a>
+                            </div>
                         #end
                         ## Servicezeiten
                         #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString")
                         #if($TOOL.nodeExist($xPath, $node))
-                            <tr>
-                                <td>$MESSAGES.getString('t02_address.hours_of_service')</td>
-                                <td>$TOOL.getValueFromXPath($xPath, null, $node)</td>
-                            </tr>
+                            <div>
+                                $MESSAGES.getString('t02_address.hours_of_service')
+                                $TOOL.getValueFromXPath($xPath, null, $node)
+                            </div>
                         #end
-                    </table>
-                </div>
-            #end
+                        #if(!$isFactSheet)
+                        </td>
+                    </tr>
+                </table>
             </div>
+            </div>
+                        #end
+            #end
         #end
     #end
 #end
@@ -528,26 +713,39 @@
 #end
 
 ## Render Table
-#macro (renderTable $entry)
-    #renderTableTitle("" $entry "")
+#macro (renderTable $entry $increaseColumns)
+    #if($tool.hasContent($increaseColumns))
+        #renderTableTitle("" $entry "" "" "" $increaseColumns)
+    #else
+      #renderTableTitle("" $entry "")
+    #end
 #end
 
-#macro (renderTableTitle $title $entry $space)
+#macro (renderTableSymbols $entry $symbolColumn $symbolList $increaseColumns)
+    #renderTableTitle("" $entry "" $symbolColumn $symbolList $increaseColumns)
+#end
+
+
+#macro (renderTableTitle $title $entry $space $symbolColumn $symbolList $increaseColumns)
     #if($tool.hasContent($entry.get("body")))
-        #if($title == "")
-            #if($tool.hasContent($entry.title))
-                #renderGroupTitle($entry.title)
-            #end
-        #else
-            #renderGroupTitle($title)
-        #end
         <div class="table">
+            #if($entry.title)
+                <h5>$entry.title</h5>
+            #end
             <table>
             #if($tool.hasContent($entry.get("head")))
                 <thead>
                     <tr>
+                    #set($num = 0)
                     #foreach($th in $entry.head)
-                        <th>$th</th>
+                        #set($isIncreaseColumn = false)
+                        #if($increaseColumns)
+                            #if($increaseColumns.indexOf($num) > -1)
+                                #set($isIncreaseColumn = true)
+                            #end
+                        #end
+                        <th #if($isIncreaseColumn)class="column--increase"#end>$th</th>
+                        #set($num = $num + 1)
                     #end
                     </tr>
                 </thead>
@@ -559,14 +757,29 @@
                     #if($entry.types)
                         #set($bodyType = $entry.types.get($num))
                         #if($bodyType == "link")
-                            <td><a href="$td">$td</a></td>
+                            <td><a href="$td" title="$stringTool.htmlescape($td)">$td</a></td>
                         #else
                             <td>$td</td>
                         #end
                     #else
-                        <td>$td</td>
+                        #if($symbolColumn == $num)
+                        <td class="symbol">
+                            #if($symbolList)
+                                #foreach($symbolEntry in $symbolList)
+                                    #if($symbolEntry.value == $td)
+                                        $symbolEntry.symbol
+                                    #end
+                                #end
+                            #else
+                                $td
+                            #end
+                        </td>
+                        #else
+                        <td>
+                            $td
+                        </td>
+                        #end
                     #end
-                    
                     #set($num = $num + 1)
                 #end
                 </tr>
@@ -648,10 +861,14 @@
 
 ## Render link in list
 #macro (renderLinkList $title $linkList $titleAsSection)
-    #renderLinkListSpace ($title $linkList $titleAsSection "")
+    #renderLinkListImage ($title $linkList $titleAsSection false)
 #end
-#macro (renderLinkListSpace $title $linkList $titleAsSection $space $asList)
-    #if($tool.hasContent($linkList))
+#macro (renderLinkListImage $title $linkList $titleAsSection $hasImage)
+    #renderLinkListImage ($title $linkList $titleAsSection $hasImage "")
+#end
+
+#macro (renderLinkListImageLimit $title $linkList $titleAsSection $hasImage $listLimit $expandId $titleTag $linkListInclude $displayPreview)
+    #if($tool.hasContent($linkList) || $tool.hasContent($linkListInclude))
         #if($titleAsSection == "true")
             #if($tool.hasContent($title))
                 #renderSectionTitle($title)
@@ -659,26 +876,71 @@
         #end
         #if($titleAsSection == "false")
             #if($tool.hasContent($title))
-                <h4>$title</h4>
+                #if($titleTag)
+                    <$titleTag>$title</$titleTag>
+                #else
+                    <h4>$title</h4>
+                #end 
             #end
         #end
-        #if($asList == "true")
-            <div class="document-list">
-            #foreach($link in $sorter.sort($linkList,"title"))
-                <div class="list-item">
-                    #renderLinkLine($link)
-                </div>
+        <div class="document-list">
+            #set($countLinksAll = 0)
+            #set($numberLinksAll = $linkList.size())
+            #if($linkListInclude)
+                #set($numberLinksAll = $numberLinksAll + $linkListInclude.size())
             #end
-            </div>
-        #else
-            <div class="document-list">
+            #set($addLinksExpand = false)
             #foreach($link in $sorter.sort($linkList,"title"))
+                #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
+                    #if($expandId != "")
+                        #set($addLinksExpand = true)
+                        <button type="button" id="${expandId}" class="js-expander button outline" title="$MESSAGES.getString('search.detail.info.links.more')">
+                            $MESSAGES.getString('search.detail.info.links.more')
+                        </button>
+                        <div class="js-expander-content ${expandId} is-hidden ">
+                    #else
+                        <a class="button outline" title="$MESSAGES.getString('search.detail.info.links.more')" href="#${hashDetail3}">
+                            $MESSAGES.getString('search.detail.info.links.more')
+                        </a>
+                        #break
+                    #end
+                #end
                 <div class="list-item">
-                    #renderLinkLine($link)
+                    #renderLinkLine($link $hasImage $displayPreview)
                 </div>
+                #set($countLinksAll = $countLinksAll + 1)
             #end
-            </div>
-        #end
+            #if($linkListInclude)
+                #foreach($link in $sorter.sort($linkListInclude,"title"))
+                    #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
+                        #if($expandId != "")
+                            #set($addLinksExpand = true)
+                            <button type="button" id="${expandId}" class="js-expander button outline" title="$MESSAGES.getString('search.detail.info.links.more')">
+                                $MESSAGES.getString('search.detail.info.links.more')
+                            </button>
+                            <div class="js-expander-content ${expandId} is-hidden ">
+                        #else
+                            <a class="button outline" title="$MESSAGES.getString('search.detail.info.links.more')" href="#${hashDetail3}">
+                                $MESSAGES.getString('search.detail.info.links.more')
+                            </a>
+                            #break
+                        #end
+                    #end
+                    <div class="list-item">
+                        #renderLinkLine($link $hasImage $displayPreview)
+                    </div>
+                    #set($countLinksAll = $countLinksAll + 1)
+                #end
+            #end
+            #if($addLinksExpand)
+                #set($addLinksExpand = false)
+                </div>
+                <button type="button" class="button outline js-expander-close ${expandId} is-hidden" title="$MESSAGES.getString('search.detail.info.links.less')">
+                    $MESSAGES.getString('search.detail.info.links.less')
+                </button>
+            #end
+        </div>
+        
     #end
 #end
 
@@ -714,6 +976,138 @@
         #if($space != "")
             #renderTextLabelAbove($title $space)
         #end
+    #end
+#end
+
+#macro (renderTextTable $title $entry $cssClass)
+    #if($tool.hasContent($entry))
+    <div class="table table--lined">
+        <table>
+            <tr>
+            #if($tool.hasContent($title))
+                <th>$title</th>
+            #end
+                <td>
+                    <p #if($cssClass)class="$cssClass"#end>$entry</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    #end
+#end
+
+#macro (renderTextListTable $title $entryList)
+    #if($tool.hasContent($entryList))
+    <div class="table table--lined">
+        <table>
+            <tr>
+            #if($tool.hasContent($title))
+                <th>$title</th>
+            #end
+                <td>
+                    <div class="text-list">
+                    #foreach($entry in $entryList)
+                        <p class="list-item">$entry</p>
+                    #end
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    #end
+#end
+
+#macro (renderLinkTable $title $entry $cssClass)
+    #if($tool.hasContent($entry))
+    <div class="table table--lined ${cssClass}">
+        <table>
+            <tr>
+            #if($tool.hasContent($title))
+                <th>$title</th>
+            #end
+                <td>
+                    #if($entry.type)
+                        #renderLinkLine($entry)
+                    #else
+                        $entry
+                    #end
+                </td>
+            </tr>
+        </table>
+    </div>
+    #end
+#end
+
+#macro (renderLinkListTable $title $entryList $cssClass)
+    #if($tool.hasContent($entryList))
+    <div class="table table--lined ${cssClass}">
+        <table>
+            <tr>
+            #if($tool.hasContent($title))
+                <th>$title</th>
+            #end
+                <td>
+                    #foreach($entry in $entryList)
+                        #renderLinkLine($entry)
+                    #end
+                </td>
+            </tr>
+        </table>
+    </div>
+    #end
+#end
+
+#macro (renderLinkLineTableRow $entry)
+    <tr class="list-item">
+        <td>
+            #if($link.isExtern)
+                <span class="ic-ic-external"></span>
+            #end
+        </td>
+        <td>
+            #if($entry.objectClass)
+                #renderLinkLine($entry)
+            #else
+            <a href="$entry.href" title="$entry.title">
+                $entry.title
+            </a>
+            #end
+        </td>
+    </tr>
+#end
+
+#macro (renderTableList $title $textList)
+    #if($tool.hasContent($textList))
+    <div class="table list">
+        <table>
+            <tbody>
+                <tr>
+                    <td>$title</td>
+                    <td>
+                        #foreach($text in $sorter.sort($textList,"body"))
+                            <span class="list_entry">$text</span>
+                        #end
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    #end
+#end
+
+#macro (renderTableLinkList $title $linkList)
+    #if($tool.hasContent($linkList))
+        <div class="row">
+            <div class="xsmall-24 small-24 large-5 columns">
+                <span>$title</span>
+            </div>
+            <div class="xsmall-24 small-24 large-19 columns">
+                #foreach($link in $sorter.sort($linkList,"title"))
+                    #renderLinkLine($link)
+                    <br>
+                #end
+            </div>
+        </div>
     #end
 #end
 
@@ -803,14 +1197,16 @@
     #end
 #end
 
-#macro (renderTextLabelLeftLink $entry)
-    <div class="table--lined">
+#macro (renderTextLabelLeftLinkTable $entry)
+    #if($tool.hasContent($entry))
+    <div class="table table--lined">
         <table>
             <tbody>
                 <tr>
                     <th>#if($tool.hasContent($entry.title))$entry.title#end</th>
                     <td>
                         #if($entry.body)
+                            <div class="content--link">
                             #if($entry.body.type)
                                 #if($entry.body.type == "linkLine")
                                     #renderLinkLine($entry.body)
@@ -820,18 +1216,19 @@
                             #else
                                 $entry.body
                             #end
+                            </div>
                         #end
                         #if($tool.hasContent($entry.link))
-                            <p>
-                                <a class="tag tag--small" href="$entry.link.href">$MESSAGES.getString('common.result.showMap')</a>
-                            </p>
+                            <a class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
+                                $MESSAGES.getString('common.result.showMap')
+                            </a>
                         #end
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    
+    #end
 #end
 
 ## New function for KML
@@ -845,8 +1242,7 @@
            #end
            #if($tool.hasContent($entry.title) && $tool.hasContent($entry.plugId) && $tool.hasContent($entry.docId))
                 <div>
-                    <svg class="icon"><use xlink:href="#internal-link"/></svg>
-                    <a href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
+                    <a href="$renderResponse.encodeURL('/portal/main-maps.psml')?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
                 </div>  
            #end
         </div>
@@ -898,4 +1294,3 @@
         </div>
     </section>
 #end
-#parse ('/WEB-INF/templates/global/include_preview_image.vm')

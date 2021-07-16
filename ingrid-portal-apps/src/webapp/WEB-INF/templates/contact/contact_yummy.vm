@@ -1,0 +1,6 @@
+<label class="yummy" for="message">message</label>
+<input type="text" class="yummy" id="message" name="message" autocomplete="off" tabindex="-1"/>
+<label class="yummy" for="name">name</label>
+<input type="text" class="yummy" id="name" name="name" autocomplete="off" tabindex="-1"/>
+<label class="yummy" for="email">email</label>
+<input type="text" class="yummy" id="email" name="email" autocomplete="off" tabindex="-1"/>

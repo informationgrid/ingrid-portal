@@ -1,0 +1,7 @@
+<div class="columns xsmall-7 small-7 medium-5 large-5 xlarge-5">
+    <div class="logo" role="banner">
+        <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+            <img src="/decorations/layout/uvp/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
+        </a>
+    </div>
+</div>

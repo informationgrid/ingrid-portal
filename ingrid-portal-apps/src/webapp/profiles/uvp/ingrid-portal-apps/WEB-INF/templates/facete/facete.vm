@@ -1,17 +1,13 @@
 #set ($action = $renderResponse.createActionURL())
-#set ($rankedHitslenght = $rankedResultList.get("length"))
+#set ($rankedHitslenght = $rankedResultList.length())
 
+<div class="accordion accordion-filter-group filter" data-accordion data-allow-all-closed="true" role="tablist" >
+    <div class="accordion-item accordion-item-filter-group" data-accordion-item>
+        <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="facet-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
+        <div class="accordion-content filter-wrapper filter-wrapper-shadowless" data-tab-content role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
+            <div class="boxes">
 #if($rankedHitslenght > 0)
-    <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
-        <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
-            <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="facet-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
-            <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
-                <div class="boxes">
                     #renderFacetCategory($facetConfig)
-                </div>
-            </div>
-        </div>
-    </div>
 #else
     <p>
         #if($isSelection)
@@ -20,18 +16,22 @@
             $MESSAGES.getString("searchResult.facete.category.no.hits") 
         #end
     </p>
-        #if($enableFacetSelection && $isSelection)
-            #set ($action = $renderResponse.createActionURL())
-            $action.setParameter("doRemoveLast", "true")
-            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
-        #end
-        #if($enableFacetSelection || $isSelection)
-            #set ($action = $renderResponse.createActionURL())
-            $action.setParameter("doRemoveAll", "true")
-            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
-        #end
-    <br>
+    #if($enableFacetSelection && $isSelection)
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter("doRemoveLast", "true")
+        #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
+    #end
+    #if($enableFacetSelection || $isSelection)
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter("doRemoveAll", "true")
+        #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
+    #end
 #end
+            </div>
+        </div>
+    </div>
+</div>
+#parse ('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
 
 #macro(renderFacetCategory $nodes)
     #foreach($node in $nodes)
@@ -165,12 +165,12 @@
                         #set($isSelected = true)
                     #end
                 #end
-                <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-                    <li class="accordion-item #if($isSelected)is-active#end" data-accordion-item="">
-                        <a class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label" #if($facet.isSelect() || $facet.isOpen())aria-expanded="true" aria-selected="true"#end>
+                <ul class="accordion filter-group" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
+                    <li class="accordion-item #if($facet.isSelect() || $facet.isOpen())is-active#end" data-accordion-item>
+                        <a href="#" class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label">
                             <span class="text">$MESSAGES.getString("$facet.getName()")</span>
                         </a>
-                        <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
+                        <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion">
                             <div class="boxes">
                             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
                             #foreach($subFacet in $facet.getFacets())
@@ -258,12 +258,14 @@
 
 #macro (renderFaceteSelectedAttributeHashMapNumber $doAction $title $numbers $key $isDelete)
     <p>
-        <a class="btn btn--delete btn--small btn--block" href="$doAction">
-        <svg class="icon link__icon"><use xlink:href="#cross"/></svg>
-        $title
-        #if($numbers && $key)
-            #renderLinkEntryNumberInArrayHashMap($numbers $key)
-        #end
+        <a class="icon" href="$doAction" title="$title">
+            <span class="ic-ic-cross"></span>
+            <span class="text">
+                $title
+                #if($numbers && $key)
+                    #renderLinkEntryNumberInArrayHashMap($numbers $key)
+                #end
+            </span>
         </a>
     </p>
 #end

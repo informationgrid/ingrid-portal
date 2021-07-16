@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -72,6 +72,7 @@ define([
     return declare([_WidgetBase], {
 
         uploadUrl: "",
+        acceptFiles: null,
 
         uploader: null,
         dialog: null,
@@ -245,6 +246,9 @@ define([
                 element: el,
                 template: this.templateEl,
                 autoUpload: true,
+                validation: {
+                    acceptFiles: this.acceptFiles
+                },
                 text: {
                     defaultResponseError: "Upload fehlgeschlagen",
                     formatProgress: "{percent}% von {total_size}",
@@ -343,14 +347,14 @@ define([
                             var status = xhrOrXdr ? xhrOrXdr.status : "default";
                             var errorData = responseJSON.errorData || {};
                             var messages = {
-                                418: "Der Dateiname " + (errorData.invalidPart ? "'" + errorData.invalidPart + "' " : "") + "enthält " + (("" + errorData.errorReason).toLowerCase() == "reserved_word" ? "ein reserviertes Wort." : 
+                                418: "Der Dateiname " + (errorData.invalidPart ? "'" + errorData.invalidPart + "' " : "") + "enthält " + (("" + errorData.errorReason).toLowerCase() == "reserved_word" ? "ein reserviertes Wort." :
                                 	"unzulässige Zeichen. Siehe auch <a href='https://de.wikipedia.org/wiki/Dateiname#Problematische_und_unzul.C3.A4ssige_Zeichen_oder_Namen' target='_blank'>unzulässige Zeichen in Dateinamen [Wikipedia]</a>."),
                                 419: "Die Datei enthält einen Virus.",
                                 420: "Die Datei ist zu groß. " + (("" + errorData.limitType).toLowerCase() == "directory" ? "Alle Dateien eines Metadatensatzes dürfen zusammen" : "Eine einzelne Datei darf") + " maximal " + this.fileSize(errorData.maxSize) + " groß sein." +
                                     (errorData.usedSize ? " Inklusive dieser Datei belegt der Metadatensatz " + this.fileSize(errorData.usedSize) + "." : ""),
                                 401: "Sie haben keine Berechtigung für den Upload. Eventuell ist die Session abgelaufen.",
                                 409: "Die Datei existiert bereits.",
-                                "default": "Beim Upload ist ein Fehler aufgetreten." 
+                                "default": "Beim Upload ist ein Fehler aufgetreten."
                             };
                             var message = messages[status] ? messages[status] : messages["default"];
                             var fileEl = this.getFileEl(id);
@@ -393,7 +397,7 @@ define([
                                 "replace": false,
                                 "rename": false,
                                 "keep": false
-                            } 
+                            }
                         };
                         var buttonState = buttonStates[status] ? buttonStates[status] : buttonStates["default"];
                         for (var button in buttonState) {
