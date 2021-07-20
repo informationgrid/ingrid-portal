@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.9.0" date="2021-07-16" description="Release 5.9.0">
+          <action type="fix" dev="wemove" issue="2603">
+            Portal: RSS-Job bei Links mit vielen Zeilenumbrüchen führen zu Datenbankfehlern
+          </action>
+          <action type="add" dev="wemove" issue="2602">
+            MapClient: Komprimierung von weiteren URL Parametern beim Aufruf von WMS Karten mit vielen Layern
+          </action>
           <action type="add" dev="wemove" issue="2598">
             MapClient: MetaVer-Kartenclient alle geladene Layer deaktiviren / alle geladenen Layer löschen
           </action>
