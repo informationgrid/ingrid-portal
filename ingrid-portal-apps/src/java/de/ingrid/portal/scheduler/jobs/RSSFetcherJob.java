@@ -206,8 +206,12 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
 
                             // check if this entry already exists
                             tx = session.beginTransaction();
+                            String link = entry.getLink();
+                            if(link != null) {
+                                link = link.trim();
+                            }
                             List rssEntries = session.createCriteria(IngridRSSStore.class).add(
-                                    Restrictions.eq("link", entry.getLink())).add(
+                                    Restrictions.eq("link", link)).add(
                                     Restrictions.eq("language", feed.getLanguage())).list();
                             tx.commit();
 
@@ -246,7 +250,7 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                                 rssEntry.setTitle(title);
                                 String description = processStringForStore(entry.getDescription().getValue(), null);
                                 rssEntry.setDescription(description);
-                                rssEntry.setLink(entry.getLink());
+                                rssEntry.setLink(link);
                                 rssEntry.setLanguage(feed.getLanguage());
                                 rssEntry.setPublishedDate(publishedDate);
                                 rssEntry.setAuthor(entry.getAuthor());
