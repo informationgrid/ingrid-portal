@@ -1,5 +1,0 @@
-#if($adminContent)
-    #if($rs.getScore())
-        #renderTableEntry( "Score" $rs.getScore())
-    #end
-#end
