@@ -12,9 +12,9 @@ CREATE TABLE ingrid_temp (
 // No primary key on 'V4_0_1__initial.sql'
 ALTER TABLE ingrid_rss_store DROP PRIMARY KEY;
 // link column is 'character varying(4000)'
-ALTER TABLE ingrid_rss_store MODIFY COLUMN link varchar(2084) NOT NULL;
+ALTER TABLE ingrid_rss_store ALTER COLUMN link TYPE varchar(2084), ALTER COLUMN url SET NOT NULL;
 */
-ALTER TABLE ingrid_rss_source ALTER COLUMN url TYPE varchar(2084) NOT NULL;
+ALTER TABLE ingrid_rss_source ALTER COLUMN url TYPE varchar(2084), ALTER COLUMN url SET NOT NULL;
 
 -- delete temporary table
 DROP TABLE IF EXISTS ingrid_temp;
