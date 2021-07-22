@@ -111,19 +111,24 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 }
                 if(extension == null) {
                     URL url = new URL(paramURL);
-                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("HEAD");
-
-                    String contentType = con.getContentType();
-
-                    if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
-                        url = new URL(paramURL.replace("http://", "https://"));
-                        con = (java.net.HttpURLConnection) url.openConnection();
+                    try {
+                        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
                         con.setRequestMethod("HEAD");
+
+                        String contentType = con.getContentType();
+
+                        if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
+                            url = new URL(paramURL.replace("http://", "https://"));
+                            con = (java.net.HttpURLConnection) url.openConnection();
+                            con.setRequestMethod("HEAD");
+                        }
+                        if(contentType != null) {
+                            extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                        }
+                    } catch (Exception e) {
+                       log.debug("Failed to load: " + paramURL);
                     }
-                    if(contentType != null) {
-                        extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
-                    }
+                    
                 }
                 response.setContentType( "text/plain" );
                 if(extension != null) {
