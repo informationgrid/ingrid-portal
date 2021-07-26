@@ -45,8 +45,7 @@ $(function() {
   $('.custom-scrollbar').niceScroll({
     cursorcolor:"#c6cfe2",
     cursorwidth:"8px",
-    cursorborderradius: "6px",
-    railpadding: { top: 25, right: 0, left: 0, bottom: 5 }
+    cursorborderradius: "6px"
   });
 
   //toggle social media links
