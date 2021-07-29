@@ -7,6 +7,15 @@
 
     <body>
         <release version="5.9.0" date="2021-07-16" description="Release 5.9.0">
+          <action type="fix" dev="wemove" issue="2608">
+            Portal: Probleme nach Update auf 5.9.0
+          </action>
+          <action type="add" dev="wemove" issue="2609">
+            Messwerteclient: "Zurück zur Kartenansicht" zeigt nicht den letzten Kartenausschnitt an
+          </action>
+        </release>
+
+        <release version="5.9.0" date="2021-07-16" description="Release 5.9.0">
           <action type="fix" dev="wemove" issue="2603">
             Portal: RSS-Job bei Links mit vielen Zeilenumbrüchen führen zu Datenbankfehlern
           </action>
