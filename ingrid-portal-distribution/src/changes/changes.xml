@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.9.0" date="2021-07-16" description="Release 5.9.0">
+        <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
           <action type="fix" dev="wemove" issue="2608">
             Portal: Probleme nach Update auf 5.9.0
           </action>
