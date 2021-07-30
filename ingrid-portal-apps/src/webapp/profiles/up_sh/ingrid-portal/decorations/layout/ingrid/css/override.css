@@ -20,10 +20,16 @@
  * limitations under the Licence.
  * **************************************************#
 */
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, body {
-  font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif;
+body {
+  font-family: AvenirNextLTPro-Regular, sans-serif;
 }
 
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-family: AvenirNextLTPro-Demi, sans-serif;
+}
+p.intro {
+  font-family: AvenirNextLTPro-Demi, sans-serif;
+}
 .header__logo {
   width: auto;
 }
@@ -227,7 +233,10 @@ header a.icon.is-selected {
 .detail .banner-noimage .page-wrapper {
   background-repeat: no-repeat;
   background-color: #F6F6F6;
+  background-position-y: bottom;
+  background-image: url(/decorations/layout/sh/images/bg_banner_large.svg) !important;
 }
+
 .detail .list-item div {
   padding: 0;
 }
@@ -800,6 +809,9 @@ a img[title='SNS'] {
 }
 
 /* menu */
+.shrink .header-menu-open button {
+  margin: 14px 0 0 0;
+}
 .menu-main-links a, .header-menu a {
   font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif !important;
   color: #003064;
@@ -906,6 +918,10 @@ footer .footer {
 footer .footer .logo a img{
   width: 60px;
 }
+footer .footer .row .columns {
+  display: flex;
+  align-items: center;
+}
 .columns.button-up {
   margin-top: 0.8rem;
   display: flex;
@@ -950,7 +966,11 @@ h6 {
 .input-search .input-search-field {
   font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif;
   background-color: #FFFFFF;
-  border: 1px solid #C6C6C6;
+  border-radius: 0;
+  border: 0;
+}
+.input-search .button {
+  border-radius: 0;
 }
 .teaser-data {
   border: unset;
@@ -1304,6 +1324,7 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
 .text-box .title {
   font-size: 22px;
   margin-bottom: 10px;
+  font-family: AvenirNextLTPro-Demi, sans-serif;
 }
 .text-box p {
   font-size: 15px;
