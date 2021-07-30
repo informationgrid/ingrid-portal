@@ -6,27 +6,28 @@
         <section help-key="about-1">
             <header>Konzept und Aufgabe von UP-SH</header>
             <content>
-                <p>Das Umweltportal Schleswig-Holstein bietet einen zentralen Zugriff auf umweltrelevante Informationen von öffentlichen Institutionen und Organisationen in Rheinland-Pfalz. Mit einem Mix aus aktuellen Nachrichten, Messwerten, Hintergrundinformationen und Umweltereignissen richtet sich das Umweltportals an interessierte Bürgerinnen und Bürger sowie "professionelle" Nutzer von Umweltinformationen, z.B. Umweltorganisationen und Ingenieurbüros. Das Informationsangebot wird kontinuierlich ausgebaut mit dem Ziel, langfristig möglichst alle behördlichen Anbieter von Umweltinformationen in Rheinland-Pfalz zu erfassen.</p>
-                <p>Bei der Konzeption des Umweltportals spielten die EU-Umweltinformationsrichtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=UIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_blank">Umweltinformationsgesetz</a> ) sowie die EU-INSPIRE-Richtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=GDIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_blank">nds. Geodateninfrastrukturgesetz</a>) eine wichtige Rolle. Diese Richtlinien setzen neue Maßstäbe für die öffentliche Verbreitung behördlicher Umweltinformationen bzw. den Aufbau der dafür notwendigen informationstechnischen Infrastrukturen.</p>
-                <p>Umweltportal Schleswig-Holstein und die eigens zum Aufbau des Portals entwickelte Software „InGrid®“ wurden u.a. als Werkzeuge zur Unterstützung der Behörden bei der Umsetzung der Richtlinien konzipiert.</p>
+                <p>Herzlich Willkommen im Umweltportal des Landes Schleswig-Holstein. Mit der neuen Software ist der Weg für einen einfachen Zugriff auf Umweltinformationen geebnet und beendet damit gleichzeitig die Ära des bisherigen Umweltatlas in SH.</p>
+                <p>Zur richtigen Einschätzung und Bewertung von Umweltsituationen werden umfassende Informationen benötigt. In der öffentlichen Verwaltung wird eine Vielzahl dieser Informationen auf unterschiedlichster Ebene generiert und verwaltet.</p>
+                <p>Vor diesem Hintergrund dient das Portal als Informationsnetz indem es Webseiten, Datenkataloge und Themenportale im Umweltkontext unter einem Dach bündelt. Sowohl die Freitext- als auch die Facettensuche führen zu einem schnellen Ergebnis. Über Suchfunktionalitäten hinaus können Sie z.B. auch Karten- und Messwertinformationen anzeigen und vergleichen.</p>
+                <p>Bei der Konzeption des Umweltportals spielten die EU-Umweltinformationsrichtlinie sowie die EU-INSPIRE-Richtlinie eine wichtige Rolle. Diese Richtlinien setzen neue Maßstäbe für die öffentliche Verbreitung behördlicher Umweltinformationen bzw. den Aufbau der dafür notwendigen informationstechnischen Infrastrukturen.</p>
             </content>
         </section>
         <section help-key="about-2">
-            <header>Die Betreiber von UP-SH</header>
+            <header>Die Betreiber</header>
             <content>
-                <p>Das Umweltportal wird vom Schleswig-Holstein betrieben. Wir sind darum bemüht, das System kontinuierlich zu erweitern und zu verbessern. Bei Fragen und Verbesserungsvorschlägen nutzen Sie bitte unser <a href="/kontakt">Kontaktformular</a>.</p>
+                <p>Das Portal wird vom Schleswig-Holsteinischen Ministerium für Energiewende, Landwirtschaft, Umwelt, Natur und Digitalisierung betrieben. Wir sind bemüht, das System kontinuierlich auszubauen. Bei Fragen und Verbesserungsvorschlägen nutzen Sie bitte das Kontaktformular.</p>
             </content>
         </section>
         <section help-key="about-4">
             <header>Informationsquellen in UP-SH</header>
             <content>
-                <p>Das Umweltportal Schleswig-Holstein ist ein komfortables und benutzerfreundliches Tor zu Umweltinformationen im Internet. Im Gegensatz zu den meisten Portalen und Suchmaschinen erfasst das Umweltportal Schleswig-Holstein nicht nur Webseiten, Textdokumente und andere Internetformate, sondern greift auch auf Datenbanken und Fachinformationssysteme zu.</p>
+                <p>Das Umweltportal Schleswig-Holstein wird durch unterschiedliche Datenquellen mit Inhalten versorgt. Einer der wesentlichen Datenquellen ist jedoch das DataWareHouse, dass einen fachübergreifenden Datenpool bereithält. Aus diesem Datenpool werden z.B. die angebotenen Kartendienste oder auch die Themenportale mit aktuellen Daten beliefert.</p>
             </content>
         </section>
         <section help-key="about-5">
-            <header>Bedingungen für Nutzung und Beteiligung an UP-SH</header>
+            <header>Beteiligung an UP-SH</header>
             <content>
-                <p>Der Kreis der Informationsanbieter in Umweltportal Schleswig-Holstein beschränkt sich vorwiegend auf Behörden und behördennahe Organisationen in Deutschland. Wenn Ihre Organisation ebenfalls umweltrelevante Informationen über Umweltportal Schleswig-Holstein bereitstellen möchte, wenden Sie sich bitte an die <a href="/kontakt">Fachgruppe Umweltinformationssysteme</a> im Umweltportal Schleswig-Holstein.</p>
+                <p>Die Dateninhalte und Informationen beschränken sich vorwiegend auf den Geschäftsbereich des Ministeriums und seinen nachgeordneten Behörden. Wenn Ihre Organisation ebenfalls umweltrelevante Informationen über das Umweltportal Schleswig-Holstein bereitstellen möchte, wenden Sie sich bitte über das Kontaktformular an uns.</p>
             </content>
         </section>
         <section help-key="about-6">
