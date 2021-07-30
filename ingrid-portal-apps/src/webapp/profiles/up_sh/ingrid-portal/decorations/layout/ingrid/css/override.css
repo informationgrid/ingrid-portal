@@ -105,10 +105,10 @@ a.icon:hover {
   border: 1px solid #003064;
   background-color: #E5EAEf;
 }
-.button.round:hover, .button.round:focus {
-  color: #003064;
-  border: 1px solid #003064;
-  background-color: #BCC0C4;
+.input-search .button.round:hover, .button.round:focus {
+  color: #FFFFFF;
+  border: 1px solid #D4004B;
+  background-color: #D4004B;
 }
 .button.outline {
   color: #003064;
@@ -971,6 +971,11 @@ footer .footer .copyright span, .footer-menu-entries .icon span {
 }
 .results-index .row {
   align-items: center;
+}
+.input-search .field {
+  font-family: AvenirNextLTPro-Regular, sans-serif;
+  border-radius: 0;
+  box-shadow: unset;
 }
 .control--radio .control__indicator {
   border-radius: 0;
