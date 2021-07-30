@@ -23,8 +23,11 @@
 body {
   font-family: AvenirNextLTPro-Regular, sans-serif;
 }
-
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+.bx-bot-xs {
+  border-radius: 0;
+  box-shadow: unset;
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, b {
   font-family: AvenirNextLTPro-Demi, sans-serif;
 }
 p.intro {
@@ -86,6 +89,7 @@ a.icon:hover {
   top: 0;
 }
 .button {
+  border-radius: 0;
   font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif;
   font-weight: bold;
   background-color: #003064;
@@ -115,7 +119,7 @@ a.icon:hover {
   background-color: #003064;
 }
 .input-search .button:hover {
-  background-color: #004188;
+  background-color: #D4004B;
 }
 .input-search .button.round {
   background-color: #003064;
@@ -165,7 +169,7 @@ header a.icon.is-selected {
 }
 .header-menu a.is-active {
   color: white;
-  background-color: #003064;
+  background-color: #D4004B;
 }
 .header-menu-close .button {
   background-color: #003064;
@@ -182,6 +186,8 @@ header a.icon.is-selected {
   color: #FFFFFF;
   font-weight: normal;
   background-color: #003064;
+  margin-left: 20px;
+  border: unset;
 }
 .menu-sub-links a:hover, .menu-sub-links .button.logout:hover,
 .menu-sub-links a:focus, .menu-sub-links .button.logout:focus {
@@ -189,7 +195,7 @@ header a.icon.is-selected {
   color: #FFFFFF;
 }
 .menu-sub-links .login_user {
-  font-family: Arial, sans-serif;
+  font-family: AvenirNextLTPro-Demi, sans-serif;
   color: #003064;
 }
 .banner {
@@ -258,7 +264,7 @@ header a.icon.is-selected {
 .accordion-content .boxes a.icon {
   border-bottom: 1px dotted #c6cfe2;
   display: block;
-  padding: 15px 0;
+  padding: 15px 0 15px 10px;
   margin: -8px 0 8px;
   line-height: 1;
 }
@@ -379,8 +385,13 @@ header a.icon.is-selected {
   border: 1px solid #012D47;
 }
 .button.pill {
-  color: #FFFFFF !important;
+  line-height: 1.5;
+  border-radius: 0;
+  color: #FFFFFF;
   background-color: #003064;
+}
+.button.outline.pill span {
+  color: #FFFFFF;
 }
 .button.outline.pill {
   margin-right: 5px;
@@ -438,6 +449,7 @@ footer hr {
 }
 
 .select2-container--default .select2-selection--single::after {
+  padding-right: 10px;
   color: #003064;
 }
 .form-element .control {
@@ -554,7 +566,7 @@ footer hr {
   margin-bottom: 48px;
 }
 .document-list a {
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: AvenirNextLTPro-Regular, sans-serif;
 }
 .text-list {
   margin-bottom: 48px;
@@ -731,6 +743,11 @@ ul li::before, .ic-ic-arrow, .link-list a span.ic-ic-arrow {
   color: #003064;
 }
 
+/* menu */
+.menu-main-links, .menu-sub-links {
+  padding: 25px 0 25px 0;
+}
+
 /* header */
 @media print, screen and (max-width: 35em) {
   header .row .columns {
@@ -813,14 +830,19 @@ a img[title='SNS'] {
   margin: 14px 0 0 0;
 }
 .menu-main-links a, .header-menu a {
-  font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif !important;
+  font-family: AvenirNextLTPro-Regular, sans-serif !important;
   color: #003064;
 }
+.header-menu-open .button, .header-menu-close .button {
+  border-radius: 5px;
+}
 .menu-main-links a.header-menu-entry {
-  padding: 14px 24px 10px;
+  border-radius: 0;
+  padding: 14px 20px 10px 30px;
 }
 .header-menu a {
-  padding: 10px 24px 7px;
+  border-radius: 0;
+  padding: 10px 20px 7px 30px;
 }
 
 /* search simple */
@@ -929,15 +951,13 @@ footer .footer .row .columns {
 }
 .footer-menu-entries .icon span {
   font-size: 15px;
-  font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif;
   transition: color 0.2s ease-out;
-  color: #FFFFFF;
 }
 .footer-menu-entries .icon:hover span {
   color: #011e4a;
 }
-footer .footer .copyright span {
-  font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif;
+footer .footer .copyright span, .footer-menu-entries .icon span {
+  font-family: AvenirNextLTPro-Regular, sans-serif;
   color: #FFFFFF;
 }
 
@@ -964,7 +984,7 @@ h6 {
   background-size: cover;
 }
 .input-search .input-search-field {
-  font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif;
+  font-family: AvenirNextLTPro-Regular, sans-serif;
   background-color: #FFFFFF;
   border-radius: 0;
   border: 0;
@@ -982,9 +1002,16 @@ h6 {
   .teaser-data {
     min-height: 330px;
   }
+  .teaser-data-projects {
+    border-radius: 0;
+    margin: 30px 0 0;
+  }
+  .teaser-data-projects li {
+    margin-bottom: 15px;
+  }
 }
 .teaser-data:hover {
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 .teaser-data p {
   color: #666;
@@ -993,10 +1020,15 @@ h6 {
   color: #003064;
 }
 .button.pill[type="reset"] {
-  background-color: #C6C6C6;
+  color: #003064;
+  background-color: #F0F2F4;
+}
+.button.pill[type="reset"] span {
+  margin-left: 0;
+  padding-top: 2px;
 }
 .button.pill:hover[type="reset"] {
-  background-color: #666666;
+  background-color: #D4004B;
 }
 .button.small {
   border-radius: 0;
@@ -1016,10 +1048,33 @@ h6 {
   background-color: #f5f5f5;
 }
 .filters-active {
-  margin-bottom: 10px;
+  display: flex;
+  margin: 15px 0 5px;
+}
+.filters-active a {
+  display: flex;
+  align-items: center;
 }
 .results-index {
   margin-bottom: 10px;
+}
+.nested-group .accordion-content, .nested-group {
+  background: #F0F2F4;
+}
+.nested-group .accordion-title {
+  font-family: AvenirNextLTPro-Demi, sans-serif;
+}
+.accordion-item:first-child > :first-child, :last-child:not(.is-active) > .accordion-title, .accordion-title {
+  border-radius: 0 !important;
+}
+.similar-accordion .nested-group-sub .accordion-item.is-active {
+  box-shadow: unset;
+}
+.nested-group .accordion-item:last-child > :last-child {
+  border-radius: 0;
+}
+.nested-group .accordion-item:hover {
+  box-shadow: unset;
 }
 @media screen and (min-width: 78em) {
   .teaser-data .data-text {
@@ -1085,23 +1140,54 @@ h6 {
 h4, h5 {
   color: #3a566d;
 }
-
+.select2-selection.select2-selection--single {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #1D4B7B;
+  border-radius: 0;
+  box-shadow: unset;
+}
+.select2-selection--single::after {
+  position: unset !important;
+}
+.select2-selection--single span {
+  margin-top: 2px;
+  padding-right: 0 !important;
+  flex: 1;
+  font-family: AvenirNextLTPro-Regular, sans-serif !important;
+  line-height: 1 !important;
+}
+.select2-container--default.select2-container--open.select2-container--below .select2-selection.select2-selection--single,
+ul.select2-results__options {
+  box-shadow: unset;
+  border-radius: 0;
+}
+.select2-results__option {
+  padding: 2px 16px !important;
+}
 .js-expander-toggle-all {
   display: flex;
   align-items: center;
   margin-top: 0;
 }
+.js-expander-toggle-all a.icon {
+  border: 1px solid #1D4B7B;
+}
 .js-toggle-all-expander-collapse,
 .js-toggle-all-expander-expand {
   display: flex;
 }
-
+.js-expander-toggle-all a.icon:first-child,
+.js-expander-toggle-all a.icon:last-child {
+  padding: 8px 16px;
+  border-radius: 0;
+}
 .js-expander-toggle-all a.icon:hover,
 .js-expander-toggle-all a.icon.is-active {
   background: #1D4B7B;
   color: #FFFFFF;
 }
-
 .js-expander-toggle-all a.icon:hover span[class^="ic-"],
 .js-expander-toggle-all a.icon.is-active span[class^="ic-"] {
   color: #FFFFFF;
@@ -1119,8 +1205,13 @@ span.icon span {
 }
 
 /* detail page */
-.slab-bold, .table.table--lined table th {
-  font-family: AvenirNextLTPro-Demi, Arial, Times, sans-serif !important;
+.slab-bold, .table.table--lined table th
+, .search-filtered .table.list table tr td:first-child,
+.search-filtered .table.list .list_entry {
+  font-family: AvenirNextLTPro-Demi, sans-serif !important;
+}
+.search-filtered .table table a:not(.button) {
+  font-family: AvenirNextLTPro-Regular, sans-serif;
 }
 .detail h2 {
   color: #003064;
@@ -1148,6 +1239,9 @@ span.icon span {
 }
 .detail .banner-noimage {
   padding: 0 0 54px 0;
+}
+.filter .nav-group .accordion-item .accordion-title {
+  border-radius: 0 !important;
 }
 @media print, screen and (max-width: 63.9375em) {
   .detail .banner-noimage {
@@ -1195,9 +1289,9 @@ span.icon span {
 
 /* catalogue */
 .accordion-title {
-  font-family: AvenirNextLTPro-Demi, Arial, Times, sans-serif;
+  font-family: AvenirNextLTPro-Demi, sans-serif;
   color: #003064;
-  background-color: #F6F6F6;
+  background-color: #F0F2F4;
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
 }
 .accordion-title:hover, .accordion-title:focus {
