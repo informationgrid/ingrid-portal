@@ -13,6 +13,9 @@
           <action type="add" dev="wemove" issue="2609">
             Messwerteclient: "Zurück zur Kartenansicht" zeigt nicht den letzten Kartenausschnitt an
           </action>
+          <action type="add" dev="wemove" issue="2609">
+            IGE: update preview images upload with file extension restriction
+          </action>
         </release>
 
         <release version="5.9.0" date="2021-07-16" description="Release 5.9.0">

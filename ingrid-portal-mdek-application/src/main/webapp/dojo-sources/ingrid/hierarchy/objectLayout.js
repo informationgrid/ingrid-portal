@@ -2675,7 +2675,7 @@ define([
                 // create uploader instance
                 var uploader = new UploadWidget({
                     uploadUrl: "rest/document",
-                    acceptFiles: "image/gif,image/jpeg,image/png,image/svg+xml,image/tiff,image/webp,image/bmp,image/vnd.microsoft.icon"
+                    acceptFiles: "image/gif,image/jpeg,image/png,image/svg+xml,image/webp,image/bmp,image/vnd.microsoft.icon"
                 });
 
                 on(dom.byId("generalPreviewImageTableLink"), "click", lang.hitch(this, function() {
