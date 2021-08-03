@@ -401,3 +401,26 @@ function checkPassword(pwd, idMeter, idText) {
         meter.style.display = 'none';
     }
 }
+
+function updateQueryStringParameter(key, value) {
+  var uri = window.parent.location.href;
+  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  if (uri.match(re)) {
+    uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+  }
+  else {
+    uri = uri + separator + key + "=" + value;
+  }
+  window.history.pushState(null,null, uri);
+}
+
+function getQueryStringParameter(key) {
+    var url = window.parent.location.href;
+    key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+key+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( url );
+    return results == null ? null : results[1];
+
+}
