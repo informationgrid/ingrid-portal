@@ -189,6 +189,13 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                 DisplayTreeNode plugsRoot = (DisplayTreeNode) ps.get("plugsRoot");
                 plugsRoot = openNodesByParameter(plugsRoot, tmpOpenNodes);
                 ps.put("plugsRoot", plugsRoot);
+            } else {
+                ArrayList<String> paramDefaultOpenNodes = new ArrayList<>();
+                DisplayTreeNode plugsRoot = (DisplayTreeNode) ps.get("plugsRoot");
+                getOpenNodes(plugsRoot, paramDefaultOpenNodes);
+                if(!paramDefaultOpenNodes.isEmpty()) {
+                    context.put("openNodes", paramDefaultOpenNodes.toString());
+                }
             }
         }
         response.setTitle(messages.getString("searchCatHierarchy.portlet.title"));
@@ -349,4 +356,14 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         return node;
     }
 
+    private void getOpenNodes(DisplayTreeNode node, ArrayList<String> openNodes) {
+        ArrayList list = (ArrayList) node.getChildren();
+        for (int i = 0; i < list.size(); i++) {
+            DisplayTreeNode subNode = (DisplayTreeNode) list.get(i);
+            if(subNode.isOpen()) {
+                openNodes.add("'" + subNode.get("level") + "-" + subNode.getId() + "'");
+                getOpenNodes(subNode, openNodes);
+            }
+        }
+    }
 }
