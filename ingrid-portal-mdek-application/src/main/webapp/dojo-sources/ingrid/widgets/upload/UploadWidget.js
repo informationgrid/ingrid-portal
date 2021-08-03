@@ -354,8 +354,8 @@ define([
                                     (errorData.usedSize ? " Inklusive dieser Datei belegt der Metadatensatz " + this.fileSize(errorData.usedSize) + "." : ""),
                                 401: "Sie haben keine Berechtigung für den Upload. Eventuell ist die Session abgelaufen.",
                                 409: "Die Datei existiert bereits.",
-                                422: "Das Hochladen von Dateien im " + errorData.invalidExtension + " Format ist nicht erlaubt. Zugelassene Dateiformaten sind: "
-                                    + errorData.allowedExtensions.join(", ") +  ".",
+                                422: "Das Hochladen von Dateien im " + errorData.invalidExtension + " Format ist nicht erlaubt. Zugelassene Dateiformaten sind: " +
+                                    this.formatExtensions(errorData.allowedExtensions) +  ".",
                                 "default": "Beim Upload ist ein Fehler aufgetreten."
                             };
                             var message = messages[status] ? messages[status] : messages["default"];
@@ -584,6 +584,13 @@ define([
         fileSize: function(size) {
             var i = size == 0 ? 0 : Math.floor(Math.log(size)/Math.log(1024));
             return (size/Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+        },
+
+        /**
+         * Formatted allowed file extensions for message
+         */
+        formatExtensions: function(extensions) {
+            return extensions !== undefined ? extensions.join(", ") : extensions;
         }
     });
 });
