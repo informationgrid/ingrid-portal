@@ -13,6 +13,9 @@
           <action type="add" dev="wemove" issue="2609">
             Messwerteclient: "Zurück zur Kartenansicht" zeigt nicht den letzten Kartenausschnitt an
           </action>
+          <action type="update" dev="wemove" issue="2610">
+            PORTAL: Katalogansicht dynamisch aufbauen (ohne Reload der Portalseite)
+          </action>
           <action type="add" dev="wemove" issue="2609">
             IGE: update preview images upload with file extension restriction
           </action>
