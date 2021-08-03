@@ -254,7 +254,7 @@
 
                                         if (leaf.expandable) {
                                             leafsHtml = leafsHtml + '<ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >';
-                                            leafsHtml = leafsHtml + '<li class="accordion-item is-active">';
+                                            leafsHtml = leafsHtml + '<li class="accordion-item">';
                                             leafsHtml = leafsHtml + '<div class="accordion-item-sub">';
                                             leafsHtml = leafsHtml + '<span class="icon">';
                                             leafsHtml = leafsHtml + '<a id="' + leafLevel + '-' + leafId + '" href="#' + leafLevel + '-' + leafId + '" onclick="updateLeaf(\'' + leafLevel + '-' + leafId + '\', true, event)" class="ic-ic-plus"></a>';
