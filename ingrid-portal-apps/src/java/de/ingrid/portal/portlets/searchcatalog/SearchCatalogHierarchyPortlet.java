@@ -173,11 +173,16 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             if (openNodesInitial > 0) {
                 ArrayList<String> paramDefaultOpenNodes = new ArrayList<>();
                 openNodesUntilHierarchyLevel(plugsRoot, plugsRoot, paramDefaultOpenNodes);
-                if(paramOpenNodes == null || paramOpenNodes.isEmpty()) {
+                if(paramOpenNodes == null) {
                     if(!paramDefaultOpenNodes.isEmpty()) {
                         context.put("openNodes", paramDefaultOpenNodes.toString());
                     }
                 } else {
+                    ArrayList<String> tmpOpenNodes = new ArrayList<String>(Arrays.asList(paramOpenNodes.split(",")));
+                    plugsRoot = openNodesByParameter(plugsRoot, tmpOpenNodes);
+                }
+            } else {
+                if(paramOpenNodes != null) {
                     ArrayList<String> tmpOpenNodes = new ArrayList<String>(Arrays.asList(paramOpenNodes.split(",")));
                     plugsRoot = openNodesByParameter(plugsRoot, tmpOpenNodes);
                 }

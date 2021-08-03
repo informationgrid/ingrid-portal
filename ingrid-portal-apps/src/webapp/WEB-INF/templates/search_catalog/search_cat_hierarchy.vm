@@ -157,7 +157,7 @@
         if (element) {
             var parent = element.parent();
             if (parent) {
-                var leafContent = parent.parent().find('.tree__content');
+                var leafContent = parent.parent().find('.tree__content').first();
                 if(updateParams) {
                     if (parent.hasClass('is-active')) {
                         parent.removeClass('is-active');
