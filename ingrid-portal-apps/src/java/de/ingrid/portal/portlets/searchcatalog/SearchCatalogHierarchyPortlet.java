@@ -189,7 +189,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             }
             ps.put("plugsRoot", plugsRoot);
         } else {
-            if (paramOpenNodes != null && !paramOpenNodes.isEmpty()) {
+            if (paramOpenNodes != null) {
                 ArrayList<String> tmpOpenNodes = new ArrayList<String>(Arrays.asList(paramOpenNodes.split(",")));
                 DisplayTreeNode plugsRoot = (DisplayTreeNode) ps.get("plugsRoot");
                 plugsRoot = openNodesByParameter(plugsRoot, tmpOpenNodes);
