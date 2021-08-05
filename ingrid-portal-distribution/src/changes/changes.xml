@@ -19,7 +19,7 @@
           <action type="fix" dev="wemove" issue="2667">
             UVP: Bauleitplaunungsseite BB führt zu leeren Ergebnissen
           </action>
-          <action type="add" dev="wemove" issue="2609">
+          <action type="fix" dev="wemove" issue="1667">
             IGE: update preview images upload with file extension restriction
           </action>
         </release>
