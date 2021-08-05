@@ -98,7 +98,6 @@
             }
             for(var filterParamIndex in filterParams) {
                 var filterParam = filterParams[filterParamIndex];
-                var functions = [];
                 for(var nodeIndex in filterParam) {
                     var nodeId = filterParam[nodeIndex];
                     updateLeafWaiting(nodeId, 0);
@@ -261,6 +260,11 @@
                             }
                         }
                         updateQueryStringParameter(param, params);
+                    }
+                } else {
+                    parent.addClass('is-active');
+                    if(leafContent.length !== 0) {
+                        leafContent.css('display', 'block');
                     }
                 }
                 if(leafContent.length !== 0 && leafContent.children().length > 0) {

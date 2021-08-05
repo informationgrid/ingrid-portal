@@ -113,7 +113,6 @@
             }
             for(var filterParamIndex in filterParams) {
                 var filterParam = filterParams[filterParamIndex];
-                var functions = [];
                 for(var nodeIndex in filterParam) {
                     var nodeId = filterParam[nodeIndex];
                     updateLeafWaiting(nodeId, 0);
