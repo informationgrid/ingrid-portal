@@ -273,7 +273,6 @@
             }
         }
         if (!hasLeafContent) {
-            var http = new XMLHttpRequest();
             jQuery.ajax({
                 url: url+ '?id=' + encodeURIComponent(id)
             }).done(function( data ) {
