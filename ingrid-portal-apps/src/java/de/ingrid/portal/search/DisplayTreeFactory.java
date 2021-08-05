@@ -41,6 +41,7 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -262,7 +263,7 @@ public class DisplayTreeFactory {
                     String partnerName = partnerNameBuffer.toString();
                     if (partnerNode == null || 
                             !partnerNode.getName().equals(partnerName)) {
-                        partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);
+                        partnerNode = new DisplayTreeNode(Utils.getMD5Hash(partnerName), partnerName, false);
                         partnerNode.setType(DisplayTreeNode.GENERIC);
                         partnerNode.put(NODE_LEVEL, 1);
                         partnerNode.put(NODE_EXPANDABLE, true);
@@ -278,7 +279,7 @@ public class DisplayTreeFactory {
                     String catalogName = plug.getDataSourceName();
                     if (catalogNode == null || 
                             !catalogNode.getName().equals(catalogName)) {
-                        catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);
+                        catalogNode = new DisplayTreeNode(Utils.getMD5Hash(catalogName + plug.getPlugId()), catalogName, false);
                         catalogNode.setType(DisplayTreeNode.GENERIC);
                         catalogNode.put(NODE_LEVEL, 2);
                         catalogNode.put(NODE_EXPANDABLE, true);
@@ -350,7 +351,7 @@ public class DisplayTreeFactory {
     }
 
     private static void addTreeNode(DisplayTreeNode root, String name, Object type, String plugId, DisplayTreeNode catalogNode) {
-        DisplayTreeNode node = new DisplayTreeNode("" + root.getNextId(), name, false);
+        DisplayTreeNode node = new DisplayTreeNode(Utils.getMD5Hash(name + plugId), name, false);
         node.setType(DisplayTreeNode.GENERIC);
         node.put(NODE_LEVEL, 3);
         // only "plugid", no "docid" !
@@ -428,7 +429,7 @@ public class DisplayTreeFactory {
             // check whether child node has children as well -> request only 1 child !
             boolean hasChildren = ctdp.hasChildren(udkDocId, plugId, plugType);
             
-            DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), nodeName, false);
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + udkDocId), nodeName, false);
             childNode.setType(DisplayTreeNode.GENERIC);
             childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);
@@ -446,7 +447,7 @@ public class DisplayTreeFactory {
             }
         }
         if (!freeAddresses.isEmpty()) {
-            DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), "searchCatHierarchy.tree.addresses.free", false);
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), "searchCatHierarchy.tree.addresses.free", false);
             childNode.setType(DisplayTreeNode.GENERIC);
             childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);
@@ -538,7 +539,7 @@ public class DisplayTreeFactory {
             // check whether child node has children as well -> request only 1 child !
             boolean hasChildren = ctdp.hasChildren(udkDocId, plugId, plugType);
             
-            DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), nodeName, false);
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + udkDocId), nodeName, false);
             childNode.setType(DisplayTreeNode.GENERIC);
             childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);
@@ -558,7 +559,7 @@ public class DisplayTreeFactory {
             }
         }
         if (!freeAddresses.isEmpty()) {
-            DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), "searchCatHierarchy.tree.addresses.free", false);
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), "searchCatHierarchy.tree.addresses.free", false);
             childNode.setType(DisplayTreeNode.GENERIC);
             childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);

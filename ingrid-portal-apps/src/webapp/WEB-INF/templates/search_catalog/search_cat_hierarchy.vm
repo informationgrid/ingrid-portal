@@ -91,10 +91,32 @@
         var params = getQueryStringParameter(param);
         if (params) {
             var paramsSplit = params.split(',');
+            paramsSplit.sort(function(a, b){
+                if(a < b) { return -1; }
+                if(a > b) { return 1; }
+                return 0;
+            });
+
+            var filterParams = [];
+            var paramIndex;
+
             for(var paramsSplitIndex in paramsSplit) {
                 var nodeId = paramsSplit[paramsSplitIndex];
-                if(nodeId) {
-                    updateLeaf(nodeId, false);
+                var nodeLevel = nodeId.split('-')[0];
+                if(!paramIndex || nodeLevel !== paramIndex) {
+                    paramIndex = nodeLevel;
+                    var filter = paramsSplit.filter(function(e){
+                        return e.indexOf(paramIndex) === 0; 
+                    })
+                    filterParams.push(filter);
+                }
+            }
+            for(var filterParamIndex in filterParams) {
+                var filterParam = filterParams[filterParamIndex];
+                var functions = [];
+                for(var nodeIndex in filterParam) {
+                    var nodeId = filterParam[nodeIndex];
+                    updateLeafWaiting(nodeId, 0);
                 }
             }
         } else {
@@ -107,11 +129,28 @@
         }
     }
 
+    function updateLeafWaiting(nodeId, attempt){
+        attempt = attempt + 1;
+        jQuery.when( $('#' + nodeId).length > 0).then(function(exists){
+            if(exists){
+                updateLeaf(nodeId, false);
+            } else {
+                if(attempt < 20) {
+                    setTimeout(function(){ 
+                        updateLeafWaiting(nodeId , attempt); 
+                    }, 1000);
+                } else {
+                    console.log(attempt + ' attempts for node:' + nodeId); 
+                }
+            }
+        });
+    }
+
     function getLeafIcon(udkClass, type) {
         if(udkClass) {
             if(udkClass !== '1000') {
                 if (type === 'dsc_ecs') {
-                    if(udkClass == "0") {
+                    if(udkClass === '0') {
                         return '<use xlink:href="#checklist"/>'
                     } else if(udkClass === '1') {
                         return '<use xlink:href="#globe"/>';
@@ -127,7 +166,7 @@
                         return '<use xlink:href="#molecule"/>';
                     }
                 } else {
-                    if(udkClass == "0") {
+                    if(udkClass === '0') {
                         return '<use xlink:href="#building"/>'
                     } else if(udkClass === '1') {
                         return '<use xlink:href="#group"/>';
@@ -188,6 +227,9 @@
                     }
                 } else {
                     parent.addClass('is-active');
+                    if(leafContent.length !== 0) {
+                        leafContent.removeClass('is-hidden');
+                    }
                 }
                 if(leafContent.length !== 0 && leafContent.children().length > 0) {
                     hasLeafContent = true;
@@ -200,69 +242,62 @@
         }
         if (!hasLeafContent) {
             var http = new XMLHttpRequest();
-            http.open('GET', url+ '?id=' + encodeURIComponent(id), true);
-            http.onreadystatechange = function() {
-                if (this.readyState == this.DONE) {
-                    if (this.status === 200) {
-                        if(this.response){
-                            const leafs = JSON.parse(this.response);
-                            var leafsHtml = '';
-                            if (leafs.length > 0) {
-                                for (var leafsIndex in leafs) {
-                                    var leaf = leafs[leafsIndex];
-                                    if(leaf){
-                                        var leafId = leaf.id;
-                                        var leafLevel = leaf.level;
-                                        var leafTitle = leaf.udk_class_value;
-                                        var leafName = leaf.name;
-                                        var leafPlugId = leaf.plugId;
-                                        var leafDocId = leaf.docId;
-                                        var leafUdkClass = leaf.udk_class;
-                                        var leafIcon = getLeafIcon(leaf.udk_class, leaf.plugType, leafTitle, leafName);
+            jQuery.ajax({
+                url: url+ '?id=' + encodeURIComponent(id)
+            }).done(function( data ) {
+                const leafs = data;
+                var leafsHtml = '';
+                if (leafs.length > 0) {
+                    for (var leafsIndex in leafs) {
+                        var leaf = leafs[leafsIndex];
+                        if(leaf){
+                            var leafId = leaf.id;
+                            var leafLevel = leaf.level;
+                            var leafTitle = leaf.udk_class_value;
+                            var leafName = leaf.name;
+                            var leafPlugId = leaf.plugId;
+                            var leafDocId = leaf.docId;
+                            var leafUdkClass = leaf.udk_class;
+                            var leafIcon = getLeafIcon(leaf.udk_class, leaf.plugType, leafTitle, leafName);
 
-                                        leafsHtml = leafsHtml + '<ul class="js-accordion-multi">';
-                                        leafsHtml = leafsHtml + '<li class="tree__item tree__toggle">';
-                                        if (leaf.expandable) {
-                                            leafsHtml = leafsHtml + '<a id="' + leafLevel + '-' + leafId + '" href="#' + leafLevel + '-' + leafId + '" onclick="updateLeaf(\'' + leafLevel + '-' + leafId + '\', true, event)">';
-                                            leafsHtml = leafsHtml + '<svg class="tree__toggle__icon icon">';
-                                            leafsHtml = leafsHtml + '<use xlink:href="#plus"/>';
-                                            leafsHtml = leafsHtml + '</svg>';
-                                            leafsHtml = leafsHtml + '<svg class="tree__toggle__icon icon">';
-                                            leafsHtml = leafsHtml + '<use xlink:href="#minus"/>';
-                                            leafsHtml = leafsHtml + '</svg>';
-                                            leafsHtml = leafsHtml + '</a>';
-                                        }
-                                        if (leafTitle) {
-                                            leafsHtml = leafsHtml + '<svg class="icon globe__icon">';
-                                            leafsHtml = leafsHtml + '<title>' + leafTitle + '</title>';
-                                            leafsHtml = leafsHtml + leafIcon;
-                                            leafsHtml = leafsHtml + '</svg>';
-                                        }
-                                        if(leafUdkClass !== '1000') {
-                                            leafsHtml = leafsHtml + '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=' + leafPlugId + '&amp;docuuid=' + leafDocId + '"> ' + leafName + ' </a>';
-                                        } else {
-                                            leafsHtml = leafsHtml + leafName;
-                                        }
-                                        leafsHtml = leafsHtml + '</li>';
-                                        if (leaf.expandable) {
-                                            leafsHtml = leafsHtml + '<li class="tree__content js-accordion-content is-hidden"></li>';
-                                        }
-                                        leafsHtml = leafsHtml + '</ul>';
-                                    }
-                                }
-                                if (leafsHtml.length > 0) {
-                                    leafContent.empty();
-                                    $(leafsHtml).appendTo(leafContent);
-                                }
-                            } else {
-                                leafContent.empty();
+                            leafsHtml = leafsHtml + '<ul class="js-accordion-multi">';
+                            leafsHtml = leafsHtml + '<li class="tree__item tree__toggle">';
+                            if (leaf.expandable) {
+                                leafsHtml = leafsHtml + '<a id="' + leafLevel + '-' + leafId + '" href="#' + leafLevel + '-' + leafId + '" onclick="updateLeaf(\'' + leafLevel + '-' + leafId + '\', true, event)">';
+                                leafsHtml = leafsHtml + '<svg class="tree__toggle__icon icon">';
+                                leafsHtml = leafsHtml + '<use xlink:href="#plus"/>';
+                                leafsHtml = leafsHtml + '</svg>';
+                                leafsHtml = leafsHtml + '<svg class="tree__toggle__icon icon">';
+                                leafsHtml = leafsHtml + '<use xlink:href="#minus"/>';
+                                leafsHtml = leafsHtml + '</svg>';
+                                leafsHtml = leafsHtml + '</a>';
                             }
+                            if (leafTitle) {
+                                leafsHtml = leafsHtml + '<svg class="icon globe__icon">';
+                                leafsHtml = leafsHtml + '<title>' + leafTitle + '</title>';
+                                leafsHtml = leafsHtml + leafIcon;
+                                leafsHtml = leafsHtml + '</svg>';
+                            }
+                            if(leafUdkClass !== '1000') {
+                                leafsHtml = leafsHtml + '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=' + leafPlugId + '&amp;docuuid=' + leafDocId + '"> ' + leafName + ' </a>';
+                            } else {
+                                leafsHtml = leafsHtml + leafName;
+                            }
+                            leafsHtml = leafsHtml + '</li>';
+                            if (leaf.expandable) {
+                                leafsHtml = leafsHtml + '<li class="tree__content js-accordion-content is-hidden"></li>';
+                            }
+                            leafsHtml = leafsHtml + '</ul>';
                         }
                     }
+                    if (leafsHtml.length > 0) {
+                        leafContent.empty();
+                        $(leafsHtml).appendTo(leafContent);
+                    }
+                } else {
+                    leafContent.empty();
                 }
-            };
-            http.send();
-            return ('');
+            });
         }
     }
 </script>

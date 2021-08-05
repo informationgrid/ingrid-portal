@@ -181,11 +181,6 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                     ArrayList<String> tmpOpenNodes = new ArrayList<String>(Arrays.asList(paramOpenNodes.split(",")));
                     plugsRoot = openNodesByParameter(plugsRoot, tmpOpenNodes);
                 }
-            } else {
-                if(paramOpenNodes != null) {
-                    ArrayList<String> tmpOpenNodes = new ArrayList<String>(Arrays.asList(paramOpenNodes.split(",")));
-                    plugsRoot = openNodesByParameter(plugsRoot, tmpOpenNodes);
-                }
             }
             ps.put("plugsRoot", plugsRoot);
         } else {
@@ -300,6 +295,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                 return values.toString();
             }
             
+        } else {
+            openNode(rootNode, nodeId);
         }
         return value;
     }
