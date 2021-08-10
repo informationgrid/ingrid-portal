@@ -95,10 +95,10 @@ a.icon:hover {
   background-color: #003064;
 }
 .button:hover {
-  background-color: #004188;
+  background-color: #D4004B;
 }
 .button:focus {
-  background-color: #003064;
+  background-color: #D4004B;
 }
 .button.round {
   color: #003064;
@@ -170,9 +170,6 @@ header a.icon.is-selected {
 .header-menu a.is-active {
   color: white;
   background-color: #D4004B;
-}
-.header-menu-close .button {
-  background-color: #003064;
 }
 .menu-main-links a:hover, .menu-main-links .button.logout:hover,
 .menu-main-links a:focus, .menu-main-links .button.logout:focus {
@@ -291,7 +288,6 @@ header a.icon.is-selected {
   left: 1px;
 }
 .teaser-data .header {
-  font-weight: 700 !important;
   color: #003064;
 }
 .teaser-data .header:hover, .teaser-data .arrow:hover,
@@ -836,6 +832,12 @@ a img[title='SNS'] {
 .header-menu-open .button, .header-menu-close .button {
   border-radius: 5px;
 }
+.header-menu-close .button {
+  background-color: #D4004B;
+}
+.menu-sub-links .button.logout:hover {
+  background-color: #D4004B;
+}
 .menu-main-links a.header-menu-entry {
   border-radius: 0;
   padding: 14px 20px 10px 30px;
@@ -848,7 +850,6 @@ a img[title='SNS'] {
 /* search simple */
 .banner.home h1.green, .banner.home .home-wrapper .indent span, .banner.home h1 {
   color: #FFFFFF;
-  font-weight: normal;
 }
 .home-wrapper {
   background-image: url('/decorations/layout/uvp/images/template/stage-overlay.svg') !important;
@@ -967,7 +968,9 @@ footer .footer .copyright span, .footer-menu-entries .icon span {
 }
 .results-index h3 {
   margin-bottom: 0;
-  font-weight: 700;
+}
+.search-result-hits {
+  font-weight: normal;
 }
 .results-index .row {
   align-items: center;
@@ -1204,7 +1207,9 @@ ul.select2-results__options {
 .nr-results {
   color: #3a566d;
 }
-
+a[class*="js-expander"] span.text {
+  font-family:AvenirNextLTPro-Demi, sans-serif;
+}
 span.icon span {
   color: #085468;
 }
@@ -1260,6 +1265,13 @@ span.icon span {
   h2 .anchor span {
     top: 0px;
   }
+}
+.detail .banner-noimage .helper.icon .text-normal, .teaser-data.search .helper.date
+, .teaser-data.search .js-expander-content a.icon .text {
+  font-family: AvenirNextLTPro-Regular, sans-serif;
+}
+.helper, .helper.icon.info span.text {
+  font-family: AvenirNextLTPro-Demi, sans-serif;
 }
 
 /* help page */
@@ -1428,6 +1440,22 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
 .text-box p {
   font-size: 15px;
   margin-bottom: 25px;
+}
+
+/* contact formular */
+.form-element textarea, .form-element input {
+  border-radius: 0;
+  border: 1px solid #f2f2f2;
+  background: #f4f6f5;
+  box-shadow: none;
+}
+.form-element textarea:focus, .form-element input:focus {
+  border: 1px solid #003064;
+  background-color: #fff;
+  box-shadow: 0 0 5px #c6cfe2;
+}
+.form-element label {
+  font-family: AvenirNextLTPro-Regular, sans-serif;
 }
 
 /* pagination */
