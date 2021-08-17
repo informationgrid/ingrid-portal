@@ -2452,6 +2452,12 @@ public class UtilsFacete {
                     }
                     query.remove("provider");
                 }
+                if(query.get("iplugs") != null){
+                    for(FieldQuery tmp : (ArrayList<FieldQuery>)query.get("iplugs")){
+                        originClause.addField(tmp);
+                    }
+                    query.remove("iplugs");
+                }
 
                 query.addClause(originClause);
             }
