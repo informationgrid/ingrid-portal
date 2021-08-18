@@ -99,6 +99,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     public IngridHit[] getSimilarTerms(String term, Locale language) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
+            query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARTERMS_FROM_TOPIC);
 
@@ -120,6 +121,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     public IngridHitDetail[] getSimilarDetailedTerms(String term, IngridHit[] hits) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
+            query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARTERMS_FROM_TOPIC);
 
@@ -135,6 +137,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     public IngridHitDetail[] getDetailedTopics(String term, IngridHit[] hits, int queryType) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
+            query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, queryType);
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
@@ -150,6 +153,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         try {
             String marshTopicId = SNSUtil.marshallTopicId( topicId );
         	IngridQuery query = QueryStringParser.parse(marshTopicId);
+            query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARLOCATIONS_FROM_TOPIC);
 
@@ -173,6 +177,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     		String marshalledTopicId = SNSUtil.marshallTopicId(topicId);
 
             IngridQuery query = QueryStringParser.parse(marshalledTopicId);
+            query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TOPIC);
 
@@ -202,6 +207,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     		String marshalledTopicId = SNSUtil.marshallTopicId(topicId);
 
             IngridQuery query = QueryStringParser.parse(marshalledTopicId);
+            query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.addField(new FieldQuery(true, false, "lang", "de"));
             query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_HIERACHY);
@@ -245,6 +251,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     public IngridHitDetail getDetailsTopic(IngridHit hit, String filter, Locale language) {
         try {
             IngridQuery query = new IngridQuery();
+            query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TOPIC);
             if (filter != null) {
@@ -272,6 +279,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     	try {
     		String marshalledTopicId = SNSUtil.marshallTopicId(topicId);
     		IngridQuery query = QueryStringParser.parse(marshalledTopicId);
+            query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.addField(new FieldQuery(true, false, "lang", language.getLanguage()));
             query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_ID);
