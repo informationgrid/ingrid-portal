@@ -2390,6 +2390,7 @@ public class UtilsFacete {
         }
         if(term != null){
             String _term = term;
+            term = "";
             for (IngridFacet ingridFacet : configNode){
                 if(ingridFacet.getFacets() != null){
                     term = getQuerySelection(term, ingridFacet.getQueryType(), ingridFacet.getFacets());
