@@ -20,14 +20,15 @@
  * limitations under the Licence.
  * **************************************************#
 */
-body {
+body, h4 span, h5 span {
   font-family: AvenirNextLTPro-Regular, sans-serif;
 }
 .bx-bot-xs {
   border-radius: 0;
   box-shadow: unset;
 }
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, b {
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, b
+, h3 span {
   font-family: AvenirNextLTPro-Demi, sans-serif;
 }
 p.intro {
@@ -1280,6 +1281,9 @@ span.icon span {
 }
 .ic-ic-check-circle, .ic-ic-bullet {
   color: #003064;
+}
+ul li::before {
+  font-size: 36px;
 }
 
 /* login success */
