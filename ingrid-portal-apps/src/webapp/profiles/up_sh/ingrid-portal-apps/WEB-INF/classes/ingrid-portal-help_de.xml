@@ -622,25 +622,25 @@
                 <p>Seine Funktionalität umfasst u.a.:</p>
                 <ul>
                     <li>
-                        - layerzentrierte Darstellung von Karten mit direkter Vorschau
+                        Layerzentrierte Darstellung von Karten mit direkter Vorschau
                     </li>
                     <li>
-                        - strukturiertes Angebot an Karten + Hinzufügen externer Karten
+                        Strukturiertes Angebot an Karten + Hinzufügen externer Karten
                     </li>
                     <li>
-                        - Suche nach Karten direkt auf eingebundenen Karten oder im Suchraum von InGrid (Kataloge)
+                        Suche nach Karten direkt auf eingebundenen Karten oder im Suchraum von InGrid (Kataloge)
                     </li>
                     <li>
-                        - Zeichnen und Messen auf der Karte
+                        Zeichnen und Messen auf der Karte
                     </li>
                     <li>
-                        - Vergleichsfunktionalität zwischen Layern (Slider blendet ein/aus)
+                        Vergleichsfunktionalität zwischen Layern (Slider blendet ein/aus)
                     </li>
                     <li>
-                        - Abspeichern und Teilen von Karten u.a. via QR Code
+                        Abspeichern und Teilen von Karten u.a. via QR Code
                     </li>
                     <li>
-                        - umfassende Druck Funktionalität
+                        Umfassende Druck Funktionalität
                     </li>
                 </ul>
             </content>
@@ -840,9 +840,9 @@
                         Klicken Sie auf ein Segment, positionieren Sie den neuen Punkt mit Mausklick und verschieben Sie ihn.</p>
                     <p>Das untere linke Fenster ermöglicht:
                         <ul>
-                            <li>- Linie/Fläche: Farbe Linie/Polygon ändern und eine Beschreibung (Text oder HTML) hinzuzufügen.
+                            <li>Linie/Fläche: Farbe Linie/Polygon ändern und eine Beschreibung (Text oder HTML) hinzuzufügen.
                                 Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf die Linie/Fläche sichtbar gemacht.</li>
-                            <li>- Distanz /Fläche : Angaben zu Distanz, Fläche, Azimut</li>
+                            <li>Distanz /Fläche : Angaben zu Distanz, Fläche, Azimut</li>
                         </ul>
                     </p>
                     <p>Sie können jedes Element durch Mausklick ändern.

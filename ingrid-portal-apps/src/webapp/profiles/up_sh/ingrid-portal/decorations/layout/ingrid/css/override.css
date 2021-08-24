@@ -1283,7 +1283,7 @@ span.icon span {
   color: #003064;
 }
 ul li::before {
-  font-size: 36px;
+  font-size: 30px;
 }
 
 /* login success */
