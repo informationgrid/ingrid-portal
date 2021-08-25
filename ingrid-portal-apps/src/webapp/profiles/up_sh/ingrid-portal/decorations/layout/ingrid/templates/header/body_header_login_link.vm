@@ -1,0 +1,5 @@
+#if(!$jetspeed.getLoggedOn())
+    <a href="$jetspeed.getAbsoluteUrl('/service-myportal.psml')" title="Anmelden">
+        <span class="text">Anmelden</span>
+    </a>
+#end
