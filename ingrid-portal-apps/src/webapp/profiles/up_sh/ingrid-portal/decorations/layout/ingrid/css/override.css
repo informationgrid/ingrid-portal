@@ -231,30 +231,74 @@ header a.icon.is-selected {
 .detail p + h4 {
   margin-top: 48px;
 }
-.detail .banner-noimage .helper.icon {
-  padding-bottom: 24px;
-}
 .detail .banner-noimage .page-wrapper {
   background-repeat: no-repeat;
   background-color: #F6F6F6;
   background-position-y: bottom;
   background-image: url(/decorations/layout/sh/images/bg_banner_large.svg) !important;
 }
+@media print, screen and (max-width: 63.9375em) {
+  .detail .banner-noimage .page-wrapper {
+    background-size: 80%;
+  }
+}
+@media screen and (min-width: 48em) {
+  .filter {
+    top: 80px;
+  }
+}
+@media print, screen and (min-width: 51em) {
+  .filter {
+    top: 120px;
+  }
+}
+footer .footer-top-link {
+  background: #003064;
+}
+footer .footer-top-link:hover {
+  background: #014289;
+}
+
+/* buttons */
+.button.pill {
+  line-height: 1.5;
+  border-radius: 0;
+  color: #FFFFFF;
+  background-color: #003064;
+}
+.button.outline.pill span {
+  margin-left: 0;
+  color: #FFFFFF;
+}
+.button.outline {
+  border-radius: 0;
+}
+.button.outline:hover {
+  color: #FFFFFF;
+  background: #003064;
+}
+.button.outline.pill {
+  margin-right: 5px;
+  border: unset;
+}
+.button.outline.pill:hover {
+  background: #D4004B;
+}
+.button.pill:hover,
+.button.pill:focus {
+  color: #eaf6ff;
+  background-color: #004188;
+}
+.button.pill:hover span,
+.button.pill:focus span {
+  color: #eaf6ff;
+}
 
 .detail .list-item div {
   padding: 0;
 }
-.detail.nav-content {
-  margin-top: -54px;
-}
-.nav-content {
-  margin-top: 0;
-}
-.nav-content h2 {
-  margin-bottom: 48px;
-}
-.nav-content .columns:last-of-type {
-  padding-left: 58px;
+.detail .nav-content {
+  margin-top: -36px;
 }
 .nav-content .accordion-title span {
   text-transform: none;
@@ -380,28 +424,6 @@ header a.icon.is-selected {
 }
 .control__indicator ~ .control__indicator {
   border: 1px solid #012D47;
-}
-.button.pill {
-  line-height: 1.5;
-  border-radius: 0;
-  color: #FFFFFF;
-  background-color: #003064;
-}
-.button.outline.pill span {
-  color: #FFFFFF;
-}
-.button.outline.pill {
-  margin-right: 5px;
-  border: 2px solid #003064;
-}
-.button.pill:hover,
-.button.pill:focus {
-  color: #eaf6ff;
-  background-color: #004188;
-}
-.button.pill:hover span,
-.button.pill:focus span {
-  color: #eaf6ff;
 }
 .boxed-table thead {
   background-color: #FFFFFF;
@@ -602,7 +624,7 @@ header .menu-tab-row .menu-tab {
   color: #004188 !important;
 }
 
-@media print, screen and (min-width: 35em) {
+@media print, screen and (min-width: 39em) {
   header .menu-tab-row .menu-tab {
     display: inline-block;
   }
@@ -674,7 +696,7 @@ h4, .h4 {
     padding: 16px;
   }
 }
-@media screen and (max-width: 47.9375em) {
+@media screen and (max-width: 51em) {
   header {
     height: 80px;
   }
@@ -779,39 +801,24 @@ header .logo a .text p {
   font-size: 16px;
   line-height: 1.15;
   margin-bottom: 0;
-  transition: color .5s;
 }
 header .logo a .text .strong {
   font-family: AvenirNextLTPro-Demi, Arial, Times, sans-serif;
 }
-header .logo a:hover{
-  color: #003064;
-  text-decoration: none;
-}
-@media print, screen and (max-width: 47.9375em) {
+@media print, screen and (max-width: 51em) {
   header .logo a {
     width: 100%;
     left: -13px;
   }
-  a img {
-    float: left;
-    margin-right: 0;
-    width: 160px;
-  }
   header .logo a .text {
-    top: 22px;
+    top: 23px;
     left: 177px;
   }
 }
-@media print, screen and (min-width: 48em) {
+@media print, screen and (min-width: 51em) {
   header .logo a {
     width: 100%;
     top: -3px;
-  }
-  a img {
-    float: left;
-    margin-right: -87px;
-    width: 180px;
   }
 }
 
@@ -1092,9 +1099,6 @@ h6 {
   }
 }
 @media print, screen and (max-width: 63.9375em) {
-  .banner.search + div + .search-filtered, .banner.search + .search-filtered {
-    margin-top: 0;
-  }
   .search-filtered .accordion.accordion-filter-group {
     margin-bottom: 38px;
     border-radius: 0;
@@ -1226,19 +1230,6 @@ span.icon span {
 }
 .detail h2 {
   color: #003064;
-}
-.button.outline {
-  border-radius: 0;
-}
-.button.outline:hover {
-  color: #FFFFFF;
-  background: #003064;
-}
-.button.outline.pill {
-  border-radius: 0;
-}
-.button.outline.pill span {
-  margin-left: 0;
 }
 .row.align-center.detail-header {
   justify-content: unset;
