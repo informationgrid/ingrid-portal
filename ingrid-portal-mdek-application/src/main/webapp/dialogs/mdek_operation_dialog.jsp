@@ -278,7 +278,7 @@
                     registry.byId("operationsName").set("value", op.name);
                 else {
                     var selectWidget = registry.byId("operationsNameSelect");
-                    selectWidget.set('value', UtilSyslist.getSyslistEntryKey(getSysListIdForServiceType(registry.byId("ref3ServiceType").get("value")), op.name));
+                    selectWidget.set('value', op.name);
                 }
                 encodeOperationDirections(op)
                 registry.byId("operationsDescription").set("value", op.description);
