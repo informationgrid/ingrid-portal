@@ -2003,8 +2003,16 @@ define([
                     var def = new Deferred();
                     var data = [
                         [
+                            message.get("dialog.research.ext.obj.content.time.at"),
+                            "am"
+                        ],
+                        [
                             message.get("dialog.research.ext.obj.content.time.since"),
                             "seit"
+                        ],
+                        [
+                            message.get("dialog.research.ext.obj.content.time.sinceToNow"),
+                            "seitX"
                         ],
                         [
                             message.get("dialog.research.ext.obj.content.time.until"),
