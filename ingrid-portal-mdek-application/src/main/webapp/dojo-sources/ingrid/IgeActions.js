@@ -2463,7 +2463,12 @@ define([
                     nodeData.timeRefDate1 = null;
                     nodeData.timeRefDate2 = timeFrom;
                 }
-            } else if (nodeData.timeRefType == "seit") {
+            } else if (nodeData.timeRefType == "am") {
+                if (timeFrom !== "") {
+                    nodeData.timeRefDate1 = timeFrom;
+                    nodeData.timeRefDate2 = timeFrom;
+                }
+            } else if (nodeData.timeRefType == "seit" || nodeData.timeRefType == "seitX") {
                 if (timeFrom !== "") {
                     nodeData.timeRefDate1 = timeFrom;
                     nodeData.timeRefDate2 = null;
