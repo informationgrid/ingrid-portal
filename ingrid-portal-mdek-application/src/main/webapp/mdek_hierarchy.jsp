@@ -2028,7 +2028,8 @@
                                             </label>
                                         </span>
                                         <div id="timeRefRef">
-                                        	<span class="outer" style="width:33%;">
+                                            <div class="outer">
+                                        	<span class="outer" style="width:100%;">
 											    <div>
                                                 <span class="label hidden">
                                                     <label for="timeRefType">
@@ -2039,7 +2040,9 @@
                                                 </span>
 												</div>
 											</span>
-											<span class="outer" style="width:33%;">
+                                            </div>
+                                            <div class="outer">
+											<span class="outer" style="width:50%;">
 											    <div><span class="label hidden">
                                                     <label for="timeRefDate1">
                                                         Datum 1 [TT.MM.JJJJ]
@@ -2051,7 +2054,7 @@
                                                 </span>
 												</div>
 											</span>
-                                            <span id="timeRefDate2Editor" class="outer" style="width:34%;">
+                                            <span id="timeRefDate2Editor" class="outer" style="width:50%;">
 											    <div><span class="label hidden">
                                                     <label for="timeRefDate2">
                                                         Datum 2 [TT.MM.JJJJ]
@@ -2063,6 +2066,7 @@
                                                 </span>
 												</div>
                                             </span>
+                                            </div>
                                         </div>
 										</div>
                                     </span>
