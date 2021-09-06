@@ -16,10 +16,10 @@ ausgedrückt werden. Zur Auswahl stehen:
 
 | Auswahl                     | Bedeutung                                                                                                                             |
 | --------------------------- |---------------------------------------------------------------------------------------------------------------------------------------| 
-| seit (bis: Zeit des Abrufs) | Für kontinuierlich/regelmäßig aktualisierte Ressourcen, wo angenommen werden kann, dass das Enddatum die Abrufzeit der Ressource ist. |
-| seit (bis: unbekannte Zeit) | Für Ressourcen, wo nur das Startdatum bekannt ist. Das Enddatum kann in der Vergangenheit, Gegenwart oder Zukunft liegen.             |
-| von - bis                   | Beginn und Ende bekannt                                                                                                               |
-| bis                         | Beginn unbekannt und Ende bekannt                                                                                                     |
+| seit (bis: Zeitpunkt des Abrufs) | Für Ressourcen, deren Datenbestand fortlaufend in kurzen regelmäßigen Zeitabschnitten aktualisiert oder angereichert wird. Das Ende der Zeitspanne entspricht dem Zeitpunkt des Abrufs der Ressource. Anstelle einer konkreten Datumsangabe für des Ende der Zeitpanne erfolgt der Eintrag "now".|
+| seit (bis: unbekannter Zeitpunkt) | Nur der Beginn der Zeitspanne ist bekannt. Das Ende der Zeitspanne ist unbekannt und kann in der Vergangenheit, Gegenwart oder Zukunft liegen. Anstelle einer konkreten Datumsangabe für das Ende der Zeitpanne erfolgt der Eintrag "unknown".|
+| von - bis                   | Beginn und Ende der Zeitspanne sind bekannt.                                                                                                               |
+| bis                         | Nur das Ende der Zeitspanne ist bekannt. Anstelle einer konkreten Datumsangabe für den Beginn der Zeitpanne erfolgt der Eintrag "unknown".                                                                                                    |
 
 # ISO Abbildung
 
