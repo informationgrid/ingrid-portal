@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -82,7 +82,7 @@ public class GetCapabilitiesService {
     /**
      * If an input stream starts with a BOM then it has to be removed/read before(!)
      * we parse it for XML handling.
-     * 
+     *
      * @param inputStream is the stream with the content to check for the BOM
      * @return an input stream with the correct starting position for reading
      * @throws IOException
@@ -100,17 +100,17 @@ public class GetCapabilitiesService {
         ICapabilitiesParser capDoc = CapabilitiesParserFactory.getDocument( doc, sysListMapper, catalogService );
         return capDoc.getCapabilitiesData( doc );
     }
-    
+
     public Record getRecordById(String urlStr) {
         Record record = null;
         try {
-            
+
             Document doc = getDocumentFromUrl(urlStr, false);
             record = new Record();
             XPathUtils xpath = new XPathUtils();
             String id = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//identifier/MD_Identifier/code/CharacterString" );
             String title = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//citation/CI_Citation/title/CharacterString" );
-            String uuid = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//identifier/MD_Identifier/@uuid" );
+            String uuid = xpath.getString( doc, "//MD_Metadata/fileIdentifier/CharacterString" );
 
             NodeList resources = xpath.getNodeList( doc, "//MD_DigitalTransferOptions/onLine/CI_OnlineResource/function/CI_OnLineFunctionCode");
             for (int j = 0; j < resources.getLength(); j++) {
@@ -127,10 +127,10 @@ public class GetCapabilitiesService {
         } catch (Exception ex) {
             log.error( "Problem getting record by ID: " + urlStr, ex );
         }
-        
+
         return record;
     }
-    
+
     private Document getDocumentFromUrl(String urlStr, boolean namespaceAware) throws SAXException, IOException, ParserConfigurationException {
         URL url = new URL( urlStr );
         // get the content in UTF-8 format, to avoid "MalformedByteSequenceException: Invalid byte 1 of 1-byte UTF-8 sequence"
