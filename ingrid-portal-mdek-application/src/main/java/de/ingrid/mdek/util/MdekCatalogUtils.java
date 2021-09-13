@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -57,7 +57,7 @@ import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 public class MdekCatalogUtils {
 
-	private static final Logger log = Logger.getLogger(MdekCatalogUtils.class);	
+	private static final Logger log = Logger.getLogger(MdekCatalogUtils.class);
 
 	private static XStream xstream = new XStream();
 
@@ -70,11 +70,11 @@ public class MdekCatalogUtils {
         }
         return listIdsTemp.toArray(new Integer[0]);
 	}
-	
+
 	public static List<SysList> extractSysListInfosFromResponse(IngridDocument response) {
         IngridDocument result = MdekUtils.getResultFromResponse(response);
         List<SysList> codelists = new ArrayList<>();
-        
+
         List<Object> docs = result.getArrayList(MdekKeys.LST_SYSLISTS);
         for (IngridDocument doc : (List<IngridDocument>)(List<?>)docs) {
             SysList codelist = new SysList();
@@ -91,7 +91,7 @@ public class MdekCatalogUtils {
 	 *               [ entry2Name, entry2Id, entry2Default ]<br>
 	 *             ],<br>
 	 *   listId2 : ...<br>
-	 * } 
+	 * }
 	 */
 	public static Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -111,7 +111,7 @@ public class MdekCatalogUtils {
 				if (entryIds != null && entryNames != null) {
 					for (int index = 0; index < entryIds.length; ++index) {
 						boolean isDefault = defaultIndex != null ? defaultIndex == index : false;
-						
+
 						resultList.add( new String[] {
 								entryNames[index],
 								entryIds[index].toString(),
@@ -158,7 +158,8 @@ public class MdekCatalogUtils {
 			String[] entryNamesDe = (String[]) listDocumentDe.get(MdekKeys.LST_ENTRY_NAMES);
 			String[] entryNamesEn = (String[]) listDocumentEn.get(MdekKeys.LST_ENTRY_NAMES);
 			Integer defaultIndex = (Integer) listDocumentDe.get(MdekKeys.LST_DEFAULT_ENTRY_INDEX);
-			Boolean maintainable = (de.ingrid.mdek.MdekUtils.YES_INTEGER == ((Integer) listDocumentDe.get(MdekKeys.LST_MAINTAINABLE)));
+			Integer maintainableValue = (Integer) listDocumentDe.get(MdekKeys.LST_MAINTAINABLE);
+			Boolean maintainable = maintainableValue != null && de.ingrid.mdek.MdekUtils.YES_INTEGER == maintainableValue;
 
 			sysList.setId(listId);
 			sysList.setDeEntries(entryNamesDe);
@@ -197,14 +198,14 @@ public class MdekCatalogUtils {
 
 	public static CatalogBean extractCatalogFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
-		
+
 		if (result != null) {
 			CatalogBean resultCat = new CatalogBean();
-	
+
 			log.debug("MDEK KEYS:");
 			log.debug(result.getInt(MdekKeys.LANGUAGE_CODE));
 			log.debug(result.getString(MdekKeys.LANGUAGE_NAME));
-			
+
 			resultCat.setUuid(result.getString(MdekKeys.UUID));
 			resultCat.setCatalogName(result.getString(MdekKeys.CATALOG_NAME));
 			resultCat.setCatalogNamespace(result.getString(MdekKeys.CATALOG_NAMESPACE));
@@ -218,7 +219,7 @@ public class MdekCatalogUtils {
 			resultCat.setDateOfCreation(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			resultCat.setDateOfLastModification(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
 			resultCat.setLocation(mapToLocationBean((IngridDocument) result.get(MdekKeys.CATALOG_LOCATION)));
-			resultCat.setAtomUrl(result.getString(MdekKeys.CATALOG_ATOM_URL));			
+			resultCat.setAtomUrl(result.getString(MdekKeys.CATALOG_ATOM_URL));
 
 			IngridDocument modUserDoc = (IngridDocument) result.get(MdekKeys.MOD_USER);
 			if (modUserDoc != null)
@@ -311,7 +312,7 @@ public class MdekCatalogUtils {
 		if (urlRefDoc != null) {
 			List<Map<String, Object>> urlResult = (List<Map<String, Object>>) urlRefDoc.get(MdekKeys.URL_RESULT);
 			List<Map<String, Object>> capResult = (List<Map<String, Object>>) urlRefDoc.get(MdekKeys.CAP_RESULT);
-			
+
 			urlJobInfo.setUrlObjectReferences(getUrlReferencesFromResult(urlResult));
 			urlJobInfo.setCapabilitiesReferences(getUrlReferencesFromResult(capResult));
 
@@ -429,7 +430,7 @@ public class MdekCatalogUtils {
 
 		return urlJobInfo;
 	}
-	
+
 	public static AnalyzeJobInfoBean extractAnalyzeJobInfoFromResponse(IngridDocument response) {
 		AnalyzeJobInfoBean analyzeJobInfo = new AnalyzeJobInfoBean();
 		addGeneralJobInfoFromResponse(response, analyzeJobInfo);
@@ -448,7 +449,7 @@ public class MdekCatalogUtils {
 				for (IngridDocument errorReportDoc : errorReportDocList) {
 					ErrorReport errorReport = new ErrorReport(
 							errorReportDoc.getString(MdekKeys.VALIDATION_MESSAGE),
-							errorReportDoc.getString(MdekKeys.VALIDATION_SOLUTION)); 
+							errorReportDoc.getString(MdekKeys.VALIDATION_SOLUTION));
 					errorReports.add(errorReport);
 				}
 			}
@@ -458,7 +459,7 @@ public class MdekCatalogUtils {
 			MdekErrorUtils.handleError(response);
 		}
 	}
-	
+
 	public static CodeListJobInfoBean extractCodeListInfoFromResponse(IngridDocument response) {
 		CodeListJobInfoBean codeListJobInfo = new CodeListJobInfoBean();
 		addGeneralJobInfoFromResponse(response, codeListJobInfo);
