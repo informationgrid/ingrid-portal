@@ -18,8 +18,6 @@
         #renderTextListTable($MESSAGES.getString("t01_object.data_language") $TOOL.getLanguageValues($TOOL.getListOfValuesFromXPath($xPathAdditionalInfoIdentificationInfoLanguageCode,".")))
     ## Konformität
         #renderTableSymbols ($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport) 2 $tmpConformityDataSymbols [0])
-    ## Identifikator des übergeordneten Metadatensatzes
-        #renderTextTable($MESSAGES.getString("t01_object.parent_identifier") $TOOL.getValueFromXPath($xPathAdditionalInfoParentIdentifier))
     ## Datenformat
         #renderTable($TOOL.getAvailability($xPathAdditionalInfoMDDistribution))
     ## Medien

@@ -12,8 +12,6 @@
     #if($type == 1)
         #renderTextTable($MESSAGES.getString("t011_obj_geo.hierarchy_level") $TOOL.getValueFromXPath($xPathInfo1MDScopeCode, "525"))
     #end
-    ## Identifikator des übergeordneten Metadatensatzes
-        #renderTextTable($MESSAGES.getString("t01_object.parent_identifier") $TOOL.getValueFromXPath($xPathAdditionalInfoParentIdentifier))
     ## XML Darstellung 
         #renderLinkTable($MESSAGES.getString("xml_link_label") $getXML)
     ## Ansprechpartner (Metadatum)
