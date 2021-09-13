@@ -66,6 +66,8 @@
             #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h4" [] true)
         </div>
         #end
+    ## Identifikator des übergeordneten Metadatensatzes
+        #renderTextTable($MESSAGES.getString("t01_object.parent_identifier") $TOOL.getValueFromXPath($xPathAdditionalInfoParentIdentifier))
     </div>
 </div>
 #end

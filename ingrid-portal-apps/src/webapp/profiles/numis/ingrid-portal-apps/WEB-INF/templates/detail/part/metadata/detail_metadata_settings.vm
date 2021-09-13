@@ -99,6 +99,8 @@
 #set($xPathRefSubordinated = "./idf:subordinatedReference")
 ## Übergeordnetet Objekte
 #set($xPathRefSuperior = "./idf:superiorReference")
+#### Identifikator des übergeordneten Metadatensatzes
+#set($xPathAdditionalInfoParentIdentifier = "./gmd:parentIdentifier")
 
 
 #set($xPathListReferences = [
@@ -106,7 +108,8 @@
     $xPathRefLinks,
     $xPathRefOthers,
     $xPathRefSubordinated,
-    $xPathRefSuperior
+    $xPathRefSuperior,
+    $xPathAdditionalInfoParentIdentifier
 ])
 
 #set($getDownloads = $TOOL.getExternLinks($xPathRefDownloads, true))
@@ -375,8 +378,6 @@
 #set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-minus' title='$tmpConformityDataValue'></span>"))
 #set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
 
-#### Identifikator des übergeordneten Metadatensatzes
-#set($xPathAdditionalInfoParentIdentifier = "./gmd:parentIdentifier")
 #### Datenformat
 #set($xPathAdditionalInfoMDDistribution = "./gmd:distributionInfo/gmd:MD_Distribution")
 #### Medien
@@ -393,7 +394,6 @@
     $xPathAdditionalInfoExportCriteria,
     $xPathAdditionalInfoIdentificationInfoLanguageCode,
     $xPathAdditionalInfoDQDataQualityReport,
-    $xPathAdditionalInfoParentIdentifier,
     "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format",
     "${xPathAdditionalInfoMDDistribution}./gmd:transferOptions",
     $xPathAdditionalInfoOrderingInstructions
