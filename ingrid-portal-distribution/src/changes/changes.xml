@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.9.2" date="2021-XX-XX" description="Release 5.9.2">
+          <action type="update" dev="wemove" issue="2804">
+            SH: Kontaktformular: Die E-Mail des Nutzers soll im REPLY-TO Header verwendet werden
+          </action>
           <action type="update" dev="wemove" issue="2184">
             Re-Add 'am' to temporalElement and add second since option
           </action>
