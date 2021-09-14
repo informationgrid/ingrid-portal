@@ -539,7 +539,7 @@
                         #renderSectionTitle($MESSAGES.getString("additional_information"))
                         <div class="search-result--nested">
                             #set($nodelist = $TOOL.getNodeListFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField"))
-                            #foreach($number in [0..$nodelist.getLength()])
+                            #foreach($number in [1..$nodelist.getLength()])
                                 #set($tmp = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[$number]/idf:title[@lang='$lang']"))
                                 #set($tmp2 = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[$number]/idf:data"))
                                 #renderTextLabelAbove($tmp $tmp2)
