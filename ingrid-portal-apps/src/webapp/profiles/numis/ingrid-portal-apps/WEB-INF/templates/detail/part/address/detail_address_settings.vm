@@ -42,7 +42,7 @@
 #set($xPathUsePointOfContactNodes = $TOOL.getNodeListFromXPath("${xPathUsePointOfContact}"))
 #set($xPathUsePointOfContactSortNodes = [])
 
-#foreach($tmpXPathNodeNumber in [0..$xPathUsePointOfContactNodes.getLength()])
+#foreach($tmpXPathNodeNumber in [1..$xPathUsePointOfContactNodes.getLength()])
     #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathUsePointOfContact}"))
     #set($add = $xPathUsePointOfContactSortNodes.add($tmpAddresses))
 #end

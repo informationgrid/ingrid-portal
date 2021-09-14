@@ -390,7 +390,7 @@
                                 #set($tmp = "")
                                 ## Inhalte der Datensammlung/Datenbank
                                 #set($nodelist = $TOOL.getNodeListFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes"))
-                                #foreach($number in [0..$nodelist.getLength()])
+                                #foreach($number in [1..$nodelist.getLength()])
                                     #set($tmp = $TOOL.getValueFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes[$number]"))
                                     #renderTextLabelAbove("$MESSAGES.getString('t011_obj_data_para.parameter') ($MESSAGES.getString('t011_obj_data_para.unit'))" $tmp)
                                     #set($tmp = "")

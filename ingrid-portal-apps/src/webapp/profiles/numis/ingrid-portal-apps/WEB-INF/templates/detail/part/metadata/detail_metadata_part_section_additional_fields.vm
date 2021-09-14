@@ -6,7 +6,7 @@
     #renderSectionTitle($MESSAGES.getString("$tabtitle"))
     #renderSectionTitle($MESSAGES.getString("additional_information"))
     #set($nodelist = $TOOL.getNodeListFromXPath($xPathAdditionalFieldsData))
-    #foreach($number in [0..$nodelist.getLength()])
+    #foreach($number in [1..$nodelist.getLength()])
         #renderTextTable($TOOL.getValueFromXPath("${xPathAdditionalFieldsData}[$number]/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("${xPathAdditionalFieldsData}[$number]/idf:data"))
     #end
 #end

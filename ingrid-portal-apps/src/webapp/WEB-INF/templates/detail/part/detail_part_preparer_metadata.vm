@@ -600,7 +600,7 @@
                                 #set($tmp = "")
                                 ## Inhalte der Datensammlung/Datenbank
                                 #set($nodelist = $TOOL.getNodeListFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes"))
-                                #foreach($number in [0..$nodelist.getLength()])
+                                #foreach($number in [1..$nodelist.getLength()])
                                     #set($tmp = $TOOL.getValueFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes[$number]"))
                                     #renderTextLabelAbove("$MESSAGES.getString('t011_obj_data_para.parameter') ($MESSAGES.getString('t011_obj_data_para.unit'))" $tmp)
                                     #set($tmp = "")
@@ -867,7 +867,7 @@
                         #renderSectionTitle($MESSAGES.getString("additional_information"))
                         <div class="search-result--nested">
                             #set($nodelist = $TOOL.getNodeListFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField"))
-                            #foreach($number in [0..$nodelist.getLength()])
+                            #foreach($number in [1..$nodelist.getLength()])
                                 #set($tmp = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[$number]/idf:title[@lang='$lang']"))
                                 #set($tmp2 = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[$number]/idf:data"))
                                 #renderTextLabelAbove($tmp $tmp2)
