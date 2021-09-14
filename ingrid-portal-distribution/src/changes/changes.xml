@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
+          <action type="update" dev="wemove" issue="2804">
+            SH: Kontaktformular: Die E-Mail des Nutzers soll im REPLY-TO Header verwendet werden
+          </action>
           <action type="fix" dev="wemove" issue="2749">
             IGE: Fix operation name display in edit dialog
           </action>
