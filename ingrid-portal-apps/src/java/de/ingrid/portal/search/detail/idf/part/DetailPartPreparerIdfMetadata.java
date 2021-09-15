@@ -1466,7 +1466,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if (urlValue == null || urlValue.length() == 0) {
                         continue;
                     }
-                    if (urlValue.toLowerCase().contains("request=getcapabilities")) {
+                    String serviceType = xPathUtils.getString(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/gmd:CI_OnLineFunctionCode");
+                    if (urlValue.toLowerCase().contains("request=getcapabilities") && urlValue.toLowerCase().contains("service=wms") &&
+                            (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))) {
                         // also add an identifier to select the correct layer in the map client 
                         map = addBigMapLink(node, urlValue + "||" + getLayerIdentifier(null), true);
                         // ADD FIRST ONE FOUND !!!
