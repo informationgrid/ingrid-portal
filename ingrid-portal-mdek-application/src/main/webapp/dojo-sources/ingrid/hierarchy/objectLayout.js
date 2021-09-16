@@ -312,6 +312,7 @@ define([
                 ];
                 var gridProperties = UtilDOM.getHTMLAttributes("generalPreviewImageTable")
                 gridProperties.imageLinkTooltip = "true";
+                gridProperties.moveRows = "true";
                 layoutCreator.createDataGrid("generalPreviewImageTable", null, previewImageStructure, null, gridProperties);
 
                 this.addPreviewUploadLink();

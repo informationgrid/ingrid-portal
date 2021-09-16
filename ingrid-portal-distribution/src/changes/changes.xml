@@ -40,6 +40,9 @@
           <action type="fix" dev="wemove" issue="2489">
             IGE: Fix export of codelists within IGE
           </action>
+          <action type="add" dev="wemove" issue="2832">
+            IGE: Make table for preview images sortable by drag'n'drop
+          </action>
         </release>
 
         <release version="5.9.0" date="2021-07-16" description="Release 5.9.0">
