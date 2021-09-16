@@ -16,6 +16,9 @@
           <action type="fix" dev="wemove" issue="2749">
             IGE: Fix operation name display in edit dialog
           </action>
+          <action type="add" dev="wemove" issue="2832">
+            IGE: Make table for preview images sortable by drag'n'drop
+          </action>
         </release>
 
         <release version="5.9.1" date="2021-08-05" description="Release 5.9.1">
