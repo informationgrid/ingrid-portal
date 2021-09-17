@@ -693,6 +693,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             String value = getAPACitationValueFromXpath("doi", node, xpathExpressions.get("doi"));
             if (value != null) {element.put("doi", value);}
         }
+        if (xpathExpressions.containsKey("doi_type") && xPathUtils.nodeExists(node, xpathExpressions.get("doi_type"))){
+            String value = getAPACitationValueFromXpath("doi_type", node, xpathExpressions.get("doi_type"));
+            if ("Dataset".equals(value)) {element.put("doi_type", messages.getString("doi.dataset"));}
+        }
         return element;
     }
 
