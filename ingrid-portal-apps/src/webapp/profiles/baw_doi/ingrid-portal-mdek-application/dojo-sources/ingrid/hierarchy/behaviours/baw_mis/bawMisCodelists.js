@@ -22,28 +22,23 @@
  */
 define([
     "dojo/_base/declare",
-    "dojo/topic",
-    "ingrid/utils/Syslist"
-], function(declare, topic, UtilSyslist) {
+    "dojo/topic"
+], function(declare, topic) {
 
     return declare(null, {
-        title: "Systemanpassungen",
-        description: "Anpassungen für die BAW, die beim erstem Laden des IGE laufen.",
+        title: "Codelistenanpassungen",
+        description: "Angepasste InGrid-Codelisten und BAW-eigene Codelisten",
         defaultActive: true,
         type: "SYSTEM",
         category: "BAW-MIS",
         run: function() {
 
-            // load custom syslists
+            // load custom codelists
             topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
                 ids.push(3950000, 3950001, 3950002, 3950003, 3950004, 3950005, 3950010);
             });
 
             topic.subscribe("/additionalSyslistsLoaded", function() {
-                // Keep only Geodatensatz and Geodatendienst for new object type
-                sysLists[UtilSyslist.listIdObjectClass] = sysLists[UtilSyslist.listIdObjectClass].filter(function(item) {
-                    return item[1] === "1" || item[1] === "3";
-                });
 
                 // Add vertical CRSes to the list of horizontal CRSes
                 var crsSyslist = sysLists[100];
