@@ -944,6 +944,36 @@
     #end
 #end
 
+## Render Citation
+#macro (renderCitation $title $entry)
+    #if($tool.hasContent($entry))
+    <div class="row columns">
+        <h4>$title</h4>
+        <div class="text-list">
+            #foreach($citation in $entry)
+                <p class="list-item">
+                    #if($tool.hasContent($citation.authors))
+                        <b>$citation.authors</b>
+                    #end
+                    #if($tool.hasContent($citation.year))
+                        <b>($citation.year):</b>
+                    #end
+                    #if($tool.hasContent($citation.title))
+                        <i>$citation.title</i>.
+                    #end
+                    #if($tool.hasContent($citation.publisher))
+                        $citation.publisher.
+                    #end
+                    #if($tool.hasContent($citation.doi))
+                        <a href="$citation.doi" target="_blank">$citation.doi</a>
+                    #end
+                </p>
+            #end
+        </div>
+    </div>
+    #end
+#end
+
 ## Render list
 #macro (renderTextList $title $textList)
     #renderTextListSpace ($title $textList "")
