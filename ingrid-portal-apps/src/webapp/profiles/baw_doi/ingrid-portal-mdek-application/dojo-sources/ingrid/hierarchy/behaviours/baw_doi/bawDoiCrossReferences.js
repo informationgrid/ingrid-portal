@@ -116,15 +116,18 @@ define([
             }, structure, "links");
             this._createAppendDoiCrossReferenceLink();
 
-            topic.subscribe("beforeFinishApplyingObjectNodeData", function (nodeData) {
-                var xrefData = registry.byId(id).data;
-                xrefData.forEach(function (row) {
-                    var dt = row.doiCrossReferenceDate;
-                    if (typeof dt === "string" || dt instanceof String) {
-                        row.doiCrossReferenceDate = new Date(parseInt(dt));
-                    }
-                });
-                UtilStore.updateWriteStore(id, xrefData);
+            topic.subscribe("/selectNode", function () {
+                var xrefTable = registry.byId(id);
+                if (xrefTable) {
+                    var xrefData = xrefTable.data;
+                    xrefData.forEach(function (row) {
+                        var dt = row.doiCrossReferenceDate;
+                        if (typeof dt === "string" || dt instanceof String) {
+                            row.doiCrossReferenceDate = new Date(parseInt(dt));
+                        }
+                    });
+                    UtilStore.updateWriteStore(id, xrefData);
+                }
             });
 
             newFieldsToDirtyCheck.push(id);

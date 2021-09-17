@@ -670,7 +670,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         HashMap<String, Object> element = new HashMap<>();
         if (xpathExpressions.containsKey("rootName") && xPathUtils.nodeExists(node, xpathExpressions.get("rootName"))){
             String value = getAPACitationValueFromXpath("name", node, xpathExpressions.get("name"), xpathExpressions.get("rootName"));
-            if (value != null) {element.put("authors", value);}
+            if ((value == null || value.trim().isEmpty()) && xpathExpressions.containsKey("org_name")) {
+                String org = getAPACitationValueFromXpath("org_name", node, xpathExpressions.get("org_name"));
+                if (org != null) {element.put("authors", org);}
+            } else {
+                element.put("authors", value);
+            }
         }
         if (xpathExpressions.containsKey("year") && xPathUtils.nodeExists(node, xpathExpressions.get("year"))){
             String value = getAPACitationValueFromXpath("year", node, xpathExpressions.get("year"));
@@ -687,6 +692,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if (xpathExpressions.containsKey("doi") && xPathUtils.nodeExists(node, xpathExpressions.get("doi"))){
             String value = getAPACitationValueFromXpath("doi", node, xpathExpressions.get("doi"));
             if (value != null) {element.put("doi", value);}
+        }
+        if (xpathExpressions.containsKey("doi_type") && xPathUtils.nodeExists(node, xpathExpressions.get("doi_type"))){
+            String value = getAPACitationValueFromXpath("doi_type", node, xpathExpressions.get("doi_type"));
+            if ("Dataset".equals(value)) {element.put("doi_type", messages.getString("doi.dataset"));}
         }
         return element;
     }
@@ -726,7 +735,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         if (matcher.find()) {
                             return matcher.group(0);
                         }
-                    case "title": case "publisher": case "doi":
+                    default:
                         return value;
                 }
             }
