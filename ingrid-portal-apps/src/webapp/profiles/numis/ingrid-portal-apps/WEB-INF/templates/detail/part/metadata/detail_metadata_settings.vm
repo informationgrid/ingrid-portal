@@ -492,7 +492,7 @@
     #foreach($tmpXPathNodeNumber in [1..$xPathUsePointOfContactNodes.getLength()])
         #set($tmpXPathNodeValue = $TOOL.getValueFromXPath("./*/gmd:role/gmd:CI_RoleCode/@codeListValue", "", $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[$tmpXPathNodeNumber]")))
         #if($tmpXPathNodeValue == $tmpXPathSort)
-            #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[./*/gmd:role/gmd:CI_RoleCode/@codeListValue='$tmpXPathSort']"))
+            #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[$tmpXPathNodeNumber][./*/gmd:role/gmd:CI_RoleCode/@codeListValue='$tmpXPathSort']"))
             #set($add = $xPathUsePointOfContactSortNodes.add($tmpAddresses))
         #end
     #end
@@ -501,7 +501,7 @@
 #foreach($tmpXPathNodeNumber in [1..$xPathUsePointOfContactNodes.getLength()])
     #set($tmpXPathNodeValue = $TOOL.getValueFromXPath("./*/gmd:role/gmd:CI_RoleCode/@codeListValue", "", $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[$tmpXPathNodeNumber]")))
     #if(!$xPathUsePointOfContactSort.contains($tmpXPathNodeValue))
-        #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[./*/gmd:role/gmd:CI_RoleCode/@codeListValue='$tmpXPathNodeValue']"))
+        #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[$tmpXPathNodeNumber][./*/gmd:role/gmd:CI_RoleCode/@codeListValue='$tmpXPathNodeValue']"))
         #set($add = $xPathUsePointOfContactSortNodes.add($tmpAddresses))
     #end
 #end
