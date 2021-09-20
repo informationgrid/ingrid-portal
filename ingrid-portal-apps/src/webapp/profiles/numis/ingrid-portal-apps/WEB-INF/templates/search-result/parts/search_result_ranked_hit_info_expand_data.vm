@@ -178,3 +178,6 @@
         #end
     #end
 #end
+
+## Zitat für diesen Datensatz
+#set($getCitation = $rs.getHitDetail().get("additional_html_citation_quote"))

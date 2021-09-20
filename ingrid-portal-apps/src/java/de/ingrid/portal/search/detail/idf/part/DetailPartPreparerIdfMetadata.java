@@ -638,7 +638,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
      * rootName is the mandatory rootXpath that repeats itself for the possibility of multiple authors.
      */
     public List<HashMap<String, Object>> getListAPACitation(Map<String, String> xpathExpressions) {
-        return getListAPACitation(xpathExpressions, "");
+        return getListAPACitation(xpathExpressions, null);
     }
 
     /**
@@ -649,7 +649,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
      */
     public List<HashMap<String, Object>> getListAPACitation(Map<String, String> xpathExpressions, String rootXpathExpression) {
         List<HashMap<String, Object>> listCitation = new ArrayList<>();
-        if(xPathUtils.nodeExists(rootNode, rootXpathExpression)){
+        if(rootXpathExpression != null && xPathUtils.nodeExists(rootNode, rootXpathExpression)){
             // return multiple citations from recurrent rootXpath
             NodeList tmpNodeList = xPathUtils.getNodeList(rootNode, rootXpathExpression);
             for (int i = 0; i < tmpNodeList.getLength(); i++){
