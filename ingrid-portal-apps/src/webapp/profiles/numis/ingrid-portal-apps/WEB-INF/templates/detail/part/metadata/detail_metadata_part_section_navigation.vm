@@ -77,6 +77,11 @@
                                         #set($tmpTitle = $MESSAGES.getString("search.detail.info.links"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
+                                    #if($getBibliographies && $getBibliographies.size() > 0)
+                                        #set($tmpHash = "${hashDetail3}_bibliography")
+                                        #set($tmpTitle = $MESSAGES.getString("bibliography"))
+                                        #renderSubNavigation($tmpTitle $tmpHash)
+                                    #end
                                     #if($getOtherLinks && $getOtherLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_www_references")
                                         #set($tmpTitle = $MESSAGES.getString("www_references"))
@@ -149,7 +154,8 @@
                     ($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0)) ||
                     $TOOL.aNodeOfListExist($xPathListAdditionalInfo) ||
                     $TOOL.aNodeOfListExist($xPathListKeywords) || $advGroup.size() > 0 ||
-                    $TOOL.aNodeOfListExist($xPathListDoi)
+                    $TOOL.aNodeOfListExist($xPathListDoi) ||
+                    ($getCitations && $getCitations.size() > 0)
                 )
                     #set($hasDetail5 = true)
                     <li class="accordion-item" data-accordion-item>
@@ -168,7 +174,7 @@
                                     #set($tmpTitle = $MESSAGES.getString("technical_information"))
                                     #renderSubNavigation($tmpTitle $tmpHash)
                                 #end
-                                #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo))
+                                #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo) || ($getCitations && $getCitations.size() > 0))
                                     #set($tmpHash = "${hashDetail5}_additional_information")
                                     #set($tmpTitle = $MESSAGES.getString("additional_information"))
                                     #renderSubNavigation($tmpTitle $tmpHash)

@@ -119,7 +119,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             }
 
             if (resourceID.equals( "httpURLDataType" )) {
-                String extension = null;
+                String extension = "";
                 if(paramURL != null) {
                     if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
                         extension = "csw";
@@ -130,7 +130,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
                         extension = "wmts";
                     }
-                    if(extension == null) {
+                    if(extension.isEmpty()) {
                         URL url = new URL(paramURL);
                         java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
                         con.setRequestMethod("HEAD");
@@ -141,9 +141,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                             url = new URL(paramURL.replace("http://", "https://"));
                             con = (java.net.HttpURLConnection) url.openConnection();
                             con.setRequestMethod("HEAD");
+                            contentType = con.getContentType();
+                            if(contentType != null) {
+                                extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                            }
                         }
-
-                        extension = UtilsMimeType.getFileExtensionOfMimeType(con.getContentType().split(";")[0]);
                     }
                     response.setContentType( "text/plain" );
                     response.getWriter().write( extension );

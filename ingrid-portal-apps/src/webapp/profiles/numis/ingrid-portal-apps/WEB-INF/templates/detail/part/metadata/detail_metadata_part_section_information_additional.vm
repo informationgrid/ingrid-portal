@@ -45,7 +45,7 @@
     </div>
 #end
 
-## DOI
+## Digital Object Identifier (DOI)
 #if($TOOL.aNodeOfListExist($xPathListDoi))
     <div class="sub-section">
         #renderGroupTitle($MESSAGES.getString("doi"))
@@ -54,4 +54,9 @@
             #renderTextTable($MESSAGES.getString("doi.type") $doi.type)
         </div>
     </div>
+#end
+
+## Zitat für diesen Datensatz
+#if($getCitations && $getCitations.size() > 0)
+    #renderCitation($MESSAGES.getString("citation") $tmp)
 #end

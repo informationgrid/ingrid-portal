@@ -958,7 +958,7 @@
                         <b>($citation.year):</b>
                     #end
                     #if($tool.hasContent($citation.title))
-                        <i>$citation.title</i>.
+                        <i>$citation.title</i>#if($tool.hasContent($citation.doi_type)) [$citation.doi_type]#end.
                     #end
                     #if($tool.hasContent($citation.publisher))
                         $citation.publisher.
