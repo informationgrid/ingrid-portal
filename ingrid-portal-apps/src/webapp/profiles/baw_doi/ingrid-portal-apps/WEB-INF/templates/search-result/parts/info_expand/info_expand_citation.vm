@@ -1,0 +1,5 @@
+## Zitat für diesen Datensatz
+#if($getCitation && !$getCitation.isEmpty())
+    #renderFactTitle($MESSAGES.getString('citation'))
+    <p>$getCitation</p>
+#end

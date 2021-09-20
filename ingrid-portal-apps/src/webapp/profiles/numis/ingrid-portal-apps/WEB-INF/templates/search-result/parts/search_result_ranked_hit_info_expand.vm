@@ -115,10 +115,7 @@
                         </div>
                     #end
 ## Zitat für diesen Datensatz
-                    #if($getCitation && !$getCitation.isEmpty())
-                        #renderFactTitle($MESSAGES.getString('citation'))
-                        <p>$getCitation</p>
-                    #end
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_citation.vm")
 ## Lizenz
                     #set($licenseKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
                     #set($licenseValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))

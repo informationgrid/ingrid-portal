@@ -180,4 +180,4 @@
 #end
 
 ## Zitat für diesen Datensatz
-#set($getCitation = $rs.getHitDetail().get("additional_html_citation_quote"))
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_citation.vm")

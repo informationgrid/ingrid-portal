@@ -1,0 +1,2 @@
+## Zitat für diesen Datensatz
+#set($getCitation = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "additional_html_citation_quote" ))
