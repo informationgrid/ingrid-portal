@@ -944,7 +944,7 @@
 #end
 
 ## Render Citation
-#macro (renderCitation $title $entry $asTable)
+#macro (renderCitation $title $entry $asTable $countEntries)
     #if($tool.hasContent($entry))
         #set($list = [])
         #foreach($citation in $entry)
@@ -973,7 +973,9 @@
         #else
             <h4>
                 $title
-                <span>($entry.size())</span>
+                #if($countEntries)
+                    <span>($entry.size())</span>
+                #end
             </h4>
             <div class="document-list">
                 #foreach($citation in $list)

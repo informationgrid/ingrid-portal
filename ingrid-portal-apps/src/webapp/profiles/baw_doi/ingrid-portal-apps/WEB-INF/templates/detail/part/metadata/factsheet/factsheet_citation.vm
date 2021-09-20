@@ -1,6 +1,6 @@
 ## Zitat für diesen Datensatz
 #if($getCitations && $getCitations.size() > 0)
 <div class="sub-section sub-section-unlined">
-    #renderCitation($MESSAGES.getString("citation") $getCitations)
+    #renderCitation($MESSAGES.getString("citation") $getCitations false false)
 </div>
 #end

@@ -1,4 +1,4 @@
 ## Zitat für diesen Datensatz
 #if($getCitations && $getCitations.size() > 0)
-    #renderCitation($MESSAGES.getString("citation") $getCitations true)
+    #renderCitation($MESSAGES.getString("citation") $getCitations true false)
 #end
