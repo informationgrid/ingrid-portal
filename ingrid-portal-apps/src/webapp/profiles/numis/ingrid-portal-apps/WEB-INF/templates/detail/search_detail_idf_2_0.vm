@@ -944,32 +944,45 @@
 #end
 
 ## Render Citation
-#macro (renderCitation $title $entry)
+#macro (renderCitation $title $entry $asTable)
     #if($tool.hasContent($entry))
-    <div class="row columns">
-        <h4>$title</h4>
-        <div class="text-list">
-            #foreach($citation in $entry)
-                <p class="list-item">
-                    #if($tool.hasContent($citation.authors))
-                        <b>$citation.authors</b>
-                    #end
-                    #if($tool.hasContent($citation.year))
-                        <b>($citation.year):</b>
-                    #end
-                    #if($tool.hasContent($citation.title))
-                        <i>$citation.title</i>#if($tool.hasContent($citation.doi_type)) [$citation.doi_type]#end.
-                    #end
-                    #if($tool.hasContent($citation.publisher))
-                        $citation.publisher.
-                    #end
-                    #if($tool.hasContent($citation.doi))
-                        <a href="$citation.doi" target="_blank">$citation.doi</a>
-                    #end
-                </p>
+        #set($list = [])
+        #foreach($citation in $entry)
+            #set($content = "")
+            #if($tool.hasContent($citation.authors))
+                #set($content = $content + "<b>$citation.authors</b> ")
             #end
-        </div>
-    </div>
+            #if($tool.hasContent($citation.year))
+                #set($content = $content + "<b>($citation.year):</b> ")
+            #end
+            #if($tool.hasContent($citation.title))
+                #set($content = $content + "<i>$citation.title</i>#if($tool.hasContent($citation.doi_type)) [$citation.doi_type]#end. ")
+            #end
+            #if($tool.hasContent($citation.publisher))
+                #set($content = $content + "$citation.publisher. ")
+            #end
+            #if($tool.hasContent($citation.doi))
+                #set($content = $content + "<a href=\"$citation.doi\" target=\"_blank\">$citation.doi</a>")
+            #end
+            #if(!$content.isEmpty())
+                #set($add = $list.add($content))
+            #end
+        #end
+        #if($asTable)
+            #renderTextListTable($title $list)
+        #else
+            <h4>
+                $title
+                <span>($entry.size())</span>
+            </h4>
+            <div class="document-list">
+                #foreach($citation in $list)
+                    <div class="list-item">
+                        $citation
+                    </div>
+                #end
+            </div>
+        #end
     #end
 #end
 

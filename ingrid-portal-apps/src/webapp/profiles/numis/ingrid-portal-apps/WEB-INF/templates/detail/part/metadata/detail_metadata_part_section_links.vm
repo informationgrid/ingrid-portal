@@ -30,9 +30,7 @@
         </div>
         #end
     ## Literaturverweise
-        #if($getBibliographies && $getBibliographies.size() > 0))
-            #renderCitation($MESSAGES.getString("bibliography") $getBibliographies)
-        #end
+        #parse("/WEB-INF/templates/detail/part/metadata/links/links_bibliography.vm")
     ## Weitere Verweise
         #if($getOtherLinks && $getOtherLinks.size() > 0)
         <div class="sub-section sub-section-unlined">

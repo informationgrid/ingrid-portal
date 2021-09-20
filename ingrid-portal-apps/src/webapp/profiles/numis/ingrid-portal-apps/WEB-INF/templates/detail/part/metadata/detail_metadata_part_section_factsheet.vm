@@ -45,9 +45,7 @@
         </div>
         #end
     ## Zitat für diesen Datensatz
-        #if($getCitations && $getCitations.size() > 0)
-            #renderCitation($MESSAGES.getString("citation") $tmp)
-        #end
+        #parse("/WEB-INF/templates/detail/part/metadata/factsheet/factsheet_citation.vm")
     ## Lizenz
         #if($useConstraints && $useConstraints.size() > 0)
             #set($tmp2 = [$useConstraints.get(0)])

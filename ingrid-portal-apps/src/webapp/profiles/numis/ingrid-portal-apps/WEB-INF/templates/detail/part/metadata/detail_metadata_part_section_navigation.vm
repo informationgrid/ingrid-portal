@@ -59,7 +59,7 @@
                         </li>
                     #end
                 ## Verweise und Downloads
-                    #if($TOOL.aNodeOfListExist($xPathListReferences))
+                    #if($TOOL.aNodeOfListExist($xPathListReferences) || ($getBibliographies && $getBibliographies.size() > 0))
                         #set($hasDetail3 = true)
                         <li class="accordion-item" data-accordion-item>
                             <a href="#${hashDetail3}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail3}-accordion-label">
@@ -154,8 +154,7 @@
                     ($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0)) ||
                     $TOOL.aNodeOfListExist($xPathListAdditionalInfo) ||
                     $TOOL.aNodeOfListExist($xPathListKeywords) || $advGroup.size() > 0 ||
-                    $TOOL.aNodeOfListExist($xPathListDoi) ||
-                    ($getCitations && $getCitations.size() > 0)
+                    $doi || ($getCitations && $getCitations.size() > 0)
                 )
                     #set($hasDetail5 = true)
                     <li class="accordion-item" data-accordion-item>

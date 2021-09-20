@@ -24,6 +24,19 @@
         #renderTable($TOOL.getMediumOptions($xPathAdditionalInfoMDDistribution))
     ## Bestellinformationen
         #renderTextTable($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath($xPathAdditionalInfoOrderingInstructions))
+    ## Digital Object Identifier (DOI)
+    #if($doi)
+        #set($list = [])
+        #if($doi.id)
+            #set($add = $list.add("<b>$MESSAGES.getString('doi.id')</b>: $doi.id"))
+        #end
+        #if($doi.type)
+            #set($add = $list.add("<b>$MESSAGES.getString('doi.type')</b>: $doi.type"))
+        #end
+        #renderTextListTable($MESSAGES.getString("doi") $list)
+    #end
+    ## Zitat für diesen Datensatz
+        #parse("/WEB-INF/templates/detail/part/metadata/information_additional/information_additional_citation.vm")
     </div>
 #end
 
@@ -43,20 +56,4 @@
         ## Suchbegriffe
         #renderTableList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "search"))
     </div>
-#end
-
-## Digital Object Identifier (DOI)
-#if($TOOL.aNodeOfListExist($xPathListDoi))
-    <div class="sub-section">
-        #renderGroupTitle($MESSAGES.getString("doi"))
-        <div class="search-result--nested">
-            #renderTextTable($MESSAGES.getString("doi.id") $doi.id)
-            #renderTextTable($MESSAGES.getString("doi.type") $doi.type)
-        </div>
-    </div>
-#end
-
-## Zitat für diesen Datensatz
-#if($getCitations && $getCitations.size() > 0)
-    #renderCitation($MESSAGES.getString("citation") $tmp)
 #end

@@ -1549,9 +1549,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         String doiId = getValueFromXPath("./idf:doi/id");
         String doiType = getValueFromXPath("./idf:doi/type");
 
-        Map<String, String> element = new HashMap<>();
-        element.put("id", doiId);
-        element.put("type", doiType);
+        Map<String, String> element =null;
+        if(doiId != null || doiType != null) {
+            element = new HashMap<>();
+            if(doiId != null) {
+                element.put("id", doiId);
+            }
+            if(doiType != null) {
+                element.put("type", doiType);
+            }
+        }
 
         return element;
     }

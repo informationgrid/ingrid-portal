@@ -1,0 +1,7 @@
+## Literaturverweise
+#if($getBibliographies && $getBibliographies.size() > 0)
+<div class="sub-section sub-section-unlined">
+    <a class="anchor" id="${hashDetail3}_bibliography"></a>
+    #renderCitation($MESSAGES.getString("bibliography") $getBibliographies)
+</div>
+#end

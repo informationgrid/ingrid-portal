@@ -20,7 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
 */
-
 .header__logo {
   width: auto;
 }
@@ -52,33 +51,6 @@
   }
 }
 
-.desktop-logo {
-  max-width: 60%;
-}
-
-.desktop__title p {
-  margin: 0 0 15px;
-  color: #2C5C91;
-}
-
-.desktop__title p.main__title {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.desktop__title p.sub__title {
-  font-size: 16px;
-}
-
-.mobile__title {
-  font-size: 27px;
-  color: #FFFFFF;
-}
-
-.mobile__title:hover {
-  color: #FFFFFF;
-}
-
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -91,97 +63,7 @@
   vertical-align: middle;
 }
 
-/*
-    Leaflet
-*/
-.marker-cluster-10 {
-  background-color: rgba(56, 170, 220, 0.6) !important;
-  z-index: 0 !important;
-}
 
-.marker-cluster-10 div{
-  background-color: rgba(56, 170, 220, 1.0) !important;
-}
-
-.marker-cluster-10.light {
-  background-color: transparent !important;
-}
-
-.marker-cluster-10.light div{
-  background-color: rgba(56, 170, 220, 0.6) !important;
-}
-
-.marker-cluster-11 {
-  background-color: rgba(48, 48, 48, 0.6) !important;
-  z-index: -10 !important;
-}
-
-.marker-cluster-11 div{
-  background-color: rgba(48, 48, 48, 1.0) !important;
-}
-
-.marker-cluster-11.light {
-  background-color: transparent !important;
-}
-
-.marker-cluster-11.light div{
-  background-color: rgba(48, 48, 48, 0.6) !important;
-}
-
-.marker-cluster-12 {
-  background-color: rgba(227, 144, 0, 0.6) !important;
-  z-index: -10 !important;
-}
-
-.marker-cluster-12 div{
-  background-color: rgba(227, 144, 0, 1.0) !important;
-}
-
-.marker-cluster-12.light {
-  background-color: transparent !important;
-}
-
-.marker-cluster-12.light div{
-  background-color: rgba(227, 144, 0, 0.6) !important;
-}
-
-.marker-cluster-1314 {
-  background-color: rgba(200, 60, 40, 0.6) !important;
-  z-index: -20 !important;
-}
-
-.marker-cluster-1314 div {
-  background-color: rgba(200, 60, 40, 1.0) !important;
-}
-
-.marker-cluster-1314.light {
-  background-color: transparent !important;
-}
-
-.marker-cluster-1314.light div {
-  background-color: rgba(200, 60, 40, 0.6) !important;
-}
-
-.marker-cluster-dev-plan {
-  background-color: rgba(110, 170, 40, 0.6) !important;
-  z-index: -30 !important;
-}
-
-.marker-cluster-dev-plan div {
-  background-color: rgba(110, 170, 40, 1.0) !important;
-}
-
-.marker-cluster-dev-plan.light {
-  background-color: transparent !important;
-}
-
-.marker-cluster-dev-plan.light div {
-  background-color: rgba(110, 170, 40, 0.6) !important;
-}
-
-.marker-cluster span {
-  color: #FFFFFF;
-}
 
 @media screen and (max-width: 768px) {
   .header__widgets__section {
@@ -208,18 +90,6 @@
   border: 3px solid #2C5C91;
 }
 
-#map-legend .leaflet-control-layers {
-  float: none;
-  background: transparent !important;
-  box-shadow: unset;
-  font-size: 12px;
-}
-
-.leaflet-legend-icon {
-  background-size: 13px 16px;
-  padding: 3px 10px 0 4px !important;
-}
-
 @media screen and (min-width: 480px) {
   .popup {
     left: 50%;
@@ -227,58 +97,8 @@
   }
 }
 
-@media screen and (max-height: 34.9375em) and (max-width: 63.9375em) and (orientation: landscape) {
-  #legend-accordion-label-landscape {
-    display: block !important;
-  }
-  .is-active #legend-accordion-label-landscape {
-    border-top: 1px solid #c6cfe2 !important;
-    border-bottom: 0 !important;
-    padding: 10px 0 !important;
-  }
-  .is-active #legend-accordion-label-landscape::after {
-    top: 10px !important;
-    right: 50% !important;
-  }
-  .is-active #legend-accordion-label-landscape span {
-    display: none;
-  }
-  #legend-accordion-label {
-    display: none !important;
-  }
-  #legend-accordion {
-    margin: 0;
-  }
-  .leaflet-popup-content {
-    min-width: 400px;
-  }
-  .header-menu-open .login {
-    display: none;
-  }
-  .leaflet-popup-content a h5, .leaflet-popup-content .helper.icon{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
-  }
-  .leaflet-popup-content {
-    margin: 24px;
-  }
-  .leaflet-popup-content .helper.icon:last-of-type, .leaflet-popup-content .helper.text:first-of-type {
-    margin-bottom: 8px;
-  }
-}
-
-@media screen and (max-width: 34.9375em) {
-  .leaflet-popup-content {
-    min-width: 300px;
-  }
-  .teaser-data .helper.icon {
-    width: 85%;
-  }
-}
-
 /* BAW */
+
 a {
   color: #4A7CC1;
 }
@@ -935,34 +755,19 @@ header .row .columns:last-of-type {
 .nav__desktop-icon {
   left: 1.125rem;
 }
-.document-list {
-  margin-bottom: 48px;
-}
-.document-list a {
-  font-family: "Roboto-Regular", sans-serif;
-}
-.text-list {
-  margin-bottom: 48px;
-}
-.text-list p.list-item {
-  margin-bottom: 2px;
-}
-.table table {
-  margin-bottom: 48px;
-}
+
 .table table tr {
   border-bottom: 1px solid #c6cfe2;
 }
-.table table tr th, .table table tr td{
-  padding: 8px;
-  max-width: 300px;
+.similar-accordion {
+  padding: 0px 24px 24px;
 }
 #frmSimilar .accordion-content {
-  padding: 8px 24px 24px;
+  padding: 8px 6px 24px;
 }
 #frmSimilar .accordion-content label {
   display: inline-block;
-  margin-right: 16px;
+  margin-right: 24px;
 }
 header .menu-tab-row .menu-tab {
   display: none;
@@ -982,35 +787,21 @@ header .menu-tab-row .menu-tab {
     display: inline-block;
   }
 }
-/*@media print, screen and (min-width: 47.9375em) {*/
-/*  header .logo {*/
-/*    width: 15em;*/
-/*    top: 5px;*/
-/*  }*/
-/*}*/
 @media print, screen and (min-width: 54em) {
   header .logo {
     width: 20em;
     top: 0px;
   }
   .header-menu-close { padding: 28px 0px 0 0; }
-  footer .footer .copyright span.icon:before {
-    content: '\00a9';
-    float: left;
-    margin-left: 8px;
-  }
-  footer .footer .copyright span.text {
-    margin-right: 0;
-    text-align: left;
-    float: left;
-    margin-left: 4px;
-  }
   footer .footer .logo {
     float: left;
     display: block;
   }
   footer .footer .footer-menu-entries {
     text-align: right;
+  }
+  footer .footer .footer-menu-entries a:last-child {
+    margin-right: 0;
   }
   footer .footer .columns div {
     margin: 10px 0;
@@ -1595,4 +1386,26 @@ a.icon {
 .search-filtered .teaser-data.is-active h2.header,
 .search-filtered .teaser-data.is-active .arrow {
     color: #1D4B7B;
+}
+
+span.icon span {
+    color: #4A7CC1;
+}
+
+footer .footer-buttons-bar .login-buttons .button.is-active {
+  border: 1px solid #4A7CC1;
+  background: #4A7CC1;
+  color: #eaf6ff;
+}
+footer .footer-buttons-bar .login-buttons .login-form {
+  border-color: #4A7CC1;
+}
+.login-form:before {
+  border-color: transparent transparent transparent #4A7CC1 !important;
+}
+
+.button.round:hover, .button.round:focus {
+    border: 1px solid #2C63B1;
+    background-color: #2C63B1;
+    color: #eaf6ff;
 }

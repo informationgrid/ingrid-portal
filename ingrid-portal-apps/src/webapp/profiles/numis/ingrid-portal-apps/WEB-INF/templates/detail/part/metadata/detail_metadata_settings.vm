@@ -101,8 +101,6 @@
 #set($xPathRefSuperior = "./idf:superiorReference")
 #### Identifikator des übergeordneten Metadatensatzes
 #set($xPathAdditionalInfoParentIdentifier = "./gmd:parentIdentifier")
-#### Literaturverweise
-#set($xPathBibliography = "./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue='crossReference']")
 
 #set($xPathListReferences = [
     $xPathRefDownloads,
@@ -110,8 +108,7 @@
     $xPathRefOthers,
     $xPathRefSubordinated,
     $xPathRefSuperior,
-    $xPathAdditionalInfoParentIdentifier,
-    $xPathBibliography
+    $xPathAdditionalInfoParentIdentifier
 ])
 
 #set($getDownloads = $TOOL.getExternLinks($xPathRefDownloads, true))
@@ -119,16 +116,10 @@
 #set($getOtherLinks = $TOOL.getExternLinks($xPathRefOthers))
 #set($getSubordinatedLinks = $TOOL.getReference($xPathRefSubordinated))
 #set($getSuperiorLinks = $TOOL.getReference($xPathRefSuperior))
-#if($TOOL.aNodeOfListExist($xPathBibliography))
-    #set($xPathBibliographyExpressions = {
-        "rootName" : "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:citedResponsibleParty",
-        "name" : "./gmd:CI_ResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']/gmd:individualName/gco:CharacterString",
-        "year": "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date",
-        "title": "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString",
-        "publisher": "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='publisher'][1]/gmd:organisationName/gco:CharacterString",
-        "doi": "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"})
-    #set($getBibliographies = $TOOL.getListAPACitation($xPathBibliographyExpressions, "./gmd:identificationInfo/*/gmd:aggregationInfo"))
-#end
+
+#### Literaturverweise
+#parse("/WEB-INF/templates/detail/part/metadata/settings/settings_bibliography.vm")
+
 
 #if($transformCoupledCSWUrl)
     #set($tmpGetOtherLinks = [])
@@ -422,7 +413,6 @@
 
 #### DOI
 #set($doi = $TOOL.getDOI())
-#set($xPathListDoi = ["./idf:doi"])
 
 ## Infos zur Datensatzbeschreibung
 #### Sprache des Metadatensatzes
@@ -522,28 +512,14 @@
 #set($xPathAdditionalFields = "./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']")
 #set($xPathAdditionalFieldsData = "./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField")
 
-## Zitat für diesen Datensatz
-#set($xPathCitation = "./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']")
-
 ##FactSheet
 #set($xPathListFactSheet = [
     $xPathListTimeTimePeriodBeginPosition,
     $xPathListTimeTimePeriodEndPosition,
     $xPathUsePointOfContact,
     $xPathRefDownloads,
-    $xPathRefLinks,
-    $xPathCitation
+    $xPathRefLinks
 ])
 
-#if($TOOL.aNodeOfListExist($xPathCitation))
-    #set($xPathCitationExpressions = {
-        "rootName" : "./gmd:identificationInfo/*/gmd:pointOfContact",
-        "name" : "./idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']/gmd:individualName/gco:CharacterString",
-        "org_name" : "./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']/gmd:organisationName/gco:CharacterString",
-        "year" : "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date|./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:DateTime",
-        "title" : "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString",
-        "publisher": "./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='publisher'][1]/gmd:organisationName/gco:CharacterString",
-        "doi" : "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString[contains(text(),'doi')]",
-        "doi_type" : "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier[contains(./gmd:code/gco:CharacterString/text(),'doi')]/gmd:authority/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"})
-    #set($getCitations = $TOOL.getListAPACitation($xPathCitationExpressions))
-#end
+## Zitat für diesen Datensatz
+#parse("/WEB-INF/templates/detail/part/metadata/settings/settings_citation.vm")
