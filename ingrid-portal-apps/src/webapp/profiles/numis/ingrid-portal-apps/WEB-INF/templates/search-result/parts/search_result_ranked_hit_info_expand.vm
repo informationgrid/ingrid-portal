@@ -121,6 +121,9 @@
                     #set($licenseValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
                     #if(($licenseKey && !$licenseKey.isEmpty()) || ($licenseValue && !$licenseValue.isEmpty()))
                         #set($licenseName = $Codelists.getCodeListValue('6500', $licenseKey, $languageCode))
+                        #if($licenseName.isEmpty())
+                            #set($licenseName = $Codelists.getCodeListValue('6500', $licenseKey, "de"))
+                        #end
                         #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $licenseKey, "url", $request.getLocale()))
                         #renderFactTitle($MESSAGES.getString('searchResult.info.license'))
                         #if($licenseUrl)

@@ -29,8 +29,6 @@
             #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h4" [] true)
         </div>
         #end
-    ## Literaturverweise
-        #parse("/WEB-INF/templates/detail/part/metadata/links/links_bibliography.vm")
     ## Weitere Verweise
         #if($getOtherLinks && $getOtherLinks.size() > 0)
         <div class="sub-section sub-section-unlined">

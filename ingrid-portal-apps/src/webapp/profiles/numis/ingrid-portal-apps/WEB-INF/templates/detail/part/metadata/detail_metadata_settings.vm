@@ -27,6 +27,8 @@
 #set($hashDetail8 = "detail_contact")
 #set($hasDetail9 = false)
 #set($hashDetail9 = "metadata_info")
+#set($hasDetail10 = false)
+#set($hashDetail10 = "bibliographical_info")
 
 #set($advGroup = $TOOL.getAlternateTitleListFromCodelist("8010"))
 #set($searchTerm = $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "search"))
@@ -412,7 +414,7 @@
 ])
 
 #### DOI
-#set($doi = $TOOL.getDOI())
+#parse("/WEB-INF/templates/detail/part/metadata/settings/settings_doi.vm")
 
 ## Infos zur Datensatzbeschreibung
 #### Sprache des Metadatensatzes

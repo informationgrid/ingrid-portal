@@ -380,7 +380,7 @@ public class DetailPartPreparer {
                     }
 
                     if(source != null && !source.isEmpty()) {
-                        String tmpQuelle = "Quellenvermerk: " + source;
+                        String tmpQuelle = messages.getString("constraints.use.costraints.source") + source;
                         if(furtherOtherConstraints.contains(tmpQuelle)){
                             furtherOtherConstraints.remove(tmpQuelle);
                         }
