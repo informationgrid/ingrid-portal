@@ -140,20 +140,11 @@ a.icon:hover {
   background-color: #fff;
   border: 2px solid #2C63B1;
 }
-.input-search .button {
-  background-color: #CB181A;
-}
-.input-search .button:hover {
-  background-color: #dc1f21;
-}
 .input-search .button.round:hover {
   background-color: #1D4B7B;
 }
 .input-search .button.round {
   background-color: #4a7cc1;
-}
-.ic-ic-lupe {
-  color: #FFFFFF;
 }
 .input-search .input-search-field {
   border: 0;
