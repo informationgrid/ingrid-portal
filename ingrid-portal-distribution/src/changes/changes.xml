@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
+          <action type="add" dev="wemove" issue="2790">
+            BAW_DOI: Portal: Language-Switcher Portlet aktivieren
+          </action>
           <action type="update" dev="wemove" issue="2747">
             BAW_DOI: Portal-Layout für das baw_doi Profil aktualisieren
           </action>

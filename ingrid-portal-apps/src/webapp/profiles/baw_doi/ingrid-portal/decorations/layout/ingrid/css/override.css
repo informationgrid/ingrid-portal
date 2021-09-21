@@ -1405,7 +1405,15 @@ footer .footer-buttons-bar .login-buttons .login-form {
 }
 
 .button.round:hover, .button.round:focus {
-    border: 1px solid #2C63B1;
-    background-color: #2C63B1;
-    color: #eaf6ff;
+  border: 1px solid #2C63B1;
+  background-color: #2C63B1;
+  color: #eaf6ff;
+}
+
+.menu-sub-links .menu-settings-links {
+  background-color: #29406A;
+}
+
+.menu-sub-links a + .menu-settings-links {
+  background-color: #314B77
 }
