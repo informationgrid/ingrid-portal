@@ -90,11 +90,6 @@
                                         #set($tmpTitle = $MESSAGES.getString("search.detail.info.links"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
-                                    #if($getBibliographies && $getBibliographies.size() > 0)
-                                        #set($tmpHash = "${hashDetail3}_bibliography")
-                                        #set($tmpTitle = $MESSAGES.getString("bibliography"))
-                                        #renderSubNavigation($tmpTitle $tmpHash)
-                                    #end
                                     #if($getOtherLinks && $getOtherLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_www_references")
                                         #set($tmpTitle = $MESSAGES.getString("www_references"))
