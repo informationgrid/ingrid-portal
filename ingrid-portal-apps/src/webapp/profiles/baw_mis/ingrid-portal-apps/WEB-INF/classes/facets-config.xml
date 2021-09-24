@@ -144,6 +144,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Wasserstraße</name>
         <id>wasserstrasse</id>
+        <isOpen>true</isOpen>
         <facets>
             <facet>
                 <name>Donau</name>
