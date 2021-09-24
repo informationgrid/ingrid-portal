@@ -108,10 +108,12 @@
                 </a>
             #else
             <div class="image">
+                #if($showMetadataClassType)
                 <div class="helper icon">
                     #set($udkObjClassName = $Codelists.getCodeListValue('8000', $entry.objectClass, $request.getLocale().getLanguage()))
                     #renderUDKIcon($entry.objectClass $udkObjClassName $udkObjClassName)
                 </div>
+                #end
                 <a href="$entry.href" class="icon" title="$stringTool.htmlescape($entry.title)">
                     <span class="text">$entry.title</span>
                 </a>

@@ -30,6 +30,8 @@
 #set($hasDetail10 = false)
 #set($hashDetail10 = "bibliographical_info")
 
+#set($showMetadataClassType = true)
+
 #set($advGroup = $TOOL.getAlternateTitleListFromCodelist("8010"))
 #set($searchTerm = $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "search"))
 #set($mapImage = $TOOL.getMapImage(${plugPartner}, true))

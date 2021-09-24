@@ -85,9 +85,7 @@
                             #else
                                 #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                             #end
-                            <div class="helper icon">
-                                #renderUDKAddressIcon($rs.udk_class $udkAdrClassName $udkAdrClassName)
-                            </div>
+                            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_addr.vm")
                             #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
                             #renderSearchTerm($searchTerm)
                             <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
@@ -100,9 +98,7 @@
                             #else
                                 #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                             #end
-                            <div class="helper icon">
-                                #renderUDKIcon($rs.udk_class $udkObjClassName $udkObjClassName)
-                            </div>
+                            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_obj.vm")
                             #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
                             #renderSearchTerm($searchTerm $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.has_access_constraint" ))
                             <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">

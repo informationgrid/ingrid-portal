@@ -26,17 +26,18 @@
 #set($xPathBawValue = ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:value/gco:Record")
 
 #set($xPathListInformationTypeBawMis = [
-    "${xPathBawFormatName}/${xPathBawFormat}",
-    "${xPathBawFormatName}/${xPathBawVersion}",
+    "${xPathBawFormat}/${xPathBawFormatName}",
+    "${xPathBawFormat}/${xPathBawVersion}",
     $xPathBawProcedure,
     $xPathBawModellType,
     $xPathBawSpatialDimensionality,
-    "${xPathBAWDataQuality}/$x{PathBawRole}",
-    "${xPathBAWDataQuality}/$x{PathBawName}",
-    "${xPathBAWDataQuality}/$x{PathBawUnit}",
-    "${xPathBAWDataQuality}/$x{PathBawValue}"
+    "${xPathBAWDataQuality}/${xPathBawRole}",
+    "${xPathBAWDataQuality}/${xPathBawName}",
+    "${xPathBAWDataQuality}/${xPathBawUnit}",
+    "${xPathBAWDataQuality}/${xPathBawValue}"
 ])
-
-#if($TOOL.aNodeOfListExist($xPathListInformationType1))
+#if($TOOL.aNodeOfListExist($xPathListInformationTypeBawMis))
     #set($checkOtherInformation = true)
 #end
+
+#set($showMetadataClassType = false)

@@ -1,0 +1,3 @@
+<div class="helper icon">
+    #renderUDKIcon($rs.udk_class $udkObjClassName $udkObjClassName)
+</div>
