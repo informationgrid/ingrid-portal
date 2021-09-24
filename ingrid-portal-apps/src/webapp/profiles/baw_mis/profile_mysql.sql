@@ -35,7 +35,7 @@ DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+4  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'user_template_default_page_fragment_id'), 'ingrid-portal-apps::SearchSimple',         'portlet', 0, 0, -1, -1, -1, -1, -1);
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+5 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'user_template_default_page_fragment_id'), 'ingrid-portal-apps::CategoryTeaser',       'portlet', 1, 0, -1, -1, -1, -1, -1);
 
--- Show '/language.link'
+-- Hide '/language.link'
 UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 
 -- Delete all '/_user/<USER>/default-page.psml'
