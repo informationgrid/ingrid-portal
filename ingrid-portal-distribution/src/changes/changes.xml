@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
+          <action type="add" dev="wemove" issue="2819">
+            UVP: Icon im UVP-Portal einfügen
+          </action>
           <action type="update" dev="wemove" issue="2746">
             BAW_MIS: Portal-Layout für das baw_mis Profil aktualisieren
           </action>
