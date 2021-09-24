@@ -6,9 +6,9 @@
     #renderSectionTitle($MESSAGES.getString("bibliographical_info"))
     <div class="row columns">
     ## Literaturverweise
-        #parse("/WEB-INF/templates/detail/part/metadata/bibliographical_info/bibliographical_info_bibliography.vm")
+        #parse("/WEB-INF/templates/detail/parts/metadata/bibliographical_info/bibliographical_info_bibliography.vm")
     ## Zitat für diesen Datensatz
-        #parse("/WEB-INF/templates/detail/part/metadata/bibliographical_info/bibliographical_info_citation.vm")
+        #parse("/WEB-INF/templates/detail/parts/metadata/bibliographical_info/bibliographical_info_citation.vm")
     ## Digital Object Identifier (DOI)
     #if($doi)
         #set($doiTable = {})

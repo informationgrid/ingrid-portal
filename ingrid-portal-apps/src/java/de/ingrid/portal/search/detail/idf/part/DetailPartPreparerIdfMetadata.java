@@ -46,7 +46,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
         super.init( node, iPlugId, request, response, context );
 
-        this.templateName = "/WEB-INF/templates/detail/part/detail_part_preparer_metadata.vm";
+        this.templateName = "/WEB-INF/templates/detail/parts/detail_part_preparer_metadata.vm";
         this.localTagName = "idfMdMetadata";
     }
     

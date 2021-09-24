@@ -4,9 +4,9 @@
     #renderSectionTitle($MESSAGES.getString("subject_reference_tab"))
     <div class="row columns">
         ## Informationen zum Datensatz
-        #parse("/WEB-INF/templates/detail/part/metadata/information/information_type.vm")
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type.vm")
         ## Zusatzinformationen
-        #parse("/WEB-INF/templates/detail/part/metadata/information/information_additional.vm")
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional.vm")
     </div>
 </div>
 #end

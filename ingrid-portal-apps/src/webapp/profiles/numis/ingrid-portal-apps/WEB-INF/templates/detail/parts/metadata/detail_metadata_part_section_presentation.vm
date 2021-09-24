@@ -30,7 +30,7 @@
                 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                 #set($isDetail = true)
                 #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
-                #parse("/WEB-INF/templates/detail/part/metadata/presentation/presentation_marker.vm")
+                #parse("/WEB-INF/templates/detail/parts/metadata/presentation/presentation_marker.vm")
             #end
         #end
         #renderTable($tmp)

@@ -45,17 +45,17 @@
         </div>
         #end
     ## BAW Auftrag
-        #parse("/WEB-INF/templates/detail/part/metadata/factsheet/factsheet_aggregate_data_set_name.vm")
+        #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_aggregate_data_set_name.vm")
     ## Zitat für diesen Datensatz
-        #parse("/WEB-INF/templates/detail/part/metadata/factsheet/factsheet_citation.vm")
+        #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_citation.vm")
     ## Lizenz
-        #parse("/WEB-INF/templates/detail/part/metadata/factsheet/factsheet_license.vm")
+        #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_license.vm")
     ## Kontakt
         #if($xPathUsePointOfContactSortNodes && $xPathUsePointOfContactSortNodes.size() > 0)
             #renderMultiLineAddresses("" $xPathUsePointOfContactSortNodes false true)
         #end
     </div>
     ## Zeige in Karte
-    #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_map_image.vm")
+    #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_map_image.vm")
 </div>
 #end

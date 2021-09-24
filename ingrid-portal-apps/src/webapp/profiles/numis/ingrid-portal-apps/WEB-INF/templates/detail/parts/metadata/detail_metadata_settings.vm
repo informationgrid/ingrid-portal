@@ -120,7 +120,7 @@
 #set($getSuperiorLinks = $TOOL.getReference($xPathRefSuperior))
 
 #### Literaturverweise
-#parse("/WEB-INF/templates/detail/part/metadata/settings/settings_bibliography.vm")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_bibliography.vm")
 
 
 #if($transformCoupledCSWUrl)
@@ -415,7 +415,7 @@
 ])
 
 #### DOI
-#parse("/WEB-INF/templates/detail/part/metadata/settings/settings_doi.vm")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_doi.vm")
 
 ## Infos zur Datensatzbeschreibung
 #### Sprache des Metadatensatzes
@@ -526,7 +526,7 @@
 ])
 
 ## Zitat für diesen Datensatz
-#parse("/WEB-INF/templates/detail/part/metadata/settings/settings_citation.vm")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_citation.vm")
 
 ## BAW BWAStr
-#parse("/WEB-INF/templates/detail/part/metadata/settings/settings_bwa_str.vm")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_bwa_str.vm")

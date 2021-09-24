@@ -130,7 +130,7 @@
                                 #set($tmp2 = "")
                             </div>
                             ## Zeige in Karte
-                            #parse ('/WEB-INF/templates/detail/part/metadata/metadata_part_map_image.vm')
+                            #parse ('/WEB-INF/templates/detail/parts/metadata/metadata_part_map_image.vm')
                         </div>
                         ## Untergeordnete Objekte
                         #set($tmp = $TOOL.getReference("./idf:subordinatedReference"))

@@ -1,4 +1,4 @@
-#parse("/WEB-INF/templates/detail/part/address/detail_address_settings.vm")
+#parse("/WEB-INF/templates/detail/parts/address/detail_address_settings.vm")
 
 <div class="detail" id="detail">
 #if($title)
@@ -23,18 +23,18 @@
     <div class="row nav-content search-filtered">
         ## Navigation
         <div class="xsmall-24 large-6 xlarge-6 columns">
-            #parse("/WEB-INF/templates/detail/part/address/detail_address_part_section_navigation.vm")
+            #parse("/WEB-INF/templates/detail/parts/address/detail_address_part_section_navigation.vm")
         </div>
         <a class="anchor" id="detail_overview"></a>
         <div class="xsmall-24 large-18 xlarge-18 columns">
             <div class="data">
         ## FactSheet
-                #parse("/WEB-INF/templates/detail/part/address/detail_address_part_section_factsheet.vm")
+                #parse("/WEB-INF/templates/detail/parts/address/detail_address_part_section_factsheet.vm")
             </div>
         ## Beschreibung
-            #parse("/WEB-INF/templates/detail/part/address/detail_address_part_section_description.vm")
+            #parse("/WEB-INF/templates/detail/parts/address/detail_address_part_section_description.vm")
         ## Verweise und Downloads
-            #parse("/WEB-INF/templates/detail/part/address/detail_address_part_section_links.vm")
+            #parse("/WEB-INF/templates/detail/parts/address/detail_address_part_section_links.vm")
         </div>
     </div>
 #end

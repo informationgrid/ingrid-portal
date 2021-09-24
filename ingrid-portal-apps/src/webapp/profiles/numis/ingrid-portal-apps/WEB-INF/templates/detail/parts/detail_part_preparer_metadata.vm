@@ -1,4 +1,4 @@
-#parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_settings.vm")
+#parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_settings.vm")
 
 <div class="detail" id="detail">
 #if($title)
@@ -12,8 +12,8 @@
                     </a>
                 </div>
                 <div class="xsmall-24 large-18 xlarge-18 columns">
-                    #parse("/WEB-INF/templates/detail/part/metadata/banner/banner_class.vm")
-                    #parse("/WEB-INF/templates/detail/part/metadata/banner/banner_search_term.vm")
+                    #parse("/WEB-INF/templates/detail/parts/metadata/banner/banner_class.vm")
+                    #parse("/WEB-INF/templates/detail/parts/metadata/banner/banner_search_term.vm")
                     <h2>$title</h2>
                 </div>
             </div>
@@ -22,39 +22,39 @@
     <div class="row nav-content search-filtered">
         ## Navigation
         <div class="xsmall-24 large-6 xlarge-6 columns">
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_navigation.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_navigation.vm")
         </div>
         <a class="anchor" id="detail_overview"></a>
         <div class="xsmall-24 large-18 xlarge-18 columns">
             <div class="data">
        ## FactSheet
-                #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_factsheet.vm")
+                #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_factsheet.vm")
             </div>
         ## Beschreibung
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_description.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_description.vm")
         ## Bibliografische Angaben
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_bibliographical_info.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_bibliographical_info.vm")
         ## Darstellung
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_presentation.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_presentation.vm")
         ## Verweise und Downloads
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_links.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_links.vm")
         ## Nutzung
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_use.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_use.vm")
         ## Kontakt
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_contact.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_contact.vm")
         ## Fachinformationen
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_information.vm")
         ## Datenqualität
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_dataquality.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_dataquality.vm")
         ## Additional Fields Example
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_additional_fields.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_additional_fields.vm")
         ## Infos zur Datensatzbeschreibung
-            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_metadata_info.vm")
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_metadata_info.vm")
         </div>
     </div>
 #end
 </div>
-#parse('/WEB-INF/templates/detail/part/metadata/detail_metadata_part_script_table_scroll.vm')
+#parse('/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_script_table_scroll.vm')
 #parse('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
 #parse('/WEB-INF/templates/scripts/include_script_filter_scroll_activate.vm')
 #parse('/WEB-INF/templates/global/include_reference_list_file_size.vm')

@@ -15,8 +15,8 @@
     ## XML Darstellung 
         #renderLinkTable($MESSAGES.getString("xml_link_label") $getXML)
     ## Ansprechpartner (Metadatum)
-        #parse("/WEB-INF/templates/detail/part/metadata/metadata_info/metadata_info_metadatum.vm")
+        #parse("/WEB-INF/templates/detail/parts/metadata/metadata_info/metadata_info_metadatum.vm")
     ## Metadatenquellen
-        #parse("/WEB-INF/templates/detail/part/metadata/metadata_info/metadata_info_source.vm")
+        #parse("/WEB-INF/templates/detail/parts/metadata/metadata_info/metadata_info_source.vm")
     </div>
 #end
