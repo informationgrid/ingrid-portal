@@ -1,0 +1,18 @@
+<div class="sub-section">
+    <a class="anchor" id="${hashDetail5}_technical_information"></a>
+    #renderGroupTitle($MESSAGES.getString("technical_information"))
+    #set($headTitles = ["Format","Version"])
+    #set($headXpathExpressions = [$xPathBawFormat, $xPathBawVersion])
+    #renderTable($TOOL.getNodeListTable("Datenformat", "$xPathBawFormatName", $headTitles, $headXpathExpressions))
+    ##Verfahren
+    #renderTextTable("Verfahren" $TOOL.getValueFromXPath($xPathBawProcedure))
+    ## Modellart
+    #renderTextListTable("Modellart" $TOOL.getListOfValuesFromXPath($xPathBawModellType, "."))
+    ##Raeumliche Dimensionalitaet
+    #renderTextTable("R&aumlumliche Dimensionalit&auml;t" $TOOL.getValueFromXPath($xPathBawSpatialDimensionality))
+    ## Daten / Größen / Parameter
+    #set($headTitles = ["Rolle","Name","Einheit","Wert"])
+    #set($headTypes = ["text","text","text", "text"])
+    #set($headXpathExpressions = [$xPathBawRole, $xPathBawName, $xPathBawUnit, $xPathBawValue])
+    #renderTable($TOOL.getNodeListTable("Parameter und Zustandsgr&ouml;&szlig;en", "$xPathBAWDataQuality", $headTitles, $headXpathExpressions, null, $headTypes))
+</div>

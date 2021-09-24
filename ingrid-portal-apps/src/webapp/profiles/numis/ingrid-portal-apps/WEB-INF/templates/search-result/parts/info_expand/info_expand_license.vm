@@ -1,0 +1,36 @@
+## Lizenz
+#set($licenseKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
+#set($licenseValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
+#if(($licenseKey && !$licenseKey.isEmpty()) || ($licenseValue && !$licenseValue.isEmpty()))
+    #set($licenseName = $Codelists.getCodeListValue('6500', $licenseKey, $languageCode))
+    #if($licenseName.isEmpty())
+        #set($licenseName = $Codelists.getCodeListValue('6500', $licenseKey, "de"))
+    #end
+    #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $licenseKey, "url", $request.getLocale()))
+    #renderFactTitle($MESSAGES.getString('searchResult.info.license'))
+    #if($licenseUrl)
+                <p>
+                    <a class="icon" href="$licenseUrl" title="$stringTool.htmlescape($licenseName)" target="_blank" rel="noopener noreferrer">
+                        <span class="ic-ic-external"></span>
+                        <span class="text">$licenseName</span>
+                    </a>
+                </p>
+    #elseif($licenseName && !$licenseName.isEmpty())
+        <p>$licenseName</p>
+    #else
+        #if($licenseValue && !$licenseValue.isEmpty())
+            #set($licenseName = $UTIL_SEARCH.getCodeListDataStringValue($licenseValue, "name"))
+            #set($licenseUrl = $UTIL_SEARCH.getCodeListDataStringValue($licenseValue, "url"))
+            #if($licenseUrl && $licenseName)
+                <p>
+                    <a class="icon" href="$licenseUrl" title="$stringTool.htmlescape($licenseName)" target="_blank" rel="noopener noreferrer">
+                        <span class="ic-ic-external"></span>
+                        <span class="text">$licenseName</span>
+                    </a>
+                </p>
+            #else
+                 <p>$licenseValue</p>
+            #end
+        #end
+    #end
+#end

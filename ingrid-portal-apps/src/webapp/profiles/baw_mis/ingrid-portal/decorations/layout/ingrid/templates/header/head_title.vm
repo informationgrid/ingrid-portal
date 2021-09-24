@@ -1,1 +1,0 @@
-<title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "Bundesanstalt für Wasserbau")</title>

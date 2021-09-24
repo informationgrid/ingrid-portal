@@ -1,0 +1,2 @@
+## Zitat für diesen Datensatz
+#set($bwastr_name = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-bwastr_name"))

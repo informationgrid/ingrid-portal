@@ -161,7 +161,8 @@
                     ($type == "5" && $TOOL.aNodeOfListExist($xPathListInformationType5)) ||
                     ($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0)) ||
                     $TOOL.aNodeOfListExist($xPathListAdditionalInfo) ||
-                    $TOOL.aNodeOfListExist($xPathListKeywords) || $advGroup.size() > 0
+                    $TOOL.aNodeOfListExist($xPathListKeywords) || $advGroup.size() > 0 ||
+                    $checkOtherInformation
                 )
                     #set($hasDetail5 = true)
                     <li class="accordion-item" data-accordion-item>

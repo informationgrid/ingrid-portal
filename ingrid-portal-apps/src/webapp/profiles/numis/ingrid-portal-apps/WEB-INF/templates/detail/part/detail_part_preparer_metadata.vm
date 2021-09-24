@@ -12,11 +12,8 @@
                     </a>
                 </div>
                 <div class="xsmall-24 large-18 xlarge-18 columns">
-                    <div class="helper icon">
-                        #set($udkObjClassName = $Codelists.getCodeListValue('8000', ${type}, $request.getLocale().getLanguage()))
-                        #renderUDKIcon($type $udkObjClassName $udkObjClassName)
-                    </div>
-                    #renderSearchTerm($searchTerm $hasAccessConstraints)
+                    #parse("/WEB-INF/templates/detail/part/metadata/banner/banner_class.vm")
+                    #parse("/WEB-INF/templates/detail/part/metadata/banner/banner_search_term.vm")
                     <h2>$title</h2>
                 </div>
             </div>

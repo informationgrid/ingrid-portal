@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
     <name>baw_doi</name>
-    <description>Portal-Profile für BAW</description>
+    <description>Portal-Profile für BAW DOI</description>
     <pages>
         <page>
             <name>main-measures.psml</name>
@@ -104,7 +104,7 @@
             <src>../numis/ingrid-portal/</src>
             <dst>ingrid-portal/</dst>
         </file>
-        <!-- COPY BAW FILES -->
+        <!-- COPY BAW DOI FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal/</src>
@@ -115,12 +115,7 @@
         </file>
         <file>
             <action>copy-dir</action>
-            <src>ingrid-webmap-client/</src>
-        </file>
-        <file>
-            <action>copy-dir</action>
-            <src>ingrid-webmap-client/frontend/src</src>
-            <dst>ingrid-webmap-client/frontend/prd</dst>
+            <src>ingrid-portal-mdek-application/</src>
         </file>
     </files>
     <sql>
@@ -146,6 +141,10 @@
         </execute>
         <execute>
             <![CDATA[DROP TABLE tmp_table;]]>
+        </execute>
+        <!-- Delete user default-page.psml -->
+        <execute>
+            <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';]]>
         </execute>
     </sql>
 </profile>

@@ -92,7 +92,7 @@
     request.setAttribute("browser", "moz") will be called.
 
     -->
-    
+
     <!-- Startseite  -->
     <rule>
         <from>/startseite</from>
@@ -102,7 +102,7 @@
         <from>/portal/default-page.psml</from>
         <to>/startseite</to>
     </outbound-rule>
-    
+
     <!-- Hauptsuche   -->
     <rule>
         <from>/freitextsuche</from>
@@ -112,7 +112,7 @@
         <from>/portal/main-search.psml</from>
         <to>/freitextsuche</to>
     </outbound-rule>
-    
+
     <!--  Suche - Datenkataloge - Hierarchiebaum -->
     <rule>
         <from>/datenkataloge</from>
@@ -122,7 +122,7 @@
         <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
         <to>/datenkataloge</to>
     </outbound-rule>
-    
+
     <!--  Messwerte  -->
     <rule>
         <from>/messwertsuche</from>
@@ -132,7 +132,7 @@
         <from>/portal/main-measures.psml</from>
         <to>/messwertsuche</to>
     </outbound-rule>
-    
+
     <!--  Themen  -->
     <rule>
         <from>/themensuche</from>
@@ -142,7 +142,7 @@
         <from>/portal/main-environment.psml</from>
         <to>/themensuche</to>
     </outbound-rule>
-    
+
     <!--  Karten   -->
     <rule>
         <from>/kartendienste</from>
@@ -162,7 +162,7 @@
         <from>/portal/main-chronicle.psml</from>
         <to>/chronik</to>
     </outbound-rule>
-    
+
     <!-- Über InGrid-Portal  -->
     <rule>
         <from>/hintergrundinformationen</from>
@@ -172,7 +172,7 @@
         <from>/portal/main-about.psml</from>
         <to>/hintergrundinformationen</to>
     </outbound-rule>
-    
+
     <!-- Informationsanbieter   -->
     <rule>
         <from>/informationsanbieter</from>
@@ -182,7 +182,7 @@
         <from>/portal/main-about-partner.psml</from>
         <to>/informationsanbieter</to>
     </outbound-rule>
-    
+
     <!-- Datenquellen  -->
     <rule>
         <from>/datenquellen</from>
@@ -192,7 +192,7 @@
         <from>/portal/main-about-data-source.psml</from>
         <to>/datenquellen</to>
     </outbound-rule>
-    
+
     <!-- Mein Portal  -->
     <rule>
         <from>/log-in/</from>
@@ -216,7 +216,7 @@
         <from>/portal/privacy.psml</from>
         <to>/datenschutzbestimmung</to>
     </outbound-rule>
-    
+
     <!-- Weitere Meldungen  -->
     <rule>
         <from>/neuigkeiten</from>
@@ -226,7 +226,7 @@
         <from>/portal/rss-news.psml</from>
         <to>/neuigkeiten</to>
     </outbound-rule>
-    
+
     <!--  Inhaltsübersicht  -->
     <rule>
         <from>/inhaltsverzeichnis</from>
@@ -236,7 +236,7 @@
         <from>/portal/service-sitemap.psml</from>
         <to>/inhaltsverzeichnis</to>
     </outbound-rule>
-    
+
     <!-- Kontakt   -->
     <rule>
         <from>/kontakt</from>
@@ -246,7 +246,7 @@
         <from>/portal/service-contact.psml</from>
         <to>/kontakt</to>
     </outbound-rule>
-    
+
     <!-- Impressum   -->
     <rule>
         <from>/impressum</from>
@@ -276,7 +276,7 @@
         <from>/portal/search-detail.psml</from>
         <to>/trefferanzeige</to>
     </outbound-rule>
-    
+
     <!-- Help -->
     <rule>
         <from>/hilfe</from>
@@ -286,5 +286,5 @@
         <from>/portal/help.psml</from>
         <to>/hilfe</to>
     </outbound-rule>
-    
+
 </urlrewrite>

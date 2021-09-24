@@ -792,7 +792,7 @@
             #renderTextLabelAbove($MESSAGES.getString("xml_link_label") $tmp)
             #set($tmp = "")
         ## Ansprechpartner (Metadatum)
-        #parse ('/WEB-INF/templates/detail/part/metadata/detail_metadata_part_metadatum.vm')
+        #parse ('/WEB-INF/templates/detail/part/metadata/metadata_info/metadata_info_metadatum.vm')
 ## Additional Fields Example
             #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
             #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))

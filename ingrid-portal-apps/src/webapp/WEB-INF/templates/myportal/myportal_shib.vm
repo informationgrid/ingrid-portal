@@ -5,8 +5,8 @@
     <input type="hidden" name="cmd" value="doCreateProfile" />
     <div class="formbody formbody_border_style"></div>
     <div class="formfooter formfooter_border_style">
-    	<div align="right">
-    		#renderInputButtonClass($MESSAGES.getString('login.form.button.createProfile') "" "" "" "float_right")
+        <div align="right">
+            #renderInputButtonClass($MESSAGES.getString('login.form.button.createProfile') "" "" $MESSAGES.getString('login.form.newUser.tooltip') "float_right btn btn--primary btn--medium") "float_right")
         </div>
     </div>
 </form>

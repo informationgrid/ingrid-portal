@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  **************************************************-
-  Ingrid Portal Base
-  ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  -->
-
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
         "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
 
@@ -156,7 +133,7 @@
         <to>/messwertsuche</to>
     </outbound-rule>
 
-    <!--  Umweltthemen  -->
+    <!--  Themen  -->
     <rule>
         <from>/themensuche</from>
         <to type="forward">/portal/main-environment.psml</to>
@@ -175,15 +152,15 @@
         <from>/portal/main-maps.psml</from>
         <to>/kartendienste</to>
     </outbound-rule>
-
-    <!--  Umweltchronik  -->
+    
+    <!--  Chronik  -->
     <rule>
-        <from>/umweltchronik</from>
+        <from>/chronik</from>
         <to type="forward">/portal/main-chronicle.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-chronicle.psml</from>
-        <to>/umweltchronik</to>
+        <to>/chronik</to>
     </outbound-rule>
 
     <!-- Über InGrid-Portal  -->
@@ -229,15 +206,7 @@
         <from>/portal/service-myportal.psml</from>
         <to>/log-in</to>
     </outbound-rule>
-    <rule>
-        <from>/personalisierungsoptionen</from>
-        <to type="forward">/portal/service-myportal.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/service-myportal.psml</from>
-        <to>/personalisierungsoptionen</to>
-    </outbound-rule>
-
+    
     <!-- Datenschutzbestimmung   -->
     <rule>
         <from>/datenschutzbestimmung</from>
@@ -296,16 +265,6 @@
     <outbound-rule>
         <from>/portal/accessibility.psml</from>
         <to>/barrierefreiheit</to>
-    </outbound-rule>
-
-    <!-- RSS Page  -->
-    <rule>
-        <from>/rss</from>
-        <to type="forward">/portal/rsspage.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/rsspage.psml</from>
-        <to>/rss</to>
     </outbound-rule>
 
     <!-- SearchDetail -->

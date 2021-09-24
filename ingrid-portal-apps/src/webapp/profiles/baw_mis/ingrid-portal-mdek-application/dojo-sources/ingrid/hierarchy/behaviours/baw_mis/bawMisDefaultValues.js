@@ -67,26 +67,26 @@ define([
             this._addTableEntriesByEntryIds({
                 tableId: "thesaurusInspire",
                 entryIds: [ "108" ] // Gewässernetz
-                    });
+            });
         },
 
         _setIsoTopics: function () {
             this._addTableEntriesByEntryIds({
                 tableId: "thesaurusTopics",
                 entryIds: [ "18" ] // transportation
-                    });
+            });
         },
 
         _setCharsetData: function () {
-                // If the dataset is new (not saved yet), then initialise the
-                // value as "utf8"
-                var datasetCharsetUtf8Value = "4";
-                var datasetCharsetWidgetId = "extraInfoCharSetData";
+            // If the dataset is new (not saved yet), then initialise the
+            // value as "utf8"
+            var datasetCharsetUtf8Value = "4";
+            var datasetCharsetWidgetId = "extraInfoCharSetData";
 
-                var datasetCharsetWidget = registry.byId(datasetCharsetWidgetId);
+            var datasetCharsetWidget = registry.byId(datasetCharsetWidgetId);
             if (datasetCharsetWidget && !datasetCharsetWidget.get("value")) {
-                    datasetCharsetWidget.set("value", datasetCharsetUtf8Value);
-                }
+                datasetCharsetWidget.set("value", datasetCharsetUtf8Value);
+            }
         },
 
         _setPublishArea: function () {
@@ -133,7 +133,7 @@ define([
 
                 var existing = tableData.find(function (value) {
                     return value.title === entryTitle;
-            });
+                });
                 if (!existing) {
                     tableData.push({title: entryTitle});
                     UtilStore.updateWriteStore(args.tableId, tableData);

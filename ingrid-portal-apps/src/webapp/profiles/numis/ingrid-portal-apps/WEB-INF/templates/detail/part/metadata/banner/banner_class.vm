@@ -1,0 +1,4 @@
+<div class="helper icon">
+    #set($udkObjClassName = $Codelists.getCodeListValue('8000', ${type}, $request.getLocale().getLanguage()))
+    #renderUDKIcon($type $udkObjClassName $udkObjClassName)
+</div>
