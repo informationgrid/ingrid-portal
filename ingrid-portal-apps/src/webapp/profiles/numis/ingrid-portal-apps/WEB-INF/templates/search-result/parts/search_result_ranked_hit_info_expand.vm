@@ -136,21 +136,22 @@
                         </p>
                     #end
                     -->
-
                     #if($rs.wms_coord)
                         <a class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
                     #end
                 #end
             </div>
-            #if(($coords.size() > 0) 
-                || ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty())
-                || $rs.wms_url)
+            #if(($coords.size() > 0) ||
+                ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty()) ||
+                $hasOtherAreaDetails || 
+                $rs.wms_url
+            )
             <div class="columns">
                 #set($hasArea = false)
                 #set($hasPreview = false)
                 #set($hasSwipe = false)
                 
-                #if($coords.size() > 0)
+                #if($coords.size() > 0 || $hasOtherAreaDetails)
                     #set($hasArea = true)
                 #end
                 

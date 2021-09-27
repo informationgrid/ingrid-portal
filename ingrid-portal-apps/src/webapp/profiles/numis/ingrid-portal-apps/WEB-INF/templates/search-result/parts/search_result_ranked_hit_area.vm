@@ -55,18 +55,14 @@
         if(bounds${mapId}) {
             map${mapId}.fitBounds(bounds${mapId});
         }
+    </script>
+    #if($bwastr_id && !$bwastr_id.isEmpty())
+        #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bwastr.vm")
+    #else
+        #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bounds.vm")
+    #end
+    <script>
 
-        coords.forEach(function(coord) {
-            var y1Coord = coord[2];
-            var x1Coord = coord[1];
-            var y2Coord = coord[4];
-            var x2Coord = coord[3];
-            if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
-                var map${mapId}LayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
-                map${mapId}LayerBounds.bindTooltip(coord[0], {direction: 'center'});
-                map${mapId}.addLayer(map${mapId}LayerBounds);
-            }
-        });
         #if(!$isMoreId)
         $('#map${mapId}').closest('.js-expander-content').addClass('is-hidden');
         #end

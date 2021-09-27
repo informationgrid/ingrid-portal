@@ -1,0 +1,33 @@
+<script>
+    var bwastr_id_${mapId} = '${bwastr_id}';
+    var bwastr_von_${mapId} = '${bwastr_von}';
+    var bwastr_bis_${mapId} = '${bwastr_bis}';
+
+    var http${mapId} = new XMLHttpRequest();
+    http${mapId}.open('GET', '$restUrlBWaStr?id=' + bwastr_id_${mapId} + '&von=' + bwastr_von_${mapId} + '&bis=' + bwastr_bis_${mapId}, true);
+    http${mapId}.send();
+
+    http${mapId}.onreadystatechange = function() {
+      if (this.readyState == this.DONE) {
+        if (this.status === 200) {
+            var data${mapId} = JSON.parse(this.response); 
+            var geometry${mapId} = data${mapId}.geometry;
+              if (geometry${mapId}) {
+                var geojsonObject${mapId} = {
+                  'type': 'FeatureCollection',
+                  'features': [{
+                    'type': 'Feature',
+                    'geometry': {
+                      'type': geometry${mapId}.type,
+                      'coordinates': geometry${mapId}.coordinates
+                    }
+                  }]
+                };
+                var featureLayer${mapId} = L.geoJson(geojsonObject${mapId}, {
+                }).addTo(map${mapId});
+                map${mapId}.fitBounds(featureLayer${mapId}.getBounds());
+            }
+        }
+      }
+    };
+</script>

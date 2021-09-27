@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
+          <action type="update" dev="wemove" issue="2744">
+            BAW_MIS: Kartenansicht für den Raumbezug anpassen
+          </action>
           <action type="add" dev="wemove" issue="2819">
             UVP: Icon im UVP-Portal einfügen
           </action>

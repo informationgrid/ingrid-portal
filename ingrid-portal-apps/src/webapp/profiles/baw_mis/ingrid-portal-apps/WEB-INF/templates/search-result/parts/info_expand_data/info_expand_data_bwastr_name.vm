@@ -1,2 +1,12 @@
 ## Zitat für diesen Datensatz
 #set($bwastr_name = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-bwastr_name"))
+#set($bwastr_id = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-bwastr-id"))
+#if($bwastr_id)
+    #set($bwastr_id = $bwastr_id.replace("id_", ""))
+#end
+#set($bwastr_von = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-strecken_km_von"))
+#set($bwastr_bis = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-strecken_km_bis"))
+
+#if($bwastr_id || $bwastr_von || $bwastr_bis)
+    #set($hasOtherAreaDetails = true)
+#end

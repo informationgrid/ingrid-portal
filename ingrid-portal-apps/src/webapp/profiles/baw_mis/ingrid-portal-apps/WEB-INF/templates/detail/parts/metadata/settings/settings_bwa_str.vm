@@ -40,4 +40,22 @@
     #set($checkOtherInformation = true)
 #end
 
+#set($bawstrIds = $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
+#foreach($bawstrId in $bawstrIds)
+    #set($tmpBwaStrValues = $bawstrId.replaceAll("[^-?0-9]+", ""))
+    #set($tmpBwaStrValues = $tmpBwaStrValues.replaceAll("-", " "))
+    #set($tmpBwaStrValuesSplit = $tmpBwaStrValues.trim().split(" "))
+    #if($tmpBwaStrValuesSplit.size() == 1)
+        #set($bwastr_id = $tmpBwaStrValuesSplit.get(0))
+        #set($bwastr_von = "")
+        #set($bwastr_bis = "")
+    #elseif($tmpBwaStrValuesSplit.size() == 3)
+        #set($bwastr_id = $tmpBwaStrValuesSplit.get(0))
+        #set($bwastr_von = $tmpBwaStrValuesSplit.get(1))
+        #set($bwastr_bis = $tmpBwaStrValuesSplit.get(2))
+    #end
+    #if($bwastr_id && !$bwastr_id.isEmpty())
+        #break
+    #end
+#end
 #set($showMetadataClassType = false)

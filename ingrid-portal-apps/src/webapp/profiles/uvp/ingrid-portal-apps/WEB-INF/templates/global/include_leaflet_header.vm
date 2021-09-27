@@ -68,10 +68,32 @@
             _homeClick: function(e) {
                 L.DomEvent.stop(e);
                 if(bounds){
+                    map.eachLayer(function(layer) {
+                        if(layer && layer.feature) {
+                            bounds = layer.getBounds();
+                        }
+                    })
                     map.fitBounds(bounds);
                 }
             }
         });
         map.addControl(new HomeControl({}));
+    }
+
+    function resizeMap(map){
+        if(map){
+            map._onResize();
+        }
+    }
+    
+    function disableLeafletMapTouchControl(map) {
+        map.removeControl(map.zoomControl);
+        map.dragging.disable();
+        map.zoomControl.disable();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
+        map.boxZoom.disable();
+        map.keyboard.disable();
     }
 </script>

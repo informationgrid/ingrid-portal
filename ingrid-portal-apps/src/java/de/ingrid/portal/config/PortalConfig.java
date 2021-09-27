@@ -288,6 +288,9 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_FORM_VALID_FILLOUT_DURATION_MIN = "portal.form.valid.fillout.duration.min";
 
+    public static final String PORTAL_BWASTR_LOCATOR_INFO = "portal.bwastr.locator.info";
+    public static final String PORTAL_BWASTR_LOCATOR_GEOK = "portal.bwastr.locator.geok";
+    public static final String PORTAL_BWASTR_LOCATOR_EPSG = "portal.bwastr.locator.epsg";
 
     // private stuff
     private static PortalConfig instance = null;
