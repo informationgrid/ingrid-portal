@@ -4,15 +4,19 @@
 <div class="teaser-data search row is-active">
     <div class="xsmall-24 small-24 #if($tool.hasContent($mapImage) && $tool.hasContent($mapImage.elements))medium-14 large-14 xlarge-14#end columns">
     ## Durch die Ressource abgedeckte Zeitspanne
+        #set($atTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodInstantPosition))
         #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
         #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
-        #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
+
+        #if($tool.hasContent($beginTime) || $tool.hasContent($endTime) || $tool.hasContent($atTime))
             #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
                 #set($tmpTitle = "time_reference_content")
             #else
                 #set($tmpTitle = "time_reference")
             #end
-            #if($beginTime == $endTime)
+            #if($tool.hasContent($atTime))
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $atTime")
+            #elseif($beginTime == $endTime)
                 #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $beginTime")
             #elseif($beginTime && !$endTime)
                 #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since'): $beginTime")
