@@ -751,6 +751,7 @@ require([
                         }
 
                         timeRefTxt += " " + formatDate(nodeData.timeRefDate1 ? nodeData.timeRefDate1 : nodeData.timeRefDate2);
+                        if (nodeData.timeRefType === "seitX") timeRefTxt += " bis jetzt"
                     }
                 }
 

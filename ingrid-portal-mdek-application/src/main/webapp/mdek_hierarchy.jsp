@@ -2027,7 +2027,7 @@
                                                 <fmt:message key="ui.obj.time.timeRefContent" />
                                             </label>
                                         </span>
-                                        <div id="timeRefRef">
+                                        <div id="timeRefRef" class="outlined" style="float: left;">
                                             <div class="outer">
                                         	<span class="outer" style="width:100%;">
 											    <div>
