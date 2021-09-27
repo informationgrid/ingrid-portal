@@ -36,10 +36,13 @@
                 #end
                 #renderGroupTitle($MESSAGES.getString($tmpTitle))
             ## Durch die Ressource abgedeckte Zeitspanne
+                #set($atTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodInstantPosition))
                 #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
                 #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
-                #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
-                    #if($beginTime == $endTime)
+                #if($tool.hasContent($beginTime) || $tool.hasContent($endTime) || $tool.hasContent($atTime))
+                    #if($tool.hasContent($atTime))
+                        #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $atTime")
+                    #elseif($beginTime == $endTime)
                         #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $beginTime")
                     #elseif($beginTime && !$endTime)
                         #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since'): $beginTime")

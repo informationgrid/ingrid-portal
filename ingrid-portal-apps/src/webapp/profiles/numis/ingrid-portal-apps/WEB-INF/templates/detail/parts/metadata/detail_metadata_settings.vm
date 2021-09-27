@@ -48,6 +48,7 @@
 
 ## Zeitbezug
 ## Durch die Ressource abgedeckte Zeitspanne
+#set($xPathListTimeTimePeriodInstantPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimeInstant/gml:timePosition")
 #set($xPathListTimeTimePeriodBeginPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition")
 #set($xPathListTimeTimePeriodEndPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition")
 ## Status
