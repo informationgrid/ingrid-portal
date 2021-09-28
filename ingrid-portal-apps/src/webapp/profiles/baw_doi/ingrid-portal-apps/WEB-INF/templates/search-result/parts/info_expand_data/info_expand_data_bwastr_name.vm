@@ -10,3 +10,4 @@
 #if($bwastr_id || $bwastr_von || $bwastr_bis)
     #set($hasOtherAreaDetails = true)
 #end
+#set($wkt = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "wkt"))

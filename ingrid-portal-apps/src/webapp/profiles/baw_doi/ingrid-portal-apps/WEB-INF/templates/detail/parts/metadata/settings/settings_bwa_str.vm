@@ -58,4 +58,9 @@
         #break
     #end
 #end
+
+#if($wktPolygons && $wktPolygons.size() > 0)
+    #set($wkt = $wktPolygons.get(0))
+#end
+
 #set($showMetadataClassType = false)

@@ -83,6 +83,8 @@
 #set($xPathPresentEXExtentDescription = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description/gco:CharacterString")
 #### Begrenzungspolygon als WKT
 #set($xPathPresentPolygon = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_BoundingPolygon/gmd:polygon")
+#set($wktPolygons = $TOOL.getPolygon($xPathPresentPolygon))
+
 #### Raumbezugssystem
 #set($xPathPresentReferenceSystemInfo = "./gmd:referenceSystemInfo")
 
