@@ -254,19 +254,19 @@
     #else
         #parse("/decorations/layout/ingrid/templates/header/body_header_login.vm")
     #end
-    #if($_menu)
-        #set($hasLanguage = false)
-        #foreach($element in $_menu.elements.iterator())
-            #if($element.getTitle() == "ingrid.page.language")
-                #set($hasLanguage = true)
-            #end
-        #end
-        #if($hasLanguage)
-        <div class="menu-settings-links">
-            $jetspeed.renderPortletWindow("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
-        </div>
-        #end
-    #end
+##    #if($_menu)
+##        #set($hasLanguage = false)
+##        #foreach($element in $_menu.elements.iterator())
+##            #if($element.getTitle() == "ingrid.page.language")
+##                #set($hasLanguage = true)
+##            #end
+##        #end
+##        #if($hasLanguage)
+##        <div class="menu-settings-links">
+##            $jetspeed.renderPortletWindow("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
+##        </div>
+##        #end
+##    #end
     </div>
 </div> 
 #end

@@ -1619,6 +1619,19 @@ footer {
     .social-buttons {
       a.social { display: none; }
     }
+
+    .language-buttons {
+      .button.lang {
+        text-transform: none;
+        padding: 0;
+      }
+      form button.lang {
+        display: none;
+        position: absolute;
+        left: -62px;
+      }
+    }
+
     .login-buttons {
       .button.is-active {
          background-color: $green-jelly;

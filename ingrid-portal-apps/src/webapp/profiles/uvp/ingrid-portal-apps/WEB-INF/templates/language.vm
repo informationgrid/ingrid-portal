@@ -23,18 +23,29 @@
 #end
 
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
-#set($i=0)
-<h6>$MESSAGES.getString("common.language.title")</h6>
-#foreach($lang in $languagesShort)
-    <a href="#" onclick="submitform($(this), '$lang')" role="button" class="#getSelected($lang)" #getPressed($lang) aria-label="$ListTool.get($languagesNames, $i)">$lang</a>
-    #set($i=$i+1)
-#end
-</form>
+<div class="language-buttons">
+    <form action="$action" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
+    #set($i=0)
+    #foreach($lang in $languagesShort)
+        #if($selectedLang != $lang)
+        <button onclick="submitform($(this), '$lang')" class="button round social lang #getSelected($lang)" #getPressed($lang) aria-label="$ListTool.get($languagesNames, $i)">$lang</button>
+        #end
+        #set($i=$i+1)
+    #end
+    </form>
+    <button id="language-buttons" class="button round social lang" title="$MESSAGES.getString('common.language.title')">
+        $selectedLang
+    </button>
+</div>
 <script>
 function submitform(anchor, lang) {
     var form = anchor.closest('form');
     form.append('<input type="hidden" name="lang" value="'+ lang + '"/>');
     form.submit();
 }
+
+  $('#language-buttons').click(function() {
+    $('footer .footer-buttons-bar .language-buttons form button.lang').fadeToggle( "fast", "linear" ).css("display","inline-block");
+  });
+
 </script>
