@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
+          <action type="update" dev="wemove" issue="1949">
+            UVP: Kartenlegende, Hinweis, dass die Karte nur der Orientierung dient und keinen Bezug zu den Verfahren hat.
+          </action>
           <action type="update" dev="wemove" issue="2744">
             BAW_MIS: Kartenansicht für den Raumbezug anpassen
           </action>
