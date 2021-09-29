@@ -55,7 +55,14 @@
         #set($bwastr_bis = $tmpBwaStrValuesSplit.get(2))
     #end
     #if($bwastr_id && !$bwastr_id.isEmpty())
-        #break
+        #if($bwastrLocatorGetDataLowers && !$bwastrLocatorGetDataLowers.isEmpty() &&
+          $stringTool.parseInt($bwastr_id) >= $stringTool.parseInt($bwastrLocatorGetDataLowers))
+            #set($bwastr_id = "")
+            #set($bwastr_von = "")
+            #set($bwastr_bis = "")
+        #else
+            #break
+        #end
     #end
 #end
 

@@ -33,6 +33,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.velocity.context.Context;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
@@ -130,7 +131,10 @@ public class SearchDetailBawDmqsPortlet extends SearchDetailPortlet {
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "bwastr" );
         request.setAttribute( "restUrlBWaStr", restUrl.toString() );
-        
+
+        Context context = getContext(request);
+        context.put("bwastrLocatorGetDataLowers", PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_GET_DATA_LOWER)); 
+
         super.doView(request, response);
     }
 }

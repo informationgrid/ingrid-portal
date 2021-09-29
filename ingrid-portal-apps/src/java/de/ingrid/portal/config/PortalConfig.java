@@ -291,6 +291,7 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_BWASTR_LOCATOR_INFO = "portal.bwastr.locator.info";
     public static final String PORTAL_BWASTR_LOCATOR_GEOK = "portal.bwastr.locator.geok";
     public static final String PORTAL_BWASTR_LOCATOR_EPSG = "portal.bwastr.locator.epsg";
+    public static final String PORTAL_BWASTR_LOCATOR_GET_DATA_LOWER = "portal.bwastr.locator.get.data.lower";
 
     public static final String PORTAL_UVP_MAP_REQUESTED_FIELDS_MARKER = "portal.mapclient.uvp.requested.fields.marker";
     public static final String PORTAL_UVP_MAP_REQUESTED_FIELDS_MARKER_DETAIL = "portal.mapclient.uvp.requested.fields.marker.detail";

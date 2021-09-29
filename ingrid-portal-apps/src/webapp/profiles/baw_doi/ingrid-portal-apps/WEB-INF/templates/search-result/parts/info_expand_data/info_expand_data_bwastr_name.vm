@@ -7,6 +7,15 @@
 #set($bwastr_von = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-strecken_km_von"))
 #set($bwastr_bis = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-strecken_km_bis"))
 
+#if($bwastr_id && !$bwastr_id.isEmpty())
+    #if($bwastrLocatorGetDataLowers && !$bwastrLocatorGetDataLowers.isEmpty() &&
+      $stringTool.parseInt($bwastr_id) >= $stringTool.parseInt($bwastrLocatorGetDataLowers))
+        #set($bwastr_id = "")
+        #set($bwastr_von = "")
+        #set($bwastr_bis = "")
+    #end
+#end
+
 #if($bwastr_id || $bwastr_von || $bwastr_bis)
     #set($hasOtherAreaDetails = true)
 #end

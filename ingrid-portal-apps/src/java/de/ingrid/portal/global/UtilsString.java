@@ -523,11 +523,15 @@ public class UtilsString {
 
     /** replaceAll String method (Java) for velocity :) */
     public static String replaceAll(String stringToProcess, String stringToReplace, String stringToReplaceWith) {
-    	return stringToProcess.replaceAll(stringToReplace, stringToReplaceWith);
+        return stringToProcess.replaceAll(stringToReplace, stringToReplaceWith);
     }
 
     /** split String method (Java) for velocity :) */
     public static String[] split(String stringToProcess, String regex) {
-    	return stringToProcess.split(regex);
+        return stringToProcess.split(regex);
+    }
+
+    public static int parseInt(String string) {
+        return Integer.parseInt(string);
     }
 }
