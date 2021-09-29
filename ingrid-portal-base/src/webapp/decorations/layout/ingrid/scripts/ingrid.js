@@ -449,6 +449,7 @@ function addLayerBWaStr(map, id, von, bis, restUrlBWaStr, wkt, coords) {
           };
           var featureLayer = L.geoJson(geojsonObject, {
           }).addTo(map);
+          featureLayer.bindTooltip('<b>' + data.bwastr_name + ' (' + data.bwastrid + ')</b><br>' + data.strecken_name, {direction: 'center'});
           map.fitBounds(featureLayer.getBounds());
         } else {
           if(wkt) {
@@ -492,4 +493,20 @@ function addLayerBounds(map, coords) {
           map.addLayer(mapLayerBounds);
       }
   });
+}
+
+function updateParamReload(key, value) {
+  var pathname = window.parent.location.pathname;
+  var search = window.parent.location.search;
+  var hash = window.parent.location.hash;
+  var uri = pathname + search;
+  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  if (uri.match(re)) {
+    uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+  }
+  else {
+    uri = uri + separator + key + "=" + value;
+  }
+  window.location.href = uri + hash;
 }

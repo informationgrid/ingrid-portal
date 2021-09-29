@@ -14,7 +14,7 @@
         var y2${mapId};
         var x2${mapId};
 
-        for (var coord of coords) {
+        coords.forEach(function(coord) {
             var tmpBounds${mapId} = coord;
             y1${mapId} = tmpBounds${mapId}[2];
             x1${mapId} = tmpBounds${mapId}[1];
@@ -44,7 +44,7 @@
                     bounds${mapId} = L.latLngBounds(southWest${mapId}, northEast${mapId});
                 }
             }
-        }
+        });
         var map${mapId} = addLeafletMapWithId('map${mapId}', getOSMLayer(''), bounds${mapId}, null , 10);
         #if($isDetail)
             map${mapId}.gestureHandling.enable();
