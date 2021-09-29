@@ -424,3 +424,72 @@ function getQueryStringParameter(key) {
     return results == null ? null : results[1];
 
 }
+
+
+function addLayerBWaStr(map, id, von, bis, restUrlBWaStr, wkt, coords) {
+  var http = new XMLHttpRequest();
+  http.open('GET', restUrlBWaStr + '?id=' + id + '&von=' + von + '&bis=' + bis, true);
+  http.send();
+
+  http.onreadystatechange = function() {
+    if (this.readyState == this.DONE) {
+      if (this.status === 200) {
+        var data = JSON.parse(this.response); 
+        var geometry = data.geometry;
+        if (geometry) {
+          var geojsonObject = {
+            'type': 'FeatureCollection',
+            'features': [{
+              'type': 'Feature',
+              'geometry': {
+                'type': geometry.type,
+                'coordinates': geometry.coordinates
+              }
+            }]
+          };
+          var featureLayer = L.geoJson(geojsonObject, {
+          }).addTo(map);
+          map.fitBounds(featureLayer.getBounds());
+        } else {
+          if(wkt) {
+            addLayerWKT(map, wkt, coords);
+          } else if (coords) {
+            addLayerBounds(map, coords);
+          }
+        }
+      }
+    }
+  };
+}
+
+function addLayerWKT(map, wkt, coords) {
+  var wkt_split = wkt.split(";");
+  
+  var features = [];
+  wkt_split.forEach(function(tmpWkt) {
+      var wicket = new Wkt.Wkt();
+      wicket.read(tmpWkt);
+      var feature = wicket.toObject();
+      features.push(feature);
+  });
+  if(features.length > 0) {
+      var featureGroup = L.featureGroup(features).addTo(map);
+      map.fitBounds(featureGroup.getBounds());
+  } else {
+      addLayerBounds(map, coords);
+  }
+}
+
+function addLayerBounds(map, coords) {
+  coords.forEach(function(coord) {
+      var y1Coord = coord[2];
+      var x1Coord = coord[1];
+      var y2Coord = coord[4];
+      var x2Coord = coord[3];
+      if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
+          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
+          mapLayerBounds.bindTooltip(coord[0], {direction: 'center'});
+          map.addLayer(mapLayerBounds);
+      }
+  });
+}

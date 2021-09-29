@@ -64,7 +64,6 @@
         #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bounds.vm")
     #end
     <script>
-
         #if(!$isMoreId)
         $('#map${mapId}').closest('.js-expander-content').addClass('is-hidden');
         #end
