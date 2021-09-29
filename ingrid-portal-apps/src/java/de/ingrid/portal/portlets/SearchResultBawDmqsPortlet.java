@@ -128,9 +128,9 @@ public class SearchResultBawDmqsPortlet extends SearchResultPortlet {
                     JSONObject questJson = new JSONObject( tmpJson );
                     if(questJson.has("result")) {
                         JSONArray questJsonArray = questJson.getJSONArray( "result" );
-                        for (int j = 0; j < questJson.length(); j++) {
-                            if(!questJsonArray.isNull(j)) {
-                                JSONObject questJsonEntry = questJsonArray.getJSONObject( j );
+                        for (int j = 0; j < questJsonArray.length(); j++) {
+                            JSONObject questJsonEntry = questJsonArray.getJSONObject( j );
+                            if(questJsonEntry.has("km_von") && questJsonEntry.has("km_bis")) {
                                 von = questJsonEntry.getString( "km_von" );
                                 bis = questJsonEntry.getString( "km_bis" );
                                 break;
