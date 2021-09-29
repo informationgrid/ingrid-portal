@@ -25,6 +25,7 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.portlet.PortletException;
@@ -55,7 +56,7 @@ public class SearchDetailBawDmqsPortlet extends SearchDetailPortlet {
                 String epsg = PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_EPSG);
                 if(von.isEmpty() && von.isEmpty()) {
                     URL url = new URL(PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_INFO) + id);
-                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     InputStream in = con.getInputStream();
                     String encoding = con.getContentEncoding();
                     encoding = encoding == null ? "UTF-8" : encoding;
@@ -92,7 +93,7 @@ public class SearchDetailBawDmqsPortlet extends SearchDetailPortlet {
                     "}" +
                     "]" +
                 "}";
-                java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
                 con.setDoInput(true);
                 con.setDoOutput(true);
@@ -109,13 +110,15 @@ public class SearchDetailBawDmqsPortlet extends SearchDetailPortlet {
                 
                 String json = IOUtils.toString(in, encoding);
                 JSONObject jsonObj = new JSONObject(json);
-                JSONArray questJsonArray = jsonObj.getJSONArray( "result" );
-                response.setContentType( "application/json" );
-                if(questJsonArray != null && questJsonArray.length() > 0) {
-                    response.getWriter().write( questJsonArray.get(0).toString() );
-                } else {
-                    response.getWriter().write( "{}" );
+                String responseString = "{}";
+                if(jsonObj.has("result")) {
+                    JSONArray questJsonArray = jsonObj.getJSONArray( "result" );
+                    if(questJsonArray != null && questJsonArray.length() > 0) {
+                        responseString = questJsonArray.get(0).toString();
+                    }
                 }
+                response.setContentType( "application/json" );
+                response.getWriter().write( responseString );
             }
 
         } catch (Exception e) {

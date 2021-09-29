@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -51,6 +52,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.validator.UrlValidator;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -104,18 +106,23 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         
         if(paramURL != null){
             if (resourceID.equals( "httpURL" )) {
-                URL url = new URL(paramURL);
-                java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                con.setRequestMethod("HEAD");
-                response.setContentType( "application/javascript" );
-                StringBuilder s = new StringBuilder();
-                response.getWriter().write( "{" );
-                if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
-                    s.append( "\"contentLength\":");
-                    s.append( "\"" + con.getContentLength() + "\"" );
+                UrlValidator urlValidator = new UrlValidator();
+                if(urlValidator.isValid(paramURL)) {
+                    URL url = new URL(paramURL);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("HEAD");
+                    response.setContentType( "application/javascript" );
+                    StringBuilder s = new StringBuilder();
+                    response.getWriter().write( "{" );
+                    if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
+                        s.append( "\"contentLength\":");
+                        s.append( "\"" + con.getContentLength() + "\"" );
+                    }
+                    response.getWriter().write( s.toString() );
+                    response.getWriter().write( "}" );
+                } else {
+                    response.getWriter().write( "{}" );
                 }
-                response.getWriter().write( s.toString() );
-                response.getWriter().write( "}" );
             }
 
             if (resourceID.equals( "httpURLDataType" )) {
@@ -131,19 +138,22 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         extension = "wmts";
                     }
                     if(extension.isEmpty()) {
-                        URL url = new URL(paramURL);
-                        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                        con.setRequestMethod("HEAD");
-
-                        String contentType = con.getContentType();
-
-                        if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
-                            url = new URL(paramURL.replace("http://", "https://"));
-                            con = (java.net.HttpURLConnection) url.openConnection();
+                        UrlValidator urlValidator = new UrlValidator();
+                        if(urlValidator.isValid(paramURL)) {
+                            URL url = new URL(paramURL);
+                            HttpURLConnection con = (HttpURLConnection) url.openConnection();
                             con.setRequestMethod("HEAD");
-                            contentType = con.getContentType();
-                            if(contentType != null) {
-                                extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+    
+                            String contentType = con.getContentType();
+    
+                            if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
+                                url = new URL(paramURL.replace("http://", "https://"));
+                                con = (HttpURLConnection) url.openConnection();
+                                con.setRequestMethod("HEAD");
+                                contentType = con.getContentType();
+                                if(contentType != null) {
+                                    extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                                }
                             }
                         }
                     }
@@ -175,20 +185,23 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     }
 
     private void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
-        URL url = new URL(paramURL);
-        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-        InputStream inStreamConvert = con.getInputStream();
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        if (null != con.getContentType()) {
-            byte[] chunk = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                os.write(chunk, 0, bytesRead);
+        UrlValidator urlValidator = new UrlValidator();
+        if(urlValidator.isValid(paramURL)) {
+            URL url = new URL(paramURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            InputStream inStreamConvert = con.getInputStream();
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            if (null != con.getContentType()) {
+                byte[] chunk = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                    os.write(chunk, 0, bytesRead);
+                }
+                os.flush();
+                URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                        Base64.getEncoder().encodeToString(os.toByteArray()));
+                response.getWriter().write(dataUri.toString());
             }
-            os.flush();
-            URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                    Base64.getEncoder().encodeToString(os.toByteArray()));
-            response.getWriter().write(dataUri.toString());
         }
     }
 
@@ -568,7 +581,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     detailPreparer.prepare(record);
                 } else if (cswURL != null) {
                     URL url = new URL(cswURL);
-                    java.net.HttpURLConnection conn = (java.net.HttpURLConnection) url.openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     if(br != null) {
                         record.put("data", IOUtils.toString(br));
