@@ -26,6 +26,6 @@
 #set($i=0)
 <h6>$MESSAGES.getString("common.language.title")</h6>
 #foreach($lang in $languagesShort)
-    <a href="#" onclick="updateURLParamReload('lang', '$lang')" role="button" class="#getSelected($lang)" #getPressed($lang) aria-label="$ListTool.get($languagesNames, $i)">$lang</a>
+    <a href="javascript:void(0)" onclick="updateURLParamReload('lang', '$lang')" role="button" class="#getSelected($lang)" #getPressed($lang) aria-label="$ListTool.get($languagesNames, $i)">$lang</a>
     #set($i=$i+1)
 #end
