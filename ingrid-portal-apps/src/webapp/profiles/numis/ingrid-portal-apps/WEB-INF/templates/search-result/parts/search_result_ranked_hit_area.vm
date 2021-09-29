@@ -56,7 +56,7 @@
             map${mapId}.fitBounds(bounds${mapId});
         }
     </script>
-    #if($bwastr_id && !$bwastr_id.isEmpty())
+    #if($bwastr && !$bwastr.isEmpty())
         #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bwastr.vm")
     #elseif($wkt && !$wkt.isEmpty())
         #parse("/WEB-INF/templates/search-result/parts/area/area_layer_wkt.vm")

@@ -1,22 +1,39 @@
 ## Zitat für diesen Datensatz
 #set($bwastr_name = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-bwastr_name"))
-#set($bwastr_id = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-bwastr-id"))
-#if($bwastr_id)
-    #set($bwastr_id = $bwastr_id.replace("id_", ""))
-#end
-#set($bwastr_von = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-strecken_km_von"))
-#set($bwastr_bis = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-strecken_km_bis"))
 
-#if($bwastr_id && !$bwastr_id.isEmpty())
-    #if($bwastrLocatorGetDataLowers && !$bwastrLocatorGetDataLowers.isEmpty() &&
-      $stringTool.parseInt($bwastr_id) >= $stringTool.parseInt($bwastrLocatorGetDataLowers))
-        #set($bwastr_id = "")
-        #set($bwastr_von = "")
-        #set($bwastr_bis = "")
+## BwaStr ID data
+#set($bwastr = [])
+#if($rs.get("detail").get("bwstr-bwastr-id"))
+    #set($bwastr_id_list = $rs.get("detail").get("bwstr-bwastr-id"))
+    #set($bwastr_von_list = $rs.get("detail").get("bwstr-strecken_km_von"))
+    #set($bwastr_bis_list = $rs.get("detail").get("bwstr-strecken_km_bis"))
+    #set($count = 0)
+    #foreach($bwastr_id in $bwastr_id_list)
+        #if($bwastr_id && !$bwastr_id.isEmpty())
+            #set($bwastr_id = $bwastr_id.replace("id_", ""))
+            #if(!$bwastrLocatorGetDataLowers.isEmpty() ||
+              $stringTool.parseInt($bwastr_id) < $stringTool.parseInt($bwastrLocatorGetDataLowers))
+                #set($tmpBwaStrId = [])
+                #set($add = $tmpBwaStrId.add($bwastr_id))
+                #if($bwastr_von_list.get($count))
+                    #set($add = $tmpBwaStrId.add($bwastr_von_list.get($count)))
+                #else
+                    #set($add = $tmpBwaStrId.add("''"))
+                #end
+                #if($bwastr_bis_list.get($count))
+                    #set($add = $tmpBwaStrId.add($bwastr_bis_list.get($count)))
+                #else
+                    #set($add = $tmpBwaStrId.add("''"))
+                #end
+                #set($add = $bwastr.add($tmpBwaStrId))
+            #end
+        #end
+        #set($count = $count + 1)
+    #end
+    #if($bwastr.size() > 0)
+        #set($hasOtherAreaDetails = true)
     #end
 #end
 
-#if($bwastr_id || $bwastr_von || $bwastr_bis)
-    #set($hasOtherAreaDetails = true)
-#end
+## WKT
 #set($wkt = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "wkt"))

@@ -426,41 +426,49 @@ function getQueryStringParameter(key) {
 }
 
 
-function addLayerBWaStr(map, id, von, bis, restUrlBWaStr, wkt, coords) {
-  var http = new XMLHttpRequest();
-  http.open('GET', restUrlBWaStr + '?id=' + id + '&von=' + von + '&bis=' + bis, true);
-  http.send();
-
-  http.onreadystatechange = function() {
-    if (this.readyState == this.DONE) {
-      if (this.status === 200) {
-        var data = JSON.parse(this.response); 
-        var geometry = data.geometry;
-        if (geometry) {
-          var geojsonObject = {
-            'type': 'FeatureCollection',
-            'features': [{
-              'type': 'Feature',
-              'geometry': {
-                'type': geometry.type,
-                'coordinates': geometry.coordinates
-              }
-            }]
-          };
-          var featureLayer = L.geoJson(geojsonObject, {
-          }).addTo(map);
-          featureLayer.bindTooltip('<b>' + data.bwastr_name + ' (' + data.bwastrid + ')</b><br>' + data.strecken_name, {direction: 'center'});
-          map.fitBounds(featureLayer.getBounds());
-        } else {
-          if(wkt) {
-            addLayerWKT(map, wkt, coords);
-          } else if (coords) {
-            addLayerBounds(map, coords);
-          }
-        }
+function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
+  var promises = [];
+  ids.forEach(function(id){
+    var request =  $.ajax({
+      url: restUrlBWaStr + '?id=' + id[0] + '&von=' + id[1] + '&bis=' + id[2],
+      dataType: 'json',
+      success: function (data) {
+        return data;
+      }
+    });
+    promises.push( request);
+  });
+  Promise.all(promises).then((values) => {
+    var features = [];
+    values.forEach(function(data){
+      var geometry = data.geometry;
+      if (geometry) {
+        var geojsonObject = {
+          'type': 'FeatureCollection',
+          'features': [{
+            'type': 'Feature',
+            'geometry': {
+              'type': geometry.type,
+              'coordinates': geometry.coordinates
+            }
+          }]
+        };
+        var featureLayer = L.geoJson(geojsonObject, {});
+        featureLayer.bindTooltip('<b>' + data.bwastr_name + ' (' + data.bwastrid + ')</b><br>' + data.strecken_name, {direction: 'center'});
+        features.push(featureLayer);
+      }
+    });
+    if(features.length > 0) {
+      var featureGroup = L.featureGroup(features).addTo(map);
+      map.fitBounds(featureGroup.getBounds());
+    } else {
+      if(wkt) {
+        addLayerWKT(map, wkt, coords);
+      } else if (coords) {
+        addLayerBounds(map, coords);
       }
     }
-  };
+  });
 }
 
 function addLayerWKT(map, wkt, coords) {
