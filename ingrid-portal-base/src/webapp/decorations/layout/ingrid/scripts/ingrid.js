@@ -495,7 +495,7 @@ function addLayerBounds(map, coords) {
   });
 }
 
-function updateParamReload(key, value) {
+function updateURLParamReload(key, value) {
   var pathname = window.parent.location.pathname;
   var search = window.parent.location.search;
   var hash = window.parent.location.hash;
