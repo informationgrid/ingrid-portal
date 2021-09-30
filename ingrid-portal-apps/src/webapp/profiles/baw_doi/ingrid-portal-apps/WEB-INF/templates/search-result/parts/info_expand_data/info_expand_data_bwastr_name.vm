@@ -8,7 +8,7 @@
     #set($bwastr_von_list = $rs.get("detail").get("bwstr-strecken_km_von"))
     #set($bwastr_bis_list = $rs.get("detail").get("bwstr-strecken_km_bis"))
     #set($count = 0)
-   #foreach($bwastr_id in $bwastr_id_list)
+    #foreach($bwastr_id in $bwastr_id_list)
         #if($bwastr_id && !$bwastr_id.isEmpty())
             #set($bwastr_id = $bwastr_id.replace("id_", ""))
             #if(!$bwastrLocatorGetDataLowers.isEmpty() ||
@@ -22,7 +22,6 @@
         #end
         #set($count = $count + 1)
     #end
-    $bwastr
     #if($bwastr.size() > 0)
         #set($hasOtherAreaDetails = true)
     #end
