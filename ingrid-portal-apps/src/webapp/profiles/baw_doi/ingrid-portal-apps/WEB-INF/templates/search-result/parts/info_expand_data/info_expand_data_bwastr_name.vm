@@ -14,17 +14,9 @@
             #if(!$bwastrLocatorGetDataLowers.isEmpty() ||
               $stringTool.parseInt($bwastr_id) < $stringTool.parseInt($bwastrLocatorGetDataLowers))
                 #set($tmpBwaStrId = [])
-                #set($add = $tmpBwaStrId.add($bwastr_id))
-                #if($bwastr_von_list.get($count))
-                    #set($add = $tmpBwaStrId.add($bwastr_von_list.get($count)))
-                #else
-                    #set($add = $tmpBwaStrId.add("''"))
-                #end
-                #if($bwastr_bis_list.get($count))
-                    #set($add = $tmpBwaStrId.add($bwastr_bis_list.get($count)))
-                #else
-                    #set($add = $tmpBwaStrId.add("''"))
-                #end
+                #set($add = $tmpBwaStrId.add("'$bwastr_id'"))
+                #set($add = $tmpBwaStrId.add("'$bwastr_von_list.get($count)'"))
+                #set($add = $tmpBwaStrId.add("'$bwastr_bis_list.get($count)'"))
                 #set($add = $bwastr.add($tmpBwaStrId))
             #end
         #end
