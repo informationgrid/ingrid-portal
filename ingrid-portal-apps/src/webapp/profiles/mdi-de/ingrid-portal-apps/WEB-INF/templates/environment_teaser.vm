@@ -1,0 +1,15 @@
+<div class="media">
+    <div class="media__obj media__obj--left">
+        <img class="themen_image_style" src="/ingrid-portal-apps/images/topics/index_themen_${randomTopicImage}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
+    </div>
+    <div class="media__body">
+        <ul class="tag-group">
+            #set ($numTopics = $topicList.size())
+            #foreach ($topic in $topicList)
+                <li>
+                    <a class="tag tag--big" href="$renderResponse.encodeURL("/portal/main-search.psml?action=doSearch&q=topic:${topic.QueryValue}&ds=1&grouping=domain")">$topic.QueryValue</a>
+                </li>
+            #end
+        </ul>
+    </div>
+</div>
