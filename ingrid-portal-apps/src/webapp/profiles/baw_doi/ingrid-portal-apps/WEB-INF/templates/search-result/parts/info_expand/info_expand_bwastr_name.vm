@@ -1,5 +1,24 @@
 ## Ortslage
-#if($bwastr_name && $bwastr_name != "")
-    #renderFactTitle("Ortslage")
-    <p>$!bwastr_name</p>
+#if($bwastr_name && !$bwastr_name.isEmpty())
+    #set($filterNames = [])
+    #foreach($tmpName in $bwastr_name)
+        #if(!$tmpName.isEmpty())
+            #if($filterNames.indexOf($tmpName) == -1)
+                #set($add = $filterNames.add($tmpName))
+            #end
+        #end
+    #end
+    #set($tmpNames = "")
+    #foreach($tmpName in $filterNames)
+        #if(!$tmpName.isEmpty())
+            #if(!$tmpNames.isEmpty())
+                #set($tmpNames = $tmpNames + ", ")
+            #end
+            #set($tmpNames = $tmpNames + $tmpName)
+        #end
+    #end
+    #if(!$tmpNames.isEmpty())
+        #renderFactTitle("Ortslage")
+        <p>$tmpNames</p>
+    #end
 #end
