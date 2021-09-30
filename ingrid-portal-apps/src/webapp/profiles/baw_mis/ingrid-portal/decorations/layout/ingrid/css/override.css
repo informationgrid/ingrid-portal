@@ -1130,6 +1130,10 @@ footer .footer-buttons-bar .login-buttons .login-form {
   }
 }
 
+.detail .page-wrapper {
+  background-image: unset !important;
+}
+
 .icon-cat_donau, .icon-cat_elbe, .icon-cat_rhein {
     top: 34px !important;
 }

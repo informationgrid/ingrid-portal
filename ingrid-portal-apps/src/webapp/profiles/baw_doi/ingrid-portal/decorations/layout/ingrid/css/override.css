@@ -1129,3 +1129,7 @@ footer .footer-buttons-bar .login-buttons .login-form {
     top: 0
   }
 }
+
+.detail .page-wrapper {
+  background-image: unset !important;
+}
