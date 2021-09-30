@@ -425,7 +425,6 @@ function getQueryStringParameter(key) {
 
 }
 
-
 function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
   var promises = [];
   ids.forEach(function(id){
@@ -438,37 +437,48 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
     });
     promises.push( request);
   });
-  Promise.all(promises).then((values) => {
-    var features = [];
-    values.forEach(function(data){
-      var geometry = data.geometry;
-      if (geometry) {
-        var geojsonObject = {
-          'type': 'FeatureCollection',
-          'features': [{
-            'type': 'Feature',
-            'geometry': {
-              'type': geometry.type,
-              'coordinates': geometry.coordinates
-            }
-          }]
-        };
-        var featureLayer = L.geoJson(geojsonObject, {});
-        featureLayer.bindTooltip('<b>' + data.bwastr_name + ' (' + data.bwastrid + ')</b><br>' + data.strecken_name, {direction: 'center'});
-        features.push(featureLayer);
+  if(promises.length > 0) {
+    map.spin(true);
+    Promise.all(promises).then((values) => {
+      var features = [];
+      values.forEach(function(data){
+        var geometry = data.geometry;
+        if (geometry) {
+          var geojsonObject = {
+            'type': 'FeatureCollection',
+            'features': [{
+              'type': 'Feature',
+              'geometry': {
+                'type': geometry.type,
+                'coordinates': geometry.coordinates
+              }
+            }]
+          };
+          var featureLayer = L.geoJson(geojsonObject, {});
+          featureLayer.bindTooltip('<b>' + data.bwastr_name + ' (' + data.bwastrid + ')</b><br>' + data.strecken_name, {direction: 'center'});
+          features.push(featureLayer);
+        }
+      });
+      if(features.length > 0) {
+        var featureGroup = L.featureGroup(features).addTo(map);
+        map.fitBounds(featureGroup.getBounds());
+        map.spin(false);
+      } else {
+        if(wkt) {
+          addLayerWKT(map, wkt, coords);
+        } else if (coords) {
+          addLayerBounds(map, coords);
+        }
+        map.spin(false);
       }
     });
-    if(features.length > 0) {
-      var featureGroup = L.featureGroup(features).addTo(map);
-      map.fitBounds(featureGroup.getBounds());
-    } else {
-      if(wkt) {
-        addLayerWKT(map, wkt, coords);
-      } else if (coords) {
-        addLayerBounds(map, coords);
-      }
+  } else {
+    if(wkt) {
+      addLayerWKT(map, wkt, coords);
+    } else if (coords) {
+      addLayerBounds(map, coords);
     }
-  });
+  }
 }
 
 function addLayerWKT(map, wkt, coords) {

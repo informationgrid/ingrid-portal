@@ -40,6 +40,7 @@
     #set($checkOtherInformation = true)
 #end
 
+## BwaStr location
 #set($bwastrIds = $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
 #set($bwastr = [])
 #foreach($tmpBwastrId in $bwastrIds)
@@ -64,6 +65,9 @@
        #end
     #end
 #end
+
+## WKT
+#set($wkt = "")
 #if($wktPolygons && $wktPolygons.size() > 0)
     #set($wkt = $wktPolygons.get(0))
 #end
