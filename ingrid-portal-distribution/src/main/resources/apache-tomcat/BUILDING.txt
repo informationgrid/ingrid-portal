@@ -64,9 +64,9 @@ source distribution, do the following:
     into which you installed the JDK release.
 
 
-(2) Install Apache Ant version 1.9.8 or later on your computer.
+(2) Install Apache Ant version 1.9.10 or later on your computer.
 
- 1. If Apache Ant version 1.9.8 or later is already installed on your
+ 1. If Apache Ant version 1.9.10 or later is already installed on your
     computer, skip to (3).
 
  2. Download a binary distribution of Ant from:
@@ -257,6 +257,9 @@ You can build them by using the following commands:
     the case, the skip.installer property may be set to skip the creation of the
     Windows installer.
 
+    Provided that Wine is available on non-Windows platforms, a full release
+    build may be made on Windows, Linux or MacOS.
+
  1. Configure GPG, if needed
 
     If the released artifacts have to be cryptographically signed with a
@@ -289,12 +292,10 @@ You can build them by using the following commands:
     file:
 
         # Location of GPG executable (used only for releases)
+        gpg.exec=/path/to/gpg
         # Code signing of Windows installer
         do.codesigning=true
-        codesigning.user=request-via-pmc
-        codesigning.pwd=request-via-pmc
-        codesigning.partnercode=request-via-pmc
-        codesigning.service=Microsoft Windows Signing
+        codesigning.storepass=request-via-pmc
 
     Release managers will be provided with the necessary credentials by the PMC.
 
@@ -481,11 +482,10 @@ NOTE: Cobertura is licensed under GPL v2 with parts of it being under
 
         java.net.preferIPv4Stack=true
 
- 10. It is possible to control whether the output of the tests is displayed
-     on the console or not. By default it is displayed and can be disabled
-     by the following property:
+ 10. By default the output of unit tests is sent to the console and can be
+     quite verbose. The output can be disabled by setting the property:
 
-        test.verbose=true
+        test.verbose=false
 
 (8) Source code checks
 
