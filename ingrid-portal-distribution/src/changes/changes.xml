@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.8.6" date="2021-XX-XX" description="Release 5.8.6">
+          <action type="fix" dev="wemove" issue="2924">
+            SSRF mit XML External Entity (XXE) Schwachstelle im MapClient beheben
+          </action>
           <action type="add" dev="wemove" issue="2925">
             Verstecken der Tomcat Version in Tomcat Fehlerseiten
           </action>
