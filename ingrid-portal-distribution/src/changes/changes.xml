@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
+          <action type="add" dev="wemove" issue="2926">
+            Aktualisierung TOMCAT Version auf 9.0.53
+          </action>
           <action type="add" dev="wemove" issue="2925">
             Verstecken der Tomcat Version in Tomcat Fehlerseiten
           </action>
