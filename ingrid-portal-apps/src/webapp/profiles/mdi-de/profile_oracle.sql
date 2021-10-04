@@ -7,7 +7,7 @@ CREATE TABLE  ingrid_temp (
 );
 
 -- Hide 'main-chronicle.psml'
---UPDATE page SET is_hidden = 1 WHERE path = '/main-chronicle.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/main-chronicle.psml';
 UPDATE page SET is_hidden = 0 WHERE path = '/search-catalog-hierarchy.psml';
 UPDATE page SET is_hidden = 1 WHERE path = '/portal/main-about-partner.psml';
 
