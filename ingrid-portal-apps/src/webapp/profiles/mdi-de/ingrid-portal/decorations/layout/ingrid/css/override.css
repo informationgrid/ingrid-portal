@@ -397,7 +397,10 @@ header a.icon.is-selected {
   padding-top: 0;
 }
 .banner.home .home-wrapper {
-  background-position: right bottom;
+  background-position: center bottom;
+}
+.banner.home .home-wrapper .ic-ic-asterisc {
+  display: none;
 }
 .banner.home .home-wrapper .dark {
   padding-top: 3.5rem;
