@@ -46,21 +46,3 @@ DROP TABLE IF EXISTS ingrid_temp;
 
 -- update max keys
 UPDATE ojb_hl_seq SET max_key=max_key+grab_size+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT';
-
--- update partners
-INSERT INTO `ingrid_partner` (`id`, `ident`, `name`, `sortkey`) VALUES
-(18, 'kuk', 'Küsteningenieruwesen und Küstenwasserschutz', 18),
-(19, 'mus', 'Meeresumweltschutz', 19),
-(20, 'mns', 'Meeresnaturschutz ', 20);
- 
-DELETE FROM `ingrid_partner` WHERE sortkey BETWEEN 1 AND 17;
- 
-INSERT INTO `ingrid_provider` (`ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES
-('kuk_baw', 'Bundesanstalt für Wasserbau (BAW)', 'https://www.baw.de/', 1, 18),
-('kuk_lkn', 'Landesbetrieb für Küstenschutz, Nationalpark und Meeresschutz S-H (LKN)', 'https://www.schleswig-holstein.de/DE/Landesregierung/LKN/lkn_node.html', 2, 18),
-('kuk_nlwkn', 'Niedersächsischer Landesbetrieb für Wasserwirtschaft, Küsten- und Naturschutz (NLWKN) ', 'https://www.nlwkn.niedersachsen.de/', 3, 18),
-('kuk_nlpv', 'Nationalparkverwaltung Niedersächsisches Wattenmeer (NLPV)', 'https://www.nationalpark-wattenmeer.de/nds', 4, 18),
-('mus_bsh', 'Bundesamt für Seeschifffahrt und Hydrographie (BSH)', 'https://www.bsh.de/', 1, 19),
-('mus_llur', 'Landesamt für Landwirtschaft, Umwelt und ländliche Räume S-H (LLUR) ', 'https://www.schleswig-holstein.de/DE/Landesregierung/LLUR/llur_node.html', 2, 19),
-('mus_lung', 'Landesamt für Umwelt, Naturschutz und Geologie M-V (LUNG) ', 'http://www.lung.mv-regierung.de/', 3, 19),
-('mns_bfn', 'Bundesamt für Naturschutz (BfN)', 'http://www.bfn.de/', 1, 20);
