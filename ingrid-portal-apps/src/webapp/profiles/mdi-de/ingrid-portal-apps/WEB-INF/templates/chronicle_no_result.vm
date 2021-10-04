@@ -1,7 +1,0 @@
-<hr>
-<div id="chronicleResult">
-#renderMessageInfo($MESSAGES.getString('chronicle.result.noResult1'))
-</div>
-<script >
-    goToByScroll('chronicleResult');
-</script>

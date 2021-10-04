@@ -93,6 +93,8 @@
                     <span class="text">$tabName</span>
                 </div>
             </a>
+        #elseif($element.url == "/main-about.psml")
+            #parse("/decorations/layout/ingrid/templates/header/body_header_main_menu_about.vm")
         #end
       #end
     #end

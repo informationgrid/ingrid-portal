@@ -7,7 +7,9 @@ CREATE TABLE  ingrid_temp (
 );
 
 -- Hide 'main-chronicle.psml'
-UPDATE page SET is_hidden = 1 WHERE path = '/main-chronicle.psml';
+--UPDATE page SET is_hidden = 1 WHERE path = '/main-chronicle.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/search-catalog-hierarchy.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/portal/main-about-partner.psml';
 
 -- Change '/default-page.psml'
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('default_page_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/default-page.psml')));
@@ -38,6 +40,7 @@ INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main_menu_id',(SELECT me
 UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/main-maps.psml';
 UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/main-measures.psml';
 UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';
+UPDATE folder_menu SET element_order = 4 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/main-about.psml';
 
 -- Delete temporary table
 DROP TABLE ingrid_temp;

@@ -38,9 +38,6 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
-                <!--<portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>-->
                 <portlet col="0" row="1">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
@@ -53,9 +50,6 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
-               <!-- <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>-->
                 <portlet col="0" row="1">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
@@ -68,9 +62,6 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
-               <!-- <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>-->
                 <portlet col="0" row="1">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
@@ -97,6 +88,17 @@
         <!-- COPY NUMIS FILES -->
         <file>
             <action>copy-dir</action>
+            <src>../numis/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../numis/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <!-- COPY MDI-DE FILES -->
+        <file>
+            <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
         </file>
         <file>
@@ -105,12 +107,7 @@
         </file>
         <file>
             <action>copy-dir</action>
-            <src>ingrid-webmap-client/</src>
-        </file>
-        <file>
-            <action>copy-dir</action>
-            <src>ingrid-webmap-client/frontend/src</src>
-            <dst>ingrid-webmap-client/frontend/prd</dst>
+            <src>ingrid-portal-mdek-application/</src>
         </file>
     </files>
     <sql>
@@ -134,7 +131,7 @@
         <execute>
             <![CDATA[UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';]]>
         </execute>
-         <execute>
+        <execute>
             <![CDATA[UPDATE folder_menu SET element_order = 4 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-about.psml';]]>
         </execute>
         <execute>

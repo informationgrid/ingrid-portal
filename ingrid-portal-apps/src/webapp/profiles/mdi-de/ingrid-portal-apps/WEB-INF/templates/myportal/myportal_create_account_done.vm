@@ -1,5 +1,0 @@
-#if ($success == 'true')
-    #renderMessageSuccess($MESSAGES.getString('account.created.content'))
-#else
-    #renderMessageError($!{MESSAGES.getString($problemText)})
-#end

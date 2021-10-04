@@ -1,1 +1,0 @@
-#renderMessageSuccess($MESSAGES.getString('account.edited.content'))
