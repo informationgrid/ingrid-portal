@@ -1,0 +1,7 @@
+<div class="columns xsmall-6 small-6 medium-7 large-6 xlarge-8">
+    <div class="logo">
+        <a href="/startseite" class="hide-for-xlarge hide-for-xsmall-only hide-for-small-only"><img src="/decorations/layout/ingrid/images/template/logo-mdi-de.svg" alt="MDI-DE"/></a>
+        <a href="/startseite" class="show-for-xlarge hide-for-xsmall-only"><img src="/decorations/layout/ingrid/images/template/logo-mdi-de.svg" alt="MDI-DE"/></a>
+        <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/ingrid/images/template/logo-mdi-de.svg" alt="MDI-DE"/></a>
+    </div>
+</div>
