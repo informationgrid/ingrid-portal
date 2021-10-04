@@ -583,6 +583,9 @@ header a.icon.is-selected {
   color: #eaf6ff;
   background-color: #2c63b1;
 }
+.button.pill span {
+  margin-left: 0px;
+}
 .button.pill:hover span {
   color: #eaf6ff;
 }
@@ -1192,4 +1195,8 @@ header .menu-tab-row .menu-tab {
   .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
     padding: 64px 0 16px;
   }
+}
+
+#searchResult .teaser-data a:last-child .arrow {
+  bottom: 0;
 }
