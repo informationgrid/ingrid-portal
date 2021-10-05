@@ -201,6 +201,11 @@ else
         echo 'admin.password=admin' > webapps/ingrid-portal-mdek-application/WEB-INF/classes/igeAdminUser.properties
     fi
 
+    if [ "$MAPCLIENT_DISABLED" == "true" ]; then
+        rm -rf webapps/ingrid-webmap-client*
+        rm -rf conf/Catalina/localhost/ingrid-webmap-client.xml
+    fi
+
     # SMTP_HOST
     echo "Update SMTP host"
     sed -i 's/workflow.mail.smtp=localhost/workflow.mail.smtp=$SMTP_HOST/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
