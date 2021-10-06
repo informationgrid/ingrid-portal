@@ -300,6 +300,9 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_UVP_MAP_REQUESTED_FIELDS_BLP_MARKER_DETAIL = "portal.mapclient.uvp.requested.fields.blp.marker.detail";
     public static final String PORTAL_UVP_MAP_REQUESTED_FIELDS_MARKER_NUM = "portal.mapclient.uvp.requested.fields.marker.num";
 
+    public static final String PORTAL_LOGIN_AUTH_FAILURES_LIMIT = "portal.login.auth.failures.limit";
+    public static final String PORTAL_LOGIN_AUTH_FAILURES_TIME = "portal.login.auth.failures.time";
+
     // private stuff
     private static PortalConfig instance = null;
 
