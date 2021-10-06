@@ -315,7 +315,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                             } else {
                                 hasAuthFailures = true;
                                 frm.setError(LoginForm.FIELD_USERNAME, "");
-                                frm.setError(LoginForm.FIELD_PW, String.format(messages.getString("login.error.auth.failures"), authLoginFailuresLimit, authLoginFailuresTime));
+                                frm.setError(LoginForm.FIELD_PW, String.format(messages.getString("login.error.auth.failures"), authLoginFailuresLimit, ((authLoginFailuresTime * 60000 - diff)/ 60000) + 1));
                             }
                         }
                     }
