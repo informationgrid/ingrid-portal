@@ -289,6 +289,9 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_FORM_VALID_FILLOUT_DURATION_MIN = "portal.form.valid.fillout.duration.min";
 
 
+    public static final String PORTAL_LOGIN_AUTH_FAILURES_LIMIT = "portal.login.auth.failures.limit";
+    public static final String PORTAL_LOGIN_AUTH_FAILURES_TIME = "portal.login.auth.failures.time";
+
     // private stuff
     private static PortalConfig instance = null;
 
