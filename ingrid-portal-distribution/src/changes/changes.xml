@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
+          <action type="add" dev="wemove" issue="1313">
+            Portal: Erkennung von Brute-Force-Attacken in Anmeldeprozess von Portal
+          </action>
           <action type="add" dev="wemove" issue="2246">
             Integration Portalprofil MDI-DE (NOKIS)
           </action>
