@@ -70,7 +70,7 @@ public class ExtensionValidator implements Validator {
 
         // match regex to find extension
         if (matcherFile.find()) {
-            fileExtension = matcherFile.group( 2 );
+            fileExtension = matcherFile.group( 2 ).toLowerCase();
         }
 
         // extension is not allowed

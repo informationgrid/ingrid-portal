@@ -354,7 +354,7 @@ define([
                                     (errorData.usedSize ? " Inklusive dieser Datei belegt der Metadatensatz " + this.fileSize(errorData.usedSize) + "." : ""),
                                 401: "Sie haben keine Berechtigung für den Upload. Eventuell ist die Session abgelaufen.",
                                 409: "Die Datei existiert bereits.",
-                                422: "Das Hochladen von Dateien im " + errorData.invalidExtension + " Format ist nicht erlaubt. Zugelassene Dateiformaten sind: " +
+                                422: "Das Hochladen von Dateien im " + errorData.invalidExtension + " Format ist nicht erlaubt. Zugelassene Dateiformate sind: " +
                                     this.formatExtensions(errorData.allowedExtensions) +  ".",
                                 "default": "Beim Upload ist ein Fehler aufgetreten."
                             };
