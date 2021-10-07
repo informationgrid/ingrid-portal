@@ -276,6 +276,10 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                     .getRequest().getSession(true);
 
             frm.populate(request);
+            
+            String login = frm.getInput(LoginConstants.USERNAME);
+            String password = frm.getInput(LoginConstants.PASSWORD);
+            
             User user = null;
             try {
                 if (frm.getInput(LoginConstants.DESTINATION) != null)
@@ -283,20 +287,29 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 else
                     session.removeAttribute(LoginConstants.DESTINATION);
 
-                if (frm.getInput(LoginConstants.USERNAME) != null) {
-                    try {
-                        user = this.userManager.getUser(frm.getInput(LoginConstants.USERNAME));
-                    } catch (Exception e) {
-                        log.error("Error on login: ", e);
+                if (login != null) {
+                    if(Utils.isValidLogin(login)) {
+                        try {
+                            user = this.userManager.getUser(login);
+                        } catch (Exception e) {
+                            log.error("Error on login: ", e);
+                        }
+                        session.setAttribute(LoginConstants.USERNAME, login);
+                    } else {
+                        frm.setInput(LoginConstants.USERNAME, "");
                     }
-                    session.setAttribute(LoginConstants.USERNAME, frm.getInput(LoginConstants.USERNAME));
                 } else {
                     session.removeAttribute(LoginConstants.USERNAME);
                 }
-                if (frm.getInput(LoginConstants.PASSWORD) != null)
-                    session.setAttribute(LoginConstants.PASSWORD, frm.getInput(LoginConstants.PASSWORD));
-                else
+                if (password != null) {
+                    if(Utils.isValidLogin(password)) {
+                        session.setAttribute(LoginConstants.PASSWORD, password);
+                    } else {
+                        frm.setInput(LoginConstants.PASSWORD, "");
+                    }
+                } else {
                     session.removeAttribute(LoginConstants.PASSWORD);
+                }
 
                 if(user != null) {
                     PasswordCredential credential = userManager.getPasswordCredential(user);
