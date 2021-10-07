@@ -88,6 +88,8 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 
     private static final String CMD_PW_UPDATE_REQUIRED = "password_update";
 
+    private static final String SESSION_AUTH_FAILURES = "SESSION_AUTH_FAILURES";
+
     private PortalAdministration admin;
 
     private UserManager userManager;
@@ -139,8 +141,14 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
+        HttpSession session = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
+            .getRequest().getSession(true);
+
         int authLoginFailuresLimit = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_LOGIN_AUTH_FAILURES_LIMIT, 3);
-        
+        boolean authLoginFailuresActiv = false;
+        if(session.getAttribute(SESSION_AUTH_FAILURES) != null) {
+            authLoginFailuresActiv = (boolean) session.getAttribute(SESSION_AUTH_FAILURES);
+        }
         String userChangeId = request.getParameter(PARAM_USER_CHANGE_ID);
         String userEmail = request.getParameter(PARAM_USER_EMAIL);
         
@@ -222,7 +230,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 frm.setError(LoginForm.FIELD_USERNAME, "");
                 frm.setError(LoginForm.FIELD_PW, "login.error.general");
             }
-        } else if (!frm.hasErrors()) {
+        } else if (!frm.hasErrors() || !authLoginFailuresActiv) {
             frm.setInitialUsername(messages.getString("login.form.username.initialValue"));
             frm.setInitialPassword(messages.getString("login.form.passwd.initialValue"));
             frm.init();
@@ -237,6 +245,9 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         context.put("actionForm", frm);
         context.put("loginConstants", new FieldMethodizer(new LoginConstants()));
         context.put("enableNewUser", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_ENABLE_NEW_USER, true ));
+        if(authLoginFailuresActiv) {
+            session.removeAttribute(SESSION_AUTH_FAILURES);
+        }
         super.doView(request, response);
     }
 
@@ -316,6 +327,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                                 hasAuthFailures = true;
                                 frm.setError(LoginForm.FIELD_USERNAME, "");
                                 frm.setError(LoginForm.FIELD_PW, String.format(messages.getString("login.error.auth.failures"), authLoginFailuresLimit, ((authLoginFailuresTime * 60000 - diff)/ 60000) + 1));
+                                session.setAttribute(SESSION_AUTH_FAILURES, true);
                             }
                         }
                     }
