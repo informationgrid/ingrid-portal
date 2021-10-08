@@ -32,6 +32,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -448,6 +450,7 @@ public class MdekEmailUtils {
 					receivers[i] = new InternetAddress(to[i]);
 				}
 			}
+            log.info(String.format("Sending email with subject '%s' to %s", subject, Stream.of(receivers).map(r -> r.toString()).collect(Collectors.joining(","))));
 
 			msg.setFrom( new InternetAddress(from) );
 			msg.setRecipients(Message.RecipientType.TO, receivers);

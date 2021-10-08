@@ -108,10 +108,17 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     private UploadVirusScanJob job;
 
     private class MockEmailService implements UploadVirusScanJob.EmailService {
-        public List<String> emails = new ArrayList<String>();
+        class Email {
+            public String subject;
+            public String body;
+        }
+        public List<Email> emails = new ArrayList<Email>();
         @Override
-        public void sendReport(final Report report) {
-        	emails.add(report.getContent());
+        public void sendReport(final String subject, final Report report) {
+            final Email email = new Email();
+            email.subject = subject;
+            email.body = report.getContent();
+            emails.add(email);
         }
     }
     private MockEmailService mockEmailService;
@@ -245,9 +252,10 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // report is sent
         assertEquals(1, this.mockEmailService.emails.size());
 
-        final String report = this.mockEmailService.emails.get(0);
-        assertTrue(report.contains("Error scanning directory"));
-        assertTrue(report.contains("de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException: Error executing external command '"+scanCommand+"'."));
+        final MockEmailService.Email report = this.mockEmailService.emails.get(0);
+        assertEquals("[IGE] Virus Scan Report ERROR", report.subject);
+        assertTrue(report.body.contains("Error scanning directory"));
+        assertTrue(report.body.contains("de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException: Error executing external command '"+scanCommand+"'."));
     }
 
     /**
@@ -275,9 +283,10 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // report is sent
         assertEquals(1, this.mockEmailService.emails.size());
 
-        final String report = this.mockEmailService.emails.get(0);
-        assertTrue(report.contains("Error scanning directory"));
-        assertTrue(report.contains("de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException: Scan returned null"));
+        final MockEmailService.Email report = this.mockEmailService.emails.get(0);
+        assertEquals("[IGE] Virus Scan Report ERROR", report.subject);
+        assertTrue(report.body.contains("Error scanning directory"));
+        assertTrue(report.body.contains("de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException: Scan returned null"));
     }
 
     /**
@@ -323,7 +332,10 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // report is sent
         assertEquals(1, this.mockEmailService.emails.size());
 
-        final String report = "Executing UploadVirusScanJob...\n"
+        final MockEmailService.Email report = this.mockEmailService.emails.get(0);
+        assertEquals("[IGE] Virus Scan Report", report.subject);
+
+        final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
         + "Directories to scan: target\\ingrid-upload-test\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
@@ -331,7 +343,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
-        assertEquals(report.replaceAll("\\R", " "), this.mockEmailService.emails.get(0).replaceAll("\\R", " ").replaceAll("/", "\\\\"));
+        assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));
     }
 
     /**
@@ -387,9 +399,10 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // report is sent
         assertEquals(1, this.mockEmailService.emails.size());
 
-        final String report = this.mockEmailService.emails.get(0);
-        assertTrue(report.contains("Error scanning directory"));
-        assertTrue(report.contains("\"result\":\"failure\""));
+        final MockEmailService.Email report = this.mockEmailService.emails.get(0);
+        assertEquals("[IGE] Virus Scan Report ERROR", report.subject);
+        assertTrue(report.body.contains("Error scanning directory"));
+        assertTrue(report.body.contains("\"result\":\"failure\""));
     }
 
     /**
@@ -432,7 +445,10 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // report is sent
         assertEquals(1, this.mockEmailService.emails.size());
 
-        final String report = "Executing UploadVirusScanJob...\n"
+        final MockEmailService.Email report = this.mockEmailService.emails.get(0);
+        assertEquals("[IGE] Virus Scan Report", report.subject);
+
+        final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
         + "Directories to scan: target\\ingrid-upload-test\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
@@ -440,7 +456,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
-        assertEquals(report.replaceAll("\\R", " "), this.mockEmailService.emails.get(0).replaceAll("\\R", " ").replaceAll("/", "\\\\"));
+        assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));
     }
 
     /**
