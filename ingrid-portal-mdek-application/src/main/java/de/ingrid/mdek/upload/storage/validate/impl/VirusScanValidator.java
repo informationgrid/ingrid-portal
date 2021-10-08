@@ -126,6 +126,7 @@ public class VirusScanValidator implements Validator {
         }
         catch (final CommandExecutionException e) {
             log.error("Virus scan failed: ", e);
+            throw new RuntimeException(e);
         }
     }
 

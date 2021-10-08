@@ -49,6 +49,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -264,7 +265,14 @@ public class RemoteServiceVirusScanValidator implements Validator {
                     throw new VirusFoundException("Virus found.", path+URL_PATH_SEPARATOR+file, infections);
                 }
                 else if (resultCode != ScanResultCode.OK) {
-                    log.error("Virus scan failed: " + response.getScanReport());
+                    try {
+                        final String errorMessage ="Virus scan failed: " + getObjectMapper().writeValueAsString(response);
+                        log.error(errorMessage);
+                        throw new RuntimeException(errorMessage);
+                    }
+                    catch (final JsonProcessingException ex) {
+                        log.error("Could not serialize response", ex);
+                    }
                 }
                 else {
                     if (log.isDebugEnabled()) {

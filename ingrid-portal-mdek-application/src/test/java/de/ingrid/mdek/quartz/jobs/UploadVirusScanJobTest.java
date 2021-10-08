@@ -68,6 +68,7 @@ import org.quartz.JobExecutionContext;
 import de.ingrid.mdek.quartz.jobs.UploadVirusScanJob.Report;
 import de.ingrid.mdek.upload.storage.validate.Validator;
 import de.ingrid.mdek.upload.storage.validate.ValidatorFactory;
+import de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException;
 import de.ingrid.mdek.upload.storage.validate.impl.ExternalCommand;
 import de.ingrid.mdek.upload.storage.validate.impl.RemoteServiceVirusScanValidator;
 import de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator;
@@ -109,7 +110,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     private class MockEmailService implements UploadVirusScanJob.EmailService {
         public List<String> emails = new ArrayList<String>();
         @Override
-        public void sendReport(Report report) {
+        public void sendReport(final Report report) {
         	emails.add(report.getContent());
         }
     }
@@ -118,10 +119,18 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     private class MockedServiceExecution implements Answer<CloseableHttpResponse> {
         private final int numFiles;
         private final Path[] infected;
+        private final String error;
 
         public MockedServiceExecution(final int numFiles, final Path... infected) {
             this.numFiles = numFiles;
             this.infected = infected;
+            this.error = null;
+        }
+
+        public MockedServiceExecution(final String error) {
+            this.numFiles = 0;
+            this.infected = new Path[] {};
+            this.error = error;
         }
 
         @Override
@@ -138,11 +147,11 @@ public class UploadVirusScanJobTest extends BaseJobTest {
             String serviceResponse = "";
             if (HttpPost.METHOD_NAME.equals(method)) {
                 // first post request (initiate)
-                serviceResponse = getServiceResponse(false, numFiles, new Path[] {});
+                serviceResponse = getServiceResponse(false, this.error, numFiles, new Path[] {});
             }
             else {
                 // second get request (finished)
-                serviceResponse = getServiceResponse(true, numFiles, infected);
+                serviceResponse = getServiceResponse(true, this.error, numFiles, infected);
             }
             entity = EntityBuilder.create().setText(serviceResponse).build();
             Mockito.when(httpResponse.getEntity()).thenReturn(entity);
@@ -213,6 +222,66 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
     /**
      * Test:
+     * - Local scanner setup, virus scanner execution throws an exception
+     * @throws Exception
+     */
+    @Test
+    public void testLocalWithException() throws Exception {
+        // set up job
+        setupJob(localVirusScanValidator);
+
+        // set up scan report expectations
+        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
+        when(this.scanner.execute(scanCommand)).thenThrow(new CommandExecutionException("Error executing external command '"+scanCommand+"'."));
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        Mockito.verify(this.scanner, times(1)).execute(any());
+
+        assertTrue(this.getTestAppender().hasIssues());
+
+        // report is sent
+        assertEquals(1, this.mockEmailService.emails.size());
+
+        final String report = this.mockEmailService.emails.get(0);
+        assertTrue(report.contains("Error scanning directory"));
+        assertTrue(report.contains("de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException: Error executing external command '"+scanCommand+"'."));
+    }
+
+    /**
+     * Test:
+     * - Local scanner setup, virus scanner execution returns null
+     * @throws Exception
+     */
+    @Test
+    public void testLocalWithNullResult() throws Exception {
+        // set up job
+        setupJob(localVirusScanValidator);
+
+        // set up scan report expectations
+        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
+        when(this.scanner.execute(scanCommand)).thenReturn(null);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        Mockito.verify(this.scanner, times(1)).execute(any());
+
+        assertTrue(this.getTestAppender().hasIssues());
+
+        // report is sent
+        assertEquals(1, this.mockEmailService.emails.size());
+
+        final String report = this.mockEmailService.emails.get(0);
+        assertTrue(report.contains("Error scanning directory"));
+        assertTrue(report.contains("de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException: Scan returned null"));
+    }
+
+    /**
+     * Test:
      * - Local scanner setup, virus contained in files, must be moved to quarantine
      *
      * CAUTION: This test will create a local file containing the test virus string.
@@ -254,7 +323,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // report is sent
         assertEquals(1, this.mockEmailService.emails.size());
 
-        String report = "Executing UploadVirusScanJob...\n"
+        final String report = "Executing UploadVirusScanJob...\n"
         + "Directories to scan: target\\ingrid-upload-test\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
@@ -298,6 +367,33 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
     /**
      * Test:
+     * - Remote scanner setup, virus scan service reports failure
+     * @throws Exception
+     */
+    @Test
+    public void testRemoteWithError() throws Exception {
+        // set up job
+        setupJob(remoteVirusScanValidator);
+
+        // set up scan report expectations
+        Mockito.doAnswer(new MockedServiceExecution("Unspecified error in remote service")).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertTrue(this.getTestAppender().hasIssues());
+
+        // report is sent
+        assertEquals(1, this.mockEmailService.emails.size());
+
+        final String report = this.mockEmailService.emails.get(0);
+        assertTrue(report.contains("Error scanning directory"));
+        assertTrue(report.contains("\"result\":\"failure\""));
+    }
+
+    /**
+     * Test:
      * - Remote scanner setup, virus contained in files, must be moved to quarantine
      *
      * CAUTION: This test will create a local file containing the test virus string.
@@ -336,7 +432,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // report is sent
         assertEquals(1, this.mockEmailService.emails.size());
 
-        String report = "Executing UploadVirusScanJob...\n"
+        final String report = "Executing UploadVirusScanJob...\n"
         + "Directories to scan: target\\ingrid-upload-test\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
@@ -361,7 +457,11 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         this.job.setEmailReports(false);
 
         // set up files
-        this.createFile(Paths.get("dir1", "File1"), VIRUS_CONTENT);
+        final Path file1 = this.createFile(Paths.get("dir1", "File1"), VIRUS_CONTENT);
+
+        // set up scan report expectations
+        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
+        when(this.scanner.execute(scanCommand)).thenReturn(this.getScanReportInfected(1, file1));
 
         // run job
         this.job.executeInternal(this.context);
@@ -466,15 +566,16 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     /**
      * Get the response of the remote service
      * @param finished
+     * @param error
      * @param numFiles
      * @param infected
      * @return String
      */
-    private String getServiceResponse(final boolean finished, final int numFiles, final Path... infected) {
+    private String getServiceResponse(final boolean finished, final String error, final int numFiles, final Path... infected) {
         final boolean isInfected = infected.length > 0;
         final String id = "03970ddd-a8dd-4428-bbca-ee7578558ede";
         final String date = LocalDateTime.now().format(dateFormatter);
-        final String result = finished ? (isInfected ? "infected" : "ok") : "undefined";
+        final String result = finished ? (error != null && error.length() > 0 ? "failure" : (isInfected ? "infected" : "ok")) : "undefined";
         final String report = (finished ? (isInfected ? getScanReportInfected(numFiles, infected) : getScanReportClean(numFiles)) : "").replace(System.getProperty("file.separator"), "/");
 
         final List<String> infectionDetails = new ArrayList<>();

@@ -134,6 +134,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
         log(Level.INFO, "Directories to scan: "+String.join(", ", scanDirs), null);
 
         final List<Path> infectedFiles = new ArrayList<>();
+        final List<Exception> exceptions = new ArrayList<>();
         try {
             // scan files
             for (final String scanDir : scanDirs) {
@@ -148,6 +149,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
                 }
                 catch (final Exception ex) {
                     log(Level.ERROR, "Error scanning directory \""+scanDir+"\"", ex);
+                    exceptions.add(ex);
                 }
             }
             log(Level.INFO, "Found "+infectedFiles.size()+" infected file(s)", null);
@@ -162,7 +164,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
             log(Level.INFO, "Aborted UploadVirusScanJob", null);
         }
 
-        if (this.sendReportEmails && !infectedFiles.isEmpty()) {
+        if (this.sendReportEmails && (!infectedFiles.isEmpty() || !exceptions.isEmpty())) {
         	this.emailService.sendReport(report);
         }
     }
