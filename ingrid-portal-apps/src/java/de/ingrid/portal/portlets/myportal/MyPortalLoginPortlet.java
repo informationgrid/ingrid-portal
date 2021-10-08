@@ -269,7 +269,6 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 
         String cmd = request.getParameter("cmd");
         boolean isLoggedInExternally = request.getAttribute(Settings.USER_AUTH_INFO) != null;
-        boolean hasAuthFailures = false;
         
         if (cmd != null && cmd.equals("doLogin")) {
             HttpSession session = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
@@ -288,7 +287,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                     session.removeAttribute(LoginConstants.DESTINATION);
 
                 if (login != null) {
-                    if(Utils.isValidLogin(login)) {
+                    if(!Utils.isInvalidInput(login)) {
                         try {
                             user = this.userManager.getUser(login);
                         } catch (Exception e) {
@@ -302,7 +301,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                     session.removeAttribute(LoginConstants.USERNAME);
                 }
                 if (password != null) {
-                    if(Utils.isValidLogin(password)) {
+                    if(!Utils.isInvalidInput(password)) {
                         session.setAttribute(LoginConstants.PASSWORD, password);
                     } else {
                         frm.setInput(LoginConstants.PASSWORD, "");
@@ -337,22 +336,20 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                                 userManager.storePasswordCredential(credential);
                                 userManager.updateUser(user);
                             } else {
-                                hasAuthFailures = true;
                                 frm.setError(LoginForm.FIELD_USERNAME, "");
                                 frm.setError(LoginForm.FIELD_PW, String.format(messages.getString("login.error.auth.failures"), authLoginFailuresLimit, ((authLoginFailuresTime * 60000 - diff)/ 60000) + 1));
                                 session.setAttribute(SESSION_AUTH_FAILURES, true);
+                                return;
                             }
                         }
                     }
                 }
-                if(!hasAuthFailures) {
-                    // signalize that the user is about to log in
-                    // see MyPortalOverviewPortlet::doView()
-                    session.setAttribute(Settings.SESSION_LOGIN_STARTED, "1");
-                    response.sendRedirect(response.encodeURL(((RequestContext) request
-                        .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
-                        + "/login/redirector"));
-                }
+                // signalize that the user is about to log in
+                // see MyPortalOverviewPortlet::doView()
+                session.setAttribute(Settings.SESSION_LOGIN_STARTED, "1");
+                response.sendRedirect(response.encodeURL(((RequestContext) request
+                    .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
+                    + "/login/redirector"));
             } catch (Exception e) {
                 log.error("Error on login: ", e);
             }
