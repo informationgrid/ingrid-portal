@@ -182,13 +182,18 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             if (oldPassword != null && oldPassword.length() > 0) {
                 PasswordCredential credential = userManager.getPasswordCredential(user);
                 String password = f.getInput(EditAccountForm.FIELD_PW_NEW);
-                credential.setPassword(oldPassword, password);
-                userManager.storePasswordCredential(credential);
-                // Update confirmid
-                String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
-                    Long.toString(System.currentTimeMillis())));
-                user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
-                userManager.updateUser(user);
+                if (Utils.isInvalidInput(password)) {
+                    f.setError(EditAccountForm.FIELD_PW_NEW, "account.create.error.password.sign");
+                    return;
+                } else {
+                    credential.setPassword(oldPassword, password);
+                    userManager.storePasswordCredential(credential);
+                    // Update confirmid
+                    String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
+                        Long.toString(System.currentTimeMillis())));
+                    user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
+                    userManager.updateUser(user);
+                }
             }
         } catch (PasswordAlreadyUsedException e) {
             f.setError(EditAccountForm.FIELD_PW_NEW, "account.edit.error.password.in.use");
