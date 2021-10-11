@@ -241,94 +241,89 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
                 return;
             }
 
-            if (Utils.isInvalidInput(password)) {
-                f.setError(CreateAccountForm.FIELD_PW, "account.create.error.password.sign");
+            Map<String, String> userAttributes = new HashMap<>();
+            // we'll assume that these map back to PLT.D values
+            userAttributes.put("user.name.prefix", f.getInput(CreateAccountForm.FIELD_SALUTATION));
+            userAttributes.put("user.name.given", f.getInput(CreateAccountForm.FIELD_FIRSTNAME));
+            userAttributes.put("user.name.family", f.getInput(CreateAccountForm.FIELD_LASTNAME));
+            userAttributes.put("user.business-info.online.email", f.getInput(CreateAccountForm.FIELD_EMAIL));
+            userAttributes.put("user.business-info.postal.street", f.getInput(CreateAccountForm.FIELD_STREET));
+            userAttributes.put("user.business-info.postal.postalcode", f.getInput(CreateAccountForm.FIELD_POSTALCODE));
+            userAttributes.put("user.business-info.postal.city", f.getInput(CreateAccountForm.FIELD_CITY));
+
+            // generate login id
+            String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
+                Long.toString(System.currentTimeMillis())));
+            userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
+
+            if (log.isInfoEnabled()) {
+                String myRoles = "";
+                for (String myRole : this.roles) {
+                    myRoles += myRole + " / ";
+                }
+                String myGroups = "";
+                for (String myGroup : this.groups) {
+                    myGroups += myGroup + " / ";
+                }
+                String myUserAttributes = "";
+                for (String myKey : userAttributes.keySet()) {
+                    myUserAttributes += myKey + ":" + userAttributes.get( myKey ) + " / ";
+                }
+                String myRules = "";
+                for (String myKey : rules.keySet()) {
+                    myRules += myKey + ":" + rules.get( myKey ) + " / ";
+                }
+                log.info("registerUser "
+                        + "\nusername: " + userName 
+                        + "\nroles: " + myRoles
+                        + "\ngroups: " + myGroups
+                        + "\nuserAttr: " + myUserAttributes
+                        + "\nrules: " + myRules);
+            }
+            admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
+
+            User user = userManager.getUser(userName);
+            PasswordCredential pwc = userManager.getPasswordCredential(user);
+            pwc.setEnabled(false);
+            userManager.storePasswordCredential(pwc);
+
+            String returnUrl = generateReturnURL(request, actionResponse, userName, confirmId);
+
+            HashMap<String, String> userInfo = new HashMap<>(userAttributes);
+            userInfo.put("returnURL", returnUrl);
+            // map coded stuff
+            String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
+                    .get("user.name.prefix"));
+            userInfo.put("user.custom.ingrid.user.salutation.full", salutationFull);
+
+            String language = locale.getLanguage();
+            String localizedTemplatePath = this.emailTemplate;
+            int period = localizedTemplatePath.lastIndexOf('.');
+            if (period > 0) {
+                String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
+                        + localizedTemplatePath.substring(period + 1);
+                if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
+                    this.emailTemplate = fixedTempl;
+                    localizedTemplatePath = fixedTempl;
+                }
+            }
+
+            if (localizedTemplatePath == null) {
+                log.error("email template not available");
+                actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_PROBLEMS_EMAIL);
                 return;
+            }
+
+            String emailSubject = messages.getString("account.create.confirmation.email.subject");
+
+            String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
+                    "foo@bar.com");
+            String to = userInfo.get("user.business-info.online.email");
+            String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
+            if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
+            	actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_CREATED);
             } else {
-                Map<String, String> userAttributes = new HashMap<>();
-                // we'll assume that these map back to PLT.D values
-                userAttributes.put("user.name.prefix", f.getInput(CreateAccountForm.FIELD_SALUTATION));
-                userAttributes.put("user.name.given", f.getInput(CreateAccountForm.FIELD_FIRSTNAME));
-                userAttributes.put("user.name.family", f.getInput(CreateAccountForm.FIELD_LASTNAME));
-                userAttributes.put("user.business-info.online.email", f.getInput(CreateAccountForm.FIELD_EMAIL));
-                userAttributes.put("user.business-info.postal.street", f.getInput(CreateAccountForm.FIELD_STREET));
-                userAttributes.put("user.business-info.postal.postalcode", f.getInput(CreateAccountForm.FIELD_POSTALCODE));
-                userAttributes.put("user.business-info.postal.city", f.getInput(CreateAccountForm.FIELD_CITY));
-
-                // generate login id
-                String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
-                    Long.toString(System.currentTimeMillis())));
-                userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
-
-                if (log.isInfoEnabled()) {
-                    String myRoles = "";
-                    for (String myRole : this.roles) {
-                        myRoles += myRole + " / ";
-                    }
-                    String myGroups = "";
-                    for (String myGroup : this.groups) {
-                        myGroups += myGroup + " / ";
-                    }
-                    String myUserAttributes = "";
-                    for (String myKey : userAttributes.keySet()) {
-                        myUserAttributes += myKey + ":" + userAttributes.get( myKey ) + " / ";
-                    }
-                    String myRules = "";
-                    for (String myKey : rules.keySet()) {
-                        myRules += myKey + ":" + rules.get( myKey ) + " / ";
-                    }
-                    log.info("registerUser "
-                            + "\nusername: " + userName 
-                            + "\nroles: " + myRoles
-                            + "\ngroups: " + myGroups
-                            + "\nuserAttr: " + myUserAttributes
-                            + "\nrules: " + myRules);
-                }
-                admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
-
-                User user = userManager.getUser(userName);
-                PasswordCredential pwc = userManager.getPasswordCredential(user);
-                pwc.setEnabled(false);
-                userManager.storePasswordCredential(pwc);
-
-                String returnUrl = generateReturnURL(request, actionResponse, userName, confirmId);
-
-                HashMap<String, String> userInfo = new HashMap<>(userAttributes);
-                userInfo.put("returnURL", returnUrl);
-                // map coded stuff
-                String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
-                        .get("user.name.prefix"));
-                userInfo.put("user.custom.ingrid.user.salutation.full", salutationFull);
-
-                String language = locale.getLanguage();
-                String localizedTemplatePath = this.emailTemplate;
-                int period = localizedTemplatePath.lastIndexOf('.');
-                if (period > 0) {
-                    String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
-                            + localizedTemplatePath.substring(period + 1);
-                    if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
-                        this.emailTemplate = fixedTempl;
-                        localizedTemplatePath = fixedTempl;
-                    }
-                }
-
-                if (localizedTemplatePath == null) {
-                    log.error("email template not available");
-                    actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_PROBLEMS_EMAIL);
-                    return;
-                }
-
-                String emailSubject = messages.getString("account.create.confirmation.email.subject");
-
-                String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
-                        "foo@bar.com");
-                String to = userInfo.get("user.business-info.online.email");
-                String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
-                if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
-                	actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_CREATED);
-                } else {
-                    actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_PROBLEMS_EMAIL);
-                }
+                actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_PROBLEMS_EMAIL);
             }
 
         } catch (JetspeedException e) {

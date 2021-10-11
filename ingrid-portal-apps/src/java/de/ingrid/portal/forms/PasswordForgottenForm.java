@@ -71,13 +71,25 @@ public class PasswordForgottenForm extends ActionForm {
             allOk = false;
         } else {
             String myEmail = getInput(FIELD_EMAIL);
-            if (!Utils.isValidEmailAddress(myEmail)) {
+            if (Utils.isInvalidInput(myEmail)) {
+                clearInput(FIELD_EMAIL);
+                setError(FIELD_EMAIL, "password.forgotten.error.emailNotValid");
+                allOk = false;
+            } else if (!Utils.isValidEmailAddress(myEmail)) {
                 setError(FIELD_EMAIL, "password.forgotten.error.emailNotValid");
                 allOk = false;
             }
         }
 
-        return allOk;      
+        if (hasInput(FIELD_LOGIN)) {
+            String login = getInput(FIELD_LOGIN);
+            if(Utils.isInvalidInput(login)) {
+                setError(PasswordForgottenForm.FIELD_LOGIN, "password.forgotten.error.loginNotExists");
+                clearInput(FIELD_LOGIN);
+                allOk = false;
+            }
+        }
+        return allOk;
     }
 
 }

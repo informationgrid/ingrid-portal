@@ -552,77 +552,72 @@ public class AdminUserPortlet extends ContentPortlet {
                 return;
             }
 
-            if (Utils.isInvalidInput(password)) {
-                f.setError(AdminUserForm.FIELD_PW_NEW, "account.create.error.password.sign");
-                return;
-            } else {
-                Map<String, String> userAttributes = new HashMap<>();
-                // we'll assume that these map back to PLT.D values
-                userAttributes.put("user.name.prefix", f.getInput(AdminUserForm.FIELD_SALUTATION));
-                userAttributes.put("user.name.given", f.getInput(AdminUserForm.FIELD_FIRSTNAME));
-                userAttributes.put("user.name.family", f.getInput(AdminUserForm.FIELD_LASTNAME));
-                userAttributes.put("user.business-info.online.email", f.getInput(AdminUserForm.FIELD_EMAIL));
-                userAttributes.put("user.business-info.postal.street", f.getInput(AdminUserForm.FIELD_STREET));
-                userAttributes.put("user.business-info.postal.postalcode", f.getInput(AdminUserForm.FIELD_POSTALCODE));
-                userAttributes.put("user.business-info.postal.city", f.getInput(AdminUserForm.FIELD_CITY));
+            Map<String, String> userAttributes = new HashMap<>();
+            // we'll assume that these map back to PLT.D values
+            userAttributes.put("user.name.prefix", f.getInput(AdminUserForm.FIELD_SALUTATION));
+            userAttributes.put("user.name.given", f.getInput(AdminUserForm.FIELD_FIRSTNAME));
+            userAttributes.put("user.name.family", f.getInput(AdminUserForm.FIELD_LASTNAME));
+            userAttributes.put("user.business-info.online.email", f.getInput(AdminUserForm.FIELD_EMAIL));
+            userAttributes.put("user.business-info.postal.street", f.getInput(AdminUserForm.FIELD_STREET));
+            userAttributes.put("user.business-info.postal.postalcode", f.getInput(AdminUserForm.FIELD_POSTALCODE));
+            userAttributes.put("user.business-info.postal.city", f.getInput(AdminUserForm.FIELD_CITY));
 
-                // generate login id
-                String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
-                        Long.toString(System.currentTimeMillis())));
-                userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
+            // generate login id
+            String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
+                    Long.toString(System.currentTimeMillis())));
+            userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
 
-                if (log.isInfoEnabled()) {
-                    String myRoles = "";
-                    for (String myRole : this.roles) {
-                        myRoles += myRole + " / ";
-                    }
-                    String myGroups = "";
-                    for (String myGroup : this.groups) {
-                        myGroups += myGroup + " / ";
-                    }
-                    String myUserAttributes = "";
-                    for (String myKey : userAttributes.keySet()) {
-                        myUserAttributes += myKey + ":" + userAttributes.get( myKey ) + " / ";
-                    }
-                    String myRules = "";
-                    for (String myKey : rules.keySet()) {
-                        myRules += myKey + ":" + rules.get( myKey ) + " / ";
-                    }
-                    log.info("registerUser "
-                            + "\nusername: " + userName 
-                            + "\nroles: " + myRoles
-                            + "\ngroups: " + myGroups
-                            + "\nuserAttr: " + myUserAttributes
-                            + "\nrules: " + myRules);
+            if (log.isInfoEnabled()) {
+                String myRoles = "";
+                for (String myRole : this.roles) {
+                    myRoles += myRole + " / ";
                 }
-                admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
-
-                user = userManager.getUser(userName);
-                PasswordCredential credential = userManager.getPasswordCredential(user);
-                credential.setUpdateRequired(isUserPwUpdateRequired);
-                userManager.storePasswordCredential(credential);
-
-                IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                        request.getLocale()), request.getLocale());
-
-                HashMap<String, String> userInfo = new HashMap<>(userAttributes);
-                // map coded stuff
-                String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
-                        .get("user.name.prefix"));
-                userInfo.put("user.custom.ingrid.user.salutation.full", salutationFull);
-                userInfo.put("login", userName);
-                if (isUserPwUpdateRequired || isUserSendInfo) {
-                    // send confirmation email
-                    if(isUserSendInfo) {
-                        userInfo.put("password", password);
-                    }
-                    if (isUserPwUpdateRequired) {
-                        userInfo.put("returnURL", generateReturnURL(request, response, userName, confirmId, userAttributes.get("user.business-info.online.email")));
-                    }
-                    sendMail(request, f, messages, userInfo, true);
+                String myGroups = "";
+                for (String myGroup : this.groups) {
+                    myGroups += myGroup + " / ";
                 }
-                f.addMessage("account.created.title");
+                String myUserAttributes = "";
+                for (String myKey : userAttributes.keySet()) {
+                    myUserAttributes += myKey + ":" + userAttributes.get( myKey ) + " / ";
+                }
+                String myRules = "";
+                for (String myKey : rules.keySet()) {
+                    myRules += myKey + ":" + rules.get( myKey ) + " / ";
+                }
+                log.info("registerUser "
+                        + "\nusername: " + userName 
+                        + "\nroles: " + myRoles
+                        + "\ngroups: " + myGroups
+                        + "\nuserAttr: " + myUserAttributes
+                        + "\nrules: " + myRules);
             }
+            admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
+
+            user = userManager.getUser(userName);
+            PasswordCredential credential = userManager.getPasswordCredential(user);
+            credential.setUpdateRequired(isUserPwUpdateRequired);
+            userManager.storePasswordCredential(credential);
+
+            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                    request.getLocale()), request.getLocale());
+
+            HashMap<String, String> userInfo = new HashMap<>(userAttributes);
+            // map coded stuff
+            String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
+                    .get("user.name.prefix"));
+            userInfo.put("user.custom.ingrid.user.salutation.full", salutationFull);
+            userInfo.put("login", userName);
+            if (isUserPwUpdateRequired || isUserSendInfo) {
+                // send confirmation email
+                if(isUserSendInfo) {
+                    userInfo.put("password", password);
+                }
+                if (isUserPwUpdateRequired) {
+                    userInfo.put("returnURL", generateReturnURL(request, response, userName, confirmId, userAttributes.get("user.business-info.online.email")));
+                }
+                sendMail(request, f, messages, userInfo, true);
+            }
+            f.addMessage("account.created.title");
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating new user.", e);
@@ -700,25 +695,20 @@ public class AdminUserPortlet extends ContentPortlet {
                     String confirmId = user.getInfoMap().get("user.custom.ingrid.user.confirmid");
                     
                     if(newPassword != null && newPassword.length() > 0){
-                        if (Utils.isInvalidInput(newPassword)) {
-                            f.setError(AdminUserForm.FIELD_PW_NEW, "account.edit.error.password.sign");
-                            return;
-                        } else {
-                            // generate login id
-                            confirmId = Utils.getMD5Hash(userName.concat(newPassword).concat(
-                                    Long.toString(System.currentTimeMillis())));
-                            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
-                            userManager.updateUser(user);
+                        // generate login id
+                        confirmId = Utils.getMD5Hash(userName.concat(newPassword).concat(
+                                Long.toString(System.currentTimeMillis())));
+                        user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
+                        userManager.updateUser(user);
 
-                            if(isAdmin){
-                                credential.setPassword(null, newPassword);
-                            }else{
-                                if (oldPassword != null && oldPassword.length() > 0) {
-                                    credential.setPassword(oldPassword, newPassword);
-                                }
+                        if(isAdmin){
+                            credential.setPassword(null, newPassword);
+                        }else{
+                            if (oldPassword != null && oldPassword.length() > 0) {
+                                credential.setPassword(oldPassword, newPassword);
                             }
-                            userManager.storePasswordCredential(credential);
                         }
+                        userManager.storePasswordCredential(credential);
                     }
                     if (isUserSendInfo || isUserPwUpdateRequired) {
                         if(isUserSendInfo) {

@@ -118,7 +118,11 @@ public class CreateAccountForm extends ActionForm {
             allOk = false;
         } else {
             String password = getInput(FIELD_PW);
-             if (!Utils.isStrengthPassword(password)) {
+            if (Utils.isInvalidInput(password)) {
+                setError(FIELD_PW, "account.create.error.password.sign");
+                clearInput(FIELD_PW);
+                allOk = false;;
+            } else if (!Utils.isStrengthPassword(password)) {
                 setError(FIELD_PW, "account.create.error.worstPassword");
                 allOk = false;
             }
