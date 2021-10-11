@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
+          <action type="fix" dev="wemove" issue="2871">
+            Eingaben werden nicht ausreichend auf XSS Angriffe gefiltert
+          </action>
           <action type="fix" dev="wemove" issue="2920">
             IGE: fix preview images upload-check not working on uppercase extensions
           </action>
