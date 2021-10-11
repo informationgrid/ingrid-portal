@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.9.2" date="2021-XX-XX" description="Release 5.9.2">
+          <action type="fix" dev="wemove" issue="2871">
+            Eingaben werden nicht ausreichend auf XSS Angriffe gefiltert
+          </action>
           <action type="add" dev="wemove" issue="1313">
             Portal: Erkennung von Brute-Force-Attacken in Anmeldeprozess von Portal
           </action>
