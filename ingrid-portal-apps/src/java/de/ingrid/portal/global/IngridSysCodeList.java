@@ -174,7 +174,7 @@ public class IngridSysCodeList {
 
     public String getCodeListDataKeyValue(String codeListId, String entryName, String dataKey) {
         String data = getDataByCodeListValue(codeListId, entryName);
-        if(!data.isEmpty()) {
+        if(data != null && !data.isEmpty()) {
             try {
                 JSONObject dataJson = new JSONObject(data);
                 if(dataJson.has(dataKey)) {
