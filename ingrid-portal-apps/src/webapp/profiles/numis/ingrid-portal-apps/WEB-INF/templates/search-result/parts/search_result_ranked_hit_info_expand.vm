@@ -115,13 +115,25 @@
                         </div>
                     #end
 ## Lizenz
-                    #set($licenseKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
-                    #set($licenseValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
+                    #set($licenseKey = "")
+                    #set($licenseValue = "")
+                    #if($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
+                        #set($licenseKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
+                    #end
+                    #if($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
+                        #set($licenseValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
+                    #end
                     #if(($licenseKey && !$licenseKey.isEmpty()) || ($licenseValue && !$licenseValue.isEmpty()))
-                        #set($licenseName = $Codelists.getCodeListValue('6500', $licenseKey, $languageCode))
-                        #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $licenseKey, "url", $request.getLocale()))
-                        #renderFactTitle($MESSAGES.getString('searchResult.info.license'))
-                        #if($licenseUrl)
+                        #set($licenseName = $Codelists.getCodeListValue("6500", $licenseKey, $languageCode))
+                        #if($licenseName.isEmpty())
+                            #set($licenseName = $Codelists.getCodeListValue("6500", $licenseKey, "de"))
+                        #end
+                        #set($licenseUrl = "")
+                        #if($UTIL_SEARCH.getCodeListDataValue("6500", $licenseKey, "url", $request.getLocale()))
+                            #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue("6500", $licenseKey, "url", $request.getLocale()))
+                        #end
+                        #renderFactTitle($MESSAGES.getString("searchResult.info.license"))
+                        #if($licenseUrl && !$licenseUrl.isEmpty())
                                     <p>
                                         <a class="icon" href="$licenseUrl" title="$stringTool.htmlescape($licenseName)" target="_blank" rel="noopener noreferrer">
                                             <span class="ic-ic-external"></span>
