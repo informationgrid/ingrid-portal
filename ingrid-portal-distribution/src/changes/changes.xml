@@ -88,6 +88,9 @@
           <action type="add" dev="wemove" issue="2832">
             IGE: Make table for preview images sortable by drag'n'drop
           </action>
+          <action type="add" dev="wemove" issue="3030">
+            IGE: Timeout for Virusscan configurable
+          </action>
         </release>
 
         <release version="5.9.0" date="2021-07-16" description="Release 5.9.0">
