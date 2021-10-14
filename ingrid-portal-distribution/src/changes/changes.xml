@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.9.3" date="2021-xx-xx" description="Release 5.9.3">
+          <action type="update" dev="wemove" issue="1523">
+            Portal: Weitere Anpassungen am HMDK Profil
+          </action>
+        </release>
+
         <release version="5.9.2" date="2021-10-11" description="Release 5.9.2">
           <action type="fix" dev="wemove" issue="2871">
             Eingaben werden nicht ausreichend auf XSS Angriffe gefiltert
