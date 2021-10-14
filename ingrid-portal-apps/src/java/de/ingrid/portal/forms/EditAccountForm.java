@@ -133,6 +133,10 @@ public class EditAccountForm extends ActionForm {
                allOk = false;
            }
         }
+        if (getInput(FIELD_PW_OLD).equals(getInput(FIELD_PW_NEW))) {
+            setError(FIELD_PW_NEW, "account.edit.error.noPasswordNew");
+            allOk = false;
+        }
         if (!getInput(FIELD_PW_NEW_CONFIRM).equals(getInput(FIELD_PW_NEW))) {
             setError(FIELD_PW_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
             allOk = false;
