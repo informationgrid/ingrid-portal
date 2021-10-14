@@ -217,6 +217,11 @@ public class AdminUserForm extends ActionForm {
                    allOk = false;
                }
             }
+            if (!isAdmin && getInput(FIELD_PW_OLD).equals(getInput(FIELD_PW_NEW))) {
+                setError(FIELD_PW_NEW, "account.edit.error.noPasswordNew");
+                setInput(FIELD_TAB, "1");
+                allOk = false;
+            }
             if (!getInput(FIELD_PW_NEW_CONFIRM).equals(getInput(FIELD_PW_NEW))) {
                 setError(FIELD_PW_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
                 setInput(FIELD_TAB, "1");

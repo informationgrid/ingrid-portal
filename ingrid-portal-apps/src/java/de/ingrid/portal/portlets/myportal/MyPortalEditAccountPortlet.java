@@ -182,6 +182,7 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             if (oldPassword != null && oldPassword.length() > 0) {
                 PasswordCredential credential = userManager.getPasswordCredential(user);
                 String password = f.getInput(EditAccountForm.FIELD_PW_NEW);
+                credential.setPassword(oldPassword, password);
                 userManager.storePasswordCredential(credential);
                 // Update confirmid
                 String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
