@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0">
+        <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
           <action type="update" dev="wemove" issue="1523">
             Portal: Weitere Anpassungen am HMDK Profil
           </action>
@@ -93,6 +93,21 @@
           </action>
           <action type="add" dev="wemove" issue="3030">
             IGE: Timeout for Virusscan configurable
+          </action>
+          <action type="add" dev="wemove" issue="1797">
+            Send report emails when virus scans fail
+          </action>
+          <action type="update" dev="wemove" issue="2799">
+            Update facet view
+          </action>
+          <action type="update" dev="wemove" issue="2762">
+            Access login via menu
+          </action>
+          <action type="fix" dev="wemove" issue="2755">
+            IGE: Import of position accuracy field
+          </action>
+          <action type="update" dev="wemove" issue="2085">
+            Improve search
           </action>
         </release>
 
