@@ -477,10 +477,10 @@ public class QueryResultPostProcessor {
                     // only show FIRST URL which matches the conditions of a WMS getCapabilities URL
 
                     for (int j = 0; j < servicesArray.length; j++) {
-                        if (serviceTypeKey.equalsIgnoreCase("2")
+                        if ((serviceTypeKey.equalsIgnoreCase("2")
                                 || serviceType.toLowerCase().indexOf("wms") != -1
-                                || serviceType.toLowerCase().indexOf("view") != -1
-                                || (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j]
+                                || serviceType.toLowerCase().indexOf("view") != -1)
+                                && (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j]
                                         .toLowerCase().indexOf("request=getcapabilities") > -1)) {
                             tmpString = servicesArray[j];
                             break;

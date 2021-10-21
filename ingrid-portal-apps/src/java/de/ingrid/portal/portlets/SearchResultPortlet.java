@@ -25,6 +25,7 @@ package de.ingrid.portal.portlets;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -49,6 +50,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.UrlValidator;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.EscapeTool;
@@ -110,19 +112,26 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     extension = "wmts";
                 }
                 if(extension == null) {
-                    URL url = new URL(paramURL);
-                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("HEAD");
-
-                    String contentType = con.getContentType();
-
-                    if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
-                        url = new URL(paramURL.replace("http://", "https://"));
-                        con = (java.net.HttpURLConnection) url.openConnection();
-                        con.setRequestMethod("HEAD");
-                    }
-                    if(contentType != null) {
-                        extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                    UrlValidator urlValidator = new UrlValidator();
+                    if(urlValidator.isValid(paramURL)) {
+                        URL url = new URL(paramURL);
+                        try {
+                            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                            con.setRequestMethod("HEAD");
+    
+                            String contentType = con.getContentType();
+    
+                            if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
+                                url = new URL(paramURL.replace("http://", "https://"));
+                                con = (HttpURLConnection) url.openConnection();
+                                con.setRequestMethod("HEAD");
+                            }
+                            if(contentType != null) {
+                                extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                            }
+                        } catch (Exception e) {
+                           log.debug("Failed to load: " + paramURL);
+                        }
                     }
                 }
                 response.setContentType( "text/plain" );
@@ -150,20 +159,23 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
     }
 
     private void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
-        URL url = new URL(paramURL);
-        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-        InputStream inStreamConvert = con.getInputStream();
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        if (null != con.getContentType()) {
-            byte[] chunk = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                os.write(chunk, 0, bytesRead);
+        UrlValidator urlValidator = new UrlValidator();
+        if(urlValidator.isValid(paramURL)) {
+            URL url = new URL(paramURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            InputStream inStreamConvert = con.getInputStream();
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            if (null != con.getContentType()) {
+                byte[] chunk = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                    os.write(chunk, 0, bytesRead);
+                }
+                os.flush();
+                URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                        Base64.getEncoder().encodeToString(os.toByteArray()));
+                response.getWriter().write(dataUri.toString());
             }
-            os.flush();
-            URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                    Base64.getEncoder().encodeToString(os.toByteArray()));
-            response.getWriter().write(dataUri.toString());
         }
     }
 

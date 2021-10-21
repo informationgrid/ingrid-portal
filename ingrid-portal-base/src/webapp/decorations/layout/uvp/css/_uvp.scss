@@ -1018,6 +1018,29 @@ header {
     font-weight: normal;
     color: #bacfd0;
   }
+  
+  .menu-settings-links {
+    height: 100%;
+    margin: -25px -12px -25px -38px;
+    padding: 25px 12px 25px 38px;
+    background-color: #24786f;
+
+    a {
+      display: inline-block;
+      text-transform: uppercase;
+      font-size: 12px;
+      padding: 4px 16px;
+    }
+    
+    h6 {
+      padding: 0;
+    }
+  }
+
+  a + .menu-settings-links {
+    background-color: #1a6164;
+    margin-top: 0;
+  }
 }
 
 /* form */
@@ -3123,10 +3146,6 @@ header {
     span.icon > span {
       color: #5E788D;
     }
-  }
-  
-  ul + .accordion-item-sub {
-    border-top: 1px solid #C6CFE2;
   }
 }
 

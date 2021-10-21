@@ -67,3 +67,4 @@
         }
     }
 </script>
+#parse("/WEB-INF/templates/facete/area_map/area_map_layers.vm")

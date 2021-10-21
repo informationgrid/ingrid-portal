@@ -1,0 +1,21 @@
+## Datensammlung
+################################
+<div class="sub-section">
+    <a class="anchor" id="${hashDetail5}_technical_information"></a>
+    #renderGroupTitle($MESSAGES.getString("technical_information"))
+    ## Schlüsselkatalog: im Datensatz vorhanden
+        #renderTextTable($MESSAGES.getString("t011_obj_geo.keyc_incl_w_dataset") $TOOL.getValueFromXPath($xPathInfo5MDFeatureCatalogueDescriptionIncludedWithDataset))
+    ## Schlüsselkatalog
+        #set($headTitles = [$MESSAGES.getString("t011_obj_geo_keyc.subject_cat"),$MESSAGES.getString("t011_obj_geo_keyc.key_date"),$MESSAGES.getString("t011_obj_geo_keyc.edition")])
+        #set($headXpathExpressions = ["./gmd:title","./gmd:date/gmd:CI_Date/gmd:date","./gmd:edition"])
+        #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_keyc"), $xPathInfo5MDFeatureCatalogueCICitation, $headTitles, $headXpathExpressions))
+    ## Inhalte der Datensammlung/Datenbank
+        #set($nodelist = $TOOL.getNodeListFromXPath($xPathInfo5MDFeatureCatalogueFeatureTypes))
+        #foreach($number in [1..$nodelist.getLength()])
+            #renderTextTable("$MESSAGES.getString('t011_obj_data_para.parameter') ($MESSAGES.getString('t011_obj_data_para.unit'))" $TOOL.getValueFromXPath("${xPathInfo5MDFeatureCatalogueFeatureTypes}[$number]"))
+        #end
+    ## Methode/Datengrundlage
+        #renderTextTable($MESSAGES.getString("t011_obj_data.base") $TOOL.getValueFromXPath($xPathInfo5LISourceDescription))
+    ## Erläuterungen zum Fachbezug
+        #renderTextTable($MESSAGES.getString("t011_obj_data.description") $TOOL.getValueFromXPath($xPathInfo5SupplementalInformation))
+</div>

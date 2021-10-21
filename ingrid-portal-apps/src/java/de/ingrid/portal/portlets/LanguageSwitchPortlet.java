@@ -36,6 +36,7 @@ import org.apache.velocity.tools.generic.ListTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -84,6 +85,11 @@ public class LanguageSwitchPortlet extends GenericVelocityPortlet {
         context.put("languagesNames", Utils.getLanguagesFullAsArray(lang));
         context.put("languagesShort", Utils.getLanguagesShortAsArray());
         context.put("selectedLang", lang);
+        
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()), request.getLocale());
+        context.put("MESSAGES", messages);
+
         super.doView(request, response);
     }
 

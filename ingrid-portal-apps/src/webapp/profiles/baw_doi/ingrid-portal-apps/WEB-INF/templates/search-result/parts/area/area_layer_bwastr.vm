@@ -1,0 +1,3 @@
+<script>
+    addLayerBWaStr(map${mapId}, $bwastr, '$restUrlBWaStr', '${wkt}', coords);
+</script>

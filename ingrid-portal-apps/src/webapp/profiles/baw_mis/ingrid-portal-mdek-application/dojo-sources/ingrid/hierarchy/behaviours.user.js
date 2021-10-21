@@ -23,17 +23,59 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/baw_mis/bawSystemBehaviours",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisAuftrag",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisDefaultValues",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisHierarchyLevelName",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisKeywordCatalogue",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisNewObjectTypes",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisSimulationMdFields",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawSystemBehaviours, bawUiGeneral, bawValidationRules) {
+], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
 
         /**
-         * System-level changes for BAW-MIS profile
+         * BAW-Auftragsinformationen
          */
-        bawSystemBehaviours: bawSystemBehaviours,
+        bawMisAuftrag: bawMisAuftrag,
+
+        /**
+         * Codelist changes for BAW-MIS profile
+         */
+        bawMisCodelists: bawMisCodelists,
+
+        /**
+         * Default values for certain fields
+         */
+        bawMisDefaultValues: bawMisDefaultValues,
+
+        /**
+         * heirarchyLevelName Field
+         */
+        bawMisHierarchyLevelName: bawMisHierarchyLevelName,
+
+        /**
+         * BAW-Keyword Catalogue (2012)
+         */
+        bawMisKeywordCatalogue: bawMisKeywordCatalogue,
+
+        /**
+         * Allowed object types in New Object dialog box
+         */
+        bawMisNewObjectTypes: bawMisNewObjectTypes,
+
+        /**
+         * IGE fields for simulation-related metadata
+         */
+        bawMisSimulationMdFields: bawMisSimulationMdFields,
+
+        /**
+         * New table for federal waterways
+         */
+        bawMisWaterwaysTable: bawMisWaterwaysTable,
 
         /**
          * UI changes for BAW-MIS profile

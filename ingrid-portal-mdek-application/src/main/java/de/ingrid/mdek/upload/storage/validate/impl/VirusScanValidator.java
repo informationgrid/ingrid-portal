@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -54,6 +54,7 @@ public class VirusScanValidator implements Validator {
     private static final String CONFIG_KEY_COMMAND       = "command";
     private static final String CONFIG_KEY_VIRUS_PATTERN = "virusPattern";
     private static final String CONFIG_KEY_CLEAN_PATTERN = "cleanPattern";
+    private static final String CONFIG_KEY_TIMEOUT = "timeout";
 
     private static final String PLACEHOLDER_FILE = "%FILE%";
 
@@ -61,7 +62,7 @@ public class VirusScanValidator implements Validator {
     private Pattern virusPattern;
     private Pattern cleanPattern;
 
-    private final ExternalCommand scanner = new ExternalCommand();
+    private ExternalCommand scanner = new ExternalCommand();
 
     private static final Logger log = LogManager.getLogger(VirusScanValidator.class);
 
@@ -72,6 +73,11 @@ public class VirusScanValidator implements Validator {
             if (!configuration.containsKey(parameter)) {
                 throw new IllegalArgumentException("Configuration value '"+parameter+"' is required.");
             }
+        }
+
+        // Set Timeout
+        if(configuration.containsKey(CONFIG_KEY_TIMEOUT)){
+            scanner = new ExternalCommand(Integer.parseInt(configuration.get(CONFIG_KEY_TIMEOUT)));
         }
 
         // command parameter
@@ -126,6 +132,7 @@ public class VirusScanValidator implements Validator {
         }
         catch (final CommandExecutionException e) {
             log.error("Virus scan failed: ", e);
+            throw new RuntimeException(e);
         }
     }
 

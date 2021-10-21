@@ -1,0 +1,3 @@
+<div class="helper icon">
+    #renderUDKAddressIcon($rs.udk_class $udkAdrClassName $udkAdrClassName)
+</div>

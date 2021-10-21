@@ -2031,8 +2031,6 @@ define([
             this._setObjectDataClass4(nodeData);
             this._setObjectDataClass5(nodeData);
             this._setObjectDataClass6(nodeData);
-
-            topic.publish("beforeFinishApplyingObjectNodeData", nodeData);
         },
         
         prepareBackendDataForGrid: function(currentField) {
@@ -2463,7 +2461,12 @@ define([
                     nodeData.timeRefDate1 = null;
                     nodeData.timeRefDate2 = timeFrom;
                 }
-            } else if (nodeData.timeRefType == "seit") {
+            } else if (nodeData.timeRefType == "am") {
+                if (timeFrom !== "") {
+                    nodeData.timeRefDate1 = timeFrom;
+                    nodeData.timeRefDate2 = timeFrom;
+                }
+            } else if (nodeData.timeRefType == "seit" || nodeData.timeRefType == "seitX") {
                 if (timeFrom !== "") {
                     nodeData.timeRefDate1 = timeFrom;
                     nodeData.timeRefDate2 = null;
@@ -2678,8 +2681,6 @@ define([
                     console.debug("Error in _getObjectData - Object Class must be 0...7!");
                     break;
             }
-
-            topic.publish("beforeFinishGettingObjectNodeData", nodeData);
 
             console.debug("------ OBJECT DATA ------");
             console.debug(nodeData);

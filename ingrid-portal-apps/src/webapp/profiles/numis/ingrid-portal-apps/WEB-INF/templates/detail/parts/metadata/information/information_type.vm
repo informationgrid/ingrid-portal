@@ -1,0 +1,20 @@
+## Informationen zum Datensatz
+#if($type == "1" && $TOOL.aNodeOfListExist($xPathListInformationType1))
+## Geodatensatz
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1.vm")
+#elseif($type == "2" && $TOOL.aNodeOfListExist($xPathListInformationType2))
+## Literatur
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type2.vm")
+#elseif($type == "3" && ($TOOL.aNodeOfListExist($xPathListInformationType3) || $serviceClassification.size() > 0))
+## Geodatendienst
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type3.vm")
+#elseif($type == "4" && $TOOL.aNodeOfListExist($xPathListInformationType4))
+## Projekt
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type4.vm")
+#elseif($type == "5" && $TOOL.aNodeOfListExist($xPathListInformationType5))
+## Datensammlung
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type5.vm")
+#elseif($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0))
+## Informationsystem
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type6.vm")
+#end

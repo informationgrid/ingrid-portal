@@ -93,6 +93,8 @@
                     <span class="text">$tabName</span>
                 </div>
             </a>
+        #elseif($element.url == "/main-about.psml")
+            #parse("/decorations/layout/ingrid/templates/header/body_header_main_menu_about.vm")
         #end
       #end
     #end
@@ -139,7 +141,7 @@
 #end
 <div class="header-menu" style="display: none;" role="navigation" aria-label="Navigation Menu">
     <div class="header-menu-close">
-        <button type="button" class="button">Menü<span class="ic-ic-cross"></span></button>
+        <button type="button" class="button ">$MESSAGES.getString('ingrid.page.menu')<span class="ic-ic-cross"></span></button>
     </div>
     <div class="menu-main-links">
     #if($_menuMain)
@@ -211,8 +213,8 @@
     #end
     #parse("/decorations/layout/ingrid/templates/header/body_header_login_link.vm")
     </div>
-    #if($jetspeed.getLoggedOn())
     <div class="menu-sub-links">
+    #if($jetspeed.getLoggedOn())
         <h6 class="login_user">$salutation</h6>
         #if($_menu)
             #foreach($element in $_menu.elements.iterator())
@@ -251,9 +253,22 @@
             #end
         #end
         <a class="button logout" href="/login/logout"><span class="text">$MESSAGES.getString('ingrid.page.login.logout')</span><span class="ic-ic-arrow"></span></a>
-    </div>
     #else
         #parse("/decorations/layout/ingrid/templates/header/body_header_login.vm")
     #end
-</div>
+    #if($_menu)
+        #set($hasLanguage = false)
+        #foreach($element in $_menu.elements.iterator())
+            #if($element.getTitle() == "ingrid.page.language")
+                #set($hasLanguage = true)
+            #end
+        #end
+        #if($hasLanguage)
+        <div class="menu-settings-links">
+            $jetspeed.renderPortletWindow("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
+        </div>
+        #end
+    #end
+    </div>
+</div> 
 #end

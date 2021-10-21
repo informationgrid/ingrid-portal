@@ -141,59 +141,19 @@
         if(mapFilter) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
-                    mapFilter.append( '<div class="form-element boxed map blue"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers10"><input id="mapMarkers10" name="mapMarkers10" type="checkbox"><span class="control__indicator"></span>Zulassungsverfahren</label></div></div></div>');
-                    $('#mapMarkers10').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers10);
-                        } else {
-                            map.removeLayer(mapMarkers10);
-                        }
-                    });
+                    createLegendEntry(map, mapFilter, mapMarkers10, 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv');
                 }
                 if(legendCounter.countMarker3){
-                    mapFilter.append( '<div class="form-element boxed map"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers11"><input id="mapMarkers11" name="mapMarkers11" type="checkbox"><span class="control__indicator"></span>Ausl&#228;ndische Vorhaben</label></div></div></div>');
-                    $('#mapMarkers11').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers11);
-                        } else {
-                            map.removeLayer(mapMarkers11);
-                        }
-                    });
+                    createLegendEntry(map, mapFilter, mapMarkers11, 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av');
                 }
                 if(legendCounter.countMarker2){
-                    mapFilter.append( '<div class="form-element boxed map red"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers1314"><input id="mapMarkers1314" name="mapMarkers1314" type="checkbox"><span class="control__indicator"></span>Vorgelagerte Verfahren</label></div></div></div>');
-                    $('#mapMarkers1314').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers1314);
-                        } else {
-                            map.removeLayer(mapMarkers1314);
-                        }
-                    });
+                    createLegendEntry(map, mapFilter, mapMarkers1314, 'red', 'mapMarkers1314', 'Vorgelagerte Verfahren', 'vv');
                 }
                 if(legendCounter.countMarker4){
-                    mapFilter.append( '<div class="form-element boxed map orange"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers12"><input id="mapMarkers12" name="mapMarkers12" type="checkbox"><span class="control__indicator"></span>Negative Vorpr&#252;fungen</label></div></div></div>');
-                    $('#mapMarkers12').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers12);
-                        } else {
-                            map.removeLayer(mapMarkers12);
-                        }
-                    });
+                    createLegendEntry(map, mapFilter, mapMarkers12, 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv');
                 }
                 if(legendCounter.countMarkerDevPlan){
-                   mapFilter.append( '<div class="form-element boxed map green"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkersDevPlan"><input id="mapMarkersDevPlan" name="mapMarkersDevPlan" type="checkbox"><span class="control__indicator"></span>Bauleitplanung</label></div></div></div>');
-                   $('#mapMarkersDevPlan').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkersDevPlan);
-                        } else {
-                            map.removeLayer(mapMarkersDevPlan);
-                        }
-                    });
+                    createLegendEntry(map, mapFilter, mapMarkersDevPlan, 'green', 'mapMarkersDevPlan', 'Bauleitplanung', 'blp');
                 }
             }
         }
@@ -260,39 +220,58 @@
         if(map){
             map.on('layeradd', onOverlayAdd);
             var mapParamLayer = '$mapParamLayer';
+            var mapParamLayers = [];
             if(mapParamLayer) {
-                mapParamLayer = mapParamLayer.split(',');
+                mapParamLayers = mapParamLayer.split(',');
             }
-            if($checkedCategoryDevPlan && mapParamLayer.length === 0 || mapParamLayer.indexOf('blp') > -1){
+            if($checkedCategoryDevPlan && mapParamLayers.length === 0 || mapParamLayers.indexOf('blp') > -1){
                 if(mapMarkersDevPlan) {
                     map.addLayer(mapMarkersDevPlan);
                     $('#mapMarkersDevPlan').prop('checked', true);
+                    if(mapParamLayers.indexOf('blp') === -1) {
+                        mapParamLayers.push('blp');
+                    }
                 }
             }
-            if($checkedCategory10 && mapParamLayer.length === 0 || mapParamLayer.indexOf('zv') > -1){
+            if($checkedCategory10 && mapParamLayers.length === 0 || mapParamLayers.indexOf('zv') > -1){
                 if(mapMarkers10) {
                     map.addLayer(mapMarkers10);
                     $('#mapMarkers10').prop('checked', true);
+                    if(mapParamLayers.indexOf('zv') === -1) {
+                        mapParamLayers.push('zv');
+                    }
                 }
             }
-            if($checkedCategory11 && mapParamLayer.length === 0 || mapParamLayer.indexOf('av') > -1){
+            if($checkedCategory11 && mapParamLayers.length === 0 || mapParamLayers.indexOf('av') > -1){
                 if(mapMarkers11) {
                     map.addLayer(mapMarkers11);
                     $('#mapMarkers11').prop('checked', true);
+                    if(mapParamLayers.indexOf('av') === -1) {
+                        mapParamLayers.push('av');
+                    }
                 }
             }
-            if($checkedCategory1314 && mapParamLayer.length === 0 || mapParamLayer.indexOf('vv') > -1){
+            if($checkedCategory1314 && mapParamLayers.length === 0 || mapParamLayers.indexOf('vv') > -1){
                 if(mapMarkers1314) {
                     map.addLayer(mapMarkers1314);
                     $('#mapMarkers1314').prop('checked', true);
+                    if(mapParamLayers.indexOf('vv') === -1) {
+                        mapParamLayers.push('vv');
+                    }
                 }
             }
-            if($checkedCategory12 && mapParamLayer.length === 0 || mapParamLayer.indexOf('nv') > -1){
+            if($checkedCategory12 && mapParamLayers.length === 0 || mapParamLayers.indexOf('nv') > -1){
                 if(mapMarkers12) {
                     map.addLayer(mapMarkers12);
                     $('#mapMarkers12').prop('checked', true);
+                    if(mapParamLayers.indexOf('nv') === -1) {
+                        mapParamLayers.push('nv');
+                    }
                 }
             }
+            if(mapParamLayers.length > 0) {
+                updateQueryStringParameter('layer', mapParamLayers.toString());
+            } 
         }
     })
     .error(function () {
@@ -318,14 +297,32 @@
         mapLat = parseFloat('$mapParamN') || mapLat;
         mapLng = parseFloat('$mapParamE') || mapLng;
         mapZoom = parseFloat('$mapParamZoom') || mapZoom;
+        map.setView(new L.LatLng(mapLat, mapLng), mapZoom);
     } else if(mapParamExtent && mapParamExtent.length === 4){
-        mapBounds = L.latLngBounds(
+        map.fitBounds(L.latLngBounds(
           L.latLng(parseFloat(mapParamExtent[0]),
             parseFloat(mapParamExtent[1])),
           L.latLng(parseFloat(mapParamExtent[2]),
           parseFloat(mapParamExtent[3]))
-        );
+        ));
     } else if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
+        map.fitBounds(L.latLngBounds(
+          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y1'),
+            parseFloat('$selectedMap.webmapclientCoords.x1')),
+          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y2'),
+          parseFloat('$selectedMap.webmapclientCoords.x2'))
+        ));
+    } else if('$mapExtent'){
+        map.fitBounds(L.latLngBounds(
+          L.latLng(parseFloat('$mapExtent.get(0)'),
+            parseFloat('$mapExtent.get(1)')),
+          L.latLng(parseFloat('$mapExtent.get(2)'),
+          parseFloat('$mapExtent.get(3)'))
+        ));
+    }
+    
+    if(!mapBounds){
+        if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
         mapBounds = L.latLngBounds(
           L.latLng(parseFloat('$selectedMap.webmapclientCoords.y1'),
             parseFloat('$selectedMap.webmapclientCoords.x1')),
@@ -340,15 +337,25 @@
           parseFloat('$mapExtent.get(3)'))
         );
     }
-    
-    if(mapBounds){
-        map.fitBounds(mapBounds);
-    } else if(mapLat && mapLng && mapZoom) {
-        map.setView(new L.LatLng(mapLat, mapLng), mapZoom);
-        mapBounds = map.getBounds();
     }
+
+    map.on('moveend', function(e){
+        var mapLatLng = this.getCenter();
+        if(mapLatLng) {
+            mapLat = this.getCenter().lat.toFixed(2);
+            mapLng = this.getCenter().lng.toFixed(2);
+            updateQueryStringParameter('N', mapLat);
+            updateQueryStringParameter('E', mapLng);
+        }
+        if(this.getZoom()) {
+            mapZoom = this.getZoom();
+            updateQueryStringParameter('zoom', mapZoom);
+        }
+    });
     
+
     function onOverlayAdd(e){
+        var paramLayers = [];
         if(e.layer.options.id === 'mapMarkersDevPlan') {
             if("$restUrlUVPDevPlan") {
                 if(mapMarkersDevPlan.getLayers().length === 0){
@@ -361,59 +368,17 @@
                                 var a = markersDevPlan[i];
                                 var id = a.id;
                                 var name = a.name;
-                                var descr = a.descr;
-                                var latlon = a.latlon;
-                                var polygon = a.polygon;
-                                var bpinfos = a.bpinfos;
-                                var popUpHtml = '';
+                                var lat = a.lat;
+                                var lon = a.lon;
+                                var popUpHtml = 'Bitte warten ...';
                                 var iconColor = 'green';
                                 var icon = getIcon(smallIcons, iconColor, enablePopUp); 
-                                var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon, interactive: !smallIcons });
+                                var marker = L.marker(new L.LatLng(lat,lon), { title: name, icon: icon, interactive: !smallIcons });
                                 marker.bbox = null;
+                                marker.lat = lat;
+                                marker.lon = lon;
                                 if(enablePopUp){
-                                    popUpHtml += '<h5>' + name + '</h5>';
-                                    if(descr && descr .length > 0){
-                                        popUpHtml += '<h6 class="no-margin">Mitgliedsgemeinden:</h6>';
-                                        popUpHtml += '<p class="leaflet-hyphens">' + descr + '</p>';
-                                    }
-                                    
-                                    if(bpinfos && bpinfos.length > 0){
-                                        popUpHtml += '<h6 class="no-margin">Nutzen Sie die folgenden Links um zu den Bauleitplanungs-Seiten zu gelangen:</h6>';
-                                        for (var j = 0; j < bpinfos.length; j++) {
-                                            var bpinfo = bpinfos[j];
-                                            if(bpinfo.url){
-                                                var url = bpinfo.url;
-                                                if(url.indexOf("http") === -1){
-                                                    url = "http://" + url;
-                                                }
-                                                if(bpinfo.tags){
-                                                    var tags = [].concat(bpinfo.tags);
-                                                    for (var k = 0; k < tags.length; k++) {
-                                                        var tag = tags[k];
-                                                        if(tag){
-                                                            var title;
-                                                            if(tag === "v"){
-                                                                title = 'Wirksame/rechtskr&auml;ftige Bauleitpl&auml;ne';
-                                                            }else if(tag === "p"){
-                                                                title = 'Bauleitpl&auml;ne im Beteiligungsverfahren';
-                                                            }else if(tag === "v_fnp"){
-                                                                title = 'Wirksame/rechtskr&auml;ftige Fl&auml;chennutzungspl&auml;ne';
-                                                            }else if(tag === "p_fnp"){
-                                                                title = 'Fl&auml;chennutzungspl&auml;ne im Beteiligungsverfahren';
-                                                            }else if(tag === "v_bp"){
-                                                                title = 'Wirksame/rechtskr&auml;ftige Bebauungspl&auml;ne';
-                                                            }else if(tag === "p_bp"){
-                                                                title = 'Bebauungspl&auml;ne im Beteiligungsverfahren';
-                                                            }
-                                                            if(title){
-                                                                popUpHtml += '<a class="icon" href="' + url + '" target="_blank"><span class="ic-ic-arrow"></span><span class="text">' + title + '</span></a>';
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    marker.on('click', onMapClickBLP);
                                     marker.bindPopup(popUpHtml, popupMarkerOptions);
                                     marker.on('popupopen', showMarker);
                                     marker.on('popupclose', hideMarker);
@@ -437,24 +402,7 @@
                         if(markers){
                             for (var i = 0; i < markers.length; i++) {
                                 var a = markers[i];
-                                var title = a[2];
-                                var categories = a[6];
-                                var uuid = a[3];
-                                var procedure = a[5];
-                                var steps = a[7];
-                                var popUpHtml = '';
-                                var iconColor = 'blue';
-                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
-                                var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
-                                marker.uuid = uuid;
-                                marker.bbox = null;
-                                if(enablePopUp){
-                                    popUpHtml = createPopUp(title, procedure, categories, steps, uuid);
-                                    marker.bindPopup(popUpHtml, popupMarkerOptions);
-                                    marker.on('popupopen', showMarker);
-                                    marker.on('popupclose', hideMarker);
-                                }
-                                mapMarkers10.addLayer(marker);
+                                createMarker(mapMarkers10, a, 'blue');
                             }
                         }
                     })
@@ -473,24 +421,7 @@
                         if(markers){
                             for (var i = 0; i < markers.length; i++) {
                                 var a = markers[i];
-                                var title = a[2];
-                                var categories = a[6];
-                                var uuid = a[3];
-                                var procedure = a[5];
-                                var steps = a[7];
-                                var popUpHtml = '';
-                                var iconColor = 'red';
-                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
-                                var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
-                                marker.uuid = uuid;
-                                marker.bbox = null;
-                                if(enablePopUp){
-                                    popUpHtml = createPopUp(title, procedure, categories, steps, uuid);
-                                    marker.bindPopup(popUpHtml, popupMarkerOptions);
-                                    marker.on('popupopen', showMarker);
-                                    marker.on('popupclose', hideMarker);
-                                }
-                                mapMarkers1314.addLayer(marker);
+                                createMarker(mapMarkers1314, a, 'red');
                             }
                         }
                     })
@@ -509,24 +440,7 @@
                         if(markers){
                             for (var i = 0; i < markers.length; i++) {
                                 var a = markers[i];
-                                var title = a[2];
-                                var categories = a[6];
-                                var uuid = a[3];
-                                var procedure = a[5];
-                                var steps = a[7];
-                                var popUpHtml = '';
-                                var iconColor = 'black';
-                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
-                                var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
-                                marker.uuid = uuid;
-                                marker.bbox = null;
-                                if(enablePopUp){
-                                    popUpHtml = createPopUp(title, procedure, categories, steps, uuid);
-                                    marker.bindPopup(popUpHtml, popupMarkerOptions);
-                                    marker.on('popupopen', showMarker);
-                                    marker.on('popupclose', hideMarker);
-                                }
-                                mapMarkers11.addLayer(marker);
+                                createMarker(mapMarkers11, a, 'black');
                             }
                         }
                     })
@@ -545,24 +459,7 @@
                         if(markers){
                             for (var i = 0; i < markers.length; i++) {
                                 var a = markers[i];
-                                var title = a[2];
-                                var categories = a[6];
-                                var uuid = a[3];
-                                var procedure = a[5];
-                                var steps = a[7];
-                                var popUpHtml = '';
-                                var iconColor = 'orange';
-                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
-                                var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
-                                marker.uuid = uuid;
-                                marker.bbox = null;
-                                if(enablePopUp){
-                                    popUpHtml = createPopUp(title, procedure, categories, steps, uuid);
-                                    marker.bindPopup(popUpHtml, popupMarkerOptions);
-                                    marker.on('popupopen', showMarker);
-                                    marker.on('popupclose', hideMarker);
-                                }
-                                mapMarkers12.addLayer(marker);
+                                createMarker(mapMarkers12, a, 'orange');
                             }
                         }
                     })
@@ -620,4 +517,133 @@
         }
         return popUpHtml;
     }
+
+    function createMarker(mapMarkers, a, iconColor) {
+        var title = a[2];
+        var uuid = a[3];
+        var popUpHtml = 'Bitte warten ...';
+        var icon = getIcon(smallIcons, iconColor, enablePopUp);
+        var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
+        marker.uuid = uuid;
+        marker.bbox = null;
+        if(enablePopUp){
+            marker.bindPopup(popUpHtml, popupMarkerOptions);
+            marker.on('click', onMapClick);
+            marker.on('popupopen', showMarker);
+            marker.on('popupclose', hideMarker);
+            
+        }
+        mapMarkers.addLayer(marker);
+    }
+
+    function onMapClick(e) {
+        var popup = e.target.getPopup();
+        map.spin(true);
+        jQuery.get("$restUrlMarkerDetail?uuid=" + e.target.uuid)
+        .done(function(data, textStatus, jqxhr) {
+            map.spin(false);
+            var title = e.target.options.title;
+            var uuid = e.target.uuid;
+            var procedure = data[0];
+            var categories = data[1];
+            var steps = data[2];
+            popup.setContent( createPopUp(title, procedure, categories, steps, uuid) );
+            popup.update();
+        })
+        .error(function () {
+          map.spin(false);
+        });
+    };
+
+    function onMapClickBLP(e) {
+        var popup = e.target.getPopup();
+        var title = e.target.options.title;
+        var x1 = e.target.lon;
+        var y1 = e.target.lat;
+        map.spin(true);
+        jQuery.get('$restUrlUVPDevPlanDetail?title=' + title + '&x1=' + x1 + '&y1=' + y1)
+        .done(function(data, textStatus, jqxhr) {
+            map.spin(false);
+            title = e.target.options.title;
+            var descr = data.descr;
+            var polygon = data.polygon;
+            var bpinfos = data.bpinfos;
+            var popUpHtml = '';
+            if(enablePopUp){
+                popUpHtml += '<h5>' + title + '</h5>';
+                if(descr && descr .length > 0){
+                    popUpHtml += '<h6 class="no-margin">Mitgliedsgemeinden:</h6>';
+                    popUpHtml += '<p class="leaflet-hyphens">' + descr + '</p>';
+                }
+                
+                if(bpinfos && bpinfos.length > 0){
+                    popUpHtml += '<h6 class="no-margin">Nutzen Sie die folgenden Links um zu den Bauleitplanungs-Seiten zu gelangen:</h6>';
+                    for (var j = 0; j < bpinfos.length; j++) {
+                        var bpinfo = bpinfos[j];
+                        if(bpinfo.url){
+                            var url = bpinfo.url;
+                            if(url.indexOf("http") === -1){
+                                url = "http://" + url;
+                            }
+                            if(bpinfo.tags){
+                                var tags = [].concat(bpinfo.tags);
+                                for (var k = 0; k < tags.length; k++) {
+                                    var tag = tags[k];
+                                    if(tag){
+                                        var title;
+                                        if(tag === "v"){
+                                            title = 'Wirksame/rechtskr&auml;ftige Bauleitpl&auml;ne';
+                                        }else if(tag === "p"){
+                                            title = 'Bauleitpl&auml;ne im Beteiligungsverfahren';
+                                        }else if(tag === "v_fnp"){
+                                            title = 'Wirksame/rechtskr&auml;ftige Fl&auml;chennutzungspl&auml;ne';
+                                        }else if(tag === "p_fnp"){
+                                            title = 'Fl&auml;chennutzungspl&auml;ne im Beteiligungsverfahren';
+                                        }else if(tag === "v_bp"){
+                                            title = 'Wirksame/rechtskr&auml;ftige Bebauungspl&auml;ne';
+                                        }else if(tag === "p_bp"){
+                                            title = 'Bebauungspl&auml;ne im Beteiligungsverfahren';
+                                        }
+                                        if(title){
+                                            popUpHtml += '<a class="icon" href="' + url + '" target="_blank"><span class="ic-ic-arrow"></span><span class="text">' + title + '</span></a>';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            popup.setContent( popUpHtml );
+            popup.update();
+        })
+        .error(function () {
+          map.spin(false);
+        });
+    };
+    
+    function createLegendEntry(map, mapFilter, markers, color, id, title, paramEntry){
+        mapFilter.append( '<div class="form-element boxed map ' + color + '"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="' + id + '"><input id="' + id + '" name="' + id + '" type="checkbox"><span class="control__indicator"></span>' + title + '</label></div></div></div>');
+        $('#' + id).on('change', function() {
+            var paramLayer = getQueryStringParameter('layer');
+            var paramLayers = [];
+            if(paramLayer) {
+                paramLayers = paramLayer.split(',');
+            }
+            var checkbox = $(this);
+            const index = paramLayers.indexOf(paramEntry);
+            if ($(this).is(':checked')) {
+                map.addLayer(markers);
+                if(index === -1) {
+                    paramLayers.push(paramEntry);
+                }
+            } else {
+                map.removeLayer(markers);
+                if (index > -1) {
+                  paramLayers.splice(index, 1);
+                }
+            }
+            updateQueryStringParameter('layer', paramLayers.toString());
+        });
+    };
 </script>

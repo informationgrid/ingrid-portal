@@ -45,6 +45,7 @@ import de.ingrid.mdek.util.MdekEmailUtils;
 public class UploadVirusScanJob extends QuartzJobBean {
 
     private static final String EMAIL_REPORT_SUBJECT = "[IGE] Virus Scan Report";
+    private static final String EMAIL_ERROR_REPORT_SUBJECT = EMAIL_REPORT_SUBJECT + " ERROR";
     private static final String VIRUSSCAN_VALIDATOR_NAME = "virusscan";
 
     private static final Logger log = LogManager.getLogger(UploadVirusScanJob.class);
@@ -72,13 +73,13 @@ public class UploadVirusScanJob extends QuartzJobBean {
      * Encapsulates email functions for better testability
      */
     interface EmailService {
-        void sendReport(Report report);
+        void sendReport(String subject, Report report);
     }
 
     private class EmailServiceImpl implements EmailService {
         @Override
-        public void sendReport(Report report) {
-        	MdekEmailUtils.sendSystemEmail(EMAIL_REPORT_SUBJECT, report.getContent());
+        public void sendReport(final String subject, final Report report) {
+        	MdekEmailUtils.sendSystemEmail(subject, report.getContent());
         }
     }
 
@@ -134,6 +135,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
         log(Level.INFO, "Directories to scan: "+String.join(", ", scanDirs), null);
 
         final List<Path> infectedFiles = new ArrayList<>();
+        final List<Exception> exceptions = new ArrayList<>();
         try {
             // scan files
             for (final String scanDir : scanDirs) {
@@ -148,6 +150,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
                 }
                 catch (final Exception ex) {
                     log(Level.ERROR, "Error scanning directory \""+scanDir+"\"", ex);
+                    exceptions.add(ex);
                 }
             }
             log(Level.INFO, "Found "+infectedFiles.size()+" infected file(s)", null);
@@ -162,8 +165,9 @@ public class UploadVirusScanJob extends QuartzJobBean {
             log(Level.INFO, "Aborted UploadVirusScanJob", null);
         }
 
-        if (this.sendReportEmails && !infectedFiles.isEmpty()) {
-        	this.emailService.sendReport(report);
+        if (this.sendReportEmails && (!infectedFiles.isEmpty() || !exceptions.isEmpty())) {
+            final String subject = !exceptions.isEmpty() ? EMAIL_ERROR_REPORT_SUBJECT : EMAIL_REPORT_SUBJECT;
+            this.emailService.sendReport(subject, report);
         }
     }
 

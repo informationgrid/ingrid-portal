@@ -6,6 +6,8 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet.spin/leaflet.spin.min.js"></script>
 <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.gesture-handling/leaflet-gesture-handling.min.css" />
 <script src="/decorations/layout/ingrid/scripts/leaflet.gesture-handling/leaflet-gesture-handling.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet.wicket/wicket.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet.wicket/wicket-leaflet.js"></script>
 
 <script>
     function getOSMLayer(attribution){
@@ -68,10 +70,36 @@
             _homeClick: function(e) {
                 L.DomEvent.stop(e);
                 if(bounds){
+                    var features = [];
+                    map.eachLayer(function(layer) {
+                        if(layer && layer.getBounds) {
+                            features.push(layer);
+                        }
+                    })
+                    if(features.length > 0) {
+                        bounds = L.featureGroup(features).getBounds();
+                    }
                     map.fitBounds(bounds);
                 }
             }
         });
         map.addControl(new HomeControl({}));
+    }
+
+    function resizeMap(map){
+        if(map){
+            map._onResize();
+        }
+    }
+    
+    function disableLeafletMapTouchControl(map) {
+        map.removeControl(map.zoomControl);
+        map.dragging.disable();
+        map.zoomControl.disable();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
+        map.boxZoom.disable();
+        map.keyboard.disable();
     }
 </script>

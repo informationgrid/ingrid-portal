@@ -312,6 +312,7 @@ define([
                 ];
                 var gridProperties = UtilDOM.getHTMLAttributes("generalPreviewImageTable")
                 gridProperties.imageLinkTooltip = "true";
+                gridProperties.moveRows = "true";
                 layoutCreator.createDataGrid("generalPreviewImageTable", null, previewImageStructure, null, gridProperties);
 
                 this.addPreviewUploadLink();
@@ -2003,8 +2004,16 @@ define([
                     var def = new Deferred();
                     var data = [
                         [
+                            message.get("dialog.research.ext.obj.content.time.at"),
+                            "am"
+                        ],
+                        [
                             message.get("dialog.research.ext.obj.content.time.since"),
                             "seit"
+                        ],
+                        [
+                            message.get("dialog.research.ext.obj.content.time.sinceToNow"),
+                            "seitX"
                         ],
                         [
                             message.get("dialog.research.ext.obj.content.time.until"),
@@ -2675,7 +2684,7 @@ define([
                 // create uploader instance
                 var uploader = new UploadWidget({
                     uploadUrl: "rest/document",
-                    acceptFiles: "image/gif,image/jpeg,image/png,image/svg+xml,image/tiff,image/webp,image/bmp,image/vnd.microsoft.icon"
+                    acceptFiles: "image/gif,image/jpeg,image/png,image/svg+xml,image/webp,image/bmp,image/vnd.microsoft.icon"
                 });
 
                 on(dom.byId("generalPreviewImageTableLink"), "click", lang.hitch(this, function() {

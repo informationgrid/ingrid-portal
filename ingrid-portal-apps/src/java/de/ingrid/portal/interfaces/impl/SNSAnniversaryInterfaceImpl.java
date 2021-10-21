@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -43,7 +43,7 @@ import java.util.Date;
 
 /**
  * TODO Describe your created type (class, etc.) here.
- * 
+ *
  * @author joachim@wemove.com
  */
 public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
@@ -80,13 +80,14 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
         IngridHits hits = null;
         try {
             query = QueryStringParser.parse(dateStr);
+            query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
             query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, lang));
             query.putInt(Topic.REQUEST_TYPE, Topic.ANNIVERSARY_FROM_TOPIC);
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
             hits = iBus.searchAndDetail(query, PortalConfig.getInstance().getInt( PortalConfig.SNS_CHRONICLE_HITS_LENGTH, 10 ), 1, 0, 10000, new String[0]);
-            
+
             // prepare the detail array
             IngridHit[] hitArray = hits.getHits();
             IngridHitDetail[] hitDetails = new IngridHitDetail[hitArray.length];
@@ -94,7 +95,7 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
             for (IngridHit hit : hitArray) {
             	hitDetails[i++] = hit.getHitDetail();
 			}
-            
+
             if (hitArray.length > 0) {
                 return hitDetails;
             }

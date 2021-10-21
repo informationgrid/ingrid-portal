@@ -2,18 +2,24 @@
     <div class="logo">
         <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="show-for-large hide-for-xsmall-only" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
             <img src="/decorations/layout/uvp/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
-            <span>Schleswig-Holstein</span>
-            <p>Umweltportal</p>
+            <div class="text">
+                <p class="strong">Schleswig-Holstein</p>
+                <p>Umweltportal</p>
+            </div>
         </a>
         <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-xlarge hide-for-large hide-for-xsmall-only hide-for-small-only" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
             <img src="/decorations/layout/uvp/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
-            <span>Schleswig-Holstein</span>
-            <p>Umweltportal</p>
+            <div class="text">
+                <p class="strong">Schleswig-Holstein</p>
+                <p>Umweltportal</p>
+            </div>
         </a>
         <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-medium" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
             <img src="/decorations/layout/uvp/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
-            <span>Schleswig-Holstein</span>
-            <p>Umweltportal</p>
+            <div class="text">
+                <p class="strong">Schleswig-Holstein</p>
+                <p>Umweltportal</p>
+            </div>
         </a>
     </div>
 </div>

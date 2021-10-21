@@ -23,9 +23,11 @@
 package de.ingrid.portal.portlets.myportal;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +88,8 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 
     private static final String CMD_PW_UPDATE_REQUIRED = "password_update";
 
+    private static final String SESSION_AUTH_FAILURES = "SESSION_AUTH_FAILURES";
+
     private PortalAdministration admin;
 
     private UserManager userManager;
@@ -136,7 +140,15 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
-        
+
+        HttpSession session = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
+            .getRequest().getSession(true);
+
+        int authLoginFailuresLimit = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_LOGIN_AUTH_FAILURES_LIMIT, 3);
+        boolean authLoginFailuresActiv = false;
+        if(session.getAttribute(SESSION_AUTH_FAILURES) != null) {
+            authLoginFailuresActiv = (boolean) session.getAttribute(SESSION_AUTH_FAILURES);
+        }
         String userChangeId = request.getParameter(PARAM_USER_CHANGE_ID);
         String userEmail = request.getParameter(PARAM_USER_EMAIL);
         
@@ -193,17 +205,32 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         LoginForm frm = (LoginForm) Utils.getActionForm(request, LoginForm.SESSION_KEY, LoginForm.class);
 
         String errorCode = request.getParameter("errorCode");
-        frm.clearErrors();
         if (errorCode != null) {
             if (errorCode.equals(LoginConstants.ERROR_CREDENTIAL_DISABLED.toString())) {
                 frm.setError(LoginForm.FIELD_PW, "login.error.userDisabled");
             } else if (errorCode.equals(LoginConstants.ERROR_CREDENTIAL_EXPIRED.toString())) {
                 frm.setError(LoginForm.FIELD_PW, "login.error.userExpired");
             } else {
+                User user = null;
+                String name = frm.getInput(LoginConstants.USERNAME);;
+                try {
+                    user = this.userManager.getUser(name);
+                    if(user != null) {
+                        PasswordCredential credential = userManager.getPasswordCredential(user);
+                        int authFailures = credential.getAuthenticationFailures();
+                        if(authFailures <= authLoginFailuresLimit) {
+                            credential.setAuthenticationFailures(authFailures + 1);
+                            userManager.storePasswordCredential(credential);
+                            userManager.updateUser(user);
+                        }
+                    }
+                } catch (SecurityException e) {
+                    log.debug("No user found: " + name );
+                }
                 frm.setError(LoginForm.FIELD_USERNAME, "");
                 frm.setError(LoginForm.FIELD_PW, "login.error.general");
             }
-        } else if (!frm.hasErrors()) {
+        } else if (!frm.hasErrors() || !authLoginFailuresActiv) {
             frm.setInitialUsername(messages.getString("login.form.username.initialValue"));
             frm.setInitialPassword(messages.getString("login.form.passwd.initialValue"));
             frm.init();
@@ -218,6 +245,9 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         context.put("actionForm", frm);
         context.put("loginConstants", new FieldMethodizer(new LoginConstants()));
         context.put("enableNewUser", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_ENABLE_NEW_USER, true ));
+        if(authLoginFailuresActiv) {
+            session.removeAttribute(SESSION_AUTH_FAILURES);
+        }
         super.doView(request, response);
     }
 
@@ -227,6 +257,12 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
      */
     @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
+
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()), request.getLocale());
+
+        int authLoginFailuresLimit = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_LOGIN_AUTH_FAILURES_LIMIT, 3);
+        int authLoginFailuresTime = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_LOGIN_AUTH_FAILURES_TIME, 5);
 
         LoginForm frm = (LoginForm) Utils.getActionForm(request, LoginForm.SESSION_KEY, LoginForm.class);
         frm.clearErrors();
@@ -239,6 +275,10 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                     .getRequest().getSession(true);
 
             frm.populate(request);
+            
+            String login = frm.getInput(LoginConstants.USERNAME);
+            String password = frm.getInput(LoginConstants.PASSWORD);
+            
             User user = null;
             try {
                 if (frm.getInput(LoginConstants.DESTINATION) != null)
@@ -246,20 +286,29 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 else
                     session.removeAttribute(LoginConstants.DESTINATION);
 
-                if (frm.getInput(LoginConstants.USERNAME) != null) {
-                    try {
-                        user = this.userManager.getUser(frm.getInput(LoginConstants.USERNAME));
-                    } catch (Exception e) {
-                        log.error("Error on login: ", e);
+                if (login != null) {
+                    if(!Utils.isInvalidInput(login)) {
+                        try {
+                            user = this.userManager.getUser(login);
+                        } catch (Exception e) {
+                            log.error("Error on login: ", e);
+                        }
+                        session.setAttribute(LoginConstants.USERNAME, login);
+                    } else {
+                        frm.setInput(LoginConstants.USERNAME, "");
                     }
-                    session.setAttribute(LoginConstants.USERNAME, frm.getInput(LoginConstants.USERNAME));
                 } else {
                     session.removeAttribute(LoginConstants.USERNAME);
                 }
-                if (frm.getInput(LoginConstants.PASSWORD) != null)
-                    session.setAttribute(LoginConstants.PASSWORD, frm.getInput(LoginConstants.PASSWORD));
-                else
+                if (password != null) {
+                    if(!Utils.isInvalidInput(password)) {
+                        session.setAttribute(LoginConstants.PASSWORD, password);
+                    } else {
+                        frm.setInput(LoginConstants.PASSWORD, "");
+                    }
+                } else {
                     session.removeAttribute(LoginConstants.PASSWORD);
+                }
 
                 if(user != null) {
                     PasswordCredential credential = userManager.getPasswordCredential(user);
@@ -274,6 +323,25 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                             + PARAM_USER_CHANGE_ID  + "=" + userChangeConfirmId + "&" 
                             + PARAM_USER_EMAIL + "=" + userEmail);
                         return;
+                    }
+                    if(credential.getAuthenticationFailures() >= authLoginFailuresLimit) {
+                        Date now = new Date();
+                        Timestamp modifiedDate = credential.getModifiedDate();
+                        if(modifiedDate != null) {
+                            long msModifiedDate = modifiedDate.getTime();
+                            long msNow = now.getTime();
+                            long diff = msNow - msModifiedDate;
+                            if(diff >= (authLoginFailuresTime * 60000)) {
+                                credential.setAuthenticationFailures(0);
+                                userManager.storePasswordCredential(credential);
+                                userManager.updateUser(user);
+                            } else {
+                                frm.setError(LoginForm.FIELD_USERNAME, "");
+                                frm.setError(LoginForm.FIELD_PW, String.format(messages.getString("login.error.auth.failures"), authLoginFailuresLimit, ((authLoginFailuresTime * 60000 - diff)/ 60000) + 1));
+                                session.setAttribute(SESSION_AUTH_FAILURES, true);
+                                return;
+                            }
+                        }
                     }
                 }
                 // signalize that the user is about to log in

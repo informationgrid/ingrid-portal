@@ -22,11 +22,14 @@
  */
 
 define([
+    "dijit/registry",
     "dojo/_base/declare",
     "dojo/dom-construct",
     "dojo/_base/array",
-    "ingrid/message"
-], function (declare, construct, array, message) {
+    "ingrid/message",
+    "ingrid/utils/Catalog",
+    "ingrid/utils/Syslist"
+], function (registry, declare, construct, array, message, UtilCatalog, UtilSyslist) {
     return declare(null, {
 
         run: function () {
@@ -90,7 +93,9 @@ define([
 
             if (authors.length > 0) {
                 var creators = this.create("creators", null, parent);
-                this.addAddressInfo("creator", authors[0], null, creators);
+                for (var i=0; i<authors.length; i++) {
+                    this.addAddressInfo("creator", authors[i], null, creators);
+                }
             } else {
                 throw new Error(message.get("doi.error.noAuthor"));
             }
@@ -100,9 +105,15 @@ define([
         getTitles: function (parent) {
 
             var titles = this.create("titles", null, parent);
-            titles.appendChild(this.create("title", {innerHTML: currentUdk.objectName}));
+            titles.appendChild(this.create("title", {
+                "xml:lang" : UtilCatalog.getCatalogLanguage(),
+                innerHTML: currentUdk.objectName
+            }));
             if (currentUdk.generalShortDescription) {
-                titles.appendChild(this.create("title", {innerHTML: currentUdk.generalShortDescription}));
+                titles.appendChild(this.create("title", {
+                    "xml:lang" : UtilCatalog.getCatalogLanguage(),
+                    innerHTML: currentUdk.generalShortDescription
+                }));
             }
 
         },
@@ -141,12 +152,23 @@ define([
 
             var addresses = array.filter(currentUdk.generalAddressTable, function (address) {
                 return address.typeOfRelation !== 10 && address.typeOfRelation !== 11
+                    && address.addressClass != 1; // Exclude the type "Einheit" for now. It gets exported as "null, null" TODO export organisation name of parent
             });
 
             if (addresses.length > 0) {
+                var uniqueAddresses = [];
+                array.forEach(addresses, function (addr) {
+                    var existing = array.some(uniqueAddresses, function (entry) {
+                        return (addr.addressClass === 0 && addr.organisation === entry.organisation)
+                            || (addr.addressClass === 2 && addr.name === entry.name && addr.givenName === entry.givenName);
+                    });
+
+                    if (!existing) uniqueAddresses.push(addr);
+                });
+
                 var contributors = this.create("contributors", null, parent);
-                for (var i = 0; i < addresses.length; i++) {
-                    this.addAddressInfo("contributor", addresses[i], "Other", contributors);
+                for (var i = 0; i < uniqueAddresses.length; i++) {
+                    this.addAddressInfo("contributor", uniqueAddresses[i], "Other", contributors);
                 }
                 return contributors;
             }
@@ -197,25 +219,61 @@ define([
 
         getAlternateIdentifiers: function (parent) {
 
-            this.create("alternateIdentifiers", null, parent)
-                .appendChild(
-                    this.create("alternateIdentifier", {
-                        alternateIdentifierType: "UUID",
-                        innerHTML: currentUdk.uuid
-                    }));
+            var identifier = currentUdk.ref1ObjectIdentifier;
+            if (!identifier) return ;
+
+            // Match the UUID
+            var match = identifier.match(/.*([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/i);
+            if (match && match[1]) {
+                this.create("alternateIdentifiers", null, parent)
+                    .appendChild(
+                        this.create("alternateIdentifier", {
+                            alternateIdentifierType: "UUID",
+                            innerHTML: match[1]
+                        }));
+            }
 
         },
 
         getRelatedIdentifiers: function (parent) {
 
+            var relatedIdentifiers;
             if (currentUdk.ref2PublishedISBN) {
-                this.create("relatedIdentifiers", null, parent)
-                    .appendChild(
+                relatedIdentifiers = this.create("relatedIdentifiers", null, parent);
+                relatedIdentifiers.appendChild(
+                    this.create("relatedIdentifier", {
+                        relatedIdentifierType: "ISBN",
+                        relationType: "IsSupplementTo",
+                        innerHTML: currentUdk.ref2PublishedISBN
+                    }));
+            }
+
+            var xrefTable = registry.byId('doiCrossReferenceTable');
+            if (xrefTable) {
+                var relatedDois = array.filter(xrefTable.data, function (row) {
+                    return row.doiCrossReferenceIdentifier
+                        && (row.doiCrossReferenceIdentifier.startsWith("http://doi.org/")
+                            || row.doiCrossReferenceIdentifier.startsWith("https://doi.org/"));
+                });
+
+                if (relatedDois.length > 0 && !relatedIdentifiers) {
+                    relatedIdentifiers = this.create("relatedIdentifiers", null, parent);
+                }
+
+                for(var i=0; i<relatedDois.length; i++) {
+                    var doi = relatedDois[i].doiCrossReferenceIdentifier;
+                    var searchElement = '://doi.org/';
+                    var idx = searchElement.length + doi.indexOf(searchElement);
+                    doi = doi.substring(idx);
+
+                    relatedIdentifiers.appendChild(
                         this.create("relatedIdentifier", {
-                            relatedIdentifierType: "ISBN",
-                            relationType: "Describes",
-                            innerHTML: currentUdk.ref2PublishedISBN
-                        }));
+                            relatedIdentifierType: "DOI",
+                            relationType: "Cites",
+                            innerHTML: doi
+                        })
+                    );
+                }
             }
 
         },
@@ -235,9 +293,19 @@ define([
             if (constraints.length > 0) {
                 var element = this.create("rightsList", null, parent);
                 for (var i = 0; i < constraints.length; i++) {
-                    this.create("rights", {
-                        innerHTML: constraints[i].title
-                    }, element);
+                    var licenceTitle = constraints[i].title;
+                    var spdxUrl = this._mapToSpdxLicenceUrl(licenceTitle);
+
+                    if (spdxUrl) {
+                        this.create("rights", {
+                            rightsURI: spdxUrl,
+                            innerHTML: constraints[i].title
+                        }, element);
+                    } else {
+                        this.create("rights", {
+                            innerHTML: constraints[i].title
+                        }, element);
+                    }
                 }
                 return element;
             }
@@ -250,6 +318,7 @@ define([
             var description = currentUdk.generalDescription;
             this.create("description", {
                 descriptionType: "Abstract",
+                "xml:lang" : UtilCatalog.getCatalogLanguage(),
                 innerHTML: description
             }, element);
 
@@ -392,6 +461,42 @@ define([
             }
 
             return formatted;
+        },
+
+        /**
+         * Maps the Licence URLs from the JSON data in codelist 6500 to the
+         * SPDX Licence List used by DataCite. See also:
+         * https://spdx.org/licenses/
+         *
+         * @param licenceTitle the "value" of the licence-entry in codelist 6500
+         * @returns mapped url from the SPDX List, if mapping was successful,
+         *          empty string otherwise.
+         * @private
+         */
+        _mapToSpdxLicenceUrl: function (licenceTitle) {
+            var listId = 6500;
+            var data = UtilSyslist.getSyslistEntryData(listId, licenceTitle);
+            if (!data) return "";
+
+            var entry = JSON.parse(data);
+            var id = entry.id;
+            if (id === "odby") {
+                return "https://opendatacommons.org/licenses/by/1.0/";
+            } else if (id === "cc-by-nd/3.0") {
+                return "https://creativecommons.org/licenses/by/3.0/legalcode";
+            } else if (id === "cc-by/4.0") {
+                return "https://creativecommons.org/licenses/by/4.0/legalcode";
+            } else if (id === "cc-by-nc/4.0") {
+                return "https://creativecommons.org/licenses/by-nc/4.0/legalcode";
+            } else if (id === "cc-by-nd/4.0") {
+                return "https://creativecommons.org/licenses/by-nd/4.0/legalcode";
+            } else if (id === "cc-by-sa/4.0") {
+                return "https://creativecommons.org/licenses/by-sa/4.0/legalcode";
+            } else if (id === "mozilla") {
+                return "https://opensource.org/licenses/MPL/2.0/";
+            } else {
+                return "";
+            }
         }
     })();
 });

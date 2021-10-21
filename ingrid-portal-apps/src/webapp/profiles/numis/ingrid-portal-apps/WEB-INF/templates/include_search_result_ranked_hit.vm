@@ -85,9 +85,7 @@
                             #else
                                 #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                             #end
-                            <div class="helper icon">
-                                #renderUDKAddressIcon($rs.udk_class $udkAdrClassName $udkAdrClassName)
-                            </div>
+                            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_addr.vm")
                             #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
                             #renderSearchTerm($searchTerm)
                             <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
@@ -100,9 +98,7 @@
                             #else
                                 #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                             #end
-                            <div class="helper icon">
-                                #renderUDKIcon($rs.udk_class $udkObjClassName $udkObjClassName)
-                            </div>
+                            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_obj.vm")
                             #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
                             #renderSearchTerm($searchTerm $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.has_access_constraint" ))
                             <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
@@ -134,12 +130,17 @@
                 ##if($tmp)
                     ##renderHitDate($UTIL_SEARCH.getDateFormatValue($tmp))
                 ##end
-                #renderTimeType($MESSAGES.getString('searchResult.hit.time.type') 
-                    $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.time_type" )
-                    $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t0" ))
-                    $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t1" ))
-                    $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t2" ))
-                )
+                #set($t0 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t0" ))
+                #set($t1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t1" ))
+                #set($t2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t2" ))
+                #if(!$t0.isEmpty() || !$t1.isEmpty() || !$t2.isEmpty())
+                    #renderTimeType($MESSAGES.getString('searchResult.hit.time.type') 
+                        $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.time_type" )
+                        $UTIL_SEARCH.getDateFormatValue($t0)
+                        $UTIL_SEARCH.getDateFormatValue($t1)
+                        $UTIL_SEARCH.getDateFormatValue($t2)
+                    )
+                #end
                 #if($!rs.abstract != "")
                 <p class="data-text">
                     #removeLocalisation($rs.abstract)

@@ -2,20 +2,20 @@
 
 <!--
 	Copyright 2004 The Apache Software Foundation
-	
+
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
 	You may obtain a copy of the License at
-	
+
 	http://www.apache.org/licenses/LICENSE-2.0
-	
+
 	Unless required by applicable law or agreed to in writing, software
 	distributed under the License is distributed on an "AS IS" BASIS,
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
 	limitations under the License.
 -->
-<beans default-init-method="init" default-destroy-method="destroy" 
+<beans default-init-method="init" default-destroy-method="destroy"
     xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
     xmlns:context="http://www.springframework.org/schema/context"
@@ -23,12 +23,12 @@
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
                 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
-    
+
     <!-- Import hibernate bean definitions -->
 	<import resource="core-services.xml"/>
 	<import resource="dwr-services.xml"/>
     <import resource="external-services.xml"/>
-    
+
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="configuration">
 		<property name="locations">
             <list>
@@ -51,7 +51,7 @@
             <ref bean="fullClassifyService" />
         </property>
     </bean>
-    
+
     <bean id="rdfService" class="de.ingrid.mdek.dwr.services.sns.RDFService">
         <property name="thesaurusService">
             <ref bean="thesaurusRDFService" />
@@ -63,7 +63,7 @@
             <ref bean="fullClassifyService" />
         </property>
     </bean>
-    
+
     <!-- Quartz Beans -->
 	<!-- Jobs -->
     <bean name="checkForExpiredDatasetsJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -132,6 +132,7 @@
                 <ref bean="simpleTrigger" />
                 <ref bean="simpleTriggerCodeLists"/>
                 <ref bean="simpleTriggerUploadCleanup" />
+                <ref bean="simpleTriggerExternalCoupledResources" />
             </list>
         </property>
         <property name="applicationContextSchedulerContextKey">
@@ -141,14 +142,14 @@
 
 	<!-- Mapper Factory -->
 
-	
+
 	<bean id="protocolFactory" class="de.ingrid.mdek.job.protocol.HashMapProtocolFactory"/>
-	
+
     <bean name="updateCodeListsJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
       <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UpdateCodeListsFromIGEJob" />
       <property name="durability" value="true" />
     </bean>
-    
+
     <bean id="simpleTriggerCodeLists" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
         <property name="jobDetail" ref="updateCodeListsJobDetail" />
         <property name="startDelay" value="120000" />
@@ -159,7 +160,25 @@
             </map>
         </property>
     </bean>
-    
+
+
+
+    <bean name="updateExternalCoupledResources" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UpdateExternalCoupledResources" />
+        <property name="durability" value="true" />
+    </bean>
+
+    <bean id="simpleTriggerExternalCoupledResources" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="updateExternalCoupledResources"/>
+        <property name="cronExpression" value="${update.coupled.resources.schedule}"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="connectionFacade"><ref bean="connectionFacade" /></entry>
+                <entry key="getCapabilitiesService"><ref bean="getCapabilitiesService" /></entry>
+            </map>
+        </property>
+    </bean>
+
     <context:component-scan base-package="de.ingrid">
         <context:exclude-filter type="regex" expression="de.ingrid.mdek.services.security.DefaultPermissionService*" />
         <context:exclude-filter type="regex" expression="de.ingrid.mdek.services.log.LogService" />

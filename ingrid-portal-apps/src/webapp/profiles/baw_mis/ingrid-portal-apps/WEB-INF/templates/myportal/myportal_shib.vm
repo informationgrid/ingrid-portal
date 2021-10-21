@@ -1,0 +1,12 @@
+#set ($action = $renderResponse.createActionURL())
+
+<form action="$action" method="post" id="frm_login">
+    <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
+    <input type="hidden" name="cmd" value="doCreateProfile" />
+    <div class="formbody formbody_border_style"></div>
+    <div class="formfooter formfooter_border_style">
+        <div class="bx-top-xs">
+            #renderInputButtonClass($MESSAGES.getString('login.form.button.createProfile') "" "" $MESSAGES.getString('login.form.newUser.tooltip') "float_right btn btn--primary btn--medium")
+        </div>
+    </div>
+</form>

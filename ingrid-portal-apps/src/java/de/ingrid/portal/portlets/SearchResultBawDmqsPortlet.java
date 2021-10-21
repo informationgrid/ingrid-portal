@@ -23,12 +23,20 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.velocity.context.Context;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,11 +112,85 @@ public class SearchResultBawDmqsPortlet extends SearchResultPortlet {
                 }
                 response.getWriter().write( "]" );
             }
+            if (resourceID.equals( "bwastr" )) {
+                String id = request.getParameter( "id" );
+                String von = request.getParameter( "von" );
+                String bis = request.getParameter( "bis" );
+                String epsg = PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_EPSG);
+                if((von == null || von.isEmpty()) && (bis == null || bis.isEmpty())) {
+                    URL url = new URL(PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_INFO) + id);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    InputStream in = con.getInputStream();
+                    String encoding = con.getContentEncoding();
+                    encoding = encoding == null ? "UTF-8" : encoding;
+
+                    String tmpJson = IOUtils.toString( in, encoding );
+                    JSONObject questJson = new JSONObject( tmpJson );
+                    if(questJson.has("result")) {
+                        JSONArray questJsonArray = questJson.getJSONArray( "result" );
+                        for (int j = 0; j < questJsonArray.length(); j++) {
+                            JSONObject questJsonEntry = questJsonArray.getJSONObject( j );
+                            if(questJsonEntry.has("km_von") && questJsonEntry.has("km_bis")) {
+                                von = questJsonEntry.getString( "km_von" );
+                                bis = questJsonEntry.getString( "km_bis" );
+                                break;
+                            }
+                        }
+                    }
+                    
+                }
+                String responseString = "{}";
+                if((von != null && !von.isEmpty()) && (bis != null && !bis.isEmpty())) {
+                    URL url = new URL(PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_GEOK));
+                    String content = "{" +
+                        "\"limit\":200," +
+                        "\"queries\":[" +
+                        "{" +
+                        "\"qid\":1," +
+                        "\"bwastrid\":\"" + id + "\"," +
+                        "\"stationierung\":{" + 
+                        "\"km_von\":" + von +
+                        "," +
+                        "\"km_bis\":" + bis +
+                        "}," +
+                        "\"spatialReference\":{" +
+                        "\"wkid\": " + epsg +
+                        "}" +
+                        "}" +
+                        "]" +
+                    "}";
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");
+                    con.setDoInput(true);
+                    con.setDoOutput(true);
+                    con.setRequestProperty("Content-Type", "application/json");
+                    con.setRequestProperty("Content-Length", String.valueOf(content.length()));
+                    
+                    OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
+                    writer.write(content);
+                    writer.flush();
+                    
+                    InputStream in = con.getInputStream();
+                    String encoding = con.getContentEncoding();
+                    encoding = encoding == null ? "UTF-8" : encoding;
+                    
+                    String json = IOUtils.toString(in, encoding);
+                    JSONObject jsonObj = new JSONObject(json);
+                    if(jsonObj.has("result")) {
+                        JSONArray questJsonArray = jsonObj.getJSONArray( "result" );
+                        if(questJsonArray != null && questJsonArray.length() > 0) {
+                            responseString = questJsonArray.get(0).toString();
+                        }
+                    }
+                }
+                response.setContentType( "application/json" );
+                response.getWriter().write( responseString );
+            }
 
         } catch (Exception e) {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
-
+        super.serveResource(request, response);
     }
     
     @Override
@@ -120,7 +202,12 @@ public class SearchResultBawDmqsPortlet extends SearchResultPortlet {
         request.setAttribute( "restUrlMarker", restUrl.toString() );
         restUrl.setResourceID( "bbox" );
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
-        
+        restUrl.setResourceID( "bwastr" );
+        request.setAttribute( "restUrlBWaStr", restUrl.toString() );
+
+        Context context = getContext(request);
+        context.put("bwastrLocatorGetDataLowers", PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_GET_DATA_LOWER)); 
+
         super.doView(request, response);
     }
 

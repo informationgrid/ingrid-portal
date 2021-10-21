@@ -1,0 +1,5 @@
+<div class="button-up">
+    <button type="button" class="button round social js-top" title="$MESSAGES.getString("ingrid.page.top")">
+        <span class="ic-ic-angle-up"></span>
+    </button>
+</div>

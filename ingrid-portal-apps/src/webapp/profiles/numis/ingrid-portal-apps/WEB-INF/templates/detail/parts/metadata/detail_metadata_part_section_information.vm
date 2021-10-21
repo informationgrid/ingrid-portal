@@ -1,0 +1,12 @@
+#if($hasDetail5)
+<div class="section">
+    <a class="anchor" id="${hashDetail5}"></a>
+    #renderSectionTitle($MESSAGES.getString("subject_reference_tab"))
+    <div class="row columns">
+        ## Informationen zum Datensatz
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type.vm")
+        ## Zusatzinformationen
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional.vm")
+    </div>
+</div>
+#end

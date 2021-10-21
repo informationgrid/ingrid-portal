@@ -24,15 +24,23 @@ package de.ingrid.portal.portlets.searchcatalog;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
 import org.apache.velocity.context.Context;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
 
+import de.ingrid.codelists.CodeListService;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IPlugHelper;
@@ -56,9 +64,39 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
     // VIEW TEMPLATES
     private static final String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm";
+    
+    private static final String UPDATE_LEAF = "updateLeaf";
+    
     //scroll top value
     private String scrollTop = "0";
+
+    @Override
+    public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
+        String resourceID = request.getResourceID();
+        if(resourceID.equals(UPDATE_LEAF)) {
+            String nodeId = request.getParameter("id");
+            if(nodeId != null) {
+                if(nodeId.indexOf('-') > -1) {
+                    String[] nodeIdSplit = nodeId.split("-");
+                    nodeId = nodeIdSplit[nodeIdSplit.length-1];
+                } 
+                PortletSession session = request.getPortletSession();
+                PageState ps = (PageState) session.getAttribute("portlet_state");
+                DisplayTreeNode root = (DisplayTreeNode) ps.get("plugsRoot");
+                if (root != null) {
+                    IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                        request.getLocale()), request.getLocale());
     
+                    String value = openNodeString(root, nodeId, request.getLocale().getLanguage(), messages, CodeListServiceFactory.instance());
+                    if(value != null) {
+                        response.setContentType( "application/json" );
+                        response.getWriter().write(value);
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
@@ -93,9 +131,15 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         }
         context.put("ps", ps);
 
+        // define an REST URL to get the map data dynamically
+        ResourceURL restUrl = response.createResourceURL();
+        restUrl.setResourceID( UPDATE_LEAF );
+        request.setAttribute( UPDATE_LEAF, restUrl.toString() );
+
         // ----------------------------------
         // check for passed RENDER PARAMETERS and react
         // ----------------------------------
+        String paramOpenNodes = request.getParameter("openNodes");
         if (ps.get("plugsRoot") == null) {
 
             // set up ECS plug list for view
@@ -124,11 +168,35 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             plugs = IPlugHelper.sortPlugs(plugs, new IPlugHelperDscEcs.PlugComparatorECS());
 
             DisplayTreeNode plugsRoot = DisplayTreeFactory.getTreeFromECSIPlugs(plugs);
+
             int openNodesInitial = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL, 3);
             if (openNodesInitial > 0) {
-                openNodesUntilHierarchyLevel(plugsRoot, plugsRoot);
+                ArrayList<String> paramDefaultOpenNodes = new ArrayList<>();
+                openNodesUntilHierarchyLevel(plugsRoot, plugsRoot, paramDefaultOpenNodes);
+                if(paramOpenNodes == null) {
+                    if(!paramDefaultOpenNodes.isEmpty()) {
+                        context.put("openNodes", paramDefaultOpenNodes.toString());
+                    }
+                } else {
+                    ArrayList<String> tmpOpenNodes = new ArrayList<String>(Arrays.asList(paramOpenNodes.split(",")));
+                    plugsRoot = openNodesByParameter(plugsRoot, tmpOpenNodes);
+                }
             }
             ps.put("plugsRoot", plugsRoot);
+        } else {
+            if (paramOpenNodes != null) {
+                ArrayList<String> tmpOpenNodes = new ArrayList<String>(Arrays.asList(paramOpenNodes.split(",")));
+                DisplayTreeNode plugsRoot = (DisplayTreeNode) ps.get("plugsRoot");
+                plugsRoot = openNodesByParameter(plugsRoot, tmpOpenNodes);
+                ps.put("plugsRoot", plugsRoot);
+            } else {
+                ArrayList<String> paramDefaultOpenNodes = new ArrayList<>();
+                DisplayTreeNode plugsRoot = (DisplayTreeNode) ps.get("plugsRoot");
+                getOpenNodes(plugsRoot, paramDefaultOpenNodes);
+                if(!paramDefaultOpenNodes.isEmpty()) {
+                    context.put("openNodes", paramDefaultOpenNodes.toString());
+                }
+            }
         }
         response.setTitle(messages.getString("searchCatHierarchy.portlet.title"));
         
@@ -201,6 +269,37 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         }
     }
 
+    private String openNodeString(DisplayTreeNode rootNode, String nodeId, String lang, IngridResourceBundle messages, CodeListService codeListService) {
+        String value = "[]";
+        DisplayTreeNode node = rootNode.getChild(nodeId);
+        if (node != null) {
+            node.setOpen(true);
+
+            // only load if not loaded yet !
+            if (!node.isLoading() && node.getChildren().isEmpty()) {
+                node.setLoading(true);
+
+                // handles all stuff
+                value = DisplayTreeFactory.openECSNodeString(rootNode, node, lang, messages, codeListService);
+
+                node.setLoading(false);
+            } else {
+                JSONArray values = new JSONArray();
+                Iterator it = node.getChildren().iterator();
+                while (it.hasNext()) {
+                    DisplayTreeNode childNode = (DisplayTreeNode) it.next();
+                    childNode.remove("parent");
+                    childNode.remove("children");
+                    values.put(new JSONObject(childNode));
+                }
+                return values.toString();
+            }
+            
+        } else {
+            openNode(rootNode, nodeId);
+        }
+        return value;
+    }
     /**
      * Open nodes if restrict partner and restrict partner level is set.
      * 
@@ -208,8 +307,9 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
      *            to check for sub nodes
      * @param rootNode
      *            need for open sub nodes by node ID (must always be root node)
+     * @param paramDefaultOpenNodes 
      */
-    private void openNodesUntilHierarchyLevel(DisplayTreeNode node, DisplayTreeNode rootNode) {
+    private void openNodesUntilHierarchyLevel(DisplayTreeNode node, DisplayTreeNode rootNode, ArrayList<String> paramDefaultOpenNodes) {
         ArrayList list = (ArrayList) node.getChildren();
         String rootNodeLevel = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL);
 
@@ -224,9 +324,48 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                     String plugType = (String) subNode.get("plugType");
                     if(plugType == null || !(closeAddress && plugType != null && plugType.equals( "dsc_ecs_address" ))){
                         openNode(rootNode, subNode.getId());
-                        openNodesUntilHierarchyLevel(subNode, rootNode);
+                        paramDefaultOpenNodes.add("'" + subNode.get("level") + "-" + subNode.getId() + "'");
+                        openNodesUntilHierarchyLevel(subNode, rootNode, paramDefaultOpenNodes);
                     }
                 }
             }
+    }
+    
+    private DisplayTreeNode openNodesByParameter(DisplayTreeNode node, ArrayList<String> openNodes) {
+        ArrayList list = (ArrayList) node.getChildren();
+        for (int i = 0; i < list.size(); i++) {
+            DisplayTreeNode subNode = (DisplayTreeNode) list.get(i);
+            if(subNode.getChildren().size() > 0) {
+                boolean isOpen = false;
+                for (String openNode : openNodes) {
+                    String[] nodeIdSplit = openNode.split("-");
+                    if(subNode.getId().equals(nodeIdSplit[nodeIdSplit.length-1])) {
+                        isOpen = true;
+                        openNodes.remove(openNode);
+                        break;
+                    }
+                }
+                subNode.setOpen(isOpen);
+                subNode = openNodesByParameter(subNode, openNodes);
+            }
+        }
+        if(!openNodes.isEmpty()) {
+            for (String openNode : openNodes) {
+                String[] nodeIdSplit = openNode.split("-");
+                openNode(node, nodeIdSplit[nodeIdSplit.length-1]);
+            }
+        }
+        return node;
+    }
+
+    private void getOpenNodes(DisplayTreeNode node, ArrayList<String> openNodes) {
+        ArrayList list = (ArrayList) node.getChildren();
+        for (int i = 0; i < list.size(); i++) {
+            DisplayTreeNode subNode = (DisplayTreeNode) list.get(i);
+            if(subNode.isOpen()) {
+                openNodes.add("'" + subNode.get("level") + "-" + subNode.getId() + "'");
+                getOpenNodes(subNode, openNodes);
+            }
+        }
     }
 }

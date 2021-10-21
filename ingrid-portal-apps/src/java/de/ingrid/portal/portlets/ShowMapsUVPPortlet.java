@@ -61,9 +61,12 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
     private static final Logger log = LoggerFactory.getLogger(ShowMapsUVPPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_MARKER       = new String[] { "title", "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class", "uvp_steps" };
-    private static final String[] REQUESTED_FIELDS_BBOX         = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
-    private static final String[] REQUESTED_FIELDS_BLP_MARKER   = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress", "fnp_url_finished", "fnp_url_in_progress", "bp_url_finished", "bp_url_in_progress" };
+    private static final String[] REQUESTED_FIELDS_MARKER               = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_UVP_MAP_REQUESTED_FIELDS_MARKER);
+    private static final String[] REQUESTED_FIELDS_MARKER_DETAIL        = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_UVP_MAP_REQUESTED_FIELDS_MARKER_DETAIL);
+    private static final String[] REQUESTED_FIELDS_BBOX                 = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_UVP_MAP_REQUESTED_FIELDS_MARKER_BBOX);
+    private static final String[] REQUESTED_FIELDS_BLP_MARKER           = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_UVP_MAP_REQUESTED_FIELDS_BLP_MARKER);
+    private static final String[] REQUESTED_FIELDS_BLP_MARKER_DETAIL    = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_UVP_MAP_REQUESTED_FIELDS_BLP_MARKER_DETAIL);
+    private static final int REQUESTED_FIELDS_MARKER_NUM            = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_UVP_MAP_REQUESTED_FIELDS_MARKER_NUM);
 
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
@@ -78,31 +81,38 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if (resourceID.equals( "marker" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
                 if(!query.isEmpty()) {
-                    response.getWriter().write(writeResponse(query, messages, sysCodeList));
+                    response.getWriter().write(writeResponse(query, messages, sysCodeList, REQUESTED_FIELDS_MARKER, REQUESTED_FIELDS_MARKER_NUM));
                 }
             }
             if (resourceID.equals( "marker2" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
                 if(!query.isEmpty()) {
-                    response.getWriter().write(writeResponse(query, messages, sysCodeList));
+                    response.getWriter().write(writeResponse(query, messages, sysCodeList, REQUESTED_FIELDS_MARKER, REQUESTED_FIELDS_MARKER_NUM));
                 }
             }
             if (resourceID.equals( "marker3" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
                 if(!query.isEmpty()) {
-                    response.getWriter().write(writeResponse(query, messages, sysCodeList));
+                    response.getWriter().write(writeResponse(query, messages, sysCodeList, REQUESTED_FIELDS_MARKER, REQUESTED_FIELDS_MARKER_NUM));
                 }
             }
             if (resourceID.equals( "marker4" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
                 if(!query.isEmpty()) {
-                    response.getWriter().write(writeResponse(query, messages, sysCodeList));
+                    response.getWriter().write(writeResponse(query, messages, sysCodeList, REQUESTED_FIELDS_MARKER, REQUESTED_FIELDS_MARKER_NUM));
                 }
+            }
+            if (resourceID.equals( "markerDetail" )) {
+                response.setContentType( "application/json" );
+                String uuid = request.getParameter( "uuid" );
+                String query = "t01_object.obj_id:" + uuid + " ranking:score";
+                response.getWriter().write(writeResponse(query, messages, sysCodeList, REQUESTED_FIELDS_MARKER_DETAIL));
             }
             if (resourceID.equals( "bbox" )) {
                 String uuid = request.getParameter( "uuid" );
+                IngridQuery queryString = QueryStringParser.parse("t01_object.obj_id:" + uuid + " ranking:score");
                 JSONArray bbox = new JSONArray();
-                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( "t01_object.obj_id:" + uuid + " ranking:score" ), REQUESTED_FIELDS_BBOX,
+                IBusQueryResultIterator it = new IBusQueryResultIterator( queryString, REQUESTED_FIELDS_BBOX,
                         IBUSInterfaceImpl.getInstance().getIBus() );
                 if(it.hasNext()){
                     IngridHit hit = it.next();
@@ -122,7 +132,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
 
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , REQUESTED_FIELDS_BLP_MARKER, IBUSInterfaceImpl.getInstance()
-                        .getIBus() );
+                        .getIBus(), REQUESTED_FIELDS_MARKER_NUM );
                 int cnt = 1;
                 JSONArray jsonData = new JSONArray();
                 while (it.hasNext()) {
@@ -135,6 +145,44 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                         String latCenter = UtilsSearch.getDetailValue( detail, "y1", 1);
                         String lonCenter = UtilsSearch.getDetailValue( detail, "x1", 1);
                         String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
+                        if(!latCenter.isEmpty() && !lonCenter.isEmpty()) {
+                            JSONObject jsonDataEntry = new JSONObject();
+                            jsonDataEntry.put("id", cnt);
+                            jsonDataEntry.put("name", blpName);
+                            jsonDataEntry.put("lat", Double.parseDouble( latCenter.trim() ));
+                            jsonDataEntry.put("lon", Double.parseDouble( lonCenter.trim() ));
+                            jsonData.put( jsonDataEntry );
+                            cnt++;
+                        } else {
+                            log.error("Metadata '" + blpName + "' has no location!");
+                        }
+                    } catch (Exception e) {
+                        log.error("Error get json object.", e);
+                    }
+                }
+
+                response.setContentType( "application/javascript" );
+                response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
+            }
+
+            if(resourceID.equals( "devPlanMarkerDetail" )){
+                response.setContentType( "application/json" );
+                String title = request.getParameter( "title" );
+                String x1 = request.getParameter( "x1" );
+                String y1 = request.getParameter( "y1" );
+                IngridQuery queryString = QueryStringParser.parse("title:\""+ title + "\" procedure:dev_plan y1:" + y1 + " x1:" + x1);
+                
+                IBusQueryResultIterator it = new IBusQueryResultIterator( queryString , REQUESTED_FIELDS_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
+                        .getIBus() );
+                int cnt = 1;
+                JSONObject jsonData = new JSONObject();
+                while (it.hasNext()) {
+                    try {
+                        IngridHit hit = it.next();
+                        IngridHitDetail detail = hit.getHitDetail();
+                        if (log.isDebugEnabled()) {
+                            log.debug("Got BLP result: " + detail.toString());
+                        }
                         String blpDescription = UtilsSearch.getDetailValue( detail, "blp_description" );
                         // General "Bauleitplanung"
                         String urlFinished = UtilsSearch.getDetailValue( detail, "blp_url_finished" );
@@ -145,10 +193,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                         // Bebauungsplan
                         String urlBpFinished = UtilsSearch.getDetailValue( detail, "bp_url_finished" );
                         String urlBpInProgress = UtilsSearch.getDetailValue( detail, "bp_url_in_progress" );
-                        JSONObject jsonDataEntry = new JSONObject();
-                        jsonDataEntry.put("id", cnt);
-                        jsonDataEntry.put("name", blpName);
-                        jsonDataEntry.put("latlon", new JSONArray().put( Double.parseDouble( latCenter.trim()) ).put(Double.parseDouble(lonCenter.trim())));
+                        jsonData.put("id", cnt);
                         JSONArray bpInfos = new JSONArray();
                         // Bauleitplaung
                         if (urlInProgress != null && !urlInProgress.isEmpty()) {
@@ -171,20 +216,19 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                         if (urlBpFinished != null && !urlBpFinished.isEmpty()) {
                             bpInfos.put( new JSONObject().put( "url", urlBpFinished ).put( "tags", "v_bp" ) );
                         }
-                        jsonDataEntry.put("bpinfos", bpInfos);
+                        jsonData.put("bpinfos", bpInfos);
                         if (blpDescription != null && !blpDescription.isEmpty()) {
-                            jsonDataEntry.put( "descr", blpDescription);
+                            jsonData.put( "descr", blpDescription);
                         }
-                        jsonData.put( jsonDataEntry );
                         cnt++;
                     } catch (Exception e) {
                         log.error("Error get json object.", e);
                     }
                 }
 
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
+                response.getWriter().write( jsonData.toString());
             }
+
             if(resourceID.equals( "legendCounter" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_QUERY_LEGEND, "datatype:www OR datatype:metadata");
                 IngridQuery query = QueryStringParser.parse( queryString );
@@ -273,48 +317,68 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         }
     }
 
-    private String writeResponse(String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException {
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
-                .getIBus() );
+    private String writeResponse(String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, String[] requestedField) throws ParseException {
+        return writeResponse(queryString, messages, sysCodeList, requestedField, 10);
+    }
+
+    private String writeResponse(String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, String[] requestedField, int pageSize) throws ParseException {
+        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedField, IBUSInterfaceImpl.getInstance()
+                .getIBus(), pageSize);
         JSONArray jsonData = new JSONArray();
         if(it != null){
             while (it.hasNext()) {
+                IngridHit hit = it.next();
+                IngridHitDetail detail = hit.getHitDetail();
                 try {
-                    IngridHit hit = it.next();
-                    IngridHitDetail detail = hit.getHitDetail();
-                    JSONArray jsonDataEntry = new JSONArray();
-                    jsonDataEntry.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "lat_center", 1)));
-                    jsonDataEntry.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "lon_center", 1)));
-                    jsonDataEntry.put(UtilsSearch.getDetailValue( detail, "title" ));
-                    jsonDataEntry.put(UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ));
-                    jsonDataEntry.put(UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ));
-                    jsonDataEntry.put(sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )));
-                    ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
-                    JSONArray jsonCategories = new JSONArray();
-                    if(categories != null && !categories.isEmpty()){
-                        for (String category : categories) {
-                            JSONObject obj = new JSONObject();
-                            obj.put( "id", category.trim());
-                            obj.put( "name", messages.getString("searchResult.categories.uvp." + category.trim()));
-                           jsonCategories.put(obj);
+                   if(requestedField == REQUESTED_FIELDS_MARKER) {
+                        JSONArray jsonDataEntry = new JSONArray();
+                        String lat = UtilsSearch.getDetailValue( detail, "lat_center", 1);
+                        String lng = UtilsSearch.getDetailValue( detail, "lon_center", 1);
+                        String title = UtilsSearch.getDetailValue( detail, "title" );
+                        String uuid = UtilsSearch.getDetailValue( detail, "t01_object.obj_id" );
+                        if(!lat.isEmpty() && !lng.isEmpty()) {
+                            jsonDataEntry.put(Double.parseDouble(lat));
+                            jsonDataEntry.put(Double.parseDouble(lng));
+                            jsonDataEntry.put(title);
+                            jsonDataEntry.put(uuid);
+                            jsonData.put(jsonDataEntry);
+                        } else {
+                            log.error("Metadata '" + title + "' with UUID '" + uuid + "' has no location!");
                         }
-                    }
-                    jsonDataEntry.put(jsonCategories);
-                    ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
-                    JSONArray jsonSteps = new JSONArray();
-                    if(steps != null && !steps.isEmpty()){
-                        for (String step : steps) {
-                            jsonSteps.put( messages.getString( "common.steps.uvp." + step.trim()));
+                    } else if (requestedField == REQUESTED_FIELDS_MARKER_DETAIL) {
+                        jsonData.put(sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )));
+                        ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
+                        JSONArray jsonCategories = new JSONArray();
+                        if(categories != null && !categories.isEmpty()){
+                            for (String category : categories) {
+                                JSONObject obj = new JSONObject();
+                                obj.put( "id", category.trim());
+                                obj.put( "name", messages.getString("searchResult.categories.uvp." + category.trim()));
+                               jsonCategories.put(obj);
+                            }
                         }
+                        jsonData.put(jsonCategories);
+                        ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
+                        JSONArray jsonSteps = new JSONArray();
+                        if(steps != null && !steps.isEmpty()){
+                            for (String step : steps) {
+                                jsonSteps.put( messages.getString( "common.steps.uvp." + step.trim()));
+                            }
+                        }
+                        jsonData.put(jsonSteps);
                     }
-                    jsonDataEntry.put(jsonSteps);
-                    jsonData.put(jsonDataEntry);
+                    
                 } catch (Exception e) {
                     log.error("Error write response.", e);
                 }
             }
         }
-        return "var markers = " + jsonData.toString() + ";";
+        if(requestedField == REQUESTED_FIELDS_MARKER) {
+            return "var markers = " + jsonData.toString() + ";";
+        } else {
+            return jsonData.toString();
+        }
+        
     }
 
     @Override
@@ -342,6 +406,10 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             restUrl.setResourceID( "marker4" );
             request.setAttribute( "restUrlMarker4", restUrl.toString() );
         }
+
+        restUrl.setResourceID( "markerDetail" );
+        request.setAttribute( "restUrlMarkerDetail", restUrl.toString() );
+
         restUrl.setResourceID( "bbox" );
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
 
@@ -349,6 +417,9 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         if(!mapclientUVPDevPlanURL.isEmpty()){
             restUrl.setResourceID( "devPlanMarker" );
             request.setAttribute( "restUrlUVPDevPlan", restUrl.toString() );
+
+            restUrl.setResourceID( "devPlanMarkerDetail" );
+            request.setAttribute( "restUrlUVPDevPlanDetail", restUrl.toString() );
         }
 
         if(!mapclientQuery.isEmpty() || !mapclientQuery2.isEmpty() || !mapclientQuery3.isEmpty() || !mapclientQuery4.isEmpty() || !mapclientUVPDevPlanURL.isEmpty()){

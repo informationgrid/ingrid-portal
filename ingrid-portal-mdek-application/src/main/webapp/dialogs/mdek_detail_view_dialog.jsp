@@ -738,11 +738,20 @@ require([
                 // temporal reference
                 renderSectionTitel("<fmt:message key='ui.obj.time.title' />");
                 var timeRefTxt;
-                if (nodeData.timeRefDate1) {
-                    if (nodeData.timeRefType && nodeData.timeRefType == "von") {
+                if (nodeData.timeRefType && (nodeData.timeRefDate1 || nodeData.timeRefDate2)) {
+                    if (nodeData.timeRefType === "von") {
                         timeRefTxt = "von " + formatDate(nodeData.timeRefDate1) + " bis " + formatDate(nodeData.timeRefDate2);
-                    } else if (nodeData.timeRefType) {
-                        timeRefTxt = nodeData.timeRefType + " " + formatDate(nodeData.timeRefDate1);
+                    } else {
+                        switch (nodeData.timeRefType){
+                            case "am": timeRefTxt = "am";break;
+                            case "seit": timeRefTxt = "seit";break;
+                            case "seitX": timeRefTxt = "seit";break;
+                            case "bis": timeRefTxt = "bis";break;
+                            case "von": timeRefTxt = "von";break;
+                        }
+
+                        timeRefTxt += " " + formatDate(nodeData.timeRefDate1 ? nodeData.timeRefDate1 : nodeData.timeRefDate2);
+                        if (nodeData.timeRefType === "seitX") timeRefTxt += " bis jetzt"
                     }
                 }
 

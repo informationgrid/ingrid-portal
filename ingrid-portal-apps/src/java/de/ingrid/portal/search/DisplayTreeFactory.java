@@ -32,10 +32,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
+
+import de.ingrid.codelists.CodeListService;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -66,6 +72,7 @@ public class DisplayTreeFactory {
     private static final String NODE_ORIG_DOC_ID = "origDocId";
     private static final String NODE_UDK_DOC_ID = "udk_docId";
     private static final String NODE_UDK_CLASS = "udk_class"; 
+    private static final String NODE_UDK_CLASS_VALUE = "udk_class_value"; 
     private static final String NODE_EXPANDABLE = "expandable"; 
 
     public static DisplayTreeNode getTreeFromQueryTerms(IngridQuery query) {
@@ -256,7 +263,7 @@ public class DisplayTreeFactory {
                     String partnerName = partnerNameBuffer.toString();
                     if (partnerNode == null || 
                             !partnerNode.getName().equals(partnerName)) {
-                        partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);
+                        partnerNode = new DisplayTreeNode(Utils.getMD5Hash(partnerName), partnerName, false);
                         partnerNode.setType(DisplayTreeNode.GENERIC);
                         partnerNode.put(NODE_LEVEL, 1);
                         partnerNode.put(NODE_EXPANDABLE, true);
@@ -272,7 +279,7 @@ public class DisplayTreeFactory {
                     String catalogName = plug.getDataSourceName();
                     if (catalogNode == null || 
                             !catalogNode.getName().equals(catalogName)) {
-                        catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);
+                        catalogNode = new DisplayTreeNode(Utils.getMD5Hash(catalogName + plug.getPlugId()), catalogName, false);
                         catalogNode.setType(DisplayTreeNode.GENERIC);
                         catalogNode.put(NODE_LEVEL, 2);
                         catalogNode.put(NODE_EXPANDABLE, true);
@@ -344,7 +351,7 @@ public class DisplayTreeFactory {
     }
 
     private static void addTreeNode(DisplayTreeNode root, String name, Object type, String plugId, DisplayTreeNode catalogNode) {
-        DisplayTreeNode node = new DisplayTreeNode("" + root.getNextId(), name, false);
+        DisplayTreeNode node = new DisplayTreeNode(Utils.getMD5Hash(name + plugId), name, false);
         node.setType(DisplayTreeNode.GENERIC);
         node.put(NODE_LEVEL, 3);
         // only "plugid", no "docid" !
@@ -422,7 +429,7 @@ public class DisplayTreeFactory {
             // check whether child node has children as well -> request only 1 child !
             boolean hasChildren = ctdp.hasChildren(udkDocId, plugId, plugType);
             
-            DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), nodeName, false);
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + udkDocId), nodeName, false);
             childNode.setType(DisplayTreeNode.GENERIC);
             childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);
@@ -440,7 +447,7 @@ public class DisplayTreeFactory {
             }
         }
         if (!freeAddresses.isEmpty()) {
-            DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), "searchCatHierarchy.tree.addresses.free", false);
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), "searchCatHierarchy.tree.addresses.free", false);
             childNode.setType(DisplayTreeNode.GENERIC);
             childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);
@@ -462,6 +469,120 @@ public class DisplayTreeFactory {
             childNode.setParent(nodeToOpen);
             nodeToOpen.addChild(childNode);
         }
+    }
+
+    public static String openECSNodeString(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen, String lang, IngridResourceBundle messages, CodeListService codeListService) {
+
+        JSONArray values = new JSONArray();
+        String plugType = (String) nodeToOpen.get(NODE_PLUG_TYPE);
+        String plugId = (String) nodeToOpen.get(NODE_PLUG_ID);
+
+        if (plugType == null || plugId == null) {
+            // no iplug node, is parent folder
+            return values.toString();
+        }
+
+        // get ALL children (IngridHits)
+        String udkDocId = (String) nodeToOpen.get(NODE_UDK_DOC_ID);
+        String keyUdkDocId = "";
+        String keyUdkClass = "";
+        List hits;
+        
+        PlugDescription pd = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
+        CatalogTreeDataProvider ctdp = CatalogTreeDataProviderFactory.getDetailDataPreparer(IPlugVersionInspector.getIPlugVersion(pd));
+        
+        if (udkDocId == null) {
+            hits = ctdp.getTopEntities(plugId, plugType);
+        } else {
+            hits = ctdp.getSubEntities(udkDocId, plugId, plugType, null);
+        }
+
+        // keys for extracting data
+        if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+            keyUdkDocId = Settings.HIT_KEY_OBJ_ID;
+            keyUdkClass = Settings.HIT_KEY_UDK_CLASS;
+
+        } else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+            keyUdkDocId = Settings.HIT_KEY_ADDRESS_ADDRID;
+            keyUdkClass = Settings.HIT_KEY_ADDRESS_CLASS;
+        }
+
+        // set up according children nodes in tree
+        int parentLevel = ((Integer) nodeToOpen.get(NODE_LEVEL)).intValue();
+        int childrenLevel = parentLevel + 1;
+        ArrayList<DisplayTreeNode> childNodes = new ArrayList(hits.size());
+        ArrayList<DisplayTreeNode> freeAddresses = new ArrayList();
+        Iterator it = hits.iterator();
+        while (it.hasNext()) {
+            IngridHit hit = (IngridHit) it.next();
+            IngridHitDetail detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
+            udkDocId = UtilsSearch.getDetailValue(detail, keyUdkDocId);
+            String udkClass = UtilsSearch.getDetailValue(detail, keyUdkClass);
+            String origDocId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ORG_OBJ_ID);
+
+            String nodeName = detail.getTitle();
+            // different node text, when person
+            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS) && (udkClass.equals("2") || udkClass.equals("3"))) {
+                String[] titleElements = new String[] {
+                    UtilsSearch.getDetailValue(detail, "T02_address.address_value"),
+                    UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS),
+                    UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE),
+                    UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_FIRSTNAME),
+                    UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME)
+                };
+                String personStr =  UtilsString.concatStringsIfNotNull(titleElements, " ");
+                if (personStr != null && personStr.length() > 0) {
+                    nodeName = personStr;
+                }
+            }
+
+            // check whether child node has children as well -> request only 1 child !
+            boolean hasChildren = ctdp.hasChildren(udkDocId, plugId, plugType);
+            
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + udkDocId), nodeName, false);
+            childNode.setType(DisplayTreeNode.GENERIC);
+            childNode.put(NODE_LEVEL, childrenLevel);
+            childNode.put(NODE_PLUG_TYPE, plugType);
+            childNode.put(NODE_PLUG_ID, plugId);
+            childNode.put(NODE_DOC_ID, hit.getId());
+            childNode.put(NODE_UDK_DOC_ID, udkDocId);
+            childNode.put(NODE_ORIG_DOC_ID, origDocId);
+            childNode.put(NODE_UDK_CLASS, udkClass);
+            childNode.put(NODE_EXPANDABLE, hasChildren);
+
+            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS) && udkClass.equals("3")) {
+                childNode.put(NODE_UDK_CLASS_VALUE, messages.getString("udk_adr_class_name_" + udkClass + ""));
+                freeAddresses.add(childNode);
+            } else {
+                childNode.put(NODE_UDK_CLASS_VALUE, codeListService.getCodeListValue("8000", udkClass, lang));
+                childNodes.add(childNode);
+            }
+        }
+        if (!freeAddresses.isEmpty()) {
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), "searchCatHierarchy.tree.addresses.free", false);
+            childNode.setType(DisplayTreeNode.GENERIC);
+            childNode.put(NODE_LEVEL, childrenLevel);
+            childNode.put(NODE_PLUG_TYPE, plugType);
+            childNode.put(NODE_PLUG_ID, plugId);
+            childNode.put(NODE_EXPANDABLE, true);
+            for (DisplayTreeNode freeAddress : freeAddresses) {
+                childNode.addChild(freeAddress);
+            }
+            childNodes.add(childNode);
+        }
+
+        // sort children nodes
+        Collections.sort(childNodes, new DisplayTreeFactory.ECSDocumentNodeComparator());
+
+        // and add them to the parent
+        it = childNodes.iterator();
+        while (it.hasNext()) {
+            DisplayTreeNode childNode = (DisplayTreeNode) it.next();
+            values.put(new JSONObject(childNode));
+            childNode.setParent(nodeToOpen);
+            nodeToOpen.addChild(childNode);
+        }
+        return values.toString();
     }
 
     /**

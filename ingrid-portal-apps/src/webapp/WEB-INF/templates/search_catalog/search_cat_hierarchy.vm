@@ -7,110 +7,298 @@
     #if($tool.hasContent(${node.udk_class}))
         #if ($node.plugType == 'dsc_ecs')
             ## objects
-            #set($nodeIcon = "icn_udk_obj_${node.udk_class}.gif")
             #set($nodeAlt = $Codelists.getCodeListValue('8000', $node.udk_class, $languageCode))
         #else
             ## addresses
-            #set($nodeIcon = "icn_udk_adr_${node.udk_class}.gif")
             #set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
         #end
-        #if($node.origDocId && $node.origDocId.length() > 0)
+        #if($node.origDocId && !$node.origDocId.isEmpty())
             #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}&docuuid=${node.origDocId}#if(${node.docId})&docid=${node.docId}#end")
         #else
-            #if($node.udk_docId && $node.udk_docId.length() > 0)
+            #if($node.udk_docId && !$node.udk_docId.isEmpty())
                 #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docuuid=${node.udk_docId}#end")
             #else
                 #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
             #end
         #end
     #else
-        #set($nodeIcon = "ico_tree_folder_close.gif")
         #set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
         #set($nodeUrl = '')
     #end
-    ## render +/- and icon
     #if($node.isOpen())
-        #set ($renderSubNodes = true)
         $action.setParameter('action','doCloseNode')
-            <li class="tree__item tree__toggle is-active">
-                <a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
-                    <svg class="tree__toggle__icon icon">
-                        <use xlink:href="#plus"/>
-                    </svg>
-                    <svg class="tree__toggle__icon icon">
-                        <use xlink:href="#minus"/>
-                    </svg>
-                </a>
-                #if($nodeUrl != '')
-                    #if ($node.plugType == 'dsc_ecs')
-                        #renderUDKIcon(${node.udk_class} $nodeAlt)
-                    #else
-                        #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
-                    #end
-                #end
-                #if($nodeUrl != '' && $node.udk_class != "1000")
-                    <a href="$nodeUrl">$nodeTitle </a>
-                #else
-                    $nodeTitle
-                #end
-            </li>
-            <li class="tree__content js-accordion-content">
-                ## render sub nodes
-                #if ($renderSubNodes)
-                    #foreach($childNode in $node.getChildren())
-                        #renderNode($childNode)
-                    #end
-                #end
-            </li>
     #else
-        #set ($renderSubNodes = false)
-        #if ($node.expandable)
-            ## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
-               $action.setParameter('action','doOpenNode')
-            <li class="tree__item tree__toggle">
-                <a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
-                    <svg class="tree__toggle__icon icon">
-                        <use xlink:href="#plus"/>
-                    </svg>
-                    <svg class="tree__toggle__icon icon">
-                        <use xlink:href="#minus"/>
-                    </svg>
-                </a>
-                #if($nodeUrl != '')
-                    #if ($node.plugType == 'dsc_ecs')
-                        #renderUDKIcon(${node.udk_class} $nodeAlt)
-                    #else
-                        #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
-                    #end
-                #end
-                ## render node text
-                <strong>
-                #if($nodeUrl != '' && $node.udk_class != "1000")
-                    <a href="$nodeUrl">$nodeTitle </a>
-                #else
-                    $nodeTitle
-                #end
-                </strong>
-            </li>
-        #else
+        $action.setParameter('action','doOpenNode')
+    #end
+    #set($nodeLevel = $node.level)
+    #set($nodeId = $node.id)
+    #set($linkId = "${nodeLevel}-${nodeId}")
+    #if ($node.expandable)
+        <li class="tree__item tree__toggle #if($node.isOpen())is-active#end">
+            <a id="$linkId" href="#$linkId" onclick="updateLeaf('$linkId', true, event)">
+                <svg class="tree__toggle__icon icon">
+                    <use xlink:href="#plus"/>
+                </svg>
+                <svg class="tree__toggle__icon icon">
+                    <use xlink:href="#minus"/>
+                </svg>
+            </a>
             #if($nodeUrl != '')
-            <li class="tree__item">
                 #if ($node.plugType == 'dsc_ecs')
                     #renderUDKIcon(${node.udk_class} $nodeAlt)
                 #else
                     #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
                 #end
-                #if($nodeUrl != '' && $node.udk_class != "1000")
-                    <a href="$nodeUrl">$nodeTitle </a>
-                #else
-                    $nodeTitle
-                #end
-            </li>
             #end
+            #if($nodeUrl != '' && $node.udk_class != "1000")
+                <a href="$nodeUrl">
+                    $nodeTitle
+                </a>
+            #else
+                $nodeTitle
+            #end
+        </li>
+        <li class="tree__content js-accordion-content #if(!$node.isOpen())is-hidden#end">
+            ## render sub nodes
+            #foreach($childNode in $node.getChildren())
+                #renderNode($childNode)
+            #end
+        </li>
+    #else
+        #if($nodeUrl != '')
+        <li class="tree__item tree__toggle">
+            #if ($node.plugType == 'dsc_ecs')
+                #renderUDKIcon(${node.udk_class} $nodeAlt)
+            #else
+                #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
+            #end
+            #if($nodeUrl != '' && $node.udk_class != "1000")
+                <a href="$nodeUrl">
+                    $nodeTitle
+                </a>
+            #else
+                $nodeTitle
+            #end
+        </li>
         #end
     #end
     </ul>
 #end
+
+<script>
+    window.onload = function () {
+        var param = 'openNodes';
+        var params = getQueryStringParameter(param);
+        if (params) {
+            var paramsSplit = params.split(',');
+            paramsSplit.sort(function(a, b){
+                if(a < b) { return -1; }
+                if(a > b) { return 1; }
+                return 0;
+            });
+
+            var filterParams = [];
+            var paramIndex;
+
+            for(var paramsSplitIndex in paramsSplit) {
+                var nodeId = paramsSplit[paramsSplitIndex];
+                var nodeLevel = nodeId.split('-')[0];
+                if(!paramIndex || nodeLevel !== paramIndex) {
+                    paramIndex = nodeLevel;
+                    var filter = paramsSplit.filter(function(e){
+                        return e.indexOf(paramIndex) === 0; 
+                    })
+                    filterParams.push(filter);
+                }
+            }
+            for(var filterParamIndex in filterParams) {
+                var filterParam = filterParams[filterParamIndex];
+                for(var nodeIndex in filterParam) {
+                    var nodeId = filterParam[nodeIndex];
+                    updateLeafWaiting(nodeId, 0);
+                }
+            }
+        } else {
+        #if(${openNodes})
+            var defaultOpenNodes = ${openNodes};
+            if (defaultOpenNodes) {
+                updateQueryStringParameter('openNodes', defaultOpenNodes.toString());
+            }
+        #end
+        }
+    }
+
+    function updateLeafWaiting(nodeId, attempt){
+        attempt = attempt + 1;
+        jQuery.when( $('#' + nodeId).length > 0).then(function(exists){
+            if(exists){
+                updateLeaf(nodeId, false);
+            } else {
+                if(attempt < 20) {
+                    setTimeout(function(){ 
+                        updateLeafWaiting(nodeId , attempt); 
+                    }, 1000);
+                } else {
+                    console.log(attempt + ' attempts for node:' + nodeId); 
+                }
+            }
+        });
+    }
+
+    function getLeafIcon(udkClass, type) {
+        if(udkClass) {
+            if(udkClass !== '1000') {
+                if (type === 'dsc_ecs') {
+                    if(udkClass === '0') {
+                        return '<use xlink:href="#checklist"/>'
+                    } else if(udkClass === '1') {
+                        return '<use xlink:href="#globe"/>';
+                    } else if(udkClass === '2') {
+                        return '<use xlink:href="#book"/>';
+                    } else if(udkClass === '3') {
+                        return '<use xlink:href="#gears"/>';
+                    } else if(udkClass === '4') {
+                        return '<use xlink:href="#folder"/>';
+                    } else if(udkClass === '5') {
+                        return '<use xlink:href="#database"/>';
+                    } else if(udkClass === '6') {
+                        return '<use xlink:href="#molecule"/>';
+                    }
+                } else {
+                    if(udkClass === '0') {
+                        return '<use xlink:href="#building"/>'
+                    } else if(udkClass === '1') {
+                        return '<use xlink:href="#group"/>';
+                    } else if(udkClass === '2') {
+                        return '<use xlink:href="#users"/>';
+                    } else if(udkClass === '3') {
+                        return '<use xlink:href="#envelope"/>';
+                    }
+                }
+            }
+        }
+        return '';
+    }
+
+    function updateLeaf(id, updateParams, evt) {
+        if(evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+        }
+
+        var element = $('#' + id);
+        var url = '$updateLeaf';
+        var hasLeafContent = false;
+        var param = 'openNodes';
+        var params = getQueryStringParameter(param);
+        var paramsSplit = params ? params.split(',') : [];
+        if (element) {
+            var parent = element.parent();
+            if (parent) {
+                var leafContent = parent.parent().find('.tree__content').first();
+                if(updateParams) {
+                    if (parent.hasClass('is-active')) {
+                        parent.removeClass('is-active');
+                        if(leafContent.length !== 0) {
+                            leafContent.addClass('is-hidden');
+                        }
+                        if(params) {
+                            var index = paramsSplit.indexOf(id);
+                            if (index !== -1) {
+                              paramsSplit.splice(index, 1);
+                            }
+                            updateQueryStringParameter(param, paramsSplit.toString());
+                        }
+                    } else {
+                        parent.addClass('is-active');
+                        if(leafContent.length !== 0) {
+                            leafContent.removeClass('is-hidden');
+                        }
+                        if(!params) {
+                            params = id;
+                        } else {
+                            var index = paramsSplit.indexOf(id);
+                            if (index === -1) {
+                                params = params + ',' + id;
+                            }
+                        }
+                        updateQueryStringParameter(param, params);
+                    }
+                } else {
+                    parent.addClass('is-active');
+                    if(leafContent.length !== 0) {
+                        leafContent.removeClass('is-hidden');
+                    }
+                }
+                if(leafContent.length !== 0 && leafContent.children().length > 0) {
+                    hasLeafContent = true;
+                } else {
+                    if(leafContent) {
+                        leafContent.append('<ul class="js-accordion-multi"><li class="tree__item tree__toggle">$MESSAGES.getString('searchCatHierarchy.tree.loading')</li></ul>');
+                    }
+                }
+            }
+        }
+        if (!hasLeafContent) {
+            jQuery.ajax({
+                url: url+ '?id=' + encodeURIComponent(id)
+            }).done(function( data ) {
+                const leafs = data;
+                var leafsHtml = '';
+                if (leafs.length > 0) {
+                    for (var leafsIndex in leafs) {
+                        var leaf = leafs[leafsIndex];
+                        if(leaf){
+                            var leafId = leaf.id;
+                            var leafLevel = leaf.level;
+                            var leafTitle = leaf.udk_class_value;
+                            var leafName = leaf.name;
+                            var leafPlugId = leaf.plugId;
+                            var leafDocId = leaf.docId;
+                            var leafUdkClass = leaf.udk_class;
+                            var leafIcon = getLeafIcon(leaf.udk_class, leaf.plugType, leafTitle, leafName);
+
+                            leafsHtml = leafsHtml + '<ul class="js-accordion-multi">';
+                            leafsHtml = leafsHtml + '<li class="tree__item tree__toggle">';
+                            if (leaf.expandable) {
+                                leafsHtml = leafsHtml + '<a id="' + leafLevel + '-' + leafId + '" href="#' + leafLevel + '-' + leafId + '" onclick="updateLeaf(\'' + leafLevel + '-' + leafId + '\', true, event)">';
+                                leafsHtml = leafsHtml + '<svg class="tree__toggle__icon icon">';
+                                leafsHtml = leafsHtml + '<use xlink:href="#plus"/>';
+                                leafsHtml = leafsHtml + '</svg>';
+                                leafsHtml = leafsHtml + '<svg class="tree__toggle__icon icon">';
+                                leafsHtml = leafsHtml + '<use xlink:href="#minus"/>';
+                                leafsHtml = leafsHtml + '</svg>';
+                                leafsHtml = leafsHtml + '</a>';
+                            }
+                            if (leafTitle) {
+                                leafsHtml = leafsHtml + '<svg class="icon globe__icon">';
+                                leafsHtml = leafsHtml + '<title>' + leafTitle + '</title>';
+                                leafsHtml = leafsHtml + leafIcon;
+                                leafsHtml = leafsHtml + '</svg>';
+                            }
+                            if(leafUdkClass !== '1000') {
+                                leafsHtml = leafsHtml + '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=' + leafPlugId + '&amp;docuuid=' + leafDocId + '"> ' + leafName + ' </a>';
+                            } else {
+                                leafsHtml = leafsHtml + leafName;
+                            }
+                            leafsHtml = leafsHtml + '</li>';
+                            if (leaf.expandable) {
+                                leafsHtml = leafsHtml + '<li class="tree__content js-accordion-content is-hidden"></li>';
+                            }
+                            leafsHtml = leafsHtml + '</ul>';
+                        }
+                    }
+                    if (leafsHtml.length > 0) {
+                        leafContent.empty();
+                        $(leafsHtml).appendTo(leafContent);
+                    }
+                } else {
+                    leafContent.empty();
+                }
+            });
+        }
+    }
+</script>
 
 <div class="tree bx-bot-l">
     #foreach($plugNode in $ps.plugsRoot.getChildren())
@@ -123,33 +311,3 @@
         #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
     </p>
 </form>
-<script>
-    document.onreadystatechange = function () {
-        if (document.readyState == "complete") {
-                var browser = whichBrowser();
-                if(browser.indexOf("Chrome") != -1)
-                    document.body.scrollTop = $scrollTop;
-                else
-                    document.documentElement.scrollTop = $scrollTop;
-        }
-    }
-    function makeScrollTopLink(url){
-        var browser = whichBrowser();
-        
-        if(browser.indexOf("Chrome") != -1)
-            var top = document.body.scrollTop;
-        else
-            var top = document.documentElement.scrollTop;
-        url = url.replace(/\s/g, "%20")
-        urlNew = url + "?scrollTop="+top;
-        document.getElementById(url).href = urlNew;
-    }
-    
-    whichBrowser = function(){
-        var N= navigator.appName, ua= navigator.userAgent, tem;
-        var M= ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
-        if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
-        M= M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
-        return M;
-    };
-</script>

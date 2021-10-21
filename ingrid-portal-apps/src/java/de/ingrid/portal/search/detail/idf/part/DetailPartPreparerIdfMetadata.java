@@ -22,10 +22,7 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +46,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
         super.init( node, iPlugId, request, response, context );
 
-        this.templateName = "/WEB-INF/templates/detail/part/detail_part_preparer_metadata.vm";
+        this.templateName = "/WEB-INF/templates/detail/parts/detail_part_preparer_metadata.vm";
         this.localTagName = "idfMdMetadata";
     }
     
@@ -635,7 +632,117 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 return listSearch;
         }
     }
-    
+
+    /**
+     * @param xpathExpressions is the xpath where the relevant elements are, including author names, publish year, title, doi.
+     * rootName is the mandatory rootXpath that repeats itself for the possibility of multiple authors.
+     */
+    public List<HashMap<String, Object>> getListAPACitation(Map<String, String> xpathExpressions) {
+        return getListAPACitation(xpathExpressions, null);
+    }
+
+    /**
+     * @param rootXpathExpression is the recurrent rootXpath that contains multiple citations; every element should have
+     * relative xpath to the rootXpath.
+     * when extracting a single citation, the second argument should not be given; the xpath for every element should
+     * be absolute xpath.
+     */
+    public List<HashMap<String, Object>> getListAPACitation(Map<String, String> xpathExpressions, String rootXpathExpression) {
+        List<HashMap<String, Object>> listCitation = new ArrayList<>();
+        if(rootXpathExpression != null && xPathUtils.nodeExists(rootNode, rootXpathExpression)){
+            // return multiple citations from recurrent rootXpath
+            NodeList tmpNodeList = xPathUtils.getNodeList(rootNode, rootXpathExpression);
+            for (int i = 0; i < tmpNodeList.getLength(); i++){
+                Node node = tmpNodeList.item(i);
+                HashMap<String, Object> element = getAPACitationElements(node, xpathExpressions);
+                if (!element.isEmpty()){listCitation.add(element);}
+            }
+        } else {
+            // return a single citation from absolute xpath
+            Node root = this.rootNode;
+            HashMap<String, Object> element = getAPACitationElements(root, xpathExpressions);
+            if (!element.isEmpty()){listCitation.add(element);}
+        }
+        return listCitation;
+    }
+
+    public HashMap<String, Object> getAPACitationElements(Node node, Map<String, String> xpathExpressions){
+        HashMap<String, Object> element = new HashMap<>();
+        if (xpathExpressions.containsKey("rootName") && xPathUtils.nodeExists(node, xpathExpressions.get("rootName"))){
+            String value = getAPACitationValueFromXpath("name", node, xpathExpressions.get("name"), xpathExpressions.get("rootName"));
+            if ((value == null || value.trim().isEmpty()) && xpathExpressions.containsKey("org_name")) {
+                String org = getAPACitationValueFromXpath("org_name", node, xpathExpressions.get("org_name"));
+                if (org != null) {element.put("authors", org);}
+            } else {
+                element.put("authors", value);
+            }
+        }
+        if (xpathExpressions.containsKey("year") && xPathUtils.nodeExists(node, xpathExpressions.get("year"))){
+            String value = getAPACitationValueFromXpath("year", node, xpathExpressions.get("year"));
+            if (value != null) {element.put("year", value);}
+        }
+        if (xpathExpressions.containsKey("title") && xPathUtils.nodeExists(node, xpathExpressions.get("title"))){
+            String value = getAPACitationValueFromXpath("title", node, xpathExpressions.get("title"));
+            if (value != null) {element.put("title", value);}
+        }
+        if (xpathExpressions.containsKey("publisher") && xPathUtils.nodeExists(node, xpathExpressions.get("publisher"))){
+            String value = getAPACitationValueFromXpath("publisher", node, xpathExpressions.get("publisher"));
+            if (value != null) {element.put("publisher", value);}
+        }
+        if (xpathExpressions.containsKey("doi") && xPathUtils.nodeExists(node, xpathExpressions.get("doi"))){
+            String value = getAPACitationValueFromXpath("doi", node, xpathExpressions.get("doi"));
+            if (value != null) {element.put("doi", value);}
+        }
+        if (xpathExpressions.containsKey("doi_type") && xPathUtils.nodeExists(node, xpathExpressions.get("doi_type"))){
+            String value = getAPACitationValueFromXpath("doi_type", node, xpathExpressions.get("doi_type"));
+            if ("Dataset".equals(value)) {element.put("doi_type", messages.getString("doi.dataset"));}
+        }
+        return element;
+    }
+
+    public String getAPACitationValueFromXpath(String type, Node node, String xpathExpression){
+        return getAPACitationValueFromXpath(type, node, xpathExpression, null);
+    }
+
+    public String getAPACitationValueFromXpath(String type, Node node, String xpathExpression, String rootXpathExpression){
+        if (type.equals("name")){
+            StringBuilder value = new StringBuilder();
+            NodeList nameList = xPathUtils.getNodeList(node, rootXpathExpression);
+            for (int i = 0; i < nameList.getLength(); i++){
+                Node nameNode = xPathUtils.getNode(nameList.item(i), xpathExpression);
+                if (nameNode != null && nameNode.getTextContent().length() > 0){
+                    if (!value.toString().equals("")){value.append(", ");}
+                    String name = nameNode.getTextContent().trim();
+                    // last name
+                    List<String> nameSplits = Arrays.asList(name.split(","));
+                    value.append(String.format("%s,", nameSplits.get(0)));
+                    // first name
+                    String[] firstnameSplits = nameSplits.get(1).trim().split(" ");
+                    for (String split : firstnameSplits) {
+                        value.append(String.format(" %s.", split.charAt(0)));
+                    }
+                }
+            }
+            return value.toString();
+        } else {
+            Node valueNode = xPathUtils.getNode(node, xpathExpression);
+            if (valueNode != null && valueNode.getTextContent().length() > 0){
+                String value = valueNode.getTextContent().trim();
+                switch (type){
+                    case "year":
+                        Pattern pattern = Pattern.compile("\\d{4}");
+                        Matcher matcher = pattern.matcher(value);
+                        if (matcher.find()) {
+                            return matcher.group(0);
+                        }
+                    default:
+                        return value;
+                }
+            }
+        }
+        return null;
+    }
+
     public Map getAvailability(String xpathExpression) {
         HashMap element = new HashMap();
         
@@ -1442,9 +1549,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         String doiId = getValueFromXPath("./idf:doi/id");
         String doiType = getValueFromXPath("./idf:doi/type");
 
-        Map<String, String> element = new HashMap<>();
-        element.put("id", doiId);
-        element.put("type", doiType);
+        Map<String, String> element =null;
+        if(doiId != null || doiType != null) {
+            element = new HashMap<>();
+            if(doiId != null) {
+                element.put("id", doiId);
+            }
+            if(doiType != null) {
+                element.put("type", doiType);
+            }
+        }
 
         return element;
     }
@@ -1466,7 +1580,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if (urlValue == null || urlValue.length() == 0) {
                         continue;
                     }
-                    if (urlValue.toLowerCase().contains("request=getcapabilities")) {
+                    String serviceType = xPathUtils.getString(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/gmd:CI_OnLineFunctionCode");
+                    if (urlValue.toLowerCase().contains("request=getcapabilities") && urlValue.toLowerCase().contains("service=wms") &&
+                            (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))) {
                         // also add an identifier to select the correct layer in the map client 
                         map = addBigMapLink(node, urlValue + "||" + getLayerIdentifier(null), true);
                         // ADD FIRST ONE FOUND !!!

@@ -20,6 +20,12 @@
  * limitations under the Licence.
  * **************************************************#
  */
+body, .popover {
+  font-family: AvenirNextLTPro-Regular, sans-serif;
+}
+.btn {
+  font-weight: normal;
+}
 .btn-default {
   color: #FFFFFF;
   background-color: #003064;
@@ -35,17 +41,28 @@
   background-color: #003064;
   border: 0;
 }
+input[type=text]:focus, input[type=email]:focus, input[type=search]:focus, select:focus, .form-control:focus {
+  border-color: #003064;
+  outline: 0;
+  box-shadow: 0 0 5px #5683b5;
+}
 .ga-more-layers {
   padding: 8px 5px !important;
 }
 .ga-more-layers a {
   color: #003064;
 }
+#drawModeHeader .ga-title {
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
   color: #0089C6;
 }
 #pulldown-content .panel > .accordion-toggle {
-  font-weight: bold !important;
+  font-family: AvenirNextLTPro-Demi, sans-serif;
 }
 #pulldown-content .panel > .accordion-toggle.collapsed {
   background-color: #1D4B7B;
@@ -71,11 +88,7 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 }
 #pulldown-content .accordion-toggle, #pulldown-content .panel-body-wide a {
   color: #000;
-  font-weight: bold;
   background-color: #F6F6F6;
-}
-[ga-catalogtree] a.ga-catalogitem-entry label {
-  font-weight: bold;
 }
 [ga-layermanager] li {
   color: #0089C6;
@@ -89,7 +102,7 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 [ga-layermanager] .ga-layer-tools {
   border-left: 0;
 }
-[ga-layermanager] .ga-layer-infos label:hover, [ga-layermanager] input:hover, [ga-layermanager] select:hover, [ga-layermanager] options:hover {
+[ga-layermanager] .ga-layer-infos label:hover, [ga-layermanager] input:hover, [ga-layermanager] select:hover, [ga-layermanager] .options:hover {
   color: #1D4B7B;
 }
 [ga-layermanager] .ga-layer-tools label {
@@ -112,7 +125,7 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 #drawModeHeader .btn-primary  {
   background-color: #003064;
   color: #FFF;
-  border: 0px;
+  border: 0;
   font-size: 16px;
 }
 [ga-help] button.ga-icon {
@@ -146,7 +159,7 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 [ga-search] .ga-search-input {
   height: 45px;
   font-size: 16px;
-  border-radius: 32px;
+  border-radius: 6px;
   padding-left: 2.8em;
   padding-right: 2.8em;
 }
@@ -164,7 +177,6 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
   position: relative;
   left: 0;
   flex: 0 0 45%;
-  max-width: 45%;
 }
 #search-container [ga-help] button.ga-icon {
   font-size: 26px;
@@ -217,7 +229,7 @@ input[type=text]:focus, input[type=email]:focus, input[type=search]:focus, selec
   background-color: #003064;
   border-color: #003064;
 }
-.btn-danger:hover, btn-danger:active{
+.btn-danger:hover, .btn-danger:active{
   background-color: #004188;
   border-color: #004188;
 }
@@ -226,4 +238,30 @@ input[type=text]:focus, input[type=email]:focus, input[type=search]:focus, selec
 }
 [ga-draw] .ga-draw-buttons>.btn i {
   padding-top: 6px;
+}
+
+/* fonts */
+@font-face {
+  font-family: 'AvenirNextLTPro-Regular';
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.woff');
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.eot');
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.eot?#iefix') format("embedded-opentype"),
+  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.woff') format("woff"),
+  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.ttf')  format('truetype');
+}
+@font-face {
+  font-family: 'AvenirNextLTPro-Light';
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.woff');
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.eot');
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.eot?#iefix') format("embedded-opentype"),
+  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.woff') format("woff"),
+  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.ttf')  format('truetype');
+}
+@font-face {
+  font-family: 'AvenirNextLTPro-Demi';
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.woff');
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.eot');
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.eot?#iefix') format("embedded-opentype"),
+  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.woff') format("woff"),
+  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.ttf')  format('truetype');
 }

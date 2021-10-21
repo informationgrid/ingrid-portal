@@ -24,11 +24,6 @@
   width: auto;
 }
 
-@media print, screen and (min-width: 35em) {
-  header .logo a {
-  }
-}
-
 *, *::before, *::after {
     box-sizing: border-box;
 }

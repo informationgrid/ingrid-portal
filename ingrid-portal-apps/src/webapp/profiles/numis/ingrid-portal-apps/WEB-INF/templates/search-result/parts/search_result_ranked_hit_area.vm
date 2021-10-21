@@ -14,7 +14,7 @@
         var y2${mapId};
         var x2${mapId};
 
-        for (var coord of coords) {
+        coords.forEach(function(coord) {
             var tmpBounds${mapId} = coord;
             y1${mapId} = tmpBounds${mapId}[2];
             x1${mapId} = tmpBounds${mapId}[1];
@@ -44,7 +44,7 @@
                     bounds${mapId} = L.latLngBounds(southWest${mapId}, northEast${mapId});
                 }
             }
-        }
+        });
         var map${mapId} = addLeafletMapWithId('map${mapId}', getOSMLayer(''), bounds${mapId}, null , 10);
         #if($isDetail)
             map${mapId}.gestureHandling.enable();
@@ -55,18 +55,15 @@
         if(bounds${mapId}) {
             map${mapId}.fitBounds(bounds${mapId});
         }
-
-        coords.forEach(function(coord) {
-            var y1Coord = coord[2];
-            var x1Coord = coord[1];
-            var y2Coord = coord[4];
-            var x2Coord = coord[3];
-            if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
-                var map${mapId}LayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
-                map${mapId}LayerBounds.bindTooltip(coord[0], {direction: 'center'});
-                map${mapId}.addLayer(map${mapId}LayerBounds);
-            }
-        });
+    </script>
+    #if($bwastr && !$bwastr.isEmpty())
+        #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bwastr.vm")
+    #elseif($wkt && !$wkt.isEmpty())
+        #parse("/WEB-INF/templates/search-result/parts/area/area_layer_wkt.vm")
+    #else
+        #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bounds.vm")
+    #end
+    <script>
         #if(!$isMoreId)
         $('#map${mapId}').closest('.js-expander-content').addClass('is-hidden');
         #end

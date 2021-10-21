@@ -1,0 +1,50 @@
+## Darstellung
+################################
+#if($hasDetail2)
+<div class="section">
+    <a class="anchor" id="${hashDetail2}"></a>
+    #renderSectionTitle($MESSAGES.getString("spacial_reference_tab"))
+    <div class="row columns">
+    ## Raumbezugssystem
+        ##renderSectionTitle($MESSAGES.getString("t011_obj_geo.coord"))
+    ## Geothesaurus-Raumbezug
+        #set($tmp = $TOOL.getAreaGeothesaurus($xPathPresentEXExtent))
+        #if($tmp)
+            #if($tool.hasContent($tmp.body))
+                #set($tmpCoords = $tmp.body)
+                #set($coords = [])
+                #foreach($tmpCoord in $tmpCoords)
+                    #set($tmpName = $tmpCoord.get(0))
+                    #set($tmpX1 = $tmpCoord.get(1).replace("\u00B0", ""))
+                    #set($tmpY1 = $tmpCoord.get(2).replace("\u00B0", ""))
+                    #set($tmpX2 = $tmpCoord.get(3).replace("\u00B0", ""))
+                    #set($tmpY2 = $tmpCoord.get(4).replace("\u00B0", ""))
+                    #if($tool.hasContent($tmpX1) && $tool.hasContent($tmpX2) && $tool.hasContent($tmpY1) && $tool.hasContent($tmpY2))
+                        #if(!$tmpName || $tmpName.isEmpty())
+                            #set($tmpName = $TOOL.getTitle())
+                        #end
+                        #set($add = $coords.add(["'$tmpName'", $tmpX1 , $tmpY1, $tmpX2, $tmpY2]))
+                    #end
+                #end
+                #set($mapId = "_detail")
+                #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+                #set($isDetail = true)
+                #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
+                #parse("/WEB-INF/templates/detail/parts/metadata/presentation/presentation_marker.vm")
+            #end
+        #end
+        #renderTable($tmp)
+        #set($tmp = "")
+    ## Administrative Einheit (Gemeindenummer)
+        #renderTextListTable($MESSAGES.getString("t011_township.township_no") $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
+    ## Höhe
+        #renderTable($TOOL.getAreaHeight($xPathPresentEXExtent))
+    ## Erläuterung zum Raumbezug
+        #renderTextTable($MESSAGES.getString("t01_object.loc_descr") $TOOL.getValueFromXPath($xPathPresentEXExtentDescription))
+    ## Begrenzungspolygon als WKT
+        #renderTextListTable($MESSAGES.getString("t01_object.polygon_wkt") $wktPolygons)
+    ## Raumbezugssystem
+        #renderLinkListTable($MESSAGES.getString("t011_obj_geo.referencesystem_id") $TOOL.getNodeListValueReferenceSystem($xPathPresentReferenceSystemInfo))
+    </div>
+</div>
+#end

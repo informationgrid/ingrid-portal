@@ -114,39 +114,12 @@
                         </div>
                         </div>
                     #end
+## Zitat für diesen Datensatz
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_citation.vm")
 ## Lizenz
-                    #set($licenseKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
-                    #set($licenseValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
-                    #if(($licenseKey && !$licenseKey.isEmpty()) || ($licenseValue && !$licenseValue.isEmpty()))
-                        #set($licenseName = $Codelists.getCodeListValue('6500', $licenseKey, $languageCode))
-                        #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $licenseKey, "url", $request.getLocale()))
-                        #renderFactTitle($MESSAGES.getString('searchResult.info.license'))
-                        #if($licenseUrl)
-                                    <p>
-                                        <a class="icon" href="$licenseUrl" title="$stringTool.htmlescape($licenseName)" target="_blank" rel="noopener noreferrer">
-                                            <span class="ic-ic-external"></span>
-                                            <span class="text">$licenseName</span>
-                                        </a>
-                                    </p>
-                        #elseif($licenseName && !$licenseName.isEmpty())
-                            <p>$licenseName</p>
-                        #else
-                            #if($licenseValue && !$licenseValue.isEmpty())
-                                #set($licenseName = $UTIL_SEARCH.getCodeListDataStringValue($licenseValue, "name"))
-                                #set($licenseUrl = $UTIL_SEARCH.getCodeListDataStringValue($licenseValue, "url"))
-                                #if($licenseUrl && $licenseName)
-                                    <p>
-                                        <a class="icon" href="$licenseUrl" title="$stringTool.htmlescape($licenseName)" target="_blank" rel="noopener noreferrer">
-                                            <span class="ic-ic-external"></span>
-                                            <span class="text">$licenseName</span>
-                                        </a>
-                                    </p>
-                                #else
-                                     <p>$licenseValue</p>
-                                #end
-                            #end
-                        #end
-                    #end
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_license.vm")
+## Ortslage
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_bwastr_name.vm")
                     #if($rs.url)
                         <p>
                             <a href="$rs.url" title="$rs.url">$!rs.url_str</a>
@@ -163,21 +136,22 @@
                         </p>
                     #end
                     -->
-
                     #if($rs.wms_coord)
                         <a class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
                     #end
                 #end
             </div>
-            #if(($coords.size() > 0) 
-                || ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty())
-                || $rs.wms_url)
+            #if(($coords.size() > 0) ||
+                ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty()) ||
+                $hasOtherAreaDetails || 
+                $rs.wms_url
+            )
             <div class="columns">
                 #set($hasArea = false)
                 #set($hasPreview = false)
                 #set($hasSwipe = false)
                 
-                #if($coords.size() > 0)
+                #if($coords.size() > 0 || $hasOtherAreaDetails)
                     #set($hasArea = true)
                 #end
                 

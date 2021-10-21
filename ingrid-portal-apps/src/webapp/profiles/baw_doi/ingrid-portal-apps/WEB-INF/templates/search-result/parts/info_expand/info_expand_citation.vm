@@ -1,0 +1,11 @@
+## Zitat für diesen Datensatz
+#if($getCitation && !$getCitation.isEmpty())
+    <div class="sub-section sub-section-unlined">
+        #renderFactTitle($MESSAGES.getString('citation'))
+        <div class="document-list">
+            <div class="list-item">
+                <p>$getCitation</p>
+            </div>
+        </div>
+    </div>
+#end

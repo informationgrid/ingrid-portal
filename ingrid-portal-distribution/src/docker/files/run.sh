@@ -129,8 +129,8 @@ else
             fi
         fi
 
-        # PortalU-RLP extends UVP layout
-        if [ "$PORTAL_PROFILE" == "portalu_rp" ] || [ "$PORTAL_PROFILE" == "up_sh" ] || [ "$PORTAL_PROFILE" == "metaver_md" ]; then
+        # Profile extends UVP and NUMIS layout
+        if [ "$PORTAL_PROFILE" == "portalu_rp" ] || [ "$PORTAL_PROFILE" == "up_sh" ] || [ "$PORTAL_PROFILE" == "metaver_md" ] || [ "$PORTAL_PROFILE" == "baw_doi" ] || [ "$PORTAL_PROFILE" == "baw_mis" ] || [ "$PORTAL_PROFILE" == "mdi-de" ]; then
             echo "Copying profile files from parent (uvp) into portal directories ..."
             cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
             cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
@@ -139,8 +139,13 @@ else
             echo "Copying profile files from parent (numis) into portal directories ..."
             cp -R $PROFILES_DIR/numis/ingrid-portal/* webapps/ROOT
             cp -R $PROFILES_DIR/numis/ingrid-portal-apps/* webapps/ingrid-portal-apps
+            
+            if [ "$PORTAL_PROFILE" == "baw_mis" ]; then
+                echo "Copying profile files from parent (baw_doi) into portal directories ..."
+                cp -R $PROFILES_DIR/baw_doi/ingrid-portal/* webapps/ROOT
+                cp -R $PROFILES_DIR/baw_doi/ingrid-portal-apps/* webapps/ingrid-portal-apps
+            fi
        fi
-
 
         echo "Copying profile files into portal directories ..."
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
@@ -194,6 +199,11 @@ else
         # adapt configuration use standalone version of IGE
         sed -i 's/installation.standalone=false/installation.standalone=true/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
         echo 'admin.password=admin' > webapps/ingrid-portal-mdek-application/WEB-INF/classes/igeAdminUser.properties
+    fi
+
+    if [ "$MAPCLIENT_DISABLED" == "true" ]; then
+        rm -rf webapps/ingrid-webmap-client*
+        rm -rf conf/Catalina/localhost/ingrid-webmap-client.xml
     fi
 
     # SMTP_HOST

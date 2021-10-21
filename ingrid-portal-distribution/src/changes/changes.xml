@@ -6,6 +6,111 @@
     </properties>
 
     <body>
+        <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
+          <action type="update" dev="wemove" issue="1523">
+            Portal: Weitere Anpassungen am HMDK Profil
+          </action>
+          <action type="fix" dev="wemove" issue="2871">
+            Eingaben werden nicht ausreichend auf XSS Angriffe gefiltert
+          </action>
+          <action type="fix" dev="wemove" issue="2920">
+            IGE: fix preview images upload-check not working on uppercase extensions
+          </action>
+          <action type="add" dev="wemove" issue="1313">
+            Portal: Erkennung von Brute-Force-Attacken in Anmeldeprozess von Portal
+          </action>
+          <action type="add" dev="wemove" issue="2246">
+            Integration Portalprofil MDI-DE (NOKIS)
+          </action>
+          <action type="fix" dev="wemove" issue="2924">
+            SSRF mit XML External Entity (XXE) Schwachstelle im MapClient beheben
+          </action>
+          <action type="add" dev="wemove" issue="2926">
+            Aktualisierung TOMCAT Version auf 9.0.53
+          </action>
+          <action type="add" dev="wemove" issue="2925">
+            Verstecken der Tomcat Version in Tomcat Fehlerseiten
+          </action>
+          <action type="update" dev="wemove" issue="1949">
+            UVP: Kartenlegende, Hinweis, dass die Karte nur der Orientierung dient und keinen Bezug zu den Verfahren hat.
+          </action>
+          <action type="update" dev="wemove" issue="2744">
+            BAW_MIS: Kartenansicht für den Raumbezug anpassen
+          </action>
+          <action type="add" dev="wemove" issue="2819">
+            UVP: Icon im UVP-Portal einfügen
+          </action>
+          <action type="update" dev="wemove" issue="2746">
+            BAW_MIS: Portal-Layout für das baw_mis Profil aktualisieren
+          </action>
+          <action type="add" dev="wemove" issue="2790">
+            BAW_DOI: Portal: Language-Switcher Portlet aktivieren
+          </action>
+          <action type="update" dev="wemove" issue="2747">
+            BAW_DOI: Portal-Layout für das baw_doi Profil aktualisieren
+          </action>
+          <action type="add" dev="wemove" issue="2664">
+            BAW_DOI: PULL Request bearbeiten
+          </action>
+          <action type="fix" dev="wemove" issue="2822">
+            BKG: IGE: Zeichenkodierung fehlerhaft
+          </action>
+          <action type="update" dev="wemove" issue="2804">
+            SH: Kontaktformular: Die E-Mail des Nutzers soll im REPLY-TO Header verwendet werden
+          </action>
+          <action type="fix" dev="wemove" issue="2749">
+            IGE: Fix operation name display in edit dialog
+          </action>
+          <action type="update" dev="wemove" issue="2184">
+            IGE: Re-Add 'am' to temporalElement and add second since option
+          </action>
+          <action type="fix" dev="wemove" issue="2608">
+            Portal: Probleme nach Update auf 5.9.0
+          </action>
+          <action type="add" dev="wemove" issue="2609">
+            Messwerteclient: "Zurück zur Kartenansicht" zeigt nicht den letzten Kartenausschnitt an
+          </action>
+          <action type="update" dev="wemove" issue="2610">
+            PORTAL: Katalogansicht dynamisch aufbauen (ohne Reload der Portalseite)
+          </action>
+          <action type="fix" dev="wemove" issue="2667">
+            UVP: Bauleitplaunungsseite BB führt zu leeren Ergebnissen
+          </action>
+          <action type="fix" dev="wemove" issue="1667">
+            IGE: update preview images upload with file extension restriction
+          </action>
+          <action type="fix" dev="wemove" issue="2334">
+            IGE: Use correct uuid of external coupled resource
+          </action>
+          <action type="add" dev="wemove" issue="2389">
+            IGE: Add job to update external coupled resource identifier
+          </action>
+          <action type="fix" dev="wemove" issue="2489">
+            IGE: Fix export of codelists within IGE
+          </action>
+          <action type="add" dev="wemove" issue="2832">
+            IGE: Make table for preview images sortable by drag'n'drop
+          </action>
+          <action type="add" dev="wemove" issue="3030">
+            IGE: Timeout for Virusscan configurable
+          </action>
+          <action type="add" dev="wemove" issue="1797">
+            Send report emails when virus scans fail
+          </action>
+          <action type="update" dev="wemove" issue="2799">
+            Update facet view
+          </action>
+          <action type="update" dev="wemove" issue="2762">
+            Access login via menu
+          </action>
+          <action type="fix" dev="wemove" issue="2755">
+            IGE: Import of position accuracy field
+          </action>
+          <action type="update" dev="wemove" issue="2085">
+            Improve search
+          </action>
+        </release>
+
         <release version="5.9.0" date="2021-07-16" description="Release 5.9.0">
           <action type="fix" dev="wemove" issue="2603">
             Portal: RSS-Job bei Links mit vielen Zeilenumbrüchen führen zu Datenbankfehlern

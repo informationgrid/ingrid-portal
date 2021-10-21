@@ -1,0 +1,7 @@
+## Zitat für diesen Datensatz
+#if($getCitations && $getCitations.size() > 0)
+<div class="sub-section sub-section-unlined">
+    <a class="anchor" id="${hashDetail10}_citation"></a>
+    #renderCitation($MESSAGES.getString("citation") $getCitations)
+</div>
+#end

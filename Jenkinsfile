@@ -1,10 +1,14 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'jdk8'
+    }
+
     environment {
         VERSION = readMavenPom().getVersion()
     }
-    
+
     options {
       buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
       disableConcurrentBuilds()
@@ -17,7 +21,7 @@ pipeline {
                 not {
                     anyOf { branch 'master'; }
                 }
-                not { 
+                not {
                     allOf {
                         anyOf { branch 'support/*'; branch 'mcloud-master' }
                         expression { return !VERSION.endsWith("-SNAPSHOT") }
@@ -81,7 +85,7 @@ pipeline {
     post {
         changed {
             // send Email with Jenkins' default configuration
-            script { 
+            script {
                 emailext (
                     body: '${DEFAULT_CONTENT}',
                     subject: '${DEFAULT_SUBJECT}',

@@ -18,6 +18,7 @@
 #set($tmpX2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x2" ))
 #set($tmpY2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y2" ))
 #set($tmpLocation = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "location" ))
+#set($hasOtherAreaDetails = false)
 #if($tmpX1)
     #set($tmpCount = 0)
     #foreach($tmp in $tmpX1.split(","))
@@ -178,3 +179,9 @@
         #end
     #end
 #end
+
+## Zitat für diesen Datensatz
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_citation.vm")
+
+## Ortslage
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_bwastr_name.vm")

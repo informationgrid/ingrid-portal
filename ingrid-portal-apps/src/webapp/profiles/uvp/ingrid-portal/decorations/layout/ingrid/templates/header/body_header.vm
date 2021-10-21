@@ -23,7 +23,7 @@
                 #else
                     <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
                 #end
-                <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
+                <button type="button" class="button small-button">$MESSAGES.getString('ingrid.page.menu')<span class="ic-ic-hamburger"></span></button>
             </div>
         </div>
     </div>

@@ -273,9 +273,9 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef1GridFormatRefGeoreferencedParam((String) td1Map.get( MdekKeys.GEO_REF_PARAMETER ));
             
             mdekObj.setRef1Coverage((Double) td1Map.get(MdekKeys.DEGREE_OF_RECORD));
+            mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.POS_ACCURACY));
             mdekObj.setRef1AltAccuracy((Double) td1Map.get(MdekKeys.POS_ACCURACY_VERTICAL));
             mdekObj.setRef1GridPosAccuracy((Double) td1Map.get(MdekKeys.GRID_POS_ACCURACY));
-            mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.RESOLUTION));
             mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
 
             List<String> baseList = (List<String>) td1Map.get(MdekKeys.DATA);
@@ -919,7 +919,7 @@ public class MdekMapper implements DataMapperInterface {
             td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
             td1Map.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
             td1Map.put(MdekKeys.GRID_POS_ACCURACY, data.getRef1GridPosAccuracy());
-            td1Map.put(MdekKeys.RESOLUTION, data.getRef1PosAccuracy());
+            td1Map.put(MdekKeys.POS_ACCURACY, data.getRef1PosAccuracy());
             td1Map.put(MdekKeys.TECHNICAL_BASE, data.getRef1BasisText());
             td1Map.put(MdekKeys.DATA, data.getRef1DataBasisText());
             td1Map.put(MdekKeys.METHOD_OF_PRODUCTION, data.getRef1ProcessText());

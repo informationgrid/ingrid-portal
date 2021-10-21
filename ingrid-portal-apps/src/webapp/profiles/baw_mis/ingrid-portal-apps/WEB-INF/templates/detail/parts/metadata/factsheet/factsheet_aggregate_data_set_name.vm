@@ -1,0 +1,8 @@
+## BAW Auftragsnummer
+#if($bawAggregateDataSetNameNumber)
+    #renderTextList("BAW Auftragsnummer" [$bawAggregateDataSetNameNumber])
+#end
+## BAW Auftragstitel
+#if($bawAggregateDataSetNameTitle)
+    #renderTextList("BAW Auftragstitel" [$bawAggregateDataSetNameTitle])
+#end

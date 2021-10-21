@@ -189,6 +189,21 @@ public class Config {
     public String mdekDirectLink;
 
     /**
+     * Shibboleth SSO
+     */
+    @PropertyValue("mdek.useShibboleth")
+    @DefaultValue("false")
+    public boolean useShibboleth;
+
+    @PropertyValue("mdek.shibboleth.username.header")
+    @DefaultValue("username")
+	public String shibbolethUsernameHeader;
+
+    @PropertyValue("mdek.shibboleth.portal.superusers")
+    @DefaultValue("")
+    public String shibbolethPortalSuperusers;
+
+    /**
      * used in UVP profile
      */
     @PropertyValue("mdek.nominatimBaseURL")

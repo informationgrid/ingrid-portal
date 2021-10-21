@@ -401,3 +401,130 @@ function checkPassword(pwd, idMeter, idText) {
         meter.style.display = 'none';
     }
 }
+
+function updateQueryStringParameter(key, value) {
+  var uri = window.parent.location.href;
+  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  if (uri.match(re)) {
+    uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+  }
+  else {
+    uri = uri + separator + key + "=" + value;
+  }
+  window.history.pushState(null,null, uri);
+}
+
+function getQueryStringParameter(key) {
+    var url = window.parent.location.href;
+    key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+key+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( url );
+    return results == null ? null : results[1];
+
+}
+
+function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
+  var promises = [];
+  ids.forEach(function(id){
+    var request =  $.ajax({
+      url: restUrlBWaStr + '?id=' + id[0] + '&von=' + id[1] + '&bis=' + id[2],
+      dataType: 'json',
+      success: function (data) {
+        return data;
+      }
+    });
+    promises.push( request);
+  });
+  if(promises.length > 0) {
+    map.spin(true);
+    Promise.all(promises).then((values) => {
+      var features = [];
+      values.forEach(function(data){
+        var geometry = data.geometry;
+        if (geometry) {
+          var geojsonObject = {
+            'type': 'FeatureCollection',
+            'features': [{
+              'type': 'Feature',
+              'geometry': {
+                'type': geometry.type,
+                'coordinates': geometry.coordinates
+              }
+            }]
+          };
+          var featureLayer = L.geoJson(geojsonObject, {});
+          featureLayer.bindTooltip('<b>' + data.bwastr_name + ' (' + data.bwastrid + ')</b><br>' + data.strecken_name, {direction: 'center'});
+          features.push(featureLayer);
+        }
+      });
+      if(features.length > 0) {
+        var featureGroup = L.featureGroup(features).addTo(map);
+        map.fitBounds(featureGroup.getBounds());
+        map.spin(false);
+      } else {
+        if(wkt) {
+          addLayerWKT(map, wkt, coords);
+        } else if (coords) {
+          addLayerBounds(map, coords);
+        }
+        map.spin(false);
+      }
+    });
+  } else {
+    if(wkt) {
+      addLayerWKT(map, wkt, coords);
+    } else if (coords) {
+      addLayerBounds(map, coords);
+    }
+  }
+}
+
+function addLayerWKT(map, wkt, coords) {
+  var wkt_split = wkt.split(";");
+  
+  var features = [];
+  wkt_split.forEach(function(tmpWkt) {
+      var wicket = new Wkt.Wkt();
+      wicket.read(tmpWkt);
+      var feature = wicket.toObject();
+      features.push(feature);
+  });
+  if(features.length > 0) {
+      var featureGroup = L.featureGroup(features).addTo(map);
+      map.fitBounds(featureGroup.getBounds());
+  } else {
+      addLayerBounds(map, coords);
+  }
+}
+
+function addLayerBounds(map, coords) {
+  coords.forEach(function(coord) {
+      var y1Coord = coord[2];
+      var x1Coord = coord[1];
+      var y2Coord = coord[4];
+      var x2Coord = coord[3];
+      if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
+          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
+          mapLayerBounds.bindTooltip(coord[0], {direction: 'center'});
+          map.addLayer(mapLayerBounds);
+      }
+  });
+}
+
+function updateURLParamReload(key, value) {
+  var pathname = window.parent.location.pathname;
+  var search = window.parent.location.search;
+  var hash = window.parent.location.hash;
+  var uri = pathname + search;
+  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  if (uri.match(re)) {
+    uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+  }
+  else {
+    uri = uri + separator + key + "=" + value;
+  }
+  window.location.href = uri + hash;
+}

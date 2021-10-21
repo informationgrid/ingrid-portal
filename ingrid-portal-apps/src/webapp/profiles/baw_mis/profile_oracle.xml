@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
-    <name>ingrid</name>
+    <name>baw_mis</name>
     <description>Portal-Profile für BAW DMQS</description>
     <pages>
         <page>
@@ -12,6 +12,34 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>main-maps.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-sitemap.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-content-rss.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-homepage.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>mdek/mdek_portal_admin.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-about-partner.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-about-data-source.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -19,13 +47,7 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
-                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
-                </portlet>
-                <portlet col="0" row="3">
-                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -37,13 +59,7 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
-                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
-                </portlet>
-                <portlet col="0" row="3">
-                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -55,18 +71,51 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
-                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
-                </portlet>
-                <portlet col="0" row="3">
-                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
         </page>
-      </pages>
+    </pages>
     <files>
+        <!-- COPY GENERAL UVP FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-mdek/</src>
+            <dst>ingrid-portal-mdek/</dst>
+        </file>
+        <!-- COPY NUMIS FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../numis/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../numis/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <!-- COPY BAW DOI FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../baw_doi/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../baw_doi/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <!-- COPY BAW FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal/</src>
@@ -75,17 +124,21 @@
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
         </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek-application/</src>
+        </file>
     </files>
     <sql>
         <execute>
             <![CDATA[CREATE TABLE tmp_table (item_key VARCHAR2(255 CHAR) DEFAULT NULL\, item_value VARCHAR2(255 CHAR) DEFAULT NULL\, item_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)]]>
         </execute>
-        <execute>
-            <![CDATA[DROP TABLE tmp_table]]>
-        </execute>
         <!-- Disable language switcher -->
         <execute>
-            <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link']]>
+            <![CDATA[UPDATE link SET is_hidden = 0 WHERE path = '/language.link']]>
+        </execute>
+        <execute>
+            <![CDATA[DROP TABLE tmp_table]]>
         </execute>
         <!-- Delete user default-page.psml -->
         <execute>

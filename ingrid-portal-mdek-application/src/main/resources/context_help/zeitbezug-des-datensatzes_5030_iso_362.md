@@ -2,10 +2,10 @@
 # ID des GUI Elements
 guid: 5030
 # title, used as window title
-title: Zeitbezug für die Ressource
+title: Zeitbezug der Ressource
 ---
 
-# Zeitbezug des Dateninhalts
+# Zeitbezug der Ressource
 
 Angabe, wann der Datensatz erstellt, revidiert und/oder publiziert wurde.
 

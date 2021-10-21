@@ -65,11 +65,11 @@
 </head>
 <body>
     <div style="padding: 5px; margin-bottom: 10px; border: 1px solid #ccc;">
-        Das hier gesetzte Datum wird in allen ausgewählten Zeilen als "Gültig bis"-Datum gesetzt. Ist kein Datum gesetzt, so werden die Datumsangaben aus den ausgewählten Zeilen entfernt.
+        Das hier gesetzte Datum wird in allen ausgew&auml;hlten Zeilen als "G&uuml;ltig bis"-Datum gesetzt. Ist kein Datum gesetzt, so werden die Datumsangaben aus den ausgew&auml;hlten Zeilen entfernt.
     </div>
-    <label for="expiryDate">Gültig bis:</label>
+    <label for="expiryDate">G&uuml;ltig bis:</label>
     <input type="text" name="expiryDate" id="expiryDate"
         data-dojo-type="dijit/form/DateTextBox" />
-        <button id="btnAddExpiryDate" type="button">Übernehmen</button>
+        <button id="btnAddExpiryDate" type="button">&Uuml;bernehmen</button>
 </body>
 </html>

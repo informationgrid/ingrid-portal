@@ -22,21 +22,15 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
+import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.IngridSysCodeList;
+import de.ingrid.portal.global.UtilsString;
+import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.json.JsonUtil;
+import de.ingrid.utils.udk.*;
+import de.ingrid.utils.xml.IDFNamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 import org.apache.velocity.context.Context;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
@@ -45,19 +39,12 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.IngridSysCodeList;
-import de.ingrid.portal.global.UtilsString;
-import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.json.JsonUtil;
-import de.ingrid.utils.udk.TM_PeriodDurationToTimeAlle;
-import de.ingrid.utils.udk.TM_PeriodDurationToTimeInterval;
-import de.ingrid.utils.udk.UtilsCountryCodelist;
-import de.ingrid.utils.udk.UtilsDate;
-import de.ingrid.utils.udk.UtilsLanguageCodelist;
-import de.ingrid.utils.xml.IDFNamespaceContext;
-import de.ingrid.utils.xpath.XPathUtils;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DetailPartPreparer {
 
@@ -393,7 +380,7 @@ public class DetailPartPreparer {
                     }
 
                     if(source != null && !source.isEmpty()) {
-                        String tmpQuelle = "Quellenvermerk: " + source;
+                        String tmpQuelle = messages.getString("constraints.use.costraints.source") + source;
                         if(furtherOtherConstraints.contains(tmpQuelle)){
                             furtherOtherConstraints.remove(tmpQuelle);
                         }

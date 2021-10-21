@@ -175,6 +175,7 @@ The optional `profile` parameter adds the sources from the profile directory (`i
 To access the application in the browser open the URL:
 
 http://localhost:8088/ingrid-portal-mdek-application/start_dev.jsp?user=mdek
+(make sure the address contains start_dev.jsp and not only start.jsp, otherwise the page will not completely load)
 
 For IntelliJ IDEA there's a dojo plugin for easier handling of imports:
 https://github.com/TomDevs/needsmoredojo

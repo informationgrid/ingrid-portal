@@ -15,18 +15,18 @@
 #end
 
 #macro(renderTimeType $timeTypeTitle $timeType $t0 $t1 $t2)
-    #if($timeType && !$timeType.isEmpty())
+    #if($timeType && !$timeType.isEmpty() && (!$t0.isEmpty() || !$t1.isEmpty() || !$t2.isEmpty()))
     <div class="helper date">
         #if($timeTypeTitle)
             <b>$timeTypeTitle</b>:
         #end
-        #if($timeType == "seit")
+        #if($timeType == "seit" && !$t1.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.since') $t1</span>
-        #elseif ($timeType == "von")
+        #elseif ($timeType == "von" && !$t2.isEmpty())
         <span>$t1 $MESSAGES.getString('searchResult.hit.time.to') $t2</span>
-        #elseif ($timeType == "am")
+        #elseif ($timeType == "am" && !$t0.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.at') $t0</span>
-        #elseif ($timeType == "bis")
+        #elseif ($timeType == "bis" && !$t2.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.until') $t2</span>
         #end
     </div>
