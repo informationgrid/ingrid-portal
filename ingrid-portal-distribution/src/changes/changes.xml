@@ -13,6 +13,9 @@
           <action type="add" dev="wemove" issue="1897">
             UVP: Button zum Sammeldownload aller Dokumente auf Detailergebnisseiten
           </action>
+          <action type="update" dev="wemove" issue="2823">
+            IGE: Add geometry context to geo datasets.
+          </action>
         </release>
 
         <release version="5.10.1" date="2021-11-23" description="Release 5.10.1">
