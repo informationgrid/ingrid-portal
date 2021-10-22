@@ -6,7 +6,10 @@
     </properties>
 
     <body>
-        <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
+    <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
+        <action type="update" dev="wemove" issue="2823">
+            IGE: Add geometry context to geo datasets.
+        </action>
     </release>
 
     <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
