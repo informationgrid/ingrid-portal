@@ -969,7 +969,7 @@
                 #set($content = $content + "$citation.publisher. ")
             #end
             #if($tool.hasContent($citation.doi))
-                #set($content = $content + "<a href=\"$citation.doi\" target=\"_blank\">$citation.doi</a>")
+                #set($content = $content + '<a href="' + $citation.doi + '" target="_blank">' + "$citation.doi</a>")
             #end
             #if(!$content.isEmpty())
                 #set($add = $list.add($content))
