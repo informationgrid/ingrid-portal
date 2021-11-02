@@ -2030,9 +2030,8 @@
                                                 <fmt:message key="ui.obj.time.timeRefContent" />
                                             </label>
                                         </span>
-                                        <div id="timeRefRef" class="outlined" style="float: left;">
-                                            <div class="outer">
-                                        	<span class="outer" style="width:100%;">
+                                        <div id="timeRefRef">
+                                        	<span class="outer" style="width:33%;">
 											    <div>
                                                 <span class="label hidden">
                                                     <label for="timeRefType">
@@ -2043,9 +2042,18 @@
                                                 </span>
 												</div>
 											</span>
-                                            </div>
-                                            <div class="outer">
-											<span class="outer" style="width:50%;">
+                                            <span class="outer" id="timeRefSubTypeEditor" style="width:67%;">
+											    <div>
+                                                <span class="label hidden">
+                                                    <label for="timeRefSubType">
+                                                        Typ
+                                                    </label>
+                                                </span><span class="input">
+                                                    <select autoComplete="false" style="width:100%;" id="timeRefSubType"></select>
+                                                </span>
+												</div>
+                                            </span>
+											<span class="outer" style="width:33%;">
 											    <div><span class="label hidden">
                                                     <label for="timeRefDate1">
                                                         Datum 1 [TT.MM.JJJJ]
@@ -2057,7 +2065,7 @@
                                                 </span>
 												</div>
 											</span>
-                                            <span id="timeRefDate2Editor" class="outer" style="width:50%;">
+                                            <span id="timeRefDate2Editor" class="outer" style="width:34%;">
 											    <div><span class="label hidden">
                                                     <label for="timeRefDate2">
                                                         Datum 2 [TT.MM.JJJJ]
@@ -2069,7 +2077,6 @@
                                                 </span>
 												</div>
                                             </span>
-                                            </div>
                                         </div>
 										</div>
                                     </span>
