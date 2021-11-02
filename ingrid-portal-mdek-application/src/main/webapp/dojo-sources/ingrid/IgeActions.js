@@ -1854,7 +1854,18 @@ define([
             registry.byId("spatialRefExplanation").attr("value", nodeData.spatialRefExplanation, true);
 
             // -- Time --
-            registry.byId("timeRefType").attr("value", nodeData.timeRefType, true);
+            if (!nodeData.timeRefType) {
+                registry.byId("timeRefType").attr("value", "", true);
+                registry.byId("timeRefSubType").attr("value", "", true);
+            } else if (nodeData.timeRefType == "bis" || nodeData.timeRefType == "am") {
+                registry.byId("timeRefType").attr("value", nodeData.timeRefType, true);
+                registry.byId("timeRefSubType").attr("value", "", true);
+            } else {
+                registry.byId("timeRefType").attr("value", "fromType", true);
+                registry.byId("timeRefSubType").attr("value", nodeData.timeRefType, true);
+            }
+
+
             if (nodeData.timeRefType == "bis") {
                 if (nodeData.timeRefDate2) {
                     registry.byId("timeRefDate1").attr("value", nodeData.timeRefDate2, true);
@@ -2455,6 +2466,7 @@ define([
 
             // -- Time --
             nodeData.timeRefType = registry.byId("timeRefType").get("value");
+            if (nodeData.timeRefType == "fromType") nodeData.timeRefType = registry.byId("timeRefSubType").get("value");
             var timeFrom = registry.byId("timeRefDate1").get("value");
             var timeTo = registry.byId("timeRefDate2").get("value");
 

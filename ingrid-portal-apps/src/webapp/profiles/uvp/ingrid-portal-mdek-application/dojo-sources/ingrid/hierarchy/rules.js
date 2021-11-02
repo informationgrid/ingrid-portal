@@ -49,6 +49,8 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
 
         applyRule3: function(value) {},
 
+        applyRule4: function(value) {},
+
         applyRule5: function() {},
 
         // If one of the fields contains data, all fields are mandatory

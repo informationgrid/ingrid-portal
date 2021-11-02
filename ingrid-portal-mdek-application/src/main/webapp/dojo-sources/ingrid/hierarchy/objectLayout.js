@@ -2008,16 +2008,29 @@ define([
                             "am"
                         ],
                         [
+                            message.get("dialog.research.ext.obj.content.time.until"),
+                            "bis"
+                        ],
+                        [
+                            message.get("dialog.research.ext.obj.content.time.from"),
+                            "fromType"
+                        ]
+                    ];
+
+                    def.resolve(data);
+                    return def;
+                };
+
+                var timeSubTypeData = function() {
+                    var def = new Deferred();
+                    var data = [
+                        [
                             message.get("dialog.research.ext.obj.content.time.since"),
                             "seit"
                         ],
                         [
                             message.get("dialog.research.ext.obj.content.time.sinceToNow"),
                             "seitX"
-                        ],
-                        [
-                            message.get("dialog.research.ext.obj.content.time.until"),
-                            "bis"
                         ],
                         [
                             message.get("dialog.research.ext.obj.content.time.fromto"),
@@ -2030,6 +2043,7 @@ define([
                 };
 
                 layoutCreator.createFilteringSelect("timeRefType", null, lang.clone(storeProps), timeTypeData);
+                layoutCreator.createFilteringSelect("timeRefSubType", null, lang.clone(storeProps), timeSubTypeData);
                 new DateTextBox({
                     style: "width: 100%;",
                     onChange: function() {

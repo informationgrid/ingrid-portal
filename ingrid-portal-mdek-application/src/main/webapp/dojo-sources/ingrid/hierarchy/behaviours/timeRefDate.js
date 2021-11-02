@@ -34,6 +34,10 @@ define([
         run: function () {
 
             on(registry.byId("timeRefType"), "Change", function (value) {
+                applyRule4(value);
+            });
+            applyRule4("");
+            on(registry.byId("timeRefSubType"), "Change", function (value) {
                 applyRule3(value);
             });
             applyRule3("");
