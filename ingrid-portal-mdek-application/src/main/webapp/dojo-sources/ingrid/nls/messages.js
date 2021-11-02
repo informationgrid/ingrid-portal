@@ -1069,6 +1069,7 @@ define({
         "dialog.research.ext.obj.content.time.since": "since (until: Unknown Time)",
         "dialog.research.ext.obj.content.time.until": "until",
         "dialog.research.ext.obj.content.time.fromto": "from - to",
+        "dialog.research.ext.obj.content.time.from": "from",
 
         "dialog.statistics.adrClass0": "Institution",
         "dialog.statistics.adrClass1": "Unit",

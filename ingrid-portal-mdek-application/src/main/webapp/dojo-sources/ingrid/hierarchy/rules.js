@@ -92,6 +92,16 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             // date must not be null when value != ""
         },
 
+        applyRule4: function(value) {
+            console.debug("apply rule 4");
+            if (value.indexOf("fromType") === 0) {
+                domClass.remove("timeRefSubTypeEditor", "hide");
+            } else {
+                domClass.add("timeRefSubTypeEditor", "hide");
+                applyRule3("");
+            }
+        },
+
         applyRule5: function() {
             console.debug("apply rule 5");
             if (!domClass.contains("uiElementN008", "hide")) {
@@ -221,6 +231,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
     applyRule1 = Rules.applyRule1;
     applyRule2 = Rules.applyRule2;
     applyRule3 = Rules.applyRule3;
+    applyRule4 = Rules.applyRule4;
     applyRule5 = Rules.applyRule5;
     applyRule6 = Rules.applyRule6;
     applyRule7 = lang.hitch(Rules, Rules.applyRule7); // method has this reference!
