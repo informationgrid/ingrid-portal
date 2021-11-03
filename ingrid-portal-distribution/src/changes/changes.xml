@@ -10,6 +10,9 @@
           <action type="fix" dev="wemove" issue="3105">
             Darstellung der Webseiten Treffer fehlerhaft
           </action>
+          <action type="add" dev="wemove" issue="3109">
+            MAPCLIENT: Import von geschützen Diensten
+          </action>
         </release>
 
         <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
