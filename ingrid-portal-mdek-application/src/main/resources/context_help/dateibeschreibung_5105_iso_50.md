@@ -8,6 +8,7 @@ title: Dateibeschreibung
 # Dateibeschreibung
 
 Textliche Beschreibung des Inhalts der Grafik.
+Die Dateibeschreibung kann manuell geändert werden.
 
 # ISO Abbildung
 

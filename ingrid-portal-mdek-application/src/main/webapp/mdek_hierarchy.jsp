@@ -315,15 +315,6 @@
                                     </span></div>
                                 </span>
                             </div>
-                            <span id="uiElement5000" class="outer">
-                                <div><span class="label">
-                                    <label for="generalShortDesc" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5000)">
-                                        <fmt:message key="ui.obj.general.shortDescription" />
-                                    </label>
-                                </span><span class="input">
-                                    <div id="generalShortDesc"></div>
-                                </span></div>
-                            </span>
                             <span id="uiElement5100" class="outer optional">
                                 <div>
                                     <span class="label left">
@@ -338,6 +329,15 @@
                                         <div id="generalPreviewImageTable" interactive="true"></div>
                                     </div>
                                 </div>
+                            </span>
+                            <span id="uiElement5000" class="outer">
+                                <div><span class="label">
+                                    <label for="generalShortDesc" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5000)">
+                                        <fmt:message key="ui.obj.general.shortDescription" />
+                                    </label>
+                                </span><span class="input">
+                                    <div id="generalShortDesc"></div>
+                                </span></div>
                             </span>
                             <span id="uiElement1010" class="outer">
                             	<div><span id="generalDescLabel" class="label">
