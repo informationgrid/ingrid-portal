@@ -13,6 +13,9 @@
         <action type="update" dev="wemove" issue="3093">
             IGE: Change Kurzbezeichnung field position.
         </action>
+        <action type="fix" dev="wemove" issue="3105">
+            Darstellung der Webseiten Treffer fehlerhaft
+        </action>
     </release>
 
     <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
