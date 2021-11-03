@@ -6,22 +6,22 @@
     </properties>
 
     <body>
-    <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
-        <action type="update" dev="wemove" issue="2823">
+        <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
+          <action type="update" dev="wemove" issue="2823">
             IGE: Add geometry context to geo datasets.
-        </action>
-        <action type="update" dev="wemove" issue="3093">
+          </action>
+          <action type="update" dev="wemove" issue="3093">
             IGE: Change Kurzbezeichnung field position.
-        </action>
-        <action type="fix" dev="wemove" issue="3105">
+          </action>
+          <action type="fix" dev="wemove" issue="3105">
             Darstellung der Webseiten Treffer fehlerhaft
-        </action>
-        <action type="add" dev="wemove" issue="3109">
+          </action>
+          <action type="add" dev="wemove" issue="3109">
             MAPCLIENT: Import von geschützen Diensten
-        </action>
-    </release>
+          </action>
+        </release>
 
-    <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
+        <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
           <action type="update" dev="wemove" issue="1523">
             Portal: Weitere Anpassungen am HMDK Profil
           </action>
