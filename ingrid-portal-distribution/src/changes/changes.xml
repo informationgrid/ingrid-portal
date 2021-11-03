@@ -6,12 +6,19 @@
     </properties>
 
     <body>
-      <release version="5.9.1.1" date="2021-10-05" description="Release 5.9.1.1">
-        <action type="fix" dev="wemove" issue="2924">
-          Fix SSRF with XML External Entity (XXE) security thread in mapclient.
-        </action>
-      </release>
-      <release version="5.9.1" date="2021-08-05" description="Release 5.9.1">
+        <release version="5.9.1.2" date="2021-xx-xx" description="Release 5.9.1.2">
+          <action type="fix" dev="wemove" issue="3105">
+            Darstellung der Webseiten Treffer fehlerhaft
+          </action>
+        </release>
+
+        <release version="5.9.1.1" date="2021-10-05" description="Release 5.9.1.1">
+          <action type="fix" dev="wemove" issue="2924">
+            Fix SSRF with XML External Entity (XXE) security thread in mapclient.
+          </action>
+        </release>
+
+        <release version="5.9.1" date="2021-08-05" description="Release 5.9.1">
           <action type="fix" dev="wemove" issue="2608">
             Portal: Probleme nach Update auf 5.9.0
           </action>
