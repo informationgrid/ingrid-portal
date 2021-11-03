@@ -150,7 +150,13 @@
                 <a href="$detailLink" title="$stringTool.htmlescape("$MESSAGES.getString('common.detail.arrow.prefix') $rs.title")">
                     <span class="ic-ic-arrow arrow"></span>
                 </a>
-                #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_info_expand.vm")
+                #if(!$rs.url)
+                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_info_expand.vm")
+                #elseif($rs.url)
+                    <p>
+                        <a href="$rs.url" title="$rs.url">$!rs.url_str</a>
+                    </p>
+                #end
             </div>
         </div>
     #else
