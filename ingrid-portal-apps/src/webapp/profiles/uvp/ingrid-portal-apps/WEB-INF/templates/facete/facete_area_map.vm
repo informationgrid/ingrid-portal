@@ -22,7 +22,6 @@
     </li>
 </ul>
 
-#parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script>
     var osm = getOSMLayer('');
     var map = addLeafletMap([osm]);
