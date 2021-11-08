@@ -96,8 +96,10 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             console.debug("apply rule 4");
             if (value.indexOf("fromType") === 0) {
                 domClass.remove("timeRefSubTypeEditor", "hide");
+                applyRule3(registry.byId("timeRefSubType").get("value"));
             } else {
                 domClass.add("timeRefSubTypeEditor", "hide");
+                // hide second date field
                 applyRule3("");
             }
         },
