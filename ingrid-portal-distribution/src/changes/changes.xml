@@ -19,6 +19,9 @@
           <action type="add" dev="wemove" issue="3109">
             MAPCLIENT: Import von geschützen Diensten
           </action>
+          <action type="bug" dev="wemove" issue="3152">
+            IGE: Improve performance by only reindex syslists on codelist changes
+          </action>
         </release>
 
         <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">

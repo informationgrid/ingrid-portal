@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,6 +25,7 @@ package de.ingrid.mdek.quartz.jobs;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.List;
 
+import de.ingrid.codelists.model.CodeList;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -42,36 +43,37 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
 
     private static final Logger log = Logger.getLogger(UpdateCodeListsFromIGEJob.class);
     private ConnectionFacade connectionFacade;
-    
+
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext)
             throws JobExecutionException {
         log.info("Executing UpdateCodeListsFromIGEJob...");
-        
+
         CodeListService clService = getClServiceFromBean(jobExecutionContext);
         Long timestamp = getLastModifiedTimestampFromDb();
-        
+
         // if at least one iPlug was found/connected
         if (timestamp != null) {
-            Object modifiedCodelists = clService.updateFromServer(timestamp);
-            
+            List<CodeList> modifiedCodelists = clService.updateFromServer(timestamp);
+
             // update db with initial codelists from service if no codelist could be fetched
             // and there never has been an update to the db (timestamp does not exist!)
             if (modifiedCodelists == null && timestamp == -1) {
                 clService.persistToAll(clService.getCodeLists());
             }
-            
+
             // reindex codelist changes if codelists have changed or initially updated
-            if (modifiedCodelists != null || timestamp == -1) {
+            boolean hasNewCodelists = modifiedCodelists != null && modifiedCodelists.size() > 0;
+            if (hasNewCodelists || timestamp == -1) {
             	updateIndexForAllIPlugs();
             }
-            
+
             log.info("UpdateCodeListsFromIGEJob finished! (timestamp = " + timestamp + ", successful = " + (modifiedCodelists != null) + ")");
         } else {
             log.info("No iPlug connected to update codelists to!");
         }
     }
-    
+
     private void updateIndexForAllIPlugs() {
     	IMdekClientCaller caller = connectionFacade.getMdekClientCaller();
         List<String> iplugList = caller.getRegisteredIPlugs();
@@ -87,7 +89,7 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
 	         }
         }
     }
-    
+
     private boolean rebuildSyslists(String plugId, String catAdminUuid) {
         boolean rebuildSyslists = true;
         if (log.isDebugEnabled()) {
@@ -102,10 +104,10 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
 
     private Long getLastModifiedTimestampFromDb() {
         List<String> iplugList = connectionFacade.getMdekClientCaller().getRegisteredIPlugs();
-        
+
         if (iplugList.isEmpty())
             return null;
-        
+
         Long lowestTimestamp = null;
         for (String iplug : iplugList) {
             IngridDocument response = connectionFacade.getMdekCallerCatalog().getLastModifiedTimestampOfSyslists(iplug, getCatAdminUuid(iplug));
@@ -116,7 +118,7 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
         }
         return lowestTimestamp == null ? -1 : lowestTimestamp;
     }
-    
+
     private String getCatAdminUuid(String plugId) {
         try {
             IMdekCallerSecurity mdekCallerSecurity = connectionFacade.getMdekCallerSecurity();
@@ -127,7 +129,7 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
             return "";
         }
     }
-    
+
     public void setConnectionFacade(ConnectionFacade connectionFacade) {
         this.connectionFacade = connectionFacade;
     }
