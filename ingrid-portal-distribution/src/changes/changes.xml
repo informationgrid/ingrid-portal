@@ -10,6 +10,9 @@
           <action type="fix" dev="wemove" issue="3105">
             Darstellung der Webseiten Treffer fehlerhaft
           </action>
+          <action type="fix" dev="wemove">
+            Fix XXE Probleme im Portal und beim IGE.
+          </action>
         </release>
 
         <release version="5.9.2" date="2021-10-11" description="Release 5.9.2">
