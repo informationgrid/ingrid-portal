@@ -22,6 +22,9 @@
           <action type="bug" dev="wemove" issue="3152">
             IGE: Improve performance by only reindex syslists on codelist changes
           </action>
+          <action type="fix" dev="wemove">
+            Fix XXE Probleme im Portal und beim IGE.
+          </action>
         </release>
 
         <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
