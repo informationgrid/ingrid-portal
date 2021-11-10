@@ -34,6 +34,7 @@ import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -118,6 +119,11 @@ public class DetailPartPreparerIdfMetadataTest {
         // nameSpaceAware is false by default. Otherwise we would have to query
         // for the correct namespace for every evaluation
         factory.setNamespaceAware( true );
+        dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+        dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse( inputSource );
         return doc;
