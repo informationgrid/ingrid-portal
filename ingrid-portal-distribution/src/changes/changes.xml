@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.9.2.1" date="2021-11-11" description="Release 5.9.2.1">
+          <action type="fix" dev="wemove" issue="3161">
+            SSRF mit XML External Entity (XXE) Schwachstelle (2)
+          </action>
+        </release>
+
         <release version="5.9.2" date="2021-10-11" description="Release 5.9.2">
           <action type="update" dev="wemove" issue="1523">
             Portal: Weitere Anpassungen am HMDK Profil
