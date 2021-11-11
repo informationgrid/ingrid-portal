@@ -886,3 +886,63 @@ thead {
     float:right
   }
 }
+
+/* BKG Footer*/
+footer {
+  width: 100%;
+}
+
+.footer-menu-entries {
+  display: inherit;
+}
+span.ueber {
+  color: #003300;
+  font-weight: bold;
+}
+
+#navFunctionsWrapper h2 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+#navFunctionsWrapper ul li {
+  margin-bottom: 0px;
+}
+
+#navFunctionsWrapper h2, #navFunctionsWrapper a {
+  font-size: 14px !important;
+}
+#social-media-footer .socialmedia {
+  max-width: 1296px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media screen and (max-width: 64em) {
+  #navFunctionsPrint {
+    display:none;
+  }
+}
+
+@media only screen and (min-width: 64em) {
+  #footer #navFunctions li {
+    margin-bottom: 0;
+  }
+}
+
+@media only screen and (min-width: 37.563em) {
+  #social-media-footer {
+    margin-bottom: 1em !important;
+  }
+  #footer .copyright li {
+    margin-bottom: 0;
+    font-size: 1.2rem;
+  }
+}
+
+#footer li, #footer p {
+  font-size: 14px !important;
+}
+
+#footer li a {
+  padding-bottom: 0px !important;
+}

@@ -14,6 +14,7 @@
         #parse("/decorations/layout/ingrid/templates/header/head.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_meta_robots.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_script.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head_script_additional.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_style.vm")
     </head>
     <body>
