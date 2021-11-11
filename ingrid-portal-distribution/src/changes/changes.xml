@@ -10,6 +10,9 @@
           <action type="fix" dev="wemove" issue="3105">
             Darstellung der Webseiten Treffer fehlerhaft
           </action>
+          <action type="fix" dev="wemove" issue="3161">
+            SSRF mit XML External Entity (XXE) Schwachstelle (2)
+          </action>
           <action type="fix" dev="wemove">
             Fix XXE Probleme im Portal und beim IGE.
           </action>
