@@ -943,6 +943,15 @@ span.ueber {
   font-size: 14px !important;
 }
 
-#footer li a {
+#footer ul li::before {
+  content: unset;
+}
+
+#footer ul li a {
   padding-bottom: 0px !important;
+}
+
+svg.icon {
+  width: 14px;
+  height: 14px;
 }
