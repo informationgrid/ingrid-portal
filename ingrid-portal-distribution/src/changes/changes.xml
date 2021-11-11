@@ -13,6 +13,9 @@
           <action type="add" dev="wemove" issue="3109">
             MAPCLIENT: Import von geschützen Diensten
           </action>
+          <action type="fix" dev="wemove" issue="3161">
+            SSRF mit XML External Entity (XXE) Schwachstelle (2)
+          </action>
           <action type="fix" dev="wemove">
             Fix XXE Probleme im Portal und beim IGE.
           </action>
