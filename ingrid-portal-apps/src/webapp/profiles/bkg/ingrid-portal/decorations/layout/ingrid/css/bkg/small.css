@@ -80,14 +80,6 @@ body>div {
  font-size: 100%
 }
 
-p, th, h1, h2, h3, div {
- -ms-word-break: break-word;
- word-break: break-word;
- -moz-hyphens: auto;
- -webkit-hyphens: auto;
- hyphens: auto
-}
-
 html {
 }
 

@@ -64,7 +64,7 @@ a:hover .text, a:focus .text {
   text-decoration: underline;
 }
 a.icon:hover {
-  color: #0077b6;
+  color: #333333;
 }
 a.icon:hover .text {
   text-decoration: underline;
@@ -250,7 +250,7 @@ header {
 }
 .teaser-data a:hover .header, .teaser-data a:hover .arrow,
 .teaser-data a:focus .header, .teaser-data a:focus .arrow {
-  color: #0077b6;
+  color: #333333;
 }
 .teaser-data .helper.icon {
   margin-bottom: 24px;
@@ -733,6 +733,11 @@ header .menu-tab-row .menu-tab {
     color: #0077b6;
 }
 
+.search-filtered .teaser-data.is-active a:hover h2.header,
+.search-filtered .teaser-data.is-active a:hover .arrow {
+    color: #333333;
+}
+
 h4, h5 {
     color: #333333;
 }
@@ -949,4 +954,8 @@ span.ueber {
 
 #footer ul li a {
   padding-bottom: 0px !important;
+}
+
+.js-expander:hover, .js-expander-close:hover {
+  text-decoration: none;
 }
