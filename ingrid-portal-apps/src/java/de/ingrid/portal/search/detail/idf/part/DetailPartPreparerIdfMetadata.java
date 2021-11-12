@@ -1174,7 +1174,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     element.put("title", messages.getString("geothesaurus_spacial_reference"));
                     
                     ArrayList head = new ArrayList();
-                    head.add(messages.getString("geothesaurus_spacial_reference"));
+                    head.add("");
                     head.add(messages.getString("spatial_ref_value_x1"));
                     head.add(messages.getString("spatial_ref_value_y1"));
                     head.add(messages.getString("spatial_ref_value_x2"));
