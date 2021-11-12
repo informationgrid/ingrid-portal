@@ -15,6 +15,9 @@
         #if($linkUrl && $linkUrl.contains("@"))
             #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
+        #if($element.url == "/privacy.psml")
+            #set($linkUrl = "https://www.bkg.bund.de/DE/Service/Datenschutz/datenschutz.html")
+        #end
         <li><a href="$linkUrl" title="$linkTitle"><span class="text">$linkName</span></a></li>
       #end
     #end
