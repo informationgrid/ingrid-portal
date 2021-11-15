@@ -15,15 +15,17 @@
                 #set($coords = [])
                 #foreach($tmpCoord in $tmpCoords)
                     #set($tmpName = $tmpCoord.get(0))
-                    #set($tmpX1 = $tmpCoord.get(1).replace("\u00B0", "").split("/").get(0))
-                    #set($tmpY1 = $tmpCoord.get(1).replace("\u00B0", "").split("/").get(1))
-                    #set($tmpX2 = $tmpCoord.get(2).replace("\u00B0", "").split("/").get(0))
-                    #set($tmpY2 = $tmpCoord.get(2).replace("\u00B0", "").split("/").get(1))
-                    #if($tool.hasContent($tmpX1) && $tool.hasContent($tmpX2) && $tool.hasContent($tmpY1) && $tool.hasContent($tmpY2))
-                        #if(!$tmpName || $tmpName.isEmpty())
-                            #set($tmpName = $TOOL.getTitle())
+                    #if($tool.hasContent($tmpCoord.get(1)) && $tool.hasContent($tmpCoord.get(2)))
+                        #set($tmpX1 = $tmpCoord.get(1).replace("\u00B0", "").split("/").get(0))
+                        #set($tmpY1 = $tmpCoord.get(1).replace("\u00B0", "").split("/").get(1))
+                        #set($tmpX2 = $tmpCoord.get(2).replace("\u00B0", "").split("/").get(0))
+                        #set($tmpY2 = $tmpCoord.get(2).replace("\u00B0", "").split("/").get(1))
+                        #if($tool.hasContent($tmpX1) && $tool.hasContent($tmpX2) && $tool.hasContent($tmpY1) && $tool.hasContent($tmpY2))
+                            #if(!$tmpName || $tmpName.isEmpty())
+                                #set($tmpName = $TOOL.getTitle())
+                            #end
+                            #set($add = $coords.add(["'$tmpName'", $tmpX1 , $tmpY1, $tmpX2, $tmpY2]))
                         #end
-                        #set($add = $coords.add(["'$tmpName'", $tmpX1 , $tmpY1, $tmpX2, $tmpY2]))
                     #end
                 #end
                 #set($mapId = "_detail")
