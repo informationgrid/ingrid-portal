@@ -962,3 +962,7 @@ span.ueber {
 .js-expander:hover, .js-expander-close:hover {
   text-decoration: none;
 }
+
+body {
+  font-family: "bundessansweb", Arial, helvetica, sans-serif, "Droid Sans";
+}
