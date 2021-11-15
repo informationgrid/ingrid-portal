@@ -35,7 +35,7 @@
                 #parse("/WEB-INF/templates/detail/parts/metadata/presentation/presentation_marker.vm")
             #end
         #end
-        #renderTable($tmp)
+        #renderTable($tmp [0])
         #set($tmp = "")
     ## Administrative Einheit (Gemeindenummer)
         #renderTextListTable($MESSAGES.getString("t011_township.township_no") $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
