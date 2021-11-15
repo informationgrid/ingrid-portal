@@ -25,7 +25,7 @@
         </page>
         <page>
             <name>service-sitemap.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>help.psml</name>
