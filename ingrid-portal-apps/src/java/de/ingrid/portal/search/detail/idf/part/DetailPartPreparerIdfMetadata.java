@@ -1177,8 +1177,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     head.add("");
                     head.add(messages.getString("spatial_ref_value_x1"));
                     head.add(messages.getString("spatial_ref_value_y1"));
-                    head.add(messages.getString("spatial_ref_value_x2"));
-                    head.add(messages.getString("spatial_ref_value_y2"));
                     element.put("head", head);
                     ArrayList body = new ArrayList();
                     element.put("body", body);
@@ -1191,7 +1189,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     for (int j = 0; j < maxRows; j++) {
                         Node childNode = subNodeList.item(j);
                         ArrayList row = new ArrayList();
-                        
+
                         if(!subjectEntries.isEmpty()){
                             if (subjectEntries.get(j)!= null) {
                                 row.add(subjectEntries.get(j));
@@ -1201,39 +1199,23 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         } else {
                             row.add("");
                         }
-                        
-                        xpathExpression = "./gmd:westBoundLongitude";
-                        if (xPathUtils.nodeExists(childNode, xpathExpression)) {
-                            String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            row.add(notNull(value + "\u00B0"));
+
+                        if (xPathUtils.nodeExists(childNode, "./gmd:westBoundLongitude") && xPathUtils.nodeExists(childNode, "./gmd:southBoundLatitude")) {
+                            String valueW = xPathUtils.getString(childNode, "./gmd:westBoundLongitude").trim();
+                            String valueS = xPathUtils.getString(childNode, "./gmd:southBoundLatitude").trim();
+                            row.add(notNull(valueW) + "\u00B0/" + notNull(valueS) + "\u00B0") ;
                         } else {
                             row.add("");
                         }
-                        
-                        xpathExpression = "./gmd:southBoundLatitude";
-                        if (xPathUtils.nodeExists(childNode, xpathExpression)) {
-                            String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            row.add(notNull(value + "\u00B0"));
+
+                        if (xPathUtils.nodeExists(childNode, "./gmd:eastBoundLongitude") && xPathUtils.nodeExists(childNode, "./gmd:northBoundLatitude")) {
+                            String valueE = xPathUtils.getString(childNode, "./gmd:eastBoundLongitude").trim();
+                            String valueN = xPathUtils.getString(childNode,  "./gmd:northBoundLatitude").trim();
+                            row.add(notNull(valueE)  + "\u00B0/" + notNull(valueN) + "\u00B0");
                         } else {
                             row.add("");
                         }
-                        
-                        xpathExpression = "./gmd:eastBoundLongitude";
-                        if (xPathUtils.nodeExists(childNode, xpathExpression)) {
-                            String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            row.add(notNull(value + "\u00B0"));
-                        } else {
-                            row.add("");
-                        }
-                        
-                        xpathExpression = "./gmd:northBoundLatitude";
-                        if (xPathUtils.nodeExists(childNode, xpathExpression)) {
-                            String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            row.add(notNull(value + "\u00B0"));
-                        } else {
-                            row.add("");
-                        }
-                        
+
                         if (!isEmptyRow(row)) {
                             body.add(row);
                         }
