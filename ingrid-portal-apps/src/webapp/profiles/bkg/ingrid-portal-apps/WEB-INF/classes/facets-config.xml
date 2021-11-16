@@ -287,7 +287,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t04_search.searchterm:advmis</query>
                 <id>adv_true</id>
                 <parentId>adv</parentId>
-                <icon>ic-A</icon>
+                <icon>/decorations/layout/ingrid/images/template/adv.jpg</icon>
             </facet>
         </facets>
     </facet>
