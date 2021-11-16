@@ -966,3 +966,16 @@ span.ueber {
 body {
   font-family: "bundessansweb", Arial, helvetica, sans-serif, "Droid Sans";
 }
+
+.filters-active .button.pill:hover {
+  text-decoration: none;
+}
+
+.filters-active .button.pill:hover span[class^="ic-"]{
+  text-decoration: none;
+  color: #0077b6;
+}
+
+.filters-active .button.pill[type="reset"] span {
+  color: #0077b6 !important;
+}
