@@ -84,8 +84,10 @@ html {
 }
 
 h1, h2, h3, h4, h5, h6 {
+/*
  font-family: "bundessansweb", Arial, helvetica, sans-serif, "Droid Sans";
  font-weight: bold;
+*/
 }
 
 div, a, ul, li, h2 {

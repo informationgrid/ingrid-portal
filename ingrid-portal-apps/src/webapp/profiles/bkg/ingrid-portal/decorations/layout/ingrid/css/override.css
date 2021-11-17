@@ -817,9 +817,13 @@ thead {
 }
 
 .desktop__title a {
-  color: #000;
+  color: #0077b6;
   font-weight: bold;
   font-size: 20px;
+}
+
+.desktop__title a:hover {
+  color: #0077b6 !important;
 }
 
 @media screen and (max-width: 47.9375em) {
@@ -963,10 +967,6 @@ span.ueber {
   text-decoration: none;
 }
 
-body {
-  font-family: "bundessansweb", Arial, helvetica, sans-serif, "Droid Sans";
-}
-
 .filters-active .button.pill:hover {
   text-decoration: none;
 }
@@ -978,4 +978,12 @@ body {
 
 .filters-active .button.pill[type="reset"] span {
   color: #0077b6 !important;
+}
+
+header {
+  font-family: "bundessansweb", Arial, helvetica, sans-serif, "Droid Sans";
+}
+
+footer {
+  font-family: "bundessansweb", Arial, helvetica, sans-serif, "Droid Sans";
 }
