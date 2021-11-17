@@ -1,4 +1,9 @@
 ## render "Get XML"-link displayed next to the title
 #if ($rs.csw_link)
-    <a class="button outline pill" href='$rs.csw_link' title='$MESSAGES.getString('common.result.show.xml')'>XML</a>
+<p class="teaser-links-content">
+    <a class="icon" href="$rs.csw_link" title="$MESSAGES.getString('xml_link')" target="_blank" rel="noopener noreferrer">
+        <span class="ic-ic-download"></span>
+      <span class="text">$MESSAGES.getString('xml_link_label')</span>
+    </a>
+</p>
 #end

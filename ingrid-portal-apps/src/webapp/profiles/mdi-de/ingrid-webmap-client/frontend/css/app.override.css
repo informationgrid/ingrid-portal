@@ -1,0 +1,94 @@
+/* CATEGORY IMAGES*/
+[ga-topic] .ga-topics-sprite-themen {
+  background: url("/ingrid-webmap-client/frontend/prd/img/themen.png");
+  width: 140px;
+}
+
+.ng-binding{
+  text-transform: capitalize;
+}
+
+[ga-topic] .ga-topics-sprite-anbieter {
+  background: url("/ingrid-webmap-client/frontend/prd/img/anbieter.png");
+  width: 140px;
+}
+
+/* BACKGROUND IMAGES*/
+@media (max-width: 768px) {
+  [ga-background-selector] .ga-osmLayer {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-osmLayer.png");
+    background-size: 38px 38px;
+  }
+  [ga-background-selector] .ga-webatlasde_light {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-light.png");
+    background-size: 38px 38px;
+  }
+  [ga-background-selector] .ga-webatlasde_grau {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-light-grau.png");
+    background-size: 38px 38px;
+  }
+}
+@media (min-width: 769px) {
+  [ga-background-selector] .ga-osmLayer {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-osmLayer.png");
+    background-size: 90px 58px;
+  }
+  [ga-background-selector] .ga-webatlasde_light {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-light.png");
+    background-size: 90px 58px;
+  }
+  [ga-background-selector] .ga-webatlasde_grau {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-light-grau.png");
+    background-size: 90px 58px;
+  }
+}
+
+/* BACKGROUND POSITIONS*/
+[ga-background-selector] .ga-bg-layer-4 {
+  z-index: 1001;
+}
+[ga-background-selector] .ga-bg-layer-5 {
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  [ga-background-selector].ga-open .ga-bg-layer-4 {
+    -webkit-transform: translate3d(0, -245px, 0);
+            transform: translate3d(0, -245px, 0);
+    -ms-transform: translateY(-245px);
+  }
+  [ga-background-selector].ga-open .ga-bg-layer-5 {
+    -webkit-transform: translate3d(0, -294px, 0);
+            transform: translate3d(0, -294px, 0);
+    -ms-transform: translateY(-294px);
+  }
+}
+@media (min-width: 769px) {
+  [ga-background-selector].ga-open .ga-bg-layer-4 {
+    -webkit-transform: translate3d(-429px, 0, 0);
+            transform: translate3d(-429px, 0, 0);
+    -ms-transform: translateX(-429px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-bg-layer-5 {
+    -webkit-transform: translate3d(-530px, 0, 0);
+            transform: translate3d(-530px, 0, 0);
+    -ms-transform: translateX(-530px);
+    /* IE 9*/
+  }
+}
+
+@media (max-width: 480px) {
+  #pulldown .panel-body {
+    max-height: 95px;
+  }
+}
+
+.ga-full-screen.ga-full-screen-no-inputs #search-container,
+.ga-full-screen #logo,
+.ga-full-screen #toptools,
+.ga-full-screen #pulldown,
+.ga-full-screen #footer {
+  display: block;
+}
+

@@ -109,6 +109,15 @@
             <action>copy-dir</action>
             <src>ingrid-portal-mdek-application/</src>
         </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/frontend</src>
+            <dst>ingrid-webmap-client/frontend/</dst>
+        </file>
     </files>
     <sql>
         <execute>
@@ -136,6 +145,10 @@
         </execute>
         <execute>
             <![CDATA[DROP TABLE tmp_table;]]>
+        </execute>
+        <!-- Delete user default-page.psml -->
+        <execute>
+            <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';]]>
         </execute>
     </sql>
 </profile>

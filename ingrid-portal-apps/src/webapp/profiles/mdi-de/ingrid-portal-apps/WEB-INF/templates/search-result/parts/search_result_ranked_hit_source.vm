@@ -1,4 +1,0 @@
-<h6 class="no-margin">$MESSAGES.getString('common.result.source')</h6>
-<p>
-    $!rs.source
-</p>

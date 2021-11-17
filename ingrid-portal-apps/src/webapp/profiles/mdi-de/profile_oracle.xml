@@ -109,6 +109,15 @@
             <action>copy-dir</action>
             <src>ingrid-portal-mdek-application/</src>
         </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/frontend</src>
+            <dst>ingrid-webmap-client/frontend/</dst>
+        </file>
     </files>
     <sql>
         <execute>

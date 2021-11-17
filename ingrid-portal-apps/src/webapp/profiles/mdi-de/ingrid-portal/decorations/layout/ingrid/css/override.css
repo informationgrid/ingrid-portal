@@ -332,7 +332,7 @@ a.icon:hover {
   background-color: #ffc627;
 }
 .input-search .button.round {
-  background-color: #E50046;
+  background-color: #ffc627;
 }
 header {
   -webkit-border-image: -webkit-linear-gradient(to left, #246293, #0089C6) 0 1 100%;
@@ -699,7 +699,7 @@ footer hr {
   color: #0089C6;
 }
 .category {
-  margin: 72px 0 0;
+  margin: 32px 0 0;
 }
 
 .category .text-center h2, .teaser-data-projects .text-center h2 {
@@ -811,6 +811,9 @@ footer .button-up {
 header .logo {
   width: 17.125em;
   height: 80px;
+}
+.shrink header .logo img {
+  height: 52px !important;
 }
 header .logo a {
   left: 70px;
@@ -1199,4 +1202,94 @@ header .menu-tab-row .menu-tab {
 
 #searchResult .teaser-data a:last-child .arrow {
   bottom: 0;
+}
+
+/* search */
+.teaser-data .arrow {
+  font-size: 40px;
+}
+
+/* detail */
+.search-filtered .table {
+  margin-bottom: 4px;
+}
+
+.search-filtered .table table {
+  background-color: #F6F6F6;
+}
+
+.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child {
+  color: #1D4B7B;
+}
+
+.search-filtered .table h4, .search-filtered .table h5 {
+  color: #1D4B7B;
+}
+
+.search-filtered .teaser-data.is-active h2.header,
+.search-filtered .teaser-data.is-active .arrow {
+  color: #1D4B7B;
+}
+
+h4, h5 {
+  color: #3a566d;
+}
+
+.results-index .result-text {
+  color: #3a566d;
+}
+
+.js-expander-toggle-all a.icon:hover,
+.js-expander-toggle-all a.icon.is-active {
+  background: #1D4B7B;
+  color: #FFFFFF;
+}
+.js-expander-toggle-all a.icon:focus {
+  background: #006ec5;
+  color: #FFFFFF;
+}
+.nr-results {
+  color: #3a566d;
+}
+
+span.icon span {
+  color: #006ec5;
+}
+
+/*planGIS Anpassungen*/
+.social {
+  display:none!important;
+}
+footer {
+  margin-top: 0px !important;
+}
+@media print, screen and (min-width: 1280px) {
+  .home-wrapper {
+    background-position: center bottom !important;
+    background-size: contain !important;
+    background-image: url('/decorations/layout/ingrid/images/template/banner.svg') !important;
+  }
+}
+@media print, screen and (max-width: 1280px) {
+  .home-wrapper {
+    background-size: cover !important;
+    background-position: left bottom !important;
+    background-image: url('/decorations/layout/ingrid/images/template/banner_tablet.svg') !important;
+  }
+}
+
+@media print, screen and (max-width: 1023px) {
+  .home-wrapper {
+    background-size: cover !important;
+    background-position: left bottom !important;
+    background-image: url('/decorations/layout/ingrid/images/template/banner_mobil.svg') !important;
+  }
+}
+
+div.paging.caption {
+  margin-bottom: 10px;
+}
+
+img {
+  max-width: 100% !important;
 }
