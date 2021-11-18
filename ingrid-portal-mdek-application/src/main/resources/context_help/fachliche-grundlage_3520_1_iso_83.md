@@ -26,22 +26,18 @@ Die fortlaufende Aktualisierung erfolgt durch Auswertungen der jüngsten Edition
 ATKIS Basis-DLM der Bundesländer, der Digitalen Topographischen Karte 1:200 000 (DTK200) und
 anderen Quellen.
 
-ISO Abbildung
+#ISO Abbildung
 
-Registerkarte Text
+##Registerkarte Text
 
 allgemeine Aussagen des Datenerzeugers zur Herkunft des Datenbestands
 
 Domain: 83 (gmd:statement)
 
-Feld ID: 3520
+#ISO Abbildung
 
-ISO Abbildung
-
-Registerkarte Verweis
+##Registerkarte Verweis
 
 Adresse für den Online-Zugriff unter Verwendung einer URL (Uniform Resource Locator)
 
 Domain: 397 (gmd:linkage)
-
-Feld ID: ?
