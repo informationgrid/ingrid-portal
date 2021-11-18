@@ -8,6 +8,9 @@
     <body>
         <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
           <action type="update" dev="wemove" issue="2073">
+            IGE: Adapt helptext of "Fachliche Grundlage"
+          </action>
+          <action type="update" dev="wemove" issue="2073">
             IGE: Fix helptext of "Fachliche Grundlage"
           </action>
           <action type="update" dev="wemove" issue="1989">
