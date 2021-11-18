@@ -7,12 +7,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-  
+
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-  
+
   http://ec.europa.eu/idabc/eupl5
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%        
+<%
     response.setHeader("Pragma", "No-cache");
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setDateHeader("Expires", -1);
@@ -36,7 +36,7 @@
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
 
 <html dir="ltr">
-    
+
     <head>
         <title>InGrid Editor</title>
         <link rel="shortcut icon" href="img/iconLogo.gif" type="image/x-icon">
@@ -49,7 +49,7 @@
             var initJumpToNodeId = '<%= request.getParameter("nodeId") == null ? "" : request.getParameter("nodeId") %>';
             var initJumpToNodeType = '<%= request.getParameter("nodeType") == null ? "" : request.getParameter("nodeType")%>';
             var selenium = '<%= request.getParameter("selenium") == null ? false : true %>';
-            var isRelease = true; 
+            var isRelease = true;
         </script>
 
         <!-- DWR Scripts -->
@@ -85,6 +85,7 @@
         <script type='text/javascript' src='dwr/interface/RDFService.js'></script>
         <script type='text/javascript' src='dwr/interface/HelpService.js'></script>
         <script type='text/javascript' src='dwr/interface/TreeService.js'></script>
+        <script type='text/javascript' src='dwr/interface/LFSService.js'></script>
         <script type='text/javascript' src='dwr/interface/GetCapabilitiesService.js'></script>
         <script type='text/javascript' src='dwr/interface/CatalogManagementService.js'></script>
         <script type='text/javascript' src='dwr/interface/ExportService.js'></script>
@@ -93,22 +94,22 @@
         <script type='text/javascript' src='dwr/interface/HttpService.js'></script>
         <script type='text/javascript' src='dwr/interface/StatisticService.js'></script>
         <script type='text/javascript' src='dwr/interface/UserRepoManager.js'></script>
-        
+
         <script type="text/javascript">
             // -> allow all to use the IGE
             //if (!(dojo.isChrome || dojo.isIE >= 7 || dojo.isFF >= 3.6)) {
             //    document.location.href = "not_supported_browser.jsp"
             //}
-            
+
    			// GeneralTopics registers functions to specific events
             require(["ingrid/init", "ingrid/hierarchy/GeneralTopics"], function(Init) {
-                Init.start();               
+                Init.start();
             });
         </script>
-        
+
     </head>
     <body class="claro">
-		<!-- SPLIT/BORDER CONTAINER START --> 
+		<!-- SPLIT/BORDER CONTAINER START -->
 		<div id="contentContainer" class="contentSection">
 			<div id="headerContainer">
                 <div id="logoContainer">

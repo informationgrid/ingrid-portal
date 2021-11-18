@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,6 +22,7 @@
  */
 define({
     "dialog.simulation.parameter.title": "Simulationsparameter/-Größe",
+    "dialog.lfs.link.parameter.title": "Links zum Langfristspeicher",
 
     "ui.obj.baw.auftragsnummer.title": "PSP-Element",
     "ui.obj.baw.auftragsnummer.help": "PSP-Element",
@@ -53,6 +54,11 @@ define({
     "ui.obj.baw.simulation.timestep.help": "Zeitschrittgröße der Simulation in Sekunden",
     "ui.obj.baw.simulation.spatial.dimensionality.title": "Räumliche Dimensionalität",
     "ui.obj.baw.simulation.spatial.dimensionality.help": "Räumliche Dimensionalität der Simulation",
+    "ui.obj.baw.lfs.link.table.title": "Links zum LFS",
+    "ui.obj.baw.lfs.link.table.help": "Während Metadatenerfassung mit IGE sollen die Metadatenerfasser die Möglichkeit haben, die beschriebenen Daten in einem schreibgeschützten Bereich auf dem Dateisystem zu kopieren.<br><br>Es können nur Einträge hinzugefügt werden, wenn die Felder PSP-Element und Streckenabschnitte ausgefüllt wurden.",
+    "ui.obj.baw.lfs.link.table.new.row": "Hinzufügen",
+    "ui.obj.baw.lfs.link.table.new.row.tooltip": "Einträge können erst dann hinzugefügt werden, wenn die Felder PSP-Element und Streckenabschnitte ausgefüllt wurden.",
+    "ui.obj.baw.lfs.link.table.column.link": "Link",
 
     "ui.sysList.3950000": "BAW - Räumliche Dimensionalität",
     "ui.sysList.3950001": "BAW - Simulationsverfahren",

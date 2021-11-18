@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -56,7 +56,7 @@ define([
         ItemFileWriteStore, ItemFileReadStore, UtilDOM, UtilSyslist, UtilStore, Memory){
 
     gridManager = {};
-        
+
     return declare(null, {
 
             uniqueGridId: 0,
@@ -89,7 +89,7 @@ define([
                     }
                 }
 
-                var gridData = deferred; // can be a promise or the actual data! 
+                var gridData = deferred; // can be a promise or the actual data!
                 when(gridData, function(data) {
                     var struct = [];
                     var sortable = false;
@@ -242,7 +242,7 @@ define([
                 if (selectProperties.autoComplete === "false") {
                 	selectProperties.autoComplete = false;
                 }
-                
+
                 if (!selectProperties.queryExpr) {
                 	// search 'contains' by default
                 	selectProperties.queryExpr = "*${0}*";
@@ -507,7 +507,7 @@ define([
                         label: 'value'
                     }
                 };
-                
+
                 if (additionalField.useSyslist) {
                     def = UtilSyslist.readSysListData(additionalField.useSyslist).then(function(entry) {
                         var entries = [];
@@ -526,13 +526,13 @@ define([
                         UtilStore.updateWriteStore(additionalField.id, entries, storeProps.data);
                     });
                     storeProps.data.items = [];
-                    
+
                 } else {
                     storeProps.data.items = additionalField.listEntries; //data;
                 }
-                
+
                 var store = new ItemFileReadStore(storeProps);
-                
+
                 var elementProperties = {
                         id: this.additionalFieldPrefix + additionalField.id,
                         name: additionalField.name,
@@ -543,17 +543,17 @@ define([
                         required: false
                         //sortByLabel: false
                 };
-                
+
                 if (additionalField.isExtendable == true)
                     var inputWidget = new ComboBox(elementProperties);
                 else
                     var inputWidget = new FilteringSelect(elementProperties);
-                
+
                 inputWidget.startup();
                 if (def) {
                     inputWidget.promiseInit = def;
                 }
-                
+
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
 
@@ -609,6 +609,32 @@ define([
                 registry.byId(additionalField.id).hideColumn("topicId");
             },
 
+        createTableLink: function(tableId, linkText, dialogLocation, dialogTitle, linkTooltip) {
+            var linkOnClick = "require('ingrid/dialog').showPage('" + dialogTitle + "', '" + dialogLocation + "?c=' + userLocale, 600, 300, true, {});";
+
+            var span = document.createElement("span");
+            span.setAttribute("class", "functionalLink");
+
+            var img = document.createElement("img");
+            img.setAttribute("src", "img/ic_fl_popup.gif");
+            img.setAttribute("width", "10");
+            img.setAttribute("height", "9");
+            img.setAttribute("alt", "Popup");
+
+            var link = document.createElement("a");
+            link.setAttribute("id", tableId + "Link");
+            link.setAttribute("href", "javascript:void(0);");
+            link.setAttribute("onclick", linkOnClick);
+            link.setAttribute("title", linkTooltip ? linkTooltip : linkText + " [Popup]");
+            link.textContent = linkText;
+
+            span.appendChild(img);
+            span.appendChild(link);
+
+            var node = dom.byId(tableId).parentElement;
+            construct.place(span, node, 'before');
+        },
+
             addSurroundingContainer: function( /*DomNode*/ nodeToInsert, additionalField, type, linkInfo) {
                 // Create the following dom structure:
                 // <span id="uiElementAdd${additionalField.id}" class="outer" type="optional">
@@ -623,7 +649,7 @@ define([
                 //       <a></a>
                 //     </span>
                 //     <span class="input">
-                //       < ingrid:ValidationTextbox or ingrid:Select (or ...) depending on ${additionalField.type} /> 
+                //       < ingrid:ValidationTextbox or ingrid:Select (or ...) depending on ${additionalField.type} />
                 //     </span>
                 //   </div>
                 // </span>
@@ -697,7 +723,7 @@ define([
                 // Create the following dom structure:
                 // <span id="uiElementAdd${additionalField.id}" class="outer" type="optional">
                 //   <div>
-                //     < ingrid:Checkbox or ... depending on ${additionalField.type} /> 
+                //     < ingrid:Checkbox or ... depending on ${additionalField.type} />
                 //     <label class="inActive">
                 //       ${additionalField.name}
                 //     </label>
@@ -738,7 +764,7 @@ define([
                 // Create the following dom structure:
                 // <span id="uiElementAdd${additionalField.id}" class="outer" type="optional">
                 //   <div>
-                //     < ingrid:Checkbox or ... depending on ${additionalField.type} /> 
+                //     < ingrid:Checkbox or ... depending on ${additionalField.type} />
                 //     <label class="inActive">
                 //       ${additionalField.name}
                 //     </label>
@@ -784,7 +810,7 @@ define([
                     // mark field as additional for easier saving data
                     domClass.add(nodeToInsert, "additionalField");
                     nodeToInsert.setAttribute("style", "margin-left: 10px;");
-                    
+
                     uiPaddingSubSpan.appendChild(nodeToInsert);
 
                     var radioLabelElement = document.createElement("label");

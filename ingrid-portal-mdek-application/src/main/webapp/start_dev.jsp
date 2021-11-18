@@ -7,12 +7,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-  
+
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-  
+
   http://ec.europa.eu/idabc/eupl5
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,7 +30,7 @@
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
 
 <html dir="ltr">
-    
+
     <head>
         <title>InGrid Editor</title>
         <link rel="shortcut icon" href="img/iconLogo.gif" type="image/x-icon">
@@ -43,7 +43,7 @@
             var initJumpToNodeId = '<%= request.getParameter("nodeId") == null ? "" : request.getParameter("nodeId") %>';
             var initJumpToNodeType = '<%= request.getParameter("nodeType") == null ? "" : request.getParameter("nodeType")%>';
             var selenium = '<%= request.getParameter("selenium") == null ? false : true %>';
-            var isRelease = false; 
+            var isRelease = false;
         </script>
 
         <!-- DWR Scripts -->
@@ -60,7 +60,7 @@
         <script type="text/javascript" src="js/leaflet/leaflet.js"></script>
         <script type="text/javascript" src="js/leaflet/leaflet-areaselect.js"></script>
         <link rel="stylesheet" href="js/leaflet/leaflet.css" />
-        
+
         <!-- DWR Services -->
         <script type='text/javascript' src='dwr/interface/UtilityService.js'></script>
         <script type='text/javascript' src='dwr/interface/CatalogService.js'></script>
@@ -72,6 +72,7 @@
         <script type='text/javascript' src='dwr/interface/RDFService.js'></script>
         <script type='text/javascript' src='dwr/interface/HelpService.js'></script>
         <script type='text/javascript' src='dwr/interface/TreeService.js'></script>
+        <script type='text/javascript' src='dwr/interface/LFSService.js'></script>
         <script type='text/javascript' src='dwr/interface/GetCapabilitiesService.js'></script>
         <script type='text/javascript' src='dwr/interface/CatalogManagementService.js'></script>
         <script type='text/javascript' src='dwr/interface/ExportService.js'></script>
@@ -89,12 +90,12 @@
 
 			// GeneralTopics registers functions to specific events
         	require(["ingrid/init", "ingrid/hierarchy/GeneralTopics"], function(Init) {
-	            Init.start();	            
+	            Init.start();
         	});
         </script>
     </head>
     <body class="claro">
-		<!-- SPLIT/BORDER CONTAINER START --> 
+		<!-- SPLIT/BORDER CONTAINER START -->
 		<div id="contentContainer" class="contentSection">
 			<div id="headerContainer">
                 <div id="logoContainer">
@@ -127,4 +128,4 @@
 		<div id="blockInputDiv" style="position: absolute; top: 0px; left: 0px; width: 100%; height:100%; z-index: 99; visibility:hidden"></div>
     </body>
 </html>
-	
+

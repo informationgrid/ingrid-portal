@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,8 +32,9 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisSimulationMdFields",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
-    "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
+    "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks"
+], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks) {
 
     return lang.mixin(behaviours, {
 
@@ -85,7 +86,12 @@ define([
         /**
          * Extra validation rules for BAW-MIS
          */
-        bawValidationRules: bawValidationRules
+        bawValidationRules: bawValidationRules,
+
+        /**
+         * Field for contacting REST-API to move files to LFS
+         */
+        bawLFSLinks: bawLFSLinks
 
     });
 });
