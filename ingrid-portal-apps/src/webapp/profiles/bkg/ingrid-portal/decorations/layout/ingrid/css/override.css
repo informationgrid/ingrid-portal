@@ -75,7 +75,8 @@ a.icon:hover .text {
   height: unset;
 }
 .shrink header .logo a {
-  top: 5px;
+  top: 0px;
+  margin: 22px 0 22px;
 }
 .button {
   background-color: #0077b6;
@@ -170,13 +171,13 @@ header {
 }
 .banner.home {
   padding-top: 0;
-  background: linear-gradient(135deg, #EEEEEE 0%, #0077b6 65%);
+  background: linear-gradient(135deg, #EEEEEE 0%, #0077b6 80%);
 }
 .banner.home .dark h1, .banner.home .dark h2, .banner.home .dark p, .banner.home .dark a, .banner.home .dark abbr{
   color: #FFFFFF;
 }
 .banner.search {
-  background: linear-gradient(135deg, #EEEEEE 0%, #0077b6 65%);
+  background: linear-gradient(135deg, #EEEEEE 0%, #0077b6 80%);
 }
 .about {
   margin-bottom: 0;
@@ -648,12 +649,9 @@ header .menu-tab-row .menu-tab {
   header {
     height: 80px;
   }
-  header .logo a {
-    top: 5px !important;
-  }
   header .menu-tab-row .menu-tab {
     width: 55px;
-    height: 91px;
+    height: 135px;
   }
   header .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"], header .menu-tab-row .menu-tab .link-menu-tab [class*=" ic-"] {
     left: 7px;
@@ -776,7 +774,8 @@ footer .footer-buttons-bar .login-buttons .login-form {
 }
 
 header .logo a {
-  top: 10px;
+  top: 0px;
+  margin: 22px 0 22px;
 }
 
 .banner.home .home-wrapper {
@@ -790,10 +789,10 @@ header .logo a {
 }
 
 .shrink header {
-  height: 95px;
+  height: 138px;
 }
 .shrink .menu-tab-row .menu-tab {
-  height: 91px;
+  height: 134px;
 }
 .shrink .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"] {
   top: -34px;
@@ -812,11 +811,8 @@ thead {
 
 .desktop__title {
   position: relative;
-  top: 45px;
-  left: 85px;
-}
-
-.desktop__title a {
+  left: 24px;
+  top: 12px;
   color: #0077b6;
   font-weight: bold;
   font-size: 20px;
@@ -826,54 +822,44 @@ thead {
   color: #0077b6 !important;
 }
 
+.desktop__title a strong {
+  color: #333333;
+}
+
 @media screen and (max-width: 47.9375em) {
   header {
-    height: 95px;
+    height: 140px;
   }
 }
 
 @media screen and (max-width: 559px) {
   .filter {
-    top: 95px;
-  }
-  .desktop__title a {
-    font-size: 16px;
+    top: 140px;
   }
 }
 
 @media print, screen and (min-width: 35em) {
   .filter {
-    top: 95px;
-  }
-  .desktop__title {
-    left: 80px;
+    top: 139px;
   }
 }
 
 @media print, screen and (min-width: 48em) {
   .filter {
-    top: 120px;
-  }
-  .desktop__title {
-    top: 55px;
-    left: 90px;
-  }
-  .shrink .desktop__title {
-    top: 45px;
-    left: 80px;
+    top: 150px;
   }
 }
 
 @media screen and (max-width: 63.9375em) {
   .shrink .filter {
     position: fixed !important;
-    top: 95px !important;
+    top: 138px !important;
   }
-  .header-menu-open {
-    top: 7px;
+  .shrink .header-menu-open {
+    top: 0px;
   }
-  .header-menu-close {
-    padding: 25px 14px 0 0 !important;
+  .header-menu-close, .shrink .header-menu-close {
+    padding: 55px 14px 0 0 !important;
   }
 }
 
@@ -884,18 +870,20 @@ thead {
     max-height: 80vh;
   }
   
-  .desktop__title {
-    top: 45px;
-    left: 0;
-    float:right
-  }
   .desktop__title a {
     font-size: 30px;
   }
   .shrink .desktop__title {
-    top: 35px;
-    left: 0;
-    float:right
+    top: 0;
+  }
+}
+
+@media print, screen and (min-width:78em) {
+  .desktop__title {
+    top: 40px !important;
+  }
+  .desktop__title a {
+    font-size: 36px;
   }
 }
 
@@ -986,4 +974,72 @@ header {
 
 footer {
   font-family: "bundessansweb", Arial, helvetica, sans-serif, "Droid Sans";
+}
+
+.menu-tab-row .menu-tab .link-menu-tab {
+  top: 80px;
+}
+
+@media print, screen and (min-width: 35em) {
+  header {
+    height: 139px;
+  }
+  .header-menu-open button, .shrink .header-menu-open button {
+    margin: 44px 0 0 0;
+  }
+}
+
+@media print, screen and (min-width: 48em) {
+  header {
+    height: 150px;
+  }
+  header .menu-tab-row .menu-tab {
+    height: 146px;
+  }
+  .menu-tab-row .menu-tab .link-menu-tab {
+    top: 70px;
+  }
+  .shrink .menu-tab-row .menu-tab .link-menu-tab {
+    top: 80px;
+  }
+  
+  .desktop__title {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 47.9375em) {
+  .shrink .menu-tab-row .menu-tab .link-menu-tab {
+    top: 80px;
+  }
+}
+
+@media print, screen and (min-width: 64em) {
+  header {
+    height: 161px;
+  }
+  header .menu-tab-row .menu-tab {
+    height: 157px;
+  }
+  .header-menu-close, .shrink .header-menu-close {
+    padding: 45px 14px 0 0 !important;
+  }
+  header .logo a {
+    margin: 32px 0 22px;
+  }
+}
+
+.shrink .filter {
+  top: 10rem;
+}
+
+.mobile__title {
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+  background: #FFFFFF;
+}
+
+.banner.home h1, .category .text-center h2 {
+  text-transform: none;
 }
