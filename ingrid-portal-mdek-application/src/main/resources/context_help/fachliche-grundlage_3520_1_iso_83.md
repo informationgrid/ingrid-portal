@@ -16,7 +16,7 @@ einem Dokument hinterlegt werden.
 HINWEIS: Für genauere Angaben sind die Felder _Datenquelle_  und _Herstellungsprozess_ zu verwenden.
 
 (INSPIRE-Pflichtfeld für Datasets und Data series)
-## Beispiel:
+## Beispiele:
 
 Kombination verschiedenster Vektordatenquellen zu einem harmonisierten digitalen
 kartographischen Modell.
@@ -26,10 +26,22 @@ Die fortlaufende Aktualisierung erfolgt durch Auswertungen der jüngsten Edition
 ATKIS Basis-DLM der Bundesländer, der Digitalen Topographischen Karte 1:200 000 (DTK200) und
 anderen Quellen.
 
-# ISO Abbildung
+ISO Abbildung
 
 Registerkarte Text
 
 allgemeine Aussagen des Datenerzeugers zur Herkunft des Datenbestands
 
+Domain: 83 (gmd:statement)
+
+Feld ID: 3520
+
+ISO Abbildung
+
+Registerkarte Verweis
+
+Adresse für den Online-Zugriff unter Verwendung einer URL (Uniform Resource Locator)
+
 Domain: 397 (gmd:linkage)
+
+Feld ID: ?
