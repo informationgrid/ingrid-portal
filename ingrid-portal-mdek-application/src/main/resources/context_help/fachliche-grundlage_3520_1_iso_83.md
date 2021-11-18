@@ -34,8 +34,6 @@ allgemeine Aussagen des Datenerzeugers zur Herkunft des Datenbestands
 
 Domain: 83 (gmd:statement)
 
-# ISO Abbildung
-
 ## Registerkarte Verweis
 
 Adresse für den Online-Zugriff unter Verwendung einer URL (Uniform Resource Locator)
