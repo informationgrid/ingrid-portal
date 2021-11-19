@@ -1043,3 +1043,7 @@ footer {
 .banner.home h1, .category .text-center h2 {
   text-transform: none;
 }
+
+.anchor {
+  top: -178px;
+}
