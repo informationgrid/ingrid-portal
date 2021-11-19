@@ -189,18 +189,20 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         if(urlValidator.isValid(paramURL)) {
             URL url = new URL(paramURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            InputStream inStreamConvert = con.getInputStream();
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            if (null != con.getContentType()) {
-                byte[] chunk = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                    os.write(chunk, 0, bytesRead);
+            if(con.getContentType().indexOf("image/") > -1) {
+                InputStream inStreamConvert = con.getInputStream();
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                if (null != con.getContentType()) {
+                    byte[] chunk = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                        os.write(chunk, 0, bytesRead);
+                    }
+                    os.flush();
+                    URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                            Base64.getEncoder().encodeToString(os.toByteArray()));
+                    response.getWriter().write(dataUri.toString());
                 }
-                os.flush();
-                URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                        Base64.getEncoder().encodeToString(os.toByteArray()));
-                response.getWriter().write(dataUri.toString());
             }
         }
     }
