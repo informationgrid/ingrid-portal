@@ -1,4 +1,0 @@
-<a target="_blank" class="mq-show-xxl" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-    <img class="mobile__logo-x" src="/decorations/layout/ingrid/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')">
-</a>
-<div class="container">

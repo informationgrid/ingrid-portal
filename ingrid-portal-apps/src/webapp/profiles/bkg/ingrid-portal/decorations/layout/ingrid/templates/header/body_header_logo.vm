@@ -1,11 +1,20 @@
-<div class="header__widgets__section">
-    <a target="_blank" class="header__widget header__logo" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')">
-    </a>
-</div>
-<div class="header__widgets__section">
-    <a class="mq-hide-xxl desktop__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="Startseite von BKG-MIS aufrufen ">
-        <p class="main__title">MetadatenInformationsSystem</p>
-    </a>
-    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="Startseite von BKG-MIS aufrufen "><span class="mq-show-s">MIS</span><span class="mq-hide-s">MetadatenInformationsSystem</span></a>
+<div class="columns xsmall-15 small-15 medium-15 large-14 xlarge-15">
+    <div class="row">
+      <div class="columns xsmall-20 small-17 medium-17 large-17 xlarge-10">
+        <div class="logo" role="banner">
+            <a target="_blank" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                <img src="/decorations/layout/uvp/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
+            </a>
+        </div>
+      </div>
+      <div class="columns xsmall-4 small-7 medium-7 large-7 xlarge-13">
+        <div class="desktop__title">
+            <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="Startseite von BKG-MIS aufrufen ">
+                <span>
+                    <strong>M</strong>etadaten<br class="hide-for-xlarge"><strong>I</strong>nformations<br class="hide-for-xlarge"><strong>S</strong>ystem
+                </span>
+            </a>
+        </div>
+     </div>
+    </div>
 </div>
