@@ -130,7 +130,7 @@ else
         fi
 
         # Profile extends UVP and NUMIS layout
-        if [ "$PORTAL_PROFILE" == "portalu_rp" ] || [ "$PORTAL_PROFILE" == "up_sh" ] || [ "$PORTAL_PROFILE" == "metaver_md" ] || [ "$PORTAL_PROFILE" == "baw_doi" ] || [ "$PORTAL_PROFILE" == "baw_mis" ] || [ "$PORTAL_PROFILE" == "mdi-de" ]; then
+        if [ "$PORTAL_PROFILE" == "bkg" ] || [ "$PORTAL_PROFILE" == "portalu_rp" ] || [ "$PORTAL_PROFILE" == "up_sh" ] || [ "$PORTAL_PROFILE" == "metaver_md" ] || [ "$PORTAL_PROFILE" == "baw_doi" ] || [ "$PORTAL_PROFILE" == "baw_mis" ] || [ "$PORTAL_PROFILE" == "mdi-de" ]; then
             echo "Copying profile files from parent (uvp) into portal directories ..."
             cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
             cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps

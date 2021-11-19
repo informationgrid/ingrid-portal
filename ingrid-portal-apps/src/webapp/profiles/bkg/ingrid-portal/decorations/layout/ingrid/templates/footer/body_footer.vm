@@ -1,6 +1,6 @@
 #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
 <footer id="footer">
-    <div id="navFunctionsWrapper" class="row ob-box-wide ob-box-padded ob-box-center">
+    <div id="navFunctionsWrapper" class="row">
       <div class="medium-7 columns">
         <h2>Diese Seite</h2>
         <ul id="navFunctions">
@@ -18,26 +18,25 @@
       </div>
     </div>
     <div id="social-media-footer">
-      <div class="socialmedia ob-box-wide ob-box-padded ob-box-center">
-          <h2 class="aural">Service</h2>
-          <ul class="columns hide-for-small-only">
-            <li class="navTwitter"><a class="external" href="https://twitter.com/BKG_Bund" title="Externer Link&nbsp;zum Twitter-Account des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Twit­ter</a></li>
-            <li class="navInstagram"><a class="external" href="https://www.instagram.com/bkg.bund" title="Externer Link&nbsp;zum Instagram-Kanal des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Ins­ta­gram</a></li>
-            <li class="navXing"><a class="external" href="https://www.xing.com/companies/bundesamtfürkartographieundgeodäsie" title="Externer Link&nbsp;zum XING-Profil des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Xing</a></li>
-            <li class="navYouTube"><a class="external" href="https://www.youtube.com/user/pressebkg" title="Externer Link&nbsp;zum YouTube-Kanal des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">You­tu­be</a></li>
-            <li class="navRSSFeed"><a href="http://www.bkg.bund.de/DE/Aktuelles/RSS-Feeds/rss-feeds.html" target="_blank">RSS</a></li>
-          </ul>
+      <div class="socialmedia">
+        <h2 class="aural">Service</h2>
+        <ul class="columns hide-for-xsmall-only hide-for-small-only">
+          <li class="navTwitter"><a class="external" href="https://twitter.com/BKG_Bund" title="Externer Link&nbsp;zum Twitter-Account des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Twit&shy;ter</a></li>
+          <li class="navLinkedIn"><a class="external" href="https://www.linkedin.com/company/bkg-bund" title="Externer Link&nbsp;zu unserer Seite auf LinkIn (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Lin&shy;ke&shy;dIn</a></li>
+          <li class="navInstagram"><a class="external" href="https://www.instagram.com/bkg.bund" title="Externer Link&nbsp;zum Instagram-Kanal des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Ins&shy;ta&shy;gram</a></li>
+          <li class="navXing"><a class="external" href="https://www.xing.com/companies/bundesamtfürkartographieundgeodäsie" title="Externer Link&nbsp;zum XING-Profil des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Xing</a></li>
+          <li class="navYouTube"><a class="external" href="https://www.youtube.com/user/pressebkg" title="Externer Link&nbsp;zum YouTube-Kanal des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">You&shy;tu&shy;be</a></li>
+          <li class="navRSSFeed"><a href="http://www.bkg.bund.de/DE/Aktuelles/RSS-Feeds/rss-feeds.html" target="_blank">RSS</a></li>
+        </ul>
       </div>
     </div>
-    <div class="copyright row ob-box-wide ob-box-padded ob-box-center">
-      <div class="small-1 medium-2 columns bkg-logo ">
-        <a target="_blank" href="https://www.bkg.bund.de/DE/Home/home.html" title="BKG Webseite">
-            <img src="/decorations/layout/ingrid/images/template/bkg_logo.jpg" alt="Logo">
-        </a>
+    <div class="copyright row">
+      <div class="xsmall-24 small-6 medium-3 columns bkg-logo">
+        <img src="/decorations/layout/ingrid/images/template/bkg_logo.png" alt="BKG">
       </div>
-      <div class="legal-links small-12 medium-10 columns">
+      <div class="legal-links small-18 medium-21 columns">
         <div class="row">
-          <div class="columns hide-for-small-only">
+          <div class="columns hide-for-xsmall-only hide-for-small-only">
               #parse("/decorations/layout/ingrid/templates/footer/body_footer_menu.vm")
           </div>
         </div>

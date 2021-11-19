@@ -3,8 +3,6 @@
 <div class="sub-section">
     <a class="anchor" id="${hashDetail5}_technical_information"></a>
     #renderGroupTitle($MESSAGES.getString("technical_information"))
-## Fachliche Grundlage
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo3LILineageStatement))
 ## Klassifikation des Dienstes
     #renderTextListTable($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
 ## Typ des Dienstes
@@ -17,6 +15,8 @@
     #renderTextTable($MESSAGES.getString("t011_obj_serv.environment") $TOOL.getValueFromXPath($xPathInfo3EnvironmentDescription))
 ## Historie
     #renderTextTable($MESSAGES.getString("t011_obj_serv.history") $TOOL.getValueFromXPath($xPathInfo3LIProcessStepDescription))
+## Fachliche Grundlage
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo3LILineageStatement))
 ## Basisdaten
     #renderTextTable($MESSAGES.getString("t011_obj_serv.base") $TOOL.getValueFromXPath($xPathInfo3LISourceDescription))
 ## Erläuterung zum Fachbezug

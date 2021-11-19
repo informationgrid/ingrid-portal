@@ -114,7 +114,7 @@
                     #if($facet.getIcon() && $facet.getIcon().length() > 0)
                         #getIcon($facet)
                     #end
-                    #if($facet.getCodelistId())
+                     #if($facet.getCodelistId())
                         $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
                     #else
                         #if($hasMobileName)

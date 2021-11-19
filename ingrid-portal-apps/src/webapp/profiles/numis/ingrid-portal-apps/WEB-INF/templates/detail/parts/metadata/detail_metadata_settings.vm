@@ -148,7 +148,7 @@
 #end
 
 ## Nutzung
-#set($useConstraints = $TOOL.getUseConstraints())
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_useconstraints.vm")
 #set($useLimitations = $TOOL.getUseLimitations())
 
 #### Zugriffsbeschränkungen (accessConstraints)

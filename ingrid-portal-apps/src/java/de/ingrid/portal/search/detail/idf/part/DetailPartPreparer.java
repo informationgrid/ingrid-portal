@@ -248,6 +248,9 @@ public class DetailPartPreparer {
     }
 
     public List<String> getUseConstraints() {
+        return getUseConstraints(true, false);
+    }
+    public List<String> getUseConstraints(boolean displayJSON, boolean replaceUseConstraintsSourcePrefix) {
         final String restrictionCodeList = "524";
         final String licenceList = "6500";
         final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
@@ -366,12 +369,18 @@ public class DetailPartPreparer {
                             }
                             furtherOtherConstraints.add( value );
                         } else {
+                            if(replaceUseConstraintsSourcePrefix && constraintSource.startsWith("Quellenvermerk: ")) {
+                                constraintSource = constraintSource.replace(messages.getString("Quellenvermerk: "), "");
+                            }
                             furtherOtherConstraints.add( constraintSource );
                         }
                     } else {
+                        if(replaceUseConstraintsSourcePrefix && constraintSource.startsWith("Quellenvermerk: ")) {
+                            constraintSource = constraintSource.replace(messages.getString("Quellenvermerk: "), "");
+                        }
                         furtherOtherConstraints.add( constraintSource );
                     }
-                } else {
+                } else if(displayJSON){
                     String finalValue = getValueFromCodeList(licenceList, constraints);
                     if (finalValue == null || finalValue.trim().isEmpty()) {
                         if (!constraints.startsWith("{") && !constraints.endsWith("}")) {

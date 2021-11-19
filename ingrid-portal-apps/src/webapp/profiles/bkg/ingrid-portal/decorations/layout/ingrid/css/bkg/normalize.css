@@ -8,7 +8,7 @@ audio, canvas, video {
  display: inline-block
 }
 
-audio:not([controls] ){
+audio:not ([controls] ){
  display: none;
  height: 0
 }
@@ -43,6 +43,12 @@ a:active, a:hover {
  outline: 0
 }
 
+/* INGRID: Remove
+h1 {
+ font-size: 2em;
+ margin: .67em 0
+}
+*/
 abbr[title] {
  border-bottom: 1px dotted
 }
@@ -79,6 +85,12 @@ q {
  quotes: "\201C" "\201D" "\2018" "\2019"
 }
 
+/* INGRID: Remove
+small {
+ font-size: 80%
+}
+*/
+
 sub, sup {
  font-size: 75%;
  line-height: 0;
@@ -98,7 +110,7 @@ img {
  border: 0
 }
 
-svg:not(:root ){
+svg:not (:root ){
  overflow: hidden
 }
 
@@ -107,7 +119,7 @@ figure {
 }
 
 fieldset {
- border: 1px solid #c0c0c0;
+ border: 1px solid silver;
  margin: 0 2px;
  padding: .35em .625em .75em
 }
@@ -166,4 +178,9 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 textarea {
  overflow: auto;
  vertical-align: top
+}
+
+table {
+ border-collapse: collapse;
+ border-spacing: 0
 }
