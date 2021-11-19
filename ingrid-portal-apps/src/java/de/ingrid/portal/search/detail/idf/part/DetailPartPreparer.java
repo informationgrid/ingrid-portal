@@ -248,7 +248,7 @@ public class DetailPartPreparer {
     }
 
     public List<String> getUseConstraints() {
-        return getUseConstraints(true, true);
+        return getUseConstraints(true, false);
     }
     public List<String> getUseConstraints(boolean displayJSON, boolean replaceUseConstraintsSourcePrefix) {
         final String restrictionCodeList = "524";
