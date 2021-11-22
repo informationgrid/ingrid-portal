@@ -36,6 +36,7 @@
         require([
             "dijit/form/NumberTextBox",
             "dijit/registry",
+            "dojo/Deferred",
             "dojo/dom",
             "dojo/dom-class",
             "dojo/on",
@@ -47,15 +48,14 @@
             "ingrid/grid/CustomGridFormatters",
             "ingrid/layoutCreator",
             "ingrid/message",
+            "ingrid/utils/Grid",
             "ingrid/utils/Store",
             "ingrid/tree/LFSTree"
-        ], function (NumberTextBox, registry, dom, domClass, on, all, query, warnDialog, checks, Editors, Formatters, layoutCreator, message, UtilStore, LFSTree) {
+        ], function (NumberTextBox, registry, Deferred, dom, domClass, on, all, query, dialog, checks, Editors, Formatters, layoutCreator, message, UtilGrid, UtilStore, LFSTree) {
 
             var caller = {};
-            var dialog = null;
 
             on(_container_, "Load", function () {
-                dialog = this;
                 if (this.customParams) {
                     caller = this.customParams;
                 }
@@ -73,7 +73,7 @@
                         label: '0'
                     }
                 };
-                defs.push(layoutCreator.createComboBox("linksToDataType", null, storeProps, function () {
+                defs.push(layoutCreator.createComboBox("lfsLinkDataType", null, storeProps, function () {
                     return UtilSyslist.getSyslistEntry(1320);
                 }));
 
@@ -84,7 +84,7 @@
                         label: 'label'
                     }
                 };
-                defs.push(layoutCreator.createFilteringSelect("linksToURLType", null, storeProps, null, "js/data/urlReferenceTypes.json"));
+                defs.push(layoutCreator.createFilteringSelect("lfsLinkURLType", null, storeProps, null, "js/data/urlReferenceTypes.json"));
                 storeProps = {
                     data: {
                         identifier: 'id',
@@ -99,13 +99,39 @@
             }
 
             function init() {
+                var btnAssign = registry.byId("lfs-dialog-apply");
+                var radioReceipt = registry.byId("radioLfsReceipt");
+                var treeReceipt = registry.byId("treeReceipt");
+                var treeFiling = registry.byId("treeFiling");
+                var linkName = registry.byId("lfsLinkName");
+
+                btnAssign.set("disabled", true);
+
+                var updateApplyButtonState = function () {
+                    console.log("check apply button state");
+                    var nameIsSet = linkName.value.trim().length > 0;
+                    var receiptChosen = radioReceipt.checked && treeReceipt.selectedItem;
+                    var filingChosen = !radioReceipt.checked && treeFiling.selectedItem;
+                    if (nameIsSet && (receiptChosen || filingChosen)) {
+                        btnAssign.set("disabled", false);
+                    } else {
+                        btnAssign.set("disabled", true);
+                    }
+                };
+                on(linkName, "Change", updateApplyButtonState);
+                on(treeReceipt, "Click", updateApplyButtonState);
+                on(treeFiling, "Click", updateApplyButtonState);
+
                 // Init the radio buttons onclick functions
-                on(registry.byId("radioLfsReceipt"), "Click", function() {
+                on(radioReceipt, "Click", function () {
                     showReceipt();
+                    updateApplyButtonState();
                 });
-                on(registry.byId("radioLfsFiling"), "Click", function() {
+                on(registry.byId("radioLfsFiling"), "Click", function () {
                     showFiling();
+                    updateApplyButtonState();
                 });
+
             }
 
             function showReceipt() {
@@ -122,11 +148,79 @@
             }
 
             function submit() {
+                var radioReceipt = registry.byId("radioLfsReceipt");
+                if (radioReceipt.checked) {
+                    showConfirmDialog().then(function () {
+                        var bwastrId = getBawStrID();
+                        var psp = registry.byId("bawAuftragsnummer").value;
+                        var file = registry.byId("treeReceipt").selectedItem.path;
+                        var user = "d";
+                        LFSService.initMove(bwastrId, psp, file, user, {
+                            callback: function (response) {
+                                console.log("Response initMove:", response);
+                                addLinkToTable(response.target);
+                                closeDialog();
+                            },
+                            exceptionHandler: function (msg) {
+                                showError(msg);
+                            }
+                        });
+                    });
+                } else {
+                    var link = registry.byId("treeFiling").selectedItem.path;
+                    addLinkToTable(link);
+                    closeDialog();
+                }
 
             }
 
-            function cancel() {
+            function getBawStrID() {
+                var item = registry.byId("bwastrTable").data[0];
+                // TODO: get ID from data field codelist
+                return "12345";
+            }
+
+            function showConfirmDialog() {
+                var deferred = new Deferred();
+
+                var titleText = message.get("dialog.general.info");
+                var displayText = message.get("dialog.lfs.move.warn");
+                dialog.show(titleText, displayText, dialog.WARNING, [{
+                    caption: message.get("general.cancel"),
+                    action: function () {
+                    }
+                }, {
+                    caption: message.get("general.ok"),
+                    action: function () {
+                        deferred.resolve();
+                    }
+                }]);
+
+                return deferred;
+            }
+
+            function showError(message) {
+                dialog.show("Fehler", "Bei der Verarbeitung ist ein Fehler aufgetreten: " + message, dialog.WARNING);
+            }
+
+            function addLinkToTable(link) {
+                var item = {
+                    link: link,
+                    name: registry.byId("lfsLinkName").value,
+                    explanation: registry.byId("lfsLinkExplanation").value,
+                    fileFormat: registry.byId("lfsLinkDataType").value,
+                    urlType: registry.byId("lfsLinkURLType").value,
+                };
+                UtilGrid.addTableDataRow("lfsLinkTable", item);
+            }
+
+
+            function closeDialog() {
                 _container_.hide();
+            }
+
+            function cancel() {
+                closeDialog();
             }
 
             dialogLfsLink = {
@@ -150,14 +244,15 @@
             <div class="inputContainer">
                 <span class="outer required">
                     <div>
-                        <span id="linksFromFieldNameLabel" class="label">
-                            <label for="linksFromFieldName"
+                        <span id="lfsLinkNameLabel" class="label">
+                            <label for="lfsLinkName"
                                    onclick="require('ingrid/dialog').showContextHelp(arguments[0], 2000)">
                                 <fmt:message key="dialog.lfs.link.name"/>*
                             </label>
                         </span>
                         <span class="input">
-                            <input id="linksFromFieldName" style="width: 100%;" maxLength="255"
+                            <input id="lfsLinkName" style="width: 100%;" maxLength="255"
+                                   data-dojo-type="dijit/form/ValidationTextBox"
                                    required="true">
                         </span>
                     </div>
@@ -165,26 +260,26 @@
                 <span class="outer" style="width:50%;">
                     <div>
                         <span class="label">
-                            <label id="linksToDataTypeLabel"
+                            <label for="lfsLinkDataType"
                                    onclick="require('ingrid/dialog').showContextHelp(arguments[0], 2240)">
                                 <fmt:message key="dialog.links.dataType"/>
                             </label>
                         </span>
                         <span class="input">
-                            <input id="linksToDataType" style="width: 100%;">
+                            <input id="lfsLinkDataType" style="width: 100%;">
                         </span>
                     </div>
                 </span>
                 <span class="outer" style="width:50%;">
                     <div>
                         <span class="label">
-                            <label for="linksToURLType"
+                            <label for="lfsLinkURLType"
                                    onclick="require('ingrid/dialog').showContextHelp(arguments[0], 2251)">
                                 <fmt:message key="dialog.links.urlType"/>
                             </label>
                         </span>
                         <span class="input">
-                            <input id="linksToURLType" style="width: 100%;">
+                            <input id="lfsLinkURLType" style="width: 100%;">
                         </span>
                     </div>
                 </span>
@@ -194,15 +289,17 @@
                         <div>
                             <div class="checkboxContainer input">
                                 <span>
-                                    <input type="radio" name="lfsType" data-dojo-type="dijit/form/RadioButton" id="radioLfsReceipt" class="radio" value="receipt" checked/>
+                                    <input type="radio" name="lfsType" data-dojo-type="dijit/form/RadioButton"
+                                           id="radioLfsReceipt" class="radio" value="receipt" checked/>
                                     <label class="inActive" for="radioLfsReceipt">
-                                        <fmt:message key="dialog.lfs.link.receipt" />
+                                        <fmt:message key="dialog.lfs.link.receipt"/>
                                     </label>
                                 </span>
                                 <span>
-                                    <input type="radio" name="lfsType" data-dojo-type="dijit/form/RadioButton" id="radioLfsFiling" class="radio" value="filing" />
+                                    <input type="radio" name="lfsType" data-dojo-type="dijit/form/RadioButton"
+                                           id="radioLfsFiling" class="radio" value="filing"/>
                                     <label class="inActive" for="radioLfsFiling">
-                                        <fmt:message key="dialog.lfs.link.filing" />
+                                        <fmt:message key="dialog.lfs.link.filing"/>
                                     </label>
                                 </span>
                             </div>
@@ -242,6 +339,7 @@
                         </span>
                         <span class="input">
                             <input id="lfsLinkExplanation" style="width: 100%;" maxLength="255"
+                                   data-dojo-type="dijit/form/ValidationTextBox"
                                    required="true">
                         </span>
                     </div>
@@ -252,7 +350,7 @@
     <!-- CONTENT END -->
     <div>
         <div class="dijitDialogPaneActionBar" style="margin: unset">
-            <button data-dojo-type="dijit/form/Button" type="button"
+            <button data-dojo-type="dijit/form/Button" type="button" id="lfs-dialog-apply"
                     data-dojo-props="onClick:function(){dialogLfsLink.submit();}" id="ok"><fmt:message
                     key="general.add"/></button>
             <button data-dojo-type="dijit/form/Button" type="button"

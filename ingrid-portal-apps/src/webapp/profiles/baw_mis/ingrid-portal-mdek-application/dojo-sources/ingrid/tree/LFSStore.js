@@ -38,9 +38,11 @@ define([
 
         storeType: "receipt",
 
+        sortFn: null,
+
         rootPromise: null,
 
-        query: function(query, options) {
+        query: function(query) {
             // summary:
             //		Queries the store for objects. This will trigger a GET request to the server, with the
             //		query added as a query string.
@@ -53,22 +55,22 @@ define([
 
             // if there is no parent then we need to get a virtual root node
             if (query.parent === null) {
-                return QueryResults([this._getRootNodes()]);
+                return this._sortedResults(QueryResults([this._getRootNodes()]));
             }
 
             if (query.parent === "lfsReceiptRoot" || query.parent === "lfsFilingRoot") {
-                return QueryResults(this._getSubRootNodes());
+                return this._sortedResults(QueryResults(this._getSubRootNodes()));
             }
 
-            var queryDef = new Deferred();
-
-            queryDef = this.getSubTree(query)
+            var self = this;
+            var queryDef = this.getSubTree(query)
                 .then(function(children) {
                     array.forEach(children, function(child) {
                         child.parent = query.parent;
                     });
-                    return children;
+                    return self._sortedResults(children);
                 }, displayErrorMessage);
+
             return QueryResults(queryDef);
         },
 
@@ -95,6 +97,10 @@ define([
                 }
             });
             return deferred.promise;
+        },
+
+        _sortedResults: function (children) {
+            return this.sortFn ? this.sortFn(children) : children;
         },
 
         _getRootNodes: function() {
@@ -124,13 +130,13 @@ define([
                     id: "kaReceipt",
                     name: "KA",
                     type: "container",
-                    path: "KA/Eingang/KA/",
+                    path: "KA/Eingang/",
                     isRoot: true
                 }, {
                     id: "hhReceipt",
                     name: "HH",
                     type: "container",
-                    path: "HH/Eingang/HH/"
+                    path: "HH/Eingang/"
                 }];
             else if (this.storeType === "filing") {
                 return [{

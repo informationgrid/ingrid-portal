@@ -49,18 +49,17 @@ define([
         category: "BAW-MIS",
 
         run: function() {
-            var promise = this._createCustomFields();
+            this._createCustomFields();
             topic.subscribe("/onObjectClassChange", function(data) {
                 if (data.objClass === "Class1") {
                     domClass.remove("uiElementAdd" + LFS_LINK_TABLE_ID, "hide");
+                    registry.byId(LFS_LINK_TABLE_ID).reinitLastColumn(true);
                 } else {
                     domClass.add("uiElementAdd" + LFS_LINK_TABLE_ID, "hide");
                 }
             });
 
             this._addActivationBehaviour();
-
-            return promise;
         },
 
         _createCustomFields: function () {
@@ -77,6 +76,7 @@ define([
                 visible: "show",
                 style: "width: 100%"
             }, this.getStructureForLfsLinkTable(), "refClass1");
+
             newFieldsToDirtyCheck.push(LFS_LINK_TABLE_ID);
             additionalFields.push(registry.byId(LFS_LINK_TABLE_ID));
 
@@ -90,7 +90,6 @@ define([
             );
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
-            return registry.byId(LFS_LINK_TABLE_ID).promiseInit;
         },
 
         /**
@@ -116,10 +115,25 @@ define([
         getStructureForLfsLinkTable: function() {
             return [
                 {
-                    field: "lfsLink",
+                    field: "name",
+                    name: message.get("ui.obj.baw.lfs.link.table.column.name"),
+                    editable: false,
+                    isMandatory: true,
+                    width: "300px"
+                }, {
+                    field: "link",
                     name: message.get("ui.obj.baw.lfs.link.table.column.link"),
                     editable: false,
-                    isMandatory: true
+                    isMandatory: true,
+                }, {
+                    field: "explanation",
+                    hidden: true
+                }, {
+                    field: "fileFormat",
+                    hidden: true
+                }, {
+                    field: "urlType",
+                    hidden: true
                 }
             ];
         }

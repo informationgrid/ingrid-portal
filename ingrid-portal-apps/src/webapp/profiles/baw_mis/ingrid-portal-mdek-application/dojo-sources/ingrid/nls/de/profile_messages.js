@@ -23,6 +23,7 @@
 define({
     "dialog.simulation.parameter.title": "Simulationsparameter/-Größe",
     "dialog.lfs.link.parameter.title": "Links zum Langfristspeicher",
+    "dialog.lfs.move.warn": "Die ausgewählten Dateien aus dem LFS-Eingang werden hiermit in die LFS-Ablage verschoben. Die Dateien können danach nicht mehr geändert, gelöscht oder ergänzt werden.",
 
     "ui.obj.baw.auftragsnummer.title": "PSP-Element",
     "ui.obj.baw.auftragsnummer.help": "PSP-Element",
@@ -59,6 +60,7 @@ define({
     "ui.obj.baw.lfs.link.table.new.row": "Hinzufügen",
     "ui.obj.baw.lfs.link.table.new.row.tooltip": "Einträge können erst dann hinzugefügt werden, wenn die Felder PSP-Element und Streckenabschnitte ausgefüllt wurden.",
     "ui.obj.baw.lfs.link.table.column.link": "Link",
+    "ui.obj.baw.lfs.link.table.column.name": "Name",
 
     "ui.sysList.3950000": "BAW - Räumliche Dimensionalität",
     "ui.sysList.3950001": "BAW - Simulationsverfahren",

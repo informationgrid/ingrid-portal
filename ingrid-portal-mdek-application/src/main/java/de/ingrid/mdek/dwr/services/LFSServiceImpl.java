@@ -24,25 +24,26 @@ package de.ingrid.mdek.dwr.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.ingrid.mdek.beans.TreeNodeBean;
-import de.ingrid.mdek.handler.AddressRequestHandler;
-import de.ingrid.mdek.handler.ObjectRequestHandler;
-import de.ingrid.mdek.i18n.MdekResourceBundle;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.net.ProxySelector;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class LFSServiceImpl {
 
@@ -50,32 +51,63 @@ public class LFSServiceImpl {
     private static final Logger log = Logger.getLogger(LFSServiceImpl.class);
 
 
-    public List<Map<String, Object>> getSubTree(String folder) {
+    public List<Map<String, Object>> getSubTree(String folder) throws Exception {
 
-        List<Map<String, Object>> data = null;
-
-        HttpClient client = getClient();
         HttpGet method = new HttpGet("http://localhost:3000/api/list?folder=" + folder);
-        String result;
+        String result = this.request(method);
+
+        return convertStringToList(result);
+    }
+
+    public Map<String, Object> initMove(String bwastrId, String psp, String file, String user) throws IOException {
+        HttpPut method = new HttpPut("http://localhost:3000/api/move/init");
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("bwastrId", bwastrId));
+        params.add(new BasicNameValuePair("psp", psp));
+        params.add(new BasicNameValuePair("user", user));
+        params.add(new BasicNameValuePair("file", file));
+        method.setEntity(new UrlEncodedFormEntity(params));
+        String result = this.request(method);
+        return convertStringToMap(result);
+    }
+
+    private String request(HttpUriRequest method) throws IOException {
+        HttpClient client = getClient();
         int status;
         HttpResponse response;
-        try {
-            response = client.execute(method);
-            status = response.getStatusLine().getStatusCode();
-            if (status == HttpStatus.SC_OK) {
-                result = EntityUtils.toString( response.getEntity() );
-                ObjectMapper mapper = new ObjectMapper();
-                data = mapper.readValue(result, new TypeReference<List<Map<String, Object>>>(){});
-            } else {
-                log.error("Could not connect to LFS REST-API. Status: " + status);
-                return null;
-            }
-
-        } catch (Exception ex) {
-            log.error("Cannot get LFS Subtree", ex);
+        response = client.execute(method);
+        status = response.getStatusLine().getStatusCode();
+        if (status == HttpStatus.SC_OK) {
+            return EntityUtils.toString(response.getEntity());
+        } else {
+            log.error("Request to LFS REST-API failed: " + status);
+            String body = EntityUtils.toString(response.getEntity());
+            Map<String, Object> message = convertStringToMap(body);
+            String msg = (String) message.get("msg");
+            if (message.containsKey("description")) msg += " => " + message.get("description");
+            throw new HttpResponseException(status, "Received status code: " + status + " with message: " + msg);
         }
 
-        return data;
+    }
+
+    private Map<String, Object> convertStringToMap(String data) throws HttpResponseException {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(data, new TypeReference<Map<String, Object>>() {
+            });
+        } catch (IOException e) {
+            throw new HttpResponseException(500, "Problem converting response entity to string");
+        }
+    }
+
+    private List<Map<String, Object>> convertStringToList(String data) throws HttpResponseException {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(data, new TypeReference<List<Map<String, Object>>>() {
+            });
+        } catch (IOException e) {
+            throw new HttpResponseException(500, "Problem converting response entity to string");
+        }
     }
 
     private HttpClient getClient() {

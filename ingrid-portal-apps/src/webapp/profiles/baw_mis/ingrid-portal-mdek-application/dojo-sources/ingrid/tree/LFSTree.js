@@ -32,7 +32,7 @@ define("ingrid/tree/LFSTree", [
     "ingrid/utils/Tree",
     "dojo/store/Observable",
     "dijit/tree/ObjectStoreModel"
-], function(declare, array, lang, domClass, registry, Tree, LFSStore, UtilSecurity, UtilTree, Observable, ObjectStoreModel) {
+], function (declare, array, lang, domClass, registry, Tree, LFSStore, UtilSecurity, UtilTree, Observable, ObjectStoreModel) {
 
     /*declare("LFSTreeNode", Tree._TreeNode, {
         templateString: dojo.cache("ingrid.tree", "templates/CustomTreeNode.html"),
@@ -69,6 +69,13 @@ define("ingrid/tree/LFSTree", [
         // register a function to decide which nodes not to make selectable
         excludeFunction: null,
 
+        // use special sort function to determine the order of the nodes
+        sortFunction: function (/*Array*/children) {
+            return children.sort(function (a, b) {
+                return a.name.localeCompare(b.name)
+            });
+        },
+
         getIconClass: function (/* dojo.data.Item */item, /* Boolean */opened) {
             var icon = item.type === "container" ? "Class1000_B" : "Class0";
             var myClass = "TreeIcon " + "TreeIcon" + icon;
@@ -82,14 +89,14 @@ define("ingrid/tree/LFSTree", [
             var memoryStore = new LFSStore({
                 data: [],
                 storeType: this.treeType,
+                sortFn: this.sortFunction,
                 getChildren: function (object) {
                     // Add a getChildren() method to store for the data model where
                     // children objects point to their parent (aka relational model)
                     return this.query({
                         parent: object.id,
-                        nodeAppType: object.nodeAppType,
                         path: object.path
-                    }, {sortByClass: self.sortByClass, sortFunction: self.sortFunction});
+                    });
                 }
             });
 
@@ -109,4 +116,4 @@ define("ingrid/tree/LFSTree", [
             this.inherited(arguments);
         }
     });
-} );
+});
