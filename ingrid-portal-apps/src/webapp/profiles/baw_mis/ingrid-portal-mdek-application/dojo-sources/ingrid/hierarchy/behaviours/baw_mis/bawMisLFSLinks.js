@@ -31,6 +31,7 @@ define([
     "dojo/dom-construct",
     "dojo/on",
     "dojo/topic",
+    "ingrid/grid/CustomGridEditors",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
     "ingrid/message",
@@ -38,7 +39,7 @@ define([
     "ingrid/utils/Syslist",
     "ingrid/utils/UI",
     "module"
-], function(registry, array, declare, lang, aspect, dom, domClass, construct, on, topic, dirty, creator, message, UtilStore, UtilSyslist, UtilUI, module) {
+], function(registry, array, declare, lang, aspect, dom, domClass, construct, on, topic, gridEditors, dirty, creator, message, UtilStore, UtilSyslist, UtilUI, module) {
 
     const LFS_LINK_TABLE_ID = "lfsLinkTable";
 
@@ -116,21 +117,27 @@ define([
             return [
                 {
                     field: "name",
-                    name: message.get("ui.obj.baw.lfs.link.table.column.name"),
-                    editable: false,
-                    isMandatory: true,
-                    width: "300px"
+                    hidden: true
                 }, {
                     field: "link",
                     name: message.get("ui.obj.baw.lfs.link.table.column.link"),
                     editable: false,
                     isMandatory: true,
+                    width: "500px",
+                    formatter: function(row, cell, value, columnDef, dataContext) {
+
+                        return "<a href='" + value + "' target='_blank' title='" + value + "'>" + (dataContext.name || value) + "</a>"
+                    },
                 }, {
                     field: "explanation",
                     hidden: true
                 }, {
                     field: "fileFormat",
-                    hidden: true
+                    name: message.get("ui.obj.baw.lfs.link.table.column.fileFormat"),
+                    editable: true,
+                    type: gridEditors.ComboboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    listId: 1320
                 }, {
                     field: "urlType",
                     hidden: true
