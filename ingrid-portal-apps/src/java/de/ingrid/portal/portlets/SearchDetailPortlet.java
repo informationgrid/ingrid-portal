@@ -130,7 +130,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         if(paramURL != null){
             if (resourceID.equals( "httpURL" )) {
                 UrlValidator urlValidator = new UrlValidator();
-                if(urlValidator.isValid(paramURL)) {
+                if(urlValidator.isValid(paramURL) || paramURL.contains(".psml?")) {
                     URL url = new URL(paramURL);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("HEAD");
@@ -218,11 +218,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 ){
                     response.setContentType( "application/zip" );
                     response.addProperty("Content-Disposition", "attachment; filename=\"" + zip.getName() + "\"");
-                     byte[] bytes = new byte[bufferedInputStream.available()];
-                    response.setContentLength(bytes.length);
-                    int aByte = 0;
-                    while ((aByte = bufferedInputStream.read()) != -1) {
-                      outputStream.write(aByte);
+                    response.setContentLength(bufferedInputStream.available());
+                    byte[] buffer = new byte[4096];
+                    int len = 0;
+                    while ((len = bufferedInputStream.read(buffer)) != -1) {
+                      outputStream.write(buffer, 0, len);
                     }
                 }
             }
