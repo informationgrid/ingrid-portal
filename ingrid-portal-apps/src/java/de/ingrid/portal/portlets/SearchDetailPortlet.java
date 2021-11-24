@@ -440,19 +440,19 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         if(!dirData.exists()) {
             dirData.mkdirs();
         }
-        File dirDownload = new File(dirData.getPath() + "./downloads");
+        File dirDownload = new File(dirData.getPath() + "/downloads");
         if(!dirDownload.exists()) {
             dirDownload.mkdirs();
         }
-        File dirPlugId = new File(dirDownload.getPath() + "./" + plugid.replace(':', '_'));
+        File dirPlugId = new File(dirDownload.getPath() + "/" + plugid.replace(':', '_'));
         if(!dirPlugId.exists()) {
             dirPlugId.mkdirs();
         }
-        File dirUuid = new File(dirPlugId.getPath() + "./" + uuid);
+        File dirUuid = new File(dirPlugId.getPath() + "/" + uuid);
         if(!dirUuid.exists()) {
             dirUuid.mkdirs();
         }
-        File dirDate = new File(dirUuid.getPath() + "./" + date.replace("-", ""));
+        File dirDate = new File(dirUuid.getPath() + "/" + date.replace("-", ""));
         if(!dirDate.exists()) {
             dirDate.mkdirs();
         }
