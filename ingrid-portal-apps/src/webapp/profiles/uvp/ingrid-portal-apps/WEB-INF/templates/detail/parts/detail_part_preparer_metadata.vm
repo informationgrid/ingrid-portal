@@ -27,7 +27,7 @@
             ## Title will be read from context and set to page head title tag.
             $TOOL.setValueToContext("title", $TOOL.getValueFromXPath("./name"))
             <div class="helper text date">
-                <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
+                <span>$MESSAGES.getString("search.detail.uvp.time") $TOOL.getTimeStamp("./date")</span>
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@
     <div class="row content-small">
         <div class="columns">
             ## Allgemeine Vorhabenbeschreibung
-            #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
+            #renderTextLabelAbove($MESSAGES.getString("search.detail.uvp.desc") $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
         </div>
     </div>
     <div class="row content-small">
@@ -54,7 +54,7 @@
                     #set($tmp = $uvpCats.add($uvpCat))
                 #end
             #end
-            #renderIconTextList("UVP-Kategorie" $uvpCats)
+            #renderIconTextList($MESSAGES.getString("search.detail.uvp.category") $uvpCats)
         </div>
     </div>
     ## Raumbezug
@@ -76,7 +76,7 @@
                         && $north.toLowerCase() != "nan" && $north.length() > 0
                         && $south.toLowerCase() != "nan" && $south.length() > 0
                         && $east.toLowerCase() != "nan" && $east.length() > 0)
-                        <h3 class="title-font">Raumbezug</h3>
+                        <h3 class="title-font">$MESSAGES.getString("search.detail.uvp.map")</h3>
             </div>
         </div>
         <div class="row no-padding">
@@ -95,11 +95,11 @@
                                 var popLocation= e.latlng;
                                 var popup = L.popup()
                                 .setLatLng(popLocation)
-                                .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
+                                .setContent('<p>$MESSAGES.getString("search.detail.uvp.map.coords")<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
                                 .openOn(map);
                             }).addTo(map);
                             
-                            addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
+                            addLeafletHomeControl(map, '$MESSAGES.getString("search.detail.uvp.map.zoom")', 'topleft', 'ic-ic-center', bounds, '', '23px');
                         </script>
                     #end
                 #end
@@ -111,7 +111,7 @@
     <div class="row content-small">
         <div class="columns form">
         ## Addressen
-            <h3>Adressen</h3>
+            <h3>$MESSAGES.getString("search.detail.uvp.address")</h3>
             #set($nodelist = $TOOL.getNodeListFromXPath("./addresses/address"))
             #set($entryLength = $nodelist.getLength())
             #if($entryLength > 0)
@@ -129,7 +129,7 @@
                     #set($postalcode = $TOOL.getValueFromXPath("./addresses/address[$number]/postalcode"))
                     #set($country = $TOOL.getValueFromXPath("./addresses/address[$number]/country"))
                     #set($postbox = $TOOL.getValueFromXPath("./addresses/address[$number]/postbox"))
-                    <h4 class="no-margin">Ansprechpartner</h4>
+                    <h4 class="no-margin">$MESSAGES.getString("search.detail.uvp.address.type")</h4>
                     <p>
                     #set($nodelistParent = $TOOL.getNodeListFromXPath("./addresses/address[$number]/parent"))
                     #set($entryLengthParent = $nodelistParent.getLength())
@@ -173,7 +173,7 @@
                     <table>
                         #if($mail)
                         <tr>
-                            <td>E-Mail:</td>
+                            <td>$MESSAGES.getString("search.detail.uvp.address.type.mail")</td>
                             <td>
                                 <a href="mailto:$mail">$mail</a>
                             </td>
@@ -181,7 +181,7 @@
                         #end
                         #if($phone)
                         <tr>
-                            <td>Telefon:</td>
+                            <td>$MESSAGES.getString("search.detail.uvp.address.type.telefon")</td>
                             <td>
                                 $phone
                             </td>
@@ -189,7 +189,7 @@
                         #end
                         #if($fax)
                         <tr>
-                            <td>Fax:</td>
+                            <td>$MESSAGES.getString("search.detail.uvp.address.type.fax")</td>
                             <td>
                                 $fax
                             </td>
@@ -197,7 +197,7 @@
                         #end
                         #if($url)
                         <tr>
-                            <td>URL:</td>
+                            <td>$MESSAGES.getString("search.detail.uvp.address.type.url")</td>
                             <td>
                                 <a href="$url">$url</a>
                             </td>
@@ -212,7 +212,14 @@
     </div>
     <div id="timeline" class="row content-small">
         <div class="columns">
-            <h1>Verfahrensschritte</h1>
+            <h1>$MESSAGES.getString("search.detail.uvp.steps")
+                #if($TOOL.getNodeListFromXPath("//docs/doc").getLength() > 0)
+                <a class="zip-download is-active" href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId">
+                    <span class="ic-ic-download"></span>
+                    <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
+                </a>
+                #end
+            </h1>
             <div class="timeline"> 
                 <div class="row">
                     <div class="columns">
@@ -242,51 +249,51 @@
                                 #if($step == "phase1")
                                     #set($from1 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
                                     #set($to1 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                                    #renderDate ("Zeitraum der Auslegung" $from1 $to1 "N&auml;here Informationen entnehmen Sie bitte den Auslegungsinformationen.")
+                                    #renderDate ($MESSAGES.getString("search.detail.uvp.phase1.date") $from1 $to1 $MESSAGES.getString("search.detail.uvp.phase1.date.info"))
                                 #end
                             ## Auslegungsinformationen
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                                #renderTableToTree("Auslegungsinformationen" $nodelist "technicalDocs")
+                                #renderTableToTree($MESSAGES.getString("search.detail.uvp.phase1.doc.technicalDocs") $nodelist "technicalDocs")
                             ## UVP-Bericht, ggf. Antragsunterlagen
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='applicationDocs']/doc")
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                                #renderTableToTree("UVP-Bericht, ggf. Antragsunterlagen" $nodelist "applicationDocs")
+                                #renderTableToTree($MESSAGES.getString("search.detail.uvp.phase1.doc.applicationDocs") $nodelist "applicationDocs")
                             ## Berichte und Empfehlungen
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='reportsRecommendationsDocs']/doc")
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                                #renderTableToTree("Berichte und Empfehlungen" $nodelist "reportsRecommendationsDocs")
+                                #renderTableToTree($MESSAGES.getString("search.detail.uvp.phase1.doc.reportsRecommendationsDocs") $nodelist "reportsRecommendationsDocs")
                             ## Weitere Unterlagen
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='moreDocs']/doc")
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                                #renderTableToTree("Weitere Unterlagen" $nodelist "moreDocs")
+                                #renderTableToTree($MESSAGES.getString("search.detail.uvp.phase1.doc.moreDocs") $nodelist "moreDocs")
                             ## Bekanntmachung
                                 ##set($xpathExpression = "./steps/step[$number]/docs[@type='publicationDocs']/doc")
                                 ##set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                ##renderTableToList("Bekanntmachung" $nodelist "publicationDocs")
+                                ##renderTableToList($MESSAGES.getString("search.detail.uvp.phase1.doc.publicationDocs") $nodelist "publicationDocs")
                             ## Zeitraum der Erörterung
                                 #if($step == "phase2")
                                     #set($from2 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
                                     #set($to2 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                                    #renderDate ("Zeitraum der Er&ouml;rterung " $from2 $to2 "N&auml;here Informationen entnehmen Sie bitte den Informationen zum Er&ouml;rterungstermin.")
+                                    #renderDate ($MESSAGES.getString("search.detail.uvp.phase2.date") $from2 $to2 $MESSAGES.getString("search.detail.uvp.phase2.date.info"))
                                 #end
                             ## Informationen zum Erörterungstermin
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                                #renderTableToTree("Informationen zum Er&ouml;rterungstermin" $nodelist "considerationDocs")
+                                #renderTableToTree($MESSAGES.getString("search.detail.uvp.phase2.doc.considerationDocs") $nodelist "considerationDocs")
                             ## Datum der Entscheidung
                                 #if($step == "phase3")
                                     #set($from3 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
-                                    #renderDate ("Datum der Entscheidung" $from3)
+                                    #renderDate ($MESSAGES.getString("search.detail.uvp.phase3.date") $from3)
                                 #end
                             ## Auslegungsinformationen
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                                #renderTableToTree("Auslegungsinformationen" $nodelist "approvalDocs")
+                                #renderTableToTree($MESSAGES.getString("search.detail.uvp.phase3.doc.approvalDocs") $nodelist "approvalDocs")
                             ## Entscheidung
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='designDocs']/doc")
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                                #renderTableToTree("Entscheidung" $nodelist "designDocs")
+                                #renderTableToTree($MESSAGES.getString("search.detail.uvp.phase3.doc.designDocs") $nodelist "designDocs")
                         #end
                             <h2 class="icon-dot icon-dot-small">
                                 <span class="ic-ic-bullet icon"></span>
@@ -299,12 +306,18 @@
             ## Negative Vorprüfung
             #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
             #if($uvpNegativeApprovalDate)
-                #renderDate ("Datum der Entscheidung" $uvpNegativeApprovalDate)
+                #renderDate ($MESSAGES.getString("search.detail.uvp.neg.date") $uvpNegativeApprovalDate)
             #end
             #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
             #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
             #if($uvpNegativeRelevantDocs.size() > 0)
-                #renderTableToTree("Ergebnis der UVP-Vorpr&uuml;fung" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
+                #if($TOOL.getNodeListFromXPath("//docs/doc").getLength() > 0)
+                <a class="zip-download is-active" href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId">
+                    <span class="ic-ic-download"></span>
+                    <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
+                </a>
+                #end
+                #renderTableToTree($MESSAGES.getString("search.detail.uvp.neg.uvpNegativeRelevantDocs") $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
             #end
         #end
         </div>
@@ -459,6 +472,31 @@
                         }
                     }
                 }
+            }
+        });
+        $('a.zip-download').each(function(index) {
+            var a = $(this);
+            var docuuid = '$docUuid';
+            var plugid = '$plugId';
+            if(docuuid !== '' && plugid !== '') {
+                $(a).removeClass("is-active");
+                var downloadText = $(a).find( "span.text" );
+                if(downloadText) {
+                    downloadText.text('$MESSAGES.getString("search.detail.download.zip.prepare")');
+                }
+                var http = new XMLHttpRequest();
+                http.open('GET', '$restUrlHttpDownloadUVPCreate?docuuid=' + docuuid + '&plugid=' + plugid, true);
+                http.onreadystatechange = function() {
+                    if (this.readyState == this.DONE) {
+                        if (this.status === 200) {
+                            downloadText.text('$MESSAGES.getString("search.detail.download.zip")');
+                            $(a).after('<span class="text"><span class="downloadText"></span></span>');
+                            var sizeElement = $(a).parent().find( 'span.downloadText' );
+                            getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent('$restUrlHttpDownloadUVP?docuuid=' + docuuid + '&plugid=' + plugid), sizeElement);
+                        }
+                    }
+                };
+                http.send();
             }
         });
     });

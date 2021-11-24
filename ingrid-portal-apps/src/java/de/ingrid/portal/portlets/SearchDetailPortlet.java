@@ -22,16 +22,23 @@
  */
 package de.ingrid.portal.portlets;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -40,6 +47,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -50,6 +59,9 @@ import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.validator.UrlValidator;
@@ -60,6 +72,11 @@ import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.EscapeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
@@ -83,9 +100,12 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.idf.IdfTool;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
+import de.ingrid.utils.xml.IDFNamespaceContext;
+import de.ingrid.utils.xml.XPathUtils;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
     private static final Logger log = LoggerFactory.getLogger(SearchDetailPortlet.class);
@@ -103,7 +123,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
         String paramURL = request.getParameter( "url" );
-        
+
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()), request.getLocale());
+
         if(paramURL != null){
             if (resourceID.equals( "httpURL" )) {
                 UrlValidator urlValidator = new UrlValidator();
@@ -182,6 +205,258 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
             }
         }
+
+        if (resourceID.equals( "httpURLDownloadUVP" )) {
+            String uuid = request.getParameter( "docuuid" );
+            String plugid = request.getParameter( "plugid" );
+            File zip = searchFilesToCreateZip(uuid, plugid, messages);
+            if(zip != null) {
+                try(
+                    OutputStream outputStream = response.getPortletOutputStream();
+                    FileInputStream fileInputStream = new FileInputStream(zip.getAbsoluteFile());
+                    BufferedInputStream bufferedInputStream = new java.io.BufferedInputStream(fileInputStream);
+                ){
+                    response.setContentType( "application/zip" );
+                    response.addProperty("Content-Disposition", "attachment; filename=\"" + zip.getName() + "\"");
+                     byte[] bytes = new byte[bufferedInputStream.available()];
+                    response.setContentLength(bytes.length);
+                    int aByte = 0;
+                    while ((aByte = bufferedInputStream.read()) != -1) {
+                      outputStream.write(aByte);
+                    }
+                }
+            }
+        }
+
+        if (resourceID.equals( "httpURLDownloadUVPCreate" )) {
+            String uuid = request.getParameter( "docuuid" );
+            String plugid = request.getParameter( "plugid" );
+            searchFilesToCreateZip(uuid, plugid, messages);
+            response.flushBuffer();
+        }
+    }
+
+    private File searchFilesToCreateZip(String uuid, String plugid, IngridResourceBundle messages) {
+        File zip = null;
+        IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+        String query = Settings.HIT_KEY_OBJ_ID + ":" + uuid + " iplugs:\"" + plugid + "\" ranking:score";
+        try {
+            IngridQuery q = QueryStringParser.parse(query);
+            IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
+            IngridHit hit = null;
+            if(hits.getHits().length > 0) {
+                hit = hits.getHits()[0];
+            }
+            if(hit != null) { 
+                Record record = ibus.getRecord(hit);
+                String idfString = IdfTool.getIdfDataFromRecord(record);
+
+                if(idfString != null){
+                    if(log.isDebugEnabled()){
+                        log.debug(idfString);
+                    } 
+                    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                    dbf.setNamespaceAware(true);
+                    dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+                    dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+                    dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+                    dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+                    dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+                    DocumentBuilder db;
+                    db = dbf.newDocumentBuilder();
+                    Document idfDoc = db.parse(new InputSource(new StringReader(idfString)));
+                    
+                    XPathUtils.getXPathInstance(new IDFNamespaceContext());
+                    
+                    Element root = idfDoc.getDocumentElement();
+                    String title = plugid.replace(':', '_') + uuid;
+                    String date = "";
+                    String xpathExpression = "//idf:idfMdMetadata/name";
+                    if(XPathUtils.nodeExists(root, xpathExpression)) {
+                        title = XPathUtils.getString(root, xpathExpression);
+                    }
+                    xpathExpression = "//idf:idfMdMetadata/date";
+                    if(XPathUtils.nodeExists(root, xpathExpression)) {
+                        date = XPathUtils.getString(root, xpathExpression);
+                    }
+                    String downloadPath = createDownloadPath(plugid, uuid, date);
+                    xpathExpression = "//idf:idfMdMetadata/steps/step[docs/doc]";
+                    if(XPathUtils.nodeExists(root, xpathExpression)) {
+                        zip = createDownload(uuid, title, downloadPath, XPathUtils.getNodeList(root, xpathExpression), messages);
+                    }
+                    xpathExpression = "//idf:idfMdMetadata[docs/doc]";
+                    if(XPathUtils.nodeExists(root, xpathExpression)) {
+                        zip = createDownload(uuid, title, downloadPath, XPathUtils.getNodeList(root, xpathExpression), messages);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error create download file for iPlug '" + plugid + "' and docuuid '" + uuid + "':", e);
+        }
+        return zip;
+    }
+
+    private File createDownload(String uuid, String title, String downloadPath, NodeList nodeList, IngridResourceBundle messages) {
+        String zipName = downloadPath + "/" + title.replaceAll("[\\\\/:*?\"<>|]", "") + ".zip";
+        File zipFile = new File(zipName);
+        File processFile = new File(downloadPath + "/CREATE");
+        if(!zipFile.exists()) {
+            if(nodeList.getLength() > 0) {
+                try (
+                    FileOutputStream f = new FileOutputStream(zipName);
+                    ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(f));
+                ){
+                    // Create download status file
+                    if(processFile.createNewFile()) {
+                        log.debug("Create download process file.");
+                    }
+                    ArrayList<String> stepFoldernames = new ArrayList<String>(); 
+                    for (int i = 0; i < nodeList.getLength(); i++) {
+                        Node stepNode = nodeList.item(i);
+                        String stepType = "";
+                        String date = "";
+                        if(XPathUtils.nodeExists(stepNode, "./@type")) {
+                            stepType = XPathUtils.getString(stepNode, "./@type");
+                        }
+                        if(XPathUtils.nodeExists(stepNode, "./datePeriod/from | ./date/from")) {
+                            date = XPathUtils.getString(stepNode, "./datePeriod/from | ./date/from");
+                            date = date.split("T")[0];
+                            date = date.replace("-", "");
+                        }
+                        if(XPathUtils.nodeExists(stepNode, "./docs/doc")) {
+                            String stepFoldername = date;
+                            if(!stepType.isEmpty()) {
+                                stepFoldername = stepFoldername + "_" + messages.getString("common.steps.uvp." + stepType);
+                            } else {
+                                stepType = "neg";
+                            }
+                            // Create ZIP step folder
+                            if(stepFoldernames.indexOf(stepFoldername) > -1) {
+                                int count = 1;
+                                for (int j = 0; j < stepFoldernames.size(); j++) {
+                                    if(stepFoldernames.get(j).equals(stepFoldername)) {
+                                        count++;
+                                    }
+                                }
+                                stepFoldernames.add(stepFoldername);
+                                stepFoldername = stepFoldername + " (" + count + ")";
+                            } else {
+                                stepFoldernames.add(stepFoldername);
+                            }
+                            if(XPathUtils.nodeExists(stepNode, "./docs")) {
+                                NodeList docsList = XPathUtils.getNodeList(stepNode, "./docs");
+                                for (int j = 0; j < docsList.getLength(); j++) {
+                                    Node docsNode = docsList.item(j);
+                                    String docType = "";
+                                    if(XPathUtils.nodeExists(docsNode, "./@type")) {
+                                        docType = XPathUtils.getString(docsNode, "./@type");
+                                    }
+                                    if(!docType.isEmpty()) {
+                                        if(!stepType.isEmpty()) {
+                                            docType = messages.getString("search.detail.uvp." + stepType + ".doc." + docType);
+                                        }
+                                    }
+                                    // Create ZIP doc folder into step folder
+                                    String docFoldername = stepFoldername + "/" + docType;
+                                    if(XPathUtils.nodeExists(docsNode, "./doc")) {
+                                        zip.putNextEntry(new ZipEntry(docFoldername + "/"));
+                                        if(docsNode.hasChildNodes()) {
+                                            if(XPathUtils.nodeExists(docsNode, "./doc")) {
+                                                NodeList docList = XPathUtils.getNodeList(docsNode, "./doc");
+                                                ArrayList<String> docFilenames = new ArrayList<String>(); 
+                                                for (int k = 0; k < docList.getLength(); k++) {
+                                                    Node doc = docList.item(k);
+                                                    // Download links and add to ZIP
+                                                    if(XPathUtils.nodeExists(doc, "./link")) {
+                                                        String link = XPathUtils.getString(doc, "./link");
+                                                        String label = XPathUtils.getString(doc, "./label");
+                                                        String[] linkSplit = link.split(uuid + "/");
+                                                        if(linkSplit.length == 1) {
+                                                            linkSplit = link.split("/");
+                                                        }
+                                                        String docFilename = linkSplit[linkSplit.length - 1];
+                                                        if(docFilename.indexOf(".") == -1) {
+                                                            docFilename = label + "_" + link;
+                                                        }
+                                                        docFilename = docFilename.replaceAll("[\\\\/:*?\"<>|]", "");
+                                                        if(docFilenames.indexOf(docFilename) > -1) {
+                                                            int count = 1;
+                                                            for (int l = 0; l < docFilenames.size(); l++) {
+                                                                if(docFilenames.get(l).equals(docFilename)) {
+                                                                    count++;
+                                                                }
+                                                            }
+                                                            docFilenames.add(docFilename);
+                                                            docFilename = docFilename + " (" + count + ")";
+                                                        } else {
+                                                            docFilenames.add(docFilename);
+                                                        }
+                                                        try (
+                                                            InputStream in = new URL(link).openStream();
+                                                        ){
+                                                            ZipEntry zipEntry = new ZipEntry(docFoldername + "/" + URLDecoder.decode(docFilename, "UTF-8"));
+                                                            zip.putNextEntry(zipEntry);
+                                                            zipEntry.getName();
+                                                            byte[] bytes = new byte[1024];
+                                                            int length;
+                                                            while ((length = in.read(bytes)) >= 0) {
+                                                                zip.write(bytes, 0, length);
+                                                            }
+                                                        } catch (IOException e) {
+                                                            log.error("Error download file for ZIP: '" + title + "'", e);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    log.error("Error create download file: " + zipName, e);
+                    if(zipFile.delete()) {
+                        log.debug("Delete download zip file!");
+                    }
+                } finally {
+                    // Delete download status file
+                    if(processFile.delete()) {
+                        log.debug("Delete download process file!");
+                    }
+                }
+            }
+        } else if(processFile.exists()) {
+            // Wait until download file create finished
+            while (processFile.exists()) {
+                log.debug("ZIP is in process. Wait for download file.");
+            }
+        }
+        return zipFile;
+    }
+
+    private String createDownloadPath(String plugid, String uuid, String date) {
+        File dirData = new File(PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_ZIP_PATH, "./data"));
+        if(!dirData.exists()) {
+            dirData.mkdirs();
+        }
+        File dirDownload = new File(dirData.getPath() + "./downloads");
+        if(!dirDownload.exists()) {
+            dirDownload.mkdirs();
+        }
+        File dirPlugId = new File(dirDownload.getPath() + "./" + plugid.replace(':', '_'));
+        if(!dirPlugId.exists()) {
+            dirPlugId.mkdirs();
+        }
+        File dirUuid = new File(dirPlugId.getPath() + "./" + uuid);
+        if(!dirUuid.exists()) {
+            dirUuid.mkdirs();
+        }
+        File dirDate = new File(dirUuid.getPath() + "./" + date.replace("-", ""));
+        if(!dirDate.exists()) {
+            dirDate.mkdirs();
+        }
+        return dirDate.getPath();
     }
 
     private void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
@@ -295,6 +570,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLDataType" );
         request.setAttribute( "restUrlHttpGetDataType", restUrl.toString() );
+
+        restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLDownloadUVPCreate" );
+        request.setAttribute( "restUrlHttpDownloadUVPCreate", restUrl.toString() );
+
+        restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLDownloadUVP" );
+        request.setAttribute( "restUrlHttpDownloadUVP", restUrl.toString() );
 
         try {
         	// check whether we come from google (no IngridSessionPreferences)
