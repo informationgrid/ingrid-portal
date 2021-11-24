@@ -129,8 +129,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
         if(paramURL != null){
             if (resourceID.equals( "httpURL" )) {
-                UrlValidator urlValidator = new UrlValidator();
-                if(urlValidator.isValid(paramURL) || paramURL.contains(".psml?")) {
+                try {
                     URL url = new URL(paramURL);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("HEAD");
@@ -143,7 +142,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     }
                     response.getWriter().write( s.toString() );
                     response.getWriter().write( "}" );
-                } else {
+                } catch (Exception e) {
+                    log.error("Error get contentLength from: " + paramURL, e);
                     response.getWriter().write( "{}" );
                 }
             }
@@ -161,8 +161,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         extension = "wmts";
                     }
                     if(extension.isEmpty()) {
-                        UrlValidator urlValidator = new UrlValidator();
-                        if(urlValidator.isValid(paramURL)) {
+                        try {
                             URL url = new URL(paramURL);
                             HttpURLConnection con = (HttpURLConnection) url.openConnection();
                             con.setRequestMethod("HEAD");
@@ -178,6 +177,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                                     extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
                                 }
                             }
+                        } catch (Exception e) {
+                            log.error("Error get datatype from: " + paramURL, e);
                         }
                     }
                     response.setContentType( "text/plain" );
