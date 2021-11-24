@@ -218,7 +218,7 @@
                 </div>
                 <noscript>
                     <div class="zip-download">
-                        <a href="$restUrlHttpDownloadUVP?docuuid=' + docuuid + '&plugid=' + plugid" title="$MESSAGES.getString('search.detail.download.zip.title')>
+                        <a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")">
                             <span class="ic-ic-download"></span>
                             <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
                         </a>
@@ -315,7 +315,7 @@
                 </div>
                 <noscript>
                     <div class="zip-download">
-                        <a href="$restUrlHttpDownloadUVP?docuuid=' + docuuid + '&plugid=' + plugid" title="$MESSAGES.getString('search.detail.download.zip.title')">
+                        <a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")">
                             <span class="ic-ic-download"></span>
                             <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
                         </a>
