@@ -181,7 +181,7 @@
                         #end
                         #if($phone)
                         <tr>
-                            <td>$MESSAGES.getString("search.detail.uvp.address.type.telefon")</td>
+                            <td>$MESSAGES.getString("search.detail.uvp.address.type.tel")</td>
                             <td>
                                 $phone
                             </td>
@@ -214,10 +214,16 @@
         <div class="columns">
             <h1>$MESSAGES.getString("search.detail.uvp.steps")
                 #if($TOOL.getNodeListFromXPath("//docs/doc").getLength() > 0)
-                <a class="zip-download is-active" href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId">
-                    <span class="ic-ic-download"></span>
-                    <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
-                </a>
+                <div class="zip-download">
+                </div>
+                <noscript>
+                    <div class="zip-download">
+                        <a href="$restUrlHttpDownloadUVP?docuuid=' + docuuid + '&plugid=' + plugid" title="$MESSAGES.getString('search.detail.download.zip.title')>
+                            <span class="ic-ic-download"></span>
+                            <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
+                        </a>
+                    </div>
+                </noscript>
                 #end
             </h1>
             <div class="timeline"> 
@@ -304,6 +310,18 @@
             </div>
         #else
             ## Negative Vorprüfung
+            #if($TOOL.getNodeListFromXPath("//docs/doc").getLength() > 0)
+                <div class="zip-download">
+                </div>
+                <noscript>
+                    <div class="zip-download">
+                        <a href="$restUrlHttpDownloadUVP?docuuid=' + docuuid + '&plugid=' + plugid" title="$MESSAGES.getString('search.detail.download.zip.title')">
+                            <span class="ic-ic-download"></span>
+                            <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
+                        </a>
+                    </div>
+                </noscript>
+            #end
             #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
             #if($uvpNegativeApprovalDate)
                 #renderDate ($MESSAGES.getString("search.detail.uvp.neg.date") $uvpNegativeApprovalDate)
@@ -311,13 +329,7 @@
             #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
             #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
             #if($uvpNegativeRelevantDocs.size() > 0)
-                #if($TOOL.getNodeListFromXPath("//docs/doc").getLength() > 0)
-                <a class="zip-download is-active" href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId">
-                    <span class="ic-ic-download"></span>
-                    <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
-                </a>
-                #end
-                #renderTableToTree($MESSAGES.getString("search.detail.uvp.neg.uvpNegativeRelevantDocs") $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
+                #renderTableToTree($MESSAGES.getString("search.detail.uvp.neg.doc.uvpNegativeRelevantDocs") $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
             #end
         #end
         </div>
@@ -474,24 +486,20 @@
                 }
             }
         });
-        $('a.zip-download').each(function(index) {
-            var a = $(this);
+        $('.zip-download').each(function(index) {
             var docuuid = '$docUuid';
             var plugid = '$plugId';
             if(docuuid !== '' && plugid !== '') {
-                $(a).removeClass("is-active");
-                var downloadText = $(a).find( "span.text" );
-                if(downloadText) {
-                    downloadText.text('$MESSAGES.getString("search.detail.download.zip.prepare")');
-                }
+                var element = $(this);
+                element.append('<span>$MESSAGES.getString("search.detail.download.zip.prepare")</span>');
                 var http = new XMLHttpRequest();
                 http.open('GET', '$restUrlHttpDownloadUVPCreate?docuuid=' + docuuid + '&plugid=' + plugid, true);
                 http.onreadystatechange = function() {
                     if (this.readyState == this.DONE) {
                         if (this.status === 200) {
-                            downloadText.text('$MESSAGES.getString("search.detail.download.zip")');
-                            $(a).after('<span class="text"><span class="downloadText"></span></span>');
-                            var sizeElement = $(a).parent().find( 'span.downloadText' );
+                            element.find('span').addClass('is-hidden');
+                            element.append('<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> <span class="text">$MESSAGES.getString("search.detail.download.zip")</span></a> <span class="text">(<span class="downloadText"></span>)</span>');
+                            var sizeElement = $(element).find( 'span.downloadText' );
                             getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent('$restUrlHttpDownloadUVP?docuuid=' + docuuid + '&plugid=' + plugid), sizeElement);
                         }
                     }
