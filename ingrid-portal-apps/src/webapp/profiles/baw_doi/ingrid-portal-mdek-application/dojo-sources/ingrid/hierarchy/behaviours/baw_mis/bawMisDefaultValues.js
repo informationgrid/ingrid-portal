@@ -59,7 +59,7 @@ define([
             this._addTableEntriesByEntryNames({
                 tableId: "categoriesOpenData",
                 listId: 6400,
-                entryIds: [ "10" ] // Transport und Verkehr
+                entryIds: [ "13" ] // Verkehr
             });
         },
 
