@@ -3212,3 +3212,12 @@ a:empty:focus-visible {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.zip-download {
+  display: block;
+  font-size: 14px;
+  
+  .span.downloadText {
+    font-size: 12px;
+  }
+}
