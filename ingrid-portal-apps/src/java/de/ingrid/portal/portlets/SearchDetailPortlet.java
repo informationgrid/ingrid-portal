@@ -379,7 +379,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                                                         if(docFilename.indexOf(".") == -1) {
                                                             docFilename = label + "_" + link;
                                                         }
-                                                        docFilename = docFilename.replaceAll("[\\\\/:*?\"<>|]", "");
                                                         if(docFilenames.indexOf(docFilename) > -1) {
                                                             int count = 1;
                                                             for (int l = 0; l < docFilenames.size(); l++) {
