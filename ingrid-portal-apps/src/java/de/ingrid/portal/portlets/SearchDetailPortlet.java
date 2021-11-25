@@ -320,7 +320,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     private File createDownload(String uuid, String title, String downloadPath, NodeList nodeList, IngridResourceBundle messages) {
         String zipName = downloadPath + "/" + title.replaceAll("[\\\\/:*?\"<>|]", "") + ".zip";
         File zipFile = new File(zipName);
-        File processFile = new File(downloadPath + "/CREATE");
+        File processFile = new File(downloadPath + "/PROCESS_RUNNING");
         if(!zipFile.exists()) {
             if(nodeList.getLength() > 0) {
                 try (
@@ -411,12 +411,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                                                         } else {
                                                             docFilenames.add(docFilename);
                                                         }
-                                                        try (
-                                                            InputStream in = new URL(link).openStream();
-                                                        ){
+                                                        try {
+                                                            URL url = new URL(link);
+                                                            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                                                            String login = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
+                                                            String password = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD);
+                                                            if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
+                                                                urlConnectionAuth(con, login, password);
+                                                            }
+                                                            InputStream in = con.getInputStream();
                                                             ZipEntry zipEntry = new ZipEntry(docFoldername + "/" + URLDecoder.decode(docFilename, "UTF-8"));
                                                             zip.putNextEntry(zipEntry);
-                                                            zipEntry.getName();
                                                             byte[] bytes = new byte[1024];
                                                             int length;
                                                             while ((length = in.read(bytes)) >= 0) {

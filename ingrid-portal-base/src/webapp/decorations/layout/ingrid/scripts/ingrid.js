@@ -332,8 +332,7 @@ function openURL(url){
     window.location = url;
 }
 
-function getLinkFileSize(url, element)
-{
+function getLinkFileSize(url, element, addBrackets){
     var respJson;
     var http = new XMLHttpRequest();
     http.open('GET', url, true);
@@ -345,7 +344,11 @@ function getLinkFileSize(url, element)
                     if(respJson){
                         if(respJson.contentLength){
                             if(element){
-                                element.text(convertFileSize(respJson.contentLength, true));
+                                var size = convertFileSize(respJson.contentLength, true);
+                                if(addBrackets) {
+                                  size = '(' + size + ')';
+                                }
+                                element.text(size);
                             }
                         }
                     }
