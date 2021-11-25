@@ -498,7 +498,7 @@
                     if (this.readyState == this.DONE) {
                         if (this.status === 200) {
                             element.find('span').addClass('is-hidden');
-                            element.append('<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> </a> <span class="text">(<span class="downloadText"></span>)</span>');
+                            element.append('<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> </a> <span class="text">(<span class="downloadText">n/a</span>)</span>');
                             var sizeElement = $(element).find( 'span.downloadText' );
                             getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent('$restUrlHttpDownloadUVP?docuuid=' + docuuid + '&plugid=' + plugid), sizeElement);
                         }
