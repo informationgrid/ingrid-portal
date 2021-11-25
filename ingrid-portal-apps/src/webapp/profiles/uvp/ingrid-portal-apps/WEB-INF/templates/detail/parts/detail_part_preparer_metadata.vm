@@ -220,7 +220,6 @@
                     <div class="zip-download">
                         <a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")">
                             <span class="ic-ic-download"></span>
-                            <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
                         </a>
                     </div>
                 </noscript>
@@ -310,6 +309,7 @@
             </div>
         #else
             ## Negative Vorprüfung
+            <h1>
             #if($TOOL.getNodeListFromXPath("//docs/doc").getLength() > 0)
                 <div class="zip-download">
                 </div>
@@ -317,11 +317,11 @@
                     <div class="zip-download">
                         <a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")">
                             <span class="ic-ic-download"></span>
-                            <span class="text">$MESSAGES.getString("search.detail.download.zip")</span>
                         </a>
                     </div>
                 </noscript>
             #end
+            </h1>
             #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
             #if($uvpNegativeApprovalDate)
                 #renderDate ($MESSAGES.getString("search.detail.uvp.neg.date") $uvpNegativeApprovalDate)
@@ -498,7 +498,7 @@
                     if (this.readyState == this.DONE) {
                         if (this.status === 200) {
                             element.find('span').addClass('is-hidden');
-                            element.append('<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> <span class="text">$MESSAGES.getString("search.detail.download.zip")</span></a> <span class="text">(<span class="downloadText"></span>)</span>');
+                            element.append('<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> </a> <span class="text">(<span class="downloadText"></span>)</span>');
                             var sizeElement = $(element).find( 'span.downloadText' );
                             getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent('$restUrlHttpDownloadUVP?docuuid=' + docuuid + '&plugid=' + plugid), sizeElement);
                         }
