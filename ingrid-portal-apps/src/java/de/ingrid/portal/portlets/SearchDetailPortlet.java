@@ -38,6 +38,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,6 +65,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
@@ -106,6 +108,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xml.XPathUtils;
+import sun.misc.BASE64Encoder;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
     private static final Logger log = LoggerFactory.getLogger(SearchDetailPortlet.class);
@@ -124,6 +127,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         String resourceID = request.getResourceID();
         String paramURL = request.getParameter( "url" );
 
+        String login = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
+        String password = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD);
+
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
 
@@ -132,6 +138,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 try {
                     URL url = new URL(paramURL);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
+                        urlConnectionAuth(con, login, password);
+                    }
                     con.setRequestMethod("HEAD");
                     response.setContentType( "application/javascript" );
                     StringBuilder s = new StringBuilder();
@@ -165,12 +174,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                             URL url = new URL(paramURL);
                             HttpURLConnection con = (HttpURLConnection) url.openConnection();
                             con.setRequestMethod("HEAD");
-    
+                            if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
+                                urlConnectionAuth(con, login, password);
+                            }
                             String contentType = con.getContentType();
     
                             if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
                                 url = new URL(paramURL.replace("http://", "https://"));
                                 con = (HttpURLConnection) url.openConnection();
+                                if(StringUtils.isNotEmpty(password)) {
+                                    urlConnectionAuth(con, login, password);
+                                }
                                 con.setRequestMethod("HEAD");
                                 contentType = con.getContentType();
                                 if(contentType != null) {
@@ -235,6 +249,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             searchFilesToCreateZip(uuid, plugid, messages);
             response.flushBuffer();
         }
+    }
+
+    private void urlConnectionAuth(URLConnection conn, String login, String password) {
+        String userPassword = login + ":" + password;
+        String encoding = new BASE64Encoder().encode(userPassword.getBytes());
+        conn.setRequestProperty("Authorization", "Basic " + encoding);
     }
 
     private File searchFilesToCreateZip(String uuid, String plugid, IngridResourceBundle messages) {
