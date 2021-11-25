@@ -207,8 +207,9 @@
                         var bwastrId = getBawStrID();
                         var psp = registry.byId("bawAuftragsnummer").value;
                         var file = registry.byId("treeReceipt").selectedItem.path;
-                        var user = "d";
-                        LFSService.initMove(bwastrId, psp, file, user, {
+                        LFSService.initMove(bwastrId, psp, file, {
+                            preHook: function () {domClass.remove("lfsDialogLoadingZone", "hide");},
+                            postHook: function () {domClass.add("lfsDialogLoadingZone", "hide");},
                             callback: function (response) {
                                 console.log("Response initMove:", response);
                                 addLinkToTable(response.target);
@@ -239,8 +240,7 @@
 
             function getBawStrID() {
                 var item = registry.byId("bwastrTable").data[0];
-                // TODO: get ID from data field codelist
-                return "12345";
+                return item.bwastr_name;
             }
 
             function showConfirmDialog() {
@@ -263,7 +263,19 @@
             }
 
             function showError(message) {
-                dialog.show("Fehler", "Bei der Verarbeitung ist ein Fehler aufgetreten: " + message, dialog.WARNING);
+                console.error(message);
+                var readableMessage = getReadableErrorMessage(message);
+                dialog.show("Fehler", "Bei der Verarbeitung ist ein Fehler aufgetreten: " + readableMessage, dialog.WARNING);
+            }
+
+            function getReadableErrorMessage(msg) {
+                if (msg.indexOf("invalid PSP number") !== -1) {
+                    return message.get("error.invalid.psp.number");
+                } else if (msg.indexOf("BWaStrId specified") !== -1) {
+                    return message.get("error.no.bwastrid.specified");
+                } else if (msg.indexOf("error while moving") !== -1) {
+                    return message.get("error.moving.object");
+                }
             }
 
             function addLinkToTable(link) {
@@ -409,7 +421,7 @@
                         <span class="input">
                             <input id="lfsLinkExplanation" style="width: 100%;" maxLength="255"
                                    data-dojo-type="dijit/form/ValidationTextBox"
-                                   required="true">
+                                   required="false">
                         </span>
                     </div>
                 </span>
@@ -419,6 +431,9 @@
     <!-- CONTENT END -->
     <div>
         <div class="dijitDialogPaneActionBar" style="margin: unset">
+            <span id="lfsDialogLoadingZone" style="vertical-align: middle;" class="hide">
+                <img src="img/ladekreis.gif" />
+            </span>
             <button data-dojo-type="dijit/form/Button" type="button" id="lfs-dialog-apply" style="display: none"
                     data-dojo-props="onClick:function(){dialogLfsLink.submitEdit();}"><fmt:message
                     key="general.apply"/></button>

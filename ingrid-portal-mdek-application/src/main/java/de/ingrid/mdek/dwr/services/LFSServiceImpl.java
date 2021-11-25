@@ -24,6 +24,9 @@ package de.ingrid.mdek.dwr.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.ingrid.mdek.Config;
+import de.ingrid.mdek.SpringConfiguration;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -38,6 +41,7 @@ import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.net.ProxySelector;
@@ -50,21 +54,33 @@ public class LFSServiceImpl {
     @SuppressWarnings("unused")
     private static final Logger log = Logger.getLogger(LFSServiceImpl.class);
 
+    private final String baseUrl;
+    private final String movePath;
+    private final String listPath;
+
+    @Autowired
+    public LFSServiceImpl(SpringConfiguration springConfig) {
+        Config config = springConfig.globalConfig();
+        this.baseUrl = config.bawRestApiBaseURL;
+        this.movePath = config.bawRestApiMovePath;
+        this.listPath = config.bawRestApiListPath;
+    }
 
     public List<Map<String, Object>> getSubTree(String folder) throws Exception {
 
-        HttpGet method = new HttpGet("http://localhost:3000/api/list?folder=" + folder);
+        HttpGet method = new HttpGet(baseUrl + listPath + folder);
         String result = this.request(method);
 
         return convertStringToList(result);
     }
 
-    public Map<String, Object> initMove(String bwastrId, String psp, String file, String user) throws IOException {
-        HttpPut method = new HttpPut("http://localhost:3000/api/move/init");
+    public Map<String, Object> initMove(String bwastrId, String psp, String file) throws IOException {
+        String username = MdekSecurityUtils.getCurrentPortalUserData().getPortalLogin();
+        HttpPut method = new HttpPut(baseUrl + movePath);
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("bwastrId", bwastrId));
         params.add(new BasicNameValuePair("psp", psp));
-        params.add(new BasicNameValuePair("user", user));
+        params.add(new BasicNameValuePair("user", username));
         params.add(new BasicNameValuePair("file", file));
         method.setEntity(new UrlEncodedFormEntity(params));
         String result = this.request(method);

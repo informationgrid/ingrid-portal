@@ -75,6 +75,10 @@ define({
 
     "validation.baw.address.role.pointOfContact": "Ein Eintrag für die Institution 'Bundesanstalt für Wasserbau' als 'Ansprechpartner' muss vorhanden sein.",
     "validation.baw.bwastr_km.entry.missing": "Km-von und Km-bis müssen entweder beide definiert sein oder sollen beide fehlen.",
-    "validation.baw.bwastr_name.missing": "Für jeden Streckenabschnitt muss mindestens den Streckenname angegeben werden."
+    "validation.baw.bwastr_name.missing": "Für jeden Streckenabschnitt muss mindestens den Streckenname angegeben werden.",
+
+    "error.invalid.psp.number": "Der Wert des PSP-Elements ist ungültig.",
+    "error.no.bwastrid.specified": "Die BWaStr.-ID aus den Streckenabschnitten ist ungültig.",
+    "error.moving.object": "Es trat ein Fehler beim Verschieben der Datei/des Ordners auf"
 });
 
