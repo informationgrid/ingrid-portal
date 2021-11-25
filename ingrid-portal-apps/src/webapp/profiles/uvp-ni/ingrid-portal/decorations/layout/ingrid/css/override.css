@@ -619,20 +619,23 @@ header {
 .button.pill:hover span {
   color: #256394;
 }
-
+.button.disabled, .button.disabled:hover, .button.disabled:focus, .button[disabled], .button[disabled]:hover, .button[disabled]:focus {
+  background-color: #0089C6;
+}
 .boxed-table thead {
   background-color: #FFFFFF;
   border-bottom: 1px solid #256394;
+  color: #3A566D;
 }
 .dark a:hover {
-  color: #FFF;
+  color: #1D4B7B;
   text-decoration: underline;
 }
 .dark a:focus {
   color: #FFF;
 }
 table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr {
-  color: #256394;
+  color: #0089C6;
 }
 table .dark a {
   text-decoration: none;
