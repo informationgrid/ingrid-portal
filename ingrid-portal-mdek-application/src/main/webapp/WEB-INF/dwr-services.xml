@@ -95,9 +95,6 @@
             <ref bean="addressRequestHandler" />
         </property>
     </bean>
-    <bean id="lfsService"
-        class="de.ingrid.mdek.dwr.services.LFSServiceImpl">
-    </bean>
 
     <bean id="helpService"
         class="de.ingrid.mdek.dwr.services.HelpServiceImpl">

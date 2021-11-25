@@ -72,7 +72,6 @@
         <script type='text/javascript' src='dwr/interface/RDFService.js'></script>
         <script type='text/javascript' src='dwr/interface/HelpService.js'></script>
         <script type='text/javascript' src='dwr/interface/TreeService.js'></script>
-        <script type='text/javascript' src='dwr/interface/LFSService.js'></script>
         <script type='text/javascript' src='dwr/interface/GetCapabilitiesService.js'></script>
         <script type='text/javascript' src='dwr/interface/CatalogManagementService.js'></script>
         <script type='text/javascript' src='dwr/interface/ExportService.js'></script>
@@ -81,6 +80,8 @@
         <script type='text/javascript' src='dwr/interface/HttpService.js'></script>
         <script type='text/javascript' src='dwr/interface/StatisticService.js'></script>
         <script type='text/javascript' src='dwr/interface/UserRepoManager.js'></script>
+
+        <jsp:include page="start_profile.jsp" flush="true"/>
 
         <script type="text/javascript">
             // define some global functions for easier debugging!
