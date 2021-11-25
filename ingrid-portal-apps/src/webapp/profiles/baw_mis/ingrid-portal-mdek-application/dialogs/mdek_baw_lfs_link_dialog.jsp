@@ -56,11 +56,15 @@
             var caller = {};
 
             on(_container_, "Load", function () {
+                var currentData;
                 if (this.customParams) {
                     caller = this.customParams;
+                    currentData = this.customParams.selectedRow;
                 }
 
-                createDOMElements().then(init());
+                createDOMElements()
+                    .then(init(currentData !== undefined))
+                    .then(setValues(currentData));
             });
 
             function createDOMElements() {
@@ -98,13 +102,48 @@
                 return all(defs);
             }
 
-            function init() {
+            function init(editMode) {
+                if (editMode) {
+                    initForEdit();
+                } else {
+                    initForAdd();
+                }
+            }
+
+            function initForEdit() {
                 var btnAssign = registry.byId("lfs-dialog-apply");
+                var radioReceipt = registry.byId("radioLfsReceipt");
+                var radioFiling = registry.byId("radioLfsFiling");
+                var linkName = registry.byId("lfsLinkName");
+
+                radioFiling.set("checked", true);
+                radioFiling.set("disabled", true);
+                radioReceipt.set("disabled", true);
+
+                dom.byId("previousLink").innerHTML = caller.selectedRow.link;
+                btnAssign.domNode.style.display = "";
+                btnAssign.set("disabled", true);
+
+                var updateApplyButtonState = function () {
+                    console.log("check apply button state");
+                    var nameIsSet = linkName.value.trim().length > 0;
+                    if (nameIsSet) {
+                        btnAssign.set("disabled", false);
+                    } else {
+                        btnAssign.set("disabled", true);
+                    }
+                };
+                on(linkName, "Change", updateApplyButtonState);
+            }
+
+            function initForAdd() {
+                var btnAssign = registry.byId("lfs-dialog-add");
                 var radioReceipt = registry.byId("radioLfsReceipt");
                 var treeReceipt = registry.byId("treeReceipt");
                 var treeFiling = registry.byId("treeFiling");
                 var linkName = registry.byId("lfsLinkName");
 
+                btnAssign.domNode.style.display = "";
                 btnAssign.set("disabled", true);
 
                 var updateApplyButtonState = function () {
@@ -122,6 +161,8 @@
                 on(treeReceipt, "Click", updateApplyButtonState);
                 on(treeFiling, "Click", updateApplyButtonState);
 
+                showReceipt();
+
                 // Init the radio buttons onclick functions
                 on(radioReceipt, "Click", function () {
                     showReceipt();
@@ -134,14 +175,26 @@
 
             }
 
+            function setValues(data) {
+                if (!data) {
+                    return;
+                }
+
+                setTimeout(function() {
+                    registry.byId("lfsLinkName").set("value", data.name);
+                    registry.byId("lfsLinkExplanation").set("value", data.explanation);
+                    registry.byId("lfsLinkDataType").set("value", data.fileFormat);
+                    registry.byId("lfsLinkURLType").set("value", data.urlType);
+                }, 100);
+
+            }
+
             function showReceipt() {
-                console.log("Receipt")
                 dom.byId("lfsReceipt").style.display = "";
                 dom.byId("lfsFiling").style.display = "none";
             }
 
             function showFiling() {
-                console.log("Filing")
                 dom.byId("lfsReceipt").style.display = "none";
                 dom.byId("lfsFiling").style.display = "";
 
@@ -172,6 +225,16 @@
                     closeDialog();
                 }
 
+            }
+
+            function submitEdit() {
+                var row = caller.selectedRow;
+                row.name = registry.byId("lfsLinkName").value;
+                row.fileFormat = registry.byId("lfsLinkDataType").value;
+                row.explanation = registry.byId("lfsLinkExplanation").value;
+                row.urlType= registry.byId("lfsLinkURLType").value;
+                UtilGrid.updateTableDataRow("lfsLinkTable", clickedRow, row);
+                closeDialog();
             }
 
             function getBawStrID() {
@@ -225,7 +288,8 @@
 
             dialogLfsLink = {
                 cancel: cancel,
-                submit: submit
+                submit: submit,
+                submitEdit: submitEdit
             };
         })
     </script>
@@ -307,9 +371,14 @@
                     </span>
                 </span>
 
-                <span class="outer">
+                <span id="treeWrapper" class="outer required">
+                    <div class="label">Dateiauswahl*</div>
+
+                    <!-- PREVIOUS VALUE -->
+                    <div id="previousLink"></div>
+
                     <!-- LFS RECEIPT -->
-                    <div id="lfsReceipt" class="outlined" style="overflow: auto; max-height: 300px">
+                    <div id="lfsReceipt" class="outlined" style="overflow: auto; max-height: 300px; display: none">
                         <span class="outer required">
                             <div>
                                 <div id="treeReceipt"></div>
@@ -350,8 +419,11 @@
     <!-- CONTENT END -->
     <div>
         <div class="dijitDialogPaneActionBar" style="margin: unset">
-            <button data-dojo-type="dijit/form/Button" type="button" id="lfs-dialog-apply"
-                    data-dojo-props="onClick:function(){dialogLfsLink.submit();}" id="ok"><fmt:message
+            <button data-dojo-type="dijit/form/Button" type="button" id="lfs-dialog-apply" style="display: none"
+                    data-dojo-props="onClick:function(){dialogLfsLink.submitEdit();}"><fmt:message
+                    key="general.apply"/></button>
+            <button data-dojo-type="dijit/form/Button" type="button" id="lfs-dialog-add" style="display: none"
+                    data-dojo-props="onClick:function(){dialogLfsLink.submit();}"><fmt:message
                     key="general.add"/></button>
             <button data-dojo-type="dijit/form/Button" type="button"
                     data-dojo-props="onClick:function(){dialogLfsLink.cancel();}" id="cancel"><fmt:message

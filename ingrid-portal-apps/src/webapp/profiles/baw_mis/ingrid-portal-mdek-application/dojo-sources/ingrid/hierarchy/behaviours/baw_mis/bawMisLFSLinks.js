@@ -31,15 +31,19 @@ define([
     "dojo/dom-construct",
     "dojo/on",
     "dojo/topic",
+    "dijit/MenuItem",
+    "dijit/MenuSeparator",
+    "ingrid/dialog",
     "ingrid/grid/CustomGridEditors",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
+    "ingrid/menu",
     "ingrid/message",
     "ingrid/utils/Store",
     "ingrid/utils/Syslist",
     "ingrid/utils/UI",
     "module"
-], function(registry, array, declare, lang, aspect, dom, domClass, construct, on, topic, gridEditors, dirty, creator, message, UtilStore, UtilSyslist, UtilUI, module) {
+], function(registry, array, declare, lang, aspect, dom, domClass, construct, on, topic, MenuItem, MenuSeparator, dialog, gridEditors, dirty, creator, menu, message, UtilStore, UtilSyslist, UtilUI, module) {
 
     const LFS_LINK_TABLE_ID = "lfsLinkTable";
 
@@ -68,12 +72,15 @@ define([
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
+            // create context menu
+            this._createBawLfsLinkTableContextMenu();
+
             // Create the simulation table parameter
             creator.createDomDataGrid({
                 id: LFS_LINK_TABLE_ID,
                 name: message.get("ui.obj.baw.lfs.link.table.title"),
                 help: message.get("ui.obj.baw.lfs.link.table.help"),
-                // contextMenu: "BAW_SIMULATION_PARAMETER",
+                contextMenu: "BAW_LFS_LINK",
                 visible: "show",
                 style: "width: 100%"
             }, this.getStructureForLfsLinkTable(), "refClass1");
@@ -125,7 +132,6 @@ define([
                     isMandatory: true,
                     width: "500px",
                     formatter: function(row, cell, value, columnDef, dataContext) {
-
                         return "<a href='" + value + "' target='_blank' title='" + value + "'>" + (dataContext.name || value) + "</a>"
                     },
                 }, {
@@ -143,7 +149,25 @@ define([
                     hidden: true
                 }
             ];
-        }
+        },
+
+        _createBawLfsLinkTableContextMenu: function () {
+            var type = "BAW_LFS_LINK";
+            var contextMenu = menu.initContextMenu({contextMenu: type});
+            contextMenu.addChild(new MenuSeparator());
+            contextMenu.addChild(new MenuItem({
+                id: "menuEditClicked_" + type,
+                label: message.get('contextmenu.table.editClicked'),
+                onClick: function () {
+                    var rowData = clickedSlickGrid.getData()[clickedRow];
+                    var dialogData = {
+                        gridId: clickedSlickGridProperties.id,
+                        selectedRow: rowData
+                    };
+                    dialog.showPage(message.get("ui.obj.baw.lfs.link.table.edit.row"), 'dialogs/mdek_baw_lfs_link_dialog.jsp?c=' + userLocale, 600, 300, true, dialogData);
+                }
+            }));
+        },
     })();
 });
 
