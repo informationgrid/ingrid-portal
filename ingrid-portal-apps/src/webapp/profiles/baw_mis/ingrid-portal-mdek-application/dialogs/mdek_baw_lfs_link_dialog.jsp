@@ -293,7 +293,7 @@
             }
 
             function setBaseURL() {
-                UtilityService.getApplicationConfigEntry( 'bawRestApiBaseURL', {
+                UtilityService.getApplicationConfigEntry( 'bawLfsBaseURL', {
                     callback: function(/*string*/res) {
                         if (res.lastIndexOf("/") !== res.length - 1) {
                             res += "/";

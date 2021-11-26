@@ -210,6 +210,10 @@ public class Config {
     @DefaultValue("https://nominatim.openstreetmap.org")
     public String nominatimBaseURL;
 
+    @PropertyValue("baw.lfs.base.url")
+    @DefaultValue("https://datenfinder.baw.de")
+    public String bawLfsBaseURL;
+
     @PropertyValue("baw.rest.api.base.url")
     @DefaultValue("https://dl.datenfinder.baw")
     public String bawRestApiBaseURL;
