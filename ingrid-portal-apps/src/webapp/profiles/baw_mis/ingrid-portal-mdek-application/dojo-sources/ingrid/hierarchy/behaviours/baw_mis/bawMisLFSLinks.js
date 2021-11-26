@@ -81,7 +81,7 @@ define([
                 name: message.get("ui.obj.baw.lfs.link.table.title"),
                 help: message.get("ui.obj.baw.lfs.link.table.help"),
                 contextMenu: "BAW_LFS_LINK",
-                visible: "show",
+                visible: "optional",
                 style: "width: 100%"
             }, this.getStructureForLfsLinkTable(), "refClass1");
 
