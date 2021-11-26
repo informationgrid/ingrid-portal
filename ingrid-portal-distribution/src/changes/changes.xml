@@ -48,6 +48,9 @@
           <action type="add" dev="wemove" issue="1583">
             UVP: Beschränkung der Vorhaben im Überblick auf der Startseite auf UVP- und Ausländische Verfahren
           </action>
+          <action type="fix" dev="wemove" issue="3221">
+            IGE: Fix validation for hidden sub sections.
+          </action>
         </release>
 
         <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
