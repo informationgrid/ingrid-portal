@@ -54,7 +54,6 @@
         ], function (NumberTextBox, registry, Deferred, dom, domClass, on, all, query, dialog, checks, Editors, Formatters, layoutCreator, message, UtilGrid, UtilStore, LFSTree) {
 
             var caller = {};
-            var baseUrl = null;
 
             on(_container_, "Load", function () {
                 var currentData;
@@ -62,8 +61,6 @@
                     caller = this.customParams;
                     currentData = this.customParams.selectedRow;
                 }
-
-                setBaseURL();
 
                 createDOMElements()
                     .then(init(currentData !== undefined))
@@ -283,24 +280,13 @@
 
             function addLinkToTable(link) {
                 var item = {
-                    link: baseUrl + link,
+                    link: link,
                     name: registry.byId("lfsLinkName").value,
                     explanation: registry.byId("lfsLinkExplanation").value,
                     fileFormat: registry.byId("lfsLinkDataType").value,
                     urlType: registry.byId("lfsLinkURLType").value,
                 };
                 UtilGrid.addTableDataRow("lfsLinkTable", item);
-            }
-
-            function setBaseURL() {
-                UtilityService.getApplicationConfigEntry( 'bawLfsBaseURL', {
-                    callback: function(/*string*/res) {
-                        if (res.lastIndexOf("/") !== res.length - 1) {
-                            res += "/";
-                        }
-                        baseUrl = res;
-                    }
-                });
             }
 
             function closeDialog() {

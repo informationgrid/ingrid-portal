@@ -26,6 +26,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/aspect",
+    "dojo/Deferred",
     "dojo/dom",
     "dojo/dom-class",
     "dojo/dom-construct",
@@ -43,7 +44,7 @@ define([
     "ingrid/utils/Syslist",
     "ingrid/utils/UI",
     "module"
-], function(registry, array, declare, lang, aspect, dom, domClass, construct, on, topic, MenuItem, MenuSeparator, dialog, gridEditors, dirty, creator, menu, message, UtilStore, UtilSyslist, UtilUI, module) {
+], function(registry, array, declare, lang, aspect, Deferred, dom, domClass, construct, on, topic, MenuItem, MenuSeparator, dialog, gridEditors, dirty, creator, menu, message, UtilStore, UtilSyslist, UtilUI, module) {
 
     const LFS_LINK_TABLE_ID = "lfsLinkTable";
 
@@ -52,9 +53,13 @@ define([
         description: "Verschieben von Datensätzen in den Langfristspeicher",
         defaultActive: true,
         category: "BAW-MIS",
+        baseUrl: null,
 
         run: function() {
-            this._createCustomFields();
+            this._setBaseUrl()
+                .then(lang.hitch(this, this._createCustomFields))
+                .then(lang.hitch(this._addActivationBehaviour));
+            
             topic.subscribe("/onObjectClassChange", function(data) {
                 if (data.objClass === "Class1") {
                     domClass.remove("uiElementAdd" + LFS_LINK_TABLE_ID, "hide");
@@ -64,11 +69,24 @@ define([
                 }
             });
 
-            this._addActivationBehaviour();
+        },
+        
+        _setBaseUrl: function() {
+            var self = this;
+            var def = new Deferred()
+            UtilityService.getApplicationConfigEntry( 'bawLfsBaseURL', {
+                callback: function(/*string*/res) {
+                    if (res.lastIndexOf("/") !== res.length - 1) {
+                        res += "/";
+                    }
+                    self.baseUrl = res;
+                    def.resolve();
+                }
+            });
+            return def;
         },
 
         _createCustomFields: function () {
-            var self = require(module.id);
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
@@ -121,6 +139,7 @@ define([
         },
 
         getStructureForLfsLinkTable: function() {
+            var self = this;
             return [
                 {
                     field: "name",
@@ -132,7 +151,7 @@ define([
                     isMandatory: true,
                     width: "500px",
                     formatter: function(row, cell, value, columnDef, dataContext) {
-                        return "<a href='" + value + "' target='_blank' title='" + value + "'>" + (dataContext.name || value) + "</a>"
+                        return "<a href='" + self.baseUrl + value + "' target='_blank' title='" + value + "'>" + (dataContext.name || value) + "</a>"
                     },
                 }, {
                     field: "explanation",
