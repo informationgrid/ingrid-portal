@@ -33,7 +33,7 @@
     <sonar.exclusions>
       src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*
     </sonar.exclusions>
-    <spring.version>5.3.12</spring.version>
+    <spring.version>5.3.13</spring.version>
   </properties>
 
   <!-- ==================== Build Configuration ==================== -->
@@ -181,6 +181,11 @@
         <version>${spring.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
         <groupId>commons-collections</groupId>
         <artifactId>commons-collections</artifactId>
         <version>3.2.2</version>
@@ -201,9 +206,26 @@
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.13</version>
+    </dependency>
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib-nodep</artifactId>
+      <version>3.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+
+
+    <dependency>
       <groupId>com.tngtech.java</groupId>
       <artifactId>config-builder</artifactId>
-      <version>1.3</version>
+      <version>1.7.0</version>
     </dependency>
     <dependency>
       <groupId>org.flywaydb</groupId>
@@ -287,6 +309,10 @@
           <artifactId>jaxen-limited</artifactId>
           <groupId>jaxen</groupId>
         </exclusion>
+        <exclusion>
+          <groupId>com.sun.xml.bind</groupId>
+          <artifactId>jaxb-impl</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -331,6 +357,18 @@
           <groupId>de.ingrid.mdek</groupId>
           <artifactId>ingrid-import-export</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-hibernate3</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <!-- also included via transitive dependencies from ingrid-mdek-services, BUT KEEP HERE TO USE WHEN services sparated (see above) -->
@@ -355,8 +393,18 @@
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
-      <artifactId>hibernate</artifactId>
-      <version>3.2.5.ga</version>
+      <artifactId>hibernate-validator</artifactId>
+      <version>5.4.3.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator-annotation-processor</artifactId>
+      <version>5.4.3.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.5.6</version>
       <!-- Because of asm version conflicts with cglib spring, we can't use
           the normal cglib dependency of hibernate Rather we use the cglib-nodep lib,
           which has its own implementation of asm. -->
@@ -374,7 +422,7 @@
           <artifactId>cglib</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
+    </dependency><!--
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-annotations</artifactId>
@@ -394,7 +442,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-
+-->
     <!-- ======================================================= -->
 
     <dependency>
@@ -520,6 +568,11 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
       <version>${spring.version}</version>
     </dependency>
     <dependency>

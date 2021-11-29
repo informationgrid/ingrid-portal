@@ -8,12 +8,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-  
+
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-  
+
   http://ec.europa.eu/idabc/eupl5
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,14 +27,17 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-		<property name="connection.datasource">java:/comp/env/jdbc/jetspeed</property> 
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost/ingrid-portal</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password"></property>
 
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
 
 <!--
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
--->        
+-->
         <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
         <property name="cache.use_query_cache">false</property>
 
