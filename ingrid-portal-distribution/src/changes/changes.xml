@@ -11,7 +11,7 @@
             MAPCLIENT: Erweiterung der Druckfunktion mit der Auswahl DPI
           </action>
           <action type="add" dev="wemove" issue="3109">
-            MAPCLIENT: Import von geschützen Diensten
+            MAPCLIENT: Import von geschützten Diensten
           </action>
           <action type="add" dev="wemove" issue="1897">
             UVP: Button zum Sammeldownload aller Dokumente auf Detailergebnisseiten
