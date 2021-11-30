@@ -118,6 +118,10 @@
                     #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_citation.vm")
 ## Lizenz
                     #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_license.vm")
+## PSP-Element
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_bwa_number.vm")
+## Auftragstitel
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_bwa_title.vm")
 ## Ortslage
                     #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_bwastr_name.vm")
 

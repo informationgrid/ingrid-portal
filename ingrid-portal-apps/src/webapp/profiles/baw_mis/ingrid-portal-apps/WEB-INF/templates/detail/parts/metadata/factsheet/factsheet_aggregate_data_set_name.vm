@@ -1,8 +1,8 @@
 ## BAW Auftragsnummer
 #if($bawAggregateDataSetNameNumber)
-    #renderTextList("BAW Auftragsnummer" [$bawAggregateDataSetNameNumber])
+    #renderTextList("PSP-Element" [$bawAggregateDataSetNameNumber])
 #end
 ## BAW Auftragstitel
 #if($bawAggregateDataSetNameTitle)
-    #renderTextList("BAW Auftragstitel" [$bawAggregateDataSetNameTitle])
+    #renderTextList("Auftragstitel" [$bawAggregateDataSetNameTitle])
 #end
