@@ -403,12 +403,17 @@ header {
 .boxed-table thead {
   background-color: #FFFFFF;
   border-bottom: 1px solid #256394;
+  color: #333333;
 }
 table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr {
   color: #256394;
 }
 table .dark a {
   text-decoration: none;
+}
+table .dark a:hover {
+  color: #256394;
+  text-decoration: underline;
 }
 .tabs .tabs-title > a {
   color: #333333;
@@ -822,10 +827,6 @@ thead {
   color: #0077b6 !important;
 }
 
-.desktop__title a strong {
-  color: #333333;
-}
-
 @media screen and (max-width: 47.9375em) {
   header {
     height: 140px;
@@ -1046,4 +1047,8 @@ footer {
 
 .anchor {
   top: -178px;
+}
+
+a.icon:focus {
+  text-decoration: none;
 }
