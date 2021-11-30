@@ -180,7 +180,7 @@
                     return;
                 }
 
-                setTimeout(function() {
+                setTimeout(function () {
                     registry.byId("lfsLinkName").set("value", data.name);
                     registry.byId("lfsLinkExplanation").set("value", data.explanation);
                     registry.byId("lfsLinkDataType").set("value", data.fileFormat);
@@ -208,8 +208,12 @@
                         var psp = registry.byId("bawAuftragsnummer").value;
                         var file = registry.byId("treeReceipt").selectedItem.path;
                         LFSService.initMove(bwastrId, psp, file, {
-                            preHook: function () {domClass.remove("lfsDialogLoadingZone", "hide");},
-                            postHook: function () {domClass.add("lfsDialogLoadingZone", "hide");},
+                            preHook: function () {
+                                domClass.remove("lfsDialogLoadingZone", "hide");
+                            },
+                            postHook: function () {
+                                domClass.add("lfsDialogLoadingZone", "hide");
+                            },
                             callback: function (response) {
                                 console.log("Response initMove:", response);
                                 addLinkToTable(response.target);
@@ -233,7 +237,7 @@
                 row.name = registry.byId("lfsLinkName").value;
                 row.fileFormat = registry.byId("lfsLinkDataType").value;
                 row.explanation = registry.byId("lfsLinkExplanation").value;
-                row.urlType= registry.byId("lfsLinkURLType").value;
+                row.urlType = registry.byId("lfsLinkURLType").value;
                 UtilGrid.updateTableDataRow("lfsLinkTable", clickedRow, row);
                 closeDialog();
             }
@@ -280,13 +284,29 @@
 
             function addLinkToTable(link) {
                 var item = {
-                    link: link,
+                    link: removePrefix(link),
                     name: registry.byId("lfsLinkName").value,
                     explanation: registry.byId("lfsLinkExplanation").value,
                     fileFormat: registry.byId("lfsLinkDataType").value,
                     urlType: registry.byId("lfsLinkURLType").value,
                 };
                 UtilGrid.addTableDataRow("lfsLinkTable", item);
+            }
+
+            /**
+             * Remove the prefix "HH/Ablage/" and "KA/Ablage/"
+             * @param link
+             * @returns {string}
+             */
+            function removePrefix(link) {
+                var startsWithHH = link.indexOf("HH/Ablage/") === 0;
+                var startsWithKA = link.indexOf("KA/Ablage/") === 0;
+                if (startsWithHH || startsWithKA) {
+                    return link.substring(10);
+                } else {
+                    console.warn("Link does not start with 'HH/Ablage/' or 'KA/Ablage/'");
+                    return link;
+                }
             }
 
             function closeDialog() {
@@ -431,7 +451,7 @@
     <div>
         <div class="dijitDialogPaneActionBar" style="margin: unset">
             <span id="lfsDialogLoadingZone" style="vertical-align: middle;" class="hide">
-                <img src="img/ladekreis.gif" />
+                <img src="img/ladekreis.gif"/>
             </span>
             <button data-dojo-type="dijit/form/Button" type="button" id="lfs-dialog-apply" style="display: none"
                     data-dojo-props="onClick:function(){dialogLfsLink.submitEdit();}"><fmt:message
