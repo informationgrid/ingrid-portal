@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.2-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.2">
+          <action type="add" dev="wemove" issue="3256">
+            MAPCLIENT: Erweiterung der Druckfunktion mit der Auswahl DPI
+          </action>
           <action type="add" dev="wemove" issue="3109">
             MAPCLIENT: Import von geschützen Diensten
           </action>
