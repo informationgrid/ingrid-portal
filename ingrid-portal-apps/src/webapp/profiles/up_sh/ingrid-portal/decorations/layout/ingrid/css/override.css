@@ -426,6 +426,7 @@ footer .footer-top-link:hover {
   border: 1px solid #012D47;
 }
 .boxed-table thead {
+  color: #003064;
   background-color: #FFFFFF;
   border-bottom: 1px solid #003064;
 }
@@ -1440,8 +1441,6 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
 /* contact formular */
 .form-element textarea, .form-element input {
   border-radius: 0;
-  border: 1px solid #f2f2f2;
-  background: #f4f6f5;
   box-shadow: none;
 }
 .form-element textarea:focus, .form-element input:focus {
