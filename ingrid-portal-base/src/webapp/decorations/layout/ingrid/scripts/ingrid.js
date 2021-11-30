@@ -332,7 +332,7 @@ function openURL(url){
     window.location = url;
 }
 
-function getLinkFileSize(url, element, addBrackets){
+function getLinkFileSize(url, element){
     var respJson;
     var http = new XMLHttpRequest();
     http.open('GET', url, true);
@@ -345,9 +345,6 @@ function getLinkFileSize(url, element, addBrackets){
                         if(respJson.contentLength){
                             if(element){
                                 var size = convertFileSize(respJson.contentLength, true);
-                                if(addBrackets) {
-                                  size = '(' + size + ')';
-                                }
                                 element.text(size);
                             }
                         }
@@ -360,7 +357,7 @@ function getLinkFileSize(url, element, addBrackets){
     return ('');
 }
 
-function convertFileSize(bytes, si) {
+function convertFileSize(bytes, si, brackets) {
     var thresh = si ? 1000 : 1024;
     if(Math.abs(bytes) < thresh) {
         return bytes + ' B';
@@ -380,7 +377,11 @@ function convertFileSize(bytes, si) {
     if((units[u] == units[0]) && (val / 1000 >= 0.1)){
         return (val / 1009).toFixed(1) + ' ' + units[1];
     }
-    return bytes.toFixed(1) + ' ' + units[u];
+    var size = bytes.toFixed(1) + ' ' + units[u];
+    if (brackets) {
+      size = '(' + size + ')';
+    }
+    return  size;
 }
 
 function checkPassword(pwd, idMeter, idText) {
