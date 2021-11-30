@@ -22,6 +22,7 @@
  */
 package de.ingrid.mdek.dwr.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.ingrid.mdek.Config;
@@ -29,23 +30,22 @@ import de.ingrid.mdek.SpringConfiguration;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.net.ProxySelector;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,14 +77,26 @@ public class LFSServiceImpl {
     public Map<String, Object> initMove(String bwastrId, String psp, String file) throws IOException {
         String username = MdekSecurityUtils.getCurrentPortalUserData().getPortalLogin();
         HttpPut method = new HttpPut(baseUrl + movePath);
-        List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("bwastrId", bwastrId));
-        params.add(new BasicNameValuePair("psp", psp));
-        params.add(new BasicNameValuePair("user", username));
-        params.add(new BasicNameValuePair("file", file));
-        method.setEntity(new UrlEncodedFormEntity(params));
+
+        String json = createJSONBody(bwastrId, psp, file, username);
+        method.setEntity(new StringEntity(
+                json,
+                ContentType.APPLICATION_JSON));
+
         String result = this.request(method);
         return convertStringToMap(result);
+    }
+
+    private String createJSONBody(String bwastrId, String psp, String file, String username) throws JsonProcessingException {
+        Map<String, String> map = new HashMap<>();
+        map.put("bwastrId", bwastrId);
+        map.put("psp", psp);
+        map.put("user", username);
+        map.put("file", file);
+        String json = new ObjectMapper()
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(map);
+        return json;
     }
 
     private String request(HttpUriRequest method) throws IOException {
