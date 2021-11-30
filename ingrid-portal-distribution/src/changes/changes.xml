@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
+          <action type="add" dev="wemove" issue="3256">
+            MAPCLIENT: Erweiterung der Druckfunktion mit der Auswahl DPI
+          </action>
           <action type="add" dev="wemove" issue="1897">
             UVP: Button zum Sammeldownload aller Dokumente auf Detailergebnisseiten
           </action>
