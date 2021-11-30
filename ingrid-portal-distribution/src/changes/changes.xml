@@ -37,7 +37,7 @@
             Darstellung der Webseiten Treffer fehlerhaft
           </action>
           <action type="add" dev="wemove" issue="3109">
-            MAPCLIENT: Import von geschützen Diensten
+            MAPCLIENT: Import von geschützten Diensten
           </action>
           <action type="bug" dev="wemove" issue="3152">
             IGE: Improve performance by only reindex syslists on codelist changes
