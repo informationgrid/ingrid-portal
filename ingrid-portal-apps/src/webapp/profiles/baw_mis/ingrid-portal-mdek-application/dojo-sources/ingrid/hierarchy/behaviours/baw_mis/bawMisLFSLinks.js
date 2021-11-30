@@ -99,9 +99,8 @@ define([
                 name: message.get("ui.obj.baw.lfs.link.table.title"),
                 help: message.get("ui.obj.baw.lfs.link.table.help"),
                 contextMenu: "BAW_LFS_LINK",
-                visible: "optional",
                 style: "width: 100%"
-            }, this.getStructureForLfsLinkTable(), "refClass1");
+            }, this.getStructureForLfsLinkTable(), "links");
 
             newFieldsToDirtyCheck.push(LFS_LINK_TABLE_ID);
             additionalFields.push(registry.byId(LFS_LINK_TABLE_ID));
