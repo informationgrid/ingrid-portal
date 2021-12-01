@@ -31,6 +31,7 @@
     $xPathBawProcedure,
     $xPathBawModellType,
     $xPathBawSpatialDimensionality,
+    $xPathInfo1LILineageStatement,
     "${xPathBAWDataQuality}/${xPathBawRole}",
     "${xPathBAWDataQuality}/${xPathBawName}",
     "${xPathBAWDataQuality}/${xPathBawUnit}",

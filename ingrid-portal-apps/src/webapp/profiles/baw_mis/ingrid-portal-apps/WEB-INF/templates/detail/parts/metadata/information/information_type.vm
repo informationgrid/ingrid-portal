@@ -17,5 +17,7 @@
         #set($headTypes = ["text","text","text", "text"])
         #set($headXpathExpressions = [$xPathBawRole, $xPathBawName, $xPathBawUnit, $xPathBawValue])
         #renderTable($TOOL.getNodeListTable("Parameter und Zustandsgr&ouml;&szlig;en", "$xPathBAWDataQuality", $headTitles, $headXpathExpressions, null, $headTypes))
+    ## Fachliche Grundlage
+        #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
     </div>
 #end
