@@ -1,0 +1,6 @@
+#if(!$jetspeed.getLoggedOn())
+    <a class="button logout" href="/Shibboleth.sso/Login">
+        <span class="text">$MESSAGES.getString('ingrid.page.myportal')</span>
+        <span class="ic-ic-user"></span>
+    </a>
+#end
