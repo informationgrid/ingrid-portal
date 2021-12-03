@@ -105,7 +105,7 @@ public class LFSServiceImpl {
         HttpResponse response;
         response = client.execute(method);
         status = response.getStatusLine().getStatusCode();
-        if (status == HttpStatus.SC_OK) {
+        if (status >= HttpStatus.SC_OK && status <= HttpStatus.SC_MULTI_STATUS) {
             return EntityUtils.toString(response.getEntity());
         } else {
             log.error("Request to LFS REST-API failed: " + status);
