@@ -31,6 +31,7 @@ define([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/on",
+    "dojo/query",
     "dojo/topic",
     "dijit/MenuItem",
     "dijit/MenuSeparator",
@@ -44,7 +45,7 @@ define([
     "ingrid/utils/Syslist",
     "ingrid/utils/UI",
     "module"
-], function(registry, array, declare, lang, aspect, Deferred, dom, domClass, construct, on, topic, MenuItem, MenuSeparator, dialog, gridEditors, dirty, creator, menu, message, UtilStore, UtilSyslist, UtilUI, module) {
+], function(registry, array, declare, lang, aspect, Deferred, dom, domClass, construct, on, query, topic, MenuItem, MenuSeparator, dialog, gridEditors, dirty, creator, menu, message, UtilStore, UtilSyslist, UtilUI, module) {
 
     const LFS_LINK_TABLE_ID = "lfsLinkTable";
 
@@ -58,8 +59,9 @@ define([
         run: function() {
             this._setBaseUrl()
                 .then(lang.hitch(this, this._createCustomFields))
+                .then(lang.hitch(this, this._modifyExistingFields))
                 .then(lang.hitch(this._addActivationBehaviour));
-            
+
             topic.subscribe("/onObjectClassChange", function(data) {
                 if (data.objClass === "Class1") {
                     domClass.remove("uiElementAdd" + LFS_LINK_TABLE_ID, "hide");
@@ -70,7 +72,7 @@ define([
             });
 
         },
-        
+
         _setBaseUrl: function() {
             var self = this;
             var def = new Deferred()
@@ -94,13 +96,16 @@ define([
             this._createBawLfsLinkTableContextMenu();
 
             // Create the simulation table parameter
-            creator.createDomDataGrid({
+            var lfsGrid = creator.createDomDataGrid({
                 id: LFS_LINK_TABLE_ID,
                 name: message.get("ui.obj.baw.lfs.link.table.title"),
                 help: message.get("ui.obj.baw.lfs.link.table.help"),
                 contextMenu: "BAW_LFS_LINK",
                 style: "width: 100%"
             }, this.getStructureForLfsLinkTable(), "links");
+
+            var node = dom.byId("uiElementN017").parentElement;
+            construct.place(lfsGrid, node, 'before');
 
             newFieldsToDirtyCheck.push(LFS_LINK_TABLE_ID);
             additionalFields.push(registry.byId(LFS_LINK_TABLE_ID));
@@ -115,6 +120,11 @@ define([
             );
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+        },
+
+        _modifyExistingFields: function() {
+            query("#uiElementN017 label")
+                .addContent(message.get("ui.obj.baw.links.to") + "<span class=\"requiredSign\">*</span>", "only")
         },
 
         /**

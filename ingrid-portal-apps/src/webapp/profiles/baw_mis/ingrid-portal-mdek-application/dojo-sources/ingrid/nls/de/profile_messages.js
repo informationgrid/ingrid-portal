@@ -63,6 +63,7 @@ define({
     "ui.obj.baw.lfs.link.table.column.link": "Link",
     "ui.obj.baw.lfs.link.table.column.name": "Name",
     "ui.obj.baw.lfs.link.table.column.fileFormat": "Dateiformat",
+    "ui.obj.baw.links.to": "Andere Verweise",
 
     "ui.sysList.3950000": "BAW - Räumliche Dimensionalität",
     "ui.sysList.3950001": "BAW - Simulationsverfahren",
