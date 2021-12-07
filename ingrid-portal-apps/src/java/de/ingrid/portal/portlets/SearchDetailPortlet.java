@@ -323,7 +323,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 
         context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)); 
-        
+        context.put("mapLinksNewTab", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPS_LINKS_NEW_TAB, false ));
+
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
         

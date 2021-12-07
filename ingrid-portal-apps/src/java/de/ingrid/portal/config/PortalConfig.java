@@ -308,6 +308,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN = "portal.detail.uvp.documents.htaccess.login";
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD = "portal.detail.uvp.documents.htaccess.password";
 
+    public static final String PORTAL_MAPS_LINKS_NEW_TAB = "portal.map.links.new.tab";
+
     // private stuff
     private static PortalConfig instance = null;
 

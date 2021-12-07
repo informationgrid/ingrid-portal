@@ -1491,7 +1491,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         String htmlLink = null;
         String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
         if (!cswUrl.isEmpty()) {
-            htmlLink = "<a href='"+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+this.uuid+"&iplug="+this.iPlugId+"&elementSetName=full' target='_blank'>"+messages.getString("xml_link")+"</a>";
+            htmlLink = "<a target=\"_blank\" class=\"external-link\" href=\""+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+this.uuid+"&iplug="+this.iPlugId+"&elementSetName=full\">"+messages.getString("xml_link")+"</a>";
         }
         return htmlLink;
     }

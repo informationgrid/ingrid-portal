@@ -16,7 +16,7 @@
                         #foreach($provider in $providers)
                             #if($provider.provider && $provider.provider.name && !$provider.provider.name.equals(","))
                                 #if($provider.provider.url && $provider.provider.url != "")
-                                    <a href="$provider.provider.url" class="icon" target="_blank">
+                                    <a href="$provider.provider.url" class="icon external-link" target="_blank">
                                         <span class="ic-ic-arrow"></span><span class="text">$provider.provider.name</span>
                                     </a>
                                 #else
@@ -35,7 +35,7 @@
                         #foreach($provider in $providers)
                             #if($provider.provider && $provider.provider.name && !$provider.provider.name.equals(","))
                                 #if($provider.provider.url && $provider.provider.url != "")
-                                    <a href="$provider.provider.url" class="icon" target="_blank">
+                                    <a href="$provider.provider.url" class="icon external-link" target="_blank">
                                         <span class="ic-ic-arrow"></span><span class="text">$provider.provider.name</span>
                                     </a>
                                 #else

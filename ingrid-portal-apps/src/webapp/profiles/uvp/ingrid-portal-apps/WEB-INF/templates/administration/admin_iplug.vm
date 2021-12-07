@@ -52,7 +52,7 @@
                                     #foreach($plugNode in $providerNode.getChildren())
                                         #set($plug = $plugNode.get("iplug"))
                                         #if($plug.getIplugAdminGuiUrl())
-                                            <a href="$plug.getIplugAdminGuiUrl()" class="icon" target="_blank">
+                                            <a href="$plug.getIplugAdminGuiUrl()" class="icon external-link" target="_blank">
                                                 <span class="ic-ic-arrow"></span>
                                                 <span class="text">$plugNode.name</span>
                                             </a>
