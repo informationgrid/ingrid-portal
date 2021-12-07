@@ -122,7 +122,7 @@
             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
 
             #if($rs.wms_coord)
-                <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
+                <a #if($mapLinksNewTab)target="_blank"#end class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
             #end
             #if(!$rs.is_blp)
               <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">

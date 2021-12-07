@@ -33,7 +33,7 @@
                                         #if($link.serviceType && !$link.serviceType.isEmpty())
                                             #renderServiceType($link.serviceType)
                                         #end
-                                        <a href="$link.href" class="icon" title="$stringTool.htmlescape($link.title)" target="_blank" rel="noopener noreferrer">
+                                        <a href="$link.href" class="icon external-link" title="$stringTool.htmlescape($link.title)" target="_blank" rel="noopener noreferrer">
                                             #if($link.special_ref == "9990")
                                                 <span class="ic-ic-download"></span>
                                             #end
@@ -96,7 +96,7 @@
                                         #if($link.serviceType && !$link.serviceType.isEmpty())
                                             #renderServiceType($link.serviceType)
                                         #end
-                                        <a class="icon" href="$link.href" title="$stringTool.htmlescape($link.title)" target="_blank" rel="noopener noreferrer">
+                                        <a class="icon external-link" href="$link.href" title="$stringTool.htmlescape($link.title)" target="_blank" rel="noopener noreferrer">
                                             <span class="ic-ic-external"></span>
                                             <span class="text">$stringTool.cutString($link.title, 100, 100).replace("/", "/<wbr>")</span>
                                         </a>
@@ -137,7 +137,7 @@
                     #end
                     -->
                     #if($rs.wms_coord)
-                        <a class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
+                        <a #if($mapLinksNewTab)target="_blank"#end class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
                     #end
                 #end
             </div>
@@ -179,7 +179,7 @@
                         #end
                             #set ($tmpValue = $!rs.additional_html_1)
                             #set ($tmpValueSrc = $tmpValue.replaceAll(".* src='", "").replaceAll("'.*", ""))
-                            <a href="$tmpValueSrc" title="$MESSAGES.getString("searchResult.info.preview")" target="_blank" rel="noopener noreferrer">
+                            <a href="$tmpValueSrc" title="$MESSAGES.getString("searchResult.info.preview")" target="_blank" class="external-link" rel="noopener noreferrer">
                                 #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
                                 #if($tmpImgValue.indexOf("src='http:") > -1)
                                     #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" data-src'))
@@ -198,7 +198,7 @@
                             <div class="swiper-slide">
                                 #renderFactTitle($MESSAGES.getString("searchResult.info.preview") "text-center")
                                 #set ($tmpValueSrc = $tmpValue.replaceAll(".* src='", "").replaceAll("'.*", ""))
-                                <a href="$tmpValueSrc" title="$MESSAGES.getString("searchResult.info.preview")" target="_blank" rel="noopener noreferrer">
+                                <a href="$tmpValueSrc" title="$MESSAGES.getString("searchResult.info.preview")" target="_blank" class="external-link" rel="noopener noreferrer">
                                     #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
                                     #if($tmpImgValue.indexOf("src='http:") > -1)
                                         #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" data-src'))

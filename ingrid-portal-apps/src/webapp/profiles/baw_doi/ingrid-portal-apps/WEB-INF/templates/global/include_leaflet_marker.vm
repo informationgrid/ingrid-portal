@@ -62,7 +62,7 @@
             var simProcess = a[5];
             var simModelType = a[6];
             var popUpHtml = '';
-            popUpHtml += '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
+            popUpHtml += '<a class="external-link" href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
             
             if(bawAuftragsnummer && bawAuftragsnummer.length > 0){
                 popUpHtml += '<div class="map_popup_cat">';
