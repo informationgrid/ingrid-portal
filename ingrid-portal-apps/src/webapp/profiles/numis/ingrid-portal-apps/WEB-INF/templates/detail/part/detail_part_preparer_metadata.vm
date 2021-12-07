@@ -106,7 +106,7 @@
             #set($entryLink = "$entry.get('link')")
         #end
         #if($entryLink && $entryLink.length() > 0)
-            <a class="link download" href="$entry.get('link')" title="$stringTool.htmlescape($entryLabel)" target="_blank" rel="noopener noreferrer">
+            <a class="link download external-link" href="$entry.get('link')" title="$stringTool.htmlescape($entryLabel)" target="_blank" rel="noopener noreferrer">
                 $entryLabel
             </a>
             <span class="text">
@@ -146,7 +146,7 @@
             #if($entryLabel && $entryLabel.length() > 0 || $entryLink && $entryLink.length() > 0)
                 <p>
                 #if($entryLink && $entryLink.length() > 0)
-                    <a class="link download" href="$entryLink" target="_blank" rel="noopener noreferrer">
+                    <a class="link download external-link" href="$entryLink" target="_blank" rel="noopener noreferrer">
                         #if($entryLabel && $entryLabel.length() > 0)
                             $entryLabel
                         #else

@@ -292,6 +292,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_LOGIN_AUTH_FAILURES_LIMIT = "portal.login.auth.failures.limit";
     public static final String PORTAL_LOGIN_AUTH_FAILURES_TIME = "portal.login.auth.failures.time";
 
+    public static final String PORTAL_MAPS_LINKS_NEW_TAB = "portal.map.links.new.tab";
+
     // private stuff
     private static PortalConfig instance = null;
 

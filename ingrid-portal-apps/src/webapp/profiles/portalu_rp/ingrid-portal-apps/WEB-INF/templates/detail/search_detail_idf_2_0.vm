@@ -36,7 +36,7 @@
                     <p class="caption">$entry.title</p>
                 #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                     <p class="caption">
-                        <a class="button outline" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}">
+                        <a #if($mapLinksNewTab)target="_blank"#end class="button outline" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}">
                             $entry.title
                             <span class="ic-ic-angle-right">
                         </a>
@@ -56,7 +56,7 @@
             #end
         #end
         #if($entry.isExtern)
-            <a href="$entry.href" class="icon">
+            <a target="_blank" class="icon external-link" href="$entry.href">
               <span class="ic-ic-external"></span>
               <span class="text">$entry.title</span>
             </a>
@@ -87,7 +87,7 @@
             #end
         #end
         #if($tool.hasContent($entry.mapLink))
-            <a class="button pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
+            <a #if($mapLinksNewTab)target="_blank"#end class="button pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
                 $MESSAGES.getString('common.result.showMap')
             </a>
         #end
@@ -97,7 +97,7 @@
 #macro (renderLinkLineAddress $entry)
     <div>
     #if($entry.isExtern)
-        <a href="$entry.href" title="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
+        <a target="_blank" class="external-link" href="$entry.href" title="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
     #else
         <a href="$entry.href" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
     #end
@@ -432,7 +432,9 @@
                                 #else 
                                     #set($url = "http://$url")
                                 #end
-                                <td><a href="$url">$url</a></td>
+                                <td>
+                                    <a target="_blank" class="external-link" href="$url">$url</a>
+                                </td>
                             </tr>
                         #end
                         ## Servicezeiten
@@ -823,7 +825,7 @@
                         #end
                         #if($tool.hasContent($entry.link))
                             <p>
-                                <a class="tag tag--small" href="$entry.link.href">$MESSAGES.getString('common.result.showMap')</a>
+                                <a #if($mapLinksNewTab)target="_blank"#end class="tag tag--small" href="$entry.link.href">$MESSAGES.getString('common.result.showMap')</a>
                             </p>
                         #end
                     </td>
@@ -846,7 +848,7 @@
            #if($tool.hasContent($entry.title) && $tool.hasContent($entry.plugId) && $tool.hasContent($entry.docId))
                 <div>
                     <svg class="icon"><use xlink:href="#internal-link"/></svg>
-                    <a href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
+                    <a #if($mapLinksNewTab) target="_blank" #end href="$renderResponse.encodeURL('/portal/main-maps.psml')?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
                 </div>  
            #end
         </div>

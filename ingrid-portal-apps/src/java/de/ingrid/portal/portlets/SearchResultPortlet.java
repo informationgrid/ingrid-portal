@@ -203,6 +203,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("ranking", request.getParameter(Settings.PARAM_RANKING));
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
         context.put("escTool", new EscapeTool());
+        context.put("mapLinksNewTab", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPS_LINKS_NEW_TAB, false ));
 
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 

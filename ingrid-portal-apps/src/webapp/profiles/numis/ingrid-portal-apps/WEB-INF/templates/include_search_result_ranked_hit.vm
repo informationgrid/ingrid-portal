@@ -59,7 +59,7 @@
                         #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
                         #renderSearchTerm($searchTerm)
                         #set($detailLink ="$!rs.url")
-                        <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
+                        <a href="$detailLink" title="$stringTool.htmlescape($rs.title)" target="_blank" class="external-link">
                             <h2 class="header">$rs.title</h2>
                         </a>
                 #elseif($rs.type == "detail-style")
@@ -146,14 +146,14 @@
                 </p>
                 #end
                 #renderServiceTypeList($serviceTypes true true)
-                <a href="$detailLink" title="$stringTool.htmlescape("$MESSAGES.getString('common.detail.arrow.prefix') $rs.title")">
+                <a href="$detailLink" title="$stringTool.htmlescape("$MESSAGES.getString('common.detail.arrow.prefix') $rs.title")" #if($rs.url) target="_blank" class="external-link" #end>
                     <span class="ic-ic-arrow arrow"></span>
                 </a>
                 #if(!$rs.url)
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_info_expand.vm")
                 #elseif($rs.url)
                     <p>
-                        <a href="$rs.url" title="$rs.url">$!rs.url_str</a>
+                        <a href="$rs.url" title="$rs.url" #if($rs.url) target="_blank" class="external-link" #end>$!rs.url_str</a>
                     </p>
                 #end
             </div>
