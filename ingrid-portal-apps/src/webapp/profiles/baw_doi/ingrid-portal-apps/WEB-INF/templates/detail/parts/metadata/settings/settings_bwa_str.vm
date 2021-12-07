@@ -1,0 +1,25 @@
+## BwaStr location
+#set($bwastrIds = $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
+#set($bwastr = [])
+#foreach($tmpBwastrId in $bwastrIds)
+    #set($tmpBwaStrValues = $tmpBwastrId.replaceAll("[^-?0-9.0-9]+", ""))
+    #set($tmpBwaStrValues = $tmpBwaStrValues.replaceAll("-", " "))
+    #set($tmpBwaStrValuesSplit = $tmpBwaStrValues.trim().split(" "))
+    #if($tmpBwaStrValuesSplit.size() == 1)
+        #set($bwastr_id = $tmpBwaStrValuesSplit.get(0))
+        #if(!$bwastr_id.isEmpty())
+            #if($bwastrLocatorGetDataLowers.isEmpty() ||
+                  $stringTool.parseInt($bwastr_id) < $stringTool.parseInt($bwastrLocatorGetDataLowers))
+                #set($add = $bwastr.add(["'$bwastr_id'", "''", "''"]))
+            #end
+        #end
+    #elseif($tmpBwaStrValuesSplit.size() == 3)
+        #set($bwastr_id = $tmpBwaStrValuesSplit.get(0))
+        #if(!$bwastr_id.isEmpty())
+            #if($bwastrLocatorGetDataLowers && !$bwastrLocatorGetDataLowers.isEmpty() &&
+                $stringTool.parseInt($bwastr_id) < $stringTool.parseInt($bwastrLocatorGetDataLowers))
+              #set($add = $bwastr.add(["'$bwastr_id'", "'$tmpBwaStrValuesSplit.get(1)'", "'$tmpBwaStrValuesSplit.get(2)'"]))
+           #end
+       #end
+    #end
+#end

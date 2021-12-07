@@ -66,6 +66,8 @@ import org.apache.velocity.tools.generic.EscapeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.geo.utils.transformation.GmlToWktTransformUtil;
+import de.ingrid.geo.utils.transformation.WktToGeoJsonTransformUtil;
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
@@ -320,6 +322,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("escTool", new EscapeTool());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
 
+        // Geotools
+        context.put("geoGmlToWkt", GmlToWktTransformUtil.class);
+        context.put("geoWktToGeoJson", WktToGeoJsonTransformUtil.class);
+        
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 
         context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)); 

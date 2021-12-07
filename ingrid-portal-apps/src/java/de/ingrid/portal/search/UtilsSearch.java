@@ -504,15 +504,18 @@ public class UtilsSearch {
     }
     
     public static String getDateFormatValue (String value){
-        String result = UtilsCSWDate.mapFromIgcToIso8601(value);
-        if(result != null) {
-            value = result;
+        if(value != null && !value.isEmpty()){
+            String result = UtilsCSWDate.mapFromIgcToIso8601(value);
+            if(result != null) {
+                value = result;
+            }
+            return UtilsSearch.convertDateString(value);
         }
-        return UtilsSearch.convertDateString(value);
+        return value;
     }
 
     public static String convertDateString(String value){
-        if(value != null){
+        if(value != null && !value.isEmpty()){
             String content = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
             if(content.length() > 0){
                 return content;
