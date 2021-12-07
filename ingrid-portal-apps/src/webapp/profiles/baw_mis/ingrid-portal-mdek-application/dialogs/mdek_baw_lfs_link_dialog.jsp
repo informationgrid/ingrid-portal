@@ -278,7 +278,9 @@
                 } else if (msg.indexOf("BWaStrId specified") !== -1) {
                     return message.get("error.no.bwastrid.specified");
                 } else if (msg.indexOf("error while moving") !== -1) {
-                    return message.get("error.moving.object");
+                    return message.get("error.moving.object") + ":<br>" + msg;
+                } else {
+                    return msg;
                 }
             }
 
