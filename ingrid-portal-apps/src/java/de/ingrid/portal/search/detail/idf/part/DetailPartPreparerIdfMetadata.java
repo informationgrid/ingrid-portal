@@ -22,25 +22,39 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import java.util.*;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.geo.utils.transformation.GmlToWktTransformUtil;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.utils.capabilities.CapabilitiesUtils;
 import de.ingrid.utils.capabilities.CapabilitiesUtils.ServiceType;
-import de.ingrid.utils.udk.UtilsString;
 
 public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
+
+    private static final Logger log = LoggerFactory.getLogger(DetailPartPreparerIdfMetadata.class);
 
     @Override
     public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
@@ -1327,55 +1341,15 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             for (int i=0; i<nodeList.getLength(); i++){
                 Node node = nodeList.item(i);
                 if(node != null) {
-                    xpathExpression = "./gml:Point/gml:pos";
-                    if(xPathUtils.nodeExists(node, xpathExpression)){
-                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
-                        for(int j=0;j<tmpNodeList.getLength(); j++) {
-                            String wkt = UtilsString.gmlPosListToWktCoordinates(tmpNodeList.item(j).getTextContent(), "POINT");
-                            if (wkt != null && !wkt.isEmpty()) {
-                                result.add(wkt);
-                            }
-                        }
-                    }
-                    xpathExpression = "./gml:LineString/gml:posList";
-                    if(xPathUtils.nodeExists(node, xpathExpression)){
-                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
-                        for(int j=0;j<tmpNodeList.getLength(); j++) {
-                            String wkt = UtilsString.gmlPosListToWktCoordinates(tmpNodeList.item(j).getTextContent(), "LINESTRING");
-                            if (wkt != null && !wkt.isEmpty()) {
-                                result.add(wkt);
-                            }
-                        }
-                    }
-                    xpathExpression = "./gml:Polygon";
-                    if(xPathUtils.nodeExists(node, xpathExpression)){
-                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
-                        for(int j=0;j<tmpNodeList.getLength(); j++) {
-                            String wkt = "";
-                            Node polygonNode = tmpNodeList.item(i);
-    
-                            xpathExpression = "./gml:exterior/gml:LinearRing/gml:posList";
-                            if(xPathUtils.nodeExists(polygonNode, xpathExpression)) {
-                                Node exteriorNode = xPathUtils.getNode(polygonNode, xpathExpression);
-                                wkt += UtilsString.gmlPosListToWktCoordinates(exteriorNode.getTextContent());
-                            }
-    
-                            xpathExpression = "./gml:interior/gml:LinearRing/gml:posList";
-                            if(xPathUtils.nodeExists(polygonNode, xpathExpression)) {
-                                NodeList interiorNodes = xPathUtils.getNodeList(polygonNode, xpathExpression);
-                                for(int k=0; k<interiorNodes.getLength(); k++) {
-                                    String str = UtilsString.gmlPosListToWktCoordinates(interiorNodes.item(k).getTextContent());
-                                    if (!wkt.isEmpty() && !str.isEmpty()) {
-                                        wkt += ", ";
-                                    }
-                                    wkt += str;
-                                }
-                            }
-                            if (wkt != null && !wkt.isEmpty()) {
-                                wkt = "POLYGON (" + wkt + ")";
-                                result.add(wkt);
-                            }
-                        }
+                    StringWriter writer = new StringWriter();
+                    Transformer transformer;
+                    try {
+                        transformer = TransformerFactory.newInstance().newTransformer();
+                        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+                        transformer.transform(new DOMSource(node), new StreamResult(writer));
+                        result.add(GmlToWktTransformUtil.gml3_2ToWktString(writer.toString()));
+                    } catch (Exception e) {
+                        log.error("Error transform GML to string: ", e);
                     }
                 }
             }
