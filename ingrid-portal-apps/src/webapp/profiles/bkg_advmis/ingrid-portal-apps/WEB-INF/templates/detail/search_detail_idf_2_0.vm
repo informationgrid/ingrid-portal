@@ -87,10 +87,10 @@
                 #if($tool.hasContent($entry.attachedToField))
                     <span class="tx-light">(${entry.get("attachedToField")})</span>
                 #end
-                ##if($tool.hasContent($entry.description))
-                #   #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
-                #    <span class="tx-light"><br/>${myDescription}</span>
-                ##end
+                ###if($tool.hasContent($entry.description))
+                ##   #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
+                ##    <span class="tx-light"><br/>${myDescription}</span>
+                ###end
             #end
         #end
         #if($tool.hasContent($entry.mapLink))
