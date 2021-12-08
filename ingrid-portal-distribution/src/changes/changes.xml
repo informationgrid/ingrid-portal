@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
+          <action type="add" dev="wemove" issue="2367">
+            Portal / Verweise - Verweise auf externe Webseiten in neuen Tab öffnen
+          </action>
+          <action type="add" dev="wemove" issue="2383">
+            Button Karte - Karte in neuen Tab öffnen
+          </action>
           <action type="add" dev="wemove" issue="3256">
             MAPCLIENT: Erweiterung der Druckfunktion mit der Auswahl DPI
           </action>
