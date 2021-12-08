@@ -60,10 +60,10 @@
             map${mapId}.fitBounds(bounds${mapId});
         }
     </script>
-    #if($bwastr && !$bwastr.isEmpty())
-        #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bwastr.vm")
-    #elseif($wkt && !$wkt.isEmpty())
+    #if($wkt && !$wkt.isEmpty())
         #parse("/WEB-INF/templates/search-result/parts/area/area_layer_wkt.vm")
+    #elseif($bwastr && !$bwastr.isEmpty())
+        #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bwastr.vm")
     #else
         #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bounds.vm")
     #end
