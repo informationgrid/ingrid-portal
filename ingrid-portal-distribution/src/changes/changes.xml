@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.9.3" date="2021-xx-xx" description="Release 5.9.3">
+          <action type="add" dev="wemove" issue="2367">
+            Portal / Verweise - Verweise auf externe Webseiten in neuen Tab öffnen
+          </action>
+          <action type="add" dev="wemove" issue="2383">
+            Button Karte - Karte in neuen Tab öffnen
+          </action>
           <action type="fix" dev="wemove" issue="3105">
             Darstellung der Webseiten Treffer fehlerhaft
           </action>
