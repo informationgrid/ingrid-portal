@@ -25,6 +25,7 @@ package de.ingrid.portal.portlets;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -99,7 +100,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         if(paramURL != null) {
             if (resourceID.equals( "httpURLDataType" )) {
-                String extension = null;
+                String extension = "";
                 if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
                     extension = "csw";
                 } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
@@ -109,18 +110,19 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
                     extension = "wmts";
                 }
-                if(extension == null) {
+                if(extension.isEmpty()) {
                     URL url = new URL(paramURL);
                     try {
-                        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                        HttpURLConnection con = (HttpURLConnection) url.openConnection();
                         con.setRequestMethod("HEAD");
 
                         String contentType = con.getContentType();
 
                         if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
                             url = new URL(paramURL.replace("http://", "https://"));
-                            con = (java.net.HttpURLConnection) url.openConnection();
+                            con = (HttpURLConnection) url.openConnection();
                             con.setRequestMethod("HEAD");
+                            contentType = con.getContentType();
                         }
                         if(contentType != null) {
                             extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
@@ -131,9 +133,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     
                 }
                 response.setContentType( "text/plain" );
-                if(extension != null) {
-                    response.getWriter().write( extension );
-                }
+                response.getWriter().write( extension );
             }
 
             if (resourceID.equals( "httpURLImage" )) {
