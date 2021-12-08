@@ -101,7 +101,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         if(paramURL != null) {
             if (resourceID.equals( "httpURLDataType" )) {
-                String extension = null;
+                String extension = "";
                 if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
                     extension = "csw";
                 } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
@@ -111,33 +111,22 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
                     extension = "wmts";
                 }
-                if(extension == null) {
-                    UrlValidator urlValidator = new UrlValidator();
-                    if(urlValidator.isValid(paramURL)) {
-                        URL url = new URL(paramURL);
-                        try {
-                            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                            con.setRequestMethod("HEAD");
-    
-                            String contentType = con.getContentType();
-    
-                            if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
-                                url = new URL(paramURL.replace("http://", "https://"));
-                                con = (HttpURLConnection) url.openConnection();
-                                con.setRequestMethod("HEAD");
-                            }
-                            if(contentType != null) {
-                                extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
-                            }
-                        } catch (Exception e) {
-                           log.debug("Failed to load: " + paramURL);
-                        }
+                if(extension.isEmpty()) {
+                    URL url = new URL(paramURL);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("HEAD");
+
+                    String contentType = con.getContentType();
+
+                    if((contentType == null || contentType.startsWith("text/html")) && paramURL.startsWith("http://")) {
+                        url = new URL(paramURL.replace("http://", "https://"));
+                        con = (HttpURLConnection) url.openConnection();
+                        con.setRequestMethod("HEAD");
+                        contentType = con.getContentType();
                     }
                 }
                 response.setContentType( "text/plain" );
-                if(extension != null) {
-                    response.getWriter().write( extension );
-                }
+                response.getWriter().write( extension );
             }
 
             if (resourceID.equals( "httpURLImage" )) {

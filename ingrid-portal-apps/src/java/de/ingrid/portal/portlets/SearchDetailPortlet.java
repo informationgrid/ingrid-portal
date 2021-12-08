@@ -138,23 +138,20 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         extension = "wmts";
                     }
                     if(extension.isEmpty()) {
-                        UrlValidator urlValidator = new UrlValidator();
-                        if(urlValidator.isValid(paramURL)) {
-                            URL url = new URL(paramURL);
-                            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                        URL url = new URL(paramURL);
+                        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                        con.setRequestMethod("HEAD");
+
+                        String contentType = con.getContentType();
+
+                        if((contentType == null || contentType.startsWith("text/html")) && paramURL.startsWith("http://")) {
+                            url = new URL(paramURL.replace("http://", "https://"));
+                            con = (HttpURLConnection) url.openConnection();
                             con.setRequestMethod("HEAD");
-    
-                            String contentType = con.getContentType();
-    
-                            if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
-                                url = new URL(paramURL.replace("http://", "https://"));
-                                con = (HttpURLConnection) url.openConnection();
-                                con.setRequestMethod("HEAD");
-                                contentType = con.getContentType();
-                                if(contentType != null) {
-                                    extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
-                                }
-                            }
+                            contentType = con.getContentType();
+                        }
+                        if(contentType != null) {
+                            extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
                         }
                     }
                     response.setContentType( "text/plain" );
