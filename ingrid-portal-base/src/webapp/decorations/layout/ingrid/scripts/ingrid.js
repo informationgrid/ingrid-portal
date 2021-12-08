@@ -358,9 +358,14 @@ function getLinkFileSize(url, element){
 }
 
 function convertFileSize(bytes, si, brackets) {
+    var size= '';
     var thresh = si ? 1000 : 1024;
     if(Math.abs(bytes) < thresh) {
-        return bytes + ' B';
+        size = bytes + ' B';
+        if (brackets) {
+          size = '(' + size + ')';
+        }
+        return size;
     }
     var units = si
         ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
@@ -377,7 +382,7 @@ function convertFileSize(bytes, si, brackets) {
     if((units[u] == units[0]) && (val / 1000 >= 0.1)){
         return (val / 1009).toFixed(1) + ' ' + units[1];
     }
-    var size = bytes.toFixed(1) + ' ' + units[u];
+    size = bytes.toFixed(1) + ' ' + units[u];
     if (brackets) {
       size = '(' + size + ')';
     }
