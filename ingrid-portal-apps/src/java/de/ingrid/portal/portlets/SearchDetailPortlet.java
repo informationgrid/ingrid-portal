@@ -24,21 +24,16 @@ package de.ingrid.portal.portlets;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -56,8 +51,6 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.validator.UrlValidator;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -76,8 +69,7 @@ import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UniversalSorter;
 import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsHttpConnection;
-import de.ingrid.portal.global.UtilsMimeType;
+import de.ingrid.portal.global.UtilsPortletServeResources;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsUvpZipDownload;
@@ -125,89 +117,13 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
         if(paramURL != null){
             if (resourceID.equals( "httpURL" )) {
-                try {
-                    URL url = new URL(paramURL);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
-                        UtilsHttpConnection.urlConnectionAuth(con, login, password);
-                    }
-                    con.setRequestMethod("HEAD");
-                    response.setContentType( "application/javascript" );
-                    StringBuilder s = new StringBuilder();
-                    response.getWriter().write( "{" );
-                    if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
-                        s.append( "\"contentLength\":");
-                        s.append( "\"" + con.getContentLength() + "\"" );
-                    }
-                    response.getWriter().write( s.toString() );
-                    response.getWriter().write( "}" );
-                } catch (Exception e) {
-                    log.error("Error get contentLength from: " + paramURL, e);
-                    response.getWriter().write( "{}" );
-                }
+                UtilsPortletServeResources.getHttpUrlLength(paramURL, login, password, response);
             }
-
             if (resourceID.equals( "httpURLDataType" )) {
-                String extension = "";
-                if(paramURL != null) {
-                    if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
-                        extension = "csw";
-                    } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
-                        extension = "wms";
-                    } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
-                        extension = "wfs";
-                    } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
-                        extension = "wmts";
-                    }
-                    if(extension.isEmpty()) {
-                        try {
-                            URL url = new URL(paramURL);
-                            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                            con.setRequestMethod("HEAD");
-                            if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
-                                UtilsHttpConnection.urlConnectionAuth(con, login, password);
-                            }
-                            String contentType = con.getContentType();
-    
-                            if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
-                                url = new URL(paramURL.replace("http://", "https://"));
-                                con = (HttpURLConnection) url.openConnection();
-                                if(StringUtils.isNotEmpty(password)) {
-                                    UtilsHttpConnection.urlConnectionAuth(con, login, password);
-                                }
-                                con.setRequestMethod("HEAD");
-                                contentType = con.getContentType();
-                                if(contentType != null) {
-                                    extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
-                                }
-                            }
-                        } catch (Exception e) {
-                            log.error("Error get datatype from: " + paramURL, e);
-                        }
-                    }
-                    response.setContentType( "text/plain" );
-                    response.getWriter().write( extension );
-                }
+                UtilsPortletServeResources.getHttpUrlDatatype(paramURL, login, password, response);
             }
-
             if (resourceID.equals( "httpURLImage" )) {
-                try {
-                    getURLResponse(paramURL, response);
-                } catch (Exception e) {
-                    log.error( "Error creating resource for resource ID: " + resourceID, e );
-                    if (resourceID.equals( "httpURLImage" )) {
-                        log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
-                        String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
-                        log.error( "Try https URL: " + httpsUrl);
-                        try {
-                            getURLResponse(httpsUrl, response);
-                            log.error( "Try https URL: " + httpsUrl);
-                        } catch (Exception e1) {
-                            log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
-                            response.getWriter().write(paramURL);
-                        }
-                    }
-                }
+                UtilsPortletServeResources.getHttpUrlImage(paramURL, response, resourceID);
             }
         }
 
@@ -239,29 +155,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             File zip = UtilsUvpZipDownload.searchFilesToCreateZip(uuid, plugid, messages, xPathUtils);
             response.setContentType( "text/plain" );
             response.getWriter().write( Files.size(zip.toPath()) + "" );
-        }
-    }
-
-    private void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
-        UrlValidator urlValidator = new UrlValidator();
-        if(urlValidator.isValid(paramURL)) {
-            URL url = new URL(paramURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            if(con.getContentType().indexOf("image/") > -1) {
-                InputStream inStreamConvert = con.getInputStream();
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
-                if (null != con.getContentType()) {
-                    byte[] chunk = new byte[4096];
-                    int bytesRead;
-                    while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                        os.write(chunk, 0, bytesRead);
-                    }
-                    os.flush();
-                    URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                            Base64.getEncoder().encodeToString(os.toByteArray()));
-                    response.getWriter().write(dataUri.toString());
-                }
-            }
         }
     }
 
