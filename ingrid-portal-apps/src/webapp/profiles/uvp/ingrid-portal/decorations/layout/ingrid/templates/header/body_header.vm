@@ -15,10 +15,7 @@
                     #if($userNameFamily)
                         #set ($salutation = "$!{salutation} $userNameFamily")
                     #end
-                    <div class="login show-for-large">
-                        <span class="ic-ic-user"></span>
-                        <a href="/portal/service-myportal.psml" title="$salutation">$salutation</a>
-                    </div>
+                    #parse("/decorations/layout/ingrid/templates/header/body_header_main_menu_login.vm")
                     <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger-logged-user"></span></button>
                 #else
                     <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
