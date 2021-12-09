@@ -29,6 +29,6 @@
 
 ## WKT
 #set($wkt = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "wkt"))
-#if($wkt)
-    #set($wkt = $geoWktToGeoJsonTransform.wktToGeoJsonTransform($wkt, "4328", "${leafletEpsg}"))
+#if($wkt && !$wkt.isEmpty())
+    #set($wkt = $geoWktToGeoJson.wktToGeoJsonTransform($wkt, "${leafletEpsg}"))
 #end
