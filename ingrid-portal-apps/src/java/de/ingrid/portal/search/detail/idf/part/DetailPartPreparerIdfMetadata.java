@@ -22,7 +22,6 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,11 +32,6 @@ import java.util.regex.Pattern;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.context.Context;
@@ -1341,13 +1335,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             for (int i=0; i<nodeList.getLength(); i++){
                 Node node = nodeList.item(i);
                 if(node != null) {
-                    StringWriter writer = new StringWriter();
-                    Transformer transformer;
                     try {
-                        transformer = TransformerFactory.newInstance().newTransformer();
-                        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-                        transformer.transform(new DOMSource(node), new StreamResult(writer));
-                        result.add(GmlToWktTransformUtil.gml3_2ToWktString(writer.toString()));
+                        result.add(GmlToWktTransformUtil.gml3_2ToWktString(node));
                     } catch (Exception e) {
                         log.error("Error transform GML to string: ", e);
                     }
