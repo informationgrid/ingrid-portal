@@ -49,6 +49,8 @@ import org.apache.velocity.tools.generic.EscapeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.geo.utils.transformation.GmlToWktTransformUtil;
+import de.ingrid.geo.utils.transformation.WktToGeoJsonTransformUtil;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridHitsWrapper;
@@ -146,6 +148,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );
         request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
+
+        // Geotools
+        context.put("geoGmlToWkt", GmlToWktTransformUtil.class);
+        context.put("geoWktToGeoJson", WktToGeoJsonTransformUtil.class);
 
         String[] mapPosition = PortalConfig.getInstance().getStringArray( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_POSITION);
         if(mapPosition != null && mapPosition.length == 3) {
