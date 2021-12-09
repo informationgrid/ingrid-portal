@@ -30,12 +30,16 @@
         });
     }
 
-    function addLeafletMap(baselayers, bounds, latlng, zoom){
-        return addLeafletMapWithId('map', baselayers, bounds, latlng, zoom);
+    function addLeafletMap(baselayers, bounds, latlng, zoom, epsg){
+        return addLeafletMapWithId('map', baselayers, bounds, latlng, zoom, epsg);
     }
 
-    function addLeafletMapWithId(mapId, baselayers, bounds, latlng, zoom){
+    function addLeafletMapWithId(mapId, baselayers, bounds, latlng, zoom, epsg){
+        if(!epsg) {
+            epsg = L.CRS.EPSG3857;
+        }
         var map = new L.Map(mapId, {
+           crs: epsg,
            layers: baselayers
         });
         if(bounds){

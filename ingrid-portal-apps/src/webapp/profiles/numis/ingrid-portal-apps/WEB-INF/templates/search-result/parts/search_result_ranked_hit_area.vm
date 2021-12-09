@@ -49,7 +49,7 @@
         #if($leafletBgLayerWMSUrl && $leafletBgLayerWMSName)
             bgLayer = getWMSLayer('$leafletBgLayerWMSUrl', '$leafletBgLayerWMSName', '');
         #end
-        var map${mapId} = addLeafletMapWithId('map${mapId}', bgLayer, bounds${mapId}, null , 10);
+        var map${mapId} = addLeafletMapWithId('map${mapId}', bgLayer, bounds${mapId}, null , 10, $leafletEpsg);
         #if($isDetail)
             map${mapId}.gestureHandling.enable();
             addLeafletHomeControl(map${mapId}, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds${mapId}, '', '23px');

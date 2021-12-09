@@ -155,6 +155,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             context.put("mapExtent", mapPosition);
             context.put("mapPosition", "");
         }
+        context.put("leafletEpsg", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_EPSG, "L.CRS.EPSG3857"));
         context.put("mapParamE", request.getParameter("E") != null ? request.getParameter("E"): "");
         context.put("mapParamN", request.getParameter("N") != null ? request.getParameter("N"): "");
         context.put("mapParamZoom", request.getParameter("zoom") != null ? request.getParameter("zoom"): "");
