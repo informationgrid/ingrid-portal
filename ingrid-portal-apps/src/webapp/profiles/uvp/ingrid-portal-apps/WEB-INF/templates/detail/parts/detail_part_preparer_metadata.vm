@@ -89,7 +89,7 @@
                             bounds = L.latLngBounds(southWest, northEast);
                             
                             var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
-                            var map = addLeafletMap([osm], bounds, null, null, $leafletEpsg);
+                            var map = addLeafletMap([osm], bounds);
                             map.gestureHandling.enable();
                             var rect = L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).on('click', function (e) {
                                 var popLocation= e.latlng;
