@@ -29,3 +29,6 @@
 
 ## WKT
 #set($wkt = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "wkt"))
+#if($wkt && !$wkt.isEmpty())
+    #set($wkt = $geoWktToGeoJson.wktToGeoJson($wkt))
+#end

@@ -85,7 +85,7 @@
 #set($xPathPresentPolygon = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_BoundingPolygon/gmd:polygon")
 #set($wktPolygons = $TOOL.getPolygon($xPathPresentPolygon))
 #if($wktPolygons && $wktPolygons.size() > 0)
-    #set($wkt = $wktPolygons.get(0))
+    #set($wkt = $geoWktToGeoJson.wktToGeoJson($wktPolygons.get(0)))
 #end
 
 #### Raumbezugssystem
