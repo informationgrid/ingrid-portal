@@ -28,6 +28,9 @@
           <action type="update" dev="wemove" issue="2823">
             IGE: Add geometry context to geo datasets.
           </action>
+          <action type="fix" dev="wemove" issue="3266">
+            IGE: Disable delayed publications for already published documents.
+          </action>
         </release>
 
         <release version="5.10.1" date="2021-11-23" description="Release 5.10.1">
