@@ -328,6 +328,7 @@ header {
 .boxed-table thead {
   background-color: #FFFFFF;
   border-bottom: 1px solid #256394;
+  color: #256394;
 }
 table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr {
   color: #256394;

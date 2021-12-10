@@ -491,10 +491,18 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
 }
 
 function addLayerWKT(map, wkt, coords) {
-  var features = L.geoJSON(JSON.parse(wkt));
-  if(features) {
-      features.addTo(map);
-      map.fitBounds(features.getBounds());
+  var wkt_split = wkt.split(";");
+  
+  var features = [];
+  wkt_split.forEach(function(tmpWkt) {
+      var wicket = new Wkt.Wkt();
+      wicket.read(tmpWkt);
+      var feature = wicket.toObject();
+      features.push(feature);
+  });
+  if(features.length > 0) {
+      var featureGroup = L.featureGroup(features).addTo(map);
+      map.fitBounds(featureGroup.getBounds());
   } else {
       addLayerBounds(map, coords);
   }
