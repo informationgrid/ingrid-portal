@@ -347,6 +347,10 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 // signalize that the user is about to log in
                 // see MyPortalOverviewPortlet::doView()
                 session.setAttribute(Settings.SESSION_LOGIN_STARTED, "1");
+                String redirect = PortalConfig.getInstance().getString(PortalConfig.PORTAL_LOGIN_REDIRECT, "");
+                if(!redirect.isEmpty()) {
+                    session.setAttribute(LoginConstants.DESTINATION, redirect);
+                }
                 response.sendRedirect(response.encodeURL(((RequestContext) request
                     .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
                     + "/login/redirector"));

@@ -303,7 +303,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_LOGIN_AUTH_FAILURES_LIMIT = "portal.login.auth.failures.limit";
     public static final String PORTAL_LOGIN_AUTH_FAILURES_TIME = "portal.login.auth.failures.time";
-
+    public static final String PORTAL_LOGIN_REDIRECT = "portal.login.redirect";
+    
     public static final String PORTAL_DETAIL_UVP_ZIP_PATH = "portal.detail.uvp.zip.path";
     public static final String PORTAL_DETAIL_UVP_ZIP_UPDATE_MIN = "portal.detail.uvp.zip.update.min";
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN = "portal.detail.uvp.documents.htaccess.login";
