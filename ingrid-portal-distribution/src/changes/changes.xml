@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.9.2.3" date="2021-12-13" description="Release 5.9.2.3">
+          <action type="fix" dev="wemove" issue="3266">
+            IGE: Disable delayed publications for already published documents.
+          </action>
+        </release>
+      
         <release version="5.9.2.2" date="2021-12-12" description="Release 5.9.2.2">
           <action type="fix" dev="wemove" issue="3292">
             Kritische Sicherheitslücke Log4Shell in der weitverbreiteten Java-Logging-Bibliothek log4j
