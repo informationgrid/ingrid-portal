@@ -44,7 +44,7 @@
     ## Erläuterung zum Raumbezug
         #renderTextTable($MESSAGES.getString("t01_object.loc_descr") $TOOL.getValueFromXPath($xPathPresentEXExtentDescription))
     ## Begrenzungspolygon als WKT
-        #renderTextListTable($MESSAGES.getString("t01_object.polygon_wkt") $wktPolygons)
+        #renderTextListTable($MESSAGES.getString("t01_object.polygon_wkt") $wktPolygons true)
     ## Raumbezugssystem
         #renderLinkListTable($MESSAGES.getString("t011_obj_geo.referencesystem_id") $TOOL.getNodeListValueReferenceSystem($xPathPresentReferenceSystemInfo))
     </div>

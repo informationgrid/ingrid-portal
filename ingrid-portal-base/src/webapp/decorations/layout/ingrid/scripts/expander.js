@@ -158,31 +158,35 @@ $('.js-toggle-all-expander-expand').on('click', function (event) {
 
 $(function(){
 
-    $('.js-expand-box').removeClass('js-non-expand-text');
+    $('.js-expand-box').each(function(index) {
+      var expanderBox = $(this);
+      expanderBox.removeClass('js-non-expand-text');
+  
+      var wrapHeight = expanderBox.find('.js-expand-text-content').height();
+      var descHeight = expanderBox.height();
 
-    var wrapHeight = $('.js-expand-box .js-expand-text-content').height();
-    var descHeight = $('.js-expand-box').height();
-
-    if (wrapHeight <= descHeight) {
-        $('.js-expand-box .js-expand-text-fade').addClass('is-hidden');
-    } else {
-        $('.js-expand-box ~ .js-open-expand-text').removeClass('is-hidden');
-    }
-
-    $('.js-expand-box ~ .js-open-expand-text').click(function() {
-        $(this).addClass('is-hidden');
-        $('.js-expand-box').addClass('is-active');
-        $('.js-expand-box ~ .js-close-expand-text').removeClass('is-hidden');
-        $('.js-expand-box .js-expand-text-fade').addClass('is-hidden');
+      if (wrapHeight <= descHeight) {
+          expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
+      } else {
+          expanderBox.find('~ .js-open-expand-text').removeClass('is-hidden');
+      }
+  
+      expanderBox.find('~ .js-open-expand-text').click(function() {
+          $(this).addClass('is-hidden');
+          expanderBox.addClass('is-active');
+          expanderBox.find('~ .js-close-expand-text').removeClass('is-hidden');
+          expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
+      });
+  
+      expanderBox.find('~ .js-close-expand-text').click(function() {
+          $(this).addClass('is-hidden');
+          expanderBox.removeClass('is-active');
+          expanderBox.find('~ .js-open-expand-text').removeClass('is-hidden');
+          expanderBox.find('.js-expand-text-fade').removeClass('is-hidden');
+      });
+      
     });
 
-    $('.js-expand-box ~ .js-close-expand-text').click(function() {
-        $(this).addClass('is-hidden');
-        $('.js-expand-box').removeClass('is-active');
-        $('.js-expand-box ~ .js-open-expand-text').removeClass('is-hidden');
-        $('.js-expand-box .js-expand-text-fade').removeClass('is-hidden');
-    });
-    
     var isAllOpen = true;
     var jsExpanders = $('.data .teaser-data .js-expander');
     if(jsExpanders.length > 0) {

@@ -1047,7 +1047,7 @@
     #end
 #end
 
-#macro (renderTextListTable $title $entryList)
+#macro (renderTextListTable $title $entryList $expandable)
     #if($tool.hasContent($entryList))
     <div class="table table--lined">
         <table>
@@ -1056,11 +1056,28 @@
                 <th>$title</th>
             #end
                 <td>
-                    <div class="text-list">
-                    #foreach($entry in $entryList)
-                        <p class="list-item">$entry</p>
+                    #if($expandable)
+                    <div class="js-expand-box js-expand-text js-non-expand-text">
+                        <div class="js-expand-text-content">
                     #end
+                            <div class="text-list">
+                            #foreach($entry in $entryList)
+                                <p class="list-item">$entry</p>
+                            #end
+                            </div>
+                            
+                    #if($expandable)
+                            </div>
+                            <div class="desc-fade"></div>
+                        </div>
+                        <button type="button" class="js-open-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.more')">
+                            $MESSAGES.getString('search.detail.info.more')
+                        </button>
+                        <button type="button" class="js-close-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.less')">
+                            $MESSAGES.getString('search.detail.info.less')
+                        </button>
                     </div>
+                    #end
                 </td>
             </tr>
         </table>
