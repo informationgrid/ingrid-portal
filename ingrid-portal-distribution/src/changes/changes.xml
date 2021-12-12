@@ -19,6 +19,9 @@
           <action type="add" dev="wemove" issue="2383">
             Button Karte - Karte in neuen Tab öffnen
           </action>
+          <action type="fix" dev="wemove" issue="3292">
+            Kritische Sicherheitslücke Log4Shell in der weitverbreiteten Java-Logging-Bibliothek log4j
+          </action>
           <action type="fix" dev="wemove" issue="3105">
             Darstellung der Webseiten Treffer fehlerhaft
           </action>
