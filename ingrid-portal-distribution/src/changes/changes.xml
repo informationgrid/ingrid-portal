@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.9.3" date="2021-xx-xx" description="Release 5.9.3">
+          <action type="update" dev="wemove" issue="2944">
+            Adapt Zeitbezug display in portal
+          </action>
           <action type="fix" dev="wemove" issue="3279">
             Fehler in der Portal Detaildarstellung
           </action>
