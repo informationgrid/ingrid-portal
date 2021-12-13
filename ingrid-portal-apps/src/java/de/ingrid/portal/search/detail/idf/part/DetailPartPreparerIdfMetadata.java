@@ -613,7 +613,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 } else if (thesaurusName.isEmpty() && type.isEmpty()) {
                                     listSearch.add(value);
                                 } else{
-                                    listSearch.add(value);
+                                    // try to match keyword to  Opendata Category
+                                    String tmpValue = sysCodeList.getNameByData("6400", value);
+                                    if(tmpValue.isEmpty()){
+                                        tmpValue = value;
+                                    }
+                                    listInspire.add(tmpValue);
                                 }
                             }
                         }
