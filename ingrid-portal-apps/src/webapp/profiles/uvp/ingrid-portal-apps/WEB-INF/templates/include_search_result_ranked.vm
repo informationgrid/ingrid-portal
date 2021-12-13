@@ -15,18 +15,20 @@
 #end
 
 #macro(renderTimeType $timeTypeTitle $timeType $t0 $t1 $t2)
-    #if($timeType && !$timeType.isEmpty())
+    #if($timeType && !$timeType.isEmpty() && (!$t0.isEmpty() || !$t1.isEmpty() || !$t2.isEmpty()))
     <div class="helper date">
         #if($timeTypeTitle)
             <b>$timeTypeTitle</b>:
         #end
-        #if($timeType == "seit")
-        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1</span>
-        #elseif ($timeType == "von")
-        <span>$t1 $MESSAGES.getString('searchResult.hit.time.to') $t2</span>
-        #elseif ($timeType == "am")
+        #if($timeType == "seit" && !$t1.isEmpty())
+        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1 $MESSAGES.getString('searchResult.hit.time.untilUnknown')</span>
+        #elseif($timeType == "seitX" && !$t1.isEmpty())
+        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1 $MESSAGES.getString('searchResult.hit.time.untilNow')</span>
+        #elseif ($timeType == "von" && !$t1.isEmpty() && !$t2.isEmpty())
+        <span>$MESSAGES.getString('searchResult.hit.time.from') $t1 $MESSAGES.getString('searchResult.hit.time.to') $t2</span>
+        #elseif ($timeType == "am" && !$t0.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.at') $t0</span>
-        #elseif ($timeType == "bis")
+        #elseif ($timeType == "bis" && !$t2.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.until') $t2</span>
         #end
     </div>
