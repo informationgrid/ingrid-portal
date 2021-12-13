@@ -11,10 +11,16 @@
                         <a href="?hkey=search-1">Suche</a>
                     </li>
                     <li>
+                        <a href="?hkey=search-measure-1">Messwerte</a>
+                    </li>
+                    <li>
                         <a href="?hkey=search-catalog-1">Kataloge</a>
                     </li>
                     <li>
                         <a href="?hkey=maps-1">Karte</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=search-chronicle-1">Chronik</a>
                     </li>
                     <li>
                         <a href="?hkey=about-1">Über InGrid</a>
@@ -676,6 +682,48 @@
                    Ansprechpartner aufgeführt. Durch einen Klick auf ein Objekt
                    oder eine Adresse werden detaillierte Informationen 
                    angezeigt. </p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Messwerte</header>
+        <section help-key="search-measure-1">
+            <header>Messwerte Kartenviewer</header>
+            <content>
+                <p>Im Bereich <b>Messwerte</b> aus dem Hauptmenü werden Ihnen aktuelle Messwerte direkt
+                   innerhalb eines Kartenviewers zur Verfügung gestellt. Der Themenschwerpunkt liegt 
+                   hierbei auf den Bereichen Strahlung, Luft und Wasser.
+                   Die Messstationen werden direkt auf der Karte visualisiert und können per Klick
+                   verfeinert werden. Verschiedene Filter ermöglichen die Einschränkung auf Stationen, Messparameter oder Zeiträume.
+                   Innerhalb von Diagrammen können Messwerte verschiedener Stationen verglichen werden.</p>
+                <p>Eine ausführliche Hilfe findet sich innerhalb der Anwendung unter dem Info Button.</p>
+            </content>
+        </section>
+        <section help-key="search-measure-2">
+            <header>Messwerte Kategorisierung</header>
+            <content>
+                <p>Zusätzlich zur Darstellung im Messwerte Kartenviewer können auch Daten diesem Bereich zugeordnet werden.
+                   In den Suchkategorien finden sich die Unterkategorien Strahlung, Luft und Klima oder Wasser zur Recherche.</p>
+                <p>Verschiedene Web-Seiten können beim Indexieren diesen Kategorien zugeordnet werden.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Chronik</header>
+        <section help-key="search-chronicle-1">
+            <header>Chronik</header>
+            <content>
+                <p>Die <b>Chronik</b> ist eine Sammlung aktueller und 
+                   historischer Ereignisse, die unsere Situation 
+                   wesentlich beeinflusst haben. Neben den Eckdaten liefert 
+                   die Chronik eine kurze Beschreibung der Ereignisse. Die 
+                   Chronik wird über den <a href="http://sns.uba.de/chronik/de.html" target="_new">Semantic Network Service</a> (SNS) des
+                    Umweltbundesamtes zur Verfügung gestellt.</p>
+                <p>Die Recherche in der Chronik ist ganz einfach. Wählen Sie 
+                   einen oder mehrere Ereignistypen aus, geben einen Suchbegriff 
+                   ein und klicken dann auf die Schaltfläche <b>Anzeigen</b>. 
+                   Bei Bedarf können Sie zudem einen Zeitraum oder ein Datum 
+                   eingeben, um die Suche weiter einzuschränken. </p>
             </content>
         </section>
     </chapter>
