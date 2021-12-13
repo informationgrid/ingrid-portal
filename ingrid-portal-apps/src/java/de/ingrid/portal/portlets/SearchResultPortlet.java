@@ -118,7 +118,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
                         String contentType = con.getContentType();
 
-                        if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
+                        if((contentType == null || contentType.startsWith("text/html")) && paramURL.startsWith("http://")) {
                             url = new URL(paramURL.replace("http://", "https://"));
                             con = (HttpURLConnection) url.openConnection();
                             con.setRequestMethod("HEAD");
