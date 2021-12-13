@@ -6,12 +6,15 @@
     </properties>
 
     <body>
-        <release version="5.10.1.2" date="2021-12-xx" description="Release 5.10.1.2">
+        <release version="5.10.1.2" date="2021-12-13" description="Release 5.10.1.2">
           <action type="fix" dev="wemove" issue="3279">
             Fehler in der Portal Detaildarstellung
           </action>
           <action type="fix" dev="wemove" issue="3266">
             IGE: Disable delayed publications for already published documents.
+          </action>
+          <action type="add" dev="wemove" issue="3109">
+            MAPCLIENT: Import von geschützten Diensten
           </action>
         </release>
 
