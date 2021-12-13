@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.9.3" date="2021-xx-xx" description="Release 5.9.3">
+          <action type="fix" dev="wemove" issue="2546">
+            Remove measurements and timeline in metaver help-themes pages
+          </action>
           <action type="update" dev="wemove" issue="2944">
             Adapt Zeitbezug display in portal
           </action>
