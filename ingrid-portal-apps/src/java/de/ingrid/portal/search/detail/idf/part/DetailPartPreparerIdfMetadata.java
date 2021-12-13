@@ -618,7 +618,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listInspire.add(tmpValue);
+                                    listSearch.add(tmpValue);
                                 }
                             }
                         }
