@@ -6,6 +6,13 @@
     </properties>
 
     <body>
+
+        <release version="5.8.8" date="2021-12-14" description="Release 5.8.8">
+          <action type="fix" dev="wemove" issue="3292">
+            Kritische Sicherheitslücke Log4Shell in der weitverbreiteten Java-Logging-Bibliothek log4j
+          </action>
+        </release>
+
         <release version="5.8.7" date="2021-11-11" description="Release 5.8.7">
           <action type="fix" dev="wemove" issue="3161">
             SSRF mit XML External Entity (XXE) Schwachstelle (2)
