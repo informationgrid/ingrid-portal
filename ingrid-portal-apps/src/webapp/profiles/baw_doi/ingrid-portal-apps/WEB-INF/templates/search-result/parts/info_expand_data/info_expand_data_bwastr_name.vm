@@ -28,7 +28,22 @@
 #end
 
 ## WKT
-#set($wkt = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "wkt"))
-#if($wkt && !$wkt.isEmpty())
-    #set($wkt = $geoWktToGeoJson.wktToGeoJson($wkt))
+
+#set($wkt = "")
+#set($hasWkt = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "wkt"))
+#if($hasWkt)
+    #set($contents = $rs.get("detail").get("content"))
+    #foreach($content in $contents)
+        #if($content.startsWith("POINT") || $content.startsWith("LINESTRING") || $content.startsWith("LINEARRING") ||
+            $content.startsWith("POLYGON") || $content.startsWith("MULTIPOINT") || $content.startsWith("MULTILINESTRING") ||
+            $content.startsWith("MULTIPOLYGON") || $content.startsWith("GEOMETRYCOLLECTION") )
+            #if($geoWktToGeoJson.isValidWkt($content))
+                #set($wkt = $content)
+                #break
+            #end
+        #end
+    #end
+    #if(!$wkt.isEmpty())
+        #set($wkt = $geoWktToGeoJson.wktToGeoJson($wkt))
+    #end
 #end
