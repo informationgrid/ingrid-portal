@@ -1062,3 +1062,7 @@ footer {
 a.icon:focus {
   text-decoration: none;
 }
+
+header .logo img {
+  width: 90%;
+}
