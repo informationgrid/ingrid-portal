@@ -84,6 +84,9 @@
           <action type="update" dev="wemove" issue="2326">
             IGE (BAW_MIS): Add literature type and modifications.
           </action>
+          <action type="update" dev="wemove" issue="2678">
+            IGE (BAW_MIS): Add link table with connection to REST-API
+          </action>
         </release>
 
         <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">

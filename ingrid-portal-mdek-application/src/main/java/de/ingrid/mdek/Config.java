@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -209,6 +209,22 @@ public class Config {
     @PropertyValue("mdek.nominatimBaseURL")
     @DefaultValue("https://nominatim.openstreetmap.org")
     public String nominatimBaseURL;
+
+    @PropertyValue("baw.lfs.base.url")
+    @DefaultValue("https://datenfinder.baw.de")
+    public String bawLfsBaseURL;
+
+    @PropertyValue("baw.rest.api.base.url")
+    @DefaultValue("https://dl.datenfinder.baw")
+    public String bawRestApiBaseURL;
+
+    @PropertyValue("baw.rest.api.move.path")
+    @DefaultValue("/api/move/init")
+    public String bawRestApiMovePath;
+
+    @PropertyValue("baw.rest.api.list.path")
+    @DefaultValue("/api/list?folder=")
+    public String bawRestApiListPath;
 
     public void initialize() {
         System.setProperty( "spring.profiles.active", "http" );

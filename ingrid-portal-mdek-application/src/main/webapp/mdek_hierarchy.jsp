@@ -193,9 +193,6 @@
                             case "conformity":
                                 localizedTitle = "<fmt:message key='dialog.conformity.title' />";
                                 break;
-                            case "simParamValue":
-                                localizedTitle = message.get('dialog.simulation.parameter.title');
-                                break;
                             case "doiCrossReference":
                                 localizedTitle = message.get('dialog.doi.xref.title');
                                 break;
