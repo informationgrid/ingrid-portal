@@ -96,8 +96,12 @@
                     }
                 };
 
-                new LFSTree({treeType: 'receipt', showRoot: false}, "treeReceipt");
-                new LFSTree({treeType: 'filing', showRoot: false}, "treeFiling");
+                var treeReceipt = new LFSTree({treeType: 'receipt', showRoot: false}, "treeReceipt");
+                var treeFiling = new LFSTree({treeType: 'filing', showRoot: false}, "treeFiling");
+                
+                // disable multiselection in trees
+                treeReceipt.dndController.singular = true;
+                treeFiling.dndController.singular = true;
 
                 return all(defs);
             }
