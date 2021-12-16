@@ -81,6 +81,9 @@
           <action type="fix" dev="wemove" issue="3266">
             IGE: Disable delayed publications for already published documents.
           </action>
+          <action type="update" dev="wemove" issue="2326">
+            IGE (BAW_MIS): Add literature type and modifications.
+          </action>
         </release>
 
         <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
