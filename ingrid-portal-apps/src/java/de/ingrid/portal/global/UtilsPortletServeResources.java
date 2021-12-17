@@ -667,7 +667,7 @@ public class UtilsPortletServeResources {
     private static String getTimeQuery(String queryString, String from, String to) {
         SimpleDateFormat df = new SimpleDateFormat( "yyyyMMdd" );
         Calendar cal = new GregorianCalendar();
-        TM_PeriodDuration pdTo = TM_PeriodDuration.parse( "PT" );
+        TM_PeriodDuration pdTo = TM_PeriodDuration.parse( to );
         if(pdTo != null) {
             if (pdTo.getValue( Interval.DAYS ) != null && pdTo.getValue( Interval.DAYS ).length() > 0) {
                 cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pdTo.getValue( Interval.DAYS ) ) * (-1) );
@@ -682,7 +682,7 @@ public class UtilsPortletServeResources {
             }
         }
         to = df.format( cal.getTime() );
-        TM_PeriodDuration pdFrom = TM_PeriodDuration.parse( "P1YT" );
+        TM_PeriodDuration pdFrom = TM_PeriodDuration.parse( from );
         if(pdFrom != null) {
             if (pdFrom.getValue( Interval.DAYS ) != null && pdFrom.getValue( Interval.DAYS ).length() > 0) {
                 cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pdFrom.getValue( Interval.DAYS ) ) * (-1) );

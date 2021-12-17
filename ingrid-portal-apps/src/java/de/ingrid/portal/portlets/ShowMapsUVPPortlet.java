@@ -60,6 +60,12 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         IngridSysCodeList sysCodeList = new IngridSysCodeList(request.getLocale());
         try {
             // "Zulassungsverfahren"
+            if (resourceID.equals( "marker_time" )) {
+                String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
+                if(!query.isEmpty()) {
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM, "P1YT", "PT");
+                }
+            }
             if (resourceID.equals( "marker" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
                 if(!query.isEmpty()) {
@@ -84,7 +90,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if (resourceID.equals( "marker4_time" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
                 if(!query.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM, "P1YT", "PT");
                 }
             }
             if (resourceID.equals( "marker4" )) {
@@ -150,6 +156,8 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         if(!mapclientQuery.isEmpty()){
             restUrl.setResourceID( "marker" );
             request.setAttribute( "restUrlMarker", restUrl.toString() );
+            restUrl.setResourceID( "marker_time" );
+            request.setAttribute( "restUrlMarker_time", restUrl.toString() );
         }
         String mapclientQuery2 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
         if(!mapclientQuery2.isEmpty()){
