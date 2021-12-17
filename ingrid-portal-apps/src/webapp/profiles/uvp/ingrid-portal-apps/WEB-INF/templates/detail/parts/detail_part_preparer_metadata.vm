@@ -498,9 +498,11 @@
                     if (this.readyState == this.DONE) {
                         if (this.status === 200) {
                             element.find('span').addClass('is-hidden');
-                            var content = '<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> </a>';
-                            content = content + '<span class="text"><span class="downloadText">' + convertFileSize(this.response, true, true) + '</span></span>'
-                            element.append(content);
+                            if(this.response != "") {
+                                var content = '<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> </a>';
+                                content = content + '<span class="text"><span class="downloadText">' + convertFileSize(this.response, true, true) + '</span></span>'
+                                element.append(content);
+                            }
                         }
                     }
                 };

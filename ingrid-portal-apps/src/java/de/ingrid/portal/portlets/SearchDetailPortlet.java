@@ -151,8 +151,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String uuid = request.getParameter( "docuuid" );
             String plugid = request.getParameter( "plugid" );
             File zip = UtilsUvpZipDownload.searchFilesToCreateZip(uuid, plugid, messages, xPathUtils);
-            response.setContentType( "text/plain" );
-            response.getWriter().write( Files.size(zip.toPath()) + "" );
+            if(zip != null && zip.exists()) {
+                response.setContentType( "text/plain" );
+                response.getWriter().write( Files.size(zip.toPath()) + "" );
+            }
         }
     }
 

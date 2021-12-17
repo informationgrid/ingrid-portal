@@ -260,19 +260,24 @@ public class UtilsUvpZipDownload {
                                                 con.setRequestMethod("HEAD");
                                                 String zipEntryName = docFoldername + "/" + URLDecoder.decode(label, "UTF-8");
                                                 JSONObject statsEntry = new JSONObject();
-                                                statsEntry.put("length", con.getContentLength());
-                                                statsEntry.put("type", con.getContentType());
-                                                statsEntry.put("modified", con.getLastModified());
-                                                if(con.getContentType().indexOf("text/html") > -1) {
-                                                    if(!zipEntryName.endsWith(".html")) {
-                                                        if(!link.isEmpty()) {
-                                                            zipEntryName += "-" + link.replaceAll("[\\\\/:*?\"<>|]", "_");
+                                                int length = con.getContentLength();
+                                                String contentType = con.getContentType();
+                                                long lastModified = con.getLastModified();
+                                                if(length != -1) {
+                                                    statsEntry.put("length", length);
+                                                    statsEntry.put("type", contentType);
+                                                    statsEntry.put("modified", lastModified);
+                                                    if(con.getContentType().indexOf("text/html") > -1) {
+                                                        if(!zipEntryName.endsWith(".html")) {
+                                                            if(!link.isEmpty()) {
+                                                                zipEntryName += "-" + link.replaceAll("[\\\\/:*?\"<>|]", "_");
+                                                            }
+                                                            zipEntryName += ".html";
                                                         }
-                                                        zipEntryName += ".html";
                                                     }
+                                                    statsEntry.put("name", zipEntryName);
+                                                    newStatsJson.put(link, statsEntry);
                                                 }
-                                                statsEntry.put("name", zipEntryName);
-                                                newStatsJson.put(link, statsEntry);
                                             } catch (IOException e) {
                                                 log.error("Error download file for ZIP: '" + title + "'", e);
                                             } catch (JSONException e) {
