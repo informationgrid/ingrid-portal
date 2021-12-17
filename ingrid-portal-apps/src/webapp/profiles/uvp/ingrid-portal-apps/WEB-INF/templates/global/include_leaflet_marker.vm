@@ -736,7 +736,8 @@
                 '<input id="' + id + '_time" name="' + id + '_time" type="checkbox" checked>' +
                 '<span class="toggle-slider round"></span>' +
                 '</label>' +
-                '<span class="toggle-label">nur Aktuelle</span>'+
+                '<span class="toggle-label checked">nur Aktuelle</span>'+
+                '<span class="toggle-label unchecked is-hidden">alle</span>'+
                 '</div>';
         }
         html += '</div></div>';
@@ -776,12 +777,19 @@
         if(markers.length > 1) {
             checkboxTime.on('change', function() {
                 if (legendEntry.is(':checked')) {
+                    var checkLabel = checkboxTime.closest('.control-group').find('.toggle-label.checked');
+                    var uncheckLabel = checkboxTime.closest('.control-group').find('.toggle-label.unchecked');
+
                     if ($(this).is(':checked')) {
                         map.addLayer(markers[0]);
                         map.removeLayer(markers[1]);
+                        checkLabel.removeClass('is-hidden');
+                        uncheckLabel.addClass('is-hidden');
                     } else {
                         map.addLayer(markers[1]);
                         map.removeLayer(markers[0]);
+                        uncheckLabel.removeClass('is-hidden');
+                        checkLabel.addClass('is-hidden');
                     }
                 }
             });
