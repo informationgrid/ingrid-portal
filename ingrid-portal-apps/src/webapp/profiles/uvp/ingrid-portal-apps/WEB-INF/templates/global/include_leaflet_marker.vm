@@ -76,9 +76,9 @@
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
         }
     });
-    // "Vorgelagerte Verfahren" markers
-    var mapMarkers1314 = L.markerClusterGroup({
-        id: 'mapMarkers1314',
+    // "Raumordnungsverfahren" markers
+    var mapMarkers13 = L.markerClusterGroup({
+        id: 'mapMarkers13',
         iconCreateFunction: function (cluster) {
             var childCount = cluster.getChildCount();
             var c = ' marker-cluster-';
@@ -92,12 +92,49 @@
             if(smallIcons){
              c += ' light';
             }
-            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-13' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    // "Linienbestimmungen" markers
+    var mapMarkers14 = L.markerClusterGroup({
+        id: 'mapMarkers14',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-14' + c, iconSize: new L.Point(40, 40) });
         }
     });
     // "Negative Vorprüfungen" markers
     var mapMarkers12 = L.markerClusterGroup({
         id: 'mapMarkers12',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-12' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    var mapMarkers12_time = L.markerClusterGroup({
+        id: 'mapMarkers12_time',
         iconCreateFunction: function (cluster) {
             var childCount = cluster.getChildCount();
             var c = ' marker-cluster-';
@@ -141,19 +178,22 @@
         if(mapFilter) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
-                    createLegendEntry(map, mapFilter, mapMarkers10, 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv');
-                }
-                if(legendCounter.countMarker3){
-                    createLegendEntry(map, mapFilter, mapMarkers11, 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av');
-                }
-                if(legendCounter.countMarker2){
-                    createLegendEntry(map, mapFilter, mapMarkers1314, 'red', 'mapMarkers1314', 'Vorgelagerte Verfahren', 'vv');
+                    createLegendEntry(map, mapFilter, [mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv');
                 }
                 if(legendCounter.countMarker4){
-                    createLegendEntry(map, mapFilter, mapMarkers12, 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv');
+                    createLegendEntry(map, mapFilter, [mapMarkers12_time, mapMarkers12], 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv');
+                }
+                if(legendCounter.countMarker2){
+                    createLegendEntry(map, mapFilter, [mapMarkers13], 'red', 'mapMarkers13', 'Raumordnungsverfahren', 'ro');
+                }
+                if(legendCounter.countMarker5){
+                    createLegendEntry(map, mapFilter, [mapMarkers14], 'purple', 'mapMarkers14', 'Linienbestimmungen', 'li');
+                }
+                if(legendCounter.countMarker3){
+                    createLegendEntry(map, mapFilter, [mapMarkers11], 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av');
                 }
                 if(legendCounter.countMarkerDevPlan){
-                    createLegendEntry(map, mapFilter, mapMarkersDevPlan, 'green', 'mapMarkersDevPlan', 'Bauleitplanung', 'blp');
+                    createLegendEntry(map, mapFilter, [mapMarkersDevPlan], 'green', 'mapMarkersDevPlan', 'Bauleitplanung', 'blp');
                 }
             }
         }
@@ -161,59 +201,22 @@
         if(mapFilterXs) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
-                    mapFilterXs.append( '<div class="form-element boxed map blue" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers10"><input id="mapMarkers10" name="mapMarkers10" type="checkbox"><span class="control__indicator"></span>Zulassungsverfahren</label></div></div></div>');
-                    $('#mapMarkers10').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers10);
-                        } else {
-                            map.removeLayer(mapMarkers10);
-                        }
-                    });
-                }
-                if(legendCounter.countMarker3){
-                    mapFilterXs.append( '<div class="form-element boxed map" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers11"><input id="mapMarkers11" name="mapMarkers11" type="checkbox"><span class="control__indicator"></span>Ausl&#228;ndische Vorhaben</label></div></div></div>');
-                    $('#mapMarkers11').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers11);
-                        } else {
-                            map.removeLayer(mapMarkers11);
-                        }
-                    });
-                }
-                if(legendCounter.countMarker2){
-                    mapFilterXs.append( '<div class="form-element boxed map red" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers1314"><input id="mapMarkers1314" name="mapMarkers1314" type="checkbox"><span class="control__indicator"></span>Vorgelagerte Verfahren</label></div></div></div>');
-                    $('#mapMarkers1314').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers1314);
-                        } else {
-                            map.removeLayer(mapMarkers1314);
-                        }
-                    });
+                    createLegendEntry(map, mapFilterXs, [mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', 'style="padding:0px"');
                 }
                 if(legendCounter.countMarker4){
-                    mapFilterXs.append( '<div class="form-element boxed map orange" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers12"><input id="mapMarkers12" name="mapMarkers12" type="checkbox"><span class="control__indicator"></span>Negative Vorpr&#252;fungen</label></div></div></div>');
-                    $('#mapMarkers12').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers12);
-                        } else {
-                            map.removeLayer(mapMarkers12);
-                        }
-                    });
+                    createLegendEntry(map, mapFilterXs, [mapMarkers12_time, mapMarkers12], 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv', 'style="padding:0px"');
+                }
+                if(legendCounter.countMarker2){
+                    createLegendEntry(map, mapFilterXs, [mapMarkers13], 'red', 'mapMarkers13', 'Raumordnungsverfahren', 'ro', 'style="padding:0px"');
+                }
+                if(legendCounter.countMarker5){
+                    createLegendEntry(map, mapFilterXs, [mapMarkers14], 'purple', 'mapMarkers14', 'Linienbestimmungen', 'li', 'style="padding:0px"');
+                }
+                if(legendCounter.countMarker3){
+                    createLegendEntry(map, mapFilterXs, [mapMarkers11], 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av', 'style="padding:0px"');
                 }
                 if(legendCounter.countMarkerDevPlan){
-                   mapFilterXs.append( '<div class="form-element boxed map green" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkersDevPlan"><input id="mapMarkersDevPlan" name="mapMarkersDevPlan" type="checkbox"><span class="control__indicator"></span>Bauleitplanung</label></div></div></div>');
-                   $('#mapMarkersDevPlan').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkersDevPlan);
-                        } else {
-                            map.removeLayer(mapMarkersDevPlan);
-                        }
-                    });
+                    createLegendEntry(map, mapFilterXs, [mapMarkersDevPlan], 'green', 'mapMarkersDevPlan', 'Bauleitplanung', 'blp', 'style="padding:0px"');
                 }
             }
         }
@@ -251,19 +254,33 @@
                     }
                 }
             }
-            if($checkedCategory1314 && mapParamLayers.length === 0 || mapParamLayers.indexOf('vv') > -1){
-                if(mapMarkers1314) {
-                    map.addLayer(mapMarkers1314);
-                    $('#mapMarkers1314').prop('checked', true);
-                    if(mapParamLayers.indexOf('vv') === -1) {
-                        mapParamLayers.push('vv');
+            if($checkedCategory13 && mapParamLayers.length === 0 || mapParamLayers.indexOf('ro') > -1){
+                if(mapMarkers13) {
+                    map.addLayer(mapMarkers13);
+                    $('#mapMarkers13').prop('checked', true);
+                    if(mapParamLayers.indexOf('ro') === -1) {
+                        mapParamLayers.push('ro');
+                    }
+                }
+            }
+            if($checkedCategory14 && mapParamLayers.length === 0 || mapParamLayers.indexOf('li') > -1){
+                if(mapMarkers14) {
+                    map.addLayer(mapMarkers14);
+                    $('#mapMarkers14').prop('checked', true);
+                    if(mapParamLayers.indexOf('li') === -1) {
+                        mapParamLayers.push('li');
                     }
                 }
             }
             if($checkedCategory12 && mapParamLayers.length === 0 || mapParamLayers.indexOf('nv') > -1){
-                if(mapMarkers12) {
-                    map.addLayer(mapMarkers12);
+                if(mapMarkers12 || mapMarkers12_time) {
                     $('#mapMarkers12').prop('checked', true);
+                    var checkboxTime = $('#mapMarkers12_time');
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(mapMarkers12_time);
+                    } else {
+                        map.addLayer(mapMarkers12);
+                    }
                     if(mapParamLayers.indexOf('nv') === -1) {
                         mapParamLayers.push('nv');
                     }
@@ -411,8 +428,8 @@
                     });
                 }
             }
-        } else if(e.layer.options.id === 'mapMarkers1314') {
-            if(mapMarkers1314.getLayers().length === 0) {
+        } else if(e.layer.options.id === 'mapMarkers13') {
+            if(mapMarkers13.getLayers().length === 0) {
                 if("$restUrlMarker2") {
                     map.spin(true);
                     jQuery.get("$restUrlMarker2")
@@ -421,7 +438,26 @@
                         if(markers){
                             for (var i = 0; i < markers.length; i++) {
                                 var a = markers[i];
-                                createMarker(mapMarkers1314, a, 'red');
+                                createMarker(mapMarkers13, a, 'red');
+                            }
+                        }
+                    })
+                    .error(function () {
+                      map.spin(false);
+                    });
+                }
+            }
+        } else if(e.layer.options.id === 'mapMarkers14') {
+            if(mapMarkers14.getLayers().length === 0) {
+                if("$restUrlMarker5") {
+                    map.spin(true);
+                    jQuery.get("$restUrlMarker5")
+                    .done(function(data, textStatus, jqxhr) {
+                        map.spin(false);
+                        if(markers){
+                            for (var i = 0; i < markers.length; i++) {
+                                var a = markers[i];
+                                createMarker(mapMarkers14, a, 'purple');
                             }
                         }
                     })
@@ -460,6 +496,25 @@
                             for (var i = 0; i < markers.length; i++) {
                                 var a = markers[i];
                                 createMarker(mapMarkers12, a, 'orange');
+                            }
+                        }
+                    })
+                    .error(function () {
+                      map.spin(false);
+                    });
+                }
+            }
+        } else if(e.layer.options.id === 'mapMarkers12_time') {
+            if(mapMarkers12_time.getLayers().length === 0) {
+                if("$restUrlMarker4_time") {
+                    map.spin(true);
+                    jQuery.get("$restUrlMarker4_time")
+                    .done(function(data, textStatus, jqxhr) {
+                        map.spin(false);
+                        if(markers){
+                            for (var i = 0; i < markers.length; i++) {
+                                var a = markers[i];
+                                createMarker(mapMarkers12_time, a, 'orange');
                             }
                         }
                     })
@@ -622,8 +677,26 @@
         });
     };
     
-    function createLegendEntry(map, mapFilter, markers, color, id, title, paramEntry){
-        mapFilter.append( '<div class="form-element boxed map ' + color + '"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="' + id + '"><input id="' + id + '" name="' + id + '" type="checkbox"><span class="control__indicator"></span>' + title + '</label></div></div></div>');
+    function createLegendEntry(map, mapFilter, markers, color, id, title, paramEntry, style){
+        var html = '<div class="form-element boxed map ' + color + '" ' + style + '>';
+        html += '<div class="input-check">' +
+        '<div class="control-group">' +
+        '<label class="control control--checkbox" for="' + id + '">' +
+        '<input id="' + id + '" name="' + id + '" type="checkbox">' +
+        '<span class="control__indicator"></span>' +
+        title + '</label>' +
+        '</div>';
+        if(markers.length > 1) {
+            html += '<div class="control-group">' +
+                '<label class="control toggle">' +
+                '<input id="' + id + '_time" name="' + id + '_time" type="checkbox" checked>' +
+                '<span class="toggle-slider round"></span>' +
+                '</label>' +
+                '<span class="toggle-label">nur Aktuelle</span>'+
+                '</div>';
+        }
+        html += '</div></div>';
+        mapFilter.append( html );
         $('#' + id).on('change', function() {
             var paramLayer = getQueryStringParameter('layer');
             var paramLayers = [];
@@ -633,17 +706,28 @@
             var checkbox = $(this);
             const index = paramLayers.indexOf(paramEntry);
             if ($(this).is(':checked')) {
-                map.addLayer(markers);
+                map.addLayer(markers[0]);
                 if(index === -1) {
                     paramLayers.push(paramEntry);
                 }
             } else {
-                map.removeLayer(markers);
+                map.removeLayer(markers[0]);
                 if (index > -1) {
                   paramLayers.splice(index, 1);
                 }
             }
             updateQueryStringParameter('layer', paramLayers.toString());
         });
+        if(markers.length > 1) {
+            $('#' + id + '_time').on('change', function() {
+                if ($(this).is(':checked')) {
+                    map.addLayer(markers[0]);
+                    map.removeLayer(markers[1]);
+                } else {
+                    map.addLayer(markers[1]);
+                    map.removeLayer(markers[0]);
+                }
+            });
+        }
     };
 </script>

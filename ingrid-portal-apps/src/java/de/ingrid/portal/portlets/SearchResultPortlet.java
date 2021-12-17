@@ -131,7 +131,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory10", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_10_CHECKED, false ));
         context.put("checkedCategory11", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED, false ));
         context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
-        context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
+        context.put("checkedCategory13", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_13_CHECKED, false ));
+        context.put("checkedCategory14", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_14_CHECKED, false ));
         context.put("ranking", request.getParameter(Settings.PARAM_RANKING));
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
         context.put("escTool", new EscapeTool());

@@ -146,6 +146,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_10</id>
                 <display>true</display>
             </facet>
+        <!-- Negative Vorprüfungen -->
+            <facet>
+                <name>Negative Vorprüfungen</name>
+                <query>t01_object.obj_class:12</query>
+                <id>procedure_12</id>
+                <display>true</display>
+            </facet>
         <!-- Raumordnungsverfahren -->
             <facet>
                 <name>Raumordnungsverfahren</name>
@@ -171,13 +178,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Bauleitplanung</name>
                 <query>procedure:dev_plan</query>
                 <id>procedure_dev_plan</id>
-                <display>true</display>
-            </facet>
-            <!-- Zulassungsverfahren -->
-            <facet>
-                <name>Negative Vorprüfungen</name>
-                <query>t01_object.obj_class:12</query>
-                <id>procedure_12</id>
                 <display>true</display>
             </facet>
         </facets>

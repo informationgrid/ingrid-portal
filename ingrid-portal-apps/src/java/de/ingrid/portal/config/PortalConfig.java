@@ -257,11 +257,13 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_QUERY_2 = "portal.mapclient.query.2";
     public static final String PORTAL_MAPCLIENT_QUERY_3 = "portal.mapclient.query.3";
     public static final String PORTAL_MAPCLIENT_QUERY_4 = "portal.mapclient.query.4";
-    
+    public static final String PORTAL_MAPCLIENT_QUERY_5 = "portal.mapclient.query.5";
+
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_10_CHECKED = "portal.mapclient.uvp.category.10.checked";
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED = "portal.mapclient.uvp.category.11.checked";
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED = "portal.mapclient.uvp.category.12.checked";
-    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED = "portal.mapclient.uvp.category.1314.checked";
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_13_CHECKED = "portal.mapclient.uvp.category.13.checked";
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_14_CHECKED = "portal.mapclient.uvp.category.14.checked";
 
     public static final String PORTAL_MAPCLIENT_LEAFLET_POSITION = "portal.mapclient.leaflet.position";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS = "portal.mapclient.leaflet.bg.layer.wmts";
