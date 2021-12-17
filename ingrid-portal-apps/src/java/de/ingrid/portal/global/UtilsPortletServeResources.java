@@ -8,8 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -38,6 +41,8 @@ import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.utils.udk.iso19108.TM_PeriodDuration;
+import de.ingrid.utils.udk.iso19108.TM_PeriodDuration.Interval;
 
 public class UtilsPortletServeResources {
 
@@ -138,6 +143,14 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
+        getHttpMarkerUVP(response, requestedFields, request, queryString, messages, sysCodeList, null, null);
+    }
+
+    public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, String from, String to) throws ParseException, IOException {
+        if(from != null && to != null) {
+            queryString = getTimeQuery(queryString, from, to);
+        }
+
         queryString = UtilsSearch.updateQueryString(queryString, request);
         StringBuilder s = new StringBuilder();
         s.append("var markers = [");
@@ -186,6 +199,14 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPWithNumber(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize) throws ParseException, IOException {
+        getHttpMarkerUVPWithNumber(response, requestedFields, queryString, messages, sysCodeList, pageSize, null, null); 
+    }
+
+    public static void getHttpMarkerUVPWithNumber(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize, String from, String to) throws ParseException, IOException {
+
+        if(from != null && to != null) {
+            queryString = getTimeQuery(queryString, from, to);
+        }
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
                 .getIBus(), pageSize);
         JSONArray jsonData = new JSONArray();
@@ -398,6 +419,13 @@ public class UtilsPortletServeResources {
             if (!tmpQuery.isEmpty()) {
                 HashMap<String, String> facetEntry = new HashMap<>();
                 facetEntry.put("id", "countMarker4");
+                facetEntry.put("query", tmpQuery);
+                facetList.add(facetEntry);
+            }
+            tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_5, "");
+            if (!tmpQuery.isEmpty()) {
+                HashMap<String, String> facetEntry = new HashMap<>();
+                facetEntry.put("id", "countMarker5");
                 facetEntry.put("query", tmpQuery);
                 facetList.add(facetEntry);
             }
@@ -633,5 +661,45 @@ public class UtilsPortletServeResources {
             }
         }
         return array;
+    }
+    
+    
+    private static String getTimeQuery(String queryString, String from, String to) {
+        SimpleDateFormat df = new SimpleDateFormat( "yyyyMMdd" );
+        Calendar cal = new GregorianCalendar();
+        TM_PeriodDuration pdTo = TM_PeriodDuration.parse( "PT" );
+        if(pdTo != null) {
+            if (pdTo.getValue( Interval.DAYS ) != null && pdTo.getValue( Interval.DAYS ).length() > 0) {
+                cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pdTo.getValue( Interval.DAYS ) ) * (-1) );
+            }
+            
+            if (pdTo.getValue( Interval.MONTHS ) != null && pdTo.getValue( Interval.MONTHS ).length() > 0) {
+                cal.add( Calendar.MONTH, Integer.parseInt( pdTo.getValue( Interval.MONTHS ) ) * (-1) );
+            }
+            
+            if (pdTo.getValue( Interval.YEARS ) != null && pdTo.getValue( Interval.YEARS ).length() > 0) {
+                cal.add( Calendar.YEAR, Integer.parseInt( pdTo.getValue( Interval.YEARS ) ) * (-1) );
+            }
+        }
+        to = df.format( cal.getTime() );
+        TM_PeriodDuration pdFrom = TM_PeriodDuration.parse( "P1YT" );
+        if(pdFrom != null) {
+            if (pdFrom.getValue( Interval.DAYS ) != null && pdFrom.getValue( Interval.DAYS ).length() > 0) {
+                cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pdFrom.getValue( Interval.DAYS ) ) * (-1) );
+            }
+            
+            if (pdFrom.getValue( Interval.MONTHS ) != null && pdFrom.getValue( Interval.MONTHS ).length() > 0) {
+                cal.add( Calendar.MONTH, Integer.parseInt( pdFrom.getValue( Interval.MONTHS ) ) * (-1) );
+            }
+            
+            if (pdFrom.getValue( Interval.YEARS ) != null && pdFrom.getValue( Interval.YEARS ).length() > 0) {
+                cal.add( Calendar.YEAR, Integer.parseInt( pdFrom.getValue( Interval.YEARS ) ) * (-1) );
+            }
+        }
+        from = df.format( cal.getTime() );
+        if(!to.isEmpty() && !from.isEmpty()) {
+            queryString += " t01_object.mod_time:[" + from + "0* TO " + to + "9*] ranking:date";
+        }
+        return queryString;
     }
 }

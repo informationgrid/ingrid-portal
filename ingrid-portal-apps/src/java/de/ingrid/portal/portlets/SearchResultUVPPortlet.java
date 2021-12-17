@@ -23,6 +23,9 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -39,6 +42,8 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsPortletServeResources;
 import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.utils.udk.iso19108.TM_PeriodDuration;
+import de.ingrid.utils.udk.iso19108.TM_PeriodDuration.Interval;
 
 public class SearchResultUVPPortlet extends SearchResultPortlet {
 
@@ -54,26 +59,37 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         
         IngridSysCodeList sysCodeList = new IngridSysCodeList(request.getLocale());
         try {
+            // "Zulassungsverfahren"
             if (resourceID.equals( "marker" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
                 if(!query.isEmpty()) {
                     UtilsPortletServeResources.getHttpMarkerUVP(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, request, query, messages, sysCodeList);
                 }
             }
+            // "Raumordnungsverfahren"
             if (resourceID.equals( "marker2" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
                 if(!query.isEmpty()) {
                     UtilsPortletServeResources.getHttpMarkerUVP(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, request, query, messages, sysCodeList);
                 }
             }
+            // "Ausländische Verfahren"
             if (resourceID.equals( "marker3" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
                 if(!query.isEmpty()) {
                     UtilsPortletServeResources.getHttpMarkerUVP(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, request, query, messages, sysCodeList);
                 }
             }
+            // "Negative Vorprüfungen"
             if (resourceID.equals( "marker4" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
+                if(!query.isEmpty()) {
+                    UtilsPortletServeResources.getHttpMarkerUVP(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, request, query, messages, sysCodeList);
+                }
+            }
+            // "Linienbestimmungen"
+            if (resourceID.equals( "marker5" )) {
+                String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_5, "");
                 if(!query.isEmpty()) {
                     UtilsPortletServeResources.getHttpMarkerUVP(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, request, query, messages, sysCodeList);
                 }
@@ -129,6 +145,13 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
             restUrl.setResourceID( "marker4" );
             request.setAttribute( "restUrlMarker4", restUrl.toString() );
         }
+
+        String mapclientQuery5 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_5, "");
+        if(!mapclientQuery5.isEmpty()){
+            restUrl.setResourceID( "marker5" );
+            request.setAttribute( "restUrlMarker5", restUrl.toString() );
+        }
+
         restUrl.setResourceID( "bbox" );
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
 
