@@ -642,7 +642,7 @@ header {
   border-width: 0 3px 3px 0;
 }
 .control__indicator {
-  border: 1px solid #012D47;
+  border: 1px solid #012D47 !important;
 }
 .button.pill {
   color: #0089C6;
@@ -655,7 +655,7 @@ header {
 }
 .button.pill:hover span,
 .button.pill:focus span {
-  color: #256394;
+  color: #FFFFFF;
 }
 .button.disabled, .button.disabled:hover, .button.disabled:focus, .button[disabled], .button[disabled]:hover, .button[disabled]:focus {
   background-color: #0089C6;

@@ -421,6 +421,10 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                             $action.setParameter("doClearSearchWildcard", "$facet.getId()")
                             #renderSearchResultFacetSelectionItem($facet $action "$resourceMsgs.getString($facet.getName()): $wildcard_item_term")
                         #end
+                    #elseif($facet.getToggle() && $facet.getToggle().isSelect())
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("$entry.getId()", "$facet.getToggle().getId()")
+                        #renderSearchResultFacetSelectionItem($facet $action "$resourceMsgs.getString($facet.getName()): $resourceMsgs.getString('common.toggle.approval.date')")
                     #end
                 #end
             #end
@@ -428,7 +432,11 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             #if($entry.isSelect())
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
-                #renderSearchResultFacetSelectionItem($entry $action "$cat: $resourceMsgs.getString($entry.getName())")
+                #set($catName = "$cat: $resourceMsgs.getString($entry.getName())")
+                #if($entry.getToggle() && $entry.getToggle().isSelect())
+                    #set($catName = $catName + " - " + $resourceMsgs.getString('common.toggle.approval.date'))
+                #end
+                #renderSearchResultFacetSelectionItem($entry $action $catName)
             #end
             #if($entry.getFacets())
                 #set($catNameSub = $resourceMsgs.getString($entry.getName()))

@@ -427,7 +427,7 @@ public class FacetsConfig {
                                 }
                             }
                         }
-                        ingridFacet.setToogle(toggle);
+                        ingridFacet.setToggle(toggle);
                     }
                 }
 

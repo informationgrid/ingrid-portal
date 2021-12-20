@@ -263,8 +263,8 @@ $treeFacet
                     </span>
                 </label>
             </div>
-            #if($facet.getToogle())
-                #set($toggle = $facet.getToogle())
+            #if($facet.getToggle())
+                #set($toggle = $facet.getToggle())
                 #set($toggleIsSelect = $toggle.isSelect())
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$parentId", "$toggle.getId()")

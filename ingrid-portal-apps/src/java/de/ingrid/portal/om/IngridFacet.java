@@ -57,7 +57,7 @@ public class IngridFacet {
     private boolean isOpen = false;
     private boolean isDisplay = false;
     private boolean categoryOnly = false;
-    private IngridFacet toogle;
+    private IngridFacet toggle;
     
     
     /* Only for partner restriction */
@@ -268,10 +268,10 @@ public class IngridFacet {
     public void setCodelistField(String codelistField) {
         this.codelistField = codelistField;
     }
-    public IngridFacet getToogle() {
-        return toogle;
+    public IngridFacet getToggle() {
+        return toggle;
     }
-    public void setToogle(IngridFacet toogle) {
-        this.toogle = toogle;
+    public void setToggle(IngridFacet toggle) {
+        this.toggle = toggle;
     }
 }
