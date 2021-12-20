@@ -697,7 +697,7 @@ public class UtilsPortletServeResources {
         }
         from = df.format( cal.getTime() );
         if(!to.isEmpty() && !from.isEmpty() && additionalQuery != null) {
-            queryString += " " + additionalQuery.replaceAll("{TO}", to).replaceAll("{FROM}", from);
+            queryString += " " + additionalQuery.replace("{TO}", to).replace("{FROM}", from);
         }
         return queryString;
     }
