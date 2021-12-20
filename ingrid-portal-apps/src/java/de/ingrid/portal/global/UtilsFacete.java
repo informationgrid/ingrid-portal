@@ -335,7 +335,7 @@ public class UtilsFacete {
                             if(queryType != null && queryType.equals("OR")) {
                                 if(tmpFacetKey.getFacets() != null) {
                                     for(IngridFacet tmpSubFacet : tmpFacetKey.getFacets()){
-                                        IngridFacet toggle = tmpSubFacet.getToogle();
+                                        IngridFacet toggle = tmpSubFacet.getToggle();
                                         if(toggle != null) {
                                             if(toggle.getId().equals(value)){
                                                 if(toggle.isSelect()) {
@@ -1794,8 +1794,8 @@ public class UtilsFacete {
                                     }
                                 }
                                 for (IngridFacet tmpSubFacet : tmpFacetKey.getFacets()) {
-                                    if(tmpSubFacet.getToogle() != null) {
-                                        IngridFacet toggle = tmpSubFacet.getToogle();
+                                    if(tmpSubFacet.getToggle() != null) {
+                                        IngridFacet toggle = tmpSubFacet.getToggle();
                                         if(toggle.getId().equals(split[1])) {
                                             toggle.setSelect(true);
                                         }
@@ -2029,8 +2029,8 @@ public class UtilsFacete {
                 if(parentId != null && facet.isSelect()){
                     appendURLParameterFacet(facetUrl, toURLParamFacet(facet.getParent().getId(), facet.getId()));
                 }
-                if(facet.getToogle() != null) {
-                    IngridFacet toggle = facet.getToogle();
+                if(facet.getToggle() != null) {
+                    IngridFacet toggle = facet.getToggle();
                     if(toggle.isSelect()) {
                         appendURLParameterFacet(facetUrl, toURLParamFacet(facet.getParent().getId(), toggle.getId()));
                     }
@@ -2293,7 +2293,7 @@ public class UtilsFacete {
                 String facetField = ingridFacet.getField();
                 String facetCodeList = ingridFacet.getCodelist();
                 String facetCodelistField = ingridFacet.getCodelistField();
-                IngridFacet toggle = ingridFacet.getToogle();
+                IngridFacet toggle = ingridFacet.getToggle();
                 if(facetId != null) {
                     if(ingridFacet.getParent() != null){
                         if((!ingridFacet.getParent().getId().equals("topic") || isAll) && !ingridFacet.getParent().getId().equals("partner") && !ingridFacet.getParent().getId().equals("provider")){
@@ -2559,7 +2559,7 @@ public class UtilsFacete {
                         }
                     }
                     for(IngridFacet ingridFacet : facets){
-                        IngridFacet toggle = ingridFacet.getToogle();
+                        IngridFacet toggle = ingridFacet.getToggle();
                         if(!hasSelected) {
                             if(ingridFacet.getQuery() != null){
                                 String query = ingridFacet.getQuery();
@@ -2594,7 +2594,7 @@ public class UtilsFacete {
             }else{
                 // AND
                 for(IngridFacet ingridFacet : facets){
-                    IngridFacet toggle = ingridFacet.getToogle();
+                    IngridFacet toggle = ingridFacet.getToggle();
                     if((ingridFacet.isSelect() || ingridFacet.isParentHidden() || (toggle != null && toggle.isSelect())) && ingridFacet.getQuery() != null){
                         term = term + " " + ingridFacet.getQuery();
                         if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
@@ -2694,6 +2694,12 @@ public class UtilsFacete {
                     isSelect = true;
                     break;
                 }
+                if(facet.getToggle() != null) {
+                    if(facet.getToggle().isSelect()) {
+                        isSelect = true;
+                        break;
+                    }
+                }
                 if(facet.getFacets() != null){
                     isSelect = isAnyFacetConfigSelect(facet.getFacets(), false);
                     if(isSelect){
@@ -2746,8 +2752,8 @@ public class UtilsFacete {
             for(IngridFacet facet : config){
                 facet.setSelect(false);
                 if (resetToggle) {
-                    if(facet.getToogle() != null) {
-                        facet.getToogle().setSelect(false);
+                    if(facet.getToggle() != null) {
+                        facet.getToggle().setSelect(false);
                     }
                 }
                 if(facet.getFacets() != null){
