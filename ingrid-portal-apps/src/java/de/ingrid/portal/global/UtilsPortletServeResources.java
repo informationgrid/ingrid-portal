@@ -143,12 +143,12 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
-        getHttpMarkerUVP(response, requestedFields, request, queryString, messages, sysCodeList, null, null);
+        getHttpMarkerUVP(response, requestedFields, request, queryString, messages, sysCodeList, null, null, null);
     }
 
-    public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, String from, String to) throws ParseException, IOException {
-        if(from != null && to != null) {
-            queryString = getTimeQuery(queryString, from, to);
+    public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, String from, String to, String additionalQuery) throws ParseException, IOException {
+        if(from != null && to != null && additionalQuery != null) {
+            queryString = getTimeQuery(queryString, from, to, additionalQuery);
         }
 
         queryString = UtilsSearch.updateQueryString(queryString, request);
@@ -199,13 +199,12 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPWithNumber(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize) throws ParseException, IOException {
-        getHttpMarkerUVPWithNumber(response, requestedFields, queryString, messages, sysCodeList, pageSize, null, null); 
+        getHttpMarkerUVPWithNumber(response, requestedFields, queryString, messages, sysCodeList, pageSize, null, null, null); 
     }
 
-    public static void getHttpMarkerUVPWithNumber(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize, String from, String to) throws ParseException, IOException {
-
-        if(from != null && to != null) {
-            queryString = getTimeQuery(queryString, from, to);
+    public static void getHttpMarkerUVPWithNumber(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize, String from, String to, String additionalQuery) throws ParseException, IOException {
+        if(from != null && to != null && additionalQuery != null) {
+            queryString = getTimeQuery(queryString, from, to, additionalQuery);
         }
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
                 .getIBus(), pageSize);
@@ -664,7 +663,7 @@ public class UtilsPortletServeResources {
     }
     
     
-    private static String getTimeQuery(String queryString, String from, String to) {
+    private static String getTimeQuery(String queryString, String from, String to, String additionalQuery) {
         SimpleDateFormat df = new SimpleDateFormat( "yyyyMMdd" );
         Calendar cal = new GregorianCalendar();
         TM_PeriodDuration pdTo = TM_PeriodDuration.parse( to );
@@ -697,8 +696,8 @@ public class UtilsPortletServeResources {
             }
         }
         from = df.format( cal.getTime() );
-        if(!to.isEmpty() && !from.isEmpty()) {
-            queryString += " t01_object.mod_time:[" + from + "0* TO " + to + "9*] ranking:date";
+        if(!to.isEmpty() && !from.isEmpty() && additionalQuery != null) {
+            queryString += " " + additionalQuery.replaceAll("{TO}", to).replaceAll("{FROM}", from);
         }
         return queryString;
     }
