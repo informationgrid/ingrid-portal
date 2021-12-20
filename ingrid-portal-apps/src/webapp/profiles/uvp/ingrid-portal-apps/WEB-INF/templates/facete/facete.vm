@@ -273,8 +273,8 @@ $treeFacet
                         <input type="checkbox" #if($toggleIsSelect)checked#end onclick="location.href='$action'">
                         <span class="toggle-slider round"></span>
                     </label>
-                    <span class="toggle-label checked #if(!$toggleIsSelect)is-hidden#end">nur Aktuelle</span>
-                    <span class="toggle-label unchecked #if($toggleIsSelect)is-hidden#end">alle</span>
+                    <span class="toggle-label checked #if(!$toggleIsSelect)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date")</span>
+                    <span class="toggle-label unchecked #if($toggleIsSelect)is-hidden#end">$MESSAGES.getString("common.toggle.all")</span>
                 </div>
             #end
         </div>
