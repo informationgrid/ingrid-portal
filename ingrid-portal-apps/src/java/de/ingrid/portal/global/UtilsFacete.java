@@ -331,6 +331,23 @@ public class UtilsFacete {
                                 }
                                 resetFacetConfigValues(config, null);
                             }
+                            String queryType = tmpFacetKey.getQueryType();
+                            if(queryType != null && queryType.equals("OR")) {
+                                if(tmpFacetKey.getFacets() != null) {
+                                    for(IngridFacet tmpSubFacet : tmpFacetKey.getFacets()){
+                                        IngridFacet toggle = tmpSubFacet.getToogle();
+                                        if(toggle != null) {
+                                            if(toggle.getId().equals(value)){
+                                                if(toggle.isSelect()) {
+                                                    toggle.setSelect(false);
+                                                } else {
+                                                    toggle.setSelect(true);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                     // Set dependency selection
@@ -383,11 +400,7 @@ public class UtilsFacete {
         // Create facet params URL
         setFacetUrlParamsToUrl(request, facetUrl);
 
-        String sFacetUrl = facetUrl.toString();
-        if(!sFacetUrl.equals("&f=")){
-            return facetUrl.toString();
-        }
-        return "";
+        return facetUrl.toString();
     }
 
     /**
@@ -1547,7 +1560,6 @@ public class UtilsFacete {
 
     private static boolean isFacetSelection(PortletRequest request){
         HashMap<String, Boolean> facetSelectionState = getFacetSelectionState(request);
-        int i=0;
         if(facetSelectionState != null){
             for (Iterator<String> iterator = facetSelectionState.keySet().iterator(); iterator.hasNext();) {
                 String key = iterator.next();
@@ -1739,7 +1751,7 @@ public class UtilsFacete {
             }
             if(config != null){
                 String[] paramsSplits = paramsFacet.split(";");
-                resetFacetConfigSelect(config);
+                resetFacetConfigSelect(config, true);
                 for(String paramsSplit : paramsSplits){
                     String[] split = paramsSplit.split(":");
                     String split0 = split[0];
@@ -1778,6 +1790,14 @@ public class UtilsFacete {
                                                     facetDep.setDependencySelect(dependencyValue.isSelect());
                                                 }
                                             }
+                                        }
+                                    }
+                                }
+                                for (IngridFacet tmpSubFacet : tmpFacetKey.getFacets()) {
+                                    if(tmpSubFacet.getToogle() != null) {
+                                        IngridFacet toggle = tmpSubFacet.getToogle();
+                                        if(toggle.getId().equals(split[1])) {
+                                            toggle.setSelect(true);
                                         }
                                     }
                                 }
@@ -2008,6 +2028,12 @@ public class UtilsFacete {
             for(IngridFacet facet : config){
                 if(parentId != null && facet.isSelect()){
                     appendURLParameterFacet(facetUrl, toURLParamFacet(facet.getParent().getId(), facet.getId()));
+                }
+                if(facet.getToogle() != null) {
+                    IngridFacet toggle = facet.getToogle();
+                    if(toggle.isSelect()) {
+                        appendURLParameterFacet(facetUrl, toURLParamFacet(facet.getParent().getId(), toggle.getId()));
+                    }
                 }
                 if(facet.getFacets() != null){
                     addConfigParamsToURL(facet.getFacets(), facetUrl, facet.getId());
@@ -2267,6 +2293,7 @@ public class UtilsFacete {
                 String facetField = ingridFacet.getField();
                 String facetCodeList = ingridFacet.getCodelist();
                 String facetCodelistField = ingridFacet.getCodelistField();
+                IngridFacet toggle = ingridFacet.getToogle();
                 if(facetId != null) {
                     if(ingridFacet.getParent() != null){
                         if((!ingridFacet.getParent().getId().equals("topic") || isAll) && !ingridFacet.getParent().getId().equals("partner") && !ingridFacet.getParent().getId().equals("provider")){
@@ -2277,6 +2304,18 @@ public class UtilsFacete {
                                     facetEntry.put("id", facetId);
                                     facetEntry.put("query", facetQuery);
                                     facetList.add(facetEntry);
+                                    if(toggle != null) {
+                                        if(toggle.isSelect()) {
+                                            if(toggle.getQuery() != null) {
+                                                facetQuery += " " + toggle.getQuery();
+                                                HashMap<String, String> facetEntryToggle = new HashMap<>();
+                                                facetEntryToggle.put("id", toggle.getId());
+                                                facetEntryToggle.put("query", facetQuery);
+                                                facetList.add(facetEntryToggle);
+                                            }
+                                        }
+                                    }
+                                    
                                 }else{
                                     // Set sub facets only by selected dependency
                                     if(ingridFacet.getParent().isDependencySelect()){
@@ -2511,16 +2550,43 @@ public class UtilsFacete {
             if(type != null){
                 // OR
                 if(type.equals("OR")){
-                    String orQuery = "()";
+                    String orQuery = "(";
+                    boolean hasSelected = false;
                     for(IngridFacet ingridFacet : facets){
-                        if((ingridFacet.isSelect() || ingridFacet.isParentHidden()) && ingridFacet.getQuery() != null){
-                            if(orQuery.equals("()")){
-                                orQuery = orQuery.replace(")", ingridFacet.getQuery().toLowerCase()+")");
-                            }else{
-                                orQuery = orQuery.replace(")", " OR " + ingridFacet.getQuery().toLowerCase()+")");
+                        if(ingridFacet.isSelect()) {
+                            hasSelected = true;
+                            break;
+                        }
+                    }
+                    for(IngridFacet ingridFacet : facets){
+                        IngridFacet toggle = ingridFacet.getToogle();
+                        if(!hasSelected) {
+                            if(ingridFacet.getQuery() != null){
+                                String query = ingridFacet.getQuery();
+                                if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
+                                    query = "(" + query + " " + toggle.getQuery() + ")";
+                                }
+                                if(orQuery.equals("(")){
+                                    orQuery += "(" + query + ")";
+                                }else{
+                                    orQuery += " OR (" + query + ")";
+                                }
+                            }
+                        } else {
+                            if((ingridFacet.isSelect() || ingridFacet.isParentHidden()) && ingridFacet.getQuery() != null){
+                                String query = ingridFacet.getQuery();
+                                if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
+                                    query = "(" + query + " " + toggle.getQuery() + ")";
+                                }
+                                if(orQuery.equals("(")){
+                                    orQuery += "(" + query + ")";
+                                }else{
+                                    orQuery += " OR (" + query + ")";
+                                }
                             }
                         }
                     }
+                    orQuery += ")";
                     if(!orQuery.equals("()")){
                         term = term + " " + orQuery;
                     }
@@ -2528,8 +2594,12 @@ public class UtilsFacete {
             }else{
                 // AND
                 for(IngridFacet ingridFacet : facets){
-                    if((ingridFacet.isSelect() || ingridFacet.isParentHidden()) && ingridFacet.getQuery() != null){
+                    IngridFacet toggle = ingridFacet.getToogle();
+                    if((ingridFacet.isSelect() || ingridFacet.isParentHidden() || (toggle != null && toggle.isSelect())) && ingridFacet.getQuery() != null){
                         term = term + " " + ingridFacet.getQuery();
+                        if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
+                            term += " " + toggle.getQuery();
+                        }
                         if(ingridFacet.getFacets() != null){
                             term = getQuerySelection(term, ingridFacet.getQueryType(), ingridFacet.getFacets());
                         }
@@ -2668,11 +2738,20 @@ public class UtilsFacete {
     }
 
     private static void resetFacetConfigSelect(List<IngridFacet> config) {
+        resetFacetConfigSelect(config, false);
+    }
+
+    private static void resetFacetConfigSelect(List<IngridFacet> config, boolean resetToggle) {
         if(config != null){
             for(IngridFacet facet : config){
                 facet.setSelect(false);
+                if (resetToggle) {
+                    if(facet.getToogle() != null) {
+                        facet.getToogle().setSelect(false);
+                    }
+                }
                 if(facet.getFacets() != null){
-                    resetFacetConfigSelect(facet.getFacets());
+                    resetFacetConfigSelect(facet.getFacets(), resetToggle);
                 }
             }
         }
