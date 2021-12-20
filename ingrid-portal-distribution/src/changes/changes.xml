@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
+          <action type="add" dev="wemove" issue="1582">
+            UVP: Optimierte Darstellung der Verfahren in der Karte
+          </action>
           <action type="fix" dev="wemove" issue="2546">
             Remove measurements and timeline in metaver help-themes pages
           </action>
