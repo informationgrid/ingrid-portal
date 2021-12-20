@@ -138,6 +138,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.procedures</name>
         <id>procedure</id>
+        <isOpen>true</isOpen>
         <facets queryType="OR">
         <!-- Zulassungsverfahren -->
             <facet>
