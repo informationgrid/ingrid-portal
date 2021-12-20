@@ -264,8 +264,8 @@
                     } else {
                         map.addLayer(mapMarkers10);
                     }
-                    if(mapParamLayers.indexOf('nv') === -1) {
-                        mapParamLayers.push('nv');
+                    if(mapParamLayers.indexOf('zv') === -1) {
+                        mapParamLayers.push('zv');
                     }
                 }
             }

@@ -263,6 +263,20 @@ $treeFacet
                     </span>
                 </label>
             </div>
+            #if($facet.getToogle())
+                #set($toggle = $facet.getToogle())
+                #set($toggleIsSelect = $toggle.isSelect())
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("$parentId", "$toggle.getId()")
+                <div class="control-group">
+                    <label class="control toggle">
+                        <input type="checkbox" #if($toggleIsSelect)checked#end onclick="location.href='$action'">
+                        <span class="toggle-slider round"></span>
+                    </label>
+                    <span class="toggle-label checked #if(!$toggleIsSelect)is-hidden#end">nur Aktuelle</span>
+                    <span class="toggle-label unchecked #if($toggleIsSelect)is-hidden#end">alle</span>
+                </div>
+            #end
         </div>
     </div>
 #end

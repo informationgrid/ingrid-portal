@@ -138,13 +138,20 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.procedures</name>
         <id>procedure</id>
-        <facets>
+        <facets queryType="OR">
         <!-- Zulassungsverfahren -->
             <facet>
                 <name>Zulassungsverfahren</name>
                 <query>t01_object.obj_class:10</query>
                 <id>procedure_10</id>
                 <display>true</display>
+                <toggle>
+                    <isSelect>true</isSelect>
+                    <id>procedure_10_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
             </facet>
         <!-- Negative Vorprüfungen -->
             <facet>
@@ -152,6 +159,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:12</query>
                 <id>procedure_12</id>
                 <display>true</display>
+                <toggle>
+                    <isSelect>true</isSelect>
+                    <id>procedure_12_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
             </facet>
         <!-- Raumordnungsverfahren -->
             <facet>

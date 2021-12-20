@@ -317,8 +317,8 @@ public class FacetsConfig {
                 if (!facetNode.getChildren( "facets" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {
-                        if (!node.getAttributes( "@queryType" ).isEmpty()) {
-                            Node subNode = (Node) node.getAttributes( "@queryType" ).get( 0 );
+                        if (!node.getAttributes( "queryType" ).isEmpty()) {
+                            Node subNode = (Node) node.getAttributes( "queryType" ).get( 0 );
                             ingridFacet.setQueryType( subNode.getValue().toString() );
                         }
 
@@ -343,6 +343,91 @@ public class FacetsConfig {
                     Node node = (Node) facetNode.getChildren( "infoResultSelect" ).get( 0 );
                     if (node != null) {
                         ingridFacet.setInfoResultSelect( node.getValue().toString() );
+                    }
+                }
+
+                if (!facetNode.getChildren( "toggle" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "toggle" ).get( 0 );
+                    if (node != null) {
+                        IngridFacet toggle = new IngridFacet();
+                        if (!node.getChildren( "id" ).isEmpty()) {
+                            Node subNode = (Node) node.getChildren( "id" ).get( 0 );
+                            if (subNode != null) {
+                                toggle.setId( subNode.getValue().toString() );
+                            }
+                        }
+                        if (!node.getChildren( "isSelect" ).isEmpty()) {
+                            Node subNode = (Node) node.getChildren( "isSelect" ).get( 0 );
+                            if (subNode != null) {
+                                toggle.setSelect( Boolean.parseBoolean(subNode.getValue().toString()) );
+                            }
+                        }
+                        if (!node.getChildren( "from" ).isEmpty() && !node.getChildren( "to" ).isEmpty()) {
+                            String from = null;
+                            String to = null;
+                            SimpleDateFormat df = new SimpleDateFormat( "yyyyMMdd" );
+                            Calendar cal;
+
+                            // from
+                            Node subNode = (Node) node.getChildren( "from" ).get( 0 );
+                            cal = new GregorianCalendar();
+                            if (subNode != null) {
+                                String value = subNode.getValue().toString();
+                                if (value.equals( "" )) {
+                                    from = "";
+                                } else {
+                                    TM_PeriodDuration pd = TM_PeriodDuration.parse( value );
+                                    if(pd != null) {
+                                        if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
+                                            cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
+                                        }
+                                        
+                                        if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
+                                            cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
+                                        }
+                                        
+                                        if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
+                                            cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
+                                        }
+                                    }
+                                    from = df.format( cal.getTime() );
+                                }
+                            }
+
+                            // to
+                            subNode = (Node) node.getChildren( "to" ).get( 0 );
+                            cal = new GregorianCalendar();
+                            if (subNode != null) {
+                                String value = subNode.getValue().toString();
+                                if (value.equals( "" )) {
+                                    to = "";
+                                } else {
+                                    TM_PeriodDuration pd = TM_PeriodDuration.parse( value );
+                                    if(pd != null) {
+                                        if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
+                                            cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
+                                        }
+                                        
+                                        if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
+                                            cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
+                                        }
+                                        
+                                        if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
+                                            cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
+                                        }
+                                    }
+                                    to = df.format( cal.getTime() );
+                                }
+                            }
+                            subNode = (Node) node.getChildren( "query" ).get( 0 );
+                            if (subNode != null) {
+                                String value = subNode.getValue().toString();
+                                if (from != null && to != null) {
+                                    toggle.setQuery( value.replace( "{FROM}", from ).replace( "{TO}", to ) );
+                                }
+                            }
+                        }
+                        ingridFacet.setToogle(toggle);
                     }
                 }
 
