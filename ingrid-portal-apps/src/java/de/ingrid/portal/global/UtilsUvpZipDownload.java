@@ -263,17 +263,25 @@ public class UtilsUvpZipDownload {
                                                 int length = con.getContentLength();
                                                 String contentType = con.getContentType();
                                                 long lastModified = con.getLastModified();
-                                                if(length != -1) {
+                                                if(length != -1 || (con.getResponseCode() != 404 && contentType.indexOf("text/html") > -1)) {
                                                     statsEntry.put("length", length);
                                                     statsEntry.put("type", contentType);
                                                     statsEntry.put("modified", lastModified);
-                                                    if(con.getContentType().indexOf("text/html") > -1) {
+                                                    if(contentType.indexOf("text/html") > -1) {
                                                         if(!zipEntryName.endsWith(".html")) {
                                                             if(!link.isEmpty()) {
                                                                 zipEntryName += "-" + link.replaceAll("[\\\\/:*?\"<>|]", "_");
                                                             }
                                                             zipEntryName += ".html";
                                                         }
+                                                    } else {
+                                                        String[] linkParts = link.split("/");
+                                                        String lastLinkPart = linkParts[linkParts.length - 1];
+                                                        if(lastLinkPart.indexOf(".") > -1) {
+                                                            String[] fileEndingPart = lastLinkPart.split("\\.");
+                                                            zipEntryName += "." + fileEndingPart[fileEndingPart.length - 1];
+                                                        }
+                                                        
                                                     }
                                                     statsEntry.put("name", zipEntryName);
                                                     newStatsJson.put(link, statsEntry);
