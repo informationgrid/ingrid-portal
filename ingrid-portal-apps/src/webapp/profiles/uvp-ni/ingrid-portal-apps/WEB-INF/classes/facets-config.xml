@@ -175,9 +175,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_13</id>
                 <display>true</display>
             </facet>
-        <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
+        <!-- Linienbestimmungen -->
             <facet>
-                <name>Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht</name>
+                <name>Linienbestimmungen</name>
                 <query>t01_object.obj_class:14</query>
                 <id>procedure_14</id>
             </facet>
