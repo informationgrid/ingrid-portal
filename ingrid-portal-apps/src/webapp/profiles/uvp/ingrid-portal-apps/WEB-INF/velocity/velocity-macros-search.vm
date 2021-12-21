@@ -433,10 +433,13 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
                 #set($catName = "$cat: $resourceMsgs.getString($entry.getName())")
-                #if($entry.getToggle() && $entry.getToggle().isSelect())
-                    #set($catName = $catName + " - " + $resourceMsgs.getString('common.toggle.approval.date'))
-                #end
                 #renderSearchResultFacetSelectionItem($entry $action $catName)
+                #if($entry.getToggle() && $entry.getToggle().isSelect())
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("$entry.getParent().getId()", "$entry.getToggle().getId()")
+                    #set($catName = $resourceMsgs.getString($entry.getName()) + ": " + $resourceMsgs.getString('common.toggle.approval.date'))
+                    #renderSearchResultFacetSelectionItem($entry $action $catName)
+                #end
             #end
             #if($entry.getFacets())
                 #set($catNameSub = $resourceMsgs.getString($entry.getName()))
