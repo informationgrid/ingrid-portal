@@ -129,45 +129,50 @@ public class UtilsUvpZipDownload {
         File processFile = new File(downloadPath + "/PROCESS_RUNNING");
         File statsJsonFile = new File(downloadPath + "/stats.json");
 
-        try {
-            // Create download status file
-            if(!processFile.exists() && processFile.createNewFile()) {
-                log.debug("Create download process file.");
-            }
-            if(!zipFile.exists()) {
-                // Delete old files
-                for(File file: processFile.getParentFile().listFiles()) {
-                    if(!file.equals(processFile)) {
-                        file.delete();
+        if(!processFile.exists()) {
+            try {
+                // Create download status file
+                if(!processFile.exists() && processFile.createNewFile()) {
+                    log.debug("Create download process file.");
+                }
+                if(!zipFile.exists()) {
+                    // Delete old files
+                    for(File file: processFile.getParentFile().listFiles()) {
+                        if(!file.equals(processFile)) {
+                            file.delete();
+                        }
+                    }
+                    if(docParentNode.getLength() > 0) {
+                        createNewZipFile(uuid, title, zipName, zipFile, downloadPath, docParentNode, xPathUtils, messages);
+                    }
+                } else if (statsJsonFile.exists()) {
+                    String json = new String(Files.readAllBytes(statsJsonFile.toPath()));
+                    JSONObject statsJson = new JSONObject(json);
+                    // Update new ZIP file
+                    createNewOrReplaceZipFile(uuid, title, zipName, zipFile, downloadPath, docParentNode, statsJsonFile, statsJson, xPathUtils, messages, true);
+                }
+            } catch (JSONException | IOException e) {
+                log.error("Error create download.", e);
+            } finally {
+                // Update zip file
+                File tmpFile = new File(zipFile.getAbsoluteFile() + ".tmp");
+                if(tmpFile.exists() && zipFile.exists()) {
+                    try {
+                        Files.move(tmpFile.getAbsoluteFile().toPath(), zipFile.getAbsoluteFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        log.error("Error rename to old zip file.", e);
                     }
                 }
-                if(docParentNode.getLength() > 0) {
-                    createNewZipFile(uuid, title, zipName, zipFile, downloadPath, docParentNode, xPathUtils, messages);
-                }
-            } else if (statsJsonFile.exists()) {
-                String json = new String(Files.readAllBytes(statsJsonFile.toPath()));
-                JSONObject statsJson = new JSONObject(json);
-                // Update new ZIP file
-                createNewOrReplaceZipFile(uuid, title, zipName, zipFile, downloadPath, docParentNode, statsJsonFile, statsJson, xPathUtils, messages, true);
-            }
-        } catch (JSONException | IOException e) {
-            log.error("Error create download.", e);
-        } finally {
-            // Update zip file
-            File tmpFile = new File(zipFile.getAbsoluteFile() + ".tmp");
-            if(tmpFile.exists() && zipFile.exists()) {
-                try {
-                    Files.move(tmpFile.getAbsoluteFile().toPath(), zipFile.getAbsoluteFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
-                    log.error("Error rename to old zip file.", e);
+                // Delete process file
+                if(processFile.exists()) {
+                    if(processFile.delete()) {
+                        log.debug("Delete download process file!");
+                    }
                 }
             }
-            // Delete process file
-            if(processFile.exists()) {
-                if(processFile.delete()) {
-                    log.debug("Delete download process file!");
-                }
-            }
+        }
+        while (processFile.exists()) {
+            log.debug("Wait for zip creation finished!");
         }
         return zipFile;
     }
