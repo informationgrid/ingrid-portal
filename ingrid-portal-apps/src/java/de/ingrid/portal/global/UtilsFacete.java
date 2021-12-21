@@ -128,7 +128,6 @@ public class UtilsFacete {
 
     private static final String FACET_CONFIG = "config";
 
-    public static final String SESSION_PARAMS_READ_FACET_FROM_SESSION = "readFacetFromSession";
     public static final String SESSION_PARAMS_FACET_GROUPING = "facet_grouping";
 
     private static Set<String> keys = null;
@@ -146,23 +145,15 @@ public class UtilsFacete {
         String portalTerm = request.getParameter("q");
         String facetTerm  = (String) getAttributeFromSession(request, "faceteTerm");
 
-        boolean readFacetFromSession = false;
-        if(getAttributeFromSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION) != null){
-            readFacetFromSession = (Boolean) getAttributeFromSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION);
-        }
-        if(readFacetFromSession){
-            setAttributeToSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION, false);
+        if(request.getParameter("f") != null){
+            getFacetAttributsParamsFromUrl(request);
         }else{
-            if(request.getParameter("f") != null){
-                getFacetAttributsParamsFromUrl(request);
-            }else{
-                if(request.getParameter("js_ranked") == null){
-                    String action = request.getParameter("action");
-                    if(facetTerm != null && portalTerm != null && action != null && ((portalTerm.equals(facetTerm) && !action.equals("doSearch"))
-                            || (portalTerm.equals(facetTerm) && action == null))){
-                        removeAllFaceteSelections(request);
-                        removeFaceteElementsFromSession(request);
-                    }
+            if(request.getParameter("js_ranked") == null){
+                String action = request.getParameter("action");
+                if(facetTerm != null && portalTerm != null && action != null && ((portalTerm.equals(facetTerm) && !action.equals("doSearch"))
+                        || (portalTerm.equals(facetTerm) && action == null))){
+                    removeAllFaceteSelections(request);
+                    removeFaceteElementsFromSession(request);
                 }
             }
         }
@@ -1422,7 +1413,6 @@ public class UtilsFacete {
         if(doRemoveLast != null){
             removeLastFaceteSelection(request);
         }
-        setAttributeToSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION, true);
     }
 
     private static void removeAllFaceteSelections(PortletRequest request){
