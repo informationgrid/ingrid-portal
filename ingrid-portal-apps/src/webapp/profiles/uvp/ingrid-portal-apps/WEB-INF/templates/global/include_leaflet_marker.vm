@@ -754,19 +754,27 @@
             }
             const index = paramLayers.indexOf(paramEntry);
             if (legendEntry.is(':checked')) {
-                if(checkboxTime.is(':checked')) {
-                    map.addLayer(markers[0]);
+                if(checkboxTime.length > 0) {
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(markers[0]);
+                    } else {
+                        map.addLayer(markers[1]);
+                    }
+                    checkboxTime.closest('.control-group').removeClass('is-hidden');
                 } else {
-                    map.addLayer(markers[1]);
+                    map.addLayer(markers[0]);
                 }
-                checkboxTime.closest('.control-group').removeClass('is-hidden');
                 if(index === -1) {
                     paramLayers.push(paramEntry);
                 }
             } else {
-                map.removeLayer(markers[0]);
-                map.removeLayer(markers[1]);
-                checkboxTime.closest('.control-group').addClass('is-hidden');
+                if(checkboxTime.length > 0) {
+                    map.removeLayer(markers[0]);
+                    map.removeLayer(markers[1]);
+                    checkboxTime.closest('.control-group').addClass('is-hidden');
+                } else {
+                    map.removeLayer(markers[0]);
+                }
                 if (index > -1) {
                   paramLayers.splice(index, 1);
                 }
