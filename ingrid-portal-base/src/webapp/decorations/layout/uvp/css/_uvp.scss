@@ -3248,10 +3248,9 @@ a:empty:focus-visible {
 .toggle {
   position: relative;
   display: inline-block;
-  width: 24px;
   height: 16px;
   float: right;
-  margin: 4px 0 0 0 !important;
+  margin: 5px 5px 0 0 !important;
   overflow: unset !important;
   
   input { 
@@ -3275,10 +3274,10 @@ a:empty:focus-visible {
   .toggle-slider:before {
     position: absolute;
     content: "";
-    height: 14px;
-    width: 14px;
-    left: 1px;
-    bottom: 1px;
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
@@ -3293,13 +3292,14 @@ a:empty:focus-visible {
   }
   
   input:checked + .toggle-slider:before {
-    -webkit-transform: translateX(18px);
-    -ms-transform: translateX(18px);
-    transform: translateX(18px);
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
   }
-  
+
   .toggle-slider.round {
-    border-radius: 34px;
+    border-radius: 32px;
+    width: 32px;
   }
   
   .toggle-slider.round:before {
@@ -3308,6 +3308,17 @@ a:empty:focus-visible {
   
   ~ .toggle-label {
     font-size: 14px;
+    padding-left: 34px;
+  }
+
+  ~ .toggle-label.checked {
     font-weight: bold;
   }
+  ~ .toggle-label.unchecked {
+    color: #3A566D;
+  }
+}
+
+.control-group + .control-group {
+  margin-top: -5px;
 }
