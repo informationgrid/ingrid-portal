@@ -55,9 +55,11 @@ define([
                     domClass.remove("timeRef", "hide");
                 }
             });
-            
+
             // Autor / Verfasser
             domClass.add("uiElement3355", "hide");
+            // Herausgeber
+            domClass.add("uiElement3350", "hide");
             // Standort
             domClass.add("uiElement3360", "hide");
             // Dokumententyp
@@ -68,8 +70,8 @@ define([
             domClass.add("uiElement3380", "hide");
             // Erläuterungen
             domClass.add("uiElement3375", "hide");
-            
-            
+
+
 
             // ========================================
             // Modifications to existing fields
