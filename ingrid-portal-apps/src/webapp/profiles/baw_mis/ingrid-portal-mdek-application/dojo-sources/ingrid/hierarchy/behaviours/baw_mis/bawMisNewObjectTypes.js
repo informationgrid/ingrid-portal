@@ -36,9 +36,28 @@ define([
 
             topic.subscribe("/additionalSyslistsLoaded", function() {
                 // out of the existing options, keep only Geodatensatz, Geodatendienst and Literatur for new object type
-                // Items are added one by one to ensure the correct order
                 arr = sysLists[UtilSyslist.listIdObjectClass].filter(function (item) {
                     return item[1] === "1" || item[1] === "2" || item[1] === "3";
+                });
+
+                // Define the order in which the options should appear
+                var desired_order = [
+                    "4", // Projekt
+                    "1", // Geodatensatz
+                    "5", // Datensammlung
+                    "3", // Geodatendienst
+                    "2", // Literatur
+                    "6", // Informationssystem
+                    "0"  // Fachaufgabe
+                ];
+
+                arr.sort(function (a, b) {
+                    var idxa = desired_order.indexOf(a[1]);
+                    var idxb = desired_order.indexOf(b[1]);
+
+                    if (idxa > idxb) return 1;
+                    else if (idxa < idxb) return -1;
+                    else return 0;
                 });
                 
                 sysLists[UtilSyslist.listIdObjectClass] = arr;
