@@ -75,16 +75,13 @@ define([
                     id: AUFTRAGSNUMMER_ID,
                     name: message.get("ui.obj.baw.auftragsnummer.title"),
                     help: message.get("ui.obj.baw.auftragsnummer.help"),
+                    isMandatory: true,
                     visible: "optional",
                     style: "width: 100%"
                 }),
                 "uiElement1000", "after");
             newFieldsToDirtyCheck.push(AUFTRAGSNUMMER_ID);
             additionalFields.push(registry.byId(AUFTRAGSNUMMER_ID));
-            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
-                var isMandatory = args.isSimulationRelated;
-                self._setMandatory(AUFTRAGSNUMMER_ID, isMandatory);
-            });
 
             construct.place(
                 creator.createDomTextbox({
@@ -92,38 +89,16 @@ define([
                     name: message.get("ui.obj.baw.auftragstitel.title"),
                     help: message.get("ui.obj.baw.auftragstitel.help"),
                     visible: "optional",
+                    isMandatory: true,
                     style: "width: 100%"
                 }),
                 "uiElement1000", "after");
             newFieldsToDirtyCheck.push(AUFTRAGSTITEL_ID);
             additionalFields.push(registry.byId(AUFTRAGSTITEL_ID));
-            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
-                var isMandatory = args.isSimulationRelated;
-                self._setMandatory(AUFTRAGSTITEL_ID, isMandatory);
-            });
 
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
             return registry.byId(AUFTRAGSTITEL_ID).promiseInit;
-        },
-
-        /**
-         * Mark or unmark a widget's DOM wrapper as required.
-         *
-         * @param widgetId widget to mark or unmark as required
-         * @param isMandatory true if an entry is mandatory, false if not
-         * @private
-         */
-        _setMandatory: function (widgetId, isMandatory) {
-            var domPrefix = "uiElementAdd";
-            var domElementId = domPrefix + widgetId;
-            if (isMandatory) {
-                domClass.add(domElementId, "required");
-                domClass.remove(domElementId, "optional");
-            } else {
-                domClass.remove(domElementId, "required");
-                domClass.add(domElementId, "optional");
-            }
         }
 
     })();
