@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
+          <action type="fix" dev="wemove" issue="2081">
+            Bereinigen der Nutzer im metaver.de Portal
+          </action>
           <action type="fix" dev="wemove" issue="3338">
             UVP: Probleme mit den BLPs im nds. UVP-Portal (Kartenansicht)
           </action>
