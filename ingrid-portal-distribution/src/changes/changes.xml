@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.10.2-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.2">
+          <action type="add" dev="wemove" issue="3314">
+            Add robot detection to account form
+          </action>
           <action type="fix" dev="wemove" issue="3338">
             UVP: Probleme mit den BLPs im nds. UVP-Portal (Kartenansicht)
           </action>
