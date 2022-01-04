@@ -36,8 +36,8 @@ ENV IBUS_IP=ibus
 ENV DB_USER=root
 ENV DB_PASSWORD=""
 ENV DB_DRIVERCLASS=com.mysql.jdbc.Driver
-ENV DB_URL_MDEK=jdbc:mysql:\\/\\/mysql\\/mdek
-ENV DB_URL_PORTAL=jdbc:mysql:\\/\\/mysql\\/ingrid_portal
+ENV DB_URL_MDEK=jdbc:mysql:\\/\\/mysql\\/mdek?useSSL=false
+ENV DB_URL_PORTAL=jdbc:mysql:\\/\\/mysql\\/ingrid_portal?useSSL=false
 ENV DB_DIALECT=org.hibernate.dialect.MySQLInnoDBDialect
 ENV SMTP_HOST=localhost
 ENV MAIL_SENDER=CHANGEME@wemove.com
