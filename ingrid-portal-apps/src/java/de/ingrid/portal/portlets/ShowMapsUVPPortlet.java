@@ -108,7 +108,8 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if (resourceID.equals( "markerDetail" )) {
                 response.setContentType( "application/json" );
                 String uuid = request.getParameter( "uuid" );
-                String query = "t01_object.obj_id:" + uuid + " ranking:score";
+                String iplug = request.getParameter( "iplug" );
+                String query = "t01_object.obj_id:" + uuid + " iplugs:\"" + iplug + "\" ranking:score";
                 UtilsPortletServeResources.getHttpMarkerUVPDetail(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_DETAIL, query, messages, sysCodeList);
             }
             if (resourceID.equals( "bbox" )) {
@@ -129,7 +130,8 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 String title = request.getParameter( "title" );
                 String x1 = request.getParameter( "x1" );
                 String y1 = request.getParameter( "y1" );
-                String queryString = "\""+ title + "\" procedure:dev_plan y1:" + y1 + " x1:" + x1;
+                String iplug = request.getParameter( "iplug" );
+                String queryString = "\""+ title + "\" procedure:dev_plan y1:" + y1 + " x1:" + x1 + " iplugs:\"" + iplug + "\"";
                 if(!queryString.isEmpty()) {
                     UtilsPortletServeResources.getHttpMarkerUVPMarkerBlpDetail(response, queryString);
                 }

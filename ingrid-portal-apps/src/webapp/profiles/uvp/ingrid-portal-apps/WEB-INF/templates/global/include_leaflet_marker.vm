@@ -431,6 +431,7 @@
                                 var name = a.name;
                                 var lat = a.lat;
                                 var lon = a.lon;
+                                var iplug = a.iplug;
                                 var popUpHtml = 'Bitte warten ...';
                                 var iconColor = 'green';
                                 var icon = getIcon(smallIcons, iconColor, enablePopUp); 
@@ -438,6 +439,7 @@
                                 marker.bbox = null;
                                 marker.lat = lat;
                                 marker.lon = lon;
+                                marker.iplug = iplug;
                                 if(enablePopUp){
                                     marker.on('click', onMapClickBLP);
                                     marker.bindPopup(popUpHtml, popupMarkerOptions);
@@ -639,11 +641,13 @@
     function createMarker(mapMarkers, a, iconColor) {
         var title = a[2];
         var uuid = a[3];
+        var iplug = a[4];
         var popUpHtml = 'Bitte warten ...';
         var icon = getIcon(smallIcons, iconColor, enablePopUp);
         var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
         marker.uuid = uuid;
         marker.bbox = null;
+        marker.iplug = iplug;
         if(enablePopUp){
             marker.bindPopup(popUpHtml, popupMarkerOptions);
             marker.on('click', onMapClick);
@@ -657,7 +661,7 @@
     function onMapClick(e) {
         var popup = e.target.getPopup();
         map.spin(true);
-        jQuery.get("$restUrlMarkerDetail?uuid=" + e.target.uuid)
+        jQuery.get("$restUrlMarkerDetail?uuid=" + e.target.uuid  + '&iplug=' + e.target.iplug)
         .done(function(data, textStatus, jqxhr) {
             map.spin(false);
             var title = e.target.options.title;
@@ -678,8 +682,9 @@
         var title = e.target.options.title;
         var x1 = e.target.lon;
         var y1 = e.target.lat;
+        var iplug = e.target.iplug;
         map.spin(true);
-        jQuery.get('$restUrlUVPDevPlanDetail?title=' + title + '&x1=' + x1 + '&y1=' + y1)
+        jQuery.get('$restUrlUVPDevPlanDetail?title=' + title + '&x1=' + x1 + '&y1=' + y1 + '&iplug=' + iplug)
         .done(function(data, textStatus, jqxhr) {
             map.spin(false);
             title = e.target.options.title;
