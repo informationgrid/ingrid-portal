@@ -105,7 +105,8 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if (resourceID.equals( "markerDetail" )) {
                 response.setContentType( "application/json" );
                 String uuid = request.getParameter( "uuid" );
-                String query = "t01_object.obj_id:" + uuid + " ranking:score";
+                String iplug = request.getParameter( "iplug" );
+                String query = "t01_object.obj_id:" + uuid + " iplugs:\"" + iplug + "\" ranking:score";
                 response.getWriter().write(writeResponse(query, messages, sysCodeList, REQUESTED_FIELDS_MARKER_DETAIL));
             }
             if (resourceID.equals( "bbox" )) {
@@ -151,6 +152,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             jsonDataEntry.put("name", blpName);
                             jsonDataEntry.put("lat", Double.parseDouble( latCenter.trim() ));
                             jsonDataEntry.put("lon", Double.parseDouble( lonCenter.trim() ));
+                            jsonDataEntry.put("iplug", hit.getPlugId());
                             jsonData.put( jsonDataEntry );
                             cnt++;
                         } else {
@@ -170,7 +172,8 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 String title = request.getParameter( "title" );
                 String x1 = request.getParameter( "x1" );
                 String y1 = request.getParameter( "y1" );
-                IngridQuery queryString = QueryStringParser.parse("title:\""+ title + "\" procedure:dev_plan y1:" + y1 + " x1:" + x1);
+                String iplug = request.getParameter( "iplug" );
+                IngridQuery queryString = QueryStringParser.parse("\""+ title + "\" procedure:dev_plan y1:" + y1 + " x1:" + x1 + " iplugs:\"" + iplug + "\"");
                 
                 IBusQueryResultIterator it = new IBusQueryResultIterator( queryString , REQUESTED_FIELDS_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
@@ -336,11 +339,13 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                         String lng = UtilsSearch.getDetailValue( detail, "lon_center", 1);
                         String title = UtilsSearch.getDetailValue( detail, "title" );
                         String uuid = UtilsSearch.getDetailValue( detail, "t01_object.obj_id" );
+                        String iplug = hit.getPlugId();
                         if(!lat.isEmpty() && !lng.isEmpty()) {
                             jsonDataEntry.put(Double.parseDouble(lat));
                             jsonDataEntry.put(Double.parseDouble(lng));
                             jsonDataEntry.put(title);
                             jsonDataEntry.put(uuid);
+                            jsonDataEntry.put(iplug);
                             jsonData.put(jsonDataEntry);
                         } else {
                             log.error("Metadata '" + title + "' with UUID '" + uuid + "' has no location!");

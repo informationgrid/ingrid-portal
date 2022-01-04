@@ -221,10 +221,26 @@
             map.on('layeradd', onOverlayAdd);
             var mapParamLayer = '$mapParamLayer';
             var mapParamLayers = [];
-            if(mapParamLayer) {
+            if(mapParamLayer.length === 0) {
+                if($checkedCategoryDevPlan) {
+                    mapParamLayers.push('blp');
+                }
+                if($checkedCategory10) {
+                    mapParamLayers.push('zv');
+                }
+                if($checkedCategory11) {
+                    mapParamLayers.push('av');
+                }
+                if($checkedCategory12) {
+                    mapParamLayers.push('nv');
+                }
+                if($checkedCategory1314) {
+                    mapParamLayers.push('vv');
+                }
+            } else {
                 mapParamLayers = mapParamLayer.split(',');
             }
-            if($checkedCategoryDevPlan && mapParamLayers.length === 0 || mapParamLayers.indexOf('blp') > -1){
+            if(mapParamLayers.indexOf('blp') > -1){
                 if(mapMarkersDevPlan) {
                     map.addLayer(mapMarkersDevPlan);
                     $('#mapMarkersDevPlan').prop('checked', true);
@@ -233,7 +249,7 @@
                     }
                 }
             }
-            if($checkedCategory10 && mapParamLayers.length === 0 || mapParamLayers.indexOf('zv') > -1){
+            if(mapParamLayers.indexOf('zv') > -1){
                 if(mapMarkers10) {
                     map.addLayer(mapMarkers10);
                     $('#mapMarkers10').prop('checked', true);
@@ -242,7 +258,7 @@
                     }
                 }
             }
-            if($checkedCategory11 && mapParamLayers.length === 0 || mapParamLayers.indexOf('av') > -1){
+            if(mapParamLayers.indexOf('av') > -1){
                 if(mapMarkers11) {
                     map.addLayer(mapMarkers11);
                     $('#mapMarkers11').prop('checked', true);
@@ -251,7 +267,7 @@
                     }
                 }
             }
-            if($checkedCategory1314 && mapParamLayers.length === 0 || mapParamLayers.indexOf('vv') > -1){
+            if(mapParamLayers.indexOf('vv') > -1){
                 if(mapMarkers1314) {
                     map.addLayer(mapMarkers1314);
                     $('#mapMarkers1314').prop('checked', true);
@@ -260,7 +276,7 @@
                     }
                 }
             }
-            if($checkedCategory12 && mapParamLayers.length === 0 || mapParamLayers.indexOf('nv') > -1){
+            if(mapParamLayers.indexOf('nv') > -1){
                 if(mapMarkers12) {
                     map.addLayer(mapMarkers12);
                     $('#mapMarkers12').prop('checked', true);
@@ -370,6 +386,7 @@
                                 var name = a.name;
                                 var lat = a.lat;
                                 var lon = a.lon;
+                                var iplug = a.iplug;
                                 var popUpHtml = 'Bitte warten ...';
                                 var iconColor = 'green';
                                 var icon = getIcon(smallIcons, iconColor, enablePopUp); 
@@ -377,6 +394,7 @@
                                 marker.bbox = null;
                                 marker.lat = lat;
                                 marker.lon = lon;
+                                marker.iplug = iplug;
                                 if(enablePopUp){
                                     marker.on('click', onMapClickBLP);
                                     marker.bindPopup(popUpHtml, popupMarkerOptions);
@@ -521,11 +539,13 @@
     function createMarker(mapMarkers, a, iconColor) {
         var title = a[2];
         var uuid = a[3];
+        var iplug = a[4];
         var popUpHtml = 'Bitte warten ...';
         var icon = getIcon(smallIcons, iconColor, enablePopUp);
         var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
         marker.uuid = uuid;
         marker.bbox = null;
+        marker.iplug = iplug;
         if(enablePopUp){
             marker.bindPopup(popUpHtml, popupMarkerOptions);
             marker.on('click', onMapClick);
@@ -539,7 +559,7 @@
     function onMapClick(e) {
         var popup = e.target.getPopup();
         map.spin(true);
-        jQuery.get("$restUrlMarkerDetail?uuid=" + e.target.uuid)
+        jQuery.get("$restUrlMarkerDetail?uuid=" + e.target.uuid  + '&iplug=' + e.target.iplug)
         .done(function(data, textStatus, jqxhr) {
             map.spin(false);
             var title = e.target.options.title;
@@ -560,8 +580,9 @@
         var title = e.target.options.title;
         var x1 = e.target.lon;
         var y1 = e.target.lat;
+        var iplug = e.target.iplug;
         map.spin(true);
-        jQuery.get('$restUrlUVPDevPlanDetail?title=' + title + '&x1=' + x1 + '&y1=' + y1)
+        jQuery.get('$restUrlUVPDevPlanDetail?title=' + title + '&x1=' + x1 + '&y1=' + y1 + '&iplug=' + iplug)
         .done(function(data, textStatus, jqxhr) {
             map.spin(false);
             title = e.target.options.title;
