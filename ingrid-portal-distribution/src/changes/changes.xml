@@ -93,6 +93,9 @@
           <action type="update" dev="wemove" issue="2678">
             IGE (BAW_MIS): Add link table with connection to REST-API
           </action>
+          <action type="add" dev="wemove" issue="3314">
+            Add robot detection to account form
+          </action>
         </release>
 
         <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">
