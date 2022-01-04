@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.10.1.3" date="2022-01-04" description="Release 5.10.1.3">
+          <action type="fix" dev="wemove" issue="3338">
+            UVP: Probleme mit den BLPs im nds. UVP-Portal (Kartenansicht)
+          </action>
+        </release>
+
         <release version="5.10.1.2" date="2021-12-13" description="Release 5.10.1.2">
           <action type="fix" dev="wemove" issue="3279">
             Fehler in der Portal Detaildarstellung
