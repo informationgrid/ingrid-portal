@@ -219,10 +219,10 @@
         if(mapFilterXs) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
-                    createLegendEntry(map, mapFilterXs, [mapMarkers10_time, mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', 'style="padding:0px"', '#if($restUrlMarker_time)$restUrlMarker_time#end');
+                    createLegendEntry(map, mapFilterXs, [mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', 'style="padding:0px"');
                 }
                 if(legendCounter.countMarker4){
-                    createLegendEntry(map, mapFilterXs, [mapMarkers12_time, mapMarkers12], 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv', 'style="padding:0px"', '#if($restUrlMarker4_time)$restUrlMarker4_time#end');
+                    createLegendEntry(map, mapFilterXs, [mapMarkers12], 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv', 'style="padding:0px"');
                 }
                 if(legendCounter.countMarker2){
                     createLegendEntry(map, mapFilterXs, [mapMarkers13], 'red', 'mapMarkers13', 'Raumordnungsverfahren', 'ro', 'style="padding:0px"');
@@ -242,10 +242,29 @@
             map.on('layeradd', onOverlayAdd);
             var mapParamLayer = '$mapParamLayer';
             var mapParamLayers = [];
-            if(mapParamLayer) {
+            if(mapParamLayer.length === 0) {
+                if($checkedCategoryDevPlan) {
+                    mapParamLayers.push('blp');
+                }
+                if($checkedCategory10) {
+                    mapParamLayers.push('zv');
+                }
+                if($checkedCategory11) {
+                    mapParamLayers.push('av');
+                }
+                if($checkedCategory12) {
+                    mapParamLayers.push('nv');
+                }
+                if($checkedCategory13) {
+                    mapParamLayers.push('ro');
+                }
+                if($checkedCategory14) {
+                    mapParamLayers.push('li');
+                }
+            } else {
                 mapParamLayers = mapParamLayer.split(',');
             }
-            if($checkedCategoryDevPlan && mapParamLayers.length === 0 || mapParamLayers.indexOf('blp') > -1){
+            if(mapParamLayers.indexOf('blp') > -1){
                 if(mapMarkersDevPlan) {
                     map.addLayer(mapMarkersDevPlan);
                     $('#mapMarkersDevPlan').prop('checked', true);
@@ -254,7 +273,7 @@
                     }
                 }
             }
-            if($checkedCategory10 && mapParamLayers.length === 0 || mapParamLayers.indexOf('zv') > -1){
+            if(mapParamLayers.indexOf('zv') > -1){
                 if(mapMarkers10 || mapMarkers10_time) {
                     $('#mapMarkers10').prop('checked', true);
                     var checkboxTime = $('#mapMarkers10_time');
@@ -269,7 +288,7 @@
                     }
                 }
             }
-            if($checkedCategory11 && mapParamLayers.length === 0 || mapParamLayers.indexOf('av') > -1){
+            if(mapParamLayers.indexOf('av') > -1){
                 if(mapMarkers11) {
                     map.addLayer(mapMarkers11);
                     $('#mapMarkers11').prop('checked', true);
@@ -278,7 +297,7 @@
                     }
                 }
             }
-            if($checkedCategory13 && mapParamLayers.length === 0 || mapParamLayers.indexOf('ro') > -1){
+            if(mapParamLayers.indexOf('ro') > -1){
                 if(mapMarkers13) {
                     map.addLayer(mapMarkers13);
                     $('#mapMarkers13').prop('checked', true);
@@ -287,7 +306,7 @@
                     }
                 }
             }
-            if($checkedCategory14 && mapParamLayers.length === 0 || mapParamLayers.indexOf('li') > -1){
+            if(mapParamLayers.indexOf('li') > -1){
                 if(mapMarkers14) {
                     map.addLayer(mapMarkers14);
                     $('#mapMarkers14').prop('checked', true);
@@ -296,7 +315,7 @@
                     }
                 }
             }
-            if($checkedCategory12 && mapParamLayers.length === 0 || mapParamLayers.indexOf('nv') > -1){
+            if(mapParamLayers.indexOf('nv') > -1){
                 if(mapMarkers12 || mapMarkers12_time) {
                     $('#mapMarkers12').prop('checked', true);
                     var checkboxTime = $('#mapMarkers12_time');
