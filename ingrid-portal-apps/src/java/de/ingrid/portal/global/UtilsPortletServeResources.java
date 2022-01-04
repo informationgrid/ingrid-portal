@@ -176,7 +176,7 @@ public class UtilsPortletServeResources {
                             JSONObject obj = new JSONObject();
                             obj.put( "id", category.trim());
                             obj.put( "name", messages.getString("searchResult.categories.uvp." + category.trim()));
-                           jsonCategories.put(obj);
+                            jsonCategories.put(obj);
                         }
                     }
                     jsonDataEntry.put(jsonCategories);
@@ -219,11 +219,13 @@ public class UtilsPortletServeResources {
                     String lng = UtilsSearch.getDetailValue( detail, "lon_center", 1);
                     String title = UtilsSearch.getDetailValue( detail, "title" );
                     String uuid = UtilsSearch.getDetailValue( detail, "t01_object.obj_id" );
+                    String iplug = hit.getPlugId();
                     if(!lat.isEmpty() && !lng.isEmpty()) {
                         jsonDataEntry.put(Double.parseDouble(lat));
                         jsonDataEntry.put(Double.parseDouble(lng));
                         jsonDataEntry.put(title);
                         jsonDataEntry.put(uuid);
+                        jsonDataEntry.put(iplug);
                         jsonData.put(jsonDataEntry);
                     } else {
                         log.error("Metadata '" + title + "' with UUID '" + uuid + "' has no location!");
@@ -316,6 +318,7 @@ public class UtilsPortletServeResources {
                     jsonDataEntry.put("name", blpName);
                     jsonDataEntry.put("lat", Double.parseDouble( latCenter.trim() ));
                     jsonDataEntry.put("lon", Double.parseDouble( lonCenter.trim() ));
+                    jsonDataEntry.put("iplug", hit.getPlugId());
                     jsonData.put( jsonDataEntry );
                     cnt++;
                 } else {
