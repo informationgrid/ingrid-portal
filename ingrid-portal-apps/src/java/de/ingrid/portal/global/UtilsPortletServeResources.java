@@ -239,7 +239,7 @@ public class UtilsPortletServeResources {
 
     public static void getHttpMarkerUVPDetail(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
-                .getIBus());
+                .getIBus(), 1, 0, 1);
         JSONArray jsonData = new JSONArray();
         if(it != null){
             while (it.hasNext()) {
@@ -278,7 +278,7 @@ public class UtilsPortletServeResources {
     public static void getHttpMarkerUVPBoundingBox (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
         JSONArray bbox = new JSONArray();
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString), UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BBOX,
-                IBUSInterfaceImpl.getInstance().getIBus() );
+                IBUSInterfaceImpl.getInstance().getIBus(), 1, 0, 1 );
         if(it.hasNext()){
             IngridHit hit = it.next();
             IngridHitDetail detail = hit.getHitDetail();
@@ -331,7 +331,7 @@ public class UtilsPortletServeResources {
 
     public static void getHttpMarkerUVPMarkerBlpDetail (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
-                .getIBus() );
+                .getIBus(), 1, 0, 1 );
         int cnt = 1;
         JSONObject jsonData = new JSONObject();
         while (it.hasNext()) {
