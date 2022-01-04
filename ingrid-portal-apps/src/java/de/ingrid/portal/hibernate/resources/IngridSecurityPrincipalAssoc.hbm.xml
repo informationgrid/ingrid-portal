@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="de.ingrid.portal.om.IngridSecurityPrincipalAssoc" table="security_principal_assoc">
+    <id name="fromPrincipalId" column="from_principal_id">
+      <generator class="assigned"/>
+    </id>
+  </class>
+</hibernate-mapping>
+

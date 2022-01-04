@@ -52,6 +52,67 @@
     </div>
 </form>
 
+#if($userStats)
+</div>
+<div class="banner subpage ">
+  <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+    <div class="row">
+      <div class="columns dark">
+            <h1 class="bx-top-0">$MESSAGES.getString('account.view.stats.users')"</h1>
+      </div>
+    </div>
+  </div>
+</div>
+  <div id="" class="search-filtered row">
+    <table class="boxed-table">
+        #set ($colNames = ["key", "value"])
+        #set ($colTitles = [$MESSAGES.getString("account.view.stats.users.header.key"), $MESSAGES.getString("account.view.stats.users.header.value")])
+        <thead>
+            <tr class="dark">
+                #foreach ($colTitle in $colTitles)
+                    <th>
+                        $colTitle
+                    </th>
+                #end
+            </tr>
+        </thead>
+        #getStatsLine($userStats "users_enabled")
+        #getStatsLine($userStats "users_enabled_older_than")
+        #getStatsLine($userStats "users_unenabled")
+        #getStatsLine($userStats "users_unenabled_older_than")
+    </table>
+  </div>
+#end
+#macro (getStatsLine $userStats $fieldKey)
+    #set ($rowValues = [$userStats.get($fieldKey)])
+    <tr>
+        <td>
+            $MESSAGES.getString("account.view.stats.${fieldKey}")
+        </td>
+        #foreach ($rowValue in $rowValues)
+            <td>
+                $rowValue.size()
+                <br>
+                ###set ($action = $renderResponse.createActionURL())
+                ##$action.setParameter("doUserListMail", "${fieldKey}")
+                ##<div class="media__obj media__obj--left">
+                ##    <a href="$action" title="$MESSAGES.getString('account.view.stats.users.mail')">
+                ##        <div class="icon icon-mail-1"></div>
+                ##    </a>
+                ##</div>
+                #if(!$fieldKey.startsWith("users_enabled"))
+                    <div class="media__obj media__obj--right">
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doUserListDelete", "${fieldKey}")
+                        <a href="$action" title="$MESSAGES.getString('account.view.stats.users.delete')" onclick="return confirm('$MESSAGES.getString('account.view.stats.users.delete.confirmed')')">
+                            <span class="ic-ic-cross"></span>
+                        </a>
+                    </div>
+                #end
+            </td>
+        #end
+    </tr>
+#end
 <script>
 ingrid_enableButtonByCheckbox('id', 'doDelete');
 </script>

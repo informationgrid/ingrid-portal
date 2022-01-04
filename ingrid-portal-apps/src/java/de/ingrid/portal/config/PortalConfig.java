@@ -316,6 +316,10 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_MAPS_LINKS_NEW_TAB = "portal.map.links.new.tab";
 
+    public static final String PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN = "portal.administration.user.enabled.older.than";
+    public static final String PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN = "portal.administration.user.unenabled.older.than";
+
+    
     // private stuff
     private static PortalConfig instance = null;
 
