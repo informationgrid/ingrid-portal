@@ -211,7 +211,7 @@ public class UVPReport {
                 "(PUB.objClass=12)\n" +
                 "AND NEGATIV.fieldKey = 'uvpNegativeApprovalDate'\n" +
                 "AND NEGATIV.data >= " + this.startDate + "\n" +
-                "AND NEGATIV.data <= " + this.endDate;
+                "AND NEGATIV.data <= " + this.endDate + "\n GROUP BY PUB.objName";
     }
 
     /**
@@ -232,7 +232,7 @@ public class UVPReport {
                 "AND PHASE.fieldKey = 'phase3'\n" +
                 "AND DATE.fieldKey = 'approvalDate'\n" +
                 "AND DATE.data >= " + this.startDate + "\n" +
-                "AND DATE.data <= " + this.endDate;
+                "AND DATE.data <= " + this.endDate + "\n GROUP BY PUB.objName";
     }
 
     /**
@@ -254,7 +254,7 @@ public class UVPReport {
                 "AND DATE.fieldKey = 'approvalDate'\n" +
                 "AND DATE.data >= " + this.startDate + "\n" +
                 "AND DATE.data <= " + this.endDate + "\n" +
-                "GROUP BY PUB.id";
+                "GROUP BY PUB.id, PUB.objName, ADDITIONALROOT.data";
     }
 
     private void mapUvpNumbers(Map<String, Object> grouped) {
@@ -291,7 +291,10 @@ public class UVPReport {
     @SuppressWarnings("unchecked")
     private String getUvpCodelistId(JSONParser jsonParser) {
 
+        String defaultCodelist = "9000";
         List<GenericValueBean> behaviours = catalogRequestHandler.getSysGenericValues(new String[]{"BEHAVIOURS"});
+        if (behaviours.size() == 0) return defaultCodelist;
+
         try {
             JSONArray json = (JSONArray) jsonParser.parse(behaviours.get(0).getValue());
             // get the defined category id or return default id (9000)
@@ -303,9 +306,9 @@ public class UVPReport {
                         return params.stream()
                                 .filter(param -> "categoryCodelist".equals(((JSONObject) param).get("id")))
                                 .findFirst().map(categoryCodelist -> ((JSONObject) categoryCodelist).get("value"))
-                                .orElse("9000");
+                                .orElse(defaultCodelist);
                     })
-                    .orElse("9000"); // default codelist for UVP
+                    .orElse(defaultCodelist); // default codelist for UVP
 
         } catch (ParseException e) {
             log.error("Error getting behaviour settings from DB", e);

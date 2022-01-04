@@ -78,16 +78,29 @@
         pageUvpStatistic.createStatistic = function() {
             var self = this;
             setGenerationState(false);
-            StatisticService.createReport("UVP", {startDate: pageUvpStatistic.startDate, endDate: pageUvpStatistic.endDate}, function(report) {
-                console.log("Report created: ", report);
-                // console.log("CSW created: ", self.convertToCSV(report));
-                var filename = "report-" +
-                        pageUvpStatistic.startDate.toISOString().substr(0,10) +
+            StatisticService.createReport("UVP", {startDate: pageUvpStatistic.startDate, endDate: pageUvpStatistic.endDate}, {
+
+                callback: function (report) {
+                    console.log("Report created: ", report);
+                    var options = {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit"
+                    };
+                    // console.log("CSW created: ", self.convertToCSV(report));
+                    var filename = "report-" +
+                        pageUvpStatistic.startDate.toLocaleDateString("en-CA", options) +
                         "__" +
-                        pageUvpStatistic.endDate.toISOString().substr(0,10) +
+                        pageUvpStatistic.endDate.toLocaleDateString("en-CA", options) +
                         ".csv";
-                download(filename, self.convertToCSV(report));
-                setGenerationState(true);
+                    download(filename, self.convertToCSV(report));
+                    setGenerationState(true);
+                },
+                errorHandler: function (error) {
+                    console.error(error);
+                    alert("Es trat ein Fehler auf");
+                    setGenerationState(true)
+                }
             });
         };
 
