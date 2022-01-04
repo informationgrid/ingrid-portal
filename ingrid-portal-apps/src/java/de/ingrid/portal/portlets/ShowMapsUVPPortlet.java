@@ -23,9 +23,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -42,8 +39,6 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsPortletServeResources;
-import de.ingrid.utils.udk.iso19108.TM_PeriodDuration;
-import de.ingrid.utils.udk.iso19108.TM_PeriodDuration.Interval;
 
 public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
@@ -134,7 +129,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 String title = request.getParameter( "title" );
                 String x1 = request.getParameter( "x1" );
                 String y1 = request.getParameter( "y1" );
-                String queryString = "title:\""+ title + "\" procedure:dev_plan y1:" + y1 + " x1:" + x1;
+                String queryString = "\""+ title + "\" procedure:dev_plan y1:" + y1 + " x1:" + x1;
                 if(!queryString.isEmpty()) {
                     UtilsPortletServeResources.getHttpMarkerUVPMarkerBlpDetail(response, queryString);
                 }

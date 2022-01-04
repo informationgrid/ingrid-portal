@@ -23,9 +23,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -42,8 +39,6 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsPortletServeResources;
 import de.ingrid.portal.search.UtilsSearch;
-import de.ingrid.utils.udk.iso19108.TM_PeriodDuration;
-import de.ingrid.utils.udk.iso19108.TM_PeriodDuration.Interval;
 
 public class SearchResultUVPPortlet extends SearchResultPortlet {
 
