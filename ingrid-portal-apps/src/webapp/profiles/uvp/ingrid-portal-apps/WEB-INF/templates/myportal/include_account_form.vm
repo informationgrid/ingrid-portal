@@ -17,24 +17,25 @@
             </select>
         </p>
     </div>
+    #parse ("/WEB-INF/templates/myportal/myportal_create_account_honeypot.vm")
     <div class="form-element">
         <label for="firstname">$MESSAGES.getString('account.edit.label.firstname')*:</label>
     </div>
     <div class="form-element">
-        <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') #addErrorFormMessagePlaceholder('firstname') />
+        <input type="text" id="firstname" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') #addErrorFormMessagePlaceholder('user_firstname') />
     </div>
     <div class="form-element">
         <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*:</label>
     </div>
     <div class="form-element">
-        <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname') #addErrorFormMessagePlaceholder('lastname') />
+        <input type="text" id="lastname" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') #addErrorFormMessagePlaceholder('user_lastname') />
     </div>
     <div class="form-element">
         <label for="email">$MESSAGES.getString('account.edit.label.email')*:</label>
     </div>
     <div class="form-element">
-        <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email') #addErrorFormMessagePlaceholder('email') />
-        #addErrorFormMessagePlaceholderWithInputCheck('email')
+        <input type="text" id="email" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email') />
+        #addErrorFormMessagePlaceholderWithInputCheck('user_email')
     </div>
 #end
 #if ($formType == 'edit')

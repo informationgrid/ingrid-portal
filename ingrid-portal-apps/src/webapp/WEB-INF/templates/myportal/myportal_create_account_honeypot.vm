@@ -1,0 +1,5 @@
+<div style="position: absolute; transform: scale(0)">
+    <input type="text" id="firstname" name="firstname" />
+    <input type="text" id="lastname" name="lastname" />
+    <input type="text" id="email" name="email" />
+</div>
