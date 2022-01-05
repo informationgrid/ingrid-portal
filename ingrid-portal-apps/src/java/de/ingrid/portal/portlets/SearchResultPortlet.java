@@ -562,7 +562,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 // reset page and page selector by facets activity
                 SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, "");
                 SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
-                SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
+                SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, rankedStarthit != null ? rankedStarthit : 0);
              }
              actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + url);
         }
