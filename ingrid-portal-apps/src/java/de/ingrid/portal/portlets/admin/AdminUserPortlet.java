@@ -321,12 +321,14 @@ public class AdminUserPortlet extends ContentPortlet {
         try {
             user = userManager.getUser(userInfo.getId());
             PasswordCredential credential = userManager.getPasswordCredential(user);
-            Timestamp timestamp = credential.getCreationDate();
+            Timestamp timestamp = null;
             if(isEnabled) {
                 Timestamp tmpTimestamp = credential.getLastAuthenticationDate();
                 if(tmpTimestamp != null) {
                     timestamp = tmpTimestamp;
                 }
+            } else {
+                timestamp = credential.getCreationDate();
             }
             if(timestamp != null) {
                 LocalDate userCreationLocalDate = timestamp.toLocalDateTime().toLocalDate();
