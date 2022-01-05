@@ -311,8 +311,9 @@
                                 #else
                                     ## Organisation
                                     #set($xPath = "./idf:addressOrganisationName")
-                                    <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</a>
-                                    
+                                    #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
+                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</a>
+                                    #end
                                 #end
                                 <br>
                             #end

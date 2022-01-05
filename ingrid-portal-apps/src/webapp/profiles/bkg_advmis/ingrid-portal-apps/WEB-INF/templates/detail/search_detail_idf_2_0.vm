@@ -321,8 +321,9 @@
                                 #else
                                     ## Organisation
                                     #set($xPath = "./idf:addressOrganisationName")
-                                    <span>$TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</span>
-                                    
+                                    #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
+                                        <span>$TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</span>
+                                    #end
                                 #end
                                 <br>
                             #end

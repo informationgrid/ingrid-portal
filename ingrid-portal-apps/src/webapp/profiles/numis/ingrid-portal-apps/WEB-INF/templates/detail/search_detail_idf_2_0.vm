@@ -473,8 +473,10 @@
                                             #elseif($t == "0" || $t == "1")
                                                 ## Organisation
                                                 #set($xPath = "./idf:addressOrganisationName")
-                                                #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
-                                                <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
+                                                #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
+                                                    #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
+                                                    <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
+                                                #end
                                             #end
                                         #end
                                     #end
