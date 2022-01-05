@@ -176,7 +176,7 @@ public class UtilsFacete {
             }
         }
         // Get all existing selection keys
-        if(keys == null){
+        if(keys == null || keys.isEmpty()){
             keys = getExistingSelectionKeys(request);
         }
 
@@ -284,7 +284,7 @@ public class UtilsFacete {
             }
         }else{
             // Get all existing selection keys
-            if(keys == null){
+            if(keys == null || keys.isEmpty()){
                 keys = getExistingSelectionKeys(request);
             }
             Set set = new TreeSet(request.getParameterMap().keySet());
