@@ -318,6 +318,7 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN = "portal.administration.user.enabled.older.than";
     public static final String PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN = "portal.administration.user.unenabled.older.than";
+    public static final String PORTAL_ADMINISTRATION_USER_UNLOGGED_OLDER_THAN = "portal.administration.user.unlogged.older.than";
 
     
     // private stuff

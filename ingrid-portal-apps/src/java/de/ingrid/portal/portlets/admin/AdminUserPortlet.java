@@ -290,19 +290,29 @@ public class AdminUserPortlet extends ContentPortlet {
         ArrayList<UserInfo> enabledUserOlderThan = new ArrayList<>();
         ArrayList<UserInfo> unenabledUser = new ArrayList<>();
         ArrayList<UserInfo> unenabledUserOlderThan = new ArrayList<>();
+        ArrayList<UserInfo> unloggedUser = new ArrayList<>();
+        ArrayList<UserInfo> unloggedUserOlderThan = new ArrayList<>();
         for (UserInfo userInfo : rows) {
-            if(userInfo.isEnable()) {
-                enabledUser.add(userInfo);
-                addUserToList(enabledUserOlderThan, userInfo, PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN, 365), userInfo.isEnable());
-            } else {
-                unenabledUser.add(userInfo);
-                addUserToList(unenabledUserOlderThan, userInfo, PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN, 14), userInfo.isEnable());
+            if(!userInfo.getRoles().equals("guest")) {
+                if(userInfo.isEnable()) {
+                    enabledUser.add(userInfo);
+                    addUserToList(enabledUserOlderThan, userInfo, PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN, 365), userInfo.isEnable());
+                } else {
+                    unenabledUser.add(userInfo);
+                    addUserToList(unenabledUserOlderThan, userInfo, PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN, 14), userInfo.isEnable());
+                }
+                if(userInfo.getLastLogin() == null || userInfo.getLastLogin().isEmpty()) {
+                    unloggedUser.add(userInfo);
+                    addUserToList(unloggedUserOlderThan, userInfo, PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMINISTRATION_USER_UNLOGGED_OLDER_THAN, 14), userInfo.isEnable());
+                }
             }
         }
         stats.put("users_enabled", enabledUser);
         stats.put("users_enabled_older_than", enabledUserOlderThan);
         stats.put("users_unenabled", unenabledUser);
         stats.put("users_unenabled_older_than", unenabledUserOlderThan);
+        stats.put("users_unlogged", unloggedUser);
+        stats.put("users_unlogged_older_than", unloggedUserOlderThan);
         return stats;
     }
 

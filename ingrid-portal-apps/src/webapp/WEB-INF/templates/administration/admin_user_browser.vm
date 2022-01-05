@@ -101,6 +101,8 @@
                         #getStatsLine($userStats "users_enabled_older_than")
                         #getStatsLine($userStats "users_unenabled")
                         #getStatsLine($userStats "users_unenabled_older_than")
+                        #getStatsLine($userStats "users_unlogged")
+                        #getStatsLine($userStats "users_unlogged_older_than")
                     </table>
                 </div>
             </div>
@@ -127,7 +129,7 @@
                 ##        <div class="icon icon-mail-1"></div>
                 ##    </a>
                 ##</div>
-                #if(!$fieldKey.startsWith("users_enabled"))
+                #if(!$fieldKey.equals("users_enabled"))
                     <div class="media__obj media__obj--right">
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doUserListDelete", "${fieldKey}")
