@@ -2493,12 +2493,19 @@ public class UtilsFacete {
                     }
                 }
             }
+        } else {
+            if(log.isDebugEnabled()) {
+                log.debug("Facet config is null!");
+            }
         }
     }
     
     private static Set<String> getExistingSelectionKeys(PortletRequest request){
         HashMap<String, String> configIds = new HashMap<>();
         getActionKeysFromConfig((ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG), configIds);
+        if(log.isDebugEnabled()) {
+            log.debug("Facet keys: " + configIds.keySet());
+        }
         return configIds.keySet();
     }
     
