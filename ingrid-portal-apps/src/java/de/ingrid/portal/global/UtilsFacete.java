@@ -126,7 +126,7 @@ public class UtilsFacete {
     private static final String PARAMS_ATTRIBUTE_TERM_TO = "term_to";
     private static final String PARAMS_WILDCARD = "wildcard";
 
-    private static final String FACET_CONFIG = "config";
+    public static final String FACET_CONFIG = "config";
 
     public static final String SESSION_PARAMS_FACET_GROUPING = "facet_grouping";
 
@@ -654,7 +654,7 @@ public class UtilsFacete {
         }
     }
 
-    private static void addToQueryWildcard(PortletRequest request, IngridQuery query) {
+    public static void addToQueryWildcard(PortletRequest request, IngridQuery query) {
         ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession( request, WILDCARD_IDS );
         if(wildcardIds != null){
             for (String wildcardId : wildcardIds) {
@@ -785,7 +785,7 @@ public class UtilsFacete {
     }
 
     @SuppressWarnings("rawtypes")
-    private static void addToQueryMap(PortletRequest request, IngridQuery query) {
+    public static void addToQueryMap(PortletRequest request, IngridQuery query) {
 
         HashMap selectedMap = (HashMap) getAttributeFromSession(request, SELECTED_MAP);
         if(selectedMap != null){
@@ -1081,7 +1081,7 @@ public class UtilsFacete {
     }
 
 
-    private static void addToQueryGeothesaurus(PortletRequest request, IngridQuery query) {
+    public static void addToQueryGeothesaurus(PortletRequest request, IngridQuery query) {
         ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
         if(!geothesaurusSelectTopics.isEmpty()){
             ClauseQuery cq = null;
@@ -1256,7 +1256,7 @@ public class UtilsFacete {
         context.put("doAddAttributeInput", getAttributeFromSession(request, "doAddAttributeInput"));
     }
 
-    private static void addToQueryAttribute(PortletRequest request, IngridQuery query) {
+    public static void addToQueryAttribute(PortletRequest request, IngridQuery query) {
         HashMap<String, String>  doAddAttribute = (HashMap<String, String>) getAttributeFromSession(request, "doAddAttribute");
 
         if (doAddAttribute != null && !doAddAttribute.isEmpty()){
@@ -1342,7 +1342,7 @@ public class UtilsFacete {
         context.put("doAddAreaAddressInput", getAttributeFromSession(request, "doAddAreaAddressInput"));
     }
 
-    private static void addToQueryAreaAddress(PortletRequest request, IngridQuery query) {
+    public static void addToQueryAreaAddress(PortletRequest request, IngridQuery query) {
         HashMap<String, String> doAddAreaAddress = (HashMap<String, String>) getAttributeFromSession(request, "doAddAreaAddress");
 
         if (doAddAreaAddress != null && !doAddAreaAddress.isEmpty() && query != null){
@@ -1398,7 +1398,7 @@ public class UtilsFacete {
         }
     }
 
-    private static Object getAttributeFromSession(PortletRequest request, String key){
+    public static Object getAttributeFromSession(PortletRequest request, String key){
         return request.getPortletSession().getAttribute(key, PortletSession.APPLICATION_SCOPE);
     }
 
@@ -2634,7 +2634,7 @@ public class UtilsFacete {
         return configIds.keySet();
     }
 
-    private static IngridFacet getFacetById(List<IngridFacet> facets, String key){
+    public static IngridFacet getFacetById(List<IngridFacet> facets, String key){
         IngridFacet ingridFacet = null;
         if(facets != null){
             for(IngridFacet tmpIngridFacet: facets){

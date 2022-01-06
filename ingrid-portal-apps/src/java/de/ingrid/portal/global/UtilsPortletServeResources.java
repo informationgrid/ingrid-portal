@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ResourceRequest;
@@ -32,6 +33,8 @@ import org.slf4j.LoggerFactory;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.om.IngridFacet;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.IBusQueryResultIterator;
 import de.ingrid.utils.IngridDocument;
@@ -142,19 +145,20 @@ public class UtilsPortletServeResources {
         }
     }
 
-    public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
-        getHttpMarkerUVP(response, requestedFields, request, queryString, messages, sysCodeList, null, null, null);
-    }
-
-    public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, String from, String to, String additionalQuery) throws ParseException, IOException {
-        if(from != null && to != null && additionalQuery != null) {
-            queryString = getTimeQuery(queryString, from, to, additionalQuery);
-        }
-
+    public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, List<IngridFacet> config) throws ParseException, IOException {
         queryString = UtilsSearch.updateQueryString(queryString, request);
         StringBuilder s = new StringBuilder();
         s.append("var markers = [");
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
+        IngridQuery query = QueryStringParser.parse( queryString );
+        if(config != null) {
+            UtilsFacete.setFacetQuery(queryString, config, query);
+            UtilsFacete.addToQueryMap(request, query);
+            UtilsFacete.addToQueryGeothesaurus(request, query);
+            UtilsFacete.addToQueryAttribute(request, query);
+            UtilsFacete.addToQueryAreaAddress(request, query);
+            UtilsFacete.addToQueryWildcard(request, query);
+        }
+        IBusQueryResultIterator it = new IBusQueryResultIterator( query, requestedFields, IBUSInterfaceImpl.getInstance()
                 .getIBus() );
         JSONArray jsonData = new JSONArray();
         if(it != null){
@@ -297,8 +301,17 @@ public class UtilsPortletServeResources {
         response.getWriter().write( bbox.toString() );
     }
 
-    public static void getHttpMarkerUVPMarkerBlp (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BLP_MARKER, IBUSInterfaceImpl.getInstance()
+    public static void getHttpMarkerUVPMarkerBlp (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
+        IngridQuery query = QueryStringParser.parse( queryString );
+        if(config != null) {
+            UtilsFacete.setFacetQuery(queryString, config, query);
+            UtilsFacete.addToQueryMap(request, query);
+            UtilsFacete.addToQueryGeothesaurus(request, query);
+            UtilsFacete.addToQueryAttribute(request, query);
+            UtilsFacete.addToQueryAreaAddress(request, query);
+            UtilsFacete.addToQueryWildcard(request, query);
+        }
+        IBusQueryResultIterator it = new IBusQueryResultIterator( query , UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BLP_MARKER, IBUSInterfaceImpl.getInstance()
                 .getIBus(), UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM );
         int cnt = 1;
         JSONArray jsonData = new JSONArray();
@@ -390,9 +403,25 @@ public class UtilsPortletServeResources {
         response.getWriter().write( jsonData.toString());
     }
 
-    public static void getHttpMarkerUVPLegendCounter (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
+    public static void getHttpMarkerUVPLegendCounter (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
+        queryString = UtilsSearch.updateQueryString(queryString, request);
         IngridQuery query = QueryStringParser.parse( queryString );
-        query.put( IngridQuery.RANKED, "score" );
+        if(config != null) {
+            UtilsFacete.setFacetQuery(queryString, config, query);
+            UtilsFacete.addToQueryMap(request, query);
+            UtilsFacete.addToQueryGeothesaurus(request, query);
+            UtilsFacete.addToQueryAttribute(request, query);
+            UtilsFacete.addToQueryAreaAddress(request, query);
+            UtilsFacete.addToQueryWildcard(request, query);
+        }
+        String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
+        if(stateRanking == null) {
+            if(config != null) {
+                stateRanking = "date";
+            } else {
+                stateRanking = "score";
+            }
+        }
         if (query.get( "FACETS" ) == null) {
             ArrayList<IngridDocument> facetQueries = new ArrayList<>();
             ArrayList<HashMap<String, String>> facetList = new ArrayList<>();
@@ -432,7 +461,7 @@ public class UtilsPortletServeResources {
                 facetList.add(facetEntry);
             }
             tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
-            if (!tmpQuery.isEmpty()) {
+            if (!tmpQuery.isEmpty() && !stateRanking.equals("date")) {
                 HashMap<String, String> facetEntry = new HashMap<>();
                 facetEntry.put("id", "countMarkerDevPlan");
                 facetEntry.put("query", tmpQuery);
