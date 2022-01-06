@@ -5,6 +5,8 @@ services:
     container_name: mysql-ingrid
     ports:
       - 3306:3306
+    command: docker-entrypoint.sh mysqld --character-set-server=utf8 --lower-case-table-names=1 --collation-server=utf8_unicode_ci --sql_mode="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
