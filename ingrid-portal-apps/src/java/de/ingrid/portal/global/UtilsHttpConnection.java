@@ -2,13 +2,13 @@ package de.ingrid.portal.global;
 
 import java.net.URLConnection;
 
-import sun.misc.BASE64Encoder;
+import java.util.Base64;
 
 public class UtilsHttpConnection {
 
     public static void urlConnectionAuth(URLConnection conn, String login, String password) {
         String userAuth = login + ":" + password;
-        String encoding = new BASE64Encoder().encode(userAuth.getBytes());
+        String encoding = Base64.getEncoder().encodeToString(userAuth.getBytes());
         conn.setRequestProperty("Authorization", "Basic " + encoding);
     }
 
