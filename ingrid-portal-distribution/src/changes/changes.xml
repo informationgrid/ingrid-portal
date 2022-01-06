@@ -99,9 +99,6 @@
           <action type="add" dev="wemove" issue="3314">
             Add robot detection to account form
           </action>
-          <action type="fix" dev="wemove" issue="3340">
-            IGE (UVP): Statistic always results in error
-          </action>
           <action type="fix" dev="wemove" issue="3341">
             Fix warnings for SSL DB connection
           </action>
