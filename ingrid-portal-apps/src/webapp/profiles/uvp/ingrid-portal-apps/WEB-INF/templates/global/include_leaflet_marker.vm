@@ -360,30 +360,13 @@
         mapZoom = parseFloat('$mapParamZoom') || mapZoom;
         map.setView(new L.LatLng(mapLat, mapLng), mapZoom);
     } else if(mapParamExtent && mapParamExtent.length === 4){
-        map.fitBounds(L.latLngBounds(
+        mapBounds = L.latLngBounds(
           L.latLng(parseFloat(mapParamExtent[0]),
             parseFloat(mapParamExtent[1])),
           L.latLng(parseFloat(mapParamExtent[2]),
           parseFloat(mapParamExtent[3]))
-        ));
+        );
     } else if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
-        map.fitBounds(L.latLngBounds(
-          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y1'),
-            parseFloat('$selectedMap.webmapclientCoords.x1')),
-          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y2'),
-          parseFloat('$selectedMap.webmapclientCoords.x2'))
-        ));
-    } else if('$mapExtent'){
-        map.fitBounds(L.latLngBounds(
-          L.latLng(parseFloat('$mapExtent.get(0)'),
-            parseFloat('$mapExtent.get(1)')),
-          L.latLng(parseFloat('$mapExtent.get(2)'),
-          parseFloat('$mapExtent.get(3)'))
-        ));
-    }
-    
-    if(!mapBounds){
-        if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
         mapBounds = L.latLngBounds(
           L.latLng(parseFloat('$selectedMap.webmapclientCoords.y1'),
             parseFloat('$selectedMap.webmapclientCoords.x1')),
@@ -398,8 +381,16 @@
           parseFloat('$mapExtent.get(3)'))
         );
     }
+    if(mapBounds){
+        map.fitBounds(mapBounds);
+    } else if('$mapExtent'){
+        mapBounds = L.latLngBounds(
+          L.latLng(parseFloat('$mapExtent.get(0)'),
+            parseFloat('$mapExtent.get(1)')),
+          L.latLng(parseFloat('$mapExtent.get(2)'),
+          parseFloat('$mapExtent.get(3)'))
+        );
     }
-
     map.on('moveend', function(e){
         var mapLatLng = this.getCenter();
         if(mapLatLng) {
