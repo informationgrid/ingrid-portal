@@ -41,6 +41,8 @@ import org.w3c.dom.NodeList;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.xml.bind.DatatypeConverter;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
@@ -168,7 +170,7 @@ public class DetailPartPreparer {
 
     public String getDateFormatValue (String value){
         try {
-            Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(value);
+            Calendar cal = DatatypeConverter.parseDateTime(value);
             if(cal != null){
                 if(cal.getTime() != null){
                     int hours = cal.getTime().getHours();
