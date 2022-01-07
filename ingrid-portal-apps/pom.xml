@@ -248,11 +248,10 @@
     </dependency>
 
     <!-- Diverses -->
-    <!-- Version 1.4.4 causes error with Java 1.8: xstream.toXML see REDMINE-702 -->
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
-      <version>1.4.13</version>
+      <version>1.4.18</version>
     </dependency>
     <dependency>
       <groupId>commons-fileupload</groupId>
