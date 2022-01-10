@@ -102,6 +102,9 @@
           <action type="fix" dev="wemove" issue="3341">
             Fix warnings for SSL DB connection
           </action>
+          <action type="fix" dev="wemove" issue="3350">
+            IGE: Remove deprecated SNS search results from search
+          </action>
         </release>
 
         <release version="5.10.0" date="2021-10-21" description="Release 5.10.0">

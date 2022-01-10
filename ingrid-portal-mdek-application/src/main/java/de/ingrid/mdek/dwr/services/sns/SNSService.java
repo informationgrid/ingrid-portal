@@ -231,7 +231,9 @@ public class SNSService {
 
     	List<SNSTopic> resultList = new ArrayList<>();
     	for (Term term : terms) {
-    		resultList.add(convertTermToSNSTopic(term));
+    		if (term.getName() != null || term.getAlternateName() != null) {
+				resultList.add(convertTermToSNSTopic(term));
+			}
     	}
 
 	    Collections.sort(resultList, new SNSTopicComparator(locale));
