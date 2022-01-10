@@ -11,7 +11,9 @@
     ## Modellart
         #renderTextListTable("Modellart" $TOOL.getListOfValuesFromXPath($xPathBawModellType, "."))
     ## Räumliche Dimensionalität
-        #renderTextTable("R&aumlumliche Dimensionalit&auml;t" $TOOL.getValueFromXPath($xPathBawSpatialDimensionality))
+        #renderTextTable("R&auml;umliche Dimensionalit&auml;t" $TOOL.getValueFromXPath($xPathBawSpatialDimensionality))
+    ## Zeitschrittgröße
+        #renderTextTable("Zeitschrittgr&ouml;&szlig;e &lsqb;s&rsqb;" $TOOL.getValueFromXPath($xPathBawTimestepSize))
     ## Parameter und Zustandsgrößen
         #set($headTitles = ["Rolle","Name","Einheit","Wert"])
         #set($headTypes = ["text","text","text", "text"])

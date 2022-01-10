@@ -18,6 +18,8 @@
 #set($xPathBawModellType = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.type']//gmd:keyword/gco:CharacterString")
 ## Räumliche Dimensionalität
 #set($xPathBawSpatialDimensionality = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.dimensionality']//gmd:keyword/gco:CharacterString")
+## Zeitschrittgröße
+#set($xPathBawTimestepSize = "./gmd:dataQualityInfo//gmd:DQ_AccuracyOfATimeMeasurement//gco:Record")
 ## Daten / Größen / Parameter
 #set($xPathBAWDataQuality = "//gmd:DQ_DataQuality")
 #set($xPathBawRole = "./gmd:lineage//gmd:LI_Source/gmd:description/gco:CharacterString")
@@ -31,6 +33,7 @@
     $xPathBawProcedure,
     $xPathBawModellType,
     $xPathBawSpatialDimensionality,
+    $xPathBawTimestepSize,
     $xPathInfo1LILineageStatement,
     "${xPathBAWDataQuality}/${xPathBawRole}",
     "${xPathBAWDataQuality}/${xPathBawName}",
