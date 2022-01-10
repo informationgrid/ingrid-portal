@@ -683,6 +683,7 @@ define([
                     });
                     url = item.addressList[0].title;
                     url = UtilString.addCapabilitiesParameter(type, url, serviceType);
+                    return true;
                 }
             });
 
