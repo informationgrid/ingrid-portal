@@ -198,7 +198,6 @@
 #end
 
 #macro (renderTree $treeFacet $treeParentId)
-$treeFacet
     #set ($action = $renderResponse.createActionURL())
     $action.setParameter("$treeParentId", "$treeFacet.getId()")
     <a class="icon" href="$action">
