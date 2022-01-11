@@ -433,12 +433,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
                 #renderSearchResultFacetSelectionItem($entry $action "$parentFacetTyp: $resourceMsgs.getString($entry.getName())")
-                #if($entry.getToggle() && $entry.getToggle().isSelect())
-                    #set ($action = $renderResponse.createActionURL())
-                    $action.setParameter("$entry.getParent().getId()", "$entry.getToggle().getId()")
-                    #set($catNameToggle = $resourceMsgs.getString($entry.getName()) + ": " + $resourceMsgs.getString('common.toggle.approval.date'))
-                    #renderSearchResultFacetSelectionItem($entry $action $catNameToggle)
-                #end
+            #end
+            #if($entry.getToggle() && $entry.getToggle().isSelect())
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("$entry.getParent().getId()", "$entry.getToggle().getId()")
+                #set($catNameToggle = $resourceMsgs.getString($entry.getName()) + ": " + $resourceMsgs.getString('common.toggle.approval.date'))
+                #renderSearchResultFacetSelectionItem($entry $action $catNameToggle)
             #end
             #if($entry.getFacets())
                 #set($catNameSub = $resourceMsgs.getString($entry.getName()))
