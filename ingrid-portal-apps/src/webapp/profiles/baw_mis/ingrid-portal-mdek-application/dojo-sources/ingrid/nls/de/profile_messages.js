@@ -23,7 +23,7 @@
 define({
     "dialog.simulation.parameter.title": "Simulationsparameter/-Größe",
     "dialog.lfs.link.parameter.title": "Links zum Langfristspeicher",
-    "dialog.lfs.move.warn": "Die ausgewählten Dateien aus dem LFS-Eingang werden hiermit in die LFS-Ablage verschoben. Die Dateien können danach nicht mehr geändert, gelöscht oder ergänzt werden.",
+    "dialog.lfs.move.warn": "Dieses Programm verwendet eine externe Schnittstelle, um die Dateien in den Langfristspeicher zu verschieben. Mit dem Klicken auf Ok wird die ausgewählte Datei bzw. das ausgewählte Verzeichnis sofort in den Langfristspeicher verschoben. Diese Aktion kann nicht Rückgängig gemacht werden und die verschobenen Objekte können nicht mehr geändert, gelöscht oder ergänzt werden. Bevor Sie auf Ok klicken, prüfen Sie daher bitte sorgfältig die Inhalte, Namen, etc. von Ihrer Datei / Ihrem Verzeichnis.",
 
     "ui.obj.baw.auftragsnummer.title": "PSP-Element",
     "ui.obj.baw.auftragsnummer.help": "PSP-Element",
