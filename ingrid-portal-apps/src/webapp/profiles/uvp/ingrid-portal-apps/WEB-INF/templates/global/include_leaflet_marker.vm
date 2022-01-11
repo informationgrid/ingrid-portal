@@ -193,7 +193,7 @@
     .done(function(data, textStatus, jqxhr) {
         var mapFilter = $('.map-filter ul li div');
         var overlayers = {};
-        if(mapFilter) {
+        if(mapFilter && mapFilter.length > 0) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
                     createLegendEntry(map, mapFilter, [mapMarkers10_time, mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', '', '#if($restUrlMarker_time)$restUrlMarker_time#end');
@@ -216,7 +216,7 @@
             }
         }
         var mapFilterXs = $('.map-filter-xs');
-        if(mapFilterXs) {
+        if(mapFilterXs && mapFilterXs.length > 0) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
                     createLegendEntry(map, mapFilterXs, [mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', 'style="padding:0px"');
