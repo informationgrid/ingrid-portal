@@ -65,13 +65,8 @@ import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
-import de.ingrid.utils.query.FuzzyFieldQuery;
-import de.ingrid.utils.query.FuzzyTermQuery;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.query.RangeQuery;
-import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.query.WildCardFieldQuery;
-import de.ingrid.utils.query.WildCardTermQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.udk.UtilsDate;
@@ -2478,28 +2473,31 @@ public class UtilsFacete {
                                 if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
                                     query =  query + " " + toggle.getQuery();
                                 }
-                                if(orQuery.isEmpty()){
-                                    orQuery += "(" + query + ")";
-                                }else{
-                                    orQuery += " OR (" + query + ")";
+                                if(ingridFacet.isSelect() || toggle.isSelect()) {
+                                    if(orQuery.isEmpty()){
+                                        orQuery += "(" + query + ")";
+                                    }else{
+                                        orQuery += " OR (" + query + ")";
+                                    }
                                 }
                             }
                         } else {
-                            if((ingridFacet.isSelect() || ingridFacet.isParentHidden()) && ingridFacet.getQuery() != null){
+                            if(ingridFacet.getQuery() != null){
                                 String query = ingridFacet.getQuery();
                                 if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
                                     query = query + " " + toggle.getQuery();
                                 }
-                                if(orQuery.isEmpty()){
-                                    orQuery += "(" + query + ")";
-                                }else{
-                                    orQuery += " OR (" + query + ")";
+                                if(ingridFacet.isSelect() || toggle != null && toggle.isSelect()) {
+                                    if(orQuery.isEmpty()){
+                                        orQuery += "(" + query + ")";
+                                    }else{
+                                        orQuery += " OR (" + query + ")";
+                                    }
                                 }
                             }
                         }
                     }
-                    orQuery += "";
-                    if(!orQuery.equals("()")){
+                    if(!orQuery.isEmpty()){
                         term = term + " " + orQuery;
                     }
                 }
