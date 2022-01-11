@@ -139,7 +139,7 @@ public class UtilsFacete {
      * @param query
      * @throws ParseException
      */
-    public static void facetePrepareInGridQuery (PortletRequest request, IngridQuery query) throws ParseException{
+    public static IngridQuery facetePrepareInGridQuery (PortletRequest request, IngridQuery query) throws ParseException{
 
         // Check for pre prozess doAction.
         String portalTerm = request.getParameter("q");
@@ -181,7 +181,7 @@ public class UtilsFacete {
         }
 
         // Set selection to query
-        setFacetQuery(portalTerm, config, query);
+        query = setFacetQuery(portalTerm, config, query);
 
         addToQueryMap(request, query);
         addToQueryGeothesaurus(request, query);
@@ -203,6 +203,7 @@ public class UtilsFacete {
         if(log.isDebugEnabled()){
             log.debug("Query Facete: " + query);
         }
+        return query;
     }
 
     /**
@@ -2439,126 +2440,26 @@ public class UtilsFacete {
         }
     }
 
-    public static void setFacetQuery(String term, List<IngridFacet> configNode, IngridQuery query) throws ParseException{
+    public static IngridQuery setFacetQuery(String term, List<IngridFacet> configNode, IngridQuery query) throws ParseException{
         if(term == null){
             term = "";
         }
         if(term != null){
-            String _term = term;
-            term = "";
             for (IngridFacet ingridFacet : configNode){
                 if(ingridFacet.getFacets() != null){
                     term = getQuerySelection(term, ingridFacet.getQueryType(), ingridFacet.getFacets());
                 }
             }
-            IngridQuery tmpQuery = QueryStringParser.parse(term);
-
             String origin = query.getString(IngridQuery.ORIGIN);
-            if(!_term.isEmpty() && origin != null && !origin.isEmpty()){
-                ClauseQuery originClause = new ClauseQuery(true, false);
-
-                originClause.put(IngridQuery.ORIGIN, origin);
-                query.remove(IngridQuery.ORIGIN);
-
-                for(TermQuery tmp :query.getTerms()){
-                    originClause.addTerm(tmp);
-                }
-                query.remove(IngridQuery.TERM_KEY);
-                for(ClauseQuery tmp : query.getClauses()){
-                    originClause.addClause(tmp);
-                }
-                query.remove("clause");
-                for(FieldQuery tmp : query.getDataTypes()){
-                    originClause.addField(tmp);
-                }
-                for(FieldQuery tmp : query.getFields()){
-                    originClause.addField(tmp);
-                    tmpQuery.removeFromList("field", tmp);
-                }
-                query.remove("field");
-                for(WildCardFieldQuery tmp : query.getWildCardFieldQueries()){
-                    originClause.addWildCardFieldQuery(tmp);
-                }
-                query.remove("wildcard_field");
-                for(WildCardTermQuery tmp : query.getWildCardTermQueries()){
-                    originClause.addWildCardTermQuery(tmp);
-                }
-                query.remove("wildcard_term");
-                for(FuzzyFieldQuery tmp : query.getFuzzyFieldQueries()){
-                    originClause.addFuzzyFieldQuery(tmp);
-                }
-                query.remove("fuzzy_field");
-                for(FuzzyTermQuery tmp : query.getFuzzyTermQueries()){
-                    originClause.addFuzzyTermQuery(tmp);
-                }
-                query.remove("fuzzy_term");
-                for(RangeQuery tmp : query.getRangeQueries()){
-                    originClause.addRangeQuery(tmp);
-                }
-                query.remove("range");
-                if(query.get("partner") != null){
-                    for(FieldQuery tmp : (ArrayList<FieldQuery>)query.get("partner")){
-                        originClause.addField(tmp);
-                    }
-                    query.remove("partner");
-                }
-                if(query.get("provider") != null){
-                    for(FieldQuery tmp : (ArrayList<FieldQuery>)query.get("provider")){
-                        originClause.addField(tmp);
-                    }
-                    query.remove("provider");
-                }
-                if(query.get("iplugs") != null){
-                    for(FieldQuery tmp : (ArrayList<FieldQuery>)query.get("iplugs")){
-                        originClause.addField(tmp);
-                    }
-                    query.remove("iplugs");
-                }
-
-                query.addClause(originClause);
+            if(!term.isEmpty()) {
+                origin += " (" + term + ")";
             }
-
-            for(TermQuery tmp :tmpQuery.getTerms()){
-                query.addTerm(tmp);
-            }
-            for(ClauseQuery tmp : tmpQuery.getClauses()){
-                query.addClause(tmp);
-            }
-            for(FieldQuery tmp : tmpQuery.getDataTypes()){
-                query.addField(tmp);
-            }
-            for(FieldQuery tmp : tmpQuery.getFields()){
-                query.addField(tmp);
-            }
-            for(WildCardFieldQuery tmp : tmpQuery.getWildCardFieldQueries()){
-                query.addWildCardFieldQuery(tmp);
-            }
-            for(WildCardTermQuery tmp : tmpQuery.getWildCardTermQueries()){
-                query.addWildCardTermQuery(tmp);
-            }
-            for(FuzzyFieldQuery tmp : tmpQuery.getFuzzyFieldQueries()){
-                query.addFuzzyFieldQuery(tmp);
-            }
-            for(FuzzyTermQuery tmp : tmpQuery.getFuzzyTermQueries()){
-                query.addFuzzyTermQuery(tmp);
-            }
-            for(RangeQuery tmp : tmpQuery.getRangeQueries()){
-                query.addRangeQuery(tmp);
-            }
-            if(tmpQuery.get("partner") != null){
-                for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("partner")){
-                    query.addField(tmp);
-                }
-            }
-            if(tmpQuery.get("provider") != null){
-                for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("provider")){
-                    query.addField(tmp);
-                }
-            }
-            if(tmpQuery.getRankingType() != null) {
-                query.put( IngridQuery.RANKED, tmpQuery.getRankingType() );
+            IngridQuery tmpQuery = QueryStringParser.parse(origin);
+            if(tmpQuery != null) {
+                return tmpQuery;
             }
         }
+        return query;
     }
 
     private static String getQuerySelection(String term, String type, List<IngridFacet> facets) {
@@ -2566,7 +2467,7 @@ public class UtilsFacete {
             if(type != null){
                 // OR
                 if(type.equals("OR")){
-                    String orQuery = "(";
+                    String orQuery = "";
                     boolean hasSelected = false;
                     for(IngridFacet ingridFacet : facets){
                         if(ingridFacet.isSelect()) {
@@ -2576,13 +2477,13 @@ public class UtilsFacete {
                     }
                     for(IngridFacet ingridFacet : facets){
                         IngridFacet toggle = ingridFacet.getToggle();
-                        if(!hasSelected) {
+                        if(!hasSelected && toggle != null) {
                             if(ingridFacet.getQuery() != null){
                                 String query = ingridFacet.getQuery();
                                 if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
-                                    query = "(" + query + " " + toggle.getQuery() + ")";
+                                    query =  query + " " + toggle.getQuery();
                                 }
-                                if(orQuery.equals("(")){
+                                if(orQuery.isEmpty()){
                                     orQuery += "(" + query + ")";
                                 }else{
                                     orQuery += " OR (" + query + ")";
@@ -2592,9 +2493,9 @@ public class UtilsFacete {
                             if((ingridFacet.isSelect() || ingridFacet.isParentHidden()) && ingridFacet.getQuery() != null){
                                 String query = ingridFacet.getQuery();
                                 if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
-                                    query = "(" + query + " " + toggle.getQuery() + ")";
+                                    query = query + " " + toggle.getQuery();
                                 }
-                                if(orQuery.equals("(")){
+                                if(orQuery.isEmpty()){
                                     orQuery += "(" + query + ")";
                                 }else{
                                     orQuery += " OR (" + query + ")";
@@ -2602,7 +2503,7 @@ public class UtilsFacete {
                             }
                         }
                     }
-                    orQuery += ")";
+                    orQuery += "";
                     if(!orQuery.equals("()")){
                         term = term + " " + orQuery;
                     }

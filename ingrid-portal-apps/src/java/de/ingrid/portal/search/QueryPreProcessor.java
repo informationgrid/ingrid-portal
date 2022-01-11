@@ -135,7 +135,7 @@ public class QueryPreProcessor {
                 query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
             }
             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-                UtilsFacete.facetePrepareInGridQuery(request, query);
+                query = UtilsFacete.facetePrepareInGridQuery(request, query);
             }
         } catch (Exception t) {
             if (log.isErrorEnabled()) {
