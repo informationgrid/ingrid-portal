@@ -322,6 +322,11 @@ public class FacetsConfig {
                             ingridFacet.setQueryType( subNode.getValue().toString() );
                         }
 
+                        if (!node.getAttributes( "listLength" ).isEmpty()) {
+                            Node subNode = (Node) node.getAttributes( "listLength" ).get( 0 );
+                            ingridFacet.setListLength( Integer.parseInt(subNode.getValue().toString()) );
+                        }
+
                         Node facetsNode = (Node) facetNode.getChildren( "facets" ).get( 0 );
                         if (facetNode != null) {
                             List<ConfigurationNode> subFacet = facetsNode.getChildren( "facet" );
