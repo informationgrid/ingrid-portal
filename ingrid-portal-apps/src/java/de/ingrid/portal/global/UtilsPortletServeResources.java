@@ -151,7 +151,7 @@ public class UtilsPortletServeResources {
         s.append("var markers = [");
         IngridQuery query = QueryStringParser.parse( queryString );
         if(config != null) {
-            UtilsFacete.setFacetQuery(queryString, config, query);
+            query = UtilsFacete.setFacetQuery(queryString, config, query);
             UtilsFacete.addToQueryMap(request, query);
             UtilsFacete.addToQueryGeothesaurus(request, query);
             UtilsFacete.addToQueryAttribute(request, query);
@@ -304,7 +304,7 @@ public class UtilsPortletServeResources {
     public static void getHttpMarkerUVPMarkerBlp (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
         IngridQuery query = QueryStringParser.parse( queryString );
         if(config != null) {
-            UtilsFacete.setFacetQuery(queryString, config, query);
+            query = UtilsFacete.setFacetQuery(queryString, config, query);
             UtilsFacete.addToQueryMap(request, query);
             UtilsFacete.addToQueryGeothesaurus(request, query);
             UtilsFacete.addToQueryAttribute(request, query);
@@ -407,7 +407,7 @@ public class UtilsPortletServeResources {
         queryString = UtilsSearch.updateQueryString(queryString, request);
         IngridQuery query = QueryStringParser.parse( queryString );
         if(config != null) {
-            UtilsFacete.setFacetQuery(queryString, config, query);
+            query = UtilsFacete.setFacetQuery(queryString, config, query);
             UtilsFacete.addToQueryMap(request, query);
             UtilsFacete.addToQueryGeothesaurus(request, query);
             UtilsFacete.addToQueryAttribute(request, query);

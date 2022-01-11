@@ -295,7 +295,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #end
 #end
 
-#macro(renderSearchResultFacetSelection $entries $resourceMsgs $cat)
+#macro(renderSearchResultFacetSelection $entries $resourceMsgs $parentFacetTyp)
     #foreach($entry in $entries)
         #if(!$entry.getQuery())
             #if($entry.getId() == 'area')
@@ -432,13 +432,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             #if($entry.isSelect())
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
-                #set($catName = "$cat: $resourceMsgs.getString($entry.getName())")
-                #renderSearchResultFacetSelectionItem($entry $action $catName)
+                #renderSearchResultFacetSelectionItem($entry $action "$parentFacetTyp: $resourceMsgs.getString($entry.getName())")
                 #if($entry.getToggle() && $entry.getToggle().isSelect())
                     #set ($action = $renderResponse.createActionURL())
                     $action.setParameter("$entry.getParent().getId()", "$entry.getToggle().getId()")
-                    #set($catName = $resourceMsgs.getString($entry.getName()) + ": " + $resourceMsgs.getString('common.toggle.approval.date'))
-                    #renderSearchResultFacetSelectionItem($entry $action $catName)
+                    #set($catNameToggle = $resourceMsgs.getString($entry.getName()) + ": " + $resourceMsgs.getString('common.toggle.approval.date'))
+                    #renderSearchResultFacetSelectionItem($entry $action $catNameToggle)
                 #end
             #end
             #if($entry.getFacets())
@@ -449,9 +448,9 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #end
 #end
 
-#macro(renderSearchResultFacetSelectionItem $entry $action $title)
+#macro(renderSearchResultFacetSelectionItem $entry $action $itemTitle)
     <a id="chk_fs_$entry.getId()" href="$action" class="button pill">
-        $title
+        $itemTitle
         <span class="ic-ic-cross"></span>
     </a>
 #end
