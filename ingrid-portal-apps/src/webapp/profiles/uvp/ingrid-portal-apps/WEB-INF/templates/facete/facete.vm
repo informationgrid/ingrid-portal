@@ -177,18 +177,55 @@
                             </span>
                         </a>
                         <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion">
-                            <div class="boxes">
+                            #set ($action = $renderResponse.createActionURL())
+                            <form action="$action" method="post" class="boxes">
                             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
+                            #set($count = 0)
+                            #set($isGreaterThanSubFacetsCount = false)
+                            #set($isQueryTypeOR = false)
+                            #if($facet.getQueryType() == "OR")
+                                #set($isQueryTypeOR = true)
+                            #end
                             #foreach($subFacet in $facet.getFacets())
                                 #if($isSelected)
                                     #if($subFacet.isSelect())
                                         #renderFacetCategoryEntry($subFacet $facet.getId())
                                     #end
                                 #else
+                                    #set($listLength = $subFacetsCount)
+                                    #if($facet.getListLength() != 0)
+                                        #set($listLength = $facet.getListLength())
+                                    #end
+                                    #if($isQueryTypeOR && $count == $listLength)
+                                        #set($isGreaterThanSubFacetsCount = true)
+                                        <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
+                                            <div class="accordion-item text-right" data-accordion-item="">
+                                                <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
+                                    #end
                                     #renderFacetCategoryEntry($subFacet $facet.getId())
                                 #end
+                                #set($count = $count + 1)
                             #end
-                           </div>
+                            #if($isQueryTypeOR)
+                                #if($isGreaterThanSubFacetsCount)
+                                                </div>
+                                                <a href="#" class="more" aria-controls="$subFacet.getParent().getId()_more" role="tab" id="$subFacet.getParent().getId()_more-label" aria-expanded="false" aria-selected="false">
+                                                    <div class="helper plus">
+                                                        <span class="ic-ic-plus"></span>
+                                                        <span class="text">$MESSAGES.getString("searchResult.facete.category.plus")</span>
+                                                    </div>
+                                                    <div class="helper minus">
+                                                        <span class="ic-ic-minus"></span>
+                                                        <span class="text">$MESSAGES.getString("searchResult.facete.category.minus")</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    #set($isGreaterThanSubFacetsCount = false)
+                                #end
+                                #renderInputButtonDialog("$facet.getId()" "" "doMultiFacets" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "button outline pill filter_submit" "")
+                            #end
+                            </form>
                         </div>
                     </li>
                 </ul>
@@ -237,7 +274,12 @@
     <div class="form-element boxed">
         <div class="input-check">
             <div class="control-group">
-                <label class="control control--radio" for="facet-$facet.getId()">
+                #if($facet.getParent().getQueryType() == "OR")
+                    #set($isCheckbox = true)
+                #else
+                    #set($isCheckbox = false)
+                #end
+                <label class="control #if($isCheckbox) control--checkbox #else control--radio #end" for="facet-$facet.getId()">
                     #set ($hasShortName = false)
                     #if($facet.getShortName())
                       #set ($hasShortName = true)

@@ -549,6 +549,24 @@ ul ol, ol ol { margin-left: 2.25rem; }
 li.accordion-item.is-active > .accordion-title::after { content: '\e925'; }
 .accordion-item::before { content:""; }
 
+div.accordion-item {
+  .more .minus {
+    display: none;
+  }
+  .more .plus {
+    display: block;
+  }
+}
+
+div.accordion-item.is-active {
+  .more .minus {
+    display: block;
+  }
+  .more .plus {
+    display: none;
+  }
+}
+
 /* menu tabs */ 
 .menu-tab-row {
   font-size: 0; /* whitespace bug */
@@ -1810,6 +1828,7 @@ footer {
   button.filter_submit {
     width: 100%;
     margin-top: 16px;
+    background-color: #fff;
   }
 
   .data {
