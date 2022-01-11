@@ -208,7 +208,12 @@
                 var radioReceipt = registry.byId("radioLfsReceipt");
                 if (radioReceipt.checked) {
                     showConfirmDialog().then(function () {
-                        var bwastrId = getBawStrID();
+                        var bwastrId = "" + getBawStrID();
+                        // 0-pad the bwastrId
+                        while (bwastrId.length < 4) {
+                            bwastrId = "0" + bwastrId;
+                        }
+
                         var psp = registry.byId("bawAuftragsnummer").value;
                         var file = registry.byId("treeReceipt").selectedItem.path;
                         LFSService.initMove(bwastrId, psp, file, {
