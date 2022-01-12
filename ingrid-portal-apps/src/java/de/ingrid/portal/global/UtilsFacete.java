@@ -37,7 +37,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.management.Query;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -2448,7 +2447,7 @@ public class UtilsFacete {
             }
             String origin = query.getString(IngridQuery.ORIGIN);
             if(!term.isEmpty()) {
-                origin += " (" + term + ")";
+                origin += " " + term;
             }
             IngridQuery tmpQuery = QueryStringParser.parse(origin);
             if(tmpQuery != null) {
@@ -2465,37 +2464,46 @@ public class UtilsFacete {
                 if(type.equals("OR")){
                     String orQuery = "(";
                     boolean hasSelected = false;
+                    boolean hasSelectedToggle = false;
+                    
                     for(IngridFacet ingridFacet : facets){
                         if(ingridFacet.isSelect()) {
                             hasSelected = true;
+                        }
+                        if(ingridFacet.getToggle() != null && ingridFacet.getToggle().isSelect()) {
+                            hasSelectedToggle = true;
+                        }
+                        if(hasSelected && hasSelectedToggle) {
                             break;
                         }
                     }
                     for(IngridFacet ingridFacet : facets){
                         IngridFacet toggle = ingridFacet.getToggle();
-                        if(!hasSelected) {
-                            if(ingridFacet.getQuery() != null){
-                                String query = ingridFacet.getQuery();
-                                if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
-                                    query =  query + " " + toggle.getQuery();
-                                }
-                                if(orQuery.equals("(")){
-                                    orQuery += "(" + query + ")";
-                                }else{
-                                    orQuery += " OR (" + query + ")";
-                                }
+                        String query = "";
+                        if(hasSelected && !hasSelectedToggle) {
+                            if(ingridFacet.getQuery() != null && ingridFacet.isSelect()){
+                                query = ingridFacet.getQuery();
                             }
-                        } else {
-                            if((ingridFacet.isSelect() || ingridFacet.isParentHidden()) && ingridFacet.getQuery() != null){
-                                String query = ingridFacet.getQuery();
-                                if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
-                                    query = query + " " + toggle.getQuery();
-                                }
-                                if(orQuery.equals("(")){
-                                    orQuery += "(" + query + ")";
-                                }else{
-                                    orQuery += " OR (" + query + ")";
-                                }
+                        } else if(!hasSelected && hasSelectedToggle) {
+                            if(ingridFacet.getQuery() != null){
+                                query = ingridFacet.getQuery();
+                            }
+                            if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
+                                query = toggle.getQuery();
+                            }
+                        } else if(hasSelected && hasSelectedToggle) {
+                            if(ingridFacet.getQuery() != null && ingridFacet.isSelect()){
+                                query = ingridFacet.getQuery();
+                            }
+                            if(ingridFacet.getQuery() != null && ingridFacet.isSelect() && toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
+                                query = toggle.getQuery();
+                            }
+                        }
+                        if(!query.isEmpty()) {
+                            if(orQuery.equals("(")){
+                                orQuery += "(" + query + ")";
+                            }else{
+                                orQuery += " OR (" + query + ")";
                             }
                         }
                     }

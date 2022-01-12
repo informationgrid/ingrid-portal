@@ -324,6 +324,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 // process query, create QueryDescriptor
                 qd = QueryPreProcessor.createRankedQueryDescriptor(request);
                 if (qd != null) {
+                    query = qd.getQuery();
+                    if(request.getParameter("rank") != null) {
+                        query.put(IngridQuery.RANKED, request.getParameter("rank"));
+                    }
                     controller.addQuery("ranked", qd);
                     SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
                 }

@@ -151,7 +151,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                     <id>procedure_10_time</id>
                     <from>P1YT</from>
                     <to>PT</to>
-                    <query>(t01_object.mod_time:[{FROM}0* TO {TO}9*] OR approval_date:[{FROM}0* TO {TO}9*])</query>
+                    <query>t01_object.obj_class:10 (t01_object.mod_time:[{FROM}0* TO {TO}9*] OR approval_date:[{FROM}0* TO {TO}9*])</query>
                 </toggle>
             </facet>
         <!-- Negative Vorprüfungen -->
@@ -165,7 +165,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                     <id>procedure_12_time</id>
                     <from>P1YT</from>
                     <to>PT</to>
-                    <query>approval_date:[{FROM}0* TO {TO}9*]</query>
+                    <query>t01_object.obj_class:12 approval_date:[{FROM}0* TO {TO}9*]</query>
                 </toggle>
             </facet>
         <!-- Raumordnungsverfahren -->
