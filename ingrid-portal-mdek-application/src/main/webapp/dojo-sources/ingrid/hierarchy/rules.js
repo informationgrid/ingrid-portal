@@ -50,8 +50,11 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             if (array.some(tableData, function(item) {
                 return (item.title == "1");
             })) {
+                domClass.remove("uiElementN005", "hide");
                 UtilGrid.updateOption("ref1VFormatDetails", "editable", true);
+                registry.byId("ref1VFormatDetails").reinitLastColumn();
             } else {
+                domClass.add("uiElementN005", "hide");
                 UtilGrid.setTableData("ref1VFormatDetails", []);
                 UtilGrid.updateOption("ref1VFormatDetails", "editable", false);
             }
