@@ -37,6 +37,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.management.Query;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -2462,7 +2463,7 @@ public class UtilsFacete {
             if(type != null){
                 // OR
                 if(type.equals("OR")){
-                    String orQuery = "";
+                    String orQuery = "(";
                     boolean hasSelected = false;
                     for(IngridFacet ingridFacet : facets){
                         if(ingridFacet.isSelect()) {
@@ -2472,37 +2473,34 @@ public class UtilsFacete {
                     }
                     for(IngridFacet ingridFacet : facets){
                         IngridFacet toggle = ingridFacet.getToggle();
-                        if(!hasSelected && toggle != null) {
+                        if(!hasSelected) {
                             if(ingridFacet.getQuery() != null){
                                 String query = ingridFacet.getQuery();
                                 if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
                                     query =  query + " " + toggle.getQuery();
                                 }
-                                if(ingridFacet.isSelect() || toggle.isSelect()) {
-                                    if(orQuery.isEmpty()){
-                                        orQuery += "(" + query + ")";
-                                    }else{
-                                        orQuery += " OR (" + query + ")";
-                                    }
+                                if(orQuery.equals("(")){
+                                    orQuery += "(" + query + ")";
+                                }else{
+                                    orQuery += " OR (" + query + ")";
                                 }
                             }
                         } else {
-                            if(ingridFacet.getQuery() != null){
+                            if((ingridFacet.isSelect() || ingridFacet.isParentHidden()) && ingridFacet.getQuery() != null){
                                 String query = ingridFacet.getQuery();
                                 if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
                                     query = query + " " + toggle.getQuery();
                                 }
-                                if(ingridFacet.isSelect() || toggle != null && toggle.isSelect()) {
-                                    if(orQuery.isEmpty()){
-                                        orQuery += "(" + query + ")";
-                                    }else{
-                                        orQuery += " OR (" + query + ")";
-                                    }
+                                if(orQuery.equals("(")){
+                                    orQuery += "(" + query + ")";
+                                }else{
+                                    orQuery += " OR (" + query + ")";
                                 }
                             }
                         }
                     }
-                    if(!orQuery.isEmpty()){
+                    orQuery += ")";
+                    if(!orQuery.equals("()")){
                         term = term + " " + orQuery;
                     }
                 }
