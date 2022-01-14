@@ -650,7 +650,7 @@ define(["dojo/_base/declare",
                 var inactiveHint = construct.create("span", {
                     id: tableId + "_uploadHint",
                     'class': "right",
-                    innerHTML: "Dokument-Upload inaktiv",
+                    innerHTML: "Hinzufügen inaktiv",
                     style: {
                         cursor: "help"
                     },
