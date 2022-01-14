@@ -172,8 +172,16 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 String title = request.getParameter( "title" );
                 String x1 = request.getParameter( "x1" );
                 String y1 = request.getParameter( "y1" );
+                String x2 = request.getParameter( "x2" );
+                String y2 = request.getParameter( "y2" );
+                if(x2 == null) {
+                    x2 = x1;
+                }
+                if(y2 == null) {
+                    y2 = y1;
+                }
                 String iplug = request.getParameter( "iplug" );
-                IngridQuery queryString = QueryStringParser.parse("\""+ title + "\" procedure:dev_plan y1:" + y1 + " x1:" + x1 + " iplugs:\"" + iplug + "\"");
+                IngridQuery queryString = QueryStringParser.parse("\""+ title + "\" procedure:dev_plan y1:" + y1 + " x1:" + x1 + " y2:" + y2 + " x2:" + x2 + " iplugs:\"" + iplug + "\"");
                 
                 IBusQueryResultIterator it = new IBusQueryResultIterator( queryString , REQUESTED_FIELDS_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
