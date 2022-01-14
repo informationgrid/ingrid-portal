@@ -138,7 +138,9 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                             JSONObject jsonDataEntry = new JSONObject();
                             jsonDataEntry.put("id", cnt);
                             jsonDataEntry.put("name", blpName);
-                            jsonDataEntry.put("latlon", new JSONArray().put( Double.parseDouble( latCenter.trim()) ).put(Double.parseDouble(lonCenter.trim())));
+                            jsonDataEntry.put("lat", Double.parseDouble( latCenter.trim() ));
+                            jsonDataEntry.put("lon", Double.parseDouble( lonCenter.trim() ));
+                            jsonDataEntry.put("iplug", hit.getPlugId());
                             JSONArray bpInfos = new JSONArray();
                             if (urlInProgress != null && !urlInProgress.isEmpty()) {
                                 bpInfos.put( new JSONObject().put( "url", urlInProgress ).put( "tags", "p" ) );
