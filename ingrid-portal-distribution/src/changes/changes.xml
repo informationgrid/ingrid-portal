@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
+          <action type="fix" dev="wemove" issue="3272">
+            UVP: update added reference as link to context help of the field uvp number
+          </action>
           <action type="update" dev="wemove" issue="3272">
             UVP: add reference to context help of the field uvp number
           </action>
