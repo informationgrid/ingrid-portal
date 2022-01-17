@@ -1,4 +1,4 @@
-        if(mapFilter) {
+        if(mapFilter && mapFilter.length > 0) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
                     createLegendEntry(map, mapFilter, [mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', '', '#if($restUrlMarker_time)$restUrlMarker_time#end');
