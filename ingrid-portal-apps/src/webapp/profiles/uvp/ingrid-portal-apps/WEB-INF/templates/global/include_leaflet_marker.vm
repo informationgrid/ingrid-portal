@@ -193,28 +193,7 @@
     .done(function(data, textStatus, jqxhr) {
         var mapFilter = $('.map-filter ul li div');
         var overlayers = {};
-        if(mapFilter && mapFilter.length > 0) {
-            if(legendCounter){
-                if(legendCounter.countMarker1){
-                    createLegendEntry(map, mapFilter, [mapMarkers10_time, mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', '', '#if($restUrlMarker_time)$restUrlMarker_time#end');
-                }
-                if(legendCounter.countMarker4){
-                    createLegendEntry(map, mapFilter, [mapMarkers12_time, mapMarkers12], 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv', '', '#if($restUrlMarker4_time)$restUrlMarker4_time#end');
-                }
-                if(legendCounter.countMarker2){
-                    createLegendEntry(map, mapFilter, [mapMarkers13], 'red', 'mapMarkers13', 'Raumordnungsverfahren', 'ro');
-                }
-                if(legendCounter.countMarker5){
-                    createLegendEntry(map, mapFilter, [mapMarkers14], 'purple', 'mapMarkers14', 'Linienbestimmungen', 'li');
-                }
-                if(legendCounter.countMarker3){
-                    createLegendEntry(map, mapFilter, [mapMarkers11], 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av');
-                }
-                if(legendCounter.countMarkerDevPlan){
-                    createLegendEntry(map, mapFilter, [mapMarkersDevPlan], 'green', 'mapMarkersDevPlan', 'Bauleitplanung', 'blp');
-                }
-            }
-        }
+#parse ('/WEB-INF/templates/global/include_leaflet_marker_legend.vm')
         var mapFilterXs = $('.map-filter-xs');
         if(mapFilterXs && mapFilterXs.length > 0) {
             if(legendCounter){
