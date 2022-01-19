@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.11.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.11.0-SNAPSHOT">
+        <release version="5.11.0" date="2022-01-19" description="Release 5.11.0">
           <action type="fix" dev="wemove" issue="3272">
             UVP: update added reference as link to context help of the field uvp number
           </action>
@@ -113,6 +113,21 @@
           </action>
           <action type="fix" dev="wemove" issue="3350">
             IGE: Remove deprecated SNS search results from search
+          </action>
+          <action type="fix" dev="wemove" issue="3317">
+            Fix map legend
+          </action>
+          <action type="update" dev="wemove" issue="3318">
+            Update baw_mis and baw_doi bg layer
+          </action>
+          <action type="update" dev="wemove" issue="1903">
+            IGE(mCLOUD): Replace string in mCloud editor
+          </action>
+          <action type="update" dev="wemove" issue="1523">
+            Update HMDK registration mail
+          </action>
+          <action type="update" dev="wemove" issue="2903">
+            Change resource time span data entry
           </action>
         </release>
 
