@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import org.apache.log4j.Logger;
 
 import com.thoughtworks.xstream.XStream;
@@ -59,7 +60,11 @@ public class MdekCatalogUtils {
 
 	private static final Logger log = Logger.getLogger(MdekCatalogUtils.class);
 
-	private static XStream xstream = new XStream();
+	private static final XStream xstream = new XStream();
+	
+	static {
+		xstream.addPermission(AnyTypePermission.ANY);
+	}
 
 
 	public static Integer[] extractSysListIdsFromResponse(IngridDocument response) {

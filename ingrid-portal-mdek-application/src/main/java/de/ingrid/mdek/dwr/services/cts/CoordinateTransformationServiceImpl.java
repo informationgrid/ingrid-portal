@@ -30,6 +30,7 @@ import java.net.URLEncoder;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import org.apache.log4j.Logger;
 
 import com.thoughtworks.xstream.XStream;
@@ -61,6 +62,7 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 		
 		// XStream initialization
 		xstream = new XStream();
+		xstream.addPermission(AnyTypePermission.ANY);
 	    xstream.alias("CTS_Response", CTSResponse.class);
 	    xstream.registerConverter(new CTSResponseConverter());
 

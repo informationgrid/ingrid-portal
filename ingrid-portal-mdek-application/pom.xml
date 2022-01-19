@@ -273,7 +273,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-wfs</artifactId>
-      <version>5.11.0-SNAPSHOT</version>
+      <version>5.11.0</version>
       <exclusions>
         <exclusion>
           <groupId>javax.measure</groupId>
@@ -578,7 +578,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-geo</artifactId>
-      <version>5.11.0-SNAPSHOT</version>
+      <version>5.11.0</version>
     </dependency>
     <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
     <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>

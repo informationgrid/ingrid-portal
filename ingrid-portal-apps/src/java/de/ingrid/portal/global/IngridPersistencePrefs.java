@@ -23,6 +23,7 @@
 package de.ingrid.portal.global;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridPrincipalPreference;
 import org.hibernate.Session;
@@ -70,6 +71,7 @@ public class IngridPersistencePrefs {
         try {
             // Create the SessionFactory
             xstream = new XStream();
+            xstream.addPermission(AnyTypePermission.ANY);
         } catch (Exception ex) {
             throw new ExceptionInInitializerError(ex);
         }
