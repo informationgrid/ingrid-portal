@@ -40,11 +40,11 @@ public class EditAccountForm extends ActionForm {
 
     public static final String FIELD_SALUTATION = "salutation";
 
-    public static final String FIELD_FIRSTNAME = "firstname";
+    public static final String FIELD_FIRSTNAME = "user_firstname";
 
-    public static final String FIELD_LASTNAME = "lastname";
+    public static final String FIELD_LASTNAME = "user_lastname";
 
-    public static final String FIELD_EMAIL = "email";
+    public static final String FIELD_EMAIL = "user_email";
 
     public static final String FIELD_PW_OLD = "password_old";
 
@@ -65,6 +65,13 @@ public class EditAccountForm extends ActionForm {
     public static final String FIELD_INTEREST = "interest";
 
     public static final String FIELD_PROFESSION = "profession";
+
+    /** attribute name of honeypot in session */
+    public static final String FIELD_HONEYPOT_FIRSTNAME = "firstname";
+
+    public static final String FIELD_HONEYPOT_LASTNAME = "lastname";
+
+    public static final String FIELD_HONEYPOT_EMAIL = "email";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -93,6 +100,10 @@ public class EditAccountForm extends ActionForm {
         setInput(FIELD_AGE, request.getParameter(FIELD_AGE));
         setInput(FIELD_INTEREST, request.getParameter(FIELD_INTEREST));
         setInput(FIELD_PROFESSION, request.getParameter(FIELD_PROFESSION));
+        // set honeypot attributes for validate
+        setInput(FIELD_HONEYPOT_FIRSTNAME, request.getParameter(FIELD_HONEYPOT_FIRSTNAME).trim());
+        setInput(FIELD_HONEYPOT_LASTNAME, request.getParameter(FIELD_HONEYPOT_LASTNAME).trim());
+        setInput(FIELD_HONEYPOT_EMAIL, request.getParameter(FIELD_HONEYPOT_EMAIL).trim());
     }
 
     /**
@@ -150,6 +161,10 @@ public class EditAccountForm extends ActionForm {
                 setError(FIELD_EMAIL, "account.edit.error.emailNotValid");
                 allOk = false;
             }
+        }
+        // check if honeypots are filled
+        if (hasInput(FIELD_HONEYPOT_FIRSTNAME) || hasInput(FIELD_HONEYPOT_LASTNAME) || hasInput(FIELD_HONEYPOT_EMAIL)) {
+            allOk = false;
         }
 
         return allOk;    
