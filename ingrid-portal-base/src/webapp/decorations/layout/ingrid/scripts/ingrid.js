@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -332,8 +332,7 @@ function openURL(url){
     window.location = url;
 }
 
-function getLinkFileSize(url, element)
-{
+function getLinkFileSize(url, element){
     var respJson;
     var http = new XMLHttpRequest();
     http.open('GET', url, true);
@@ -345,7 +344,8 @@ function getLinkFileSize(url, element)
                     if(respJson){
                         if(respJson.contentLength){
                             if(element){
-                                element.text(convertFileSize(respJson.contentLength, true));
+                                var size = convertFileSize(respJson.contentLength, true);
+                                element.text(size);
                             }
                         }
                     }
@@ -357,10 +357,15 @@ function getLinkFileSize(url, element)
     return ('');
 }
 
-function convertFileSize(bytes, si) {
+function convertFileSize(bytes, si, brackets) {
+    var size= '';
     var thresh = si ? 1000 : 1024;
     if(Math.abs(bytes) < thresh) {
-        return bytes + ' B';
+        size = bytes + ' B';
+        if (brackets) {
+          size = '(' + size + ')';
+        }
+        return size;
     }
     var units = si
         ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
@@ -377,7 +382,11 @@ function convertFileSize(bytes, si) {
     if((units[u] == units[0]) && (val / 1000 >= 0.1)){
         return (val / 1009).toFixed(1) + ' ' + units[1];
     }
-    return bytes.toFixed(1) + ' ' + units[u];
+    size = bytes.toFixed(1) + ' ' + units[u];
+    if (brackets) {
+      size = '(' + size + ')';
+    }
+    return  size;
 }
 
 function checkPassword(pwd, idMeter, idText) {
@@ -482,18 +491,10 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
 }
 
 function addLayerWKT(map, wkt, coords) {
-  var wkt_split = wkt.split(";");
-  
-  var features = [];
-  wkt_split.forEach(function(tmpWkt) {
-      var wicket = new Wkt.Wkt();
-      wicket.read(tmpWkt);
-      var feature = wicket.toObject();
-      features.push(feature);
-  });
-  if(features.length > 0) {
-      var featureGroup = L.featureGroup(features).addTo(map);
-      map.fitBounds(featureGroup.getBounds());
+  var features = L.geoJSON(JSON.parse(wkt));
+  if(features) {
+      features.addTo(map);
+      map.fitBounds(features.getBounds());
   } else {
       addLayerBounds(map, coords);
   }

@@ -4,7 +4,7 @@
     #if($ibusURL && $ibusURL != "")
         <h4>$MESSAGES.getString('admin.iplug.headline.ibus')</h4>
         <div class="link-list">
-            <a href="$ibusURL">
+            <a target="_blank" class="external-link" href="$ibusURL">
                 $MESSAGES.getString('admin.iplug.headline.ibus')
             </a>
         </div>
@@ -15,7 +15,7 @@
         <div class="link-list">
         #foreach($plug in $SEIplugs)
             #if($plug.getIplugAdminGuiUrl())
-            <a href="$plug.getIplugAdminGuiUrl()">
+            <a target="_blank" class="external-link" href="$plug.getIplugAdminGuiUrl()">
                 $plug.getDataSourceName()
             </a>
             #else
@@ -52,7 +52,7 @@
                                     #foreach($plugNode in $providerNode.getChildren())
                                         #set($plug = $plugNode.get("iplug"))
                                         #if($plug.getIplugAdminGuiUrl())
-                                            <a href="$plug.getIplugAdminGuiUrl()" class="icon" target="_blank">
+                                            <a href="$plug.getIplugAdminGuiUrl()" class="icon external-link" target="_blank">
                                                 <span class="ic-ic-arrow"></span>
                                                 <span class="text">$plugNode.name</span>
                                             </a>

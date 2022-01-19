@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -249,7 +249,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             af != null &&
             !queryString.equals( af.getInitialQuery() )) {
             response.setTitle( messages.getString( TITLE_KEY_RESULT ) );
-            UtilsFacete.setAttributeToSession( request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true );
             setUpQuery( request, queryString, false );
             setQuery = true;
         }
@@ -320,7 +319,15 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             // check if submit or requery or delete query
             if (request.getParameter( "doSetQuery" ) == null && request.getParameter( "doDeleteQuery" ) == null) {
                 // redirect to our page wih parameters for bookmarking
-                actionResponse.sendRedirect( actionResponse.encodeURL( Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch( request ) ) );
+                String url = "";
+                if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+                    String queryType = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
+                    if (queryType != null && queryType.equals(Settings.MSGV_NO_QUERY)) {
+                        SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+                    }
+                    url = UtilsFacete.setFaceteParamsToSessionByAction(request);
+                }
+                actionResponse.sendRedirect( actionResponse.encodeURL( Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch( request ) ) + url);
             }
         }
     }

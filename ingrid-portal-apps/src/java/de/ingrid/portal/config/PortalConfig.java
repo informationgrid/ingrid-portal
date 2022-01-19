@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -254,16 +254,21 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
     
     public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";
+    public static final String PORTAL_MAPCLIENT_QUERY_ADDITIONAL = "portal.mapclient.query.additional";
     public static final String PORTAL_MAPCLIENT_QUERY_2 = "portal.mapclient.query.2";
     public static final String PORTAL_MAPCLIENT_QUERY_3 = "portal.mapclient.query.3";
     public static final String PORTAL_MAPCLIENT_QUERY_4 = "portal.mapclient.query.4";
-    
+    public static final String PORTAL_MAPCLIENT_QUERY_4_ADDITIONAL = "portal.mapclient.query.4.additional";
+    public static final String PORTAL_MAPCLIENT_QUERY_5 = "portal.mapclient.query.5";
+
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_10_CHECKED = "portal.mapclient.uvp.category.10.checked";
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED = "portal.mapclient.uvp.category.11.checked";
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED = "portal.mapclient.uvp.category.12.checked";
-    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED = "portal.mapclient.uvp.category.1314.checked";
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_13_CHECKED = "portal.mapclient.uvp.category.13.checked";
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_14_CHECKED = "portal.mapclient.uvp.category.14.checked";
 
     public static final String PORTAL_MAPCLIENT_LEAFLET_POSITION = "portal.mapclient.leaflet.position";
+    public static final String PORTAL_MAPCLIENT_LEAFLET_EPSG = "portal.mapclient.leaflet.epsg";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS = "portal.mapclient.leaflet.bg.layer.wmts";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS = "portal.mapclient.leaflet.bg.layer.wms";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION = "portal.mapclient.leaflet.bg.layer.attribution";
@@ -302,7 +307,20 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_LOGIN_AUTH_FAILURES_LIMIT = "portal.login.auth.failures.limit";
     public static final String PORTAL_LOGIN_AUTH_FAILURES_TIME = "portal.login.auth.failures.time";
+    public static final String PORTAL_LOGIN_REDIRECT = "portal.login.redirect";
+    
+    public static final String PORTAL_DETAIL_UVP_ZIP_PATH = "portal.detail.uvp.zip.path";
+    public static final String PORTAL_DETAIL_UVP_ZIP_UPDATE_MIN = "portal.detail.uvp.zip.update.min";
+    public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN = "portal.detail.uvp.documents.htaccess.login";
+    public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD = "portal.detail.uvp.documents.htaccess.password";
 
+    public static final String PORTAL_MAPS_LINKS_NEW_TAB = "portal.map.links.new.tab";
+
+    public static final String PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN = "portal.administration.user.enabled.older.than";
+    public static final String PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN = "portal.administration.user.unenabled.older.than";
+    public static final String PORTAL_ADMINISTRATION_USER_UNLOGGED_OLDER_THAN = "portal.administration.user.unlogged.older.than";
+
+    
     // private stuff
     private static PortalConfig instance = null;
 

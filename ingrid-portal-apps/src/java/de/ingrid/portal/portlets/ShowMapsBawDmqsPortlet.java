@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -42,19 +42,11 @@ import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.portal.search.UtilsSearch;
-import de.ingrid.portal.search.net.IBusQueryResultIterator;
-import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
-import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.portal.global.UtilsPortletServeResources;
 
 public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
 
     private static final Logger log = LoggerFactory.getLogger( ShowMapsBawDmqsPortlet.class );
-
-    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "bwstr-center-lon", "bwstr-center-lat", "t01_object.obj_id", "bawAuftragsnummer", "simProcess", "simModelType" };
-    private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
 
     @Override
     public void init(PortletConfig config) throws PortletException {
@@ -66,79 +58,16 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
         String resourceID = request.getResourceID();
         try {
             if (resourceID.equals( "marker" )) {
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markers = [" );
-                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "datatype:metadata ranking:score") ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
-                        .getIBus() );
-                while (it.hasNext()) {
-                    StringBuilder s = new StringBuilder();
-                    IngridHit hit = it.next();
-                    IngridHitDetail detail = hit.getHitDetail();
-                    if (detail.containsKey( "bwstr-center-lat" ) && detail.containsKey( "bwstr-center-lon" )) {
-                        String lat = UtilsSearch.getDetailValue(detail, "bwstr-center-lat");
-                        String lon = UtilsSearch.getDetailValue(detail, "bwstr-center-lon");
-                        if (!"NaN".equals(lat) && !"NaN".equals(lon)) {
-                            s.append("[")
-                                    //.append( detail.get( "bwstr-center-lat" ).toString() )
-                                    .append(lat)
-                                    .append(",")
-                                    //.append( detail.get( "bwstr-center-lon" ).toString() )
-                                    .append(lon)
-                                    .append(",'")
-                                    .append(detail.get("title").toString())
-                                    .append("','")
-                                    .append(UtilsSearch.getDetailValue(detail, "t01_object.obj_id"));
-
-                            String bawAuftragsnummer = UtilsSearch.getDetailValue(detail, "bawAuftragsnummer");
-                            s.append("','");
-                            if (bawAuftragsnummer != null) {
-                                s.append(bawAuftragsnummer);
-                            } else {
-                                s.append("");
-                            }
-                            String simProcess = UtilsSearch.getDetailValue(detail, "simProcess");
-                            s.append("','");
-                            if (simProcess != null) {
-                                s.append(simProcess);
-                            } else {
-                                s.append("");
-                            }
-                            String simModelType = UtilsSearch.getDetailValue(detail, "simModelType");
-                            s.append("','");
-                            if (simModelType != null) {
-                                s.append(simModelType);
-                            } else {
-                                s.append("");
-                            }
-                            s.append("']");
-                            if (it.hasNext()) {
-                                s.append(",");
-                            }
-                            response.getWriter().write(s.toString());
-                        }
-                    }
-                }
-                response.getWriter().write( "];" );
+                String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "datatype:metadata ranking:score");
+                UtilsPortletServeResources.getHttpMarkerBawDmqsMarker(response, queryString);
             }
             if (resourceID.equals( "bbox" )) {
                 String uuid = request.getParameter( "uuid" );
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "[" );
-                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( "t01_object.obj_id:" + uuid + " ranking:score" ), REQUESTED_FIELDS_BBOX,
-                        IBUSInterfaceImpl.getInstance().getIBus() );
-                if (it.hasNext()) {
-                    StringBuilder s = new StringBuilder();
-                    IngridHit hit = it.next();
-                    IngridHitDetail detail = hit.getHitDetail();
-                    if (detail.containsKey( "y1" ) && detail.containsKey( "x2" )) {
-                        s.append("[").append( detail.get( "y1" ).toString() ).append( "," ).append( detail.get( "x1" ).toString() ).append( "],[" ).append( detail.get( "y2" ).toString() )
-                                .append( "," ).append( detail.get( "x2" ).toString() ).append("]");
-                        response.getWriter().write( s.toString() );
-                    }
+                if(uuid != null) {
+                    String queryString = "t01_object.obj_id:" + uuid + " ranking:score";
+                    UtilsPortletServeResources.getHttpMarkerBawDmqsBoundingBox(response, queryString);
                 }
-                response.getWriter().write( "]" );
             }
-
         } catch (Exception e) {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }

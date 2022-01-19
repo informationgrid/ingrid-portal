@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2022 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -165,10 +165,8 @@
                 if (newVal) {
                     simParamValueType = DISCRETE_NUMERIC;
 
-                    domClass.add("uiElementSpDiscreteVals", "required");
                     domClass.remove("uiElementSpDiscreteVals", "hidden");
                 } else {
-                    domClass.remove("uiElementSpDiscreteVals", "required");
                     domClass.add("uiElementSpDiscreteVals", "hidden");
                 }
             });
@@ -176,13 +174,11 @@
                 if (newVal) {
                     simParamValueType = DISCRETE_STRING;
 
-                    domClass.add("uiElementSpDiscreteStrVals", "required");
                     domClass.remove("uiElementSpDiscreteStrVals", "hidden");
                     domClass.add("uiElementSpUnits", "hidden");
 
                     registry.byId("spDiscreteStrValsTable").reinitLastColumn(true);
                 } else {
-                    domClass.remove("uiElementSpDiscreteStrVals", "required");
                     domClass.add("uiElementSpDiscreteStrVals", "hidden");
                     domClass.remove("uiElementSpUnits", "hidden");
                 }
@@ -222,20 +218,6 @@
                 }
             });
 
-            // Also check the table for values
-            if (simParamValueType === DISCRETE_NUMERIC) {
-                var valuesTable = registry.byId("spDiscreteNumValsTable");
-                if (valuesTable.data.length === 0) {
-                    valid = false;
-                    checks.setErrorLabel("spDiscreteNumValsTable");
-                }
-            } else if (simParamValueType === DISCRETE_STRING) {
-                var valuesTable = registry.byId("spDiscreteStrValsTable");
-                if (valuesTable.data.length === 0) {
-                    valid = false;
-                    checks.setErrorLabel("spDiscreteStrValsTable");
-                }
-            }
             return valid;
         }
 
@@ -402,11 +384,11 @@
             </div>
         </span>
         <!-- Discrete numerical values table start -->
-        <span id="uiElementSpDiscreteVals" class="outer required">
+        <span id="uiElementSpDiscreteVals" class="outer">
             <div>
                 <span class="label">
                     <label for="spDiscreteNumValsTable">
-                        <fmt:message key="ui.obj.baw.simulation.parameter.value.discrete" />*
+                        <fmt:message key="ui.obj.baw.simulation.parameter.value.discrete" />
                     </label>
                 </span>
                 <span class="input">
@@ -420,7 +402,7 @@
             <div>
                 <span class="label">
                     <label for="spDiscreteStrValsTable">
-                        <fmt:message key="ui.obj.baw.simulation.parameter.value.discrete" />*
+                        <fmt:message key="ui.obj.baw.simulation.parameter.value.discrete" />
                     </label>
                 </span>
                 <span class="input">

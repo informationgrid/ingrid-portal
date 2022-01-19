@@ -57,6 +57,10 @@
   background: $red;
   border: 1px solid $red;
 }
+.map.purple .control__indicator {
+    background: purple;
+    border: 1px solid purple;
+}
 .map.orange .control__indicator {
   background: $orange;
   border: 1px solid $orange;
@@ -82,6 +86,10 @@
 .map.red .control:hover input ~ .control__indicator,
 .map.red .control input:focus ~ .control__indicator {
   background: $red;
+}
+.map.purple .control:hover input ~ .control__indicator,
+.map.purple .control input:focus ~ .control__indicator {
+  background: purple;
 }
 .map.orange .control:hover input ~ .control__indicator,
 .map.orange .control input:focus ~ .control__indicator {
@@ -113,6 +121,9 @@
 .map.red .control input:checked ~ .control__indicator {
   background: $red;
 }
+.map.purple .control input:checked ~ .control__indicator {
+  background: purple;
+}
 .map.orange .control input:checked ~ .control__indicator {
   background: $orange;
 }
@@ -136,6 +147,10 @@
 .map.red .control:hover input:not([disabled]):checked ~ .control__indicator,
 .map.red .control input:checked:focus ~ .control__indicator {
   background: $red;
+}
+.map.purple .control:hover input:not([disabled]):checked ~ .control__indicator,
+.map.purple .control input:checked:focus ~ .control__indicator {
+  background: purple;
 }
 .map.orange .control:hover input:not([disabled]):checked ~ .control__indicator,
 .map.orange .control input:checked:focus ~ .control__indicator {

@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -2008,16 +2008,29 @@ define([
                             "am"
                         ],
                         [
+                            message.get("dialog.research.ext.obj.content.time.until"),
+                            "bis"
+                        ],
+                        [
+                            message.get("dialog.research.ext.obj.content.time.from"),
+                            "fromType"
+                        ]
+                    ];
+
+                    def.resolve(data);
+                    return def;
+                };
+
+                var timeSubTypeData = function() {
+                    var def = new Deferred();
+                    var data = [
+                        [
                             message.get("dialog.research.ext.obj.content.time.since"),
                             "seit"
                         ],
                         [
                             message.get("dialog.research.ext.obj.content.time.sinceToNow"),
                             "seitX"
-                        ],
-                        [
-                            message.get("dialog.research.ext.obj.content.time.until"),
-                            "bis"
                         ],
                         [
                             message.get("dialog.research.ext.obj.content.time.fromto"),
@@ -2030,6 +2043,7 @@ define([
                 };
 
                 layoutCreator.createFilteringSelect("timeRefType", null, lang.clone(storeProps), timeTypeData);
+                layoutCreator.createFilteringSelect("timeRefSubType", null, lang.clone(storeProps), timeSubTypeData);
                 new DateTextBox({
                     style: "width: 100%;",
                     onChange: function() {

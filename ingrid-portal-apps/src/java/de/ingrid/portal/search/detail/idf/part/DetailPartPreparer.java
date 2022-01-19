@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -41,6 +41,8 @@ import org.w3c.dom.NodeList;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.xml.bind.DatatypeConverter;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
@@ -168,7 +170,7 @@ public class DetailPartPreparer {
 
     public String getDateFormatValue (String value){
         try {
-            Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(value);
+            Calendar cal = DatatypeConverter.parseDateTime(value);
             if(cal != null){
                 if(cal.getTime() != null){
                     int hours = cal.getTime().getHours();
@@ -248,6 +250,9 @@ public class DetailPartPreparer {
     }
 
     public List<String> getUseConstraints() {
+        return getUseConstraints(true, false);
+    }
+    public List<String> getUseConstraints(boolean displayJSON, boolean replaceUseConstraintsSourcePrefix) {
         final String restrictionCodeList = "524";
         final String licenceList = "6500";
         final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
@@ -366,12 +371,18 @@ public class DetailPartPreparer {
                             }
                             furtherOtherConstraints.add( value );
                         } else {
+                            if(replaceUseConstraintsSourcePrefix && constraintSource.startsWith("Quellenvermerk: ")) {
+                                constraintSource = constraintSource.replace(messages.getString("Quellenvermerk: "), "");
+                            }
                             furtherOtherConstraints.add( constraintSource );
                         }
                     } else {
+                        if(replaceUseConstraintsSourcePrefix && constraintSource.startsWith("Quellenvermerk: ")) {
+                            constraintSource = constraintSource.replace(messages.getString("Quellenvermerk: "), "");
+                        }
                         furtherOtherConstraints.add( constraintSource );
                     }
-                } else {
+                } else if(displayJSON){
                     String finalValue = getValueFromCodeList(licenceList, constraints);
                     if (finalValue == null || finalValue.trim().isEmpty()) {
                         if (!constraints.startsWith("{") && !constraints.endsWith("}")) {

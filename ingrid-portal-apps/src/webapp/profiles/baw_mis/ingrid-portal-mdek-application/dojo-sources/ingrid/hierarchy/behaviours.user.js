@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -32,8 +32,9 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisSimulationMdFields",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
-    "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
+    "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks"
+], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks) {
 
     return lang.mixin(behaviours, {
 
@@ -85,7 +86,12 @@ define([
         /**
          * Extra validation rules for BAW-MIS
          */
-        bawValidationRules: bawValidationRules
+        bawValidationRules: bawValidationRules,
+
+        /**
+         * Field for contacting REST-API to move files to LFS
+         */
+        bawLFSLinks: bawLFSLinks
 
     });
 });

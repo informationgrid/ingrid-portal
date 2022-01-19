@@ -168,7 +168,13 @@
                 <ul class="accordion filter-group" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
                     <li class="accordion-item #if($facet.isSelect() || $facet.isOpen())is-active#end" data-accordion-item>
                         <a href="#" class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label">
-                            <span class="text">$MESSAGES.getString("$facet.getName()")</span>
+                            <span class="text">
+                            #if($facet.getCodelistId())
+                               $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
+                            #else
+                                $MESSAGES.getString("$facet.getName()")
+                            #end
+                            </span>
                         </a>
                         <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion">
                             <div class="boxes">
@@ -242,7 +248,11 @@
                     #end
                     <input id="facet-$facet.getId()" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'">
                     <span class="control__indicator"></span>
-                    $MESSAGES.getString("$facet.getName()")
+                    #if($facet.getCodelistId())
+                       $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
+                    #else
+                        $MESSAGES.getString("$facet.getName()")
+                    #end
                     <span class="nr-results">
                     #if($number)
                         ($number)
@@ -252,6 +262,20 @@
                     </span>
                 </label>
             </div>
+            #if($facet.getToggle())
+                #set($toggle = $facet.getToggle())
+                #set($toggleIsSelect = $toggle.isSelect())
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("$parentId", "$toggle.getId()")
+                <div class="control-group">
+                    <label class="control toggle">
+                        <input type="checkbox" #if($toggleIsSelect)checked#end onclick="location.href='$action'">
+                        <span class="toggle-slider round"></span>
+                    </label>
+                    <span class="toggle-label checked #if(!$toggleIsSelect)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date")</span>
+                    <span class="toggle-label unchecked #if($toggleIsSelect)is-hidden#end">$MESSAGES.getString("common.toggle.all")</span>
+                </div>
+            #end
         </div>
     </div>
 #end

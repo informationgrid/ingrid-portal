@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-        <version>5.10.0</version>
+        <version>5.11.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-mdek-application</artifactId>
@@ -33,7 +33,7 @@
     <sonar.exclusions>
       src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*
     </sonar.exclusions>
-    <spring.version>5.3.12</spring.version>
+    <spring.version>5.3.14</spring.version>
   </properties>
 
   <!-- ==================== Build Configuration ==================== -->
@@ -193,7 +193,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
-        <version>2.9.10.5</version>
+        <version>2.9.10.8</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -273,7 +273,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-wfs</artifactId>
-      <version>4.3.0</version>
+      <version>5.11.0</version>
       <exclusions>
         <exclusion>
           <groupId>javax.measure</groupId>
@@ -578,7 +578,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-geo</artifactId>
-      <version>5.5.0</version>
+      <version>5.11.0</version>
     </dependency>
     <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
     <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>

@@ -45,7 +45,11 @@
                 }
             }
         });
-        var map${mapId} = addLeafletMapWithId('map${mapId}', getOSMLayer(''), bounds${mapId}, null , 10);
+        var bgLayer = getOSMLayer('');
+        #if($leafletBgLayerWMSUrl && $leafletBgLayerWMSName)
+            bgLayer = getWMSLayer('$leafletBgLayerWMSUrl', '$leafletBgLayerWMSName', '');
+        #end
+        var map${mapId} = addLeafletMapWithId('map${mapId}', bgLayer, bounds${mapId}, null , 10);
         #if($isDetail)
             map${mapId}.gestureHandling.enable();
             addLeafletHomeControl(map${mapId}, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds${mapId}, '', '23px');
@@ -56,10 +60,10 @@
             map${mapId}.fitBounds(bounds${mapId});
         }
     </script>
-    #if($bwastr && !$bwastr.isEmpty())
-        #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bwastr.vm")
-    #elseif($wkt && !$wkt.isEmpty())
+    #if($wkt && !$wkt.isEmpty())
         #parse("/WEB-INF/templates/search-result/parts/area/area_layer_wkt.vm")
+    #elseif($bwastr && !$bwastr.isEmpty())
+        #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bwastr.vm")
     #else
         #parse("/WEB-INF/templates/search-result/parts/area/area_layer_bounds.vm")
     #end

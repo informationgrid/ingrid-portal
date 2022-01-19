@@ -40,7 +40,7 @@
                 #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        <a href="$entry.src" title="$imgTitle" target="_blank" rel="noopener noreferrer">
+                        <a target="_blank" class="external-link" href="$entry.src" title="$imgTitle" rel="noopener noreferrer">
                             <img class="preview_image" #if($entry.src.indexOf("https") == -1) src="./" data-src="$entry.src" #else src="$entry.src" #end title="$stringTool.htmlescape($imgTitle)" alt="img" onerror="$loadDefaultMapImage">
                             <noscript>
                                 <img class="preview_image" src="$entry.src" title="$stringTool.htmlescape($imgTitle)" alt="img">
@@ -69,7 +69,7 @@
                 #if($tool.hasContent($entry.serviceType))
                     #renderServiceType($entry.serviceType)
                 #end
-                <a class="icon" href="$entry.href" title="$entry.title" target="_blank" rel="noopener noreferrer">
+                <a target="_blank" class="icon external-link" href="$entry.href" title="$entry.title" rel="noopener noreferrer">
                   <span class="ic-ic-external"></span>
                   <span class="text">$entry.title</span>
                 </a>
@@ -136,7 +136,7 @@
                             #foreach($graphic in $entry.graphicOverview)
                                 <div class="swiper-slide">
                                     <p class="caption">
-                                        <a href="$graphic" title="$entry.title" target="_blank" rel="noopener noreferrer">
+                                        <a target="_blank" class="external-link" href="$graphic" title="$entry.title" rel="noopener noreferrer">
                                             <img class="preview_image" #if($graphic.indexOf("https") == -1) src="./" data-src="$graphic" #else src="$graphic" #end title="$stringTool.htmlescape($entry.title)" alt="img" onerror="$loadDefaultMapImage">
                                             <noscript>
                                                 <img class="preview_image" src="$graphic" title="$stringTool.htmlescape($entry.title)" alt="img">
@@ -151,7 +151,7 @@
                     </div>
                     #elseif($tool.hasContent($entry.graphicOverview.get(0)))
                     <div class="preview">
-                        <a href="$entry.graphicOverview.get(0)" title="$entry.title" target="_blank" rel="noopener noreferrer">
+                        <a target="_blank" class="external-link" href="$entry.graphicOverview.get(0)" title="$entry.title" rel="noopener noreferrer">
                             <img class="preview_image" #if($entry.graphicOverview.get(0).indexOf("https") == -1) src="./" data-src="$entry.graphicOverview.get(0)" #else src="$entry.graphicOverview.get(0)" #end title="$stringTool.htmlescape($entry.title)" alt="img" onerror="$loadDefaultMapImage">
                             <noscript>
                                 <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$stringTool.htmlescape($imgTitle)" alt="img">
@@ -168,7 +168,7 @@
                 </div>
             #end
             #if($tool.hasContent($entry.mapLink))
-            <a class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
+            <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
                 $MESSAGES.getString('common.result.showMap')
             </a>
             #end
@@ -184,7 +184,7 @@
                         #renderServiceType($entry.serviceType)
                     #end
                 #end
-                <a href="$entry.href" class="icon" title="$stringTool.htmlescape($entry.title)" target="_blank" rel="noopener noreferrer">
+                <a target="_blank" href="$entry.href" class="icon external-link" title="$stringTool.htmlescape($entry.title)" rel="noopener noreferrer">
                   <span class="ic-ic-download"></span>
                   <span class="text">$entry.title</span>
                 </a>
@@ -207,7 +207,7 @@
 #macro (renderLinkLineAddress $entry)
     <div>
     #if($entry.isExtern)
-        <a href="$entry.href" title="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
+        <a target="_blank" class="external-link" href="$entry.href" title="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
     #else
         <a href="$entry.href" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
     #end
@@ -308,7 +308,7 @@
     #end
     #if($entry.href)
     <p class="caption">
-        <a class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$MESSAGES.getString("common.result.showMap.tooltip.short")">
+        <a #if($mapLinksNewTab)target="_blank"#end class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$MESSAGES.getString("common.result.showMap.tooltip.short")">
             $MESSAGES.getString("common.result.showMap.tooltip.short")
         </a>
     </p>
@@ -473,8 +473,10 @@
                                             #elseif($t == "0" || $t == "1")
                                                 ## Organisation
                                                 #set($xPath = "./idf:addressOrganisationName")
-                                                #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
-                                                <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
+                                                #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
+                                                    #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
+                                                    <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
+                                                #end
                                             #end
                                         #end
                                     #end
@@ -616,7 +618,7 @@
                                 #set($url = "http://$url")
                             #end
                             <div>
-                                <a class="icon" href="$url" title="$url">
+                                <a target="_blank" class="icon external-link" href="$url" title="$url">
                                     <span class="ic-ic-external"></span>
                                     <span class="text">$url</span>
                                 </a>
@@ -969,7 +971,7 @@
                 #set($content = $content + "$citation.publisher. ")
             #end
             #if($tool.hasContent($citation.doi))
-                #set($content = $content + "<a href=\"$citation.doi\" target=\"_blank\">$citation.doi</a>")
+                #set($content = $content + '<a class="external-link" href="' + $citation.doi + '" target="_blank">' + "$citation.doi</a>")
             #end
             #if(!$content.isEmpty())
                 #set($add = $list.add($content))
@@ -1047,7 +1049,7 @@
     #end
 #end
 
-#macro (renderTextListTable $title $entryList)
+#macro (renderTextListTable $title $entryList $expandable)
     #if($tool.hasContent($entryList))
     <div class="table table--lined">
         <table>
@@ -1056,11 +1058,28 @@
                 <th>$title</th>
             #end
                 <td>
-                    <div class="text-list">
-                    #foreach($entry in $entryList)
-                        <p class="list-item">$entry</p>
+                    #if($expandable)
+                    <div class="js-expand-box js-expand-text js-non-expand-text">
+                        <div class="js-expand-text-content">
                     #end
+                            <div class="text-list">
+                            #foreach($entry in $entryList)
+                                <p class="list-item">$entry</p>
+                            #end
+                            </div>
+                            
+                    #if($expandable)
+                            </div>
+                            <div class="desc-fade"></div>
+                        </div>
+                        <button type="button" class="js-open-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.more')">
+                            $MESSAGES.getString('search.detail.info.more')
+                        </button>
+                        <button type="button" class="js-close-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.less')">
+                            $MESSAGES.getString('search.detail.info.less')
+                        </button>
                     </div>
+                    #end
                 </td>
             </tr>
         </table>
@@ -1270,7 +1289,7 @@
                             </div>
                         #end
                         #if($tool.hasContent($entry.link))
-                            <a class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
+                            <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
                                 $MESSAGES.getString('common.result.showMap')
                             </a>
                         #end

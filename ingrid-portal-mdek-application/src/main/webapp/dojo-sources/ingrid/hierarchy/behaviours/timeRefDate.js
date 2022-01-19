@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -34,6 +34,10 @@ define([
         run: function () {
 
             on(registry.byId("timeRefType"), "Change", function (value) {
+                applyRule4(value);
+            });
+            applyRule4("");
+            on(registry.byId("timeRefSubType"), "Change", function (value) {
                 applyRule3(value);
             });
             applyRule3("");

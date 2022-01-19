@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -54,7 +54,7 @@ define({
     "uvp.form.applicationReceipt.invalid": "Das Datum muss vor dem Beginn der ersten Auslegung sein.",
 
     "uvp.form.categoryIds": "UVP-Nummer",
-    "uvp.form.categoryIds.helpMessage": "Hier ist die UVP-Nummer einzugeben, die für das Zulassungsverfahren zutrifft (Mehrfach-Nennungen möglich).<br><br>Es werden die bundesrechtlichen und die für Ihr Land maßgeblichen UVP-Nummern angeboten. Sollte wider Erwarten eine Nummer fehlen, wenden Sie sich bitte an die in Ihrem Land für die Betreuung des UVP-Portals zuständigen Ansprechpartner.<br><br>Die UVP-Nummern dienen der Einordnung des Zulassungsverfahrens in die Kategorien, nach denen auf der Portalseite gesucht werden kann. Außerdem sind sie wichtig zur Erfüllung der Berichtspflicht nach Artikel 12 der UVP-Richtlinie 2011/92/EU, nach der alle sechs Jahre die bis dahin durchgeführten UVP-Verfahren ausgezählt und der EU-Kommission unter Zuordnung zu den Kategorien mitgeteilt werden müssen.",
+    "uvp.form.categoryIds.helpMessage": "Hier ist die UVP-Nummer einzugeben, die für das Zulassungsverfahren zutrifft (Mehrfach-Nennungen möglich).<br><br>Es werden die bundesrechtlichen und die für Ihr Land maßgeblichen UVP-Nummern angeboten. Sollte wider Erwarten eine Nummer fehlen, wenden Sie sich bitte an die in Ihrem Land für die Betreuung des UVP-Portals zuständigen Ansprechpartner.<br><br>Die UVP-Nummern dienen der Einordnung des Zulassungsverfahrens in die Kategorien, nach denen auf der Portalseite gesucht werden kann. Außerdem sind sie wichtig zur Erfüllung der Berichtspflicht nach Artikel 12 der UVP-Richtlinie 2011/92/EU, nach der alle sechs Jahre die bis dahin durchgeführten UVP-Verfahren ausgezählt und der EU-Kommission unter Zuordnung zu den Kategorien mitgeteilt werden müssen.<br><br>Referenzen:<br><br> <a href='https://www.gesetze-im-internet.de/uvpg/anlage_1.html' target='_blank'>https://www.gesetze-im-internet.de/uvpg/anlage_1.html</a>",
     "uvp.form.preExaminationAccomplished.label": "Vorprüfung durchgeführt",
     "uvp.form.preExaminationAccomplished.yes": "Ja",
     "uvp.form.preExaminationAccomplished.no": "Nein",

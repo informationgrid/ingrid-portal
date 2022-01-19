@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -98,7 +98,11 @@ public class PasswordUpdateRequiredForm extends ActionForm {
         if (!isPasswordRequired) {
             if (hasInput(FIELD_PW)) {
                 String password = getInput(FIELD_PW);
-                if (!Utils.isStrengthPassword(password)) {
+                if (Utils.isInvalidInput(password)) {
+                    setError(FIELD_PW, "account.create.error.password.sign");
+                    clearInput(FIELD_PW);
+                    allOk = false;
+                } else if (!Utils.isStrengthPassword(password)) {
                    setError(FIELD_PW, "account.create.error.worstPassword");
                    allOk = false;
                }

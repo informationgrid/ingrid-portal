@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -119,14 +119,34 @@ public class IngridSysCodeList {
         return "";
     }
 
-    public String getDataByCodeListValue(String codeListId, String entryId) {
+    public String getNameByData(String codeListId, String data) {
+       return getName(codeListId, getCodeListValueByData(codeListId, data));
+    }
+
+    public String getCodeListValueByData(String codeListId, String data) {
         CodeListService clService = CodeListServiceFactory.instance();
         
         CodeList cl = clService.getCodeList(codeListId);
         if (cl != null) {
             for (CodeListEntry entry : cl.getEntries()) {
+                if (entry.getData().equalsIgnoreCase(data)) {
+                    return entry.getId();
+                }
+            }
+        }else{
+            log.debug("Codelist does not exist for codeListId: " + codeListId);
+        }
+        return "";
+    }
+
+    public String getDataByCodeListValue(String codeListId, String entryId) {
+        CodeListService clService = CodeListServiceFactory.instance();
+
+        CodeList cl = clService.getCodeList(codeListId);
+        if (cl != null) {
+            for (CodeListEntry entry : cl.getEntries()) {
                 if (entry.getId().equalsIgnoreCase(entryId)) {
-                    return entry.getData(); 
+                    return entry.getData();
                 }
             }
         }else{

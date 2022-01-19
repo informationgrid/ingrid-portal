@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -23,6 +23,7 @@
 package de.ingrid.portal.global;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridPrincipalPreference;
 import org.hibernate.Session;
@@ -70,6 +71,7 @@ public class IngridPersistencePrefs {
         try {
             // Create the SessionFactory
             xstream = new XStream();
+            xstream.addPermission(AnyTypePermission.ANY);
         } catch (Exception ex) {
             throw new ExceptionInInitializerError(ex);
         }

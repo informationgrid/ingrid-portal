@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,7 +22,11 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,16 +35,20 @@ import javax.portlet.RenderResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.geo.utils.transformation.GmlToWktTransformUtil;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.utils.capabilities.CapabilitiesUtils;
 import de.ingrid.utils.capabilities.CapabilitiesUtils.ServiceType;
-import de.ingrid.utils.udk.UtilsString;
 
 public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
+
+    private static final Logger log = LoggerFactory.getLogger(DetailPartPreparerIdfMetadata.class);
 
     @Override
     public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
@@ -605,7 +613,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 } else if (thesaurusName.isEmpty() && type.isEmpty()) {
                                     listSearch.add(value);
                                 } else{
-                                    listSearch.add(value);
+                                    // try to match keyword to  Opendata Category
+                                    String tmpValue = sysCodeList.getNameByData("6400", value);
+                                    if(tmpValue.isEmpty()){
+                                        tmpValue = value;
+                                    }
+                                    listSearch.add(tmpValue);
                                 }
                             }
                         }
@@ -1174,11 +1187,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     element.put("title", messages.getString("geothesaurus_spacial_reference"));
                     
                     ArrayList head = new ArrayList();
-                    head.add(messages.getString("geothesaurus_spacial_reference"));
+                    head.add("");
                     head.add(messages.getString("spatial_ref_value_x1"));
                     head.add(messages.getString("spatial_ref_value_y1"));
-                    head.add(messages.getString("spatial_ref_value_x2"));
-                    head.add(messages.getString("spatial_ref_value_y2"));
                     element.put("head", head);
                     ArrayList body = new ArrayList();
                     element.put("body", body);
@@ -1191,7 +1202,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     for (int j = 0; j < maxRows; j++) {
                         Node childNode = subNodeList.item(j);
                         ArrayList row = new ArrayList();
-                        
+
                         if(!subjectEntries.isEmpty()){
                             if (subjectEntries.get(j)!= null) {
                                 row.add(subjectEntries.get(j));
@@ -1201,39 +1212,23 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         } else {
                             row.add("");
                         }
-                        
-                        xpathExpression = "./gmd:westBoundLongitude";
-                        if (xPathUtils.nodeExists(childNode, xpathExpression)) {
-                            String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            row.add(notNull(value + "\u00B0"));
+
+                        if (xPathUtils.nodeExists(childNode, "./gmd:westBoundLongitude") && xPathUtils.nodeExists(childNode, "./gmd:southBoundLatitude")) {
+                            String valueW = xPathUtils.getString(childNode, "./gmd:westBoundLongitude").trim();
+                            String valueS = xPathUtils.getString(childNode, "./gmd:southBoundLatitude").trim();
+                            row.add(notNull(valueW) + "\u00B0/" + notNull(valueS) + "\u00B0") ;
                         } else {
                             row.add("");
                         }
-                        
-                        xpathExpression = "./gmd:southBoundLatitude";
-                        if (xPathUtils.nodeExists(childNode, xpathExpression)) {
-                            String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            row.add(notNull(value + "\u00B0"));
+
+                        if (xPathUtils.nodeExists(childNode, "./gmd:eastBoundLongitude") && xPathUtils.nodeExists(childNode, "./gmd:northBoundLatitude")) {
+                            String valueE = xPathUtils.getString(childNode, "./gmd:eastBoundLongitude").trim();
+                            String valueN = xPathUtils.getString(childNode,  "./gmd:northBoundLatitude").trim();
+                            row.add(notNull(valueE)  + "\u00B0/" + notNull(valueN) + "\u00B0");
                         } else {
                             row.add("");
                         }
-                        
-                        xpathExpression = "./gmd:eastBoundLongitude";
-                        if (xPathUtils.nodeExists(childNode, xpathExpression)) {
-                            String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            row.add(notNull(value + "\u00B0"));
-                        } else {
-                            row.add("");
-                        }
-                        
-                        xpathExpression = "./gmd:northBoundLatitude";
-                        if (xPathUtils.nodeExists(childNode, xpathExpression)) {
-                            String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            row.add(notNull(value + "\u00B0"));
-                        } else {
-                            row.add("");
-                        }
-                        
+
                         if (!isEmptyRow(row)) {
                             body.add(row);
                         }
@@ -1345,55 +1340,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             for (int i=0; i<nodeList.getLength(); i++){
                 Node node = nodeList.item(i);
                 if(node != null) {
-                    xpathExpression = "./gml:Point/gml:pos";
-                    if(xPathUtils.nodeExists(node, xpathExpression)){
-                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
-                        for(int j=0;j<tmpNodeList.getLength(); j++) {
-                            String wkt = UtilsString.gmlPosListToWktCoordinates(tmpNodeList.item(j).getTextContent(), "POINT");
-                            if (wkt != null && !wkt.isEmpty()) {
-                                result.add(wkt);
-                            }
-                        }
-                    }
-                    xpathExpression = "./gml:LineString/gml:posList";
-                    if(xPathUtils.nodeExists(node, xpathExpression)){
-                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
-                        for(int j=0;j<tmpNodeList.getLength(); j++) {
-                            String wkt = UtilsString.gmlPosListToWktCoordinates(tmpNodeList.item(j).getTextContent(), "LINESTRING");
-                            if (wkt != null && !wkt.isEmpty()) {
-                                result.add(wkt);
-                            }
-                        }
-                    }
-                    xpathExpression = "./gml:Polygon";
-                    if(xPathUtils.nodeExists(node, xpathExpression)){
-                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
-                        for(int j=0;j<tmpNodeList.getLength(); j++) {
-                            String wkt = "";
-                            Node polygonNode = tmpNodeList.item(i);
-    
-                            xpathExpression = "./gml:exterior/gml:LinearRing/gml:posList";
-                            if(xPathUtils.nodeExists(polygonNode, xpathExpression)) {
-                                Node exteriorNode = xPathUtils.getNode(polygonNode, xpathExpression);
-                                wkt += UtilsString.gmlPosListToWktCoordinates(exteriorNode.getTextContent());
-                            }
-    
-                            xpathExpression = "./gml:interior/gml:LinearRing/gml:posList";
-                            if(xPathUtils.nodeExists(polygonNode, xpathExpression)) {
-                                NodeList interiorNodes = xPathUtils.getNodeList(polygonNode, xpathExpression);
-                                for(int k=0; k<interiorNodes.getLength(); k++) {
-                                    String str = UtilsString.gmlPosListToWktCoordinates(interiorNodes.item(k).getTextContent());
-                                    if (!wkt.isEmpty() && !str.isEmpty()) {
-                                        wkt += ", ";
-                                    }
-                                    wkt += str;
-                                }
-                            }
-                            if (wkt != null && !wkt.isEmpty()) {
-                                wkt = "POLYGON (" + wkt + ")";
-                                result.add(wkt);
-                            }
-                        }
+                    try {
+                        result.add(GmlToWktTransformUtil.gml3_2ToWktString(node));
+                    } catch (Exception e) {
+                        log.error("Error transform GML to string: ", e);
                     }
                 }
             }
@@ -1509,7 +1459,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         String htmlLink = null;
         String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
         if (!cswUrl.isEmpty()) {
-            htmlLink = "<a href='"+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+this.uuid+"&iplug="+this.iPlugId+"&elementSetName=full' target='_blank'>"+messages.getString("xml_link")+"</a>";
+            htmlLink = "<a target=\"_blank\" class=\"external-link\" href=\""+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+this.uuid+"&iplug="+this.iPlugId+"&elementSetName=full\">"+messages.getString("xml_link")+"</a>";
         }
         return htmlLink;
     }

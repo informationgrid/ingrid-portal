@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -92,7 +92,28 @@ define(["dojo/_base/declare",
             // check first general validity
             this.checkValidityOfInputElements(notSaveableIDs);
 
-            var widgets = query(".rubric:not(.hide) .required:not(.hide):not(.alwaysHidden) .dijitTextBox:not(.noValidate), .rubric:not(.hide) .required:not(.hide) .dijitSelect:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.getAttribute("widgetid");});
+            // TODO: this probably can be simplified:
+            //       * get all fields
+            //       * get all fields that have a hide class as a parent 
+            //       * filter hidden fields from all fields
+            var hiddenSubRubrics = query(
+                ".rubric:not(.hide) .hide .required:not(.hide):not(.alwaysHidden) .dijitTextBox:not(.noValidate), " +
+                ".rubric:not(.hide) .hide .required:not(.hide) .dijitSelect:not(.noValidate)",
+                "contentFrameBodyObject")
+                .map(function (item) {
+                    return item.getAttribute("widgetid");
+                });
+            var widgets = query(
+                ".rubric:not(.hide) .required:not(.hide):not(.alwaysHidden) .dijitTextBox:not(.noValidate), " +
+                ".rubric:not(.hide) .required:not(.hide) .dijitSelect:not(.noValidate)",
+                "contentFrameBodyObject")
+                .map(function (item) {
+                    return item.getAttribute("widgetid");
+                })
+                .filter(function (item) {
+                    return hiddenSubRubrics.indexOf(item) === -1
+                });
+            
             widgets = widgets.concat(query(".dijitTextBox, .dijitSelect", "sectionTopObject").map(function(item) {return item.getAttribute("widgetid");}));
             var grids = query(".rubric:not(.hide) .required:not(.hide):not(.alwaysHidden) .ui-widget:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.id;});
 

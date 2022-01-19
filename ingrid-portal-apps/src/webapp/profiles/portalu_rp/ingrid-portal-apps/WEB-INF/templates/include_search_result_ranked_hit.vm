@@ -127,7 +127,7 @@
             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
 
             #if($rs.wms_coord)
-                <a class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
+                <a #if($mapLinksNewTab)target="_blank"#end class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
             #end
                 <a href="$detailLink" title="$rs.title">
                     <span class="ic-ic-arrow arrow"></span>

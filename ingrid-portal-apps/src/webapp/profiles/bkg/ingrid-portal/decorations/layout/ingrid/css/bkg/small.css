@@ -80,20 +80,14 @@ body>div {
  font-size: 100%
 }
 
-p, th, h1, h2, h3, div {
- -ms-word-break: break-word;
- word-break: break-word;
- -moz-hyphens: auto;
- -webkit-hyphens: auto;
- hyphens: auto
-}
-
 html {
 }
 
 h1, h2, h3, h4, h5, h6 {
+/*
  font-family: "bundessansweb", Arial, helvetica, sans-serif, "Droid Sans";
  font-weight: bold;
+*/
 }
 
 div, a, ul, li, h2 {
@@ -768,27 +762,6 @@ p.navToTop a:hover, p.navToTop a:focus, p.navToTop a:active {
  margin-bottom: 0
 }
 
-.button {
- font-size: 1.3rem;
- font-weight: normal;
- clear: left;
- display: block;
- padding: 8px 10px 10px;
- color: white;
- background-color: #407e40;
- line-height: 1;
- text-transform: uppercase;
- word-spacing: .25em;
- border-top-left-radius: 3px;
- border-top-right-radius: 3px;
- border-bottom-left-radius: 3px;
- border-bottom-right-radius: 3px;
- -moz-border-radius: 3px 3px 3px 3px;
- -webkit-border-radius: 3px 3px 3px 3px;
- -o-border-radius: 3px 3px 3px 3px;
- -khtml-border-radius: 3px 3px 3px 3px
-}
-
 a.button:hover, a.button:focus, a.button:active {
  color: white;
  background: #585858;
@@ -1457,11 +1430,6 @@ form .trenner.columns {
 form .trenner .columns {
  padding-bottom: 20px;
  margin-bottom: 0
-}
-
-input, textarea, select {
- width: 100%;
- padding: 4px 3px 5px
 }
 
 textarea {

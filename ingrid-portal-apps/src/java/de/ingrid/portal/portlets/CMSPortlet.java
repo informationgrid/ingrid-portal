@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,12 +22,7 @@
  */
 package de.ingrid.portal.portlets;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,6 +44,7 @@ import org.slf4j.LoggerFactory;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsPortletServeResources;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridCMS;
@@ -71,31 +67,12 @@ public class CMSPortlet extends GenericVelocityPortlet {
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
-        
-        try {
-            if (resourceID.equals( "httpURLImage" )) {
-                String paramURL = request.getParameter( "url" );
-                if(paramURL != null){
-                    URL url = new URL(paramURL);
-                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                    InputStream inStreamConvert = con.getInputStream();
-                    ByteArrayOutputStream os = new ByteArrayOutputStream();
-                    if (null != con.getContentType()) {
-                        byte[] chunk = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                            os.write(chunk, 0, bytesRead);
-                        }
-                        os.flush();
-                        URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                                Base64.getEncoder().encodeToString(os.toByteArray()));
-                        response.getWriter().write(dataUri.toString());
-                    }
-                }
-            }
+        String paramURL = request.getParameter( "url" );
 
-        } catch (Exception e) {
-            log.error( "Error creating resource for resource ID: " + resourceID, e );
+        if(paramURL != null) {
+            if (resourceID.equals( "httpURLImage" )) {
+                UtilsPortletServeResources.getHttpUrlImage(paramURL, response, resourceID);
+            }
         }
     }
 

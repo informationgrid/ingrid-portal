@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -223,7 +223,12 @@ define([
             });
 
             // Add link for creating a new entry to the simulation parameter table
-            this._createAppendSimulationParameterLink();
+            creator.createTableLink(
+                "simParamTable",
+                message.get("ui.obj.baw.simulation.parameter.table.new.row"),
+                'dialogs/mdek_baw_simulation_parameter_dialog.jsp',
+                message.get('dialog.simulation.parameter.title')
+            );
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
             return registry.byId(SIM_PARAM_TABLE_ID).promiseInit;
@@ -245,34 +250,6 @@ define([
                     dialog.showPage(message.get("dialog.simulation.parameter.title"), 'dialogs/mdek_baw_simulation_parameter_dialog.jsp?c=' + userLocale, 600, 300, true, dialogData);
                 }
             }));
-        },
-
-        _createAppendSimulationParameterLink: function () {
-            var linkId = "simParamTableLink";
-            var linkText = message.get("ui.obj.baw.simulation.parameter.table.new.row");
-            var linkOnClick = "require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('simParamValue'), 'dialogs/mdek_baw_simulation_parameter_dialog.jsp?c=' + userLocale, 600, 300, true, {});";
-
-            var span = document.createElement("span");
-            span.setAttribute("class", "functionalLink");
-
-            var img = document.createElement("img");
-            img.setAttribute("src", "img/ic_fl_popup.gif");
-            img.setAttribute("width", "10");
-            img.setAttribute("height", "9");
-            img.setAttribute("alt", "Popup");
-
-            var link = document.createElement("a");
-            link.setAttribute("id", linkId);
-            link.setAttribute("href", "javascript:void(0);");
-            link.setAttribute("onclick", linkOnClick);
-            link.setAttribute("title", linkText + " [Popup]");
-            link.textContent = linkText;
-
-            span.appendChild(img);
-            span.appendChild(link);
-
-            var node = dom.byId(SIM_PARAM_TABLE_ID).parentElement;
-            construct.place(span, node, 'before');
         },
 
         /**

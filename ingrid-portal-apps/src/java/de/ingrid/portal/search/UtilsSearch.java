@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -504,15 +504,18 @@ public class UtilsSearch {
     }
     
     public static String getDateFormatValue (String value){
-        String result = UtilsCSWDate.mapFromIgcToIso8601(value);
-        if(result != null) {
-            value = result;
+        if(value != null && !value.isEmpty()){
+            String result = UtilsCSWDate.mapFromIgcToIso8601(value);
+            if(result != null) {
+                value = result;
+            }
+            return UtilsSearch.convertDateString(value);
         }
-        return UtilsSearch.convertDateString(value);
+        return value;
     }
 
     public static String convertDateString(String value){
-        if(value != null){
+        if(value != null && !value.isEmpty()){
             String content = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
             if(content.length() > 0){
                 return content;

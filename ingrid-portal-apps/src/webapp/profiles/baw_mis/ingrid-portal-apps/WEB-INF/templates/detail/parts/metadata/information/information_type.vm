@@ -11,11 +11,15 @@
     ## Modellart
         #renderTextListTable("Modellart" $TOOL.getListOfValuesFromXPath($xPathBawModellType, "."))
     ## Räumliche Dimensionalität
-        #renderTextTable("R&aumlumliche Dimensionalit&auml;t" $TOOL.getValueFromXPath($xPathBawSpatialDimensionality))
+        #renderTextTable("R&auml;umliche Dimensionalit&auml;t" $TOOL.getValueFromXPath($xPathBawSpatialDimensionality))
+    ## Zeitschrittgröße
+        #renderTextTable("Zeitschrittgr&ouml;&szlig;e &lsqb;s&rsqb;" $TOOL.getValueFromXPath($xPathBawTimestepSize))
     ## Parameter und Zustandsgrößen
         #set($headTitles = ["Rolle","Name","Einheit","Wert"])
         #set($headTypes = ["text","text","text", "text"])
         #set($headXpathExpressions = [$xPathBawRole, $xPathBawName, $xPathBawUnit, $xPathBawValue])
         #renderTable($TOOL.getNodeListTable("Parameter und Zustandsgr&ouml;&szlig;en", "$xPathBAWDataQuality", $headTitles, $headXpathExpressions, null, $headTypes))
+    ## Fachliche Grundlage
+        #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
     </div>
 #end

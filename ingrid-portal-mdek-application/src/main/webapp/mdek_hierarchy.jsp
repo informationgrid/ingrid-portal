@@ -4,17 +4,14 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2022 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-
   http://ec.europa.eu/idabc/eupl5
-
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -193,9 +190,6 @@
                             case "conformity":
                                 localizedTitle = "<fmt:message key='dialog.conformity.title' />";
                                 break;
-                            case "simParamValue":
-                                localizedTitle = message.get('dialog.simulation.parameter.title');
-                                break;
                             case "doiCrossReference":
                                 localizedTitle = message.get('dialog.doi.xref.title');
                                 break;
@@ -315,15 +309,6 @@
                                     </span></div>
                                 </span>
                             </div>
-                            <span id="uiElement5000" class="outer">
-                                <div><span class="label">
-                                    <label for="generalShortDesc" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5000)">
-                                        <fmt:message key="ui.obj.general.shortDescription" />
-                                    </label>
-                                </span><span class="input">
-                                    <div id="generalShortDesc"></div>
-                                </span></div>
-                            </span>
                             <span id="uiElement5100" class="outer optional">
                                 <div>
                                     <span class="label left">
@@ -338,6 +323,15 @@
                                         <div id="generalPreviewImageTable" interactive="true"></div>
                                     </div>
                                 </div>
+                            </span>
+                            <span id="uiElement5000" class="outer">
+                                <div><span class="label">
+                                    <label for="generalShortDesc" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5000)">
+                                        <fmt:message key="ui.obj.general.shortDescription" />
+                                    </label>
+                                </span><span class="input">
+                                    <div id="generalShortDesc"></div>
+                                </span></div>
                             </span>
                             <span id="uiElement1010" class="outer">
                             	<div><span id="generalDescLabel" class="label">
@@ -2030,9 +2024,8 @@
                                                 <fmt:message key="ui.obj.time.timeRefContent" />
                                             </label>
                                         </span>
-                                        <div id="timeRefRef" class="outlined" style="float: left;">
-                                            <div class="outer">
-                                        	<span class="outer" style="width:100%;">
+                                        <div id="timeRefRef">
+                                        	<span class="outer" style="width:33%;">
 											    <div>
                                                 <span class="label hidden">
                                                     <label for="timeRefType">
@@ -2043,9 +2036,18 @@
                                                 </span>
 												</div>
 											</span>
-                                            </div>
-                                            <div class="outer">
-											<span class="outer" style="width:50%;">
+                                            <span class="outer" id="timeRefSubTypeEditor" style="width:67%;">
+											    <div>
+                                                <span class="label hidden">
+                                                    <label for="timeRefSubType">
+                                                        Typ
+                                                    </label>
+                                                </span><span class="input">
+                                                    <select autoComplete="false" style="width:100%;" id="timeRefSubType"></select>
+                                                </span>
+												</div>
+                                            </span>
+											<span class="outer" style="width:33%;">
 											    <div><span class="label hidden">
                                                     <label for="timeRefDate1">
                                                         Datum 1 [TT.MM.JJJJ]
@@ -2057,7 +2059,7 @@
                                                 </span>
 												</div>
 											</span>
-                                            <span id="timeRefDate2Editor" class="outer" style="width:50%;">
+                                            <span id="timeRefDate2Editor" class="outer" style="width:34%;">
 											    <div><span class="label hidden">
                                                     <label for="timeRefDate2">
                                                         Datum 2 [TT.MM.JJJJ]
@@ -2069,7 +2071,6 @@
                                                 </span>
 												</div>
                                             </span>
-                                            </div>
                                         </div>
 										</div>
                                     </span>

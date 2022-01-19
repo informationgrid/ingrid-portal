@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -57,6 +57,8 @@ public class IngridFacet {
     private boolean isOpen = false;
     private boolean isDisplay = false;
     private boolean categoryOnly = false;
+    private IngridFacet toggle;
+    
     
     /* Only for partner restriction */
     private boolean isParentHidden = false;
@@ -265,5 +267,11 @@ public class IngridFacet {
     }
     public void setCodelistField(String codelistField) {
         this.codelistField = codelistField;
+    }
+    public IngridFacet getToggle() {
+        return toggle;
+    }
+    public void setToggle(IngridFacet toggle) {
+        this.toggle = toggle;
     }
 }

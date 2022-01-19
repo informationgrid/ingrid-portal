@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.10.0</version>
+    <version>5.11.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-apps</artifactId>
@@ -31,6 +31,12 @@
 
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
+
+    <dependency>
+      <groupId>de.ingrid</groupId>
+      <artifactId>ingrid-utils-geo</artifactId>
+      <version>5.11.0</version>
+    </dependency>
 
     <dependency>
       <groupId>com.tngtech.java</groupId>
@@ -190,7 +196,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication</artifactId>
-      <version>5.8.0</version>
+      <version>5.11.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -242,11 +248,10 @@
     </dependency>
 
     <!-- Diverses -->
-    <!-- Version 1.4.4 causes error with Java 1.8: xstream.toXML see REDMINE-702 -->
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
-      <version>1.4.13</version>
+      <version>1.4.18</version>
     </dependency>
     <dependency>
       <groupId>commons-fileupload</groupId>
@@ -328,20 +333,17 @@
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-1.2-api</artifactId>
-      <version>2.13.3</version>
       <scope>provided</scope>
     </dependency>
     <!-- end -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.13.3</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.13.3</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

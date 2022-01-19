@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,19 +22,18 @@
  */
 package de.ingrid.portal.portlets;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -52,7 +51,6 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.validator.UrlValidator;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -61,6 +59,8 @@ import org.apache.velocity.tools.generic.EscapeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.geo.utils.transformation.GmlToWktTransformUtil;
+import de.ingrid.geo.utils.transformation.WktToGeoJsonTransformUtil;
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
@@ -69,9 +69,10 @@ import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UniversalSorter;
 import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsMimeType;
+import de.ingrid.portal.global.UtilsPortletServeResources;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.global.UtilsUvpZipDownload;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -86,6 +87,8 @@ import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
+import de.ingrid.utils.xml.IDFNamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
     private static final Logger log = LoggerFactory.getLogger(SearchDetailPortlet.class);
@@ -99,108 +102,60 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     
     private HashMap replacementFields = new HashMap();
 
+    protected XPathUtils xPathUtils = null;
+    
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
         String paramURL = request.getParameter( "url" );
-        
+
+        String login = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
+        String password = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD);
+
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()), request.getLocale());
+
         if(paramURL != null){
             if (resourceID.equals( "httpURL" )) {
-                UrlValidator urlValidator = new UrlValidator();
-                if(urlValidator.isValid(paramURL)) {
-                    URL url = new URL(paramURL);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("HEAD");
-                    response.setContentType( "application/javascript" );
-                    StringBuilder s = new StringBuilder();
-                    response.getWriter().write( "{" );
-                    if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
-                        s.append( "\"contentLength\":");
-                        s.append( "\"" + con.getContentLength() + "\"" );
-                    }
-                    response.getWriter().write( s.toString() );
-                    response.getWriter().write( "}" );
-                } else {
-                    response.getWriter().write( "{}" );
-                }
+                UtilsPortletServeResources.getHttpUrlLength(paramURL, login, password, response);
             }
-
             if (resourceID.equals( "httpURLDataType" )) {
-                String extension = "";
-                if(paramURL != null) {
-                    if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
-                        extension = "csw";
-                    } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
-                        extension = "wms";
-                    } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
-                        extension = "wfs";
-                    } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
-                        extension = "wmts";
-                    }
-                    if(extension.isEmpty()) {
-                        UrlValidator urlValidator = new UrlValidator();
-                        if(urlValidator.isValid(paramURL)) {
-                            URL url = new URL(paramURL);
-                            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                            con.setRequestMethod("HEAD");
-    
-                            String contentType = con.getContentType();
-    
-                            if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
-                                url = new URL(paramURL.replace("http://", "https://"));
-                                con = (HttpURLConnection) url.openConnection();
-                                con.setRequestMethod("HEAD");
-                                contentType = con.getContentType();
-                                if(contentType != null) {
-                                    extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
-                                }
-                            }
-                        }
-                    }
-                    response.setContentType( "text/plain" );
-                    response.getWriter().write( extension );
-                }
+                UtilsPortletServeResources.getHttpUrlDatatype(paramURL, login, password, response);
             }
-
             if (resourceID.equals( "httpURLImage" )) {
-                try {
-                    getURLResponse(paramURL, response);
-                } catch (Exception e) {
-                    log.error( "Error creating resource for resource ID: " + resourceID, e );
-                    if (resourceID.equals( "httpURLImage" )) {
-                        log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
-                        String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
-                        log.error( "Try https URL: " + httpsUrl);
-                        try {
-                            getURLResponse(httpsUrl, response);
-                            log.error( "Try https URL: " + httpsUrl);
-                        } catch (Exception e1) {
-                            log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
-                            response.getWriter().write(paramURL);
-                        }
+                UtilsPortletServeResources.getHttpUrlImage(paramURL, response, resourceID);
+            }
+        }
+
+        if (resourceID.equals( "httpURLDownloadUVP" )) {
+            String uuid = request.getParameter( "docuuid" );
+            String plugid = request.getParameter( "plugid" );
+            File zip = UtilsUvpZipDownload.searchFilesToCreateZip(uuid, plugid, messages, xPathUtils);
+            if(zip != null) {
+                try(
+                    OutputStream outputStream = response.getPortletOutputStream();
+                    FileInputStream fileInputStream = new FileInputStream(zip.getAbsoluteFile());
+                    BufferedInputStream bufferedInputStream = new java.io.BufferedInputStream(fileInputStream);
+                ){
+                    response.setContentType( "application/zip" );
+                    response.addProperty("Content-Disposition", "attachment; filename=\"" + zip.getName() + "\"");
+                    response.setContentLength(bufferedInputStream.available());
+                    byte[] buffer = new byte[4096];
+                    int len = 0;
+                    while ((len = bufferedInputStream.read(buffer)) != -1) {
+                      outputStream.write(buffer, 0, len);
                     }
                 }
             }
         }
-    }
 
-    private void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
-        UrlValidator urlValidator = new UrlValidator();
-        if(urlValidator.isValid(paramURL)) {
-            URL url = new URL(paramURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            InputStream inStreamConvert = con.getInputStream();
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            if (null != con.getContentType()) {
-                byte[] chunk = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                    os.write(chunk, 0, bytesRead);
-                }
-                os.flush();
-                URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                        Base64.getEncoder().encodeToString(os.toByteArray()));
-                response.getWriter().write(dataUri.toString());
+        if (resourceID.equals( "httpURLDownloadUVPCreate" )) {
+            String uuid = request.getParameter( "docuuid" );
+            String plugid = request.getParameter( "plugid" );
+            File zip = UtilsUvpZipDownload.searchFilesToCreateZip(uuid, plugid, messages, xPathUtils);
+            if(zip != null && zip.exists()) {
+                response.setContentType( "text/plain" );
+                response.getWriter().write( Files.size(zip.toPath()) + "" );
             }
         }
     }
@@ -212,6 +167,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         // get fields from config that should be treated as date fields
         dateFields = Arrays.asList(PortalConfig.getInstance().getStringArray(PortalConfig.UDK_FIELDS_DATE));
         
+        xPathUtils = new XPathUtils(new IDFNamespaceContext());
         // get translation(replacement) rules from config file
         // map(map)
         String[] translations = PortalConfig.getInstance().getStringArray(PortalConfig.UDK_FIELDS_TRANSLATE);
@@ -261,10 +217,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("escTool", new EscapeTool());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
 
+        // Geotools
+        context.put("geoGmlToWkt", GmlToWktTransformUtil.class);
+        context.put("geoWktToGeoJson", WktToGeoJsonTransformUtil.class);
+        
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 
         context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)); 
-        
+        context.put("mapLinksNewTab", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPS_LINKS_NEW_TAB, false ));
+
+        context.put("leafletEpsg", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_EPSG, "3857"));
+
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
         
@@ -293,6 +256,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLDataType" );
         request.setAttribute( "restUrlHttpGetDataType", restUrl.toString() );
+
+        restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLDownloadUVPCreate" );
+        request.setAttribute( "restUrlHttpDownloadUVPCreate", restUrl.toString() );
+
+        restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLDownloadUVP" );
+        request.setAttribute( "restUrlHttpDownloadUVP", restUrl.toString() );
 
         try {
         	// check whether we come from google (no IngridSessionPreferences)

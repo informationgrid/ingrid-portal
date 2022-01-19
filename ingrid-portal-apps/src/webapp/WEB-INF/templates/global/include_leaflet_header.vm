@@ -34,7 +34,12 @@
     }
 
     function addLeafletMapWithId(mapId, baselayers, bounds, latlng, zoom){
+        var epsg = L.CRS.EPSG3857;
+        if('${leafletEpsg}'.length > 0) {
+            epsg = L.CRS.EPSG${leafletEpsg};
+        }
         var map = new L.Map(mapId, {
+           crs: epsg,
            layers: baselayers
         });
         if(bounds){

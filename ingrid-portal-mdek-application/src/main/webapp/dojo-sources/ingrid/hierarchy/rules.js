@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -50,8 +50,11 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             if (array.some(tableData, function(item) {
                 return (item.title == "1");
             })) {
+                domClass.remove("uiElementN005", "hide");
                 UtilGrid.updateOption("ref1VFormatDetails", "editable", true);
+                registry.byId("ref1VFormatDetails").reinitLastColumn();
             } else {
+                domClass.add("uiElementN005", "hide");
                 UtilGrid.setTableData("ref1VFormatDetails", []);
                 UtilGrid.updateOption("ref1VFormatDetails", "editable", false);
             }
@@ -90,6 +93,18 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 registry.byId("timeRefDate1").validate();
             }
             // date must not be null when value != ""
+        },
+
+        applyRule4: function(value) {
+            console.debug("apply rule 4");
+            if (value.indexOf("fromType") === 0) {
+                domClass.remove("timeRefSubTypeEditor", "hide");
+                applyRule3(registry.byId("timeRefSubType").get("value"));
+            } else {
+                domClass.add("timeRefSubTypeEditor", "hide");
+                // hide second date field
+                applyRule3("");
+            }
         },
 
         applyRule5: function() {
@@ -221,6 +236,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
     applyRule1 = Rules.applyRule1;
     applyRule2 = Rules.applyRule2;
     applyRule3 = Rules.applyRule3;
+    applyRule4 = Rules.applyRule4;
     applyRule5 = Rules.applyRule5;
     applyRule6 = Rules.applyRule6;
     applyRule7 = lang.hitch(Rules, Rules.applyRule7); // method has this reference!

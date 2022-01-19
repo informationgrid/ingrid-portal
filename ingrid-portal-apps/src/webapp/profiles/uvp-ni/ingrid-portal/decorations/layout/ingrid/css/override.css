@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -155,21 +155,38 @@
   background-color: rgba(227, 144, 0, 0.6) !important;
 }
 
-.marker-cluster-1314 {
+.marker-cluster-13 {
   background-color: rgba(200, 60, 40, 0.6) !important;
   z-index: -20 !important;
 }
 
-.marker-cluster-1314 div {
+.marker-cluster-13 div {
   background-color: rgba(200, 60, 40, 1.0) !important;
 }
 
-.marker-cluster-1314.light {
+.marker-cluster-13.light {
   background-color: transparent !important;
 }
 
-.marker-cluster-1314.light div {
+.marker-cluster-13.light div {
   background-color: rgba(200, 60, 40, 0.6) !important;
+}
+
+.marker-cluster-14 {
+  background-color: rgba(128,0,128, 0.6) !important;
+  z-index: -20 !important;
+}
+
+.marker-cluster-14 div {
+  background-color: rgba(128,0,128, 1.0) !important;
+}
+
+.marker-cluster-14.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-14.light div {
+  background-color: rgba(128,0,128, 0.6) !important;
 }
 
 .marker-cluster-dev-plan {
@@ -316,6 +333,7 @@ a.icon:hover {
 .button.round:hover, .button.round:focus {
   color: #1D4B7B;
   background-color: #eaf6ff;
+  border: 1px solid #1D4B7B;
 }
 .button.outline {
   color: #0089C6;
@@ -325,7 +343,7 @@ a.icon:hover {
 .input-search .button {
   background-color: #E50046;
 }
-.input-search .button:hover {
+.input-search .button:hover, .input-search .button:focus {
   background-color: #CA526A;
 }
 .input-search .button.round {
@@ -346,7 +364,8 @@ header {
 .menu-tab-row .menu-tab.is-selected .link-menu-tab {
   color: #1D4B7B;
 }
-.menu-tab-row .menu-tab:hover .link-menu-tab {
+.menu-tab-row .menu-tab:hover .link-menu-tab,
+.menu-tab-row .menu-tab:focus .link-menu-tab {
   color: #1D4B7B;
 }
 .header-menu {
@@ -358,7 +377,12 @@ header {
 .header-menu-close .button {
   background-color: #1D4B7B;
 }
-.menu-main-links a:hover, .menu-main-links .button.logout:hover {
+.header-menu-close .button:hover,
+.header-menu-close .button:focus {
+  background-color: #012D47;
+}
+.menu-main-links a:hover, .menu-main-links .button.logout:hover,
+.menu-main-links a:focus, .menu-main-links .button.logout:focus {
   background-color: #012D47;
   color: #FFFFFF;
 }
@@ -368,7 +392,8 @@ header {
 .menu-sub-links .button.logout {
   background-color: #012D47;
 }
-.menu-sub-links a:hover, .menu-sub-links .button.logout:hover {
+.menu-sub-links a:hover, .menu-sub-links .button.logout:hover,
+.menu-sub-links a:focus, .menu-sub-links .button.logout:focus {
   background-color: #5E788D;
   color: #FFFFFF;
 }
@@ -416,14 +441,20 @@ header {
 .teaser-data .header {
   color: #0089C6;
 }
-.teaser-data .header:hover, .teaser-data .arrow:hover {
+.teaser-data .header:hover, .teaser-data .arrow:hover,
+.teaser-data a:focus .header, .teaser-data:focus .arrow {
+  color: #1D4B7B !important;
+}
+.teaser-data a:hover .header, .teaser-data a:hover .arrow,
+.teaser-data a:focus .header, .teaser-data a:focus .arrow {
   color: #1D4B7B;
 }
 .teaser-data path.leaflet-interactive, .detail path.leaflet-interactive {
   stroke: #0089C6;
   fill: #0089C6;
 }
-.teaser:hover .teaser-link, .tabs-content .tabs-panel .teaser:hover .teaser-link {
+.teaser:hover .teaser-link, .tabs-content .tabs-panel .teaser:hover .teaser-link,
+.teaser:focus-within .teaser-link, .tabs-content .tabs-panel .teaser:focus-within .teaser-link {
   color: #1D4B7B;
 }
 .teaser .teaser-link .ic-abfall, .teaser .teaser-link .ic-UVPG-12 {
@@ -597,11 +628,13 @@ header {
 .filter-group .accordion-item .accordion-title::after {
   color: #0089C6;
 }
-.filter-group .accordion-item .accordion-title:hover {
+.filter-group .accordion-item .accordion-title:hover,
+.filter-group .accordion-item .accordion-title:focus {
   color: #1D4B7B;
   border-color: #1D4B7B !important;
 }
-.filter-group .accordion-item .accordion-title:hover::after {
+.filter-group .accordion-item .accordion-title:hover::after,
+.filter-group .accordion-item .accordion-title:focus::after {
   color: #1D4B7B;
 }
 .control--checkbox .control__indicator::after {
@@ -609,29 +642,48 @@ header {
   border-width: 0 3px 3px 0;
 }
 .control__indicator {
-  border: 1px solid #012D47;
+  border: 1px solid #012D47 !important;
 }
 .button.pill {
   color: #0089C6;
   background-color: #eaf6ff;
 }
-.button.pill:hover span {
+.button.pill:hover,
+.button.pill:focus {
+  color: #eaf6ff;
+  background-color: #256394;
+}
+.button.pill:hover span,
+.button.pill:focus span {
   color: #256394;
 }
 
+.button.pill:hover,
+.button.pill:focus {
+  color: #eaf6ff;
+  background-color: #256394;
+}
+.button.pill:hover span,
+.button.pill:focus span {
+  color: #FFFFFF;
+}
+.button.disabled, .button.disabled:hover, .button.disabled:focus, .button[disabled], .button[disabled]:hover, .button[disabled]:focus {
+  background-color: #0089C6;
+}
 .boxed-table thead {
   background-color: #FFFFFF;
   border-bottom: 1px solid #256394;
+  color: #3A566D;
 }
 .dark a:hover {
-  color: #FFF;
+  color: #1D4B7B;
   text-decoration: underline;
 }
 .dark a:focus {
   color: #FFF;
 }
 table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr {
-  color: #256394;
+  color: #0089C6;
 }
 table .dark a {
   text-decoration: none;
@@ -671,6 +723,15 @@ footer .footer .logo {
 footer hr {
   margin: 0 0 16px;
 }
+footer .footer-top-link {
+  background-color: #006ec5;
+}
+
+footer .footer-top-link:hover,
+footer .footer-top-link:focus {
+  background-color: #1D4B7B;
+}
+
 .switch {
   position: absolute;
   bottom: 0;
@@ -840,6 +901,9 @@ header .menu-tab-row .menu-tab {
   .switch-popup a.switch-link.numis img {
      width: 24em;
   }
+  .search-filtered .accordion.accordion-filter-group .accordion-content.filter-wrapper {
+     max-height: unset;
+  }
 }
 @media print, screen and (min-width: 78em) {
   footer .footer .footer-menu-entries, footer .footer .copyright {
@@ -852,4 +916,8 @@ header .menu-tab-row .menu-tab {
   .banner.home .home-wrapper h1 .ic-ic-asterisc {
     font-size: 29px;
   }
+}
+
+.toggle input:checked + .toggle-slider {
+  background-color: #0089C6;
 }

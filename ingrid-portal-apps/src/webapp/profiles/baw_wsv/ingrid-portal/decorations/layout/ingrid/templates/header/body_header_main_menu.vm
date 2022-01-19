@@ -1,0 +1,5 @@
+<div class="columns xsmall-14 small-15 medium-17 large-16 xlarge-16 nav-tabs">
+#if(!$mainMenu.empty)
+    #includeMainNavigation($mainMenu)
+#end
+</div>

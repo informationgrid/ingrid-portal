@@ -10,6 +10,7 @@ title: Dateibeschreibung der Vorschaugrafik
 # Dateibeschreibung der Vorschaugrafik
 
 Textliche Beschreibung des Inhalts der Grafik.
+Die Dateibeschreibung kann manuell geändert werden.
 
 
 # ISO Abbildung

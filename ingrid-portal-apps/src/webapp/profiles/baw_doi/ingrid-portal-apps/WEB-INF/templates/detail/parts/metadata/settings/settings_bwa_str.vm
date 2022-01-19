@@ -1,45 +1,3 @@
-## BAW Auftragsnummer
-#set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
-## BAW Auftragstitel
-#set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString"))
-## BAW BWAStrCenter
-#set($bawstrCenterLongitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lon']/idf:data"))
-#set($bawstrCenterLatitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lat']/idf:data"))
-
-## Format
-#set($xPathBawFormat = "//gmd:resourceFormat/gmd:MD_Format")
-## Format Name
-#set($xPathBawFormatName = "./gmd:name/gco:CharacterString")
-## Format Version
-#set($xPathBawVersion = "./gmd:version/gco:CharacterString")
-## Verfahren
-#set($xPathBawProcedure = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.method']//gmd:keyword/gco:CharacterString")
-## Modellart
-#set($xPathBawModellType = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.type']//gmd:keyword/gco:CharacterString")
-## Räumliche Dimensionalität
-#set($xPathBawSpatialDimensionality = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.dimensionality']//gmd:keyword/gco:CharacterString")
-## Daten / Größen / Parameter
-#set($xPathBAWDataQuality = "//gmd:DQ_DataQuality")
-#set($xPathBawRole = "./gmd:lineage//gmd:LI_Source/gmd:description/gco:CharacterString")
-#set($xPathBawName = ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueType/gco:RecordType")
-#set($xPathBawUnit = ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueUnit//gml:catalogSymbol")
-#set($xPathBawValue = ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:value/gco:Record")
-
-#set($xPathListInformationTypeBawMis = [
-    "${xPathBawFormat}/${xPathBawFormatName}",
-    "${xPathBawFormat}/${xPathBawVersion}",
-    $xPathBawProcedure,
-    $xPathBawModellType,
-    $xPathBawSpatialDimensionality,
-    "${xPathBAWDataQuality}/${xPathBawRole}",
-    "${xPathBAWDataQuality}/${xPathBawName}",
-    "${xPathBAWDataQuality}/${xPathBawUnit}",
-    "${xPathBAWDataQuality}/${xPathBawValue}"
-])
-#if($TOOL.aNodeOfListExist($xPathListInformationTypeBawMis))
-    #set($checkOtherInformation = true)
-#end
-
 ## BwaStr location
 #set($bwastrIds = $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
 #set($bwastr = [])
@@ -65,11 +23,3 @@
        #end
     #end
 #end
-
-## WKT
-#set($wkt = "")
-#if($wktPolygons && $wktPolygons.size() > 0)
-    #set($wkt = $wktPolygons.get(0))
-#end
-
-#set($showMetadataClassType = false)

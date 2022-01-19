@@ -7,8 +7,9 @@ Bitte verifizieren Sie Ihre Anmeldung durch den nachfolgenden Link.
 
 $!{map.get("returnURL")}
 
-Danach schreiben Sie eine E-Mail an das Dataport UDP HH Funktionspostfach: dataportudphh@dataport.de 
-Wir weisen Ihnen dann die Berechtigung für den InGrid-Editor zu. Erst danach können Sie mit dem Erfassen oder Bearbeiten der Metadaten beginnen.
+Danach schreiben Sie eine E-Mail an das Dataport UDP HH Funktionspostfach: dataportudphh@dataport.de
+Bitte teilen Sie uns darin Ihren Benutzernamen, sowie die zuständige Behörde/Amt/Institution mit für die Sie im InGrid-Editor die entsprechenden Rechte benötigen.
+Wir weisen Ihnen dann die Berechtigung(en) für den InGrid-Editor zu. Erst danach können Sie mit dem Erfassen oder Bearbeiten der Metadaten beginnen.
 
 Mit freundlichen Grüßen,
 Ihr HMDK-Team

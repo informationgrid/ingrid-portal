@@ -400,7 +400,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_dev_plan</id>
                 <display>true</display>
             </facet>
-            <!-- Zulassungsverfahren -->
+            <!-- Negative Vorprüfungen -->
             <facet>
                 <name>Negative Vorprüfungen</name>
                 <query>t01_object.obj_class:12</query>

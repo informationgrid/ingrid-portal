@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,16 +22,9 @@
  */
 package de.ingrid.portal.portlets;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -50,13 +43,14 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.validator.UrlValidator;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.EscapeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.geo.utils.transformation.GmlToWktTransformUtil;
+import de.ingrid.geo.utils.transformation.WktToGeoJsonTransformUtil;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridHitsWrapper;
@@ -64,7 +58,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UniversalSorter;
 import de.ingrid.portal.global.UtilsFacete;
-import de.ingrid.portal.global.UtilsMimeType;
+import de.ingrid.portal.global.UtilsPortletServeResources;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
@@ -99,82 +93,15 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         String resourceID = request.getResourceID();
         String paramURL = request.getParameter( "url" );
 
+        String login = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
+        String password = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD);
+
         if(paramURL != null) {
             if (resourceID.equals( "httpURLDataType" )) {
-                String extension = null;
-                if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
-                    extension = "csw";
-                } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
-                    extension = "wms";
-                } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
-                    extension = "wfs";
-                } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
-                    extension = "wmts";
-                }
-                if(extension == null) {
-                    UrlValidator urlValidator = new UrlValidator();
-                    if(urlValidator.isValid(paramURL)) {
-                        URL url = new URL(paramURL);
-                        try {
-                            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                            con.setRequestMethod("HEAD");
-    
-                            String contentType = con.getContentType();
-    
-                            if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
-                                url = new URL(paramURL.replace("http://", "https://"));
-                                con = (HttpURLConnection) url.openConnection();
-                                con.setRequestMethod("HEAD");
-                            }
-                            if(contentType != null) {
-                                extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
-                            }
-                        } catch (Exception e) {
-                           log.debug("Failed to load: " + paramURL);
-                        }
-                    }
-                }
-                response.setContentType( "text/plain" );
-                if(extension != null) {
-                    response.getWriter().write( extension );
-                }
+                UtilsPortletServeResources.getHttpUrlDatatype(paramURL, login, password, response);
             }
-
             if (resourceID.equals( "httpURLImage" )) {
-                try {
-                    getURLResponse(paramURL, response);
-                } catch (Exception e) {
-                    log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
-                    String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
-                    log.error( "Try https URL: " + httpsUrl);
-                    try {
-                        getURLResponse(httpsUrl, response);
-                    } catch (Exception e1) {
-                        log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
-                        response.getWriter().write(paramURL);
-                    }
-                }
-            }
-        }
-    }
-
-    private void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
-        UrlValidator urlValidator = new UrlValidator();
-        if(urlValidator.isValid(paramURL)) {
-            URL url = new URL(paramURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            InputStream inStreamConvert = con.getInputStream();
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            if (null != con.getContentType()) {
-                byte[] chunk = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                    os.write(chunk, 0, bytesRead);
-                }
-                os.flush();
-                URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                        Base64.getEncoder().encodeToString(os.toByteArray()));
-                response.getWriter().write(dataUri.toString());
+                UtilsPortletServeResources.getHttpUrlImage(paramURL, response, resourceID);
             }
         }
     }
@@ -206,10 +133,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory10", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_10_CHECKED, false ));
         context.put("checkedCategory11", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED, false ));
         context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
-        context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
+        context.put("checkedCategory13", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_13_CHECKED, false ));
+        context.put("checkedCategory14", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_14_CHECKED, false ));
         context.put("ranking", request.getParameter(Settings.PARAM_RANKING));
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
         context.put("escTool", new EscapeTool());
+        context.put("mapLinksNewTab", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPS_LINKS_NEW_TAB, false ));
 
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 
@@ -221,6 +150,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         restUrl.setResourceID( "httpURLImage" );
         request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
 
+        // Geotools
+        context.put("geoGmlToWkt", GmlToWktTransformUtil.class);
+        context.put("geoWktToGeoJson", WktToGeoJsonTransformUtil.class);
+
         String[] mapPosition = PortalConfig.getInstance().getStringArray( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_POSITION);
         if(mapPosition != null && mapPosition.length == 3) {
             context.put("mapPosition", mapPosition);
@@ -229,6 +162,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             context.put("mapExtent", mapPosition);
             context.put("mapPosition", "");
         }
+        context.put("leafletEpsg", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_EPSG, "3857"));
         context.put("mapParamE", request.getParameter("E") != null ? request.getParameter("E"): "");
         context.put("mapParamN", request.getParameter("N") != null ? request.getParameter("N"): "");
         context.put("mapParamZoom", request.getParameter("zoom") != null ? request.getParameter("zoom"): "");
@@ -628,7 +562,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 // reset page and page selector by facets activity
                 SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, "");
                 SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
-                SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
+                SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, rankedStarthit != null ? rankedStarthit : 0);
              }
              actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + url);
         }

@@ -57,6 +57,24 @@
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-10' + c, iconSize: new L.Point(40, 40) });
         }
     });
+    var mapMarkers10_time = L.markerClusterGroup({
+        id: 'mapMarkers10_time',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-10' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
     // "Ausländische Verfahren" markers
     var mapMarkers11 = L.markerClusterGroup({
         id: 'mapMarkers11',
@@ -76,9 +94,9 @@
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
         }
     });
-    // "Vorgelagerte Verfahren" markers
-    var mapMarkers1314 = L.markerClusterGroup({
-        id: 'mapMarkers1314',
+    // "Raumordnungsverfahren" markers
+    var mapMarkers13 = L.markerClusterGroup({
+        id: 'mapMarkers13',
         iconCreateFunction: function (cluster) {
             var childCount = cluster.getChildCount();
             var c = ' marker-cluster-';
@@ -92,12 +110,49 @@
             if(smallIcons){
              c += ' light';
             }
-            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-13' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    // "Linienbestimmungen" markers
+    var mapMarkers14 = L.markerClusterGroup({
+        id: 'mapMarkers14',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-14' + c, iconSize: new L.Point(40, 40) });
         }
     });
     // "Negative Vorprüfungen" markers
     var mapMarkers12 = L.markerClusterGroup({
         id: 'mapMarkers12',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-12' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    var mapMarkers12_time = L.markerClusterGroup({
+        id: 'mapMarkers12_time',
         iconCreateFunction: function (cluster) {
             var childCount = cluster.getChildCount();
             var c = ' marker-cluster-';
@@ -138,82 +193,27 @@
     .done(function(data, textStatus, jqxhr) {
         var mapFilter = $('.map-filter ul li div');
         var overlayers = {};
-        if(mapFilter) {
-            if(legendCounter){
-                if(legendCounter.countMarker1){
-                    createLegendEntry(map, mapFilter, mapMarkers10, 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv');
-                }
-                if(legendCounter.countMarker3){
-                    createLegendEntry(map, mapFilter, mapMarkers11, 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av');
-                }
-                if(legendCounter.countMarker2){
-                    createLegendEntry(map, mapFilter, mapMarkers1314, 'red', 'mapMarkers1314', 'Vorgelagerte Verfahren', 'vv');
-                }
-                if(legendCounter.countMarker4){
-                    createLegendEntry(map, mapFilter, mapMarkers12, 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv');
-                }
-                if(legendCounter.countMarkerDevPlan){
-                    createLegendEntry(map, mapFilter, mapMarkersDevPlan, 'green', 'mapMarkersDevPlan', 'Bauleitplanung', 'blp');
-                }
-            }
-        }
+#parse ('/WEB-INF/templates/global/include_leaflet_marker_legend.vm')
         var mapFilterXs = $('.map-filter-xs');
         if(mapFilterXs) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
-                    mapFilterXs.append( '<div class="form-element boxed map blue" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers10"><input id="mapMarkers10" name="mapMarkers10" type="checkbox"><span class="control__indicator"></span>Zulassungsverfahren</label></div></div></div>');
-                    $('#mapMarkers10').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers10);
-                        } else {
-                            map.removeLayer(mapMarkers10);
-                        }
-                    });
-                }
-                if(legendCounter.countMarker3){
-                    mapFilterXs.append( '<div class="form-element boxed map" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers11"><input id="mapMarkers11" name="mapMarkers11" type="checkbox"><span class="control__indicator"></span>Ausl&#228;ndische Vorhaben</label></div></div></div>');
-                    $('#mapMarkers11').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers11);
-                        } else {
-                            map.removeLayer(mapMarkers11);
-                        }
-                    });
-                }
-                if(legendCounter.countMarker2){
-                    mapFilterXs.append( '<div class="form-element boxed map red" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers1314"><input id="mapMarkers1314" name="mapMarkers1314" type="checkbox"><span class="control__indicator"></span>Vorgelagerte Verfahren</label></div></div></div>');
-                    $('#mapMarkers1314').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers1314);
-                        } else {
-                            map.removeLayer(mapMarkers1314);
-                        }
-                    });
+                    createLegendEntry(map, mapFilterXs, [mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', 'style="padding:0px"');
                 }
                 if(legendCounter.countMarker4){
-                    mapFilterXs.append( '<div class="form-element boxed map orange" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers12"><input id="mapMarkers12" name="mapMarkers12" type="checkbox"><span class="control__indicator"></span>Negative Vorpr&#252;fungen</label></div></div></div>');
-                    $('#mapMarkers12').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkers12);
-                        } else {
-                            map.removeLayer(mapMarkers12);
-                        }
-                    });
+                    createLegendEntry(map, mapFilterXs, [mapMarkers12], 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv', 'style="padding:0px"');
+                }
+                if(legendCounter.countMarker2){
+                    createLegendEntry(map, mapFilterXs, [mapMarkers13], 'red', 'mapMarkers13', 'Raumordnungsverfahren', 'ro', 'style="padding:0px"');
+                }
+                if(legendCounter.countMarker5){
+                    createLegendEntry(map, mapFilterXs, [mapMarkers14], 'purple', 'mapMarkers14', 'Linienbestimmungen', 'li', 'style="padding:0px"');
+                }
+                if(legendCounter.countMarker3){
+                    createLegendEntry(map, mapFilterXs, [mapMarkers11], 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av', 'style="padding:0px"');
                 }
                 if(legendCounter.countMarkerDevPlan){
-                   mapFilterXs.append( '<div class="form-element boxed map green" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkersDevPlan"><input id="mapMarkersDevPlan" name="mapMarkersDevPlan" type="checkbox"><span class="control__indicator"></span>Bauleitplanung</label></div></div></div>');
-                   $('#mapMarkersDevPlan').on('change', function() {
-                        var checkbox = $(this);
-                        if ($(this).is(':checked')) {
-                            map.addLayer(mapMarkersDevPlan);
-                        } else {
-                            map.removeLayer(mapMarkersDevPlan);
-                        }
-                    });
+                    createLegendEntry(map, mapFilterXs, [mapMarkersDevPlan], 'green', 'mapMarkersDevPlan', 'Bauleitplanung', 'blp', 'style="padding:0px"');
                 }
             }
         }
@@ -221,10 +221,29 @@
             map.on('layeradd', onOverlayAdd);
             var mapParamLayer = '$mapParamLayer';
             var mapParamLayers = [];
-            if(mapParamLayer) {
+            if(mapParamLayer.length === 0) {
+                if($checkedCategoryDevPlan) {
+                    mapParamLayers.push('blp');
+                }
+                if($checkedCategory10) {
+                    mapParamLayers.push('zv');
+                }
+                if($checkedCategory11) {
+                    mapParamLayers.push('av');
+                }
+                if($checkedCategory12) {
+                    mapParamLayers.push('nv');
+                }
+                if($checkedCategory13) {
+                    mapParamLayers.push('ro');
+                }
+                if($checkedCategory14) {
+                    mapParamLayers.push('li');
+                }
+            } else {
                 mapParamLayers = mapParamLayer.split(',');
             }
-            if($checkedCategoryDevPlan && mapParamLayers.length === 0 || mapParamLayers.indexOf('blp') > -1){
+            if(mapParamLayers.indexOf('blp') > -1){
                 if(mapMarkersDevPlan) {
                     map.addLayer(mapMarkersDevPlan);
                     $('#mapMarkersDevPlan').prop('checked', true);
@@ -233,16 +252,22 @@
                     }
                 }
             }
-            if($checkedCategory10 && mapParamLayers.length === 0 || mapParamLayers.indexOf('zv') > -1){
-                if(mapMarkers10) {
-                    map.addLayer(mapMarkers10);
+            if(mapParamLayers.indexOf('zv') > -1){
+                if(mapMarkers10 || mapMarkers10_time) {
                     $('#mapMarkers10').prop('checked', true);
+                    var checkboxTime = $('#mapMarkers10_time');
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(mapMarkers10_time);
+                        checkboxTime.closest('.control-group').removeClass('is-hidden');
+                    } else {
+                        map.addLayer(mapMarkers10);
+                    }
                     if(mapParamLayers.indexOf('zv') === -1) {
                         mapParamLayers.push('zv');
                     }
                 }
             }
-            if($checkedCategory11 && mapParamLayers.length === 0 || mapParamLayers.indexOf('av') > -1){
+            if(mapParamLayers.indexOf('av') > -1){
                 if(mapMarkers11) {
                     map.addLayer(mapMarkers11);
                     $('#mapMarkers11').prop('checked', true);
@@ -251,19 +276,34 @@
                     }
                 }
             }
-            if($checkedCategory1314 && mapParamLayers.length === 0 || mapParamLayers.indexOf('vv') > -1){
-                if(mapMarkers1314) {
-                    map.addLayer(mapMarkers1314);
-                    $('#mapMarkers1314').prop('checked', true);
-                    if(mapParamLayers.indexOf('vv') === -1) {
-                        mapParamLayers.push('vv');
+            if(mapParamLayers.indexOf('ro') > -1){
+                if(mapMarkers13) {
+                    map.addLayer(mapMarkers13);
+                    $('#mapMarkers13').prop('checked', true);
+                    if(mapParamLayers.indexOf('ro') === -1) {
+                        mapParamLayers.push('ro');
                     }
                 }
             }
-            if($checkedCategory12 && mapParamLayers.length === 0 || mapParamLayers.indexOf('nv') > -1){
-                if(mapMarkers12) {
-                    map.addLayer(mapMarkers12);
+            if(mapParamLayers.indexOf('li') > -1){
+                if(mapMarkers14) {
+                    map.addLayer(mapMarkers14);
+                    $('#mapMarkers14').prop('checked', true);
+                    if(mapParamLayers.indexOf('li') === -1) {
+                        mapParamLayers.push('li');
+                    }
+                }
+            }
+            if(mapParamLayers.indexOf('nv') > -1){
+                if(mapMarkers12 || mapMarkers12_time) {
                     $('#mapMarkers12').prop('checked', true);
+                    var checkboxTime = $('#mapMarkers12_time');
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(mapMarkers12_time);
+                        checkboxTime.closest('.control-group').removeClass('is-hidden');
+                    } else {
+                        map.addLayer(mapMarkers12);
+                    }
                     if(mapParamLayers.indexOf('nv') === -1) {
                         mapParamLayers.push('nv');
                     }
@@ -299,30 +339,13 @@
         mapZoom = parseFloat('$mapParamZoom') || mapZoom;
         map.setView(new L.LatLng(mapLat, mapLng), mapZoom);
     } else if(mapParamExtent && mapParamExtent.length === 4){
-        map.fitBounds(L.latLngBounds(
+        mapBounds = L.latLngBounds(
           L.latLng(parseFloat(mapParamExtent[0]),
             parseFloat(mapParamExtent[1])),
           L.latLng(parseFloat(mapParamExtent[2]),
           parseFloat(mapParamExtent[3]))
-        ));
+        );
     } else if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
-        map.fitBounds(L.latLngBounds(
-          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y1'),
-            parseFloat('$selectedMap.webmapclientCoords.x1')),
-          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y2'),
-          parseFloat('$selectedMap.webmapclientCoords.x2'))
-        ));
-    } else if('$mapExtent'){
-        map.fitBounds(L.latLngBounds(
-          L.latLng(parseFloat('$mapExtent.get(0)'),
-            parseFloat('$mapExtent.get(1)')),
-          L.latLng(parseFloat('$mapExtent.get(2)'),
-          parseFloat('$mapExtent.get(3)'))
-        ));
-    }
-    
-    if(!mapBounds){
-        if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
         mapBounds = L.latLngBounds(
           L.latLng(parseFloat('$selectedMap.webmapclientCoords.y1'),
             parseFloat('$selectedMap.webmapclientCoords.x1')),
@@ -337,8 +360,16 @@
           parseFloat('$mapExtent.get(3)'))
         );
     }
+    if(mapBounds){
+        map.fitBounds(mapBounds);
+    } else if('$mapExtent'){
+        mapBounds = L.latLngBounds(
+          L.latLng(parseFloat('$mapExtent.get(0)'),
+            parseFloat('$mapExtent.get(1)')),
+          L.latLng(parseFloat('$mapExtent.get(2)'),
+          parseFloat('$mapExtent.get(3)'))
+        );
     }
-
     map.on('moveend', function(e){
         var mapLatLng = this.getCenter();
         if(mapLatLng) {
@@ -370,6 +401,7 @@
                                 var name = a.name;
                                 var lat = a.lat;
                                 var lon = a.lon;
+                                var iplug = a.iplug;
                                 var popUpHtml = 'Bitte warten ...';
                                 var iconColor = 'green';
                                 var icon = getIcon(smallIcons, iconColor, enablePopUp); 
@@ -377,6 +409,7 @@
                                 marker.bbox = null;
                                 marker.lat = lat;
                                 marker.lon = lon;
+                                marker.iplug = iplug;
                                 if(enablePopUp){
                                     marker.on('click', onMapClickBLP);
                                     marker.bindPopup(popUpHtml, popupMarkerOptions);
@@ -411,8 +444,27 @@
                     });
                 }
             }
-        } else if(e.layer.options.id === 'mapMarkers1314') {
-            if(mapMarkers1314.getLayers().length === 0) {
+        } else if(e.layer.options.id === 'mapMarkers10_time') {
+            if(mapMarkers10_time.getLayers().length === 0) {
+                if("$restUrlMarker_time") {
+                    map.spin(true);
+                    jQuery.get("$restUrlMarker_time")
+                    .done(function(data, textStatus, jqxhr) {
+                        map.spin(false);
+                        if(markers){
+                            for (var i = 0; i < markers.length; i++) {
+                                var a = markers[i];
+                                createMarker(mapMarkers10_time, a, 'blue');
+                            }
+                        }
+                    })
+                    .error(function () {
+                      map.spin(false);
+                    });
+                }
+            }
+        } else if(e.layer.options.id === 'mapMarkers13') {
+            if(mapMarkers13.getLayers().length === 0) {
                 if("$restUrlMarker2") {
                     map.spin(true);
                     jQuery.get("$restUrlMarker2")
@@ -421,7 +473,26 @@
                         if(markers){
                             for (var i = 0; i < markers.length; i++) {
                                 var a = markers[i];
-                                createMarker(mapMarkers1314, a, 'red');
+                                createMarker(mapMarkers13, a, 'red');
+                            }
+                        }
+                    })
+                    .error(function () {
+                      map.spin(false);
+                    });
+                }
+            }
+        } else if(e.layer.options.id === 'mapMarkers14') {
+            if(mapMarkers14.getLayers().length === 0) {
+                if("$restUrlMarker5") {
+                    map.spin(true);
+                    jQuery.get("$restUrlMarker5")
+                    .done(function(data, textStatus, jqxhr) {
+                        map.spin(false);
+                        if(markers){
+                            for (var i = 0; i < markers.length; i++) {
+                                var a = markers[i];
+                                createMarker(mapMarkers14, a, 'purple');
                             }
                         }
                     })
@@ -460,6 +531,25 @@
                             for (var i = 0; i < markers.length; i++) {
                                 var a = markers[i];
                                 createMarker(mapMarkers12, a, 'orange');
+                            }
+                        }
+                    })
+                    .error(function () {
+                      map.spin(false);
+                    });
+                }
+            }
+        } else if(e.layer.options.id === 'mapMarkers12_time') {
+            if(mapMarkers12_time.getLayers().length === 0) {
+                if("$restUrlMarker4_time") {
+                    map.spin(true);
+                    jQuery.get("$restUrlMarker4_time")
+                    .done(function(data, textStatus, jqxhr) {
+                        map.spin(false);
+                        if(markers){
+                            for (var i = 0; i < markers.length; i++) {
+                                var a = markers[i];
+                                createMarker(mapMarkers12_time, a, 'orange');
                             }
                         }
                     })
@@ -521,11 +611,13 @@
     function createMarker(mapMarkers, a, iconColor) {
         var title = a[2];
         var uuid = a[3];
+        var iplug = a[4];
         var popUpHtml = 'Bitte warten ...';
         var icon = getIcon(smallIcons, iconColor, enablePopUp);
         var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
         marker.uuid = uuid;
         marker.bbox = null;
+        marker.iplug = iplug;
         if(enablePopUp){
             marker.bindPopup(popUpHtml, popupMarkerOptions);
             marker.on('click', onMapClick);
@@ -539,7 +631,7 @@
     function onMapClick(e) {
         var popup = e.target.getPopup();
         map.spin(true);
-        jQuery.get("$restUrlMarkerDetail?uuid=" + e.target.uuid)
+        jQuery.get("$restUrlMarkerDetail?uuid=" + e.target.uuid  + '&iplug=' + e.target.iplug)
         .done(function(data, textStatus, jqxhr) {
             map.spin(false);
             var title = e.target.options.title;
@@ -560,8 +652,9 @@
         var title = e.target.options.title;
         var x1 = e.target.lon;
         var y1 = e.target.lat;
+        var iplug = e.target.iplug;
         map.spin(true);
-        jQuery.get('$restUrlUVPDevPlanDetail?title=' + title + '&x1=' + x1 + '&y1=' + y1)
+        jQuery.get('$restUrlUVPDevPlanDetail?title=' + title + '&x1=' + x1 + '&y1=' + y1 + '&iplug=' + iplug)
         .done(function(data, textStatus, jqxhr) {
             map.spin(false);
             title = e.target.options.title;
@@ -622,28 +715,86 @@
         });
     };
     
-    function createLegendEntry(map, mapFilter, markers, color, id, title, paramEntry){
-        mapFilter.append( '<div class="form-element boxed map ' + color + '"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="' + id + '"><input id="' + id + '" name="' + id + '" type="checkbox"><span class="control__indicator"></span>' + title + '</label></div></div></div>');
-        $('#' + id).on('change', function() {
+    function createLegendEntry(map, mapFilter, markers, color, id, title, paramEntry, style, restUrlTime){
+        var html = '<div class="form-element boxed map ' + color + '" ' + style + '>';
+        html += '<div class="input-check">' +
+            '<div class="control-group">' +
+            '<label class="control control--checkbox" for="' + id + '">' +
+            '<input id="' + id + '" name="' + id + '" type="checkbox">' +
+            '<span class="control__indicator"></span>' +
+            title + '</label>' +
+            '</div>';
+        if(markers.length > 1 && restUrlTime && restUrlTime.length > 0) {
+            html += '<div class="control-group is-hidden">' +
+                '<label class="control toggle">' +
+                '<input id="' + id + '_time" name="' + id + '_time" type="checkbox" checked>' +
+                '<span class="toggle-slider round"></span>' +
+                '</label>' +
+                '<span class="toggle-label checked">$MESSAGES.getString("common.toggle.approval.date")</span>'+
+                '<span class="toggle-label unchecked is-hidden">$MESSAGES.getString("common.toggle.all")</span>'+
+                '</div>';
+        }
+        html += '</div></div>';
+        mapFilter.append( html );
+
+        var legendEntry = $('#' + id);
+        var checkboxTime = $('#' + id + '_time');
+
+        legendEntry.on('change', function() {
             var paramLayer = getQueryStringParameter('layer');
             var paramLayers = [];
             if(paramLayer) {
                 paramLayers = paramLayer.split(',');
             }
-            var checkbox = $(this);
             const index = paramLayers.indexOf(paramEntry);
-            if ($(this).is(':checked')) {
-                map.addLayer(markers);
+            if (legendEntry.is(':checked')) {
+                if(checkboxTime.length > 0) {
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(markers[0]);
+                    } else {
+                        map.addLayer(markers[1]);
+                    }
+                    checkboxTime.closest('.control-group').removeClass('is-hidden');
+                } else {
+                    map.addLayer(markers[0]);
+                }
                 if(index === -1) {
                     paramLayers.push(paramEntry);
                 }
             } else {
-                map.removeLayer(markers);
+                if(checkboxTime.length > 0) {
+                    map.removeLayer(markers[0]);
+                    map.removeLayer(markers[1]);
+                    checkboxTime.closest('.control-group').addClass('is-hidden');
+                } else {
+                    map.removeLayer(markers[0]);
+                }
                 if (index > -1) {
                   paramLayers.splice(index, 1);
                 }
             }
             updateQueryStringParameter('layer', paramLayers.toString());
         });
+
+        if(markers.length > 1) {
+            checkboxTime.on('change', function() {
+                if (legendEntry.is(':checked')) {
+                    var checkLabel = checkboxTime.closest('.control-group').find('.toggle-label.checked');
+                    var uncheckLabel = checkboxTime.closest('.control-group').find('.toggle-label.unchecked');
+
+                    if ($(this).is(':checked')) {
+                        map.addLayer(markers[0]);
+                        map.removeLayer(markers[1]);
+                        checkLabel.removeClass('is-hidden');
+                        uncheckLabel.addClass('is-hidden');
+                    } else {
+                        map.addLayer(markers[1]);
+                        map.removeLayer(markers[0]);
+                        uncheckLabel.removeClass('is-hidden');
+                        checkLabel.addClass('is-hidden');
+                    }
+                }
+            });
+        }
     };
 </script>

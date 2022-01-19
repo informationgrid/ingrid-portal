@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -231,7 +231,9 @@ public class SNSService {
 
     	List<SNSTopic> resultList = new ArrayList<>();
     	for (Term term : terms) {
-    		resultList.add(convertTermToSNSTopic(term));
+    		if (term.getName() != null || term.getAlternateName() != null) {
+				resultList.add(convertTermToSNSTopic(term));
+			}
     	}
 
 	    Collections.sort(resultList, new SNSTopicComparator(locale));

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -30,6 +30,7 @@ import java.net.URLEncoder;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import org.apache.log4j.Logger;
 
 import com.thoughtworks.xstream.XStream;
@@ -61,6 +62,7 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 		
 		// XStream initialization
 		xstream = new XStream();
+		xstream.addPermission(AnyTypePermission.ANY);
 	    xstream.alias("CTS_Response", CTSResponse.class);
 	    xstream.registerConverter(new CTSResponseConverter());
 

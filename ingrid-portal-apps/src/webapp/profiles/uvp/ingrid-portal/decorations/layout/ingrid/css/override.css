@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -149,21 +149,38 @@
   background-color: rgba(227, 144, 0, 0.6) !important;
 }
 
-.marker-cluster-1314 {
+.marker-cluster-13 {
   background-color: rgba(200, 60, 40, 0.6) !important;
   z-index: -20 !important;
 }
 
-.marker-cluster-1314 div {
+.marker-cluster-13 div {
   background-color: rgba(200, 60, 40, 1.0) !important;
 }
 
-.marker-cluster-1314.light {
+.marker-cluster-13.light {
   background-color: transparent !important;
 }
 
-.marker-cluster-1314.light div {
+.marker-cluster-13.light div {
   background-color: rgba(200, 60, 40, 0.6) !important;
+}
+
+.marker-cluster-14 {
+  background-color: rgba(128,0,128, 0.6) !important;
+  z-index: -20 !important;
+}
+
+.marker-cluster-14 div {
+  background-color: rgba(128,0,128, 1.0) !important;
+}
+
+.marker-cluster-14.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-14.light div {
+  background-color: rgba(128,0,128, 0.6) !important;
 }
 
 .marker-cluster-dev-plan {
@@ -285,5 +302,12 @@
   }
   .header-menu-open .small-button {
     display: none;
+  }
+}
+
+
+@media print, screen and (min-width: 64em) {
+  .search-filtered .accordion.accordion-filter-group .accordion-content.filter-wrapper {
+     max-height: unset;
   }
 }

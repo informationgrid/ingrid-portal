@@ -1,0 +1,5 @@
+## PSP-Element
+#if($bwa_num)
+#renderFactTitle("PSP-Element")
+        <p>$bwa_num.get(0)</p>
+#end

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -199,7 +199,10 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
                 request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_DONE);
             }
         }
-        
+
+        // insert timestamp token into session
+        request.getPortletSession().setAttribute("timestampToken", System.currentTimeMillis());
+
         context.put("actionForm", f);
         context.put("loginLength", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_LENGTH_CHECK_LOGIN, 4));
         super.doView(request, response);
@@ -217,11 +220,16 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
         actionResponse.setRenderParameter("cmd", request.getParameter("cmd"));
 
+        // check timestamp token
+        Object timestampToken = request.getPortletSession().getAttribute("timestampToken");
+        long timespan = timestampToken != null ? System.currentTimeMillis() - (long) timestampToken : 0;
+        boolean isTokenValid = timespan >= 5000;
+
         CreateAccountForm f = (CreateAccountForm) Utils.getActionForm(request, CreateAccountForm.SESSION_KEY,
                 CreateAccountForm.class);
         f.clearErrors();
         f.populate(request);
-        if (!f.validate()) {
+        if (!f.validate() && !isTokenValid) {
             return;
         }
 

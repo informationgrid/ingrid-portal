@@ -185,3 +185,9 @@
 
 ## Ortslage
 #parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_bwastr_name.vm")
+
+## PSP-Element
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_bwa_number.vm")
+
+## Auftragstitel
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_bwa_title.vm")

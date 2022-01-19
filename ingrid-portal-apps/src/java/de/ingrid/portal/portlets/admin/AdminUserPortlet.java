@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.security.PrivilegedAction;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -64,11 +65,15 @@ import org.apache.jetspeed.security.PasswordAlreadyUsedException;
 import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.Role;
 import org.apache.jetspeed.security.RoleManager;
+import org.apache.jetspeed.security.SecurityAttributes;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserResultList;
 import org.apache.velocity.context.Context;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,6 +84,10 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridPrincipalRuleAssoc;
+import de.ingrid.portal.om.IngridSecurityCredential;
+import de.ingrid.portal.om.IngridSecurityPrincipalAssoc;
 import de.ingrid.portal.portlets.security.SecurityResources;
 import de.ingrid.portal.security.role.IngridRole;
 
@@ -230,7 +239,7 @@ public class AdminUserPortlet extends ContentPortlet {
         try {
 
             // get entities
-            List rows = getEntities(request);
+            List<UserInfo> rows = getEntities(request);
 
             String defaultSortColumn = PortalConfig.getInstance().getString( PortalConfig.USER_ADMIN_SORT_COLUMN, "id" );
             String sortColumn = getSortColumn(request, defaultSortColumn);
@@ -240,6 +249,9 @@ public class AdminUserPortlet extends ContentPortlet {
             // put rows into session
             setEntitiesInSession(request, rows);
 
+            HashMap<String, ArrayList<UserInfo>> userStats = createStats(rows);
+            request.getPortletSession().setAttribute("stats", userStats, PortletSession.PORTLET_SCOPE);
+            
             // always refresh !
             refreshBrowserState(request);
             ContentBrowserState state = getBrowserState(request);
@@ -256,7 +268,8 @@ public class AdminUserPortlet extends ContentPortlet {
             context.put(CONTEXT_ENTITIES, rows.subList(firstRow, lastRow));
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
             context.put(CONTEXT_BROWSER_STATE, state);
-            
+            context.put("userStats", userStats);
+
             for (Map.Entry<String, String> filter : state.getFilterCriteria().entrySet()) {
                 context.put(filter.getKey(), filter.getValue());
             }
@@ -269,6 +282,63 @@ public class AdminUserPortlet extends ContentPortlet {
             return false;
         }
         return true;
+    }
+
+    private HashMap<String, ArrayList<UserInfo>> createStats(List<UserInfo> rows) {
+        HashMap<String, ArrayList<UserInfo>> stats = new HashMap<>();
+        ArrayList<UserInfo> enabledUser = new ArrayList<>();
+        ArrayList<UserInfo> enabledUserOlderThan = new ArrayList<>();
+        ArrayList<UserInfo> unenabledUser = new ArrayList<>();
+        ArrayList<UserInfo> unenabledUserOlderThan = new ArrayList<>();
+        ArrayList<UserInfo> unloggedUser = new ArrayList<>();
+        ArrayList<UserInfo> unloggedUserOlderThan = new ArrayList<>();
+        for (UserInfo userInfo : rows) {
+            if(!userInfo.getRoles().equals("guest")) {
+                if(userInfo.isEnable()) {
+                    enabledUser.add(userInfo);
+                    addUserToList(enabledUserOlderThan, userInfo, PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN, 365), userInfo.isEnable());
+                } else {
+                    unenabledUser.add(userInfo);
+                    addUserToList(unenabledUserOlderThan, userInfo, PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN, 14), userInfo.isEnable());
+                }
+                if(userInfo.getLastLogin() == null || userInfo.getLastLogin().isEmpty()) {
+                    unloggedUser.add(userInfo);
+                    addUserToList(unloggedUserOlderThan, userInfo, PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMINISTRATION_USER_UNLOGGED_OLDER_THAN, 14), userInfo.isEnable());
+                }
+            }
+        }
+        stats.put("users_enabled", enabledUser);
+        stats.put("users_enabled_older_than", enabledUserOlderThan);
+        stats.put("users_unenabled", unenabledUser);
+        stats.put("users_unenabled_older_than", unenabledUserOlderThan);
+        stats.put("users_unlogged", unloggedUser);
+        stats.put("users_unlogged_older_than", unloggedUserOlderThan);
+        return stats;
+    }
+
+    private void addUserToList(ArrayList<UserInfo> userInfoList, UserInfo userInfo, int minusDays, boolean isEnabled) {
+        User user;
+        try {
+            user = userManager.getUser(userInfo.getId());
+            PasswordCredential credential = userManager.getPasswordCredential(user);
+            Timestamp timestamp = null;
+            if(isEnabled) {
+                Timestamp tmpTimestamp = credential.getLastAuthenticationDate();
+                if(tmpTimestamp != null) {
+                    timestamp = tmpTimestamp;
+                }
+            } else {
+                timestamp = credential.getCreationDate();
+            }
+            if(timestamp != null) {
+                LocalDate userCreationLocalDate = timestamp.toLocalDateTime().toLocalDate();
+                if(userCreationLocalDate.isBefore(LocalDate.now().minusDays(minusDays))) {
+                    userInfoList.add(userInfo);
+                }
+            }
+        } catch (SecurityException e) {
+            log.error("User not exists: " + userInfo.getId());
+        }
     }
 
     private void orderEntities(List rows, String sortColumn, boolean ascendingOrder) {
@@ -409,11 +479,20 @@ public class AdminUserPortlet extends ContentPortlet {
                 userInfo.setEmail(user.getInfoMap().get(SecurityResources.USER_EMAIL));
 
                 PasswordCredential pc = userManager.getPasswordCredential(user);
-                Timestamp t = pc.getLastAuthenticationDate();
-                if(t != null){
-                    userInfo.setLastLogin(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(t));
-                } else {
-                    userInfo.setLastLogin("");
+                if(pc != null) {
+                    Timestamp t = pc.getLastAuthenticationDate();
+                    if(t != null){
+                        userInfo.setLastLogin(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(t));
+                    } else {
+                        userInfo.setLastLogin("");
+                    }
+    
+                    userInfo.setEnabled(pc.isEnabled());
+    
+                    Timestamp userCreationDate = user.getCreationDate();
+                    if(t != null){
+                        userInfo.setCreationDate(userCreationDate);
+                    }
                 }
 
                 rows.add(userInfo);
@@ -428,7 +507,7 @@ public class AdminUserPortlet extends ContentPortlet {
         return rows;
     }
     
-    public class UserInfo extends HashMap<String, String> {
+    public class UserInfo extends HashMap<String, Object> {
         private static final long serialVersionUID = -7920936432515328718L;
 
         List<String> rolesList = new ArrayList<>();
@@ -438,7 +517,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public String getId() {
-            return this.get("id");
+            return (String) this.get("id");
         }
 
         public void setId(String name) {
@@ -446,7 +525,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public String getFirstName() {
-            return this.get("firstName");
+            return (String) this.get("firstName");
         }
         
         public void setFirstName(String firstName) {
@@ -457,7 +536,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public String getLastName() {
-            return this.get("lastName");
+            return (String) this.get("lastName");
         }
         
         public void setLastName(String lastName) {
@@ -468,7 +547,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
 
         public String getEmail() {
-            return this.get("email");
+            return (String) this.get("email");
         }
         
         public void setEmail(String email) {
@@ -479,16 +558,32 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public String getLastLogin() {
-            return this.get("lastLogin");
+            return (String) this.get("lastLogin");
         }
         
         public void setLastLogin(String lastLogin) {
             this.put("lastLogin", lastLogin);
         }
 
+        public Timestamp getCreationDate() {
+            return (Timestamp) this.get("setCreationDate");
+        }
         
+        public void setCreationDate(Timestamp setCreationDate) {
+            this.put("setCreationDate", setCreationDate);
+        }
+
+        
+        public boolean isEnable() {
+            return (boolean) this.get("isEnable");
+        }
+        
+        public void setEnabled(boolean isEnable) {
+            this.put("isEnable", isEnable);
+        }
+
         public String getRoles() {
-            return this.get("roles");
+            return (String) this.get("roles");
         }
 
         public void setRoles(String roles) {
@@ -754,50 +849,91 @@ public class AdminUserPortlet extends ContentPortlet {
 
         String[] ids = (String[]) getDBEntities(request);
         for (int i = 0; i < ids.length; i++) {
-            try {
-
-                final String innerFolder = Folder.USER_FOLDER;
-                final String innerUserName = ids[i];
-                final PageManager innerPageManager = pageManager;
-                User powerUser = userManager.getUser("admin");
-                JetspeedException pe = (JetspeedException) JSSubject.doAsPrivileged(userManager.getSubject(powerUser),
-                        new PrivilegedAction() {
-                            public Object run() {
-                                try {
-                                    // remove user's home folder
-                                    if (log.isDebugEnabled()) {
-                                        log.debug("Try to remove folder: " + innerFolder + innerUserName);
-                                    }
-                                    Folder f = innerPageManager.getFolder(innerFolder + innerUserName);
-                                    innerPageManager.removeFolder(f);
-
-                                    return null;
-                                } catch (FolderNotFoundException | NodeException e1) {
-                                    return e1;
-                                }
-                            }
-                        }, null);
-                
-                if (pe != null) {
-                    log.error("Registration Error: Failed to remove user folders for " + ids[i] + ", " + pe.toString());
-                }
-                // remove user creation and cascade roles, groups, etc
-                try {
-                    if (userManager.getUser(ids[i]) != null) {
-                        userManager.removeUser(ids[i]);
-                    }
-                } catch (Exception e) {
-                    log.error("Registration Error: Failed to remove user " + ids[i]);
-                }
-
-            } catch (Exception e) {
-                if (log.isErrorEnabled()) {
-                    log.error("Problems deleting user (" + ids[i] + ").", e);
-                }
-            }
+            deleteUserData(ids[i]);
         }
     }
 
+    private void deleteUserData(String id) {
+        try {
+            final String innerFolder = Folder.USER_FOLDER;
+            final String innerUserName = id;
+            final PageManager innerPageManager = pageManager;
+            User powerUser = userManager.getUser("admin");
+            JetspeedException pe = (JetspeedException) JSSubject.doAsPrivileged(userManager.getSubject(powerUser),
+                    new PrivilegedAction() {
+                        public Object run() {
+                            try {
+                                // remove user's home folder
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Try to remove folder: " + innerFolder + innerUserName);
+                                }
+                                Folder f = innerPageManager.getFolder(innerFolder + innerUserName);
+                                innerPageManager.removeFolder(f);
+                                return null;
+                            } catch (FolderNotFoundException | NodeException e1) {
+                                return e1;
+                            }
+                        }
+                    }, null);
+            
+            if (pe != null) {
+                log.error("Registration Error: Failed to remove user folders for " + id + ", " + pe.toString());
+            }
+            // remove user creation and cascade roles, groups, etc
+            Session session = null;
+            try {
+                User user = userManager.getUser(id);
+                if (user != null) {
+                    SecurityAttributes sa = user.getSecurityAttributes(); 
+                    for (String key : sa.getInfoMap().keySet()) {
+                        sa.removeAttribute(key);
+                    }
+                    userManager.updateUser(user);
+
+                    // Delete other DB entries
+                    session = HibernateUtil.currentSession();
+                    // Delete principal_rule_assoc
+                    List deleteEntries = session.createCriteria(IngridPrincipalRuleAssoc.class).add(Restrictions.eq("id", id)).list();
+                    Iterator it = deleteEntries.iterator();
+                    Transaction tx = session.beginTransaction();
+                    while (it.hasNext()) {
+                        Object obj = it.next();
+                        session.evict(obj);
+                        session.delete((IngridPrincipalRuleAssoc) obj);
+                    }
+                    tx.commit();
+                    // Delete security_credential
+                    deleteEntries = session.createCriteria(IngridSecurityCredential.class).add(Restrictions.eq("principalId", user.getId())).list();
+                    it = deleteEntries.iterator();
+                    tx = session.beginTransaction();
+                    while (it.hasNext()) {
+                        Object obj = it.next();
+                        session.evict(obj);
+                        session.delete((IngridSecurityCredential) obj);
+                    }
+                    tx.commit();
+                    // Delete security_principal_assoc
+                    deleteEntries = session.createCriteria(IngridSecurityPrincipalAssoc.class).add(Restrictions.eq("id", user.getId())).list();
+                    it = deleteEntries.iterator();
+                    tx = session.beginTransaction();
+                    while (it.hasNext()) {
+                        Object obj = it.next();
+                        session.evict(obj);
+                        session.delete((IngridSecurityPrincipalAssoc) obj);
+                    }
+                    tx.commit();
+                    userManager.removeUser(id);
+                }
+            } catch (Exception e) {
+                log.error("Registration Error: Failed to remove user " + id);
+            }
+
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems deleting user (" + id + ").", e);
+            }
+        }
+    }
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
@@ -850,7 +986,32 @@ public class AdminUserPortlet extends ContentPortlet {
             // necessary data
             response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_EDIT);
             response.setRenderParameter("cmd", "action processed");
-
+        } else if (request.getParameter("doUserListDelete") != null) {
+            String userStatsEntryKey = request.getParameter("doUserListDelete");
+            if(userStatsEntryKey != null) {
+                HashMap<String, ArrayList<UserInfo>> userStats = (HashMap<String, ArrayList<UserInfo>>) request.getPortletSession().getAttribute("stats", PortletSession.PORTLET_SCOPE);
+                if(userStats != null) {
+                    ArrayList<UserInfo> userStat = userStats.get(userStatsEntryKey);
+                    if(userStat != null && userStat.size() > 0) {
+                        for (UserInfo userInfo : userStat) {
+                            deleteUserData(userInfo.getId());
+                        }
+                    }
+                }
+            }
+        } else if (request.getParameter("doUserListMail") != null) {
+            String userStatsEntryKey = request.getParameter("doUserListMail");
+            if(userStatsEntryKey != null) {
+                HashMap<String, ArrayList<UserInfo>> userStats = (HashMap<String, ArrayList<UserInfo>>) request.getPortletSession().getAttribute("stats", PortletSession.PORTLET_SCOPE);
+                if(userStats != null) {
+                    ArrayList<UserInfo> userStat = userStats.get(userStatsEntryKey);
+                    if(userStat != null && userStat.size() > 0) {
+                        for (UserInfo userInfo : userStat) {
+                            
+                        }
+                    }
+                }
+            }
         } else {
             super.processAction(request, response);
         }

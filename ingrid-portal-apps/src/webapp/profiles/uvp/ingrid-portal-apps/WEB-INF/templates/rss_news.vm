@@ -7,7 +7,7 @@
                     <span class="tx-darker"><strong>$date.format('dd.MM.yyyy',$rssEntry.publishedDate)</strong></span>
                     <span class="tx-light">$date.format('HH:mm',$rssEntry.publishedDate)</span>
                 </small>
-                <a href="$!rssEntry.link" title="$!rssEntry.title">
+                <a target="_blank" class="external-link" href="$!rssEntry.link" title="$!rssEntry.title">
                     <h2 class="header">
                         $!rssEntry.title
                     </h2>
@@ -21,7 +21,7 @@
                 <h6 class="no-margin">$MESSAGES.getString('news.author')</h6>
                 <p>$rssEntry.author</p>
                 #end
-                <a href="$!rssEntry.link" title="$!rssEntry.title">
+                <a target="_blank" class="external-link" href="$!rssEntry.link" title="$!rssEntry.title">
                     <span class="ic-ic-arrow arrow"></span>
                 </a>
             </div>

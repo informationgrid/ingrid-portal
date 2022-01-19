@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -347,6 +347,10 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 // signalize that the user is about to log in
                 // see MyPortalOverviewPortlet::doView()
                 session.setAttribute(Settings.SESSION_LOGIN_STARTED, "1");
+                String redirect = PortalConfig.getInstance().getString(PortalConfig.PORTAL_LOGIN_REDIRECT, "");
+                if(!redirect.isEmpty()) {
+                    session.setAttribute(LoginConstants.DESTINATION, redirect);
+                }
                 response.sendRedirect(response.encodeURL(((RequestContext) request
                     .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
                     + "/login/redirector"));

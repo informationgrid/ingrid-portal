@@ -2606,7 +2606,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
   }
 
   .header-menu-close {
-    padding: 18px 0px 0 0 !important;
+    padding: 18px 14px 0 0 !important;
   }
 
   .menu-tab-row .menu-tab {
@@ -3211,4 +3211,114 @@ a:empty:focus-visible {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.zip-download {
+  display: block;
+  font-size: 14px;
+  float: right;
+  
+  a {
+    display: block;
+    float: right;
+    width: 45px;
+  }
+  span.text {
+    display:block;
+
+    .span.downloadText {
+      font-size: 12px;
+    }
+  }
+  
+  [class^="ic-ic-"] {
+    display: block;
+    font-size: 24px;
+    text-align: center;
+    border: 1px solid;
+    padding: 8px 0;
+    border-radius: 16px;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  height: 16px;
+  float: right;
+  margin: 5px 5px 0 0 !important;
+  overflow: unset !important;
+  
+  input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .toggle-slider {
+    background-color: $green-jelly;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .toggle-slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+  }
+
+  .toggle-slider.round {
+    border-radius: 32px;
+    width: 32px;
+  }
+  
+  .toggle-slider.round:before {
+    border-radius: 50%;
+  }
+  
+  ~ .toggle-label {
+    font-size: 14px;
+    padding-left: 34px;
+  }
+
+  ~ .toggle-label.checked {
+    font-weight: bold;
+  }
+  ~ .toggle-label.unchecked {
+    color: #3A566D;
+  }
+}
+
+.control-group + .control-group {
+  margin-top: -5px;
 }
