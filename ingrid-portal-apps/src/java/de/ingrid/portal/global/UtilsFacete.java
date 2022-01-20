@@ -460,7 +460,12 @@ public class UtilsFacete {
                             }else if(key.startsWith(facetKey)){
                                 String facetSubkey = key.replace(facetKey + ":", "");
                                 if(facetSubkey.indexOf(':') > -1){
-                                    facetSubkey = facetSubkey.split(":")[1];
+                                    String[] list = facetSubkey.split(":");
+                                    if(list.length > 1) {
+                                        facetSubkey = list[1];
+                                    } else {
+                                        continue;
+                                    }
                                 }
                                 if(log.isDebugEnabled()) {
                                     log.debug("Facet facetSubkey: '" + facetSubkey + "' from '" + facetKey + "'.");
