@@ -10,7 +10,6 @@
     #set($count = 0)
     #foreach($bwastr_id in $bwastr_id_list)
         #if($bwastr_id && !$bwastr_id.isEmpty())
-            #set($bwastr_id = $bwastr_id.replace("id_", ""))
             #if(!$bwastrLocatorGetDataLowers.isEmpty() ||
               $stringTool.parseInt($bwastr_id) < $stringTool.parseInt($bwastrLocatorGetDataLowers))
                 #set($tmpBwaStrId = [])
