@@ -1080,6 +1080,12 @@ header {
     border-top-left-radius: 8px;
     border-bottom-right-radius: 25px;
     border-bottom-left-radius: 25px;
+    
+    span.text {
+      font-size: 36px;
+      display: inline-block;
+      margin: 21px 0 0;
+    }
   }
   .teaser-link {
     position: relative;
