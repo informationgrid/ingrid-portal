@@ -142,33 +142,10 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     -->
     <facet sort="SORT_BY_VALUE_DESC">
-        <name>Wasserstraße</name>
+        <name>Wasserstrasse</name>
         <id>wasserstrasse</id>
+        <field>bwstr-bwastr_name</field>
         <isOpen>true</isOpen>
-        <facets>
-            <facet>
-                <name>Donau</name>
-                <id>bwastrdonau</id>
-                <query>bwstr-bwastr-id:id_040?</query>
-            </facet>
-            <facet>
-                <name>Elbe</name>
-                <id>bwastrelbe</id>
-                <query>bwstr-bwastr-id:id_070?</query>
-            </facet>
-            <facet>
-                <name>Rhein</name>
-                <id>bwastrrhein</id>
-                <query>bwstr-bwastr-id:id_390?</query>
-            </facet>
-            <!--
-            <facet>
-                <name>Andere Wasserstraße</name>
-                <id>wildcard_wasserstrasse</id>
-                <wildcard>location|bwstr-bwastr_name</wildcard>
-            </facet>
-            -->
-        </facets>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Verfahren</name>
@@ -254,11 +231,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.area</name>
         <id>area.map</id>
-    </facet>
-    <facet sort="SORT_BY_VALUE_DESC">
-        <name>TEST: Wasserstraße</name>
-        <id>wasserstrasse-test</id>
-        <field>bwstr-bwastr_name</field>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>TEST: Datenformate</name>
