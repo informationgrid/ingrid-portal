@@ -55,7 +55,10 @@
         #set($bwastr_id = $tmpBwaStrValuesSplit.get(0))
         #if(!$bwastr_id.isEmpty())
             #if($bwastrLocatorGetDataLowers.isEmpty() ||
-                  $stringTool.parseInt($bwastr_id) < $stringTool.parseInt($bwastrLocatorGetDataLowers))
+                    $stringTool.parseInt($bwastr_id) < $stringTool.parseInt($bwastrLocatorGetDataLowers))
+                #if($bwastr_id.endsWith("00"))
+                    #set($bwastr_id = $bwastr_id.substring(0, 2) + "01")
+                #end
                 #set($add = $bwastr.add(["'$bwastr_id'", "''", "''"]))
             #end
         #end
@@ -63,8 +66,11 @@
         #set($bwastr_id = $tmpBwaStrValuesSplit.get(0))
         #if(!$bwastr_id.isEmpty())
             #if($bwastrLocatorGetDataLowers && !$bwastrLocatorGetDataLowers.isEmpty() &&
-                $stringTool.parseInt($bwastr_id) < $stringTool.parseInt($bwastrLocatorGetDataLowers))
-              #set($add = $bwastr.add(["'$bwastr_id'", "'$tmpBwaStrValuesSplit.get(1)'", "'$tmpBwaStrValuesSplit.get(2)'"]))
+                    $stringTool.parseInt($bwastr_id) < $stringTool.parseInt($bwastrLocatorGetDataLowers))
+                #if($bwastr_id.endsWith("00"))
+                    #set($bwastr_id = $bwastr_id.substring(0, 2) + "01")
+                #end
+                #set($add = $bwastr.add(["'$bwastr_id'", "'$tmpBwaStrValuesSplit.get(1)'", "'$tmpBwaStrValuesSplit.get(2)'"]))
            #end
        #end
     #end
