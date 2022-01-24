@@ -10,6 +10,9 @@
           <action type="add" dev="wemove" issue="3303">
             Portal Filter-Facetten im baw_mis Profil anpassen
           </action>
+          <action type="update" dev="wemove" issue="2618">
+            Katalogausgabe entsprechend #1358 für BKG-MIS umsetzen
+          </action>
         </release>
 
         <release version="5.11.0" date="2022-01-19" description="Release 5.11.0">
