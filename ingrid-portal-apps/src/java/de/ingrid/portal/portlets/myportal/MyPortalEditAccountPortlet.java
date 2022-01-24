@@ -161,13 +161,13 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
         }
 
         try {
-            user.getSecurityAttributes().getAttribute("user.name.prefix", true).setStringValue(f.getInput(AdminUserForm.FIELD_SALUTATION));
-            user.getSecurityAttributes().getAttribute("user.name.given", true).setStringValue(f.getInput(AdminUserForm.FIELD_FIRSTNAME));
-            user.getSecurityAttributes().getAttribute("user.name.family", true).setStringValue(f.getInput(AdminUserForm.FIELD_LASTNAME));
-            user.getSecurityAttributes().getAttribute("user.business-info.online.email", true).setStringValue(f.getInput(AdminUserForm.FIELD_EMAIL));
-            user.getSecurityAttributes().getAttribute("user.business-info.postal.street", true).setStringValue(f.getInput(AdminUserForm.FIELD_STREET));
-            user.getSecurityAttributes().getAttribute("user.business-info.postal.postalcode", true).setStringValue(f.getInput(AdminUserForm.FIELD_POSTALCODE));
-            user.getSecurityAttributes().getAttribute("user.business-info.postal.city", true).setStringValue(f.getInput(AdminUserForm.FIELD_CITY));
+            user.getSecurityAttributes().getAttribute("user.name.prefix", true).setStringValue(f.getInput(EditAccountForm.FIELD_SALUTATION));
+            user.getSecurityAttributes().getAttribute("user.name.given", true).setStringValue(f.getInput(EditAccountForm.FIELD_FIRSTNAME));
+            user.getSecurityAttributes().getAttribute("user.name.family", true).setStringValue(f.getInput(EditAccountForm.FIELD_LASTNAME));
+            user.getSecurityAttributes().getAttribute("user.business-info.online.email", true).setStringValue(f.getInput(EditAccountForm.FIELD_EMAIL));
+            user.getSecurityAttributes().getAttribute("user.business-info.postal.street", true).setStringValue(f.getInput(EditAccountForm.FIELD_STREET));
+            user.getSecurityAttributes().getAttribute("user.business-info.postal.postalcode", true).setStringValue(f.getInput(EditAccountForm.FIELD_POSTALCODE));
+            user.getSecurityAttributes().getAttribute("user.business-info.postal.city", true).setStringValue(f.getInput(EditAccountForm.FIELD_CITY));
 
             userManager.updateUser(user);
         } catch (Exception e) {
