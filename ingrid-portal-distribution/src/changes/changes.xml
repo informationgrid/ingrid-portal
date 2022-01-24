@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.11.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.1">
+          <action type="update" dev="wemove" issue="2618">
+            Katalogausgabe entsprechend #1358 für BKG-MIS umsetzen
+          </action>
         </release>
 
         <release version="5.11.0" date="2022-01-19" description="Release 5.11.0">
