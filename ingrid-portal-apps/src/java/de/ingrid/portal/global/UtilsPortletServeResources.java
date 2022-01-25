@@ -76,25 +76,12 @@ public class UtilsPortletServeResources {
             }
             if(extension.isEmpty()) {
                 try {
-                    URL url = new URL(paramURL);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("HEAD");
-                    if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
-                        UtilsHttpConnection.urlConnectionAuth(con, login, password);
-                    }
-                    String contentType = con.getContentType();
-
-                    if((contentType == null || contentType.startsWith("text/html")) && paramURL.startsWith("http://")) {
-                        url = new URL(paramURL.replace("http://", "https://"));
-                        con = (HttpURLConnection) url.openConnection();
-                        if(StringUtils.isNotEmpty(password)) {
-                            UtilsHttpConnection.urlConnectionAuth(con, login, password);
+                    Map<String, Object> requestHeader = UtilsHttpConnection.urlConnectionHead (paramURL, login, password);
+                    if(!requestHeader.isEmpty()) {
+                        String contentType = (String) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_TYPE);
+                        if(contentType != null) {
+                            extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
                         }
-                        con.setRequestMethod("HEAD");
-                        contentType = con.getContentType();
-                    }
-                    if(contentType != null) {
-                        extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
                     }
                 } catch (Exception e) {
                     log.error("Error get datatype from: " + paramURL, e);
@@ -107,20 +94,18 @@ public class UtilsPortletServeResources {
 
     public static void getHttpUrlLength(String paramURL, String login, String password, ResourceResponse response ) throws IOException {
         try {
-            URL url = new URL(paramURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
-                UtilsHttpConnection.urlConnectionAuth(con, login, password);
-            }
-            con.setRequestMethod("HEAD");
+            Map<String, Object> requestHeader = UtilsHttpConnection.urlConnectionHead (paramURL, login, password);
             StringBuilder s = new StringBuilder();
             response.setContentType( "application/javascript" );
             response.getWriter().write( "{" );
-            if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
-                s.append( "\"contentLength\":");
-                s.append( "\"" + con.getContentLength() + "\"" );
+            if(!requestHeader.isEmpty()) {
+                int length = (int) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_LENGTH);
+                if(length != -1) {
+                    s.append( "\"contentLength\":");
+                    s.append( "\"" + requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_LENGTH) + "\"" );
+                    response.getWriter().write( s.toString() );
+                }
             }
-            response.getWriter().write( s.toString() );
             response.getWriter().write( "}" );
         } catch (Exception e) {
             log.error("Error get contentLength from: " + paramURL, e);

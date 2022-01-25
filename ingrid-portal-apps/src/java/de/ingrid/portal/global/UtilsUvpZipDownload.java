@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -129,13 +130,25 @@ public class UtilsUvpZipDownload {
         File processFile = new File(downloadPath + "/PROCESS_RUNNING");
         File statsJsonFile = new File(downloadPath + "/stats.json");
 
-        if(!processFile.exists()) {
+        boolean hasToUpdate = false;
+        if(processFile.exists()) {
+            Date now = new Date();
+            long nowTime = now.getTime();
+            long lastUpdateTime = processFile.lastModified();
+            long lastUpdateTimeInMin = (nowTime - lastUpdateTime) / 60000;
+            long updateTime = 30;
+            if(lastUpdateTimeInMin > updateTime) {
+                hasToUpdate = true;
+            }
+        }
+        
+        if(!processFile.exists() || !statsJsonFile.exists() || hasToUpdate) {
             try {
                 // Create download status file
                 if(!processFile.exists() && processFile.createNewFile()) {
                     log.debug("Create download process file.");
                 }
-                if(!zipFile.exists()) {
+                if(!zipFile.exists() || !statsJsonFile.exists()) {
                     // Delete old files
                     for(File file: processFile.getParentFile().listFiles()) {
                         if(!file.equals(processFile)) {
@@ -241,7 +254,7 @@ public class UtilsUvpZipDownload {
                                         // Download links and add to ZIP
                                         if(xPathUtils.nodeExists(doc, "./link")) {
                                             String link = xPathUtils.getString(doc, "./link");
-                                            String label = xPathUtils.getString(doc, "./label").replaceAll("[\\\\/:*?\"<>|]", "_");
+                                            String label = xPathUtils.getString(doc, "./label");
                                             if(docFilenames.indexOf(label) > -1) {
                                                 int count = 1;
                                                 for (int l = 0; l < docFilenames.size(); l++) {
@@ -255,41 +268,44 @@ public class UtilsUvpZipDownload {
                                                 docFilenames.add(label);
                                             }
                                             try {
-                                                URL url = new URL(link);
-                                                HttpURLConnection con = (HttpURLConnection) url.openConnection();
                                                 String login = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
                                                 String password = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD);
-                                                if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
-                                                    UtilsHttpConnection.urlConnectionAuth(con, login, password);
-                                                }
-                                                con.setRequestMethod("HEAD");
-                                                String zipEntryName = docFoldername + "/" + URLDecoder.decode(label, "UTF-8");
-                                                JSONObject statsEntry = new JSONObject();
-                                                int length = con.getContentLength();
-                                                String contentType = con.getContentType();
-                                                long lastModified = con.getLastModified();
-                                                if(length != -1 || (con.getResponseCode() != 404 && contentType.indexOf("text/html") > -1)) {
-                                                    statsEntry.put("length", length);
-                                                    statsEntry.put("type", contentType);
-                                                    statsEntry.put("modified", lastModified);
-                                                    if(contentType.indexOf("text/html") > -1) {
-                                                        if(!zipEntryName.endsWith(".html")) {
-                                                            if(!link.isEmpty()) {
-                                                                zipEntryName += "-" + link.replaceAll("[\\\\/:*?\"<>|]", "_");
-                                                            }
-                                                            zipEntryName += ".html";
-                                                        }
-                                                    } else {
-                                                        String[] linkParts = link.split("/");
-                                                        String lastLinkPart = linkParts[linkParts.length - 1];
-                                                        if(lastLinkPart.indexOf(".") > -1) {
-                                                            String[] fileEndingPart = lastLinkPart.split("\\.");
-                                                            zipEntryName += "." + fileEndingPart[fileEndingPart.length - 1];
-                                                        }
-                                                        
+                                                Map<String, Object> requestHeader = UtilsHttpConnection.urlConnectionHead (link, login, password);
+                                                if(!requestHeader.isEmpty()) {
+                                                    String zipEntryName = docFoldername;
+                                                    JSONObject statsEntry = new JSONObject();
+                                                    int length = (int) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_LENGTH);
+                                                    String contentType = (String) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_TYPE);
+                                                    if(contentType == null) {
+                                                        contentType = "";
                                                     }
-                                                    statsEntry.put("name", zipEntryName);
-                                                    newStatsJson.put(link, statsEntry);
+                                                    long lastModified = (long) requestHeader.get(UtilsHttpConnection.HEADER_LAST_MODIFIED);
+                                                    int responseCode = (int) requestHeader.get(UtilsHttpConnection.HEADER_RESPONSE_CODE);
+                                                    if(length != -1 || responseCode == 200) {
+                                                        statsEntry.put("length", length);
+                                                        statsEntry.put("link", link);
+                                                        statsEntry.put("type", contentType);
+                                                        statsEntry.put("modified", lastModified);
+                                                        
+                                                        label = URLDecoder.decode(label, "UTF-8");
+                                                        if(contentType.indexOf("text/html") > -1) {
+                                                            if(!label.endsWith(".html")) {
+                                                                if(!link.isEmpty()) {
+                                                                    label += "-" + link.replaceAll("[\\\\/:*?\"<>|]", "_");
+                                                                }
+                                                                label += ".html";
+                                                            }
+                                                        } else {
+                                                            String[] linkParts = link.split("/");
+                                                            String lastLinkPart = linkParts[linkParts.length - 1];
+                                                            if(lastLinkPart.indexOf(".") > -1) {
+                                                                String[] fileEndingPart = lastLinkPart.split("\\.");
+                                                                label += "." + fileEndingPart[fileEndingPart.length - 1];
+                                                            }
+                                                        }
+                                                        statsEntry.put("name", zipEntryName + "/" + label) ;
+                                                        newStatsJson.put(docFoldername + "_" + link + "_ " + label, statsEntry);
+                                                    }
                                                 }
                                             } catch (IOException e) {
                                                 log.error("Error download file for ZIP: '" + title + "'", e);
@@ -384,8 +400,7 @@ public class UtilsUvpZipDownload {
                 while(keys.hasNext()) {
                     String key = keys.next();
                     try {
-                        JSONObject statsEntry = statsJson.getJSONObject(key);
-                        addFileInZip(key, zip, statsEntry);
+                        addFileInZip(zip, statsJson.getJSONObject(key));
                     } catch (IOException | JSONException e) {
                         log.error("Error download file for ZIP: '" + key + "'", e);
                     }
@@ -396,8 +411,8 @@ public class UtilsUvpZipDownload {
         }
     }
 
-    public static void addFileInZip(String link, ZipOutputStream zip, JSONObject statsEntry) throws IOException, JSONException {
-        URL url = new URL(link);
+    public static void addFileInZip(ZipOutputStream zip, JSONObject statsEntry) throws IOException, JSONException {
+        URL url = new URL(statsEntry.getString("link"));
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         String login = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
         String password = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD);
@@ -454,8 +469,7 @@ public class UtilsUvpZipDownload {
                     while(keys.hasNext()) {
                         String key = keys.next();
                         try {
-                            JSONObject newStatsEntry = newStatsJson.getJSONObject(key);
-                            addFileInZip(key, zip, newStatsEntry);
+                            addFileInZip(zip, newStatsJson.getJSONObject(key));
                         } catch (IOException | JSONException e) {
                             log.error("Error download file for ZIP: '" + key + "'", e);
                         }
