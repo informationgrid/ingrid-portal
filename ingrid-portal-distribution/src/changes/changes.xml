@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.11.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.1">
+          <action type="update" dev="wemove" issue="3411">
+            Neues Passwort bei Aktualisierung eines Accounts
+          </action>
+          <action type="fix" dev="wemove" issue="3412">
+            Problem bei Darstellung der Landing Page für neu angemeldete Benutzer offen
+          </action>
           <action type="update" dev="wemove" issue="2618">
             Katalogausgabe entsprechend #1358 für BKG-MIS umsetzen
           </action>
