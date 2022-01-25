@@ -178,6 +178,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>simspatialdimension</id>
         <field>simspatialdimension</field>
     </facet>
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>Datenformate</name>
+        <id>datenformate-test</id>
+        <field>t017_url_ref.datatype</field>
+    </facet>
     <!-- Aktualität (Metadaten)-->
     <!-- Kann erweitert werden -->
     <facet>
@@ -232,11 +237,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.area</name>
         <id>area.map</id>
     </facet>
-    <facet sort="SORT_BY_VALUE_DESC">
-        <name>TEST: Datenformate</name>
-        <id>datenformate-test</id>
-        <field>t017_url_ref.datatype</field>
-    </facet>
     <!-- Kategorie -->
     <facet>
         <name>Kategorie</name>
@@ -248,7 +248,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Donau</name>
                 <query>bwstr-bwastr_name.phrase:"donau"</query>
                 <id>cat_donau</id>
-                <icon>/decorations/layout/ingrid/images/template/icon_donau_mdk.svg</icon>
+                <!-- <icon>/decorations/layout/ingrid/images/template/icon_donau_mdk.svg</icon> -->
                 <shortcut>Do</shortcut>
                 <display>true</display>
             </facet>
@@ -265,7 +265,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Elbe</name>
                 <query>bwstr-bwastr_name.phrase:"elbe"</query>
                 <id>cat_elbe</id>
-                <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon>
+                <!-- <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon> -->
                 <shortcut>El</shortcut>
                 <display>true</display>
             </facet>
@@ -346,7 +346,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Rhein</name>
                 <query>bwstr-bwastr_name.phrase:"rhein"</query>
                 <id>cat_rhein</id>
-                <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon>
+                <!-- <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon> -->
                 <shortcut>Rh</shortcut>
                 <display>true</display>
             </facet>
