@@ -142,16 +142,16 @@ public class EditAccountForm extends ActionForm {
             } else if (!Utils.isStrengthPassword(password)) {
                setError(FIELD_PW_NEW, "account.create.error.worstPassword");
                allOk = false;
-           }
+            }
+            if (getInput(FIELD_PW_OLD).equals(getInput(FIELD_PW_NEW))) {
+                setError(FIELD_PW_NEW, "account.edit.error.noPasswordNew");
+                allOk = false;
+            }
+            if (!getInput(FIELD_PW_NEW_CONFIRM).equals(getInput(FIELD_PW_NEW))) {
+                setError(FIELD_PW_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
+                allOk = false;
+            }
         }
-        if (getInput(FIELD_PW_OLD).equals(getInput(FIELD_PW_NEW))) {
-            setError(FIELD_PW_NEW, "account.edit.error.noPasswordNew");
-            allOk = false;
-        }
-        if (!getInput(FIELD_PW_NEW_CONFIRM).equals(getInput(FIELD_PW_NEW))) {
-            setError(FIELD_PW_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
-            allOk = false;
-        } 
         if (!hasInput(FIELD_EMAIL)) {
             setError(FIELD_EMAIL, "account.edit.error.noEmail");
             allOk = false;
