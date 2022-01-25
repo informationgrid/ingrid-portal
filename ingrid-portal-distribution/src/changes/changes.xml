@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="update" dev="wemove" issue="3411">
+            Neues Passwort bei Aktualisierung eines Accounts
+          </action>
+          <action type="fix" dev="wemove" issue="3412">
+            Problem bei Darstellung der Landing Page für neu angemeldete Benutzer offen
+          </action>
           <action type="add" dev="wemove" issue="3303">
             Portal Filter-Facetten im baw_mis Profil anpassen
           </action>
