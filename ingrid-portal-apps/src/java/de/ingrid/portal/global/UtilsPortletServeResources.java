@@ -411,7 +411,9 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPLegendCounter (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
-        queryString = UtilsSearch.updateQueryString(queryString, request);
+        if(config != null) {
+            queryString = UtilsSearch.updateQueryString(queryString, request);
+        }
         IngridQuery query = QueryStringParser.parse( queryString );
         if(config != null) {
             query = UtilsFacete.setFacetQuery(queryString, config, query);
