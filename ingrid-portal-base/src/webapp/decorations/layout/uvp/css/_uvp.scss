@@ -739,6 +739,7 @@ li.accordion-item.is-active > .accordion-title::after { content: '\e925'; }
       position: relative;
       top: 35%;
       font-family: 'Roboto-Medium';
+      padding: 0 16px;
     }
   }
   .button.round {
