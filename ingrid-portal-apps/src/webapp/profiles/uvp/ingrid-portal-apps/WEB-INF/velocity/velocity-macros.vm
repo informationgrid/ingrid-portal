@@ -453,11 +453,11 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 #macro (renderMessageSuccess $_message)
     <div class="row alert">
-        <div class="columns">
-            <p class="success no-margin">
-                <span class="alert-text">$_message</span>
-            </p>
-        </div>
+      <div>
+        <p class="success no-margin">
+            <span class="alert-text">$_message</span>
+        </p>
+       </div>
     </div>
 #end
 
