@@ -194,8 +194,9 @@
         var mapFilter = $('.map-filter ul li div');
         var overlayers = {};
 #parse ('/WEB-INF/templates/global/include_leaflet_marker_legend.vm')
+
         var mapFilterXs = $('.map-filter-xs');
-        if(mapFilterXs) {
+        if(mapFilterXs && mapFilterXs.length > 0) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
                     createLegendEntry(map, mapFilterXs, [mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', 'style="padding:0px"');
