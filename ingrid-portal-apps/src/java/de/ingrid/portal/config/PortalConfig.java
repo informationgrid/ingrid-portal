@@ -256,10 +256,13 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";
     public static final String PORTAL_MAPCLIENT_QUERY_ADDITIONAL = "portal.mapclient.query.additional";
     public static final String PORTAL_MAPCLIENT_QUERY_2 = "portal.mapclient.query.2";
+    public static final String PORTAL_MAPCLIENT_QUERY_2_ADDITIONAL = "portal.mapclient.query.2.additional";
     public static final String PORTAL_MAPCLIENT_QUERY_3 = "portal.mapclient.query.3";
+    public static final String PORTAL_MAPCLIENT_QUERY_3_ADDITIONAL = "portal.mapclient.query.3.additional";
     public static final String PORTAL_MAPCLIENT_QUERY_4 = "portal.mapclient.query.4";
     public static final String PORTAL_MAPCLIENT_QUERY_4_ADDITIONAL = "portal.mapclient.query.4.additional";
     public static final String PORTAL_MAPCLIENT_QUERY_5 = "portal.mapclient.query.5";
+    public static final String PORTAL_MAPCLIENT_QUERY_5_ADDITIONAL = "portal.mapclient.query.5.additional";
 
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_10_CHECKED = "portal.mapclient.uvp.category.10.checked";
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED = "portal.mapclient.uvp.category.11.checked";
