@@ -391,38 +391,9 @@
             if("$restUrlUVPDevPlan") {
                 if(mapMarkersDevPlan.getLayers().length === 0){
                     map.spin(true);
-                    jQuery.get("$restUrlUVPDevPlan")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markersDevPlan){
-                            for (var i = 0; i < markersDevPlan.length; i++) {
-                                var a = markersDevPlan[i];
-                                var id = a.id;
-                                var name = a.name;
-                                var lat = a.lat;
-                                var lon = a.lon;
-                                var iplug = a.iplug;
-                                var popUpHtml = 'Bitte warten ...';
-                                var iconColor = 'green';
-                                var icon = getIcon(smallIcons, iconColor, enablePopUp); 
-                                var marker = L.marker(new L.LatLng(lat,lon), { title: name, icon: icon, interactive: !smallIcons });
-                                marker.bbox = null;
-                                marker.lat = lat;
-                                marker.lon = lon;
-                                marker.iplug = iplug;
-                                if(enablePopUp){
-                                    marker.on('click', onMapClickBLP);
-                                    marker.bindPopup(popUpHtml, popupMarkerOptions);
-                                    marker.on('popupopen', showMarker);
-                                    marker.on('popupclose', hideMarker);
-                                }
-                                mapMarkersDevPlan.addLayer(marker);
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkersDevPlan';
+                    var markerColor = 'green';
+                    loadMarkers("$restUrlUVPDevPlan", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers10') {
@@ -554,6 +525,28 @@
             marker.on('popupopen', showMarker);
             marker.on('popupclose', hideMarker);
             
+        }
+        mapMarkers.addLayer(marker);
+    }
+
+    function createMarkerBLP(mapMarkers, a, iconColor) {
+        var id = a.id;
+        var name = a.name;
+        var lat = a.lat;
+        var lon = a.lon;
+        var iplug = a.iplug;
+        var popUpHtml = 'Bitte warten ...';
+        var icon = getIcon(smallIcons, iconColor, enablePopUp); 
+        var marker = L.marker(new L.LatLng(lat,lon), { title: name, icon: icon, interactive: !smallIcons });
+        marker.bbox = null;
+        marker.lat = lat;
+        marker.lon = lon;
+        marker.iplug = iplug;
+        if(enablePopUp){
+            marker.on('click', onMapClickBLP);
+            marker.bindPopup(popUpHtml, popupMarkerOptions);
+            marker.on('popupopen', showMarker);
+            marker.on('popupclose', hideMarker);
         }
         mapMarkers.addLayer(marker);
     }
