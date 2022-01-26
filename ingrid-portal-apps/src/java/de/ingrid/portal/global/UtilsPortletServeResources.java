@@ -22,7 +22,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -148,7 +147,7 @@ public class UtilsPortletServeResources {
         String marker = request.getParameter("marker");
         String markerColor = request.getParameter("markerColor");
         IBusQueryResultIterator it = new IBusQueryResultIterator( query, requestedFields, IBUSInterfaceImpl.getInstance()
-                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, 100);
+                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, REQUESTED_FIELDS_UVP_MARKER_NUM);
         response.setContentType( "application/javascript" );
         if(it != null){
             while (it.hasNext()) {
@@ -204,7 +203,7 @@ public class UtilsPortletServeResources {
         String marker = request.getParameter("marker");
         String markerColor = request.getParameter("markerColor");
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
-                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, 100);
+                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, REQUESTED_FIELDS_UVP_MARKER_NUM);
         response.setContentType( "application/javascript" );
         if(it != null){
             while (it.hasNext()) {
@@ -274,7 +273,7 @@ public class UtilsPortletServeResources {
 
     public static void getHttpMarkerUVPBoundingBox (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
         JSONArray bbox = new JSONArray();
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString), UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BBOX,
+        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString), REQUESTED_FIELDS_UVP_BBOX,
                 IBUSInterfaceImpl.getInstance().getIBus(), 1, 0, 1 );
         if(it.hasNext()){
             IngridHit hit = it.next();
@@ -302,10 +301,16 @@ public class UtilsPortletServeResources {
             UtilsFacete.addToQueryAreaAddress(request, query);
             UtilsFacete.addToQueryWildcard(request, query);
         }
-        IBusQueryResultIterator it = new IBusQueryResultIterator( query , UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BLP_MARKER, IBUSInterfaceImpl.getInstance()
-                .getIBus(), UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM );
+        int startPage = 0;
+        if(request.getParameter("startPage") != null) {
+            startPage = Integer.parseInt(request.getParameter("startPage"));
+        }
+        String marker = request.getParameter("marker");
+        String markerColor = request.getParameter("markerColor");
+        IBusQueryResultIterator it = new IBusQueryResultIterator( query , REQUESTED_FIELDS_UVP_BLP_MARKER, IBUSInterfaceImpl.getInstance()
+                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, REQUESTED_FIELDS_UVP_MARKER_NUM);
         int cnt = 1;
-        JSONArray jsonData = new JSONArray();
+        response.setContentType( "application/javascript" );
         while (it.hasNext()) {
             try {
                 IngridHit hit = it.next();
@@ -323,7 +328,7 @@ public class UtilsPortletServeResources {
                     jsonDataEntry.put("lat", Double.parseDouble( latCenter.trim() ));
                     jsonDataEntry.put("lon", Double.parseDouble( lonCenter.trim() ));
                     jsonDataEntry.put("iplug", hit.getPlugId());
-                    jsonData.put( jsonDataEntry );
+                    response.getWriter().write("createMarkerBLP(" + marker + ", " + jsonDataEntry.toString() + ", '" + markerColor + "');");
                     cnt++;
                 } else {
                     log.error("Metadata '" + blpName + "' has no location!");
@@ -332,12 +337,10 @@ public class UtilsPortletServeResources {
                 log.error("Error get json object.", e);
             }
         }
-        response.setContentType( "application/javascript" );
-        response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
     }
 
     public static void getHttpMarkerUVPMarkerBlpDetail (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
+        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , REQUESTED_FIELDS_UVP_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
                 .getIBus(), 1, 0, 1 );
         int cnt = 1;
         JSONObject jsonData = new JSONObject();
