@@ -429,15 +429,12 @@
             if(mapMarkers10.getLayers().length === 0) {
                 if("$restUrlMarker") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker")
+                    var startPage = 0;
+                    var marker = 'mapMarkers10';
+                    var markerColor = 'blue';
+                    jQuery.get("$restUrlMarker?startPage=" + startPage + "&marker=" + marker + "markerColor=" + markerColor)
                     .done(function(data, textStatus, jqxhr) {
                         map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers10, a, 'blue');
-                            }
-                        }
                     })
                     .error(function () {
                       map.spin(false);
