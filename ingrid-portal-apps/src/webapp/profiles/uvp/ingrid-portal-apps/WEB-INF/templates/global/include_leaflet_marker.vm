@@ -429,130 +429,63 @@
             if(mapMarkers10.getLayers().length === 0) {
                 if("$restUrlMarker") {
                     map.spin(true);
-                    var startPage = 0;
                     var marker = 'mapMarkers10';
                     var markerColor = 'blue';
-                    jQuery.get("$restUrlMarker?startPage=" + startPage + "&marker=" + marker + "markerColor=" + markerColor)
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    loadMarkers("$restUrlMarker", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers10_time') {
             if(mapMarkers10_time.getLayers().length === 0) {
                 if("$restUrlMarker_time") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker_time")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers10_time, a, 'blue');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers10_time';
+                    var markerColor = 'blue';
+                    loadMarkers("$restUrlMarker_time", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers13') {
             if(mapMarkers13.getLayers().length === 0) {
                 if("$restUrlMarker2") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker2")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers13, a, 'red');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers13';
+                    var markerColor = 'red';
+                    loadMarkers("$restUrlMarker2", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers14') {
             if(mapMarkers14.getLayers().length === 0) {
                 if("$restUrlMarker5") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker5")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers14, a, 'purple');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers14';
+                    var markerColor = 'purple';
+                    loadMarkers("$restUrlMarker5", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers11') {
             if(mapMarkers11.getLayers().length === 0) {
                 if("$restUrlMarker3") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker3")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers11, a, 'black');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers11';
+                    var markerColor = 'black';
+                    loadMarkers("$restUrlMarker3", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers12') {
             if(mapMarkers12.getLayers().length === 0) {
                 if("$restUrlMarker4") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker4")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers12, a, 'orange');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers12';
+                    var markerColor = 'orange';
+                    loadMarkers("$restUrlMarker4", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers12_time') {
             if(mapMarkers12_time.getLayers().length === 0) {
                 if("$restUrlMarker4_time") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker4_time")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers12_time, a, 'orange');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers12_time';
+                    var markerColor = 'orange';
+                    loadMarkers("$restUrlMarker4_time", 0, marker, markerColor, map);
                 }
             }
         }
@@ -794,4 +727,19 @@
             });
         }
     };
+    
+    function loadMarkers(url, startPage, marker, markerColor, map) {
+        jQuery.get(url + "?startPage=" + startPage + "&marker=" + marker + "&markerColor=" + markerColor)
+        .done(function(data, textStatus, jqxhr) {
+            startPage += 1;
+            if(data != "") {
+                loadMarkers(url, startPage, marker, markerColor, map);
+            } else {
+                map.spin(false);
+            }
+        })
+        .error(function () {
+            map.spin(false);
+        });
+    }
 </script>
