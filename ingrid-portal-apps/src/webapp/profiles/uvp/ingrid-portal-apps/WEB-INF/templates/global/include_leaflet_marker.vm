@@ -94,6 +94,24 @@
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
         }
     });
+    var mapMarkers11_time = L.markerClusterGroup({
+        id: 'mapMarkers11_time',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
     // "Raumordnungsverfahren" markers
     var mapMarkers13 = L.markerClusterGroup({
         id: 'mapMarkers13',
@@ -113,9 +131,45 @@
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-13' + c, iconSize: new L.Point(40, 40) });
         }
     });
+    var mapMarkers13_time = L.markerClusterGroup({
+        id: 'mapMarkers13_time',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-13' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
     // "Linienbestimmungen" markers
     var mapMarkers14 = L.markerClusterGroup({
         id: 'mapMarkers14',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-14' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    var mapMarkers14_time = L.markerClusterGroup({
+        id: 'mapMarkers14_time',
         iconCreateFunction: function (cluster) {
             var childCount = cluster.getChildCount();
             var c = ' marker-cluster-';
@@ -269,27 +323,45 @@
                 }
             }
             if(mapParamLayers.indexOf('av') > -1){
-                if(mapMarkers11) {
-                    map.addLayer(mapMarkers11);
+                if(mapMarkers11 || mapMarkers11_time) {
                     $('#mapMarkers11').prop('checked', true);
+                    var checkboxTime = $('#mapMarkers11_time');
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(mapMarkers11_time);
+                        checkboxTime.closest('.control-group').removeClass('is-hidden');
+                    } else {
+                        map.addLayer(mapMarkers11);
+                    }
                     if(mapParamLayers.indexOf('av') === -1) {
                         mapParamLayers.push('av');
                     }
                 }
             }
             if(mapParamLayers.indexOf('ro') > -1){
-                if(mapMarkers13) {
-                    map.addLayer(mapMarkers13);
+                if(mapMarkers13 || mapMarkers13_time) {
                     $('#mapMarkers13').prop('checked', true);
+                    var checkboxTime = $('#mapMarkers13_time');
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(mapMarkers13_time);
+                        checkboxTime.closest('.control-group').removeClass('is-hidden');
+                    } else {
+                        map.addLayer(mapMarkers13);
+                    }
                     if(mapParamLayers.indexOf('ro') === -1) {
                         mapParamLayers.push('ro');
                     }
                 }
             }
             if(mapParamLayers.indexOf('li') > -1){
-                if(mapMarkers14) {
-                    map.addLayer(mapMarkers14);
+                if(mapMarkers14 || mapMarkers14_time) {
                     $('#mapMarkers14').prop('checked', true);
+                    var checkboxTime = $('#mapMarkers14_time');
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(mapMarkers14_time);
+                        checkboxTime.closest('.control-group').removeClass('is-hidden');
+                    } else {
+                        map.addLayer(mapMarkers14);
+                    }
                     if(mapParamLayers.indexOf('li') === -1) {
                         mapParamLayers.push('li');
                     }
@@ -424,6 +496,15 @@
                     loadMarkers("$restUrlMarker2", 0, marker, markerColor, map);
                 }
             }
+        } else if(e.layer.options.id === 'mapMarkers13_time') {
+            if(mapMarkers13_time.getLayers().length === 0) {
+                if("$restUrlMarker2_time") {
+                    map.spin(true);
+                    var marker = 'mapMarkers13_time';
+                    var markerColor = 'red';
+                    loadMarkers("$restUrlMarker2_time", 0, marker, markerColor, map);
+                }
+            }
         } else if(e.layer.options.id === 'mapMarkers14') {
             if(mapMarkers14.getLayers().length === 0) {
                 if("$restUrlMarker5") {
@@ -433,6 +514,15 @@
                     loadMarkers("$restUrlMarker5", 0, marker, markerColor, map);
                 }
             }
+        } else if(e.layer.options.id === 'mapMarkers14_time') {
+            if(mapMarkers14_time.getLayers().length === 0) {
+                if("$restUrlMarker5_time") {
+                    map.spin(true);
+                    var marker = 'mapMarkers14_time';
+                    var markerColor = 'purple';
+                    loadMarkers("$restUrlMarker5_time", 0, marker, markerColor, map);
+                }
+            }
         } else if(e.layer.options.id === 'mapMarkers11') {
             if(mapMarkers11.getLayers().length === 0) {
                 if("$restUrlMarker3") {
@@ -440,6 +530,15 @@
                     var marker = 'mapMarkers11';
                     var markerColor = 'black';
                     loadMarkers("$restUrlMarker3", 0, marker, markerColor, map);
+                }
+            }
+        } else if(e.layer.options.id === 'mapMarkers11_time') {
+            if(mapMarkers11_time.getLayers().length === 0) {
+                if("$restUrlMarker3_time") {
+                    map.spin(true);
+                    var marker = 'mapMarkers11_time';
+                    var markerColor = 'black';
+                    loadMarkers("$restUrlMarker3_time", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers12') {
