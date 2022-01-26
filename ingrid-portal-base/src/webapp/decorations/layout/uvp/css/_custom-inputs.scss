@@ -41,7 +41,7 @@
   border-radius: 50%;
 }
 .map .control__indicator {
-  background: $blue-prov;
+  background: #303030;
   border: 1px solid $blue-prov;
 }
 .nr-results {
@@ -54,12 +54,12 @@
   border: 1px solid $blue;
 }
 .map.red .control__indicator {
-  background: $red;
-  border: 1px solid $red;
+  background: #d63e2a;
+  border: 1px solid #d63e2a;
 }
 .map.purple .control__indicator {
-    background: purple;
-    border: 1px solid purple;
+    background: #d252b9;
+    border: 1px solid #d252b9;
 }
 .map.orange .control__indicator {
   background: $orange;
@@ -77,7 +77,7 @@
 }
 .map .control:hover input ~ .control__indicator,
 .map .control input:focus ~ .control__indicator {
-  background: $blue-prov;
+  background: #303030;
 }
 .map.blue .control:hover input ~ .control__indicator,
 .map.blue .control input:focus ~ .control__indicator {
@@ -85,11 +85,11 @@
 }
 .map.red .control:hover input ~ .control__indicator,
 .map.red .control input:focus ~ .control__indicator {
-  background: $red;
+  background: #d63e2a;
 }
 .map.purple .control:hover input ~ .control__indicator,
 .map.purple .control input:focus ~ .control__indicator {
-  background: purple;
+  background: #d252b9;
 }
 .map.orange .control:hover input ~ .control__indicator,
 .map.orange .control input:focus ~ .control__indicator {
@@ -113,16 +113,16 @@
   }
 }
 .map .control input:checked ~ .control__indicator {
-  background: $blue-prov;
+  background: #303030;
 }
 .map.blue .control input:checked ~ .control__indicator {
   background: $blue;
 }
 .map.red .control input:checked ~ .control__indicator {
-  background: $red;
+  background: #d63e2a;
 }
 .map.purple .control input:checked ~ .control__indicator {
-  background: purple;
+  background: #d252b9;
 }
 .map.orange .control input:checked ~ .control__indicator {
   background: $orange;
@@ -138,7 +138,7 @@
 }
 .map .control:hover input:not([disabled]):checked ~ .control__indicator,
 .map .control input:checked:focus ~ .control__indicator {
-  background: $blue-prov;
+  background: #303030;
 }
 .map.blue .control:hover input:not([disabled]):checked ~ .control__indicator,
 .map.blue .control input:checked:focus ~ .control__indicator {
@@ -146,11 +146,11 @@
 }
 .map.red .control:hover input:not([disabled]):checked ~ .control__indicator,
 .map.red .control input:checked:focus ~ .control__indicator {
-  background: $red;
+  background: #d63e2a;
 }
 .map.purple .control:hover input:not([disabled]):checked ~ .control__indicator,
 .map.purple .control input:checked:focus ~ .control__indicator {
-  background: purple;
+  background: #d252b9;
 }
 .map.orange .control:hover input:not([disabled]):checked ~ .control__indicator,
 .map.orange .control input:checked:focus ~ .control__indicator {

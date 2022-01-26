@@ -132,8 +132,6 @@ public class UtilsPortletServeResources {
 
     public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, List<IngridFacet> config) throws ParseException, IOException {
         queryString = UtilsSearch.updateQueryString(queryString, request);
-        StringBuilder s = new StringBuilder();
-        s.append("var markers = [");
         IngridQuery query = QueryStringParser.parse( queryString );
         if(config != null) {
             query = UtilsFacete.setFacetQuery(queryString, config, query);
@@ -143,9 +141,15 @@ public class UtilsPortletServeResources {
             UtilsFacete.addToQueryAreaAddress(request, query);
             UtilsFacete.addToQueryWildcard(request, query);
         }
+        int startPage = 0;
+        if(request.getParameter("startPage") != null) {
+            startPage = Integer.parseInt(request.getParameter("startPage"));
+        }
+        String marker = request.getParameter("marker");
+        String markerColor = request.getParameter("markerColor");
         IBusQueryResultIterator it = new IBusQueryResultIterator( query, requestedFields, IBUSInterfaceImpl.getInstance()
-                .getIBus() );
-        JSONArray jsonData = new JSONArray();
+                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, 100);
+        response.setContentType( "application/javascript" );
         if(it != null){
             while (it.hasNext()) {
                 try {
@@ -177,45 +181,49 @@ public class UtilsPortletServeResources {
                         }
                     }
                     jsonDataEntry.put(jsonSteps);
-                    jsonData.put(jsonDataEntry);
+                    response.getWriter().write("createMarker(" + marker + ", " + jsonDataEntry.toString() + ", '" + markerColor + "');");
                 } catch (Exception e) {
                     log.error("Error write response.", e);
                 }
             }
         }
-        response.setContentType( "application/javascript" );
-        response.getWriter().write("var markers = " + jsonData.toString() + ";");
     }
 
-    public static void getHttpMarkerUVPWithNumber(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize) throws ParseException, IOException {
-        getHttpMarkerUVPWithNumber(response, requestedFields, queryString, messages, sysCodeList, pageSize, null, null, null); 
+    public static void getHttpMarkerUVPWithNumber(ResourceRequest request, ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize) throws ParseException, IOException {
+        getHttpMarkerUVPWithNumber(request, response, requestedFields, queryString, messages, sysCodeList, pageSize, null, null, null); 
     }
 
-    public static void getHttpMarkerUVPWithNumber(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize, String from, String to, String additionalQuery) throws ParseException, IOException {
+    public static void getHttpMarkerUVPWithNumber(ResourceRequest request, ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize, String from, String to, String additionalQuery) throws ParseException, IOException {
         if(from != null && to != null && additionalQuery != null) {
             queryString = getTimeQuery(queryString, from, to, additionalQuery);
         }
+        int startPage = 0;
+        if(request.getParameter("startPage") != null) {
+            startPage = Integer.parseInt(request.getParameter("startPage"));
+        }
+        String marker = request.getParameter("marker");
+        String markerColor = request.getParameter("markerColor");
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
-                .getIBus(), pageSize);
-        JSONArray jsonData = new JSONArray();
+                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, 100);
+        response.setContentType( "application/javascript" );
         if(it != null){
             while (it.hasNext()) {
                 IngridHit hit = it.next();
                 IngridHitDetail detail = hit.getHitDetail();
                 try {
-                    JSONArray jsonDataEntry = new JSONArray();
                     String lat = UtilsSearch.getDetailValue( detail, "lat_center", 1);
                     String lng = UtilsSearch.getDetailValue( detail, "lon_center", 1);
                     String title = UtilsSearch.getDetailValue( detail, "title" );
                     String uuid = UtilsSearch.getDetailValue( detail, "t01_object.obj_id" );
                     String iplug = hit.getPlugId();
                     if(!lat.isEmpty() && !lng.isEmpty()) {
+                        JSONArray jsonDataEntry = new JSONArray();
                         jsonDataEntry.put(Double.parseDouble(lat));
                         jsonDataEntry.put(Double.parseDouble(lng));
                         jsonDataEntry.put(title);
                         jsonDataEntry.put(uuid);
                         jsonDataEntry.put(iplug);
-                        jsonData.put(jsonDataEntry);
+                        response.getWriter().write("createMarker(" + marker + ", " + jsonDataEntry.toString() + ", '" + markerColor + "');");
                     } else {
                         log.error("Metadata '" + title + "' with UUID '" + uuid + "' has no location!");
                     }
@@ -224,8 +232,6 @@ public class UtilsPortletServeResources {
                 }
             }
         }
-        response.setContentType( "application/javascript" );
-        response.getWriter().write("var markers = " + jsonData.toString() + ";");
     }
 
     public static void getHttpMarkerUVPDetail(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
