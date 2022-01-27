@@ -2436,14 +2436,20 @@ public class UtilsFacete {
         }
     }
 
-    public static IngridQuery setFacetQuery(String term, List<IngridFacet> configNode, IngridQuery query) throws ParseException{
+    public static IngridQuery setFacetQuery(String term, List<IngridFacet> configNode, IngridQuery query) throws ParseException {
+        return setFacetQuery(term, configNode, query, null);
+    }
+    
+    public static IngridQuery setFacetQuery(String term, List<IngridFacet> configNode, IngridQuery query, String parent) throws ParseException{
         if(term == null){
             term = "";
         }
         if(term != null){
             for (IngridFacet ingridFacet : configNode){
-                if(ingridFacet.getFacets() != null){
-                    term = getQuerySelection(term, ingridFacet.getQueryType(), ingridFacet.getFacets());
+                if(parent == null || parent != ingridFacet.getId()) {
+                    if(ingridFacet.getFacets() != null){
+                        term = getQuerySelection(term, ingridFacet.getQueryType(), ingridFacet.getFacets());
+                    }
                 }
             }
             String origin = query.getString(IngridQuery.ORIGIN);

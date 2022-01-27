@@ -453,3 +453,27 @@
         #end
     </form>
 #end
+
+#if($restUrlFacetValue)
+<script>
+    $('.control--checkbox').each(function(index) {
+        var element = $(this);
+        var input = element.find('input');
+        var spanNr = element.find('.nr-results');
+        if(input.length > 0 && spanNr.length > 0) {
+            var id = input.attr('id');
+            var spanNrValue= spanNr.text().trim();
+            if(id && spanNrValue.length === 0) {
+                jQuery.get("$restUrlFacetValue?facetId=" + id.replace('facet-', '') )
+                .done(function(data, textStatus, jqxhr) {
+                    if(data) {
+                        spanNr.text('(' + data + ')');
+                    }
+                })
+                .error(function () {
+                });
+            }
+        }
+    })
+</script>
+#end
