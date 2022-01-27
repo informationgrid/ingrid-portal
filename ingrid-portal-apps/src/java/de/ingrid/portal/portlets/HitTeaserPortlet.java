@@ -80,7 +80,8 @@ public class HitTeaserPortlet extends GenericVelocityPortlet {
         context.put( "leafletEpsg", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_EPSG, "3857"));
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
-        
+        context.put( "leafletBgLayerOpacity", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY));
+
         String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
         String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
         if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
