@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.11.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.1">
+        <release version="5.11.0" date="2022-01-27" description="Release 5.11.0">
           <action type="update" dev="wemove" issue="3411">
             Neues Passwort bei Aktualisierung eines Accounts
           </action>
@@ -16,9 +16,6 @@
           <action type="update" dev="wemove" issue="2618">
             Katalogausgabe entsprechend #1358 für BKG-MIS umsetzen
           </action>
-        </release>
-
-        <release version="5.11.0" date="2022-01-19" description="Release 5.11.0">
           <action type="fix" dev="wemove" issue="3389">
             BWaStr.IDs für Haupt- und Nebenstrecken in Kombination mit fehlendem WKT führen zu fehlender Darstellung von Features in der Kartenansicht
           </action>
