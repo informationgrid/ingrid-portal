@@ -166,6 +166,9 @@ public class UtilsUvpZipDownload {
                 }
             } catch (JSONException | IOException e) {
                 log.error("Error create download.", e);
+                if(statsJsonFile.delete()) {
+                    createDownload(uuid, title, downloadPath, docParentNode, messages, xPathUtils);
+                }
             } finally {
                 // Update zip file
                 File tmpFile = new File(zipFile.getAbsoluteFile() + ".tmp");
