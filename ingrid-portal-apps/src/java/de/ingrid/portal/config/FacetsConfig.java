@@ -313,20 +313,20 @@ public class FacetsConfig {
                         ingridFacet.setColNum( Integer.parseInt(node.getValue().toString()) );
                     }
                 }
-                
+
+                if (!facetNode.getChildren( "queryType" ).isEmpty()) {
+                    Node subNode = (Node) facetNode.getChildren( "queryType" ).get( 0 );
+                    ingridFacet.setQueryType( subNode.getValue().toString() );
+                }
+
+                if (!facetNode.getChildren( "listLength" ).isEmpty()) {
+                    Node subNode = (Node) facetNode.getChildren( "listLength" ).get( 0 );
+                    ingridFacet.setListLength( Integer.parseInt(subNode.getValue().toString()) );
+                }
+
                 if (!facetNode.getChildren( "facets" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {
-                        if (!node.getAttributes( "queryType" ).isEmpty()) {
-                            Node subNode = (Node) node.getAttributes( "queryType" ).get( 0 );
-                            ingridFacet.setQueryType( subNode.getValue().toString() );
-                        }
-
-                        if (!node.getAttributes( "listLength" ).isEmpty()) {
-                            Node subNode = (Node) node.getAttributes( "listLength" ).get( 0 );
-                            ingridFacet.setListLength( Integer.parseInt(subNode.getValue().toString()) );
-                        }
-
                         Node facetsNode = (Node) facetNode.getChildren( "facets" ).get( 0 );
                         if (facetNode != null) {
                             List<ConfigurationNode> subFacet = facetsNode.getChildren( "facet" );

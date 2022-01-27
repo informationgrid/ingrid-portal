@@ -202,7 +202,7 @@
                                     <hr class="no-margin border-dotted">
                                     #foreach($subFacet in $facet.getFacets())
                                         #if(!$subFacet.isSelect())
-                                            #if($isQueryTypeOR && $count == $listLength)
+                                            #if($facet.getListLength() != 0 && $count == $listLength)
                                                 #set($isGreaterThanSubFacetsCount = true)
                                                 <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
                                                     <div class="accordion-item text-right" data-accordion-item="">
@@ -217,7 +217,7 @@
                                 #end
                             #else
                                 #foreach($subFacet in $facet.getFacets())
-                                    #if($isQueryTypeOR && $count == $listLength)
+                                    #if($facet.getListLength() != 0 && $count == $listLength)
                                         #set($isGreaterThanSubFacetsCount = true)
                                         <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
                                             <div class="accordion-item text-right" data-accordion-item="">
@@ -229,23 +229,21 @@
                                     #end
                                 #end
                             #end
-                            #if($isQueryTypeOR)
-                                #if($isGreaterThanSubFacetsCount)
-                                                </div>
-                                                <a href="#" class="more" aria-controls="$subFacet.getParent().getId()_more" role="tab" id="$subFacet.getParent().getId()_more-label" aria-expanded="false" aria-selected="false">
-                                                    <div class="helper plus">
-                                                        <span class="ic-ic-plus"></span>
-                                                        <span class="text">$MESSAGES.getString("searchResult.facete.category.plus")</span>
-                                                    </div>
-                                                    <div class="helper minus">
-                                                        <span class="ic-ic-minus"></span>
-                                                        <span class="text">$MESSAGES.getString("searchResult.facete.category.minus")</span>
-                                                    </div>
-                                                </a>
+                            #if($isGreaterThanSubFacetsCount)
                                             </div>
+                                            <a href="#" class="more" aria-controls="$subFacet.getParent().getId()_more" role="tab" id="$subFacet.getParent().getId()_more-label" aria-expanded="false" aria-selected="false">
+                                                <div class="helper plus">
+                                                    <span class="ic-ic-plus"></span>
+                                                    <span class="text">$MESSAGES.getString("searchResult.facete.category.plus")</span>
+                                                </div>
+                                                <div class="helper minus">
+                                                    <span class="ic-ic-minus"></span>
+                                                    <span class="text">$MESSAGES.getString("searchResult.facete.category.minus")</span>
+                                                </div>
+                                            </a>
                                         </div>
-                                    #set($isGreaterThanSubFacetsCount = false)
-                                #end
+                                    </div>
+                                #set($isGreaterThanSubFacetsCount = false)
                             #end
                             </div>
                         </div>
