@@ -729,4 +729,86 @@ public class UtilsPortletServeResources {
         }
         return queryString;
     }
+
+    public static void getHttpFacetValue(ResourceRequest request, ResourceResponse response, ArrayList<IngridFacet> config, String facetId) throws ParseException {
+        IngridFacet facet = UtilsFacete.getFacetById(config, facetId);
+        String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
+        if(stateRanking == null) {
+            stateRanking = "date";
+        }
+        if(facetId.equals("procedure_dev_plan") && stateRanking.equals("date")) {
+            try {
+                response.getWriter().write("0");
+            } catch (IOException e) {
+                log.error("Error write response!", e);
+            }
+        } else {
+            if(facet != null) {
+                String queryString = facet.getQuery();
+                if(facet.getToggle() != null && facet.getToggle().isSelect()) {
+                    queryString = facet.getToggle().getQuery();
+                }
+                queryString = UtilsSearch.updateQueryString(queryString, request);
+                IngridQuery query = QueryStringParser.parse( queryString );
+                if(config != null) {
+                    query = UtilsFacete.setFacetQuery(queryString, config, query, facet.getParent().getId());
+                    UtilsFacete.addToQueryMap(request, query);
+                    UtilsFacete.addToQueryGeothesaurus(request, query);
+                    UtilsFacete.addToQueryAttribute(request, query);
+                    UtilsFacete.addToQueryAreaAddress(request, query);
+                    UtilsFacete.addToQueryWildcard(request, query);
+                }
+                if (query.get( "FACETS" ) == null) {
+                    ArrayList<IngridDocument> facetQueries = new ArrayList<>();
+                    ArrayList<HashMap<String, String>> facetList = new ArrayList<>();
+                    String tmpQuery = facet.getQuery();
+                    if (!tmpQuery.isEmpty()) {
+                        HashMap<String, String> facetEntry = new HashMap<>();
+                        facetEntry.put("id", "value");
+                        facetEntry.put("query", tmpQuery);
+                        facetList.add(facetEntry);
+                    }
+                    if (!facetList.isEmpty()) {
+                        IngridDocument facets = new IngridDocument();
+                        facets.put("id", "value");
+                        facets.put("classes", facetList);
+                        facetQueries.add(facets);
+                    }
+                    if (!facetQueries.isEmpty()) {
+                        query.put( "FACETS", facetQueries );
+                    }
+                }
+                IngridHits hits;
+                try {
+                    IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+                    hits = ibus.search( query, Settings.SEARCH_RANKED_HITS_PER_PAGE, 1, 0, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ) );
+
+                    if (hits == null) {
+                        if (log.isErrorEnabled()) {
+                            log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+                        }
+                    } else {
+                        if(hits.length() > 0) {
+                            Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
+                            JSONObject obj = new JSONObject();
+                            if(facets != null){
+                                for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
+                                    String key = iterator.next();
+                                    Long value = (Long) facets.get(key);
+                                    response.getWriter().write(value+"");
+                                    break;
+                                }
+                            }
+                        } else {
+                            response.getWriter().write("0");
+                        }
+                    }
+                } catch (Exception t) {
+                    if (log.isErrorEnabled()) {
+                        log.error( "Problems performing Search !", t );
+                    }
+                }
+            }
+        }
+    }
 }
