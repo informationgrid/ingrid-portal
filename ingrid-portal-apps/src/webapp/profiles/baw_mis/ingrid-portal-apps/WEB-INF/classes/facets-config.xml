@@ -146,11 +146,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>wasserstrasse</id>
         <field>bwstr-bwastr_name</field>
         <isOpen>true</isOpen>
+        <listLength>6</listLength>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Verfahren</name>
         <id>simprocess</id>
         <field>simprocess</field>
+        <listLength>6</listLength>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Modelldaten</name>
@@ -177,11 +179,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>Räumliche Dimensionalität</name>
         <id>simspatialdimension</id>
         <field>simspatialdimension</field>
+        <listLength>6</listLength>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Datenformate</name>
         <id>datenformate</id>
         <field>t017_url_ref.datatype</field>
+        <listLength>6</listLength>
     </facet>
     <!-- Aktualität (Metadaten)-->
     <!-- Kann erweitert werden -->

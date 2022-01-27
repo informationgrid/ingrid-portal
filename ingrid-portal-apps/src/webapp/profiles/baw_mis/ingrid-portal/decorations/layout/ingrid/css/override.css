@@ -1138,3 +1138,7 @@ footer .footer-buttons-bar .login-buttons .login-form {
 .icon-cat_donau, .icon-cat_elbe, .icon-cat_rhein {
     top: 34px !important;
 }
+
+.control input:checked ~ .control__indicator {
+    border: 1px solid #012D47;
+}
