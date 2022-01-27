@@ -429,16 +429,27 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                 #end
             #end
         #else
+            #set($isCategorySelect = false)
+            #if($entry.getParent()) 
+                #foreach($tmpEntry in $entry.getParent().getFacets())
+                    #if($tmpEntry.isSelect())
+                        #set($isCategorySelect = true)
+                        #break
+                    #end
+                #end
+            #end
             #if($entry.isSelect())
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
                 #renderSearchResultFacetSelectionItem($entry $action "$parentFacetTyp: $resourceMsgs.getString($entry.getName())")
             #end
             #if($entry.getToggle() && $entry.getToggle().isSelect())
-                #set ($action = $renderResponse.createActionURL())
-                $action.setParameter("$entry.getParent().getId()", "$entry.getToggle().getId()")
-                #set($catNameToggle = $resourceMsgs.getString($entry.getName()) + ": " + $resourceMsgs.getString('common.toggle.approval.date'))
-                #renderSearchResultFacetSelectionItem($entry $action $catNameToggle)
+                #if($isCategorySelect && $entry.isSelect())
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("$entry.getParent().getId()", "$entry.getToggle().getId()")
+                    #set($catNameToggle = $resourceMsgs.getString($entry.getName()) + ": " + $resourceMsgs.getString('common.toggle.approval.date'))
+                    #renderSearchResultFacetSelectionItem($entry $action $catNameToggle)
+                #end
             #end
             #if($entry.getFacets())
                 #set($catNameSub = $resourceMsgs.getString($entry.getName()))
