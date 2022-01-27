@@ -580,13 +580,13 @@
         return icon;
     }
     
-    function createPopUp(title, procedure, categories, steps, id) {
+    function createPopUp(title, procedure, categories, steps, id, iplug) {
         var popUpHtml = '';
         if(procedure && procedure.length > 0){
             popUpHtml += '<div class="helper text"><small>' + procedure + '</small></div>';
         }
         
-        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '" target="_blank" title="' + title + '"><h5>' + title + '</h5></a>';
+        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '&plugid=' + iplug + '" target="_blank" title="' + title + '"><h5>' + title + '</h5></a>';
         
         if(categories && categories.length > 0){
             var categoryList = [];
@@ -662,7 +662,8 @@
             var procedure = data[0];
             var categories = data[1];
             var steps = data[2];
-            popup.setContent( createPopUp(title, procedure, categories, steps, uuid) );
+            var iplug = e.target.iplug;
+            popup.setContent( createPopUp(title, procedure, categories, steps, uuid, iplug) );
             popup.update();
         })
         .error(function () {
