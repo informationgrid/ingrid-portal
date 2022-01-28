@@ -2714,14 +2714,17 @@ meter[value="5"]::-moz-meter-bar { background: green; }
 }
 .js-expand-text .js-expand-text-content:before {
   background: linear-gradient(rgba(255, 255, 255, 0) 115px, $white);
+  pointer-events: none;
 }
 
 .image div.description:before {
   background: linear-gradient(rgba(255, 255, 255, 0) 100px, $white);
+  pointer-events: none;
 }
 
 .no-image div.description:before {
   background: linear-gradient(rgba(255, 255, 255, 0) 35px, $white);
+  pointer-events: none;
 }
 .image div.description, .no-image div.description {
   position: relative;
