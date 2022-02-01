@@ -141,11 +141,41 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <wildcard>bawauftragsnummer</wildcard>
     </facet>
     -->
+    <facet>
+        <name>Abteilung</name>
+        <id>baw_abteilung</id>
+        <facets>
+            <facet>
+                <name>Bautechnik</name>
+                <query>baw_abteilung_short:b</query>
+                <id>bautechnik</id>
+            </facet>
+            <facet>
+                <name>Geotechnik</name>
+                <query>baw_abteilung_short:g</query>
+                <id>geotechnik</id>
+            </facet>
+            <facet>
+                <name>Wasserbau im Binnenbereich</name>
+                <query>baw_abteilung_short:w</query>
+                <id>binnenbereich</id>
+            </facet>
+            <facet>
+                <name>Wasserbau im Küstenbereich</name>
+                <query>baw_abteilung_short:k</query>
+                <id>kuestenbereich</id>
+            </facet>
+            <facet>
+                <name>Zentraler Service</name>
+                <query>baw_abteilung_short:z</query>
+                <id>zentral</id>
+            </facet>
+        </facets>
+    </facet>
     <facet sort="SORT_BY_VALUE_DESC">
-        <name>Wasserstrasse</name>
+        <name>Wasserstraße</name>
         <id>wasserstrasse</id>
         <field>bwstr-bwastr_name</field>
-        <isOpen>true</isOpen>
         <listLength>6</listLength>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
@@ -243,124 +273,167 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Kategorie -->
     <facet>
-        <name>Kategorie</name>
-        <id>category</id>
+        <name>Wasserstraße</name>
+        <id>category_wasserstrasse</id>
         <categoryOnly>true</categoryOnly>
         <facets>
             <!-- Donau -->
             <facet>
                 <name>Donau</name>
                 <query>bwstr-bwastr_name.phrase:"donau"</query>
-                <id>cat_donau</id>
+                <id>Donau</id>
+                <parentId>wasserstrasse</parentId>
                 <!-- <icon>/decorations/layout/ingrid/images/template/icon_donau_mdk.svg</icon> -->
                 <shortcut>Do</shortcut>
-                <display>true</display>
             </facet>
             <!-- Eider -->
             <facet>
                 <name>Eider</name>
                 <query>bwstr-bwastr_name.phrase:"eider"</query>
-                <id>cat_ei</id>
+                <id>Eider</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>Ei</shortcut>
-                <display>true</display>
             </facet>
             <!-- Elbe -->
             <facet>
                 <name>Elbe</name>
                 <query>bwstr-bwastr_name.phrase:"elbe"</query>
-                <id>cat_elbe</id>
+                <id>Elbe</id>
+                <parentId>wasserstrasse</parentId>
                 <!-- <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon> -->
                 <shortcut>El</shortcut>
-                <display>true</display>
             </facet>
             <!-- Ems -->
             <facet>
                 <name>Ems</name>
                 <query>bwstr-bwastr_name.phrase:"ems"</query>
                 <id>cat_em</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>Em</shortcut>
-                <display>true</display>
             </facet>
             <!-- Main-Donau-Kanal -->
             <facet>
                 <name>Main-Donau-Kanal</name>
                 <query>bwstr-bwastr_name.phrase:"main-donau-kanal"</query>
-                <id>cat_mdk</id>
+                <id>Main-Donau-Kanal</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>MDK</shortcut>
-                <display>true</display>
             </facet>
             <!-- Mittellandkanal -->
             <facet>
                 <name>Mittellandkanal</name>
                 <query>bwstr-bwastr_name.phrase:"mittellandkanal"</query>
-                <id>cat_mlk</id>
+                <id>Mittellandkanal</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>MLK</shortcut>
-                <display>true</display>
             </facet>
             <!-- Mosel -->
             <facet>
                 <name>Mosel</name>
                 <query>bwstr-bwastr_name.phrase:"mosel"</query>
-                <id>cat_mo</id>
+                <id>Mosel</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>Mo</shortcut>
-                <display>true</display>
             </facet>
             <!-- Neckar -->
             <facet>
                 <name>Neckar</name>
                 <query>bwstr-bwastr_name.phrase:"neckar"</query>
-                <id>cat_ne</id>
+                <id>Neckar</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>Ne</shortcut>
-                <display>true</display>
             </facet>
             <!-- Nord-Ostsee-Kanal  -->
             <facet>
                 <name>Nord-Ostsee-Kanal</name>
                 <query>bwstr-bwastr_name.phrase:"nord-ostsee-kanal"</query>
-                <id>cat_nok</id>
+                <id>Nord-Ostsee-Kanal</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>NOK</shortcut>
-                <display>true</display>
             </facet>
             <!-- Nordsee -->
             <facet>
                 <name>Nordsee</name>
                 <query>bwstr-bwastr_name.phrase:"nordsee"</query>
-                <id>cat_nsee</id>
+                <id>Nordsee</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>NSee</shortcut>
-                <display>true</display>
             </facet>
             <!-- Oder -->
             <facet>
                 <name>Oder</name>
                 <query>bwstr-bwastr_name.phrase:"oder"</query>
-                <id>cat_od</id>
+                <id>Oder</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>Od</shortcut>
-                <display>true</display>
             </facet>
             <!-- Ostsee -->
             <facet>
                 <name>Ostsee</name>
                 <query>bwstr-bwastr_name.phrase:"ostsee"</query>
-                <id>cat_osee</id>
+                <id>Ostsee</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>OSee</shortcut>
-                <display>true</display>
             </facet>
             <!-- Rhein -->
             <facet>
                 <name>Rhein</name>
                 <query>bwstr-bwastr_name.phrase:"rhein"</query>
-                <id>cat_rhein</id>
+                <id>Rhein</id>
+                <parentId>wasserstrasse</parentId>
                 <!-- <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon> -->
                 <shortcut>Rh</shortcut>
-                <display>true</display>
             </facet>
             <!-- Weser -->
             <facet>
                 <name>Weser</name>
                 <query>bwstr-bwastr_name.phrase:"weser"</query>
-                <id>cat_we</id>
+                <id>Weser</id>
+                <parentId>wasserstrasse</parentId>
                 <shortcut>We</shortcut>
-                <display>true</display>
+            </facet>
+        </facets>
+    </facet>
+    <!-- Abteilung -->
+    <facet>
+        <name>Abteilung</name>
+        <id>category_baw_abteilung</id>
+        <categoryOnly>true</categoryOnly>
+        <facets>
+            <facet>
+                <name>Bautechnik</name>
+                <query>baw_abteilung_short:b</query>
+                <id>bautechnik</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>B</shortcut>
+            </facet>
+            <facet>
+                <name>Geotechnik</name>
+                <query>baw_abteilung_short:g</query>
+                <id>geotechnik</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>G</shortcut>
+            </facet>
+            <facet>
+                <name>Wasserbau im Binnenbereich</name>
+                <query>baw_abteilung_short:w</query>
+                <id>binnenbereich</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>W</shortcut>
+            </facet>
+            <facet>
+                <name>Wasserbau im Küstenbereich</name>
+                <query>baw_abteilung_short:k</query>
+                <id>kuestenbereich</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>K</shortcut>
+            </facet>
+            <facet>
+                <name>Zentraler Service</name>
+                <query>baw_abteilung_short:z</query>
+                <id>zentral</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>Z</shortcut>
             </facet>
         </facets>
     </facet>
