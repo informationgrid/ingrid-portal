@@ -121,7 +121,7 @@ INSERT INTO tmp_table (item_key, item_value) values ('main_menu_id',  (SELECT me
 UPDATE folder_menu SET options = '/main-search.psml' WHERE options = '/default-page.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id');
 UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';
 UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-measures.psml';
-UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE temp_key = 'main_menu_id') AND options = '/main-maps.psml';
+UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-maps.psml';
 
 -- DONE with tmp_table
 DROP TABLE tmp_table;
