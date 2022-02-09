@@ -51,6 +51,7 @@
 #set($xPathListTimeTimePeriodInstantPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimeInstant/gml:timePosition")
 #set($xPathListTimeTimePeriodBeginPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition")
 #set($xPathListTimeTimePeriodEndPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition")
+#set($xPathListTimeTimePeriodEndIndeterminatePosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition/@indeterminatePosition")
 ## Status
 #set($xPathListTimeMDProgressCode = "./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue")
 ## Periodizität

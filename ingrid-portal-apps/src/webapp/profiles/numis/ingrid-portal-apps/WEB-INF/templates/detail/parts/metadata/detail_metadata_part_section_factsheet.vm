@@ -7,6 +7,14 @@
         #set($atTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodInstantPosition))
         #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
         #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
+        #set($fromType = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndIndeterminatePosition))
+
+        #set($toIndeterminate = "")
+        #if($tool.hasContent($fromType) && $fromType == 'now')
+           #set($toIndeterminate = $MESSAGES.getString('search.detail.time.untilNow'))
+        #else
+           #set($toIndeterminate = $MESSAGES.getString('search.detail.time.untilUnknown'))
+        #end
 
         #if($tool.hasContent($beginTime) || $tool.hasContent($endTime) || $tool.hasContent($atTime))
             #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
@@ -15,15 +23,15 @@
                 #set($tmpTitle = "time_reference")
             #end
             #if($tool.hasContent($atTime))
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $atTime")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $atTime")
             #elseif($beginTime == $endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $beginTime")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $beginTime")
             #elseif($beginTime && !$endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since'): $beginTime")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since') $beginTime $toIndeterminate")
             #elseif(!$beginTime && $endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.to'): $endTime")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.to') $endTime")
             #elseif($beginTime != $endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
             #end
         #end
     ## Downloads
