@@ -21,9 +21,9 @@
             <b>$timeTypeTitle</b>:
         #end
         #if($timeType == "seit" && !$t1.isEmpty())
-        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1 $MESSAGES.getString('searchResult.hit.time.untilUnknown')</span>
+        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1$MESSAGES.getString('searchResult.hit.time.untilUnknown')</span>
         #elseif($timeType == "seitX" && !$t1.isEmpty())
-        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1 $MESSAGES.getString('searchResult.hit.time.untilNow')</span>
+        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1$MESSAGES.getString('searchResult.hit.time.untilNow')</span>
         #elseif ($timeType == "von" && !$t1.isEmpty() && !$t2.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.from') $t1 $MESSAGES.getString('searchResult.hit.time.to') $t2</span>
         #elseif ($timeType == "am" && !$t0.isEmpty())

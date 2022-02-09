@@ -27,7 +27,7 @@
             #elseif($beginTime == $endTime)
                 #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $beginTime")
             #elseif($beginTime && !$endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since') $beginTime $toIndeterminate")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since') $beginTime$toIndeterminate")
             #elseif(!$beginTime && $endTime)
                 #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.to') $endTime")
             #elseif($beginTime != $endTime)
