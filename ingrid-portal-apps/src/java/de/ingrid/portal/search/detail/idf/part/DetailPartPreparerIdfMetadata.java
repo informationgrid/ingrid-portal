@@ -1216,15 +1216,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         if (xPathUtils.nodeExists(childNode, "./gmd:westBoundLongitude") && xPathUtils.nodeExists(childNode, "./gmd:southBoundLatitude")) {
                             String valueW = xPathUtils.getString(childNode, "./gmd:westBoundLongitude").trim();
                             String valueS = xPathUtils.getString(childNode, "./gmd:southBoundLatitude").trim();
-                            row.add(notNull(valueW) + "\u00B0/" + notNull(valueS) + "\u00B0") ;
+                            row.add((Math.round(Double.parseDouble(valueW) * 1000000) / 1000000.0) + "\u00B0/" + (Math.round(Double.parseDouble(valueS) * 1000000) / 1000000.0) + "\u00B0");
                         } else {
                             row.add("");
                         }
-
                         if (xPathUtils.nodeExists(childNode, "./gmd:eastBoundLongitude") && xPathUtils.nodeExists(childNode, "./gmd:northBoundLatitude")) {
                             String valueE = xPathUtils.getString(childNode, "./gmd:eastBoundLongitude").trim();
                             String valueN = xPathUtils.getString(childNode,  "./gmd:northBoundLatitude").trim();
-                            row.add(notNull(valueE)  + "\u00B0/" + notNull(valueN) + "\u00B0");
+                            row.add((Math.round(Double.parseDouble(valueE) * 1000000) / 1000000.0) + "\u00B0/" + (Math.round(Double.parseDouble(valueN) * 1000000) / 1000000.0) + "\u00B0");
                         } else {
                             row.add("");
                         }
