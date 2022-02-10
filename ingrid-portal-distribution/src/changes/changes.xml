@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.11.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.2">
+          <action type="fix" dev="wemove" issue="3476">
+            MAPCLIENT: Fehlerhebung beim Import von geschützten Diensten
+          </action>
+        </release>
+
         <release version="5.11.0" date="2022-01-27" description="Release 5.11.0">
           <action type="update" dev="wemove" issue="3411">
             Neues Passwort bei Aktualisierung eines Accounts
