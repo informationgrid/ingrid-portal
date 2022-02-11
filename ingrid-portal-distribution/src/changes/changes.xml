@@ -8,6 +8,9 @@
     <body>
         <release version="5.11.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.2">
           <action type="update" dev="wemove" issue="2499">
+            UVP: Update Text in pop-up window
+          </action>
+          <action type="update" dev="wemove" issue="2499">
             BKG: Update > 5.8: Release-Bereitstellung BKG-Profil
           </action>
           <action type="fix" dev="wemove" issue="3476">
