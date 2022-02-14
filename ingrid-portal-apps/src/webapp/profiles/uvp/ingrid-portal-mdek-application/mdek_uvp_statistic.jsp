@@ -50,8 +50,12 @@
               a.setAttribute('href', 'data:text/plain;charset=utf8,'+ '\uFEFF' + encodeURIComponent(text));
               a.setAttribute('download', filename);
         	    document.body.appendChild(a);
-        	    a.click();  // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
-        	    document.body.removeChild(a);
+                // it happens that the click is not executed to download the file
+                // maybe because the download button is clicked and here another click event is executed
+                setTimeout(function() {
+                    a.click();  // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
+                    document.body.removeChild(a);
+                });
         	}
         }
 
