@@ -87,6 +87,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         put("command", "savscan -f -all -archive -mime %FILE%");
         put("virusPattern", "(?m)^>>> Virus '([^']+)' found in file (.+)$");
         put("cleanPattern", "(?m)^No viruses were discovered.$");
+        put("errorPattern", "(?m)^\\d* error(s\\b|\\b) ((\\was\\b)|(\\were\\b)) encountered.$");
     }};
     private static final Map<String, String> VIRUSSCAN_VALIDATOR_CONFIG_REMOTE = new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
@@ -225,6 +226,45 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
         // no report is sent
         assertEquals(0, this.mockEmailService.emails.size());
+    }
+
+    /**
+     * Test:
+     * - Local scanner setup, error is found during scan, but no virus
+     * @throws Exception
+     */
+    @Test
+    public void testLocalErrorFound() throws Exception {
+        // set up job
+        setupJob(localVirusScanValidator);
+
+        // set up files
+        final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
+        final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), "");
+        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), "");
+
+        // set up scan report expectations
+        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
+        when(this.scanner.execute(scanCommand)).thenReturn(this.getScanReportError(3));
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        Mockito.verify(this.scanner, times(1)).execute(any());
+
+        assertTrue(this.fileExists(file1));
+        assertTrue(this.fileExists(file2));
+        assertTrue(this.fileExists(file3));
+        assertTrue(this.getTestAppender().hasIssues());
+
+        // report is sent and contains whole scan result
+        assertEquals(1, this.mockEmailService.emails.size());
+
+        final MockEmailService.Email report = this.mockEmailService.emails.get(0);
+        assertEquals("[IGE] Virus Scan Report ERROR", report.subject);
+        assertTrue(report.body.contains("2 errors were encountered."));
+        assertTrue(report.body.contains("End of Scan."));
     }
 
     /**
@@ -574,6 +614,24 @@ public class UploadVirusScanJobTest extends BaseJobTest {
                 "",
                 "",
                 numFiles+" files scanned in 5 seconds.",
+                "No viruses were discovered.",
+                "End of Scan."
+        );
+    }
+
+    /**
+     * Get the scan report in case of no infection
+     * @param numFiles
+     * @return String
+     */
+    private String getScanReportError(final int numFiles) {
+        return String.join(System.getProperty("line.separator"),
+                "Full Scanning",
+                "",
+                "",
+                "",
+                numFiles+" files scanned in 5 seconds.",
+                "2 errors were encountered.",
                 "No viruses were discovered.",
                 "End of Scan."
         );
