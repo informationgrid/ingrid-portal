@@ -57,7 +57,7 @@
                     #elseif(!$beginTime && $endTime)
                         #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.to') $endTime")
                     #elseif($beginTime != $endTime)
-                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
                     #end
                 #end
             ## Status
