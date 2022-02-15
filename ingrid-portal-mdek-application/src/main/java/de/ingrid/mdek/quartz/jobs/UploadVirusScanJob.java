@@ -22,14 +22,11 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-
+import de.ingrid.mdek.upload.storage.validate.Validator;
+import de.ingrid.mdek.upload.storage.validate.ValidatorFactory;
+import de.ingrid.mdek.upload.storage.validate.VirusFoundException;
+import de.ingrid.mdek.upload.storage.validate.VirusScanException;
+import de.ingrid.mdek.util.MdekEmailUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,10 +34,13 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import de.ingrid.mdek.upload.storage.validate.Validator;
-import de.ingrid.mdek.upload.storage.validate.ValidatorFactory;
-import de.ingrid.mdek.upload.storage.validate.VirusFoundException;
-import de.ingrid.mdek.util.MdekEmailUtils;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UploadVirusScanJob extends QuartzJobBean {
 
@@ -147,6 +147,12 @@ public class UploadVirusScanJob extends QuartzJobBean {
                     for (final Path file : vfex.getInfections().keySet()) {
                         infectedFiles.add(file);
                     }
+                }
+                catch (final VirusScanException vscanex) {
+                    String scanReport = vscanex.getScanReport();
+                    // if error is found print scanReport with log lvl error, so it is added to the mail report
+                    log(Level.ERROR, scanReport, vscanex);
+                    exceptions.add(vscanex);
                 }
                 catch (final Exception ex) {
                     log(Level.ERROR, "Error scanning directory \""+scanDir+"\"", ex);
