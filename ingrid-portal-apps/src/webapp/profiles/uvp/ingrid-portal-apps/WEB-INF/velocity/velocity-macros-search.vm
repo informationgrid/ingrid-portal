@@ -390,9 +390,9 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                                             $action.setParameter("$entry.getId()", "$facet.getId()")
                                             #set($addText = "")
                                             #if($facet.getToggle().isSelect())
-                                                #set($addText = ": $resourceMsgs.getString('common.toggle.approval.date')")
+                                                #set($addText = "$resourceMsgs.getString('common.toggle.approval.date')")
                                             #end
-                                            #renderSearchResultFacetSelectionItem($facet $action "$resourceMsgs.getString($entry.getName()): $resourceMsgs.getString($facet.getName()) $addText")
+                                            #renderSearchResultFacetSelectionItem($facet $action "$resourceMsgs.getString($entry.getName()): $addText $resourceMsgs.getString($facet.getName())")
                                             #break
                                         #end
                                     #end
