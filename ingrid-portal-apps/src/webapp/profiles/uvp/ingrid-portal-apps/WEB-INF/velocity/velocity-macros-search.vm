@@ -450,7 +450,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     #if($isToggleSelected)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("$entry.getId()", "$toggleGroupIds")
-                        #renderSearchResultFacetSelectionItem($facet $action "$resourceMsgs.getString($entry.getName()): $resourceMsgs.getString('common.toggle.approval.date')")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $resourceMsgs.getString('common.toggle.approval.date')")
                     #end
                 #else
                     #foreach($facet in $entry.getFacets())
