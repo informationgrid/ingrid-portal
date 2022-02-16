@@ -316,40 +316,43 @@ public class UtilsFacete {
                         resetFacetConfigValues(config, null);
                         IngridFacet tmpFacetKey = getFacetById(config, key);
                         if(tmpFacetKey != null){
-                            IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), value);
-                            if(tmpFacetValue != null){
-                                if(tmpFacetValue.isSelect()){
-                                    tmpFacetValue.setSelect(false);
-                                    if(tmpFacetValue.getFacets() != null){
-                                        for(IngridFacet tmpSubFacet : tmpFacetValue.getFacets()){
-                                            tmpSubFacet.setSelect(false);
+                            String[] valueIds = value.split(",");
+                            for (String valueId : valueIds) {
+                                IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), valueId);
+                                if(tmpFacetValue != null){
+                                    if(tmpFacetValue.isSelect()){
+                                        tmpFacetValue.setSelect(false);
+                                        if(tmpFacetValue.getFacets() != null){
+                                            for(IngridFacet tmpSubFacet : tmpFacetValue.getFacets()){
+                                                tmpSubFacet.setSelect(false);
+                                            }
                                         }
+                                    }else{
+                                        tmpFacetValue.setSelect(true);
+                                        facetIsSelect = true;
+                                        // Set last selection
+                                        if(lastSelection == null){
+                                            lastSelection = new HashMap<>();
+                                        }
+                                        lastSelection.put(tmpFacetKey.getId() + ":" + tmpFacetValue.getId(), tmpFacetValue.getId());
                                     }
-                                }else{
-                                    tmpFacetValue.setSelect(true);
-                                    facetIsSelect = true;
-                                    // Set last selection
-                                    if(lastSelection == null){
-                                        lastSelection = new HashMap<>();
+                                    if(isFacetConfigSelect(tmpFacetKey.getFacets())){
+                                        tmpFacetKey.setSelect(facetIsSelect);
                                     }
-                                    lastSelection.put(tmpFacetKey.getId() + ":" + tmpFacetValue.getId(), tmpFacetValue.getId());
+                                    resetFacetConfigValues(config, null);
                                 }
-                                if(isFacetConfigSelect(tmpFacetKey.getFacets())){
-                                    tmpFacetKey.setSelect(facetIsSelect);
-                                }
-                                resetFacetConfigValues(config, null);
-                            }
-                            String queryType = tmpFacetKey.getQueryType();
-                            if(queryType != null && queryType.equals("OR")) {
-                                if(tmpFacetKey.getFacets() != null) {
-                                    for(IngridFacet tmpSubFacet : tmpFacetKey.getFacets()){
-                                        IngridFacet toggle = tmpSubFacet.getToggle();
-                                        if(toggle != null) {
-                                            if(toggle.getId().equals(value)){
-                                                if(toggle.isSelect()) {
-                                                    toggle.setSelect(false);
-                                                } else {
-                                                    toggle.setSelect(true);
+                                String queryType = tmpFacetKey.getQueryType();
+                                if(queryType != null && queryType.equals("OR")) {
+                                    if(tmpFacetKey.getFacets() != null) {
+                                        for(IngridFacet tmpSubFacet : tmpFacetKey.getFacets()){
+                                            IngridFacet toggle = tmpSubFacet.getToggle();
+                                            if(toggle != null) {
+                                                if(toggle.getId().equals(valueId)){
+                                                    if(toggle.isSelect()) {
+                                                        toggle.setSelect(false);
+                                                    } else {
+                                                        toggle.setSelect(true);
+                                                    }
                                                 }
                                             }
                                         }
