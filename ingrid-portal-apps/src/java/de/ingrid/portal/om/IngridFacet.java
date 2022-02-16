@@ -59,7 +59,7 @@ public class IngridFacet {
     private boolean isDisplay = false;
     private boolean categoryOnly = false;
     private IngridFacet toggle;
-    
+    private ArrayList<ArrayList<String>> toggleGroups;
     
     /* Only for partner restriction */
     private boolean isParentHidden = false;
@@ -280,5 +280,11 @@ public class IngridFacet {
     }
     public void setListLength(int listLength) {
         this.listLength = listLength;
+    }
+    public ArrayList<ArrayList<String>> getToggleGroups() {
+        return toggleGroups;
+    }
+    public void setToggleGroups(ArrayList<ArrayList<String>> toggleGroups) {
+        this.toggleGroups = toggleGroups;
     }
 }

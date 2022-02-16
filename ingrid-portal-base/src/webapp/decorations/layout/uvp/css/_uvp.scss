@@ -47,7 +47,10 @@ blockquote {
   .author { font-family: 'RobotoSlab-Bold'; }
 }
 .no-margin { margin: 0; }
-.border-dotted { border-style: dotted; }
+.border-dotted { 
+  border-top: 1px dotted #c6cfe2;
+  border-bottom: 0;
+}
 .dont-break-out {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -3346,6 +3349,14 @@ a:empty:focus-visible {
   }
   ~ .toggle-label.unchecked {
     color: #3A566D;
+  }
+}
+.toggle-group {
+  .toggle ~ .toggle-label {
+    position: relative;
+    float: right;
+    right: 10px;
+    padding: 0;
   }
 }
 

@@ -379,7 +379,32 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     #end
                 #end
             #elseif($entry.isSelect())
-                #if($entry.getFacets())
+                #if($entry.getToggleGroups())
+                    #foreach($facet in $entry.getFacets())
+                        #if($facet.isSelect())
+                            #if($facet.getToggle())
+                                #foreach($toggleGroup in $entry.getToggleGroups())
+                                    #foreach($toggle in $toggleGroup)
+                                        #if($toggle == $facet.getId())
+                                            #set ($action = $renderResponse.createActionURL())
+                                            $action.setParameter("$entry.getId()", "$facet.getId()")
+                                            #set($addText = "")
+                                            #if($facet.getToggle().isSelect())
+                                                #set($addText = ": $resourceMsgs.getString('common.toggle.approval.date')")
+                                            #end
+                                            #renderSearchResultFacetSelectionItem($facet $action "$resourceMsgs.getString($entry.getName()): $resourceMsgs.getString($facet.getName()) $addText")
+                                            #break
+                                        #end
+                                    #end
+                                #end
+                            #else
+                                #set ($action = $renderResponse.createActionURL())
+                                $action.setParameter("$entry.getId()", "$facet.getId()")
+                                #renderSearchResultFacetSelectionItem($facet $action "$resourceMsgs.getString($entry.getName()): $resourceMsgs.getString($facet.getName())")
+                            #end
+                        #end
+                    #end
+                #elseif($entry.getFacets())
                     #set($catNameKey = "$entry.getName()" + ".single")
                     #set($catName = $resourceMsgs.getString($catNameKey))
                     #if($catName.indexOf(".single") > -1)
