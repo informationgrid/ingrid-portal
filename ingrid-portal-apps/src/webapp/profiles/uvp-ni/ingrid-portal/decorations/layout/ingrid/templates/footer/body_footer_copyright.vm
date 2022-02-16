@@ -1,0 +1,4 @@
+<div class="copyright">
+    <span class="icon"></span>
+    <span class="text copyright_text">$MESSAGES.getString("ingrid.page.copyright")</span>
+</div>

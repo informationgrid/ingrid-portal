@@ -710,15 +710,9 @@ footer .footer .columns div {
 }
 footer .footer .copyright span {
   color: #5E788D;
-  text-transform: none;
-  max-width: 350px;
-  line-height: 1.25;
-  margin-left: auto;
-  margin-right: auto;
 }
 footer .footer .logo {
   width: 2.25em;
-  display: none;
 }
 footer hr {
   margin: 0 0 16px;
