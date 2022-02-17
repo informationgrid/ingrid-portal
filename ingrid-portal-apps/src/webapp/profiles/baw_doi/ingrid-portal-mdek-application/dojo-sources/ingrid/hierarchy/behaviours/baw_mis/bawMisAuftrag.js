@@ -75,7 +75,8 @@ define([
                     id: AUFTRAGSNUMMER_ID,
                     name: message.get("ui.obj.baw.auftragsnummer.title"),
                     help: message.get("ui.obj.baw.auftragsnummer.help"),
-                    isMandatory: true,
+                    // Different from baw_mis Profile
+                    isMandatory: false,
                     visible: "optional",
                     style: "width: 100%"
                 }),
@@ -89,7 +90,8 @@ define([
                     name: message.get("ui.obj.baw.auftragstitel.title"),
                     help: message.get("ui.obj.baw.auftragstitel.help"),
                     visible: "optional",
-                    isMandatory: true,
+                    // Different from baw_mis Profile
+                    isMandatory: false,
                     style: "width: 100%"
                 }),
                 "uiElement1000", "after");
