@@ -346,7 +346,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
                 if(this.iPlugId != null){
                     if(uuid != null){
-                        String href = "docuuid=" + uuid;
+                        String href = "?docuuid=" + uuid;
                         if(PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID)) {
                             href += "&plugid=" + this.iPlugId;
                         }
