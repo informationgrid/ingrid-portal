@@ -20,7 +20,6 @@ The `properties` value must contain the following properties defining the virus 
 - `command` The command to invoke the virus scanner. This string must contain the literal `%FILE%` that will be replaced by the real file path to scan. The scanner output must inform about the file's status and archive support should be activated.
 - `virusPattern` A regular expression pattern that matches infections reported in the scan command result. The pattern must contain a capturing group for the virus name (#1) and one for the infected resource (#2)
 - `cleanPattern` A regular expression pattern applied to the command result that matches, if no virus infection is found
-- `errorPattern` A regular expression pattern applied to the command result that matches when an error happens during the scan
 
 The following sections show typically configurations for some free virus scanners:
 
@@ -33,8 +32,7 @@ The following sections show typically configurations for some free virus scanner
             "properties":{\
                 "command":"\\\\path\\\\to\\\\sophos\\\\savscan -f -all -archive -mime %FILE%",\
                 "virusPattern":"(?m)^>>> Virus '([^']+)' found in file (.+)$",\
-                "cleanPattern":"(?m)^No viruses were discovered.$",\
-                "errorPattern":"(?m)^\\d* error(s\\b|\\b) ((\\was\\b)|(\\were\\b)) encountered.$"\
+                "cleanPattern":"(?m)^No viruses were discovered.$"\
             }\
         }\
         ...
@@ -50,8 +48,7 @@ upload.validators.config={\
         "properties":{\
             "command":"\\\\path\\\\to\\\\clamav\\\\clamscan %FILE%",\
             "virusPattern":"(?m)^(?=.+: (.+) FOUND$)(.+): .+ FOUND$",\
-            "cleanPattern":"(?m)^Infected files: 0$",\
-            "errorPattern":"(?m)^Total errors: \\d+$"\
+            "cleanPattern":"(?m)^Infected files: 0$"\
         }\
     }\
     ...
@@ -262,18 +259,3 @@ Data scanned: 0.00 MB
 Data read: 0.00 MB (ratio 0.00:1)
 Time: 37.007 sec (0 m 37 s)
 ```
-
-
-### File cannot be accepted (password protected)
-
-```
-ERROR: Can't access file /tmp/ingrid/upload/tmp/psw.7
-
------------ SCAN SUMMARY -----------
-Infected files: 0
-Total errors: 1
-Time: 0.000 sec (0 m 0 s)
-Start Date: 2022:01:20 14:22:03
-End Date:   2022:01:20 14:22:03
-```
-
