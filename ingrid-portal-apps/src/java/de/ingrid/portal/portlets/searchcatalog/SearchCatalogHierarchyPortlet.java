@@ -119,6 +119,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         // add request language, used to localize the map client
         context.put("languageCode", request.getLocale().getLanguage());
 
+        context.put("detailUseParamPlugid", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID));
+
         setDefaultViewPage(TEMPLATE_START);
 
         // TODO remove page state in future, when separate portlets

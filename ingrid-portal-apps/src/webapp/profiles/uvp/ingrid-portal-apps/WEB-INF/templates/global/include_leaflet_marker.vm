@@ -586,7 +586,7 @@
             popUpHtml += '<div class="helper text"><small>' + procedure + '</small></div>';
         }
         
-        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '&plugid=' + iplug + '" target="_blank" title="' + title + '"><h5>' + title + '</h5></a>';
+        popUpHtml += '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=' + id + '#if($detailUseParamPlugid)&plugid=' + iplug + '#end" target="_blank" title="' + title + '"><h5>' + title + '</h5></a>';
         
         if(categories && categories.length > 0){
             var categoryList = [];

@@ -122,7 +122,7 @@
         #set($refCount = 0)
         #foreach($uuid in $referenceAllUUID)
             #set($link = {})
-            #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cmd=doShowDocument&docuuid=$referenceAllUUID.get($refCount)&plugid=$rs.plugid"))
+            #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$referenceAllUUID.get($refCount)#if($detailUseParamPlugid)&plugid=$rs.plugid#end"))
             #set($add = $link.put("type", "$referenceAllClass.get($refCount)"))
             #set($add = $link.put("title", "$referenceAllName.get($refCount)"))
             #set($add = $link.put("serviceType", "$referenceAllType.get($refCount)"))

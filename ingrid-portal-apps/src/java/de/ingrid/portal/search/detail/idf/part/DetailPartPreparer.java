@@ -1015,7 +1015,11 @@ public class DetailPartPreparer {
         
         if (this.iPlugId != null){
             if(uuid != null){
-                element.put("href", "?cmd=doShowAddressDetail&docuuid="+uuid+"&plugid="+this.iPlugId);
+                String href = "?docuuid=" + uuid + "&type=address";
+                if(PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID)) {
+                    href += "&plugid=" + this.iPlugId;
+                }
+                element.put("href", href);
             }else{
                 element.put("href", "");
             }
