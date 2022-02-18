@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.11.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.2">
+        <release version="5.11.2" date="2022-02-18" description="Release 5.11.2">
           <action type="fix" dev="wemove" issue="3495">
             UVP-NI: Im Footer des nds. UVP-Portals fehlt der MU-Tag
           </action>
