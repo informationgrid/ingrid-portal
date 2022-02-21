@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.11.3-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.3">
+          <action type="update" dev="wemove" issue="3413">
+            Add antivirus scan error handling
+          </action>
+        </release>
+
         <release version="5.11.2" date="2022-02-18" description="Release 5.11.2">
           <action type="fix" dev="wemove" issue="3495">
             UVP-NI: Im Footer des nds. UVP-Portals fehlt der MU-Tag
