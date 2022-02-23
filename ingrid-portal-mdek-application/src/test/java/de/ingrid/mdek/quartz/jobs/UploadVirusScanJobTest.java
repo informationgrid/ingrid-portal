@@ -207,7 +207,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), "");
-        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), "");
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), "");
 
         // set up scan report expectations
         final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
@@ -241,7 +241,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), "");
-        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), "");
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), "");
 
         // set up scan report expectations
         final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
@@ -347,7 +347,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), VIRUS_CONTENT);
-        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), VIRUS_CONTENT);
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), VIRUS_CONTENT);
 
         // set up scan report expectations
         final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
@@ -380,7 +380,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
         + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
-        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File3,Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File3,Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
         assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));
@@ -399,7 +399,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), "");
-        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), "");
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), "");
 
         // set up scan response expectations
         Mockito.doAnswer(new MockedServiceExecution(3, new Path[] {})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
@@ -463,7 +463,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), VIRUS_CONTENT);
-        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), VIRUS_CONTENT);
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), VIRUS_CONTENT);
 
         // set up scan response expectations
         Mockito.doAnswer(new MockedServiceExecution(3, new Path[] {file2, file3})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
@@ -493,7 +493,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
         + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
-        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File3,Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File3,Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
         assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));
