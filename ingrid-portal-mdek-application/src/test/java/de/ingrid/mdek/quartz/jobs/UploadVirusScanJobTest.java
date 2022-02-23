@@ -75,8 +75,8 @@ import de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator;
 
 public class UploadVirusScanJobTest extends BaseJobTest {
 
-    private static final Path DOCS_PATH = Paths.get("target", "ingrid-upload-test");
-    private static final Path QUARANTINE_PATH = Paths.get("target", "ingrid-upload-quarantine");
+    private static final Path DOCS_PATH = Paths.get("/target", "ingrid-upload-test");
+    private static final Path QUARANTINE_PATH = Paths.get("/target", "ingrid-upload-quarantine");
 
     private static final String VIRUS_CONTENT = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
 
@@ -376,11 +376,11 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertEquals("[IGE] Virus Scan Report", report.subject);
 
         final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
-        + "Directories to scan: target\\ingrid-upload-test\n"
+        + "Directories to scan: \\target\\ingrid-upload-test\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
-        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
-        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
         assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));
@@ -489,11 +489,11 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertEquals("[IGE] Virus Scan Report", report.subject);
 
         final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
-        + "Directories to scan: target\\ingrid-upload-test\n"
+        + "Directories to scan: \\target\\ingrid-upload-test\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
-        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
-        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
         assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));

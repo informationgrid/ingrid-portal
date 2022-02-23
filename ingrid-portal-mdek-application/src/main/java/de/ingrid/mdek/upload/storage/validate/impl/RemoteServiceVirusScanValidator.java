@@ -160,10 +160,10 @@ public class RemoteServiceVirusScanValidator implements Validator {
         @JsonIgnore
         public Map<Path, String> getInfections() {
             final Map<Path, String> result = new HashMap<>();
-            final ResourceToPathConverter pathConverter = new ResourceToPathConverter();
             if (scan != null) {
                 for (final InfectionDetail infection : scan.infections) {
-                    result.put(pathConverter.convert(infection.location), infection.virus);
+                    // use the path without any further modification
+                    result.put(Paths.get(infection.location), infection.virus);
                 }
             }
             return result;
