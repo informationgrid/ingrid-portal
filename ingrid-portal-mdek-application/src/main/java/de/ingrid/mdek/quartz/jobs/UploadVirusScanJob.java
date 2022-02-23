@@ -149,9 +149,10 @@ public class UploadVirusScanJob extends QuartzJobBean {
                     }
                 }
                 catch (final VirusScanException vscanex) {
+                    log.warn("An error occurred during the scan");
+
                     String scanReport = vscanex.getScanReport();
-                    // if error is found print scanReport with log lvl error, so it is added to the mail report
-                    log(Level.ERROR, scanReport, vscanex);
+                    report.add(scanReport);
                     exceptions.add(vscanex);
                 }
                 catch (final Exception ex) {
@@ -161,8 +162,10 @@ public class UploadVirusScanJob extends QuartzJobBean {
             }
             log(Level.INFO, "Found "+infectedFiles.size()+" infected file(s)", null);
 
-            // cleanup
-            this.doCleanup(infectedFiles);
+            // cleanup (only if virus are found)
+            if (!infectedFiles.isEmpty()){
+                this.doCleanup(infectedFiles);
+            }
 
             log(Level.INFO, "Finished UploadVirusScanJob", null);
         }
