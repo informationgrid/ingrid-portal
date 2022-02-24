@@ -216,13 +216,12 @@
                                         #if(!$listedFacets.isEmpty())
                                             #set($toggleGroupIds = "")
                                             #foreach($listedFacet in $listedFacets)
-                                                #if($toggleGroupIds != "")
+                                                #if(!$toggleGroupIds.isEmpty())
                                                     #set($toggleGroupIds = $toggleGroupIds + ",")
                                                 #end
                                                 #if($listedFacet.getToggle())
                                                     #set($toggleGroupIds = $toggleGroupIds + $listedFacet.getToggle().getId())
                                                 #end
-                                                #renderFacetCategoryEntry($listedFacet $facet.getId())
                                             #end
                                             #if(!$toggleGroupIds.isEmpty())
                                                 #set ($action = $renderResponse.createActionURL())
@@ -232,9 +231,12 @@
                                                         <input type="checkbox" #if($listedFacetsIsSelected)checked#end onclick="location.href='$action'">
                                                         <span class="toggle-slider round"></span>
                                                     </label>
-                                                    <span class="toggle-label checked #if(!$listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date")</span>
-                                                    <span class="toggle-label unchecked #if($listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.all")</span>
+                                                    <span class="toggle-label checked #if(!$listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date.on")</span>
+                                                    <span class="toggle-label unchecked #if($listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date.off")</span>
                                                 </div>
+                                                #foreach($listedFacet in $listedFacets)
+                                                    #renderFacetCategoryEntry($listedFacet $facet.getId())
+                                                #end
                                                 #if(!$unlistedSelectedFacets.isEmpty() || !$unlistedFacets.isEmpty())
                                                     <hr class="no-margin border-dotted">
                                                 #end
@@ -301,13 +303,12 @@
                                         #if(!$listedFacets.isEmpty())
                                             #set($toggleGroupIds = "")
                                             #foreach($listedFacet in $listedFacets)
-                                                #if($toggleGroupIds != "")
+                                                #if(!$toggleGroupIds.isEmpty())
                                                     #set($toggleGroupIds = $toggleGroupIds + ",")
                                                 #end
                                                 #if($listedFacet.getToggle())
                                                     #set($toggleGroupIds = $toggleGroupIds + $listedFacet.getToggle().getId())
                                                 #end
-                                                #renderFacetCategoryEntry($listedFacet $facet.getId())
                                             #end
                                             #if(!$toggleGroupIds.isEmpty())
                                                 #set ($action = $renderResponse.createActionURL())
@@ -317,9 +318,12 @@
                                                         <input type="checkbox" #if($listedFacetsIsSelected)checked#end onclick="location.href='$action'">
                                                         <span class="toggle-slider round"></span>
                                                     </label>
-                                                    <span class="toggle-label checked #if(!$listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date")</span>
-                                                    <span class="toggle-label unchecked #if($listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.all")</span>
+                                                    <span class="toggle-label checked #if(!$listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date.on")</span>
+                                                    <span class="toggle-label unchecked #if($listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date.off")</span>
                                                 </div>
+                                                #foreach($listedFacet in $listedFacets)
+                                                    #renderFacetCategoryEntry($listedFacet $facet.getId())
+                                                #end
                                                 #if(!$unlistedFacets.isEmpty())
                                                     <hr class="no-margin border-dotted">
                                                 #end
