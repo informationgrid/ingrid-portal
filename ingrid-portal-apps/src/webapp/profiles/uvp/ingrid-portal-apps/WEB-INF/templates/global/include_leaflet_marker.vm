@@ -754,8 +754,8 @@
                 '<input id="' + id + '_time" name="' + id + '_time" type="checkbox" checked>' +
                 '<span class="toggle-slider round"></span>' +
                 '</label>' +
-                '<span class="toggle-label checked">$MESSAGES.getString("common.toggle.approval.date")</span>'+
-                '<span class="toggle-label unchecked is-hidden">$MESSAGES.getString("common.toggle.all")</span>'+
+                '<span class="toggle-label checked">$MESSAGES.getString("common.toggle.approval.date.on")</span>'+
+                '<span class="toggle-label unchecked is-hidden">$MESSAGES.getString("common.toggle.approval.date.off")</span>'+
                 '</div>';
         }
         html += '</div></div>';

@@ -48,7 +48,7 @@ blockquote {
 }
 .no-margin { margin: 0; }
 .border-dotted { 
-  border-top: 1px dotted #c6cfe2;
+  border-top: 1px dashed #c6cfe2;
   border-bottom: 0;
 }
 .dont-break-out {
@@ -3334,10 +3334,8 @@ a:empty:focus-visible {
     padding-left: 34px;
   }
 
-  ~ .toggle-label.checked {
+  ~ .toggle-label {
     font-weight: normal;
-  }
-  ~ .toggle-label.unchecked {
     color: #3A566D;
   }
 }
@@ -3347,6 +3345,9 @@ a:empty:focus-visible {
     float: right;
     right: 10px;
     padding: 0;
+  }
+  + .form-element.boxed {
+    clear: both;
   }
 }
 
