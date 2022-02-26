@@ -146,6 +146,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
                 catch (final VirusFoundException vfex) {
                     for (final Path file : vfex.getInfections().keySet()) {
                         infectedFiles.add(file);
+                        log.info("Found: " + file.toString() + " - " + vfex.getInfections().get(file).toString());
                     }
                 }
                 catch (final VirusScanException vscanex) {
