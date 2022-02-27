@@ -394,6 +394,8 @@ define({
     "dialog.waitForJob.objCount": "Bearbeitete Objekte:",
     "dialog.waitForJob.numObjects": "Anzahl der Objekte:",
 
+    "dialog.uploadWidget.title": "Dokument-Upload",
+
     "dialog.xml.title": "ISO-XML Ansicht",
     "dialog.xml.problem.generation": "Die ISO-XML Abbildung konnte nicht erstellt werden.",
     "dialog.xml.noPublishedVersion": "Es gibt keine veröffentlichte Version oder es trat ein Fehler bei der Erstellung auf.",

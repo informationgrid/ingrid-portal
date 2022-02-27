@@ -150,4 +150,6 @@ define({
     "dialog.object.deleteMessage": "Achtung! Die Datensätze werden endgültig gelöscht und können nicht wiederhergestellt werden. Sie werden auch in den Statistiken nicht mehr berücksichtigt, obwohl dies bei abgeschlossenen Verfahren sowie bei negativen Vorprüfungen für die Berichtspflicht gegenüber der EU-Kommission erforderlich ist!<br><br>Sollen die folgenden Objekte ${0} wirklich endg&uuml;ltig gel&ouml;scht werden?",
     "dialog.object.deleteChildrenMessage": "Sollen die folgenden Objekte ${0} und alle untergeordneten Objekte wirklich endg&uuml;ltig gel&ouml;scht werden?<br><br>Die Datensätze werden endgültig gelöscht und können nicht wiederhergestellt werden. Sie werden auch in den Statistiken nicht mehr berücksichtigt, obwohl dies bei abgeschlossenen Verfahren sowie bei negativen Vorprüfungen für die Berichtspflicht gegenüber der EU-Kommission erforderlich ist!",
 
+    "dialog.uploadWidget.title": "Dokument-Upload",
+
 });
