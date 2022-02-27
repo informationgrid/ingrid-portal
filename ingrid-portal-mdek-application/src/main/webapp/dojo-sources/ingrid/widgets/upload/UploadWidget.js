@@ -12,7 +12,7 @@
  * You may obtain a copy of the Licence at:
  * 
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -41,6 +41,7 @@ define([
     'dijit/ConfirmDialog',
     'dijit/form/Button',
     'ingrid/dialog',
+    'ingrid/message',
     './fine-uploader/fine-uploader',
     'dojo/text!./template/UploadWidget.html',
     'dojo/text!./template/UploadWidget.css'
@@ -65,6 +66,7 @@ define([
     Dialog,
     Button,
     IngridDialog,
+    message,
     qq,
     template,
     styles
@@ -97,6 +99,8 @@ define([
 
         resultParts: {},
         uploads: [],
+        dialogTitle: "",
+
 
         /**
          * Show the upload dialog
@@ -114,6 +118,7 @@ define([
             this.uploads = [];
 
             // build ui
+            this.dialogTitle = message.get("dialog.uploadWidget.title");
             this.dialog = this.createDialog(existingFiles);
             this.uploader = this.createUploader(this.dialog.containerNode, path);
 
@@ -157,7 +162,7 @@ define([
          */
         createDialog: function(existingFiles) {
             var dialog = new Dialog({
-                title: "Dokument-Upload",
+                title: this.dialogTitle,
                 style: "width: 840px",
                 execute: lang.hitch(this, function(cancelEvent) {
                     // resolve the deferred created in open method

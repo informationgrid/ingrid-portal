@@ -105,7 +105,8 @@ define({
     "mcloud.form.dcatcategory": "OpenData Kategorie (GovData)",
     "mcloud.form.dcatcategory.helpMessage": "Hier können mehrere OpenData-Kategorien eingetragen werden. Bei der Abgabe nach GovData sind diese Kategorien bestimmend, werden in der mCLOUD allerdings nicht angezeigt.<br /><br />Es muss mindestens eine Kategorie eingetragen werden.",
 
-    "mcloud.dialog.resume": "Fortfahren"
+    "mcloud.dialog.resume": "Fortfahren",
+    "dialog.uploadWidget.title": "Hinzufügen"
 
 });
 
