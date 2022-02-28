@@ -153,10 +153,8 @@ public class UploadVirusScanJob extends QuartzJobBean {
                     report.add(vfex.getScanReport());
                 }
                 catch (final VirusScanException vscanex) {
-                    log.warn("An error occurred during the scan");
-
                     String scanReport = vscanex.getScanReport();
-                    report.add(scanReport);
+                    log(Level.WARN, "Error(s) found during the scan: " + scanReport, null);
                     exceptions.add(vscanex);
                 }
                 catch (final Exception ex) {

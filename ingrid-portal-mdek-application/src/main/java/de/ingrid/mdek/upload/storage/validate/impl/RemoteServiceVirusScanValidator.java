@@ -293,7 +293,7 @@ public class RemoteServiceVirusScanValidator implements Validator {
 
                     // error is found
                     if( scanReport.contains( "errors" ) ){
-                        log.warn("Scan error found.");
+                        log.info("Scan error found." + scanReport);
                         throw new VirusScanException("Error during scan.", path+URL_PATH_SEPARATOR+file, scanReport);
                     }
                 }
