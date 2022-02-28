@@ -379,6 +379,13 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         + "Directories to scan: \\target\\ingrid-upload-test\n"
         + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
         + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
+        + "Full Scanning \n"
+        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File2Ä\n"
+        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File3,Ö \n"
+        + "3 files scanned in 5 seconds.\n"
+        + "2 viruses were discovered.\n"
+        + "2 files out of 3 were infected.\n"
+        + "End of Scan.\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
         + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
@@ -494,6 +501,13 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         + "Directories to scan: \\target\\ingrid-upload-test\n"
         + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
         + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
+        + "Full Scanning \n"
+        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File2Ä\n"
+        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File3,Ö \n"
+        + "3 files scanned in 5 seconds.\n"
+        + "2 viruses were discovered.\n"
+        + "2 files out of 3 were infected.\n"
+        + "End of Scan.\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
         + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
@@ -578,7 +592,6 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     /**
      * Check existence of a test file
      * @param path
-     * @param name
      * @throws IOException
      */
     private boolean fileExists(final Path path) throws IOException {
@@ -588,7 +601,6 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     /**
      * Get the scan report in case of infection
      * @param numFiles
-     * @param files
      * @return String
      */
     private String getScanReportInfected(final int numFiles, final Path... infected) {

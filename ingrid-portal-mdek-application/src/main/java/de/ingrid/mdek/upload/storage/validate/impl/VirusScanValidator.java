@@ -131,15 +131,13 @@ public class VirusScanValidator implements Validator {
                 scanError = true;
             }
 
-            // errors can happen both when a virus scan finds no virus and when a virus is found
-            if (scanError) {
-                log.warn("An error occurred during the scan");
-                throw new VirusScanException( "Error during scan.", path+"/"+file, scanResult );
-            }
-
             if (!virusList.isEmpty()) {
                 log.warn("Virus found: " + result);
-                throw new VirusFoundException("Virus found.", path+"/"+file, virusList);
+                throw new VirusFoundException("Virus found.", path+"/"+file, scanResult, virusList);
+            }
+            else if (scanError) {
+                log.warn("An error occurred during the scan");
+                throw new VirusScanException( "Error during scan.", path+"/"+file, scanResult );
             }
             else if (!cleanPattern.matcher(result).lookingAt()) {
                 log.error("Virus scan failed: " + result);

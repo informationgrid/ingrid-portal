@@ -30,15 +30,13 @@ import de.ingrid.mdek.upload.ValidationException;
 /**
  * Exception signaling a virus infection. The HTTP status code is 419.
  */
-public class VirusFoundException extends ValidationException {
-
-    private static final int STATUS_CODE = 419;
+public class VirusFoundException extends VirusScanException {
 
     private static final long serialVersionUID = 1L;
     private static final String INFECTIONS_KEY = "infections";
 
-    public VirusFoundException(final String message, final String file, final Map<Path, String> infections) {
-        super(message, file, STATUS_CODE);
+    public VirusFoundException(final String message, final String file, final String scanReport, final Map<Path, String> infections) {
+        super(message, file, scanReport);
         this.data.put(INFECTIONS_KEY, infections);
     }
 
