@@ -149,6 +149,8 @@ public class UploadVirusScanJob extends QuartzJobBean {
                         // print infection information
                         log(Level.INFO, "Infection found: " + file.toString() + " - " + vfex.getInfections().get(file).toString(), null);
                     }
+                    // add scan log in case of virus
+                    report.add(vfex.getScanReport());
                 }
                 catch (final VirusScanException vscanex) {
                     log.warn("An error occurred during the scan");
