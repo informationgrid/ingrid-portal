@@ -271,16 +271,10 @@ public class RemoteServiceVirusScanValidator implements Validator {
                 final ScanResultCode resultCode = response.getScanResult();
                 String scanReport = response.getScanReport();
 
-                // error is found
-                if( scanReport.contains( "errors" ) ){
-                    log.warn("Scan error found.");
-                    throw new VirusScanException("Error during scan.", path+URL_PATH_SEPARATOR+file, scanReport);
-                }
-
                 if (resultCode == ScanResultCode.INFECTED) {
                     final Map<Path, String> infections = response.getInfections();
                     log.warn("Virus found: " + scanReport);
-                    throw new VirusFoundException("Virus found.", path+URL_PATH_SEPARATOR+file, infections);
+                    throw new VirusFoundException("Virus found.", path+URL_PATH_SEPARATOR+file, scanReport, infections);
                 }
                 else if (resultCode != ScanResultCode.OK) {
                     try {
@@ -295,6 +289,12 @@ public class RemoteServiceVirusScanValidator implements Validator {
                 else {
                     if (log.isDebugEnabled()) {
                         log.debug("Scan result: " + scanReport);
+                    }
+
+                    // error is found
+                    if( scanReport.contains( "errors" ) ){
+                        log.warn("Scan error found.");
+                        throw new VirusScanException("Error during scan.", path+URL_PATH_SEPARATOR+file, scanReport);
                     }
                 }
             }

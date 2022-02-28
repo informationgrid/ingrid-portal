@@ -20,7 +20,6 @@ public class VirusScanException extends ValidationException {
         this.data.put(SCAN_EXCEPTION_KEY, scanReport);
     }
 
-
     /**
      * Get the whole log returned by the virus scan
      * @return String
