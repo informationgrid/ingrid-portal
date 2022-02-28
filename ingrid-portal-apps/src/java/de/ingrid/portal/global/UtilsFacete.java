@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -287,10 +287,10 @@ public class UtilsFacete {
             Set set = new TreeSet(request.getParameterMap().keySet());
             if(config != null){
                 HashMap<String, String> lastSelection = null;
-                boolean facetIsSelect = false;
+                boolean facetIsSelect = false; 
                 boolean isQueryTypeOr = false;
                 String keyQueryTypeOr = null;
-
+                
                 if(request.getParameter("doMultiFacets") != null) {
                     isQueryTypeOr = true;
                     keyQueryTypeOr = request.getParameter("doMultiFacets");
@@ -819,15 +819,16 @@ public class UtilsFacete {
             if (webmapclientCoords != null && !webmapclientCoords.isEmpty()){
                 ArrayList<String> coordOptions = (ArrayList<String>) selectedMap.get("coordOptions");
                 if(coordOptions != null && !coordOptions.isEmpty()){
-                    if(coordOptions.size() == 1) {
-                        query.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
-                        query.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
-                        query.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
-                        query.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
-                        query.addField(new FieldQuery(true, false, "coord", coordOptions.get(0)));
-                    }else{
                     ClauseQuery cq = new ClauseQuery(true, false);
-                       for(int i=0; i<coordOptions.size();i++){
+                    if(coordOptions.size() == 1) {
+                        cq.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
+                        cq.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
+                        cq.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
+                        cq.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
+                        cq.addField(new FieldQuery(true, false, "coord", coordOptions.get(0)));
+                        query.addClause(cq);
+                    }else{
+                        for(int i=0; i<coordOptions.size();i++){
                             ClauseQuery coordQuery = new ClauseQuery(false, false);
                             coordQuery.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
                             coordQuery.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
@@ -1158,10 +1159,10 @@ public class UtilsFacete {
                         if(topic.getTopicNativeKey() != null){
                             topicId = topic.getTopicNativeKey();
                         }
-                        if(topicId != null && topicId.indexOf(selectedIds.get(i)) > -1){
+                        if(topicId != null && topicId.indexOf((String)selectedIds.get(i)) > -1){
                             HashMap<String, String> map = new HashMap<>();
                             map.put("topicTitle", topic.get("topicName").toString());
-                            map.put("topicId", selectedIds.get(i));
+                            map.put("topicId", (String)selectedIds.get(i));
                             geothesaurusSelectTopics.add(map);
                             break;
                         }
@@ -1286,19 +1287,19 @@ public class UtilsFacete {
 
         if (doAddAttribute != null && !doAddAttribute.isEmpty()){
             if(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_TITLE) != null)
-                query.addField(new FieldQuery(false, false, "title", doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_TITLE)));
+                query.addField(new FieldQuery(false, false, "title", (String) doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_TITLE)));
             if(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE) != null)
-                query.addField(new FieldQuery(false, false, "fs_institution", doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE)));
+                query.addField(new FieldQuery(false, false, "fs_institution", (String) doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE)));
             if(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_PM) != null)
-                query.addField(new FieldQuery(false, false, "fs_projectleader", doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_PM)));
+                query.addField(new FieldQuery(false, false, "fs_projectleader", (String) doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_PM)));
             if(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_STAFF) != null)
-                query.addField(new FieldQuery(false, false, "fs_participants", doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_STAFF)));
+                query.addField(new FieldQuery(false, false, "fs_participants", (String) doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_STAFF)));
             if(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_ORG) != null)
-                query.addField(new FieldQuery(false, false, "fs_project_executing_organisation", doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_ORG)));
+                query.addField(new FieldQuery(false, false, "fs_project_executing_organisation", (String) doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_ORG)));
             if(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_FROM) != null)
-                query.addField(new FieldQuery(false, false, "fs_runtime_from", UtilsDate.convertDateString(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_FROM), "dd.MM.yyyy", "yyyy-MM-dd")));
+                query.addField(new FieldQuery(false, false, "fs_runtime_from", UtilsDate.convertDateString((String) doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_FROM), "dd.MM.yyyy", "yyyy-MM-dd")));
             if(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_TO) != null)
-                query.addField(new FieldQuery(false, false, "fs_runtime_to", UtilsDate.convertDateString(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_TO), "dd.MM.yyyy", "yyyy-MM-dd")));
+                query.addField(new FieldQuery(false, false, "fs_runtime_to", UtilsDate.convertDateString((String) doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_TO), "dd.MM.yyyy", "yyyy-MM-dd")));
         }
     }
 
@@ -1372,11 +1373,11 @@ public class UtilsFacete {
 
         if (doAddAreaAddress != null && !doAddAreaAddress.isEmpty() && query != null){
             if(doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_STREET) != null)
-                query.addField(new FieldQuery(true, false, "street", doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_STREET)));
+                query.addField(new FieldQuery(true, false, "street", (String) doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_STREET)));
             if(doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_ZIP) != null)
-                query.addField(new FieldQuery(true, false, "zip", doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_ZIP)));
+                query.addField(new FieldQuery(true, false, "zip", (String) doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_ZIP)));
             if(doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_CITY) != null)
-                query.addField(new FieldQuery(true, false, "city", doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_CITY)));
+                query.addField(new FieldQuery(true, false, "city", (String) doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_CITY)));
         }
     }
 
@@ -1518,7 +1519,6 @@ public class UtilsFacete {
                 }
             }else{
                 Collections.sort(keys,new Comparator(){
-                    @Override
                     public int compare(Object left, Object right){
                         String leftKey = (String)left;
                         String rightKey = (String)right;
@@ -1538,7 +1538,6 @@ public class UtilsFacete {
             }
         }else{
             Collections.sort(keys,new Comparator(){
-                @Override
                 public int compare(Object left, Object right){
                     String leftKey = (String)left;
                     String rightKey = (String)right;
@@ -1620,7 +1619,7 @@ public class UtilsFacete {
                     IngridHit[] topics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(topicName, "/location", request.getLocale());
                     for(int j=0; j<topics.length; j++){
                         Topic topic = (Topic) topics[j];
-                        addToListOfTopicsGeoThesaurus(topics[j], request);
+                        addToListOfTopicsGeoThesaurus((IngridHit)topics[j], request);
                         if(topicId.equals(topic.getTopicNativeKey())){
                             HashMap<String, String> addedTopic = new HashMap<>();
                             addedTopic.put("topicId", topic.getTopicNativeKey());
@@ -1962,7 +1961,7 @@ public class UtilsFacete {
             }
 
             if(options != null){
-                addUrlParameterForFacet(facetUrl, PARAMS_MAP_OPTIONS, options);
+                addUrlParameterForFacet(facetUrl, PARAMS_MAP_OPTIONS, (ArrayList<String>) options);
             }
         }
 
@@ -2160,7 +2159,6 @@ public class UtilsFacete {
     private static void sortFacetConfig(List<IngridFacet> config, String sorting){
         if(sorting.equals("SORT_BY_VALUE_ASC")){
             Collections.sort(config ,new Comparator(){
-                @Override
                 public int compare(Object left, Object right){
                     Long leftValue = 0L;
                     Long rightValue = 0L;
@@ -2175,7 +2173,6 @@ public class UtilsFacete {
             });
         }else if(sorting.equals("SORT_BY_VALUE_DESC")){
             Collections.sort(config ,new Comparator(){
-                @Override
                 public int compare(Object left, Object right){
                     Long leftValue = 0L;
                     Long rightValue = 0L;
@@ -2190,7 +2187,6 @@ public class UtilsFacete {
             });
         }else if(sorting.equals("SORT_BY_NAME")){
             Collections.sort(config ,new Comparator(){
-                @Override
                 public int compare(Object left, Object right){
                     String leftValue = "";
                     String rightValue = "";
@@ -2335,7 +2331,7 @@ public class UtilsFacete {
                                             }
                                         }
                                     }
-
+                                    
                                 }else{
                                     // Set sub facets only by selected dependency
                                     if(ingridFacet.getParent().isDependencySelect()){
@@ -2443,33 +2439,30 @@ public class UtilsFacete {
         }
     }
 
-    public static IngridQuery setFacetQuery(String searchTerm, List<IngridFacet> configNode, IngridQuery query) throws ParseException {
-        return setFacetQuery(searchTerm, configNode, query, null);
+    public static IngridQuery setFacetQuery(String term, List<IngridFacet> configNode, IngridQuery query) throws ParseException {
+        return setFacetQuery(term, configNode, query, null);
     }
-
-    public static IngridQuery setFacetQuery(String searchTerm, List<IngridFacet> configNode, IngridQuery query, String parent) throws ParseException{
-        String term = searchTerm;
-
+    
+    public static IngridQuery setFacetQuery(String term, List<IngridFacet> configNode, IngridQuery query, String parent) throws ParseException{
         if(term == null){
             term = "";
         }
-
-        for (IngridFacet ingridFacet : configNode){
-            if(parent == null || parent != ingridFacet.getId()) {
-                if(ingridFacet.getFacets() != null){
-                    term = getQuerySelection(term, ingridFacet.getQueryType(), ingridFacet.getFacets());
+        if(term != null){
+            for (IngridFacet ingridFacet : configNode){
+                if(parent == null || parent != ingridFacet.getId()) {
+                    if(ingridFacet.getFacets() != null){
+                        term = getQuerySelection(term, ingridFacet.getQueryType(), ingridFacet.getFacets());
+                    }
                 }
             }
-        }
-        String origin = query.getString(IngridQuery.ORIGIN);
-        if(!term.isEmpty()) {
-            if(!origin.equals(term)) {
+            String origin = query.getString(IngridQuery.ORIGIN);
+            if(!term.isEmpty()) {
                 origin += " " + term;
             }
-        }
-        IngridQuery tmpQuery = QueryStringParser.parse(origin);
-        if(tmpQuery != null) {
-            return tmpQuery;
+            IngridQuery tmpQuery = QueryStringParser.parse(origin);
+            if(tmpQuery != null) {
+                return tmpQuery;
+            }
         }
         return query;
     }
@@ -2482,7 +2475,7 @@ public class UtilsFacete {
                     String orQuery = "(";
                     boolean hasSelected = false;
                     boolean hasSelectedToggle = false;
-
+                    
                     for(IngridFacet ingridFacet : facets){
                         if(ingridFacet.isSelect()) {
                             hasSelected = true;
