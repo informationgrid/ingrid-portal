@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import de.ingrid.mdek.upload.storage.validate.VirusScanException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -140,33 +141,42 @@ public class RemoteServiceVirusScanValidator implements Validator {
     private static class ServiceResponse {
         public String id;
         public Date date;
-        @JsonDeserialize(converter=ResourceToPathConverter.class)
+        @JsonDeserialize(converter = ResourceToPathConverter.class)
         public Path resource;
         public ScanType type;
         public ScanResult scan;
         public boolean complete;
+
         @JsonIgnore
         public ScanStatus getScanStatus() {
             return scan != null ? scan.status : ScanStatus.FINISHED;
         }
+
         @JsonIgnore
         public ScanResultCode getScanResult() {
             return scan != null ? scan.result : ScanResultCode.UNDEFINED;
         }
+
         @JsonIgnore
         public String getScanReport() {
             return scan != null ? scan.report : "";
         }
+
         @JsonIgnore
         public Map<Path, String> getInfections() {
             final Map<Path, String> result = new HashMap<>();
             if (scan != null) {
                 for (final InfectionDetail infection : scan.infections) {
                     // use the path without any further modification
-                    result.put(Paths.get(infection.location), infection.virus);
+                    result.put( Paths.get( infection.location ), infection.virus );
                 }
             }
             return result;
+        }
+
+        @JsonIgnore
+        public Boolean checkScanError(String scanReport) {
+            return scanReport.contains( "errors" ) ? true : false;
         }
     }
 
@@ -278,6 +288,12 @@ public class RemoteServiceVirusScanValidator implements Validator {
                     if (log.isDebugEnabled()) {
                         log.debug("Scan result: " + response.getScanReport());
                     }
+
+                    // error is found
+                    if( response.checkScanError( response.getScanReport() )){
+                        throw new VirusScanException("Error during scan.", path+URL_PATH_SEPARATOR+file, response.getScanReport());
+                    }
+
                 }
             }
         }

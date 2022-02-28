@@ -96,7 +96,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
 
     /**
      * Set the directories to scan.
-     * @param storage
+     * @param scanDirs
      */
     public void setScanDirs(final List<String> scanDirs) {
         this.scanDirs = scanDirs;
@@ -146,7 +146,8 @@ public class UploadVirusScanJob extends QuartzJobBean {
                 catch (final VirusFoundException vfex) {
                     for (final Path file : vfex.getInfections().keySet()) {
                         infectedFiles.add(file);
-                        log.info("Found: " + file.toString() + " - " + vfex.getInfections().get(file).toString());
+                        // print infection information
+                        log(Level.INFO, "Infection found: " + file.toString() + " - " + vfex.getInfections().get(file).toString(), null);
                     }
                 }
                 catch (final VirusScanException vscanex) {

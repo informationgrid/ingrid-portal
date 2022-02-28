@@ -377,6 +377,8 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
         final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
         + "Directories to scan: \\target\\ingrid-upload-test\n"
+        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
+        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
         + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
@@ -490,6 +492,8 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
         final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
         + "Directories to scan: \\target\\ingrid-upload-test\n"
+        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
+        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
         + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
