@@ -82,7 +82,7 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
             query = QueryStringParser.parse( categoryQuery );
             UtilsSearch.processRestrictingPartners(query);
             UtilsFacete.addDefaultIngridFacets( request, config );
-            query = UtilsFacete.setFacetQuery( null, config, query );
+            query = UtilsFacete.setFacetQuery( config, query );
             if (query.get( "FACETS" ) == null) {
                 ArrayList<IngridDocument> facetQueries = new ArrayList<>();
                 UtilsFacete.getConfigFacetQuery( config, facetQueries, true, null, true );
