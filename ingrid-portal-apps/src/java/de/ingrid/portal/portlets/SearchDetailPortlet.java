@@ -313,14 +313,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + qPlugId + "\" ranking:score";
                 }
 
-                IngridQuery q = UtilsQueryString.parseQueryString(qStr);
+                IngridQuery q = QueryStringParser.parse(qStr);
                 IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
 
                 if (hits.length() == 0) {
                     log.error("No record found for document uuid:" + docUuid.trim() + (detailUseParamPlugid ? " using iplug: " + iplugId.trim() : ""));
 
                     qStr = Settings.HIT_KEY_ORG_OBJ_ID + ":\"" + docUuid.trim() + qPlugId + "\" ranking:score";
-                    q = UtilsQueryString.parseQueryString(qStr);
+                    q = QueryStringParser.parse(qStr);
                     hits = ibus.search(q, 1, 1, 0, 3000);
                     if(hits.length() == 0){
                         log.error("No object record found for document uuid:" + docUuid.trim() + " for field: " + Settings.HIT_KEY_ORG_OBJ_ID);
@@ -329,7 +329,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         } else {
                             qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score";
                         }
-                          q = UtilsQueryString.parseQueryString(qStr);
+                          q = QueryStringParser.parse(qStr);
                         hits = ibus.search(q, 1, 1, 0, 3000);
                         if(hits.length() == 0){
                             log.error("No record found for document uuid:" + docUuid.trim());

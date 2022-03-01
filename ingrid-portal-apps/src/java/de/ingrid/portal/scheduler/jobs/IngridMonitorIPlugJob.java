@@ -24,18 +24,19 @@ package de.ingrid.portal.scheduler.jobs;
 
 import java.io.IOException;
 
+import net.weta.components.communication.tcp.TimeoutException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.ingrid.ibus.client.BusClientFactory;
-import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
-import net.weta.components.communication.tcp.TimeoutException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -86,7 +87,7 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		int status = 0;
 		String statusCode = null;
 		try {
-			IngridQuery q = UtilsQueryString.parseQueryString(query);
+			IngridQuery q = QueryStringParser.parse(query);
 			
 			startTimer();
 			// Don't use cache!

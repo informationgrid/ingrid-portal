@@ -22,11 +22,6 @@
  */
 package de.ingrid.portal.global;
 
-import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
-import de.ingrid.utils.queryparser.TokenMgrError;
-
 /**
  * TODO Describe your created type (class, etc.) here.
  *
@@ -289,24 +284,6 @@ public class UtilsQueryString {
     
     public static String normalizeUuid(String token) {
     	return token.replaceAll("^\\{(.+)\\}$", "$1");
-    }
-
-    public static IngridQuery parseQueryString(String queryString) throws ParseException {
-        return parseQueryString(queryString, false);
-    }
-
-    public static IngridQuery parseQueryString(String queryString, boolean hasCascade) throws ParseException {
-        IngridQuery query = null;
-        try {
-            query = QueryStringParser.parse( queryString );
-        } catch (ParseException | TokenMgrError t) {
-            if (!hasCascade) {
-                query = parseQueryString("\"" + queryString + "\"", true);
-            } else {
-                throw new ParseException("UtilsQueryString class");
-            }
-        }
-        return query;
     }
 
 }

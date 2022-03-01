@@ -295,7 +295,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         int chunkSize = 20;
         boolean fetchNextChunk = true;
         try {
-            IngridQuery query = UtilsQueryString.parseQueryString(queryStr.concat(" ranking:any"));
+            IngridQuery query = QueryStringParser.parse(queryStr.concat(" ranking:any"));
             IngridHits hits;
             // request hits in chunks or all at once, when restricted number of hits !
             int page = 0;

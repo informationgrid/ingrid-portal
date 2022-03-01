@@ -44,7 +44,6 @@ import org.slf4j.LoggerFactory;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.IBusQueryResultIterator;
@@ -52,6 +51,7 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -89,7 +89,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
         String partnerQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_PARTNER_LIST_QUERY );
         if(partnerQuery != null && partnerQuery.length() > 0){
             try {
-                IBusQueryResultIterator it = new IBusQueryResultIterator( UtilsQueryString.parseQueryString( partnerQuery ), REQUESTED_FIELDS_ADDRESS, IBUSInterfaceImpl.getInstance().getIBus() );
+                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( partnerQuery ), REQUESTED_FIELDS_ADDRESS, IBUSInterfaceImpl.getInstance().getIBus() );
                 ArrayList<String> addedInstitution = new ArrayList<>();
                 TreeMap<String, HashMap<String, Object>> partnersMap = new TreeMap<>();
                 

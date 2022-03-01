@@ -46,10 +46,10 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsFacete;
-import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.queryparser.TokenMgrError;
 
 /**
@@ -344,7 +344,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // Create IngridQuery
         IngridQuery query = null;
         try {
-            query = UtilsQueryString.parseQueryString( queryString );
+            query = QueryStringParser.parse( queryString );
         } catch (ParseException | TokenMgrError t) {
             if (log.isDebugEnabled()) {
                 log.debug( "Problems creating IngridQuery, parsed query string: " + queryString, t );

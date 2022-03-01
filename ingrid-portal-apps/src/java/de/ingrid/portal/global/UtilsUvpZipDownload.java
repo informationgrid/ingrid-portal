@@ -66,6 +66,7 @@ import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.idf.IdfTool;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.xpath.XPathUtils;
 
 public class UtilsUvpZipDownload {
@@ -77,7 +78,7 @@ public class UtilsUvpZipDownload {
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
         String query = Settings.HIT_KEY_OBJ_ID + ":" + uuid + " iplugs:\"" + plugid + "\" ranking:score";
         try {
-            IngridQuery q = UtilsQueryString.parseQueryString(query);
+            IngridQuery q = QueryStringParser.parse(query);
             IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
             IngridHit hit = null;
             if(hits.getHits().length > 0) {

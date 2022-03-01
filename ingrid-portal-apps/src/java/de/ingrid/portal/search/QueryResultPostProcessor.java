@@ -35,7 +35,6 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridHitWrapper;
 import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
@@ -43,6 +42,7 @@ import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -361,7 +361,7 @@ public class QueryResultPostProcessor {
     	            }
 
                 	while (!skipSearch) {
-                        IngridQuery query = UtilsQueryString.parseQueryString("T022_adr_adr.adr_to_id:".concat(currentAddressId)
+                        IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(currentAddressId)
                                 .concat(" datatype:address ranking:score"));
                         IngridHits hits = IBUSInterfaceImpl.getInstance().searchAndDetail(query, 10, 1, 0,
                                 PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000),

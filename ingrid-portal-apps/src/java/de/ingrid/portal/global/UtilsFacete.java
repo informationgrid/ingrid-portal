@@ -2461,7 +2461,7 @@ public class UtilsFacete {
                 if(!origin.equals(term)) {
                     term = origin + " " + term;
                 }
-                IngridQuery tmpQuery = UtilsQueryString.parseQueryString(term);
+                IngridQuery tmpQuery = QueryStringParser.parse(term);
                 if(tmpQuery != null) {
                     return tmpQuery;
                 }

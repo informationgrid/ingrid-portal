@@ -35,10 +35,10 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
-import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
-import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
+import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.PortalConfig;
@@ -47,12 +47,12 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
 
@@ -204,7 +204,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             }
 
             try {
-                query = UtilsQueryString.parseQueryString(inputTerm);
+                query = QueryStringParser.parse(inputTerm);
             } catch (Exception t) {
                 if (log.isWarnEnabled()) {
                     log.warn("Problems creating IngridQuery from input term: " + inputTerm, t);
