@@ -2461,10 +2461,10 @@ public class UtilsFacete {
                 if(!origin.equals(term)) {
                     term = origin + " " + term;
                 }
-            }
-            IngridQuery tmpQuery = QueryStringParser.parse(term);
-            if(tmpQuery != null) {
-                return tmpQuery;
+                IngridQuery tmpQuery = QueryStringParser.parse(term);
+                if(tmpQuery != null) {
+                    return tmpQuery;
+                }
             }
         }
         return query;
