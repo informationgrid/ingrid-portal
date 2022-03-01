@@ -75,8 +75,8 @@ import de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator;
 
 public class UploadVirusScanJobTest extends BaseJobTest {
 
-    private static final Path DOCS_PATH = Paths.get("target", "ingrid-upload-test");
-    private static final Path QUARANTINE_PATH = Paths.get("target", "ingrid-upload-quarantine");
+    private static final Path DOCS_PATH = Paths.get("/target", "ingrid-upload-test");
+    private static final Path QUARANTINE_PATH = Paths.get("/target", "ingrid-upload-quarantine");
 
     private static final String VIRUS_CONTENT = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
 
