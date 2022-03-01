@@ -43,6 +43,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridPartner;
@@ -55,7 +56,6 @@ import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.TermQuery;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -340,7 +340,7 @@ public class DisplayTreeFactory {
         IngridQuery query = null;
         
         try {
-            query = QueryStringParser.parse( queryString );
+            query = UtilsQueryString.parseQueryString( queryString );
             hits = IBUSInterfaceImpl.getInstance().search( query, 1, 0, 0, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ));
         } catch (Exception e) {
         }

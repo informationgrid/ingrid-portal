@@ -42,6 +42,7 @@ import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsFacete;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -51,7 +52,6 @@ import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class CategoryTeaserPortlet extends GenericVelocityPortlet {
 
@@ -79,7 +79,7 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
         String categoryQuery = null;
         try {
             categoryQuery = PortalConfig.getInstance().getString( PortalConfig.CATEGORY_TEASER_SEARCH_QUERY, "" ).trim();
-            query = QueryStringParser.parse( categoryQuery );
+            query = UtilsQueryString.parseQueryString( categoryQuery );
             UtilsSearch.processRestrictingPartners(query);
             UtilsFacete.addDefaultIngridFacets( request, config );
             query = UtilsFacete.setFacetQuery( config, query );

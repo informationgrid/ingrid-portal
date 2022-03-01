@@ -22,10 +22,17 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.AnniversaryInterface;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.utils.IngridHit;
@@ -34,12 +41,6 @@ import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
-import de.ingrid.utils.queryparser.QueryStringParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -79,7 +80,7 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
         IngridQuery query;
         IngridHits hits = null;
         try {
-            query = QueryStringParser.parse(dateStr);
+            query = UtilsQueryString.parseQueryString(dateStr);
             query.remove(IngridQuery.ORIGIN);
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
             query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, lang));

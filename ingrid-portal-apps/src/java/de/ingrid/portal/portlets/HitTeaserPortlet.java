@@ -37,13 +37,13 @@ import org.slf4j.LoggerFactory;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class HitTeaserPortlet extends GenericVelocityPortlet {
 
@@ -65,7 +65,7 @@ public class HitTeaserPortlet extends GenericVelocityPortlet {
         String hitQuery = null;
         try {
             hitQuery = PortalConfig.getInstance().getString( PortalConfig.HIT_TEASER_SEARCH_QUERY, "" ).trim();
-            query = QueryStringParser.parse( hitQuery );
+            query = UtilsQueryString.parseQueryString( hitQuery );
             hits = doSearch( query, 0, 0, PortalConfig.getInstance().getInt( PortalConfig.HIT_TEASER_SEARCH_COUNT, 2 ) );
         } catch (ParseException e) {
             log.error("ParseExection Error.", e);

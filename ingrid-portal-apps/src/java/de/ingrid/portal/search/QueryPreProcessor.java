@@ -37,13 +37,13 @@ import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsFacete;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.utils.IngridQueryTools;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -130,7 +130,7 @@ public class QueryPreProcessor {
                 if(addToQuery != null && addToQuery.length() > 0){
                     queryString = UtilsSearch.updateQueryString(addToQuery, request);
                 }
-                query = QueryStringParser.parse(queryString);
+                query = UtilsQueryString.parseQueryString(queryString);
             }else{
                 query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
             }
@@ -301,7 +301,7 @@ public class QueryPreProcessor {
                     String qStr = UtilsSearch.processSearchSources("", (String[]) searchSources.get("sources"),
                             (String[]) searchSources.get("meta"));
                     try {
-                        IngridQuery q = QueryStringParser.parse(qStr);
+                        IngridQuery q = UtilsQueryString.parseQueryString(qStr);
                         // add datatypes
                         FieldQuery[] datatypes = q.getDataTypes();
                         for (int i = 0; i < datatypes.length; i++) {
@@ -345,7 +345,7 @@ public class QueryPreProcessor {
                     IngridPersistencePrefs.SEARCH_PARTNER);
             if (searchPartnerStr != null && searchPartnerStr.length() > 0) {
                 try {
-                    IngridQuery q = QueryStringParser.parse(searchPartnerStr);
+                    IngridQuery q = UtilsQueryString.parseQueryString(searchPartnerStr);
                     query.put(IngridQuery.PARTNER, q.get(IngridQuery.PARTNER));
                     query.put(IngridQuery.PROVIDER, q.get(IngridQuery.PROVIDER));
                 } catch (ParseException e) {
@@ -371,7 +371,7 @@ public class QueryPreProcessor {
                     IngridPersistencePrefs.SEARCH_PARTNER);
             if (searchPartnerStr != null && searchPartnerStr.length() > 0) {
                 try {
-                    IngridQuery q = QueryStringParser.parse(searchPartnerStr);
+                    IngridQuery q = UtilsQueryString.parseQueryString(searchPartnerStr);
                     query.put(IngridQuery.PARTNER, q.get(IngridQuery.PARTNER));
                 } catch (ParseException e) {
                     log.error("Error parsing sources query string.", e);

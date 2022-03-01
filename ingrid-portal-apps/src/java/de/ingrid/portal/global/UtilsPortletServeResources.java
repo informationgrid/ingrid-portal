@@ -153,7 +153,7 @@ public class UtilsPortletServeResources {
 
     public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, List<IngridFacet> config) throws ParseException, IOException {
         queryString = UtilsSearch.updateQueryString(queryString, request);
-        IngridQuery query = QueryStringParser.parse( queryString );
+        IngridQuery query = UtilsQueryString.parseQueryString( queryString );
         if(config != null) {
             query = UtilsFacete.getQueryFacets(request, config, queryString, query);
         }
@@ -219,7 +219,7 @@ public class UtilsPortletServeResources {
         }
         String marker = request.getParameter("marker");
         String markerColor = request.getParameter("markerColor");
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
+        IBusQueryResultIterator it = new IBusQueryResultIterator( UtilsQueryString.parseQueryString( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
                 .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, REQUESTED_FIELDS_UVP_MARKER_NUM);
         response.setContentType( "application/javascript" );
         if(it != null){
@@ -251,7 +251,7 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPDetail(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
+        IBusQueryResultIterator it = new IBusQueryResultIterator( UtilsQueryString.parseQueryString( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
                 .getIBus(), 1, 0, 1);
         JSONArray jsonData = new JSONArray();
         if(it != null){
@@ -290,7 +290,7 @@ public class UtilsPortletServeResources {
 
     public static void getHttpMarkerUVPBoundingBox (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
         JSONArray bbox = new JSONArray();
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString), REQUESTED_FIELDS_UVP_BBOX,
+        IBusQueryResultIterator it = new IBusQueryResultIterator( UtilsQueryString.parseQueryString(queryString), REQUESTED_FIELDS_UVP_BBOX,
                 IBUSInterfaceImpl.getInstance().getIBus(), 1, 0, 1 );
         if(it.hasNext()){
             IngridHit hit = it.next();
@@ -309,7 +309,7 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPMarkerBlp (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
-        IngridQuery query = QueryStringParser.parse( queryString );
+        IngridQuery query = UtilsQueryString.parseQueryString( queryString );
         if(config != null) {
             query = UtilsFacete.getQueryFacets(request, config, queryString, query);
         }
@@ -352,7 +352,7 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPMarkerBlpDetail (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , REQUESTED_FIELDS_UVP_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
+        IBusQueryResultIterator it = new IBusQueryResultIterator( UtilsQueryString.parseQueryString(queryString) , REQUESTED_FIELDS_UVP_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
                 .getIBus(), 1, 0, 1 );
         int cnt = 1;
         JSONObject jsonData = new JSONObject();
@@ -413,7 +413,7 @@ public class UtilsPortletServeResources {
         if(config != null) {
             queryString = UtilsSearch.updateQueryString(queryString, request);
         }
-        IngridQuery query = QueryStringParser.parse( queryString );
+        IngridQuery query = UtilsQueryString.parseQueryString( queryString );
         if(config != null) {
             query = UtilsFacete.getQueryFacets(request, config, queryString, query);
         }
@@ -515,7 +515,7 @@ public class UtilsPortletServeResources {
     public static void getHttpMarkerBawDmqsMarker (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
         response.setContentType( "application/javascript" );
         response.getWriter().write( "var markers = [" );
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_BAW_DMQS_MARKER, IBUSInterfaceImpl.getInstance()
+        IBusQueryResultIterator it = new IBusQueryResultIterator( UtilsQueryString.parseQueryString( queryString ), REQUESTED_FIELDS_BAW_DMQS_MARKER, IBUSInterfaceImpl.getInstance()
                 .getIBus() );
         while (it.hasNext()) {
             StringBuilder s = new StringBuilder();
@@ -571,7 +571,7 @@ public class UtilsPortletServeResources {
     public static void getHttpMarkerBawDmqsBoundingBox (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
         response.setContentType( "application/javascript" );
         response.getWriter().write( "[" );
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString), REQUESTED_FIELDS_BAW_DMQS_BBOX,
+        IBusQueryResultIterator it = new IBusQueryResultIterator( UtilsQueryString.parseQueryString(queryString), REQUESTED_FIELDS_BAW_DMQS_BBOX,
                 IBUSInterfaceImpl.getInstance().getIBus() );
         if (it.hasNext()) {
             StringBuilder s = new StringBuilder();
@@ -756,7 +756,7 @@ public class UtilsPortletServeResources {
                     queryString = facet.getToggle().getQuery();
                 }
                 queryString = UtilsSearch.updateQueryString(queryString, request);
-                IngridQuery query = QueryStringParser.parse( queryString );
+                IngridQuery query = UtilsQueryString.parseQueryString( queryString );
                 if(config != null) {
                     query = UtilsFacete.getQueryFacets(request, config, queryString, query);
                 }
