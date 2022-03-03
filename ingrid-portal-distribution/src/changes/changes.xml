@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="fix" dev="wemove" issue="3544">
+            Portal: "Auswahl anwenden" Button für die räumliche Suche nicht sichtbar
+          </action>
           <action type="fix" dev="wemove" issue="3545">
             Mapclient: Teilen von Zeichnung enthält falsche URL
           </action>
