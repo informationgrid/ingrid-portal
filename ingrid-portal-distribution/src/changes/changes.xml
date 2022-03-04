@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.11.3-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.3">
+        <release version="5.11.3" date="2022-03-04" description="Release 5.11.3">
           <action type="fix" dev="wemove" issue="1903">
             Editor - Im GUI "Dokument-Upload" ersetzen mit "hinzufügen"
           </action>
