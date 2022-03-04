@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.11.3-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.3">
+          <action type="fix" dev="wemove" issue="1903">
+            Editor - Im GUI "Dokument-Upload" ersetzen mit "hinzufügen"
+          </action>
           <action type="fix" dev="wemove" issue="3545">
             Mapclient: Teilen von Zeichnung enthält falsche URL
           </action>
