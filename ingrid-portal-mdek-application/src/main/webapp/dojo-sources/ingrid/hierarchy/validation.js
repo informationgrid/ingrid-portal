@@ -381,17 +381,13 @@ define(["dojo/_base/declare",
             var subType = registry.byId("timeRefSubType").get("value");
 
             if (type != null) {
-                switch (type) {
-                    case "fromType":
-                        if (date1 == null || subType == null) validationFailed = true;
-                        if (subType === "von" && date2 == null) validationFailed = true;
-                        break;
-                    case "am":
-                        if (date1 == null) validationFailed = true;
-                        break;
-                    case "bis":
-                        if (date2 == null) validationFailed = true;
-                        break;
+                // if type is not null, date1 must be set
+                if (date1 == null) validationFailed = true;
+                if (type === "fromType") {
+                    // if type is fromType a subType must be set
+                    if (subType == null) validationFailed = true;
+                    // if subType is 'von', date2 must be set
+                    if (subType === "von" && date2 == null) validationFailed = true;
                 }
             }
             if (validationFailed)
