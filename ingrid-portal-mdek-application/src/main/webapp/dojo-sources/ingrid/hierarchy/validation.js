@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -107,7 +107,7 @@ define(["dojo/_base/declare",
 
             array.forEach(data, function(item, row) {
                 var error = false;
-                // coordinates not mandatory, see INGRID-2089 
+                // coordinates not mandatory, see INGRID-2089
                 if (UtilGeneral.hasValue(item.name) && !UtilGeneral.hasValue(item.longitude1) && !UtilGeneral.hasValue(item.longitude2) && !UtilGeneral.hasValue(item.latitude1) && !UtilGeneral.hasValue(item.latitude2)) {
                     error = false;
                 } else {
@@ -148,9 +148,9 @@ define(["dojo/_base/declare",
             var column = val.cell;
             var gridId = "spatialRefLocation";
             var corrCell = -1;
-            
+
             if (column === 0) return;
-            
+
             if (!value)
                 error = true;
             else {
@@ -188,14 +188,14 @@ define(["dojo/_base/declare",
                 // show tooltip
                 var toolTip = string.substitute(message.get("validation.minmax"), [message.get("validation.latLon2"), message.get("validation.latLon1")]);
                 UtilUI.showToolTip("spatialRefLocation", toolTip);
-                    
+
             } else {
                 domClass.remove(cellDom1, "importantBackground");
                 domClass.remove(cellDom2, "importantBackground");
                 grid.removeInvalidCell({row: row, column: column});
                 grid.removeInvalidCell({row: row, column: corrCell});
             }
-            
+
             return val;
         },
 
@@ -372,6 +372,32 @@ define(["dojo/_base/declare",
             }
         },
 
+
+        timeRefDatePublishable: function (notPublishableIDs) {
+            var validationFailed = false;
+            var date1 = registry.byId("timeRefDate1").get("value");
+            var date2 = registry.byId("timeRefDate2").get("value");
+            var type = registry.byId("timeRefType").get("value");
+            var subType = registry.byId("timeRefSubType").get("value");
+
+            if (type != null) {
+                switch (type) {
+                    case "fromType":
+                        if (date1 == null || subType == null) validationFailed = true;
+                        if (subType === "von" && date2 == null) validationFailed = true;
+                        break;
+                    case "am":
+                        if (date1 == null) validationFailed = true;
+                        break;
+                    case "bis":
+                        if (date2 == null) validationFailed = true;
+                        break;
+                }
+            }
+            if (validationFailed)
+                notPublishableIDs.push(["timeRefRef", message.get("validation.error.time.reference")]);
+        },
+
         extraInfoConformityPublishable: function(notPublishableIDs) {
             var objClass = registry.byId("objectClass").get("value").substr(5, 1);
             if ((objClass == "1") || (objClass == "3")) {
@@ -533,6 +559,7 @@ define(["dojo/_base/declare",
     applyTimeRefIntervalValidation = Validators.applyTimeRefIntervalValidation;
 
     timeRefTablePublishable = Validators.timeRefTablePublishable;
+    timeRefDatePublishable = Validators.timeRefDatePublishable;
     dqTablesPublishable = Validators.dqTablesPublishable;
     spatialRefAdminUnitPublishable = Validators.spatialRefAdminUnitPublishable;
     extraInfoConformityPublishable = Validators.extraInfoConformityPublishable;
