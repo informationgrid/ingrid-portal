@@ -29,7 +29,7 @@ RUN unzip ingrid-portal-*-installer.jar -d /tmp \
     && chmod 755 $INSTALL_DIR/apache-tomcat/bin/*.sh
 
 
-FROM docker-registry.wemove.com/ingrid-java:jre-8-alpine
+FROM docker-registry.wemove.com/ingrid-java:jre-8-slim
 ENV INGRID_USER=root
 ENV PORTAL_CACHE_ENABLE=true
 ENV IBUS_IP=ibus
