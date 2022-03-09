@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.11.4-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.4">
+          <action type="fix" dev="wemove" issue="3584">
+            MAPCLIENT: Dienst-Import über das Portal funktioniert nicht
+          </action>
           <action type="update" dev="wemove" issue="3399">
             Fehlermeldung "Layer hinzufügen" in Kartenanwendung
           </action>
