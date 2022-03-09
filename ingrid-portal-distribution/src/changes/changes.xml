@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="update" dev="wemove" issue="3399">
+            Fehlermeldung "Layer hinzufügen" in Kartenanwendung
+          </action>
           <action type="update" dev="wemove" issue="3095">
             Hintergrundkarten in Metaver - Einbinden der TopPlusOpen-Light Karten
           </action>
