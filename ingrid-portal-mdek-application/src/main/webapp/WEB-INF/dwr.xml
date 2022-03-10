@@ -7,12 +7,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-
+  
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-
+  
   http://ec.europa.eu/idabc/eupl5
-
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,7 +20,7 @@
   limitations under the Licence.
   **************************************************#
   -->
-<!DOCTYPE dwr PUBLIC
+<!DOCTYPE dwr PUBLIC 
     "-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN"
     "http://getahead.org/dwr//dwr30.dtd">
 <dwr>
@@ -85,10 +85,10 @@
         <create creator="spring" javascript="StatisticService">
             <param name="beanName" value="statisticService" />
         </create>
-
+        
         <convert converter="exception" match="java.lang.Exception" />
         <convert converter="bean" match="java.lang.StackTraceElement" />
-
+        
         <convert converter="bean" match="de.ingrid.mdek.MdekError"/>
         <convert converter="bean" match="de.ingrid.mdek.MdekError$MdekErrorType"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.AnalyzeJobInfoBean"/>
@@ -181,7 +181,7 @@
         <convert converter="bean" match="de.ingrid.mdek.quartz.jobs.util.URLState"/>
         <convert converter="enum" match="de.ingrid.mdek.quartz.jobs.util.URLState$State"/>
         <convert converter="bean" match="de.ingrid.mdek.dwr.services.report.Report"/>
-
+        
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.ProfileBean" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.Rubric" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.OptionEntry" javascript="*">
@@ -199,9 +199,9 @@
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.NumberControl" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.CheckboxControl" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.ExtendedControls" javascript="*"/>
-
+        
         <convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationService$SpatialReferenceSystem"/>
-
+        
         <convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity$IdcPermission"/>
         <convert converter="enum" match="de.ingrid.mdek.MdekUtils$CsvRequestType"/>
         <convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcEntityOrderBy"/>
@@ -211,13 +211,13 @@
         <convert converter="enum" match="de.ingrid.mdek.MdekUtils$WorkState"/>
         <convert converter="enum" match="de.ingrid.mdek.job.protocol.ProtocolHandler$Type"/>
         <convert converter="enum" match="de.ingrid.mdek.dwr.services.report.ReportType"/>
-
+        
         <!-- Dependencies from mdek-service -->
         <convert converter="bean" match="de.ingrid.mdek.services.catalog.dbconsistency.ErrorReport"/>
-
+        
         <!-- Exception converter -->
         <!-- <convert match="java.lang.Exception" converter="exception"/>
         <convert match="java.lang.StackTraceElement" converter="bean"/>-->
-
+        
     </allow>
 </dwr>

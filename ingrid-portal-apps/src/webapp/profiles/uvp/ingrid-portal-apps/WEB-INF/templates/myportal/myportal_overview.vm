@@ -19,7 +19,7 @@
     </p>
     <div class="link-list">
     #if(!$externalLogin)
-        <a class="icon" href="/portal/myportal-edit-account.psml"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry2')</span></a>
+        <a class="icon" href="$renderResponse.encodeURL('/portal/myportal-edit-account.psml')"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry2')</span></a>
     #end
     #if(!$externalLogin)
         <a class="icon" href="/login/logout"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry4')</span></a>

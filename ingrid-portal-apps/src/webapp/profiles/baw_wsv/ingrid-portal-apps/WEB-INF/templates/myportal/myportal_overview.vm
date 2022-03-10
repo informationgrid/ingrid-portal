@@ -16,18 +16,13 @@
     <br />
     $MESSAGES.getString('overview.content.description')
 </p>
-<ul class="link-list">
-    <li>
-        <a href="/portal/main-maps.psml"><svg class="icon"><use xlink:href="#internal-link"/></svg>$MESSAGES.getString('overview.content.entry0')</a>
-    </li>
-#if(!$externalLogin)
-    <li>
-        <a href="/portal/myportal-edit-account.psml"><svg class="icon"><use xlink:href="#internal-link"/></svg>$MESSAGES.getString('overview.content.entry2')</a>
-    </li>
-#end
-#if(!$externalLogin)
-    <li>
-        <a href="/login/logout"><svg class="icon"><use xlink:href="#internal-link"/></svg>$MESSAGES.getString('overview.content.entry4')</a>
-    </li>
-#end
-</ul>
+    <div class="link-list">
+        <a class="icon" href="$renderResponse.encodeURL('/portal/main-maps.psml')"><svg class="icon"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry0')</span></a>
+    #if(!$externalLogin)
+        <a class="icon" href="$renderResponse.encodeURL('/portal/myportal-edit-account.psml')"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry2')</span></a>
+    #end
+    #if(!$externalLogin)
+        <a class="icon" href="/login/logout"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry4')</span></a>
+    #end
+    </div>
+</div>
