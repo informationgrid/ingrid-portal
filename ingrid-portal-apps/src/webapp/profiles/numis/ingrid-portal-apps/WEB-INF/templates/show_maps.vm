@@ -6,7 +6,7 @@
     #set($hasKML = false)
 #end
 
-<iframe id="iframe_map" allowfullscreen></iframe>
+<iframe id="iframe_map" src="$mapUrl" allowfullscreen></iframe>
 
 <script>
 var buffer = 0; //scroll bar buffer
