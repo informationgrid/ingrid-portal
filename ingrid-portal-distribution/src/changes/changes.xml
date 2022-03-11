@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="fix" dev="wemove" issue="3594">
+            Reload Mapclient - weiße Seite
+          </action>
           <action type="fix" dev="wemove" issue="3596">
             IT-Sicherheitsmängel in Docker Basis Images beseitigen
           </action>
