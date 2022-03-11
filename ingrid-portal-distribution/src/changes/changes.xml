@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.11.2.1" date="2022-03-11" description="Release 5.11.2.1">
+          <action type="update" dev="wemove">
+            Add 'Hessen' to metaver
+          </action>
+          <action type="fix" dev="wemove" issue="3594">
+            Reload Mapclient - weiße Seite
+          </action>
           <action type="fix" dev="wemove" issue="3596">
             IT-Sicherheitsmängel in Docker Basis Images beseitigen
           </action>
