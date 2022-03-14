@@ -3363,3 +3363,10 @@ a:empty:focus-visible {
 .control-group + .control-group {
   margin-top: -5px;
 }
+
+.button-list {
+  .list_entry {
+    white-space: nowrap;
+    margin: 8px;
+  }
+}

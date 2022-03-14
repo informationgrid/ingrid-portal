@@ -1,23 +1,24 @@
-#set ($userNameGiven = $userAttributes.get("user.name.given"))
-#set ($userNameFamily = $userAttributes.get("user.name.family"))
-#set ($externalLogin = $renderRequest.getAttribute('de.ingrid.user.auth.info'))
-
-#if($userNameGiven)
-    #set($salutation = " $userNameGiven")
-#end
-#if($userNameFamily)
-    #set($salutation = "$!{salutation} $userNameFamily")
-#end
-
-<p>
-    $MESSAGES.resetMsgParams()
-    $MESSAGES.setMsgParam("$!{salutation}")
-    $MESSAGES.getStringWithMsgParams('overview.welcome')
-    <br />
-    $MESSAGES.getString('overview.content.description')
-</p>
+<div class="columns">
+    #set ($userNameGiven = $userAttributes.get("user.name.given"))
+    #set ($userNameFamily = $userAttributes.get("user.name.family"))
+    #set ($externalLogin = $renderRequest.getAttribute('de.ingrid.user.auth.info'))
+    
+    #if($userNameGiven)
+        #set($salutation = " $userNameGiven")
+    #end
+    #if($userNameFamily)
+        #set($salutation = "$!{salutation} $userNameFamily")
+    #end
+    
+    <p>
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$!{salutation}")
+        $MESSAGES.getStringWithMsgParams('overview.welcome')
+        <br />
+        $MESSAGES.getString('overview.content.description')
+    </p>
     <div class="link-list">
-        <a class="icon" href="$renderResponse.encodeURL('/portal/main-maps.psml')"><svg class="icon"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry0')</span></a>
+        <a class="icon" href="$renderResponse.encodeURL('/portal/main-maps.psml')"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry0')</span></a>
     #if(!$externalLogin)
         <a class="icon" href="$renderResponse.encodeURL('/portal/myportal-edit-account.psml')"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry2')</span></a>
     #end
