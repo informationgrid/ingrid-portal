@@ -1655,7 +1655,11 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded block--light</value>
+                <value>category</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
             </preference>
         </portlet-preferences>
     </portlet>
