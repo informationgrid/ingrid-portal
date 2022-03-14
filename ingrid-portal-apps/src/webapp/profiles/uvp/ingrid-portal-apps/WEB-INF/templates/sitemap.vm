@@ -58,16 +58,6 @@
                         <span class="text">$MESSAGES.getString("sitemap.application.main2")</span>
                     </a>
                 </div>
-                #set ($link = $renderResponse.encodeURL("/portal/cms/cms-1.psml"))
-                <a class="icon" href="$link" title="$MESSAGES.getString("Zu den Anleitungen und Tutorials im GeoPortal.WSV")">
-                    <span class="ic-ic-arrow-right"></span>
-                    <span class="text">$MESSAGES.getString("sitemap.default.page.manual")</span>
-                </a>
-                #set ($link = $renderResponse.encodeURL("/portal/cms/cms-2.psml"))
-                <a class="icon" href="$link" title="$MESSAGES.getString("Informationsveranstaltungen zum GeoPortal.WSV")">
-                    <span class="ic-ic-arrow-right"></span>
-                    <span class="text">$MESSAGES.getString("Veranstaltungen")</span>
-                </a>
             #end
             #if($enableAbout)
                 #set ($link = $renderResponse.encodeURL("/portal/main-about.psml"))
