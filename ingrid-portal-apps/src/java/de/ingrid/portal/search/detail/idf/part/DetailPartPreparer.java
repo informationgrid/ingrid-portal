@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -71,7 +71,7 @@ public class DetailPartPreparer {
     protected String                  uuid;
     protected Context                 context;
     protected IngridResourceBundle    messages;
-    
+
     protected String templateName = "";
     protected String localTagName = "";
     protected String namespaceUri = "";
@@ -82,19 +82,19 @@ public class DetailPartPreparer {
     public enum LinkType {
         EMAIL, WWW_URL
     }
-    
+
     public enum ReferenceType {
         SUBORDINATE, SUPERIOR, CROSS, OBJECT
     }
-    
+
     public enum LabelType {
         LEFT, ABOVE, DURING
     }
-    
+
     public enum TimeSpatialType {
         TIME, SPATIAL
     }
-    
+
     /** Default initialization ! May be overwritten in subclasses. */
     public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
         this.rootNode = node;
@@ -127,15 +127,15 @@ public class DetailPartPreparer {
         }
     }
 
-    
+
     public String getValueFromXPath(String xpathExpression) {
         return getValueFromXPath(xpathExpression, null);
     }
-    
+
     public String getValueFromXPath( String xpathExpression, String codeListId) {
         return getValueFromXPath(xpathExpression, codeListId, this.rootNode);
     }
-    
+
     public String getValueFromXPath(String xpathExpression, String codeListId, Node root) {
         String value = null;
         Node node = xPathUtils.getNode(root, xpathExpression);
@@ -149,7 +149,7 @@ public class DetailPartPreparer {
             }
             if(value != null){
                 if(value.equals("false")){
-                    value = messages.getString("general.no"); 
+                    value = messages.getString("general.no");
                 }else if(value.equals("true")){
                     value = messages.getString("general.yes");
                 }
@@ -157,7 +157,7 @@ public class DetailPartPreparer {
         }
         return value;
     }
-    
+
     public String getDecodeValue(String value) {
         if (value != null){
            try {
@@ -168,22 +168,34 @@ public class DetailPartPreparer {
         }
         return value;
     }
-    
+
+    public String getDateValueWithoutTimeFromXPath(String xpathExpression) {
+        return getDateValueFromXPath(xpathExpression, false);
+    }
+
     public String getDateValueFromXPath(String xpathExpression) {
+        return getDateValueFromXPath(xpathExpression, true);
+    }
+
+    public String getDateValueFromXPath(String xpathExpression, Boolean withTime) {
         String value = null;
         Node node = xPathUtils.getNode(this.rootNode, xpathExpression);
         if(node != null && node.getTextContent().length() > 0){
             value = node.getTextContent().trim();
-            return getDateFormatValue(value);
+            return getDateFormatValue(value, withTime);
         }
         return value;
     }
 
-    public String getDateFormatValue (String value){
+    public String getDateFormatValue (String value) {
+        return getDateFormatValue(value, true);
+    }
+
+    public String getDateFormatValue (String value, Boolean withTime) {
         try {
             Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(value);
             if(cal != null){
-                if(cal.getTime() != null){
+                if(cal.getTime() != null && withTime){
                     int hours = cal.getTime().getHours();
                     int minutes = cal.getTime().getMinutes();
                     int seconds = cal.getTime().getSeconds();
@@ -198,15 +210,15 @@ public class DetailPartPreparer {
         }
         return value;
     }
-    
+
     public List<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression) {
         return getListOfValuesFromXPath(xpathExpression, xpathSubExpression, null);
     }
-    
+
     public List<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId) {
         return getListOfValuesFromXPath(xpathExpression, xpathSubExpression, codeListId, null);
     }
-    
+
     public List<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId, List<String> consideredValues) {
         ArrayList<String> list = new ArrayList<>();
         NodeList tmpNodeList = xPathUtils.getNodeList(this.rootNode, xpathExpression);
@@ -256,7 +268,7 @@ public class DetailPartPreparer {
                 newValue = newValue.replace("Nutzungsbedingungen:", "");
             }
         }
-        
+
         return newValue.trim();
     }
 
@@ -322,7 +334,7 @@ public class DetailPartPreparer {
                     continue;
                 }
 
-                
+
                 String constraintSource = constraintsNodes.item(indexConstraint).getTextContent();
                 if (constraintSource == null || constraintSource.trim().isEmpty()) {
                     log.warn("Empty otherConstraints ! We skip this one");
@@ -420,7 +432,7 @@ public class DetailPartPreparer {
                             value = finalValue;
                         }
                     }
-                    
+
                     if (!result.contains(value)) {
                         result.add(value);
                     }
@@ -437,7 +449,7 @@ public class DetailPartPreparer {
                             if(resultItem.indexOf(splitFurtherConstraintEntry.replaceAll("<span>", "").replaceAll("</span>", "")) == -1) {
                               exist = false;
                               break;
-                            } 
+                            }
                         }
                     } else {
                         if(resultItem.indexOf(splitFurtherConstraint[0]) > -1) {
@@ -495,27 +507,27 @@ public class DetailPartPreparer {
     public List<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType) {
         return getSiblingsValuesFromXPath(xpathExpression, siblingType, false);
     }
-    
+
     public List<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType, boolean includeSelection) {
         return getSiblingsValuesFromXPath(xpathExpression, siblingType, includeSelection, null);
     }
-    
+
     public List<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType, boolean includeSelection, String codeListId) {
         return getSiblingsValuesFromXPath(xpathExpression, siblingType, includeSelection, codeListId, null);
     }
-    
+
     /** Get values of sibling(s) of node(s).<br>
      * NOTICE: values starting with "{" and ending with "}" (JSON !) are not included
      * @param xpathExpression get siblings of this node(s)
      * @param siblingNodeName name of the sibling nodes to return values from, pass null if all siblings matter
-     * @param includeSelection include the value of the node of which the siblings are detected 
+     * @param includeSelection include the value of the node of which the siblings are detected
      * @param codeListId pass code list if values have to be transformed, else pass null
      * @param consideredValues values to skip
      * @return list of values to render
      */
     public List<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingNodeName, boolean includeSelection, String codeListId, List<String> consideredValues) {
         ArrayList<String> list = new ArrayList<>();
-        
+
         List<Node> siblingList = xPathUtils.getSiblingsFromXPath(rootNode, xpathExpression, siblingNodeName, includeSelection);
         if(siblingList == null) {
             return list;
@@ -560,11 +572,11 @@ public class DetailPartPreparer {
     public boolean nodeExist(String xpathExpression){
         return nodeExist(xpathExpression, this.rootNode);
     }
-    
+
     public boolean nodeExist(String xpathExpression, Node node){
         return xPathUtils.nodeExists(node, xpathExpression);
     }
-    
+
     public boolean aNodeOfListExist(List<String> xpathExpressions){
         boolean exists = false;
         if(xpathExpressions != null){
@@ -577,7 +589,7 @@ public class DetailPartPreparer {
         }
         return exists;
     }
-    
+
     public Node getNodeFromXPath(String xpathExpression){
         return xPathUtils.getNode(this.rootNode, xpathExpression);
     }
@@ -585,15 +597,15 @@ public class DetailPartPreparer {
     public NodeList getNodeListFromXPath(String xpathExpression){
         return getNodeListFromXPath(xpathExpression, this.rootNode);
     }
-    
+
     public NodeList getNodeListFromXPath(String xpathExpression, Node node){
         return xPathUtils.getNodeList(node, xpathExpression);
     }
-    
+
     public Map getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, List<String> xpathSubEntryList){
         return getTreeFromXPathBy(xpathExpression, xpathSubEntry, xpathSubEntryList, this.rootNode);
     }
-    
+
     public Map getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, List<String> xpathSubEntryList, Node node){
         HashMap root = new HashMap();
         root.put("type", "root");
@@ -645,7 +657,7 @@ public class DetailPartPreparer {
                                             folder.put( "children", new ArrayList<HashMap>() );
                                         }
                                         ArrayList<HashMap> children = (ArrayList) folder.get("children");
-                                        
+
                                         HashMap subMap = null;
                                         for (int j=children.size()-1; j>=0;j--){
                                             HashMap tmpMap = children.get(j);
@@ -710,23 +722,23 @@ public class DetailPartPreparer {
         }
         return value;
     }
-    
+
     public Map<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions) {
         return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, null);
     }
-    
+
     public Map<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList) {
         return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, headCodeList, null);
     }
-    
+
     public Map<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList, List<String> headTypes) {
         HashMap<String, Object> element = new HashMap<>();
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList tmpNodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
-            
+
             element.put("type", "table");
             element.put("title", title);
-            
+
             ArrayList<String> head = new ArrayList<>();
             head.addAll(headTitles);
             element.put("head", head);
@@ -737,11 +749,11 @@ public class DetailPartPreparer {
             }
             ArrayList<ArrayList<String>> body = new ArrayList<>();
             element.put("body", body);
-            
+
             for (int i=0; i<tmpNodeList.getLength();i++){
                 Node node = tmpNodeList.item(i);
                 ArrayList<String> row = new ArrayList<>();
-                
+
                 for (int j=0; j<headXpathExpressions.size();j++){
                     String headXpathExpression = headXpathExpressions.get(j);
                     if(xPathUtils.nodeExists(node, headXpathExpression)){
@@ -775,7 +787,7 @@ public class DetailPartPreparer {
                         row.add("");
                     }
                 }
-                
+
                 if (!isEmptyRow(row)) {
                     body.add(row);
                 }
@@ -783,11 +795,11 @@ public class DetailPartPreparer {
         }
         return element;
     }
-    
+
     public StringTokenizer stringTokenizer(String value){
         return new StringTokenizer(value, ",");
     }
-    
+
     public String valueHTMLEscape(String value){
         if(value != null){
             value = value.replaceAll("\n", "<br/>");
@@ -796,7 +808,7 @@ public class DetailPartPreparer {
         }
         return value;
     }
-    
+
     public String getValueFromCodeList(String codelist, String value){
         return getValueFromCodeList(codelist, value, false);
     }
@@ -814,7 +826,7 @@ public class DetailPartPreparer {
         }
         return value;
     }
-    
+
 
     public String getLanguageValue(String value){
         return UtilsLanguageCodelist.getNameFromIso639_2(value, this.request.getLocale().getLanguage());
@@ -840,16 +852,16 @@ public class DetailPartPreparer {
     public List<String> mergeList(List<String> list1, List<String> list2){
         ArrayList<String> mergedList = new ArrayList<>();
         if(list1 != null){
-            mergedList.addAll(list1);    
+            mergedList.addAll(list1);
         }
-        
+
         if(list2 != null){
-            mergedList.addAll(list2);    
+            mergedList.addAll(list2);
         }
         sortList(mergedList);
-        return mergedList; 
+        return mergedList;
     }
-    
+
     public void sortList(List<String> list){
         Collections.sort(list, new Comparator<Object>(){
             public int compare(Object left, Object right){
@@ -859,7 +871,7 @@ public class DetailPartPreparer {
             }
         });
     }
-    
+
     public String notNull(String in) {
         if (in == null) {
             return "";
@@ -867,7 +879,7 @@ public class DetailPartPreparer {
             return in;
         }
     }
-    
+
     public boolean isEmptyList(Map listEntry) {
         boolean isEmptyList = true;
         if ((listEntry.get("type") != null && listEntry.get("type").equals("textList") || listEntry.get("type").equals("linkList")) &&
@@ -876,7 +888,7 @@ public class DetailPartPreparer {
         }
         return isEmptyList;
     }
-    
+
     public int getGreatestInt(List numbers) {
         int i = 0;
         int maximum = Integer.parseInt(numbers.get(i).toString());
@@ -888,7 +900,7 @@ public class DetailPartPreparer {
         }
         return maximum;
     }
-    
+
     public boolean isEmptyRow(List row) {
         for (int i = 0; i < row.size(); i++) {
             if (row.get(i) instanceof String && ((String) row.get(i)).length() > 0) {
@@ -897,17 +909,17 @@ public class DetailPartPreparer {
         }
         return true;
     }
-    
+
     public String getIndividualName(String value) {
         String[] valueSpitter = value.split(",");
-        
+
         StringBuilder name = new StringBuilder("");
         for (int j=valueSpitter.length; 0 < j ;j--){
             name.append(" " + valueSpitter[j-1]);
-        }    
+        }
         return name.toString();
     }
-    
+
     public String timePeriodDurationToTimeAlle(String value){
         if(value != null){
             String content = new TM_PeriodDurationToTimeAlle().parse(value);
@@ -931,7 +943,7 @@ public class DetailPartPreparer {
         }
         return null;
     }
-    
+
     public String convertDateString(String value){
         if(value != null){
             if(value.indexOf('T') > -1){
@@ -952,17 +964,17 @@ public class DetailPartPreparer {
         }
         return null;
     }
-    
+
     public String getLanguage(){
         return this.request.getLocale().getLanguage();
     }
-    
+
     public void addSpace(List<HashMap<String, String>> elements) {
         HashMap<String, String> element = new HashMap<>();
         element.put("type", "space");
         elements.add(element);
     }
-    
+
     protected HashMap addElementEmailWeb(String title, String href, String body, String altText, LinkType linkType) {
         HashMap element = new HashMap();
         element.put("type", "textLinkLine");
@@ -984,14 +996,14 @@ public class DetailPartPreparer {
             default:
                 break;
         }
-        
+
         return element;
     }
-    
+
     protected void addElement(ArrayList elements, String type, String body) {
         addElement(elements, type, body, null);
     }
-    
+
     protected void addElement(ArrayList elements, String type, String body, String title) {
         HashMap element = new HashMap();
         if (type != null)
@@ -1000,10 +1012,10 @@ public class DetailPartPreparer {
             element.put("body", body);
         if (title != null)
             element.put("title", title);
-        
+
         elements.add(element);
     }
-    
+
     protected HashMap addElementLink(String type, Boolean hasLinkIcon, Boolean isExtern, String title, String uuid) {
         HashMap element = new HashMap();
         if (type != null)
@@ -1014,7 +1026,7 @@ public class DetailPartPreparer {
             element.put("sort", hasLinkIcon);
         if (isExtern != null)
             element.put("isExtern", isExtern);
-        
+
         if (this.iPlugId != null){
             if(uuid != null){
                 element.put("href", "?cmd=doShowAddressDetail&docuuid="+uuid+"&plugid="+this.iPlugId);
@@ -1024,10 +1036,10 @@ public class DetailPartPreparer {
         }else{
             element.put("href", "");
         }
-            
+
         return element;
     }
-    
+
     protected HashMap addElementAddress(String type, String title, String body, String sort, ArrayList elements) {
         HashMap element = new HashMap();
         if (type != null)
@@ -1040,14 +1052,14 @@ public class DetailPartPreparer {
             element.put("body", body);
         if (elements != null)
             element.put("elements", elements);
-        
+
         return element;
     }
 
     public String removeLocalisation (String locString){
         return locString.split("#locale-")[0];
     }
-    
+
     public String getTemplateName() {
         return templateName;
     }

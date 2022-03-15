@@ -2,7 +2,7 @@
 #* @vtlvariable name="MESSAGES" type="java.util.ResourceBundle" *#
 #* @vtlmacrolibrary path="../../../velocity/velocity-macros.vm" *#
 #* @vtlmacrolibrary path="../search_detail_idf_2_0.vm" *#
-##Render header 
+##Render header
 #macro (renderDetailHeader $title $type $modTime)
     <section class="block block--light block--pad-top">
         <div class="ob-box-wide ob-box-padded ob-box-center">
@@ -158,7 +158,7 @@
                             #renderSectionTitle($MESSAGES.getString("references"))
                             <div class="search-result--nested">
                                 #if($type == "3")
-                                    ## Dargestellte Daten 
+                                    ## Dargestellte Daten
                                     #set($tmp = $TOOL.getReference("./idf:crossReference[idf:attachedToField[@entry-id='3600']]", true))
                                     #renderLinkList($MESSAGES.getString("coupled_data") $tmp "false")
                                     #set($tmp = "")
@@ -252,15 +252,15 @@
                             </div>
                         #end
                         ## Zeitbezug
-                        #set($xpathList = ["./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])            
+                        #set($xpathList = ["./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])
                         #if($TOOL.aNodeOfListExist($xpathList))
                             <hr>
                             #renderSectionTitle($MESSAGES.getString("time_reference"))
                             <div class="search-result--nested">
                                 ## Durch die Ressource abgedeckte Zeitspanne
-                                #set($atTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimeInstant/gml:timePosition"))
-                                #set($beginTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition"))
-                                #set($endTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition"))
+                                #set($atTime = $TOOL.getDateValueWithoutTimeFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimeInstant/gml:timePosition"))
+                                #set($beginTime = $TOOL.getDateValueWithoutTimeFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition"))
+                                #set($endTime = $TOOL.getDateValueWithoutTimeFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition"))
                                 #if($tool.hasContent($beginTime) || $tool.hasContent($endTime) || $tool.hasContent($atTime))
                                     #if($tool.hasContent($atTime))
                                         #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $atTime")
@@ -291,7 +291,7 @@
                                 #end
                                 ## Zeitbezug der Ressource
                                 #set($nodelist = $TOOL.getNodeListFromXPath("./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date"))
-                                ## Erstellung 
+                                ## Erstellung
                                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                                 #if($title.length() > 0)
                                     #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
@@ -305,7 +305,7 @@
                                     #renderTextLabelAbove($title $tmp)
                                     #set($tmp = "")
                                 #end
-                                ## letzte Änderung 
+                                ## letzte Änderung
                                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
                                 #if($title.length() > 0)
                                     #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
@@ -782,7 +782,7 @@
                             #set($tmp = $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions/gco:CharacterString"))
                             #renderTextLabelAbove($MESSAGES.getString("t01_object.ordering_instructions") $tmp)
                             #set($tmp = "")
-                            
+
                             ## Zugangsbeschränkungen (accessConstraints)
                             #set($consideredValues = ["otherRestrictions"])
                             #set($accessConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints")
@@ -839,7 +839,7 @@
                         #set($tmp = $TOOL.getConformityData("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report"))
                         #renderTable($tmp)
                         #set($tmp = "")
-                        ## Objekt-ID 
+                        ## Objekt-ID
                         #set($tmp = $TOOL.getValueFromXPath("./gmd:fileIdentifier"))
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.obj_id") $tmp)
                         #set($tmp = "")
@@ -847,7 +847,7 @@
                         #set($tmp = $TOOL.getValueFromXPath("./gmd:parentIdentifier"))
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.parent_identifier") $tmp)
                         #set($tmp = "")
-                        ## XML Darstellung 
+                        ## XML Darstellung
                         #set($tmp = $TOOL.addLinkToGetXML())
                         #renderTextLabelAbove($MESSAGES.getString("xml_link_label") $tmp)
                         #set($tmp = "")
