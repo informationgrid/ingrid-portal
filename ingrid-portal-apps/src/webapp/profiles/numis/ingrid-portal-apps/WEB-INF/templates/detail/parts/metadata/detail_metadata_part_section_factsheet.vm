@@ -4,10 +4,10 @@
 <div class="teaser-data search row is-active">
     <div class="xsmall-24 small-24 #if($tool.hasContent($mapImage) && $tool.hasContent($mapImage.elements))medium-14 large-14 xlarge-14#end columns">
     ## Durch die Ressource abgedeckte Zeitspanne
-        #set($atTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodInstantPosition))
-        #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
-        #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
-        #set($fromType = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndIndeterminatePosition))
+        #set($atTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodInstantPosition))
+        #set($beginTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodBeginPosition))
+        #set($endTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodEndPosition))
+        #set($fromType = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodEndIndeterminatePosition))
 
         #set($toIndeterminate = "")
         #if($tool.hasContent($fromType) && $fromType == 'now')
