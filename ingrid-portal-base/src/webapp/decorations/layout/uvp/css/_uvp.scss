@@ -3368,5 +3368,15 @@ a:empty:focus-visible {
   .list_entry {
     white-space: nowrap;
     margin: 8px;
+    
+    span {
+      margin: 0;
+    }
+  }
+}
+
+.teaser-data.search.no-teaser-number {
+  .teaser {
+    height: 160px;
   }
 }

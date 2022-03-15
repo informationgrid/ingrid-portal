@@ -1,0 +1,6 @@
+#set($linkTitle = $MESSAGES.getString('ingrid.page.mapclient.tooltip'))
+#set($linkName = $MESSAGES.getString('ingrid.page.mapclient'))
+#if($linkName != "ingrid.page.mapclient")
+  #set($linkUrl = "/ingrid-webmap-client/admin")
+  <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end target="_blank"><span class="text">$linkName</span></a>
+#end

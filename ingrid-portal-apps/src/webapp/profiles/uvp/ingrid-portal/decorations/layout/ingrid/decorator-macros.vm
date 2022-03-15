@@ -213,6 +213,7 @@
                         <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end><span class="text">$linkName</span></a>
                       #end
                     #end
+                    #parse("/decorations/layout/ingrid/templates/decorator/decorator_administration_additional.vm")
                 #end
             #end
         #end

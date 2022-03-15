@@ -1,0 +1,23 @@
+#if($_menuFooter)
+    #set($currentPage = $site.getPageOrTemplate().url)
+    #foreach($element in $_menuFooter.elements.iterator())
+      #if($element.elementType == "option")
+        #set($lastType = $element.type)
+        #set($linkTitle = $element.getTitle($preferedLocale))
+        #set($linkName = $element.getShortTitle($preferedLocale))
+        ## read localized title from resource with title from psml as key !
+        #if($linkTitle.startsWith('ingrid'))
+            #set($linkTitle = $MESSAGES.getString($linkTitle))
+            #set($linkName = $MESSAGES.getString($linkName))
+        #end
+        #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        #set($linkPage = $element.url)
+        #set($isSelected = $element.isSelected($site))
+        #set($defaultTitle = $element.getTitle())
+        #if($defaultTitle == "ingrid.page.language")
+            #set($linkTitle = $defaultTitle)
+        #end
+        <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end #if($element.url == "/help.psml")target="_blank"#end><span class="text">$linkName</span></a>
+      #end
+    #end
+#end
