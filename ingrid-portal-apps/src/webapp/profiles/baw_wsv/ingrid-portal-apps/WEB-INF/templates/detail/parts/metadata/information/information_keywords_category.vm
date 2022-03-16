@@ -1,2 +1,2 @@
     ## Kategorien
-    #renderTextListTable($MESSAGES.getString("t011_obj_geo.hierarchy_level_name") $TOOL.getListOfValuesFromXPath("./gmd:hierarchyLevelName", ".") "" "-")
+    #renderTableList($MESSAGES.getString("t011_obj_geo.hierarchy_level_name") $TOOL.getListOfValuesFromXPath("./gmd:hierarchyLevelName", "."))

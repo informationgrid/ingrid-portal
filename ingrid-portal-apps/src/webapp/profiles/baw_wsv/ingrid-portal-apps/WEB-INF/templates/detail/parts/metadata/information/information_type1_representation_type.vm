@@ -1,2 +1,0 @@
-## Digitale Repräsentation
-    #renderTextListTable($MESSAGES.getString("t011_obj_geo_spatial_rep.type") $TOOL.getListOfValuesFromXPath($xPathInfo1SpatialRepresentationType, $xPathInfo1MDSpatialRepresentationTypeCode, "526") "" "-")

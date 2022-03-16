@@ -1,2 +1,0 @@
-    ## Typ
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.hierarchy_level") $TOOL.getValueFromXPath($xPathInfo1MDScopeCode, "525") "" "-")

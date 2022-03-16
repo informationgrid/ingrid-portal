@@ -1,12 +1,6 @@
 ## Name des Metadatenstandards
-#set($tmp = $TOOL.getValueFromXPath("./gmd:metadataStandardName"))
-#renderTextTable($MESSAGES.getString("t01_object.metadata_standard_name") $tmp "-")
-#set($tmp = "")
+    #renderTextTable($MESSAGES.getString("t01_object.metadata_standard_name") $TOOL.getValueFromXPath("./gmd:metadataStandardName"))
 ## Version des Metadatenstandards
-#set($tmp = $TOOL.getValueFromXPath("./gmd:metadataStandardVersion"))
-#renderTextTable($MESSAGES.getString("t01_object.metadata_standard_version") $tmp "-")
-#set($tmp = "")
+    #renderTextTable($MESSAGES.getString("t01_object.metadata_standard_version") $TOOL.getValueFromXPath("./gmd:metadataStandardVersion"))
 ## Zeichensatz des Metadatensatz
-#set($tmp = $TOOL.getValueFromXPath("./gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue", "510"))
-#renderTextTable($MESSAGES.getString("t01_object.metadata_character_set") $tmp "-")
-#set($tmp = "")
+    #renderTextTable($MESSAGES.getString("t01_object.metadata_character_set") $TOOL.getValueFromXPath("./gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue", "510"))

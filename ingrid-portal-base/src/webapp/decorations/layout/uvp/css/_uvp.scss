@@ -2590,7 +2590,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
 
 /* shrink */
 
-.shrink {
+.shrink, .shrink-default {
   header {
     height: 80px;
     position: fixed;
@@ -2658,6 +2658,10 @@ meter[value="5"]::-moz-meter-bar { background: green; }
       text-decoration: none;
     }
   }
+}
+
+.shrink-default {
+  height: unset;
 }
 
 .js-expand-text {

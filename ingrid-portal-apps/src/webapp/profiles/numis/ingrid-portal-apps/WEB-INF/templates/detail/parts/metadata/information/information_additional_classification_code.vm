@@ -1,2 +1,0 @@
-    ## Veröffentlichung
-        #renderTextTable($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($TOOL.getValueFromXPath($xPathAdditionalInfoMDClassificationCode)))

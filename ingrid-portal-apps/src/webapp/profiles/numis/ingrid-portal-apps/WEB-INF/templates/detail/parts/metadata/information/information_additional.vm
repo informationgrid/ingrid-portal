@@ -4,8 +4,10 @@
     <div class="sub-section">
         <a class="anchor" id="${hashDetail5}_additional_information"></a>
         #renderGroupTitle($MESSAGES.getString("additional_information"))
+    ## Datensatz/Datenserie
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_dataset_series.vm")
     ## Veröffentlichung
-        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_classification_code.vm")
+        #renderTextTable($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($TOOL.getValueFromXPath($xPathAdditionalInfoMDClassificationCode)))
     ## Eignung/Nutzung
         #renderTextTable($MESSAGES.getString("t01_object.dataset_usage") $TOOL.getValueFromXPath($xPathAdditionalInfoSpecificUsage))
     ## Herstellungszweck
@@ -32,8 +34,6 @@
     <div class="sub-section">
         <a class="anchor" id="${hashDetail5}_fs_keywords"></a>
         #renderGroupTitle($MESSAGES.getString("fs_keywords"))
-        ## Typ
-        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_keywords_typ.vm")
         ## Kategorien
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_keywords_category.vm")
         ## Verschlagwortung

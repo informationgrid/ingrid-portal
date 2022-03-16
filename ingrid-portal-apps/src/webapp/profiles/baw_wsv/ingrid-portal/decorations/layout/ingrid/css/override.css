@@ -67,10 +67,10 @@ a:hover, a:focus {
 a.icon:hover {
   color: #333;
 }
-.shrink header .logo {
+.shrink header .logo, .shrink-default header .logo {
     width: 14.5em;
 }
-.shrink header .logo a {
+.shrink header .logo a, .shrink-default header .logo a {
     top: 0px;
 }
 .button {
@@ -789,6 +789,6 @@ a[class*="js-expander"] [class*="ic-"] {
     top: 27px;
   }
 }
-.shrink .desktop__title {
+.shrink .desktop__title, .shrink-default .desktop__title {
   top: 12px;
 }
