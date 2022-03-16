@@ -3,6 +3,10 @@
 <div class="sub-section">
     <a class="anchor" id="${hashDetail5}_technical_information"></a>
     #renderGroupTitle($MESSAGES.getString("technical_information"))
+## Identifikator
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type3_identificator.vm")
+## Digitale Repräsentation
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_representation_type.vm")
 ## Klassifikation des Dienstes
     #renderTextListTable($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
 ## Typ des Dienstes

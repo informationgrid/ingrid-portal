@@ -796,7 +796,7 @@
         </div>
     #else
         #if($space != "")
-            #renderTextLabelAbove($title $space)
+            #renderTextTable($title $space)
         #end
     #end
 #end
@@ -1032,7 +1032,7 @@
     #end
 #end
 
-#macro (renderTextTable $title $entry $cssClass)
+#macro (renderTextTable $title $entry $cssClass $defaultEntry)
     #if($tool.hasContent($entry))
     <div class="table table--lined">
         <table>
@@ -1041,15 +1041,29 @@
                 <th>$title</th>
             #end
                 <td>
-                    <p #if($cssClass)class="$cssClass"#end>$entry</p>
+                    <p #if($tool.hasContent($cssClass))class="$cssClass"#end>$entry</p>
                 </td>
             </tr>
         </table>
     </div>
+    #elseif($tool.hasContent($defaultEntry))
+    <div class="table table--lined">
+        <table>
+            <tr>
+            #if($tool.hasContent($title))
+                <th>$title</th>
+            #end
+                <td>
+                    <p #if($tool.hasContent($cssClass))class="$cssClass"#end>$defaultEntry</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
     #end
 #end
 
-#macro (renderTextListTable $title $entryList $expandable)
+#macro (renderTextListTable $title $entryList $expandable $defaultEntry)
     #if($tool.hasContent($entryList))
     <div class="table table--lined">
         <table>
@@ -1084,6 +1098,8 @@
             </tr>
         </table>
     </div>
+    #elseif($defaultEntry)
+        #renderTextTable($title $space)
     #end
 #end
 

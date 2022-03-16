@@ -3,12 +3,10 @@
 <div class="sub-section">
     <a class="anchor" id="${hashDetail5}_technical_information"></a>
     #renderGroupTitle($MESSAGES.getString("technical_information"))
-## Identifikator der Datenquelle
-    #renderTextListTable($MESSAGES.getString("t011_obj_geo.datasource_uuid") $TOOL.getListOfValuesFromXPath($xPathInfo1MDIdentifierCode, "."))
-## Identifikator der Datenquelle (older iplug)
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.datasource_uuid") $TOOL.getValueFromXPath($xPathInfo1RSIdentifierCode))
+## Identifikator
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_identificator.vm")
 ## Digitale Repräsentation
-    #renderTextListTable($MESSAGES.getString("t011_obj_geo_spatial_rep.type") $TOOL.getListOfValuesFromXPath($xPathInfo1SpatialRepresentationType, $xPathInfo1MDSpatialRepresentationTypeCode, "526"))
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_representation_type.vm")
 ## Topologieinformation
     #renderTextTable($MESSAGES.getString("t011_obj_geo.vector_topology_level") $TOOL.getValueFromXPath($xPathInfo1MD_VectorSpatialRepresentationTopologyLevel, "528"))
 ## Vektorformat

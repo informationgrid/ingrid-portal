@@ -540,3 +540,4 @@
 
 ## BAW BWAStr
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_bwa_str.vm")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_additional.vm")

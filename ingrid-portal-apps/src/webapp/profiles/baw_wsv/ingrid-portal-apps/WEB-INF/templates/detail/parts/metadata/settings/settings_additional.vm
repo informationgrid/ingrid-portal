@@ -1,0 +1,30 @@
+#set($hasDetail0 = true)
+#set($hasDetail1 = true)
+#set($hasDetail2 = true)
+#set($hasDetail3 = true)
+#set($hasDetail4 = true)
+#set($hasDetail5 = true)
+
+#set($xPathListKeywords = [
+    $xPathKeywordsDescriptiveKeywords,
+    $xPathKeywordsTopicCategory,
+    $xPathInfo1MDScopeCode,
+    "./gmd:hierarchyLevelName"
+])
+
+#set($xPathListInformationType3 = [
+    $xPathInfo3LILineageStatement,
+    $xPathInfo3ServiceType,
+    $xPathInfo3ServiceTypeVersion,
+    $xPathInfo3MDResolution,
+    $xPathInfo3EnvironmentDescription,
+    $xPathInfo3LIProcessStepDescription,
+    $xPathInfo3LIProcessStepDescription,
+    $xPathInfo3LISourceDescription,
+    $xPathInfo3SupplementalInformation,
+    $xPathInfo3SupplementalInformationAbstract,
+    $xPathInfo3SVOperationMetadata,
+    $xPathInfo3SVOperationMetadataConnectPoint,
+    $xPathInfo1MDIdentifierCode,
+    $xPathInfo1RSIdentifierCode
+])
