@@ -55,8 +55,6 @@
 #end
 </div>
 #parse('/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_script_table_scroll.vm')
-#parse('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
-#parse('/WEB-INF/templates/scripts/include_script_filter_scroll_activate.vm')
 #parse('/WEB-INF/templates/global/include_reference_list_file_size.vm')
 #parse('/WEB-INF/templates/global/include_reference_list_datatype.vm')
 

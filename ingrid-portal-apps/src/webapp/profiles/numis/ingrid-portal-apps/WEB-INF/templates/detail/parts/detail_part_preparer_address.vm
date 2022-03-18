@@ -39,5 +39,3 @@
     </div>
 #end
 </div>
-#parse('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
-#parse('/WEB-INF/templates/scripts/include_script_filter_scroll_activate.vm')
