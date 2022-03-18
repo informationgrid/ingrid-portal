@@ -111,13 +111,16 @@
 #end
 
 ## URLRefering details
+#set($urlReferenceLink = [])
 #set($urlReferenceLink = $rs.getHitDetail().get("t017_url_ref.url_link"))
+#set($urlReferenceContent = [])
 #set($urlReferenceContent = $rs.getHitDetail().get("t017_url_ref.content"))
+#set($urlReferenceSpecialRef = [])
 #set($urlReferenceSpecialRef = $rs.getHitDetail().get("t017_url_ref.special_ref"))
+#set($urlReferenceDatatype = [])
 #set($urlReferenceDatatype = $rs.getHitDetail().get("t017_url_ref.datatype"))
-
+#set($linksRef = [])
 #if($referenceAllUUID || $urlReferenceLink)
-    #set($linksRef = [])
     #if($referenceAllUUID)
         #set($refCount = 0)
         #foreach($uuid in $referenceAllUUID)

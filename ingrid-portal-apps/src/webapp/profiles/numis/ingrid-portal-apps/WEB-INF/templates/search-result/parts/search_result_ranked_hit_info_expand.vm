@@ -7,7 +7,7 @@
         <span class="icon  ic-ic-minus"></span>
         <span class="text">$MESSAGES.getString('searchResult.info.less')</span>
     </a>
-    <div class="js-expander-content ${moreId}" >
+    <div class="js-expander-content ${moreId} #if(!$isMoreId)is-hidden#end" >
         <div class="row">
             <div class="xsmall-24 small-24 medium-14 large-14 xlarge-14 columns">
                 #if($referenceAllUUID || $urlReferenceLink)
@@ -124,6 +124,8 @@
                     #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_bwa_title.vm")
 ## Ortslage
                     #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_bwastr_name.vm")
+## Ort
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_coords.vm")
 
                     <div class="teaser-links">
                         #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
@@ -150,13 +152,18 @@
                 #set($hasArea = false)
                 #set($hasPreview = false)
                 #set($hasSwipe = false)
+                #set($hasAreaAsPreview = false)
                 
                 #if($coords.size() > 0 || $hasOtherAreaDetails)
                     #set($hasArea = true)
                 #end
-                
                 #if($rs.additional_html_1 && !$rs.additional_html_1.isEmpty())
-                    #set($hasPreview = true)
+                    #if($rs.additional_html_1.indexOf("<iframe") > -1)
+                        #set($hasPreview = false)
+                        #set($hasAreaAsPreview = true)
+                    #else
+                        #set($hasPreview = true)
+                    #end
                 #end
                 
                 #if($hasArea && $hasPreview)
@@ -218,9 +225,11 @@
                     
                 #end
                 #renderFactTitle($MESSAGES.getString("searchResult.info.area") "text-center")
-                #if($hasArea)
+                #if($hasArea && !$hasAreaAsPreview)
                     #set($mapId = $moreId)
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
+                #elseif($hasAreaAsPreview)
+                    $rs.additional_html_1
                 #end
                 #if($hasSwipe)
                             </div>
