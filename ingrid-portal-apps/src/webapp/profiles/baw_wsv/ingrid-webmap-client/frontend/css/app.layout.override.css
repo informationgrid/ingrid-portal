@@ -1,0 +1,181 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+.btn-default {
+  color: #FFFFFF;
+}
+.btn-default:hover {
+  color: #FFFFFF;
+}
+#menu-button {
+  border: 0;
+}
+.ga-more-layers {
+  padding: 8px 5px !important;
+}
+.ga-more-layers a {
+}
+body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
+}
+#pulldown-content .panel > .accordion-toggle {
+  font-weight: bold !important;
+}
+#pulldown-content .panel > .accordion-toggle.collapsed {
+}
+#pulldown-content .panel > .accordion-toggle:hover, #pulldown-content .panel > .accordion-toggle:active {
+  text-decoration: none;
+  color: #FFFFFF;
+  background: #012D47;
+}
+#pulldown-content .panel > .accordion-toggle.light.collapsed {
+}
+#pulldown-content .panel > .accordion-toggle.light:hover, #pulldown-content .panel > .accordion-toggle.light:active {
+  text-decoration: none;
+}
+[ga-catalogtree] .ga-catalogitem-leaf {
+}
+[ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected, [ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected:hover, [ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected button {
+}
+#pulldown-content .accordion-toggle, #pulldown-content .panel-body-wide a {
+  font-weight: bold;
+}
+[ga-catalogtree] a.ga-catalogitem-entry label {
+  font-weight: bold;
+}
+[ga-layermanager] li {
+}
+[ga-layermanager] .ga-layer-folded .fa-gear {
+}
+[ga-layermanager] .fa-gear {
+}
+[ga-layermanager] .ga-layer-tools {
+  border-left: 0;
+}
+[ga-layermanager] .ga-layer-infos label:hover, [ga-layermanager] input:hover, [ga-layermanager] select:hover, [ga-layermanager] options:hover {
+}
+[ga-layermanager] .ga-layer-tools label {
+}
+[ga-print] button {
+}
+[ga-print] label {
+}
+#drawModeHeader {
+}
+#drawModeHeader .btn-primary  {
+  border: 0px;
+  font-size: 16px;
+}
+[ga-help] button.ga-icon {
+  font-size: 18px;
+}
+[ga-draw] .ga-draw-buttons > .btn {
+  color: #333;
+}
+[ga-draw] .ga-more li a{
+}
+[ga-search] form {
+}
+[ga-search] .fa-remove-sign {
+  font-size: 26px;
+  right: 5px;
+}
+[ga-search] .fa-search, [ga-search] .fa-remove-sign {
+  top: 8px;
+}
+[ga-search] .fa-search {
+  background-color: transparent;
+  border: 0;
+  left: 5px;
+  font-size: 22px;
+  top: 8px;
+}
+[ga-search] .ga-search-input {
+  height: 45px;
+  font-size: 16px;
+  border-radius: 32px;
+  padding-left: 2.8em;
+  padding-right: 2.8em;
+}
+#header {
+  left: 0;
+  z-index: 500;
+  display: flex;
+}
+#search-container {
+  top: 5rem;
+  max-width: 79.16667%;
+  width: auto;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+  left: 0;
+  flex: 0 0 45%;
+  max-width: 45%;
+}
+#search-container [ga-help] button.ga-icon {
+  font-size: 26px;
+  top: 7px;
+}
+.ga-menu-bt {
+  width: 45px;
+  height: 45px;
+}
+.theme-toggle .topic-modal-toggle {
+}
+@media (max-width: 480px) {
+  .search-focused #search-container {
+    background: transparent;
+  }
+}
+@media (max-width: 768px) {
+  #search-container {
+    top: .7em;
+  }
+}
+
+[ga-draw] .ga-draw-disclaimer {
+    color: #012D47;
+}
+
+[ga-draw] .ga-draw-disclaimer a {
+}
+
+#toptools {
+    background-color: #007A89;
+    padding: 0.25em 0 0.25em 1.25em;
+    border-radius: 25px;
+}
+
+#toptools a {
+    color: #FFFFFF !important;
+}
+
+/* Background switcher border */
+@media (min-width: 769px) {
+  [ga-background-selector] .ga-bg-layer, [ga-background-selector] .ga-bg-layer-bt {
+    border-color: #333333;
+  }
+}
+
+[ga-background-selector] .ga-bg-highlight, [ga-background-selector] .ga-bg-layer:hover {
+  border-color: #007A89 !important;
+}

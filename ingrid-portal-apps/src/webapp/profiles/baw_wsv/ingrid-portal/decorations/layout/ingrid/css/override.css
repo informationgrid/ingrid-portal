@@ -792,3 +792,7 @@ a[class*="js-expander"] [class*="ic-"] {
 .shrink .desktop__title, .shrink-default .desktop__title {
   top: 12px;
 }
+
+.shrink .body, .shrink-default .body {
+    margin-top: 4.375rem;
+}

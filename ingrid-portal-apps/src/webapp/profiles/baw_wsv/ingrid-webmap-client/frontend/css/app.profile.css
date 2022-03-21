@@ -145,24 +145,3 @@
     color: white;
     font-size: 12pt;
 }
-
-#toptools {
-    background-color: #007A89;
-    padding: 0.25em 0 0.25em 1.25em;
-    border-radius: 25px;
-}
-
-#toptools a {
-    color: #FFFFFF !important;
-}
-
-/* Background switcher border */
-@media (min-width: 769px) {
-  [ga-background-selector] .ga-bg-layer, [ga-background-selector] .ga-bg-layer-bt {
-    border-color: #333333;
-  }
-}
-
-[ga-background-selector] .ga-bg-highlight, [ga-background-selector] .ga-bg-layer:hover {
-  border-color: #007A89 !important;
-}
