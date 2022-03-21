@@ -99,8 +99,7 @@ public class CMSPortlet extends GenericVelocityPortlet {
         
         if(myKey.equals("portal.teaser.shortcut")){
             myView= prefs.getValue("infoTemplate", SHORTCUT_TEMPLATE);
-        }else{
-            myView= prefs.getValue("infoTemplate", DEFAULT_TEMPLATE);    
+            setDefaultViewPage(myView);
         }
 
         ResourceURL restUrl = response.createResourceURL();
@@ -108,7 +107,6 @@ public class CMSPortlet extends GenericVelocityPortlet {
         restUrl.setResourceID( "httpURLImage" );
         request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
 
-        setDefaultViewPage(myView);
 
         Session session = HibernateUtil.currentSession();
 

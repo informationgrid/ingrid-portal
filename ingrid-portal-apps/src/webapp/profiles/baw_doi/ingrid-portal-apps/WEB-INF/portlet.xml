@@ -944,7 +944,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/default_cms.vm</value>
+            <value>/WEB-INF/templates/info_cms.vm</value>
         </init-param>
         <portlet-name>IngridInformPortlet</portlet-name>
         <display-name>Generisches Informationsportlet</display-name>
@@ -959,7 +959,7 @@
         <portlet-preferences>
             <preference>
                 <name>infoTemplate</name>
-                <value>/WEB-INF/templates/info_cms.vm</value>
+                <value></value>
             </preference>
             <preference>
                 <name>helpKey</name>
