@@ -6,7 +6,10 @@
     </properties>
 
     <body>
-        <release version="5.11.4-SNAPSHOT" date="2022-xx-xx" description="Release 5.11.4">
+        <release version="5.11.4" date="2022-03-23" description="Release 5.11.4">
+          <action type="fix" dev="wemove" issue="3638">
+            Objektklassen in MetaVer wieder anpassen
+          </action>
           <action type="update" dev="wemove">
             Add 'Hessen' to metaver
           </action>
