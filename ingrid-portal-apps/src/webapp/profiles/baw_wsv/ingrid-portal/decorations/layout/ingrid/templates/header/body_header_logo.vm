@@ -3,7 +3,7 @@
       <div class="columns xsmall-12 small-12 medium-8 large-7 xlarge-7">
         <div class="logo" role="banner">
           <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-            <img class="mobile__logo" src="/decorations/layout/ingrid/images/logo-mobile.png" alt="logo-mobile.png">
+            <img src="/decorations/layout/uvp/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.home.tooltip')">
           </a>
         </div>
       </div>

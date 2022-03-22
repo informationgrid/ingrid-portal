@@ -100,7 +100,34 @@
         </page>
     </pages>
     <files>
-        <!-- COPY GENERAL WSV FILES -->
+        <!-- COPY GENERAL UVP FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-mdek/</src>
+            <dst>ingrid-portal-mdek/</dst>
+        </file>
+        <!-- COPY NUMIS FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../numis/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../numis/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <!-- COPY WSV FILES -->
         <file>
             <action>copy-dir</action>
             <src>../baw_wsv/ingrid-portal/</src>
@@ -121,6 +148,7 @@
             <src>../baw_wsv/ingrid-webmap-client/frontend/src</src>
             <dst>ingrid-webmap-client/frontend/prd</dst>
         </file>
+        <!-- COPY EBA FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal/</src>
