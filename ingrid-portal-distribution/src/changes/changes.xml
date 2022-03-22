@@ -10,6 +10,9 @@
           <action type="fix" dev="wemove" issue="3638">
             Objektklassen in MetaVer wieder anpassen
           </action>
+          <action type="update" dev="wemove" issue="3637">
+            Aktualisierung Portal-Layout für das GeoPortal.EBA
+          </action>
           <action type="update" dev="wemove" issue="3636">
             Aktualisierung Portal-Layout für das GeoPortal.WSV
           </action>
