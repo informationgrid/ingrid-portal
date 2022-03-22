@@ -137,10 +137,10 @@ header {
   color: #FFFFFF;
 }
 .menu-sub-links {
-  background-color: #2a4268;
+  background-color: #485f88;
 }
 .menu-sub-links .button.logout {
-  background-color: #000;
+  background-color: #2a4268;
 }
 .menu-sub-links a:hover, .menu-sub-links .button.logout:hover,
 .menu-sub-links a:focus, .menu-sub-links .button.logout:focus {

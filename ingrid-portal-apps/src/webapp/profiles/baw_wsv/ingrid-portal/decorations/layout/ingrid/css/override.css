@@ -140,7 +140,7 @@ header {
   background-color: #0B4D59;
 }
 .menu-sub-links .button.logout {
-  background-color: #333;
+  background-color: #0e3c49;
 }
 .menu-sub-links a:hover, .menu-sub-links .button.logout:hover,
 .menu-sub-links a:focus, .menu-sub-links .button.logout:focus {
@@ -174,10 +174,10 @@ header {
   color: #3A566D;
 }
 .banner.home h1.green {
-  color: #0e3c49;
+  color: #c9cbcf;
 }
 .banner.home .home-wrapper .indent span {
-  color: #0e3c49;
+  color: #c9cbcf;
 }
 
 .detail .banner-noimage .page-wrapper {
