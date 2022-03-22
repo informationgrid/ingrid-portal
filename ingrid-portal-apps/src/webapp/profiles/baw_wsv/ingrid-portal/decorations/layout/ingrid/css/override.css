@@ -125,7 +125,7 @@ header {
   background-color: rgba(0, 0, 0, 0.2);
 }
 .header-menu-close .button {
-  background-color: #333;
+  background-color: #0e3c49;
 }
 .header-menu-close .button:hover,
 .header-menu-close .button:focus {
@@ -133,7 +133,7 @@ header {
 }
 .menu-main-links a:hover, .menu-main-links .button.logout:hover,
 .menu-main-links a:focus, .menu-main-links .button.logout:focus {
-  background-color: #067B9A;
+  background-color: #0e3c49;
   color: #FFFFFF;
 }
 .menu-sub-links {
@@ -174,10 +174,10 @@ header {
   color: #3A566D;
 }
 .banner.home h1.green {
-  color: #33CC99;
+  color: #0e3c49;
 }
 .banner.home .home-wrapper .indent span {
-  color: #33CC99;
+  color: #0e3c49;
 }
 
 .detail .banner-noimage .page-wrapper {

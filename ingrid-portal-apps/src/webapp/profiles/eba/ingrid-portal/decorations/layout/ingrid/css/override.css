@@ -125,7 +125,7 @@ header {
   background-color: rgba(0, 0, 0, 0.2);
 }
 .header-menu-close .button {
-  background-color: #000;
+  background-color: #2a4268;
 }
 .header-menu-close .button:hover,
 .header-menu-close .button:focus {
@@ -133,7 +133,7 @@ header {
 }
 .menu-main-links a:hover, .menu-main-links .button.logout:hover,
 .menu-main-links a:focus, .menu-main-links .button.logout:focus {
-  background-color: #067B9A;
+  background-color: #485f88;
   color: #FFFFFF;
 }
 .menu-sub-links {
