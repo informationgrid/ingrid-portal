@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="fix" dev="wemove" issue="3638">
+            Objektklassen in MetaVer wieder anpassen
+          </action>
           <action type="update" dev="wemove" issue="3636">
             Aktualisierung Portal-Layout für das GeoPortal.WSV
           </action>
