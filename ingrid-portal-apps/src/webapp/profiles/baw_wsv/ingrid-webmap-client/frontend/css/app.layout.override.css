@@ -20,40 +20,20 @@
  * limitations under the Licence.
  * **************************************************#
  */
-.btn-default {
-  color: #FFFFFF;
-}
-.btn-default:hover {
-  color: #FFFFFF;
-}
 #menu-button {
   border: 0;
 }
 .ga-more-layers {
   padding: 8px 5px !important;
 }
-.ga-more-layers a {
-}
-body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
-}
 #pulldown-content .panel > .accordion-toggle {
   font-weight: bold !important;
 }
-#pulldown-content .panel > .accordion-toggle.collapsed {
-}
 #pulldown-content .panel > .accordion-toggle:hover, #pulldown-content .panel > .accordion-toggle:active {
   text-decoration: none;
-  color: #FFFFFF;
-  background: #012D47;
-}
-#pulldown-content .panel > .accordion-toggle.light.collapsed {
 }
 #pulldown-content .panel > .accordion-toggle.light:hover, #pulldown-content .panel > .accordion-toggle.light:active {
   text-decoration: none;
-}
-[ga-catalogtree] .ga-catalogitem-leaf {
-}
-[ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected, [ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected:hover, [ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected button {
 }
 #pulldown-content .accordion-toggle, #pulldown-content .panel-body-wide a {
   font-weight: bold;
@@ -61,24 +41,8 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 [ga-catalogtree] a.ga-catalogitem-entry label {
   font-weight: bold;
 }
-[ga-layermanager] li {
-}
-[ga-layermanager] .ga-layer-folded .fa-gear {
-}
-[ga-layermanager] .fa-gear {
-}
 [ga-layermanager] .ga-layer-tools {
   border-left: 0;
-}
-[ga-layermanager] .ga-layer-infos label:hover, [ga-layermanager] input:hover, [ga-layermanager] select:hover, [ga-layermanager] options:hover {
-}
-[ga-layermanager] .ga-layer-tools label {
-}
-[ga-print] button {
-}
-[ga-print] label {
-}
-#drawModeHeader {
 }
 #drawModeHeader .btn-primary  {
   border: 0px;
@@ -89,10 +53,6 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 }
 [ga-draw] .ga-draw-buttons > .btn {
   color: #333;
-}
-[ga-draw] .ga-more li a{
-}
-[ga-search] form {
 }
 [ga-search] .fa-remove-sign {
   font-size: 26px;
@@ -139,8 +99,6 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
   width: 45px;
   height: 45px;
 }
-.theme-toggle .topic-modal-toggle {
-}
 @media (max-width: 480px) {
   .search-focused #search-container {
     background: transparent;
@@ -152,15 +110,8 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
   }
 }
 
-[ga-draw] .ga-draw-disclaimer {
-    color: #012D47;
-}
-
-[ga-draw] .ga-draw-disclaimer a {
-}
-
 #toptools {
-    background-color: #007A89;
+    background-color: #007A89 !important;
     padding: 0.25em 0 0.25em 1.25em;
     border-radius: 25px;
 }
