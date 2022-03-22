@@ -491,7 +491,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             #if($entry.isSelect())
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
-                #renderSearchResultFacetSelectionItem($entry $action "$parentFacetTyp: $resourceMsgs.getString($entry.getName())")
+                #if($Codelists && $entry.getCodelistId())
+                    #set($entryName = $Codelists.getCodeListValue($entry.getCodelistId(), $entry.getCodelistEntryId(), $languageCode))
+                #else
+                    #set($entryName = $entry.getName())
+                #end
+                #renderSearchResultFacetSelectionItem($entry $action "$parentFacetTyp: $resourceMsgs.getString($entryName)")
             #end
             #if($entry.getToggle() && $entry.getToggle().isSelect())
                 #if($isCategorySelect && $entry.isSelect())
