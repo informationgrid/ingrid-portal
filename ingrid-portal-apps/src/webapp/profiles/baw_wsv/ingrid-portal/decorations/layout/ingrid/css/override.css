@@ -841,7 +841,7 @@ a[class*="js-expander"] [class*="ic-"] {
 
 .shrink .header-menu-open button,
 .shrink-default .header-menu-open button {
-    margin: 4px 0 0 0;
+    margin: 6px 0 0 0;
 }
 .shrink header .logo img,
 .shrink-default header .logo img {
@@ -857,4 +857,19 @@ a[class*="js-expander"] [class*="ic-"] {
   .shrink-default .desktop__title {
     top: 6px;
   }
+}
+
+.header-menu-open .login ~ .button {
+  margin: 33px 0 0 0;
+}
+
+@media screen and (max-width: 47.9375em) {
+  .header-menu-open .login ~ .button {
+    margin: 18px 0 0 0;
+  }
+}
+
+.shrink .header-menu-open .login ~ .button,
+.shrink-default .header-menu-open .login ~ .button {
+  margin: 6px 0 0 0;
 }
