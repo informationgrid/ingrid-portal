@@ -285,7 +285,7 @@ blockquote {
 }
 
 /* buttons */
-.button span {
+.button span[class^="ic-"] {
   margin-left: 8px;
 }
 .button {
@@ -2506,6 +2506,7 @@ h2 .anchor:target {
   .swiper-container-background {
     background: $white-cascade;
     margin: 0 0 24px 0;
+    padding: 0 0 6px 0;
 
     .preview_image {
       margin: auto;
