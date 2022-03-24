@@ -185,6 +185,15 @@
         <execute>
             <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link';]]>
         </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET DECORATOR = 'ingrid-teaser' WHERE NAME = 'ingrid-portal-apps::CMSPortlet1';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET DECORATOR = 'ingrid-teaser' WHERE NAME = 'ingrid-portal-apps::CMSPortlet2';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET DECORATOR = 'ingrid-teaser' WHERE NAME = 'ingrid-portal-apps::CMSPortlet3';]]>
+        </execute>
         <!-- Delete user default-page.psml -->
         <execute>
             <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';]]>

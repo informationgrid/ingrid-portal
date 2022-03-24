@@ -1880,8 +1880,16 @@
                 <value>portal.cms.portlet.1</value>
             </preference>
             <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
     </portlet>  
@@ -1908,17 +1916,25 @@
                 <value>portal.cms.portlet.2</value>
             </preference>
             <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
             </preference>
-       </portlet-preferences>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet id="CMSPortlet3">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/default_cms3.vm</value>
+            <value>/WEB-INF/templates/default_cms.vm</value>
         </init-param>
         <portlet-name>CMSPortlet3</portlet-name>
         <display-name>CMSPortlet3</display-name>
@@ -1936,8 +1952,16 @@
                 <value>portal.cms.portlet.3</value>
             </preference>
             <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>search-filtered row content-small</value>
             </preference>
        </portlet-preferences>
     </portlet>

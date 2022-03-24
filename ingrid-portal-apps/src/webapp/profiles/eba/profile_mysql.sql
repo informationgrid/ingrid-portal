@@ -100,6 +100,10 @@ DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_
 DROP TABLE IF EXISTS ingrid_temp;
 DROP TABLE IF EXISTS ingrid_temp2;
 
+UPDATE fragment SET DECORATOR = 'ingrid-teaser' WHERE NAME = 'ingrid-portal-apps::CMSPortlet1';
+UPDATE fragment SET DECORATOR = 'ingrid-teaser' WHERE NAME = 'ingrid-portal-apps::CMSPortlet2';
+UPDATE fragment SET DECORATOR = 'ingrid-teaser' WHERE NAME = 'ingrid-portal-apps::CMSPortlet3';
+
 -- update max keys
 UPDATE ojb_hl_seq SET max_key=max_key+grab_size+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT';
 UPDATE ojb_hl_seq SET max_key=max_key+grab_size+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT_PREF';

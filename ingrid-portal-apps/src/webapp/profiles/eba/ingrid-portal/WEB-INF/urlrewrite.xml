@@ -273,21 +273,6 @@
         <to>/trefferanzeige</to>
     </outbound-rule>
     
-    <!-- Help -->
-    <rule enabled="true">
-        <condition type="parameter" name="hkey" operator="equal">(maps-1)</condition>
-        <from>/hilfe(.*)$</from>
-        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe/GeoViewer.WSV</to>
-    </rule>
-    <rule>
-        <from>/hilfe</from>
-        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe/GeoPortal.WSV+Hilfe</to>
-    </rule>
-    <rule>
-        <from>/portal/help.psml</from>
-        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe/GeoPortal.WSV+Hilfe</to>
-    </rule>
-    
     <!-- Features -->
     <rule>
         <from>/funktionen</from>
@@ -348,12 +333,12 @@
         <to>/cms1</to>
     </outbound-rule>
     <rule>
-        <from>/cms2</from>
+        <from>/hilfe</from>
         <to type="forward">/portal/cms/cms-2.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/cms/cms-2.psml</from>
-        <to>/cms2</to>
+        <to>/hilfe</to>
     </outbound-rule>
     
     <rule>
