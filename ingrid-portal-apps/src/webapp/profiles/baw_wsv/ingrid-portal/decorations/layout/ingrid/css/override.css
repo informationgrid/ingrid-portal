@@ -117,6 +117,9 @@ header {
 .menu-tab-row .menu-tab .link-menu-tab {
   color: #007A89;
 }
+.menu-tab-row .menu-tab.is-selected {
+  background-color: #589199;
+}
 .menu-tab-row .menu-tab.is-selected .link-menu-tab {
   color: #FFF;
 }
@@ -886,4 +889,11 @@ a[class*="js-expander"] [class*="ic-"] {
 .shrink .header-menu-open .login ~ .button,
 .shrink-default .header-menu-open .login ~ .button {
   margin: 6px 0 0 0;
+}
+
+.button.outline:hover,
+.button.outline:focus,
+.teaser .teaser-link .teaser-number {
+  background-color: #589199;
+  color: #FFF;
 }
