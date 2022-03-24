@@ -272,7 +272,7 @@
         <from>/portal/search-detail.psml</from>
         <to>/trefferanzeige</to>
     </outbound-rule>
-    
+
     <!-- Features -->
     <rule>
         <from>/funktionen</from>
@@ -340,7 +340,13 @@
         <from>/portal/cms/cms-2.psml</from>
         <to>/hilfe</to>
     </outbound-rule>
-    
+
+    <!-- Help -->
+    <outbound-rule>
+        <from>/portal/help.psml</from>
+        <to>/hilfe</to>
+    </outbound-rule>
+
     <rule>
         <from>/portal/myportal-create-account.psml</from>
         <to type="redirect">/startseite</to>
