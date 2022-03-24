@@ -13,6 +13,9 @@ CREATE TABLE  ingrid_temp2 (
     temp_value NUMBER(10,0)
 );
 
+-- Show '/main-search.psml'
+UPDATE page SET is_hidden = 0 WHERE path = '/main-search.psml';
+
 -- Show '/main-measures.psml'
 UPDATE page SET is_hidden = 0 WHERE path = '/main-measures.psml';
 

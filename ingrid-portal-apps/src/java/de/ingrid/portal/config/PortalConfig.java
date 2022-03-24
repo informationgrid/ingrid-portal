@@ -187,6 +187,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_SEARCH_LANGUAGE_INDEPENDENT = "portal.search.language.independent";
 
     public static final String PORTAL_ENABLE_APPLICATION= "portal.enable.application";
+    public static final String PORTAL_ENABLE_SEARCH= "portal.enable.search";
+    public static final String PORTAL_ENABLE_CONTACT= "portal.enable.contact";
 
     // Hide CMS items for changing on admin page
     public static final String PORTAL_ADMIN_HIDE_CMS_ITEMS = "portal.admin.hide.cms.items";

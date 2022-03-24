@@ -100,6 +100,9 @@ public class InfoPortlet extends GenericVelocityPortlet {
             context.put("enableAccessibility", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ACCESSIBILITY, Boolean.FALSE));
             context.put("enableRSSPage", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_RSS_PAGE, Boolean.FALSE));
             context.put("enableDisclaimer", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_DISCLAIMER, Boolean.FALSE));
+            context.put("enableApplication", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_APPLICATION, Boolean.FALSE));
+            context.put("enableSearch", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH, Boolean.TRUE));
+            context.put("enableContact", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_CONTACT, Boolean.TRUE));
         }
         
         if(myView.equalsIgnoreCase(INFO_TEASER_TEMPLATE)){
@@ -167,7 +170,6 @@ public class InfoPortlet extends GenericVelocityPortlet {
 
             context.put("snsAnniversary", result);
         }
-        context.put("enableApplication", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_APPLICATION, Boolean.FALSE));
         super.doView(request, response);
     }
 

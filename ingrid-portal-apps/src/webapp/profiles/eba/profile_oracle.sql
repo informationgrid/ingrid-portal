@@ -13,6 +13,12 @@ CREATE TABLE  ingrid_temp2 (
     temp_value NUMBER(10,0)
 );
 
+-- Hide '/main-search.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/main-search.psml';
+
+-- Hide '/service-contact.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/service-contact.psml';
+
 -- Hide '/cms/cms-1.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-1.psml';
 
@@ -20,7 +26,7 @@ UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-1.psml';
 UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-2.psml';
 
 -- Show '/application/main-application.psml'
-UPDATE page SET is_hidden = 0 WHERE path = '/application/main-application.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
 
 -- Hide '/main-measures.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/main-measures.psml';

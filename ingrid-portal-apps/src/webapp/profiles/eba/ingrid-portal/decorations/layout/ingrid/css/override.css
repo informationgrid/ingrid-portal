@@ -744,40 +744,33 @@ a[class*="js-expander"] [class*="ic-"] {
 
 .desktop__title {
   position: relative;
-  left: 24px;
-  top: 12px;
+  left: 145px;
+  top: 6px;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 40px;
 }
 
 @media print, screen and (min-width: 35em) {
   .desktop__title {
-    font-size: 28px;
+    left: 175px;
   }
 }
 @media print, screen and (min-width: 48em) {
   .desktop__title {
-    font-size: 32px;
-    top: 30px;
-  }
-  header .menu-tab-row .menu-tab {
-    width: 110px;
+    left: 175px;
   }
 }
 @media print, screen and (max-width: 63.9375em) {
-  .desktop__title {
-  }
   header .logo img {
     width: 7.25rem;
   }
 }
 @media print, screen and (min-width: 64em) {
+  .desktop__title {
+    left: 190px;
+  }
   .header__logo {
     top: 0 !important;
-  }
-  .desktop__title {
-    top: 27px;
-    font-size: 36px;
   }
   header .menu-tab-row .menu-tab {
     width: 145px;
@@ -799,15 +792,14 @@ a[class*="js-expander"] [class*="ic-"] {
   }
 }
 @media print, screen and (min-width: 78em) {
-  .desktop__title {
-    top: 27px;
-    font-size: 40px;
-  }
 }
-.shrink .desktop__title, .shrink-default .desktop__title {
-  top: 12px;
+.shrink .desktop__title,
+.shrink-default .desktop__title {
+  left: 145px;
+  top: 6px;
 }
 
-.shrink .body, .shrink-default .body {
+.shrink .body,
+.shrink-default .body {
     margin-top: 4.375rem;
 }

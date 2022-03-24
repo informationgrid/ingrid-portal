@@ -4,6 +4,10 @@
     <description>Portal-Profile Geoportal.EBA</description>
     <pages>
         <page>
+            <name>main-search.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>main-chronicle.psml</name>
             <hidden>true</hidden>
         </page>
@@ -33,7 +37,11 @@
         </page>
         <page>
             <name>application/main-application.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>service-contact.psml</name>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>default-page.psml</name>

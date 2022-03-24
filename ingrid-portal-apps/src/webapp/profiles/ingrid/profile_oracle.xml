@@ -4,6 +4,10 @@
     <description>Portal-Profile für InGrid-Portal</description>
     <pages>
         <page>
+            <name>main-search.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>main-measures.psml</name>
             <hidden>false</hidden>
         </page>
