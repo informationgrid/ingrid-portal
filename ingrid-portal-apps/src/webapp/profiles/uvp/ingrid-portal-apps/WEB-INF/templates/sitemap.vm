@@ -3,11 +3,13 @@
     <div class="sitemap">
         <h4>$MESSAGES.getString("sitemap.area.main")</h4>
         <div class="link-list">
+            #if ($enableSearch)
                 #set ($link = $renderResponse.encodeURL("/portal/main-search.psml"))
                 <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.search.tooltip")">
                     <span class="ic-ic-arrow-right"></span>
                     <span class="text">$MESSAGES.getString("sitemap.area.main.search")</span>
                 </a>
+            #end
             #if ($enableSearchCatalog)
                 #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
                 <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.tooltip")">
@@ -102,11 +104,13 @@
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.service.help")</span>
             </a>
+            #if($enableContact)
             #set ($link = $renderResponse.encodeURL("/portal/service-contact.psml"))
             <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.service.contact.tooltip")">
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.service.contact")</span>
             </a>
+            #end
             #set ($link = $renderResponse.encodeURL("/portal/service-sitemap.psml"))
             <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.service.sitemap.tooltip")">
                 <span class="ic-ic-arrow-right"></span>
@@ -127,12 +131,13 @@
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.footer.accessibility")</span>
             </a>
+            #if($enableRSSPage)
             #set ($link = $renderResponse.encodeURL("/portal/rsspage.psml"))
             <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.rsspage.tooltip")">
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.footer.rsspage")</span>
             </a>
-
+            #end
         </div>
     </div>
 </div>

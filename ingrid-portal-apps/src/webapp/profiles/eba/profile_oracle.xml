@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
     <name>baw_wsv</name>
-    <description>Portal-Profile Geoportal.EBA</description>
+    <description>Portal-Profile GeoPortal.EBA</description>
     <pages>
         <page>
             <name>main-search.psml</name>
