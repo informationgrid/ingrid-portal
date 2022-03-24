@@ -104,19 +104,27 @@ a.icon:hover {
   border: 2px solid #0098B6;
 }
 header {
+  -webkit-border-image: -webkit-linear-gradient(to right, #007A89, #007A89) 0 1 100%;
+  -moz-border-image: -moz-linear-gradient(to right, #007A89, #007A89) 0 1 100%;
+  border-image: linear-gradient(to right, #007A89, #007A89) 0 1 100%;
+}
+.shrink-default header {
   background-color: #007A89;
   -webkit-border-image: -webkit-linear-gradient(to right, #FFF, #FFF) 0 1 100%;
   -moz-border-image: -moz-linear-gradient(to right, #FFF, #FFF) 0 1 100%;
   border-image: linear-gradient(to right, #FFF, #FFF) 0 1 100%;
 }
 .menu-tab-row .menu-tab .link-menu-tab {
-  color: #FFF;
+  color: #007A89;
 }
 .menu-tab-row .menu-tab.is-selected .link-menu-tab {
   color: #FFF;
 }
 .menu-tab-row .menu-tab:hover .link-menu-tab,
 .menu-tab-row .menu-tab:focus .link-menu-tab {
+  color: #FFF;
+}
+.shrink-default .menu-tab-row .menu-tab .link-menu-tab {
   color: #FFF;
 }
 .header-menu {
@@ -129,7 +137,7 @@ header {
   background-color: #FFF;
   color: #007A89;
 }
-.header-menu-open .button {
+.shrink-default .header-menu-open .button {
   background-color: #FFF;
   color: #007A89;
 }
@@ -140,7 +148,7 @@ header {
 }
 .header-menu-close .button:hover,
 .header-menu-close .button:focus {
-  background-color: #007A89;
+  background-color: #589199;
   color: #FFF;
 }
 .menu-main-links a:hover, .menu-main-links .button.logout:hover,
@@ -536,11 +544,14 @@ footer .footer-top-link:focus {
 }
 header .menu-tab-row .menu-tab {
   display: none;
+}
+.shrink-default .menu-tab-row .menu-tab {
   background-color: #007A89;
 }
 header .menu-tab-row .menu-tab:hover,
 header .menu-tab-row .menu-tab:focus {
   background-color: #589199;
+  color: #FFF;
 }
 .swiper-pagination-bullet {
   background: #333 !important;
@@ -763,7 +774,7 @@ a[class*="js-expander"] [class*="ic-"] {
   font-size: 32px;
 }
 
-.desktop__title a {
+.shrink-default .desktop__title a {
   color: #FFF;
 }
 
@@ -815,8 +826,11 @@ a[class*="js-expander"] [class*="ic-"] {
 }
 .shrink header,
 .shrink-default header {
-  background-color: #007A89;
   height: 65px;
+}
+
+.shrink-default header {
+  background-color: #007A89;
 }
  
 .shrink .body,
