@@ -7,6 +7,15 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="add" dev="wemove" issue="3665">
+            MAPCLIENT: Import von Layern per Single-Tile
+          </action>
+          <action type="add" dev="wemove" issue="3666">
+            MAPCLIENT: Barrierefreiheit-Link im Footer vom Kartenviewer einbinden
+          </action>
+          <action type="add" dev="wemove" issue="3667">
+            MAPCLIENT: Hilfe-Link im Footer vom Kartenviewer einbinden
+          </action>
           <action type="fix" dev="wemove" issue="3631">
             Layouts anpassen für die Suchergebnisseite und die Detaildarstellung im RLP-Profil
           </action>
