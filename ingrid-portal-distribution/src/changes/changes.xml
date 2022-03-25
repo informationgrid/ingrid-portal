@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="update" dev="wemove" issue="3668">
+            Automatische Auflösung von Redirects bei der Darstellung von Vorschaubildern (http -> https)
+          </action>
           <action type="add" dev="wemove" issue="3665">
             MAPCLIENT: Import von Layern per Single-Tile
           </action>
