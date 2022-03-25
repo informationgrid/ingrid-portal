@@ -662,6 +662,10 @@ public class UtilsPortletServeResources {
     }
 
     private static void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
+        getURLResponse(paramURL, response, false);
+    }
+
+    private static void getURLResponse (String paramURL, ResourceResponse response, boolean hasRedirect) throws IOException, URISyntaxException {
         UrlValidator urlValidator = new UrlValidator();
         if(urlValidator.isValid(paramURL)) {
             URL url = new URL(paramURL);
@@ -679,6 +683,11 @@ public class UtilsPortletServeResources {
                     URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
                             Base64.getEncoder().encodeToString(os.toByteArray()));
                     response.getWriter().write(dataUri.toString());
+                }
+            } else if (con.getHeaderField("Location") != null && !hasRedirect){
+                String locationUrl = con.getHeaderField("Location");
+                if(urlValidator.isValid(locationUrl)) {
+                    getURLResponse(locationUrl, response, true);
                 }
             }
         }
