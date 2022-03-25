@@ -56,6 +56,14 @@ define({
     "ui.obj.baw.simulation.spatial.dimensionality.title": "Räumliche Dimensionalität",
     "ui.obj.baw.simulation.spatial.dimensionality.help": "Räumliche Dimensionalität der Simulation",
 
+    "ui.obj.literature.author.table.column.family.name": "Nachname",
+    "ui.obj.literature.author.table.column.given.name": "Vorname",
+    "ui.obj.literature.author.table.column.organisation": "Organisation",
+    "ui.obj.literature.author.table.column.author.is.organisation": "Autor ist Organisation",
+    "ui.obj.literature.table.row.identifier": "Identifikator",
+    "ui.obj.literature.author.table.title": "Autor(en)",
+    "ui.obj.literature.author.table.help": "Liste der Autoren, die nicht als Kontakte angelegt sind. Autoren können entweder Personen oder Organisationen sein. Für Personen müssen sowohl Vor- als auch Nachname angegeben werden. Für Organisationen können Vor- und Nachname leer gelassen werden.",
+
     "ui.obj.doi.xref.author.table.column.family.name": "Name",
     "ui.obj.doi.xref.author.table.column.given.name": "Vorname",
     "ui.obj.doi.xref.table.help": "Literaturverweise zu anderen Veröffentlichungen hinzufügen",

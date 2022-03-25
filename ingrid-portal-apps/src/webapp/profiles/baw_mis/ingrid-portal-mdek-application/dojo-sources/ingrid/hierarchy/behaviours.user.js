@@ -29,6 +29,7 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisDoiFieldsEditRestrictions",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisHierarchyLevelName",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisKeywordCatalogue",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisLiterature",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisNewObjectTypes",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisSimulationMdFields",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
@@ -37,8 +38,8 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisMessdaten"
 ], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisDoiFieldsEditRestrictions,
-            bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields,
-            bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks, bawMisMessdaten) {
+            bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisLiterature, bawMisNewObjectTypes,
+            bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks, bawMisMessdaten) {
 
     return lang.mixin(behaviours, {
 
@@ -86,6 +87,11 @@ define([
          * UI changes for BAW-MIS profile
          */
         bawUiGeneral: bawUiGeneral,
+
+        /**
+         * Literature class and cross-references
+         */
+        bawMisLiterature: bawMisLiterature,
 
         /**
          * Extra validation rules for BAW-MIS

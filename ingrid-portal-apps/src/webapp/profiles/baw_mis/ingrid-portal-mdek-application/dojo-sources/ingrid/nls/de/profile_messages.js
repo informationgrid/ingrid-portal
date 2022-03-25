@@ -101,6 +101,14 @@ define({
     "ui.obj.baw.measuring.dataQualityDescription.title": "Beschreibung der Datenqualität",
     "ui.obj.baw.measuring.dataQualityDescription.help": "",
 
+    "ui.obj.literature.author.table.column.family.name": "Nachname",
+    "ui.obj.literature.author.table.column.given.name": "Vorname",
+    "ui.obj.literature.author.table.column.organisation": "Organisation",
+    "ui.obj.literature.author.table.column.author.is.organisation": "Autor ist Organisation",
+    "ui.obj.literature.table.row.identifier": "Identifikator",
+    "ui.obj.literature.author.table.title": "Autor(en)",
+    "ui.obj.literature.author.table.help": "Liste der Autoren, die nicht als Kontakte angelegt sind. Autoren können entweder Personen oder Organisationen sein. Für Personen müssen sowohl Vor- als auch Nachname angegeben werden. Für Organisationen können Vor- und Nachname leer gelassen werden.",
+
     "ui.sysList.3950000": "BAW - Räumliche Dimensionalität",
     "ui.sysList.3950001": "BAW - Simulationsverfahren",
     "ui.sysList.3950002": "BAW - Bezeichnung der Hierarchieebene",
