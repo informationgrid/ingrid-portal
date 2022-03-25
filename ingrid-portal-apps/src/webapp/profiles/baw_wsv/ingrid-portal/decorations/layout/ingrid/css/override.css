@@ -897,3 +897,14 @@ a[class*="js-expander"] [class*="ic-"] {
   background-color: #589199;
   color: #FFF;
 }
+
+.shrink .header-menu-close,
+.shrink-default .header-menu-close {
+  padding: 8px 14px 0 0 !important;
+}
+
+@media screen and (min-width: 78em) {
+  .shrink .header-menu-close {
+    padding: 8px 14px 0 0 !important;
+  }
+}
