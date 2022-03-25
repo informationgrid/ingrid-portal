@@ -6,7 +6,10 @@
     </properties>
 
     <body>
-        <release version="5.11.4" date="2022-03-23" description="Release 5.11.4">
+        <release version="5.11.4" date="2022-03-25" description="Release 5.11.4">
+          <action type="update" dev="wemove" issue="3668">
+            Automatische Auflösung von Redirects bei der Darstellung von Vorschaubildern (http -> https)
+          </action>
           <action type="fix" dev="wemove" issue="3638">
             Objektklassen in MetaVer wieder anpassen
           </action>
