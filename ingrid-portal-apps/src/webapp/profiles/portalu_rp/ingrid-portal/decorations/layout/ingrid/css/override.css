@@ -1330,3 +1330,16 @@ footer .footer-buttons-bar .login-buttons .login-form {
 .teaser-data.search .js-expander-content .button {
   border: 1px solid #871D33;
 }
+
+.info--right span {
+  color: #4a4a4a;
+  border-bottom: 1px dashed #4a4a4a;
+}
+
+.nr-results {
+  color: #4a4a4a;
+}
+
+.teaser-data .helper, .teaser-data p {
+  color: #4a4a4a;
+}
