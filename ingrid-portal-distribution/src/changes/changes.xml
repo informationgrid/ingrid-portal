@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="fix" dev="wemove" issue="3654">
+            BKG-Design: Info-Seite "Session abgelaufen"
+          </action>
           <action type="update" dev="wemove" issue="3669">
             Vermeidung von Nutzung des MD5 HASH Algorithmus für Kodierung von Passwörtern
           </action>
