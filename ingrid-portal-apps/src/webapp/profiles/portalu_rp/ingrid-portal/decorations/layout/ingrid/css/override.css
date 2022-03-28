@@ -95,9 +95,11 @@ a.icon:hover {
   color: #ffffff;
   background-color: #C6C6C6;
 }
-.button.round:hover, .button.round:focus {
+.button.round:hover,
+.button.round:focus {
   color: #ffffff;
-  background-color: #666666;
+  background-color: #962039;
+  border: 1px solid transparent;
 }
 .input-search .button.round:hover {
   color: #ffffff;
@@ -433,12 +435,12 @@ footer hr {
   margin: 0 0 16px;
 }
 footer .footer-top-link {
-  background-color: #006ec5;
+  background-color: #962039;
 }
 
 footer .footer-top-link:hover,
 footer .footer-top-link:focus {
-  background-color: #1D4B7B;
+  background-color: #b52744;
 }
 
 .select2-container--default .select2-selection--single::after {
@@ -1295,16 +1297,15 @@ h4, h5 {
 }
 
 .js-expander-toggle-all a.icon:hover,
+.js-expander-toggle-all a.icon:focus,
 .js-expander-toggle-all a.icon.is-active {
     background: #871D33;
     color: #FFFFFF;
 }
 
+.js-expander-toggle-all a.icon:hover [class^="ic-"],
+.js-expander-toggle-all a.icon:focus [class^="ic-"],
 .js-expander-toggle-all a.icon.is-active [class^="ic-"] {
-    color: #FFFFFF;
-}
-.js-expander-toggle-all a.icon:focus {
-    background: #871D33;
     color: #FFFFFF;
 }
 .nr-results {
