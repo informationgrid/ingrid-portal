@@ -767,15 +767,15 @@ public class DetailPartPreparer {
                                 valueConcated.append(value);
                                 break;
                             }
-                            if(headCodeList != null){
-                                for (int l=0; l<headCodeList.size();l++){
-                                    String codelist = headCodeList.get(l);
+                            if(headCodeList != null && headCodeList.size() > j){
+                                String codelist = headCodeList.get(j);
+                                if(codelist != null && !codelist.isEmpty()) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue(codelist, value).trim();
                                     if(tmpValue.length() > 0){
                                         value = tmpValue;
                                     }
-                                    valueConcated.append(value);
                                 }
+                                valueConcated.append(value);
                             } else {
                                 valueConcated.append(value);
                             }

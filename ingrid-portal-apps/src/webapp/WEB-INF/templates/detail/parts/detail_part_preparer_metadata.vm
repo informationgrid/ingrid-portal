@@ -343,15 +343,11 @@
                                 #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue", "526"))
                                 #renderTextList($MESSAGES.getString("t011_obj_geo_spatial_rep.type") $tmp)
                                 #set($tmp = "")
-                                ## Topologieinformation
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue", "528"))
-                                #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.vector_topology_level") $tmp)
-                                #set($tmp = "")
                                 ## Vektorformat
-                                #set($headTitles = [$MESSAGES.getString("t011_obj_geo_vector.geometric_object_type"),$MESSAGES.getString("t011_obj_geo_vector.geometric_object_count")])
-                                #set($headXpathExpressions = ["./gmd:MD_GeometricObjects/gmd:geometricObjectType/gmd:MD_GeometricObjectTypeCode/@codeListValue","./gmd:MD_GeometricObjects/gmd:geometricObjectCount"])
-                                #set($headCodeList = ["515"])
-                                #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_vector"), "./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects", $headTitles, $headXpathExpressions, $headCodeList))
+                                #set($headTitles = [$MESSAGES.getString("t011_obj_geo.vector_topology_level"),$MESSAGES.getString("t011_obj_geo_vector.geometric_object_type"),$MESSAGES.getString("t011_obj_geo_vector.geometric_object_count")])
+                                #set($headXpathExpressions = ["./gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue", "./gmd:geometricObjects/gmd:MD_GeometricObjects/gmd:geometricObjectType/gmd:MD_GeometricObjectTypeCode/@codeListValue","./gmd:geometricObjects/gmd:MD_GeometricObjects/gmd:geometricObjectCount"])
+                                #set($headCodeList = ["528", "515"])
+                                #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_vector"), "./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation", $headTitles, $headXpathExpressions, $headCodeList))
                                 #renderTable($tmp)
                                 #set($tmp = "")
                                 ## Erstellungsmaßstab

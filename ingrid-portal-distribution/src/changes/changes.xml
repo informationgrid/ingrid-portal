@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="update" dev="wemove" issue="3377">
+            Portal: Detail-Ausgabe für Vektordaten werden nicht vollständig angezeigt
+          </action>
           <action type="fix" dev="wemove" issue="3654">
             BKG-Design: Info-Seite "Session abgelaufen"
           </action>
