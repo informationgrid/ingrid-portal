@@ -246,7 +246,7 @@ else
     # Change admin password for mapclient admin GUI if MAPCLIENT_ADMIN_PW is define
     if [ "$MAPCLIENT_ADMIN_PW" ]; then
         echo "Update mapclient admin password"
-        sed -i 's|password="21232f297a57a5a743894a0e4a801fc3" roles="admin-gui|password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui|' conf/tomcat-users.xml
+        sed -i 's|password="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918" roles="admin-gui|password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui|' conf/tomcat-users.xml
     fi
 
     # Change server.xml
