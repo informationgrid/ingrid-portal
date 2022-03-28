@@ -57,5 +57,5 @@
   <user username="tomcat" password="tomcat" roles="tomcat"/>
   <user username="both" password="tomcat" roles="tomcat,role1"/>
   <user username="role1" password="tomcat" roles="role1"/>
-  <user username="admin" password="d033e22ae348aeb5660fc2140aec35850c4da997" roles="admin-gui"/>
+  <user username="admin" password="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918" roles="admin-gui"/>
 </tomcat-users>

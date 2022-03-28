@@ -150,7 +150,7 @@
         <!-- INGRID: Set MD5 algorithm -->
         <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
                resourceName="UserDatabase">
-               <CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler" algorithm="sha" />
+               <CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler" algorithm="sha-256" />
         </Realm>
       </Realm>
 
