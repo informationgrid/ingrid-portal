@@ -45,6 +45,17 @@ define([
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
+            var authorsGridId = this._initObjClass2AuthorsTable();
+            newFieldsToDirtyCheck.push(authorsGridId);
+            additionalFields.push(registry.byId(authorsGridId));
+
+            array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+
+
+            return registry.byId(authorsGridId).promiseInit;
+        },
+
+        _initObjClass2AuthorsTable: function() {
             var id = "bawLiteratureAuthorsTable";
             var structure = [
                 {
@@ -82,14 +93,8 @@ define([
             var node = dom.byId("uiElement3350").parentElement;
             construct.place(authorsGrid, node, 'before');
 
-            newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
-
-            array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
-
-
             // Validation rules
-            topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+            topic.subscribe("/onBeforeObjectPublish", function (notPublishableIDs) {
                 var authorsData = registry.byId(id).data;
 
                 var hasInvalidRows = array.some(authorsData, function (row) {
@@ -98,7 +103,7 @@ define([
                     var hasOrg = UtilGeneral.hasValue(row.authorOrganisation);
 
                     return (hasGivenName && !hasFamilyName)
-                           || (!hasGivenName && hasFamilyName);
+                        || (!hasGivenName && hasFamilyName);
                 })
 
                 if (hasInvalidRows) {
@@ -106,7 +111,7 @@ define([
                 }
             });
 
-            return registry.byId(id).promiseInit;
+            return id;
         }
 
     })();
