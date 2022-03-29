@@ -415,4 +415,66 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <field>t02_address.administrative_area_value</field>
         <isOpen>true</isOpen>
     </facet>
+    <!-- Kategorie -->
+    <facet>
+        <name>Kategorie</name>
+        <id>category</id>
+        <categoryOnly>true</categoryOnly>
+        <facets>
+        <!-- Anwendung -->
+            <facet>
+                <name>searchResult.facete.metaclass.application</name>
+                <query>t01_object.obj_class:6</query>
+                <id>application</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>6</codelist-entry-id>
+                <parentId>type</parentId>
+                <icon>ic-chemie</icon>
+            </facet>
+        <!-- Geo-Information / Karte -->
+            <facet>
+                <name>searchResult.facete.metaclass.map</name>
+                <query>t01_object.obj_class:1</query>
+                <id>map</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>1</codelist-entry-id>
+                <parentId>type</parentId>
+                <icon>ic-map</icon>
+            </facet>
+        <!-- Geodatendienst -->
+            <facet>
+                <name>searchResult.facete.metaclass.geoservice</name>
+                <query>t01_object.obj_class:3</query>
+                <id>geoservice</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>3</codelist-entry-id>
+                <parentId>type</parentId>
+                <icon>ic-ic-dienste</icon>
+            </facet>
+        <!-- INSPIRE-relevant -->
+            <facet>
+                <name>INSPIRE</name>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
+                <id>inspire_true</id>
+                <parentId>inspire</parentId>
+                <icon>ic-inspire</icon>
+            </facet>
+        <!-- Opendata -->
+           <facet>
+                <name>Opendata</name>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
+                <id>opendata_true</id>
+                <parentId>opendata</parentId>
+                <icon>ic-opendata</icon>
+            </facet>
+        <!-- AdV-Produkt -->
+           <facet>
+                <name>AdV-Produkt</name>
+                <query>t04_search.searchterm:advmis</query>
+                <id>adv_true</id>
+                <parentId>adv</parentId>
+                <icon>/decorations/layout/ingrid/images/template/adv.jpg</icon>
+            </facet>
+        </facets>
+    </facet>
 </facets>

@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
-    <name>ingrid</name>
-    <description>Portal-Profile für InGrid-Portal</description>
+    <name>bkg_advmis</name>
+    <description>Portal-Profile für BKG-ADVMIS</description>
     <pages>
         <page>
             <name>main-measures.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-about-data-source.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-about-partner.psml</name>
             <hidden>true</hidden>
         </page>
         <page>
@@ -24,6 +32,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>accessibility.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
             <hidden>true</hidden>
         </page>
@@ -38,6 +50,9 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
             </portlets>
         </page>
         <page>
@@ -47,6 +62,9 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
             </portlets>
         </page>
         <page>
@@ -55,6 +73,9 @@
             <portlets>
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -72,6 +93,45 @@
         </page>
     </pages>
     <files>
+        <!-- COPY GENERAL UVP FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-mdek/</src>
+            <dst>ingrid-portal-mdek/</dst>
+        </file>
+        <!-- COPY NUMIS FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../numis/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../numis/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <!-- COPY BKG FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../bkg/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../bkg/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <!-- COPY BKG_ADVMIS FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal/</src>
@@ -93,6 +153,10 @@
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link';]]>
+        </execute>
+        <!-- Delete user default-page.psml -->
+        <execute>
+            <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';]]>
         </execute>
     </sql>
 </profile>

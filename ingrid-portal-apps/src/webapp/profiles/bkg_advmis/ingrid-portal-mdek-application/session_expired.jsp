@@ -1,6 +1,6 @@
-<!--
+<%--
   **************************************************-
-  Ingrid Portal Base
+  InGrid Portal Apps
   ==================================================
   Copyright (C) 2014 - 2022 wemove digital solutions GmbH
   ==================================================
@@ -19,7 +19,12 @@
   See the Licence for the specific language governing permissions and
   limitations under the Licence.
   **************************************************#
-  -->
+  --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
@@ -129,7 +134,7 @@
                     <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
                         <div class="row align-center">
                             <div class="large-20 columns dark">
-                                <h1>FEHLER 403: ZUGRIFF VERWEIGERT</h1>
+                                <h1><fmt:message key="ui.entry.session.expired" /></h1>
                             </div>
                         </div>
                     </div>
@@ -138,28 +143,13 @@
                     <div class="columns">
                         <div class="form">
                             <p>
-                                Die gew&uuml;nschte Seite kann nicht aufgerufen werden. M&ouml;glicherweise fehlt Ihnen für diese Seite die Berechtigung oder Ihre Portal-Session ist abgelaufen.
+                               <fmt:message key="ui.entry.session.expired.text" />
                             </p>
-                            <ul>
-                                <li>
-                                    Versuchen Sie sich &uuml;ber die <a href="/startseite">Startseite</a> 
-                                    wieder am Portal anzumelden und rufen Sie die gew&uuml;nschte URL 
-                                    erneut auf. 
-                                </li>
-                                <li>
-                                    Oder st&ouml;bern Sie in den verschiedenen Such-Kategorien von ADV-MIS:
-                                    <div class="link-list">
-                                        <a class="icon" href="/freitextsuche">
-                                            <span class="ic-ic-arrow"></span>
-                                            <span class="text">Suche</span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <br />
-                            <p>
-                                Danke f&uuml;r Ihr Verst&auml;ndnis.
-                            </p>
+                            <div class="link-list">
+                                <a class="button" href="/log-in">
+                                    <span class="text">Login</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
