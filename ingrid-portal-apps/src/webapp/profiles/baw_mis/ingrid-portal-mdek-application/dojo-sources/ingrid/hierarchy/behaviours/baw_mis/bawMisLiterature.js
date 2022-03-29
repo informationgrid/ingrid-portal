@@ -27,12 +27,14 @@ define([
     "dojo/_base/lang",
     "dojo/dom",
     "dojo/dom-construct",
+    "dojo/topic",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
-    "ingrid/message"
-], function(registry, array, declare, lang, dom, construct, Editors, Formatters, dirty, creator, message) {
+    "ingrid/message",
+    "ingrid/utils/General"
+], function(registry, array, declare, lang, dom, construct, topic, Editors, Formatters, dirty, creator, message, UtilGeneral) {
 
     return declare(null, {
         title: "Literatur und Querverweise",
@@ -84,6 +86,26 @@ define([
             additionalFields.push(registry.byId(id));
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+
+
+            // Validation rules
+            topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                var authorsData = registry.byId(id).data;
+
+                var hasInvalidRows = array.some(authorsData, function (row) {
+                    var hasGivenName = UtilGeneral.hasValue(row.authorGivenName);
+                    var hasFamilyName = UtilGeneral.hasValue(row.authorFamilyName);
+                    var hasOrg = UtilGeneral.hasValue(row.authorOrganisation);
+
+                    return (hasGivenName && !hasFamilyName)
+                           || (!hasGivenName && hasFamilyName);
+                })
+
+                if (hasInvalidRows) {
+                    notPublishableIDs.push([id, message.get("validation.baw.literature.authors")]);
+                }
+            });
+
             return registry.byId(id).promiseInit;
         }
 
