@@ -95,7 +95,7 @@ public class UtilsHttpConnection {
             }
             con.disconnect();
         } catch (IOException e) {
-            log.error("Error load url: " + paramUrl, e);
+            UtilsLog.logError("Error load url: " + paramUrl, e, log);
         }
         return header;
     }

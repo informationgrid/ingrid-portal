@@ -105,7 +105,7 @@ public class UtilsPortletServeResources {
                         }
                     }
                 } catch (Exception e) {
-                    log.error("Error get datatype from: " + paramURL, e);
+                    UtilsLog.logError("Error get datatype from: " + paramURL, e, log);
                 }
             }
         }
@@ -129,7 +129,7 @@ public class UtilsPortletServeResources {
             }
             response.getWriter().write( "}" );
         } catch (Exception e) {
-            log.error("Error get contentLength from: " + paramURL, e);
+            UtilsLog.logError("Error get contentLength from: " + paramURL, e, log);
             response.setContentType( "application/javascript" );
             response.getWriter().write( "{}" );
         }
@@ -139,13 +139,13 @@ public class UtilsPortletServeResources {
         try {
             getURLResponse(paramURL, response);
         } catch (Exception e) {
-            log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
+            UtilsLog.logError("Error creating HTTP resource for resource ID: " + resourceID, e, log);
             String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
             log.error( "Try https URL: " + httpsUrl);
             try {
                 getURLResponse(httpsUrl, response);
             } catch (Exception e1) {
-                log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
+                UtilsLog.logError("Error creating HTTPS resource for resource ID: " + resourceID, e, log);
                 response.getWriter().write(paramURL);
             }
         }
@@ -199,7 +199,7 @@ public class UtilsPortletServeResources {
                     jsonDataEntry.put(jsonSteps);
                     response.getWriter().write("createMarker(" + marker + ", " + jsonDataEntry.toString() + ", '" + markerColor + "');");
                 } catch (Exception e) {
-                    log.error("Error write response.", e);
+                    UtilsLog.logError("Error write response.", e, log);
                 }
             }
         }
@@ -244,7 +244,7 @@ public class UtilsPortletServeResources {
                         log.error("Metadata '" + title + "' with UUID '" + uuid + "' has no location!");
                     }
                 } catch (Exception e) {
-                    log.error("Error write response.", e);
+                    UtilsLog.logError("Error write response.", e, log);
                 }
             }
         }
@@ -280,7 +280,7 @@ public class UtilsPortletServeResources {
                     }
                     jsonData.put(jsonSteps);
                 } catch (Exception e) {
-                    log.error("Error write response.", e);
+                    UtilsLog.logError("Error write response.", e, log);
                 }
             }
         }
@@ -346,7 +346,7 @@ public class UtilsPortletServeResources {
                     log.error("Metadata '" + blpName + "' has no location!");
                 }
             } catch (Exception e) {
-                log.error("Error get json object.", e);
+                UtilsLog.logError("Error get json object.", e, log);
             }
         }
     }
@@ -402,7 +402,7 @@ public class UtilsPortletServeResources {
                 }
                 cnt++;
             } catch (Exception e) {
-                log.error("Error get json object.", e);
+                UtilsLog.logError("Error get json object.", e, log);
             }
         }
         response.setContentType( "application/json" );
@@ -505,10 +505,8 @@ public class UtilsPortletServeResources {
                     response.getWriter().write( "var legendCounter = {};");
                 }
             }
-        } catch (Exception t) {
-            if (log.isErrorEnabled()) {
-                log.error( "Problems performing Search !", t );
-            }
+        } catch (Exception e) {
+            UtilsLog.logError("Problems performing Search !", e, log);
         }
     }
 
@@ -756,7 +754,7 @@ public class UtilsPortletServeResources {
             try {
                 response.getWriter().write("0");
             } catch (IOException e) {
-                log.error("Error write response!", e);
+                UtilsLog.logError("Error write response!", e, log);
             }
         } else {
             if(facet != null) {
@@ -814,10 +812,8 @@ public class UtilsPortletServeResources {
                             response.getWriter().write("0");
                         }
                     }
-                } catch (Exception t) {
-                    if (log.isErrorEnabled()) {
-                        log.error( "Problems performing Search !", t );
-                    }
+                } catch (Exception e) {
+                    UtilsLog.logError("Problems performing Search !", e, log);
                 }
             }
         }
