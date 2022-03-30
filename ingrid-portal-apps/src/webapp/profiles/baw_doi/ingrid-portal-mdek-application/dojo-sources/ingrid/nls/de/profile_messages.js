@@ -64,6 +64,12 @@ define({
     "ui.obj.literature.author.table.title": "Autor(en)",
     "ui.obj.literature.author.table.help": "Liste der Autoren, die nicht als Kontakte angelegt sind. Autoren können entweder Personen oder Organisationen sein. Für Personen müssen sowohl Vor- als auch Nachname angegeben werden. Für Organisationen können Vor- und Nachname leer gelassen werden.",
 
+    "ui.obj.baw.literature.xref.table.title": "Literaturverweise",
+    "ui.obj.baw.literature.xref.table.help": "Literaturverweise hinzufügen",
+    "ui.obj.baw.literature.xref.table.new.row": "Hinzufügen",
+    "ui.obj.baw.literature.xref.table.edit.row": "Bearbeiten",
+    "ui.obj.baw.literature.xref.table.new.row.tooltip": "Literaturverweis hinzufügen",
+    "ui.obj.baw.literature.xref.table.row.title": "Literaturverweis",
     "ui.obj.doi.xref.author.table.column.family.name": "Name",
     "ui.obj.doi.xref.author.table.column.given.name": "Vorname",
     "ui.obj.doi.xref.table.help": "Literaturverweise zu anderen Veröffentlichungen hinzufügen",

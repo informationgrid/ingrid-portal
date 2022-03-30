@@ -21,20 +21,28 @@
  * **************************************************#
  */
 define([
+    "dijit/MenuItem",
+    "dijit/MenuSeparator",
     "dijit/registry",
     "dojo/_base/array",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/Deferred",
     "dojo/dom",
+    "dojo/dom-class",
     "dojo/dom-construct",
+    "dojo/promise/all",
     "dojo/topic",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
+    "ingrid/menu",
     "ingrid/message",
-    "ingrid/utils/General"
-], function(registry, array, declare, lang, dom, construct, topic, Editors, Formatters, dirty, creator, message, UtilGeneral) {
+    "ingrid/utils/General",
+    "ingrid/utils/Store"
+], function(MenuItem, MenuSeparator, registry, array, declare, lang, Deferred, dom, domClass, construct, all, topic,
+            Editors, Formatters, dirty, creator, menu, message, UtilGeneral, UtilStore) {
 
     return declare(null, {
         title: "Literatur und Querverweise",
@@ -45,14 +53,19 @@ define([
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
-            var authorsGridId = this._initObjClass2AuthorsTable();
-            newFieldsToDirtyCheck.push(authorsGridId);
-            additionalFields.push(registry.byId(authorsGridId));
+            var authorsTableId = this._initObjClass2AuthorsTable();
+            newFieldsToDirtyCheck.push(authorsTableId);
+            additionalFields.push(registry.byId(authorsTableId));
+            registry.byId(authorsTableId).reinitLastColumn(true);
+
+            var literatureTableId = this._initLiteratureXrefTable();
+            newFieldsToDirtyCheck.push(literatureTableId);
+            additionalFields.push(registry.byId(literatureTableId));
+            registry.byId(literatureTableId).reinitLastColumn(true);
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
 
-
-            return registry.byId(authorsGridId).promiseInit;
+            return registry.byId(authorsTableId).promiseInit;
         },
 
         _initObjClass2AuthorsTable: function() {
@@ -100,7 +113,6 @@ define([
                 var hasInvalidRows = array.some(authorsData, function (row) {
                     var hasGivenName = UtilGeneral.hasValue(row.authorGivenName);
                     var hasFamilyName = UtilGeneral.hasValue(row.authorFamilyName);
-                    var hasOrg = UtilGeneral.hasValue(row.authorOrganisation);
 
                     return (hasGivenName && !hasFamilyName)
                         || (!hasGivenName && hasFamilyName);
@@ -112,6 +124,120 @@ define([
             });
 
             return id;
+        },
+
+        _initLiteratureXrefTable: function() {
+            var id = "bawLiteratureXrefTable";
+            var structure = [
+                {
+                    field: "bawLiteratureNodeDocType",
+                    editable: false,
+                    formatter: Formatters.renderIconClass,
+                    width: "23px",
+                    hidden: false
+                },
+                {
+                    field: "bawLiteratureXrefLink",
+                    name: message.get("ui.obj.baw.literature.xref.table.row.title"),
+                    editable: false,
+                    width: "663px"
+                },
+                {
+                    field: "bawLiteratureXrefUuid",
+                    editable: false,
+                    width: "0px",
+                    hidden: true
+                },
+                {
+                    field: "bawLiteratureXrefTitle",
+                    editable: false,
+                    width: "0px",
+                    hidden: true
+                }
+            ];
+
+            this._createLiteratureXrefTableContextMenu();
+            var authorsTable = creator.createDomDataGrid({
+                id: id,
+                name: message.get("ui.obj.baw.literature.xref.table.title"),
+                help: message.get("ui.obj.baw.literature.xref.table.help"),
+                contextMenu: "BAW_LITERATURE_CROSS_REFERENCE",
+                visible: "optional",
+                style: "width: 100%"
+            }, structure, "links");
+
+            var node = dom.byId("uiElementN017").parentElement;
+            construct.place(authorsTable, node, 'before');
+
+            // Add link for creating a new entry
+            creator.createTableLink(
+                id,
+                message.get("ui.obj.baw.literature.xref.table.new.row"),
+                'dialogs/mdek_baw_literature_xref_dialog.jsp',
+                message.get('ui.obj.baw.literature.xref.table.new.row'),
+                message.get('ui.obj.baw.literature.xref.table.new.row.tooltip')
+            );
+
+            topic.subscribe("/onObjectClassChange", function(data) {
+                if (data.objClass === "Class1") {
+                    domClass.remove("uiElementAddbawLiteratureXrefTable", "hide");
+                } else {
+                    domClass.add("uiElementAddbawLiteratureXrefTable", "hide");
+                }
+            });
+
+            topic.subscribe("/selectNode", function () {
+                var table = registry.byId(id);
+                if (!table) return;
+
+                var promises = [];
+                var data = table.data;
+
+                array.forEach(data, function (row) {
+                    var deferred = new Deferred();
+                    promises.push(deferred);
+
+                    var uuid = row.bawLiteratureXrefUuid;
+                    if (uuid) {
+                        ObjectService.getNodeData(uuid, "O", "true", {
+                            callback: function (obj) {
+                                row.bawLiteratureNodeDocType = obj.nodeDocType;
+                                deferred.resolve();
+                            },
+
+                            errorHandler: function (err) {
+                                console.error(err);
+                                deferred.resolve();
+                            }
+                        });
+                    }
+                });
+
+                all(promises).then(function () {
+                    UtilStore.updateWriteStore(id, data);
+                    table.reinitLastColumn(true);
+                });
+            });
+
+            return id;
+        },
+
+        _createLiteratureXrefTableContextMenu: function () {
+            var type = "BAW_LITERATURE_CROSS_REFERENCE";
+            var contextMenu = menu.initContextMenu({contextMenu: type});
+            contextMenu.addChild(new MenuSeparator());
+            contextMenu.addChild(new MenuItem({
+                id: "menuEditClicked_" + type,
+                label: message.get('contextmenu.table.editClicked'),
+                onClick: function () {
+                    var rowData = clickedSlickGrid.getData()[clickedRow];
+                    var dialogData = {
+                        gridId: clickedSlickGridProperties.id,
+                        selectedRow: rowData
+                    };
+                    dialog.showPage(message.get("ui.obj.baw.literature.xref.table.edit.row"), 'dialogs/mdek_baw_literature_xref_dialog.jsp?c=' + userLocale, 400, 300, true, dialogData);
+                }
+            }));
         }
 
     })();
