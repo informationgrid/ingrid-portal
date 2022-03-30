@@ -157,8 +157,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Anwendungen</name>
                 <query>hierarchylevel:application</query>
                 <id>others</id>
-                <codelist-id>8000</codelist-id>
-                <codelist-entry-id>6</codelist-entry-id>
             </facet>
         </facets>
     </facet>
@@ -421,11 +419,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <facets>
         <!-- Anwendung -->
             <facet>
-                <name>searchResult.facete.metaclass.application</name>
+                <name>Anwendungen</name>
                 <query>hierarchylevel:application</query>
                 <id>others</id>
-                <codelist-id>8000</codelist-id>
-                <codelist-entry-id>6</codelist-entry-id>
                 <parentId>type</parentId>
                 <icon>ic-chemie</icon>
             </facet>
