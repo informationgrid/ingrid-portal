@@ -427,31 +427,25 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <facets>
         <!-- Anwendung -->
             <facet>
-                <name>searchResult.facete.metaclass.application</name>
-                <query>t01_object.obj_class:6</query>
-                <id>application</id>
-                <codelist-id>8000</codelist-id>
-                <codelist-entry-id>6</codelist-entry-id>
+                <name>Anwendungen</name>
+                <query>hierarchylevel:application</query>
+                <id>others</id>
                 <parentId>type</parentId>
                 <icon>ic-chemie</icon>
             </facet>
         <!-- Geo-Information / Karte -->
             <facet>
-                <name>searchResult.facete.metaclass.map</name>
-                <query>t01_object.obj_class:1</query>
-                <id>map</id>
-                <codelist-id>8000</codelist-id>
-                <codelist-entry-id>1</codelist-entry-id>
+                <name>Daten</name>
+                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType OR hierarchylevel:tile)</query>
+                <id>data</id>
                 <parentId>type</parentId>
                 <icon>ic-map</icon>
             </facet>
         <!-- Geodatendienst -->
             <facet>
-                <name>searchResult.facete.metaclass.geoservice</name>
-                <query>t01_object.obj_class:3</query>
-                <id>geoservice</id>
-                <codelist-id>8000</codelist-id>
-                <codelist-entry-id>3</codelist-entry-id>
+                <name>Dienste</name>
+                <query>hierarchylevel:service</query>
+                <id>service</id>
                 <parentId>type</parentId>
                 <icon>ic-ic-dienste</icon>
             </facet>
