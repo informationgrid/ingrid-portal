@@ -157,6 +157,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Anwendungen</name>
                 <query>hierarchylevel:application</query>
                 <id>others</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>6</codelist-entry-id>
             </facet>
         </facets>
     </facet>
@@ -411,14 +413,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
-    <!-- INSPIRE-Themen -->
-    <facet sort="SORT_BY_VALUE_DESC">
-        <name>INSPIRE-Themen</name>
-        <id>inspire_topics</id>
-        <field>t04_search.searchterm</field>
-        <codelist>6100</codelist>
-        <codelist-field>de</codelist-field>
-    </facet>
     <!-- Kategorie -->
     <facet>
         <name>Kategorie</name>
@@ -427,9 +421,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <facets>
         <!-- Anwendung -->
             <facet>
-                <name>Anwendungen</name>
+                <name>searchResult.facete.metaclass.application</name>
                 <query>hierarchylevel:application</query>
                 <id>others</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>6</codelist-entry-id>
                 <parentId>type</parentId>
                 <icon>ic-chemie</icon>
             </facet>
