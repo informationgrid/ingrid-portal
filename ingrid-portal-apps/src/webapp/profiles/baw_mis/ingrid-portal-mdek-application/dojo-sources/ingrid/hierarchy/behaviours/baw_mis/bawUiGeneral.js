@@ -60,6 +60,18 @@ define([
             domClass.add("uiElement3355", "hide");
             // Herausgeber
             domClass.add("uiElement3350", "hide");
+            // Erschienen in
+            domClass.add("uiElement3340", "hide");
+            // Erscheinungsort
+            domClass.add("uiElement3310", "hide");
+            // Band / Heft
+            domClass.add("uiElement3330", "hide");
+            // Seiten
+            domClass.add("uiElement3320", "hide");
+            // Erscheinungsjahr
+            domClass.add("uiElement3300", "hide");
+            // Verlag
+            domClass.add("uiElement3370", "hide");
             // Standort
             domClass.add("uiElement3360", "hide");
             // Dokumententyp
