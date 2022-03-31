@@ -33,7 +33,7 @@
     <sonar.exclusions>
       src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*
     </sonar.exclusions>
-    <spring.version>5.3.14</spring.version>
+    <spring.version>5.3.18</spring.version>
   </properties>
 
   <!-- ==================== Build Configuration ==================== -->
