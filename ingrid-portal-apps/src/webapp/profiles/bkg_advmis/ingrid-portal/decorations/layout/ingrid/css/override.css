@@ -411,7 +411,7 @@ header {
 }
 .button.pill:hover span,
 .button.pill:focus span {
-  color: #eaf6ff;
+  color: #0077b6;
 }
 .boxed-table thead {
   background-color: #FFFFFF;
