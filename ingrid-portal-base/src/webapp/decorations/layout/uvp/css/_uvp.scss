@@ -2778,6 +2778,11 @@ meter[value="5"]::-moz-meter-bar { background: green; }
       margin-top: -8px;
     }
   }
+
+  .filter .filter-group label .nr-results {
+    float: right;
+    margin-left: 8px;
+  }
 }
 
 a[class*="js-expander"] {
