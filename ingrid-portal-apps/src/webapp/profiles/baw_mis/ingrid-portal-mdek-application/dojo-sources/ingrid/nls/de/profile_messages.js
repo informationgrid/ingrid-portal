@@ -113,6 +113,10 @@ define({
     "validation.baw.address.role.pointOfContact": "Ein Eintrag für die Institution 'Bundesanstalt für Wasserbau' als 'Ansprechpartner' muss vorhanden sein.",
     "validation.baw.bwastr_km.entry.missing": "Km-von und Km-bis müssen entweder beide definiert sein oder sollen beide fehlen.",
     "validation.baw.bwastr_name.missing": "Für jeden Streckenabschnitt muss mindestens den Streckenname angegeben werden.",
+    "validation.baw.averageWaterLevel.incomplete": "Die Spalten 'Wasserstand' und 'Maßeinheit' sind verpflichtend.",
+    "validation.baw.zeroLevel.incomplete": "Die Spalten 'Pegelnullpunkt', 'Maßeinheit' und 'Vertikales Koordinatenreferenzsystem' sind verpflichtend.",
+    "validation.baw.gauge.incomplete": "Die Spalte 'Gerätename' ist verpflichtend.",
+    "validation.baw.targetParameters.incomplete": "Die Spalten 'Name', 'Art' und 'Maßeinheit' sind verpflichtend.",
 
     "error.invalid.psp.number": "Der Wert des PSP-Elements ist ungültig.",
     "error.no.bwastrid.specified": "Die BWaStr.-ID aus den Streckenabschnitten ist ungültig.",

@@ -34,8 +34,9 @@ define([
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
-    "ingrid/message"
-], function (registry, array, declare, lang, dom, domClass, construct, on, topic, Editors, Formatters, dirty, creator, message) {
+    "ingrid/message",
+    "ingrid/utils/Grid"
+], function (registry, array, declare, lang, dom, domClass, construct, on, topic, Editors, Formatters, dirty, creator, message, UtilGrid) {
 
     var measurementFields = ["measuringMethod", "spatiality", "measuringDepth", "unitOfMeasurement", "averageWaterLevel",
         "zeroLevel", "drainMin", "drainMax", "gauge", "targetParameters"];
@@ -59,17 +60,7 @@ define([
                 } else {
                     handleHierarchyLevelNameIsNotMeasurementData();
                 }
-            })
-            /*topic.subscribe("/onObjectClassChange", function (data) {
-                if (data.objClass === "Class1") {
-                    domClass.remove("uiElementAdd" + AUFTRAGSNUMMER_ID, "hide");
-                    domClass.remove("uiElementAdd" + AUFTRAGSTITEL_ID, "hide");
-                } else {
-                    domClass.add("uiElementAdd" + AUFTRAGSNUMMER_ID, "hide");
-                    domClass.add("uiElementAdd" + AUFTRAGSTITEL_ID, "hide");
-                }
-
-            });*/
+            });
         },
 
         _createCustomFields: function () {
@@ -100,7 +91,9 @@ define([
         },
 
         _createBehaviours: function() {
-            addMeasuringDepthBehaviour()
+            addMeasuringDepthBehaviour();
+            
+            addTableValidations();
         }
     })();
 
@@ -170,7 +163,8 @@ define([
                 field: "unitOfMeasurement",
                 name: message.get("ui.obj.baw.measuring.averageWaterLevel.unitOfMeasurement") + "*",
                 type: Editors.ComboboxEditor,
-                formatter: Formatters.ListCellFormatter,
+                formatter: lang.partial(Formatters.SyslistCellFormatter, 3950020),
+                listId: 3950020,
                 isMandatory: true,
                 editable: true
             }
@@ -336,7 +330,8 @@ define([
             id: "targetParameters",
             name: message.get("ui.obj.baw.measuring.targetParameters.title"),
             help: message.get("ui.obj.baw.measuring.targetParameters.help"),
-            style: "width: 100%"
+            style: "width: 100%",
+            isMandatory: true
         }, structure, "refClass1");
         newFieldsToDirtyCheck.push("targetParameters");
         additionalFields.push(registry.byId("targetParameters"));
@@ -378,13 +373,13 @@ define([
 
     function showFields(fields) {
         array.forEach(fields, function(field) {
-            domClass.remove(field, "hide");
+            domClass.remove("uiElementAdd" + field, "hide");
         })
     }
 
     function hideFields(fields) {
         array.forEach(fields, function(field) {
-            domClass.add(field, "hide");
+            domClass.add("uiElementAdd" + field, "hide");
         })
     }
 
@@ -405,6 +400,34 @@ define([
         
         on(depth, "Change", toggleState);
         on(unit, "Change", toggleState);
+    }
+    
+    function addTableValidations() {
+        topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+            array.forEach(UtilGrid.getTableData("averageWaterLevel"), function (row) {
+                if (!row.waterLevel || !row.unitOfMeasurement) {
+                    notPublishableIDs.push(["averageWaterLevel", message.get("validation.baw.averageWaterLevel.incomplete")]);
+                }
+            });
+            
+            array.forEach(UtilGrid.getTableData("zeroLevel"), function (row) {
+                if (!row.zeroLevel || !row.unitOfMeasurement || !row.verticalCoordinateReferenceSystem) {
+                    notPublishableIDs.push(["zeroLevel", message.get("validation.baw.zeroLevel.incomplete")]);
+                }
+            });
+            
+            array.forEach(UtilGrid.getTableData("gauge"), function (row) {
+                if (!row.name) {
+                    notPublishableIDs.push(["gauge", message.get("validation.baw.gauge.incomplete")]);
+                }
+            });
+            
+            array.forEach(UtilGrid.getTableData("targetParameters"), function (row) {
+                if (!row.name || !row.type || !row.unitOfMeasurement) {
+                    notPublishableIDs.push(["targetParameters", message.get("validation.baw.targetParameters.incomplete")]);
+                }
+            });
+        });
     }
 });
 
