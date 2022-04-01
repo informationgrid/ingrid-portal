@@ -56,6 +56,8 @@ define({
     "ui.obj.baw.simulation.spatial.dimensionality.title": "Räumliche Dimensionalität",
     "ui.obj.baw.simulation.spatial.dimensionality.help": "Räumliche Dimensionalität der Simulation",
 
+    "ui.obj.baw.literature.handle.title": "Persistenter Handle",
+    "ui.obj.baw.literature.handle.help": "Persistenter Handle für die Publikation als URL z.B. https://hdl.handle.net/20.500.11970/000000",
     "ui.obj.baw.literature.publisher.title": "Herausgeber (ohne Adressbuch-Eintrag)",
     "ui.obj.baw.literature.publisher.help": "Angabe des Herausgebers",
     "ui.obj.baw.literature.author.table.column.family.name": "Nachname",

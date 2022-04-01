@@ -109,7 +109,14 @@ define([
             additionalFields.push(registry.byId(publisherTextboxId));
 
 
-            // Cross-references
+            // Handles
+            var handleTextboxId = this._initHandleTextbox();
+
+            newFieldsToDirtyCheck.push(handleTextboxId);
+            additionalFields.push(registry.byId(handleTextboxId));
+
+
+            // Cross-references to literature objects in Geodata class
             var literatureTableId = this._initLiteratureXrefTable();
             newFieldsToDirtyCheck.push(literatureTableId);
             additionalFields.push(registry.byId(literatureTableId));
@@ -251,6 +258,27 @@ define([
                     notPublishableIDs.push([publisherTextboxId, msg]);
                 }
             });
+        },
+
+        _initHandleTextbox: function () {
+            var id = "bawLiteratureHandleTextbox";
+            construct.place(
+                creator.createDomTextbox({
+                    id: id,
+                    name: message.get("ui.obj.baw.literature.handle.title"),
+                    help: message.get("ui.obj.baw.literature.handle.help"),
+                    style: "width: 100%"
+                }), "links");
+
+            topic.subscribe("/onObjectClassChange", function(data) {
+                if (data.objClass === "Class2") {
+                    domClass.remove("uiElementAdd" + id, "hidden");
+                } else {
+                    domClass.add("uiElementAdd" + id, "hidden");
+                }
+            });
+
+            return id;
         },
 
         _initLiteratureXrefTable: function() {

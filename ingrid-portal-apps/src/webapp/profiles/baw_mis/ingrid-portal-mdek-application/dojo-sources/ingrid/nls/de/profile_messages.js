@@ -107,6 +107,8 @@ define({
     "ui.obj.baw.measuring.dataQualityDescription.title": "Beschreibung der Datenqualität",
     "ui.obj.baw.measuring.dataQualityDescription.help": "",
 
+    "ui.obj.baw.literature.handle.title": "Persistenter Handle",
+    "ui.obj.baw.literature.handle.help": "Persistenter Handle für die Publikation als URL z.B. https://hdl.handle.net/20.500.11970/000000",
     "ui.obj.baw.literature.publisher.title": "Herausgeber (ohne Adressbuch-Eintrag)",
     "ui.obj.baw.literature.publisher.help": "Angabe des Herausgebers",
     "ui.obj.baw.literature.author.table.column.family.name": "Nachname",
