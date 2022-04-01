@@ -211,7 +211,7 @@ define([
         },
 
         _initPublisherTextbox: function () {
-            var id = "bawLiteraturePublisherTextbox";
+            var id = "bawLiteraturePublisher";
             construct.place(
                 creator.createDomTextbox({
                     id: id,
@@ -241,7 +241,7 @@ define([
                     return row.nameOfRelation === publisherEntryName;
                 });
 
-                var publisherTextboxId = "bawLiteraturePublisherTextbox";
+                var publisherTextboxId = "bawLiteraturePublisher";
                 var publisherTextbox = registry.byId(publisherTextboxId);
 
                 console.log(publishers);
@@ -261,7 +261,7 @@ define([
         },
 
         _initHandleTextbox: function () {
-            var id = "bawLiteratureHandleTextbox";
+            var id = "bawLiteratureHandle";
             construct.place(
                 creator.createDomTextbox({
                     id: id,
