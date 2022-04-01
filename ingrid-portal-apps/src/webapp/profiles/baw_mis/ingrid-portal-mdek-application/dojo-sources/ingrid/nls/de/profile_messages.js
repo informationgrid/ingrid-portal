@@ -131,6 +131,7 @@ define({
     "validation.baw.bwastr_name.missing": "Für jeden Streckenabschnitt muss mindestens den Streckenname angegeben werden.",
     "validation.baw.literature.authors.count": "Mindestens ein Autor muss definiert sein. Autoren können entweder in der Adressen- oder in der Autoren-Tabelle angegeben werden.",
     "validation.baw.literature.authors.names": "Für Personen müssen sowohl Vor- als auch Nachname angegeben werden.",
+    "validation.baw.literature.publication.date.count": "Das Veröffentlichungsdatum ist eine Pflichtangabe. Es muss genau ein Veröffentlichungsdatum angegeben werden.",
     "validation.baw.literature.publishers": "Es muss im Metadatensatz genau einen Herausgeber angegeben werden. Herausgeber kann entweder in der Adressen-Tabelle oder im Herausgeber-Textfeld angegeben werden.",
     "validation.baw.literature.authors": "Für Personen müssen sowohl Vor- als auch Nachname angegeben werden.",
     "validation.baw.averageWaterLevel.incomplete": "Die Spalten 'Wasserstand' und 'Maßeinheit' sind verpflichtend.",

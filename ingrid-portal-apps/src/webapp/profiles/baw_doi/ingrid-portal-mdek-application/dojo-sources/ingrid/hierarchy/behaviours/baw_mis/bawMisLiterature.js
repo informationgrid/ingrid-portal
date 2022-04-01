@@ -53,6 +53,42 @@ define([
         defaultActive: true,
         category: "BAW-MIS",
         run: function() {
+            this._customiseTimeRef();
+            this._createCustomFields();
+        },
+
+        _customiseTimeRef: function() {
+            topic.subscribe("/onObjectClassChange", function(data) {
+                var objClass = data.objClass;
+                if (objClass === "Class2") {
+                    domClass.remove("timeRef", "hide");
+
+                    // Durch die Ressource abgedeckte Zeitspanne
+                    domClass.add("uiElementN011", "hide");
+                } else {
+                    domClass.remove("uiElementN011", "hide");
+                }
+            });
+
+            this._addPublicationDateValidationRule();
+        },
+
+        _addPublicationDateValidationRule: function() {
+            var id = "timeRefTable";
+            // Validation rules
+            topic.subscribe("/onBeforeObjectPublish", function (notPublishableIDs) {
+                var publicationDates = array.filter(registry.byId(id).data, function (row) {
+                    return row.type === "2";
+                });
+
+                // Check that exactly on publication date exists
+                if (publicationDates.length !== 1) {
+                    notPublishableIDs.push([id, message.get("validation.baw.literature.publication.date.count")]);
+                }
+            });
+        },
+
+        _createCustomFields: function() {
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
