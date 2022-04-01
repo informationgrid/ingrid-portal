@@ -78,7 +78,7 @@ define([
             // Validation rules
             topic.subscribe("/onBeforeObjectPublish", function (notPublishableIDs) {
                 var publicationDates = array.filter(registry.byId(id).data, function (row) {
-                    return row.type === "2";
+                    return row.type == 2;
                 });
 
                 // Check that exactly on publication date exists
