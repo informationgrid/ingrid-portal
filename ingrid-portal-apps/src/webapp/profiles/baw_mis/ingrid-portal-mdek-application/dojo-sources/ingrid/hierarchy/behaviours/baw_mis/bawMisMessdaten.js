@@ -54,11 +54,16 @@ define([
             
             this._createBehaviours();
             
+            var levelNameForSimulation = ["Datei", "Simulationslauf", "Simulationsmodell", "Szenario ", "Variante"];
             on(registry.byId("bawHierarchyLevelName"), "Change", function(value) {
                 if (value === "Messdaten") {
                     handleHierarchyLevelNameIsMeasurementData();
+                    hideFields(nonMeasurementFields);
                 } else {
                     handleHierarchyLevelNameIsNotMeasurementData();
+                    if (levelNameForSimulation.indexOf(value) !== -1) {
+                        showFields(nonMeasurementFields);
+                    }
                 }
             });
         },
@@ -351,22 +356,30 @@ define([
     
     function handleHierarchyLevelNameIsMeasurementData() {
         showFields(measurementFields);
-        hideFields(nonMeasurementFields);
         
         // show DQ-rubric
         domClass.remove("refClass1DQ", "hidden");
+        domClass.add("ref1ContentDQTables", "hide");
+        domClass.add("uiElement3565", "hide");
+        domClass.add("uiElement5071", "hide");
+        domClass.add("uiElement5069", "hide");
+        domClass.add("uiElement3530", "hide");
         
         // TODO: "Durch die Ressource abgedeckte Zeitspanne" required
     }
     
     function handleHierarchyLevelNameIsNotMeasurementData() {
         hideFields(measurementFields);
-        showFields(nonMeasurementFields);
         
         // TODO: show other fields depending on value (behaviour could already exist!)
         
         // hide DQ-rubric
         domClass.add("refClass1DQ", "hidden");
+        domClass.remove("ref1ContentDQTables", "hide");
+        domClass.remove("uiElement3565", "hide");
+        domClass.remove("uiElement5071", "hide");
+        domClass.remove("uiElement5069", "hide");
+        domClass.remove("uiElement3530", "hide");
 
         // TODO: "Durch die Ressource abgedeckte Zeitspanne" optional
     }
