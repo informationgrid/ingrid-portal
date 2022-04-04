@@ -6,59 +6,62 @@
     </properties>
 
     <body>
-        <release version="5.10.2-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.2">
-          <action type="fix" dev="wemove" issue="3495">
-            UVP-NI: Im Footer des nds. UVP-Portals fehlt der MU-Tag
-          </action>
-          <action type="update" dev="wemove" issue="3413">
-            Add antivirus scan error handling
-          </action>
-          <action type="add" dev="wemove" issue="3314">
-            Add robot detection to account form
-          </action>
-          <action type="fix" dev="wemove" issue="3338">
-            UVP: Probleme mit den BLPs im nds. UVP-Portal (Kartenansicht)
-          </action>
-          <action type="add" dev="wemove" issue="1582">
-            UVP: Optimierte Darstellung der Verfahren in der Karte
-          </action>
-          <action type="fix" dev="wemove" issue="2546">
-            Remove measurements and timeline in metaver help-themes pages
-          </action>
-          <action type="update" dev="wemove" issue="2944">
-            Adapt Zeitbezug display in portal
-          </action>
-          <action type="fix" dev="wemove" issue="3279">
-            Fehler in der Portal Detaildarstellung
-          </action>
-          <action type="fix" dev="wemove" issue="3292">
-            Kritische Sicherheitslücke Log4Shell in der weitverbreiteten Java-Logging-Bibliothek log4j
-          </action>
-          <action type="add" dev="wemove" issue="3089">
-            HMDK: Bei Daten Dienste Kopplung wird der abstract bei Verweise angezeigt
-          </action>
-          <action type="add" dev="wemove" issue="2367">
-            Portal / Verweise - Verweise auf externe Webseiten in neuen Tab öffnen
-          </action>
-          <action type="add" dev="wemove" issue="2383">
-            Button Karte - Karte in neuen Tab öffnen
-          </action>
-          <action type="add" dev="wemove" issue="3256">
-            MAPCLIENT: Erweiterung der Druckfunktion mit der Auswahl DPI
-          </action>
-          <action type="add" dev="wemove" issue="3109">
-            MAPCLIENT: Import von geschützten Diensten
-          </action>
-          <action type="add" dev="wemove" issue="1897">
-            UVP: Button zum Sammeldownload aller Dokumente auf Detailergebnisseiten
-          </action>
-          <action type="update" dev="wemove" issue="2823">
-            IGE: Add geometry context to geo datasets.
-          </action>
-          <action type="fix" dev="wemove" issue="3266">
-            IGE: Disable delayed publications for already published documents.
-          </action>
-        </release>
+      <release version="5.10.2-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.2">
+        <action type="fix" dev="wemove" issue="3495">
+          UVP-NI: Im Footer des nds. UVP-Portals fehlt der MU-Tag
+        </action>
+        <action type="update" dev="wemove" issue="3413">
+          Add antivirus scan error handling
+        </action>
+        <action type="add" dev="wemove" issue="3314">
+          Add robot detection to account form
+        </action>
+        <action type="fix" dev="wemove" issue="3338">
+          UVP: Probleme mit den BLPs im nds. UVP-Portal (Kartenansicht)
+        </action>
+        <action type="add" dev="wemove" issue="1582">
+          UVP: Optimierte Darstellung der Verfahren in der Karte
+        </action>
+        <action type="fix" dev="wemove" issue="2546">
+          Remove measurements and timeline in metaver help-themes pages
+        </action>
+        <action type="update" dev="wemove" issue="2944">
+          Adapt Zeitbezug display in portal
+        </action>
+        <action type="fix" dev="wemove" issue="3279">
+          Fehler in der Portal Detaildarstellung
+        </action>
+        <action type="fix" dev="wemove" issue="3292">
+          Kritische Sicherheitslücke Log4Shell in der weitverbreiteten Java-Logging-Bibliothek log4j
+        </action>
+        <action type="add" dev="wemove" issue="3089">
+          HMDK: Bei Daten Dienste Kopplung wird der abstract bei Verweise angezeigt
+        </action>
+        <action type="add" dev="wemove" issue="2367">
+          Portal / Verweise - Verweise auf externe Webseiten in neuen Tab öffnen
+        </action>
+        <action type="add" dev="wemove" issue="2383">
+          Button Karte - Karte in neuen Tab öffnen
+        </action>
+        <action type="add" dev="wemove" issue="3256">
+          MAPCLIENT: Erweiterung der Druckfunktion mit der Auswahl DPI
+        </action>
+        <action type="add" dev="wemove" issue="3109">
+          MAPCLIENT: Import von geschützten Diensten
+        </action>
+        <action type="add" dev="wemove" issue="1897">
+          UVP: Button zum Sammeldownload aller Dokumente auf Detailergebnisseiten
+        </action>
+        <action type="update" dev="wemove" issue="2823">
+          IGE: Add geometry context to geo datasets.
+        </action>
+        <action type="fix" dev="wemove" issue="3266">
+          IGE: Disable delayed publications for already published documents.
+        </action>
+        <action type="update" dev="wemove" issue="3286">
+          IGE: Wechsel des Reiters blockiert
+        </action>
+      </release>
 
         <release version="5.10.1" date="2021-11-23" description="Release 5.10.1">
           <action type="fix" dev="wemove" issue="3105">

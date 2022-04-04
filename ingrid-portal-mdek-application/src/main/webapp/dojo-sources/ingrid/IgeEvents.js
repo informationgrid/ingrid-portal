@@ -505,10 +505,24 @@ define([
 
                     // disable header
                     this._toggleHeaderAccessibility(true);
+                    
+                    // enable tab buttons, which are disabled when tab content is disabled
+                    // but we still want to navigate through all tabs (#3286)
+                    this._enableTabButtons();
 
                     UtilUI["_uiElementsActive" + nodeType] = false;
                 }
             }
+        },
+
+        _enableTabButtons: function() {
+            var tabContainers = require("dojo/query")(".rubric:not(.hide) .dijitTabContainer", "contentFrameBodyObject");
+            array.forEach(tabContainers, function(tabContainer) {
+                var tabs = registry.getEnclosingWidget(tabContainer).tablist.getChildren();
+                array.forEach(tabs, function(tab) {
+                    tab.set("disabled", false);
+                });
+            });
         },
 
         _toggleButtonsAccessibility: function( /*boolean*/ disable) {
