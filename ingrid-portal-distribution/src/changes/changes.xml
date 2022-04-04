@@ -109,6 +109,9 @@
           <action type="update" dev="wemove" issue="3462">
             Anpassung der Kontexthilfe für Systemumgebung
           </action>
+          <action type="update" dev="wemove" issue="3286">
+            IGE: Wechsel des Reiters blockiert
+          </action>
         </release>
 
         <release version="5.11.0" date="2022-01-19" description="Release 5.11.0">
