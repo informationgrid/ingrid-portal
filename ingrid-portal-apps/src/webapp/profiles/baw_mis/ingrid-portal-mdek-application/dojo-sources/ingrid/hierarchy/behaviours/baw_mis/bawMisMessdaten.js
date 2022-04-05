@@ -344,7 +344,7 @@ define([
     
     function addDQDescription(newFieldsToDirtyCheck, additionalFields) {
         construct.place(
-            creator.createDomNumberTextbox({
+            creator.createDomTextbox({
                 id: "dataQualityDescription",
                 name: message.get("ui.obj.baw.measuring.dataQualityDescription.title"),
                 help: message.get("ui.obj.baw.measuring.dataQualityDescription.help"),
@@ -365,13 +365,12 @@ define([
         domClass.add("uiElement5069", "hide");
         domClass.add("uiElement3530", "hide");
         
-        // TODO: "Durch die Ressource abgedeckte Zeitspanne" required
+        // "Durch die Ressource abgedeckte Zeitspanne" required
+        domClass.add("uiElementN011", "required");
     }
     
     function handleHierarchyLevelNameIsNotMeasurementData() {
         hideFields(measurementFields);
-        
-        // TODO: show other fields depending on value (behaviour could already exist!)
         
         // hide DQ-rubric
         domClass.add("refClass1DQ", "hidden");
@@ -381,7 +380,8 @@ define([
         domClass.remove("uiElement5069", "hide");
         domClass.remove("uiElement3530", "hide");
 
-        // TODO: "Durch die Ressource abgedeckte Zeitspanne" optional
+        // "Durch die Ressource abgedeckte Zeitspanne" optional
+        domClass.remove("uiElementN011", "required");
     }
 
     function showFields(fields) {
@@ -400,9 +400,10 @@ define([
         var depth = registry.byId("measuringDepth")
         var unit = registry.byId("unitOfMeasurement")
         
-        var toggleState = function(value) {
-            const required = value !== "";
-            if (required) {
+        var toggleState = function() {
+            const requiredForDepth = depth.value !== "" && !isNaN(depth.value);
+            const requiredForUnit = unit.value !== "";
+            if (requiredForDepth || requiredForUnit) {
                 domClass.add("uiElementAddmeasuringDepth", "required");
                 domClass.add("uiElementAddunitOfMeasurement", "required");
             } else {
