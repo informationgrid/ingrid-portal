@@ -77,6 +77,8 @@ define([
             var id = "timeRefTable";
             // Validation rules
             topic.subscribe("/onBeforeObjectPublish", function (notPublishableIDs) {
+                if (currentUdk.objectClass != 2) return;
+
                 var publicationDates = array.filter(registry.byId(id).data, function (row) {
                     return row.type == 2;
                 });
@@ -177,6 +179,8 @@ define([
             var id = "bawLiteratureAuthorsTable";
             // Validation rules
             topic.subscribe("/onBeforeObjectPublish", function (notPublishableIDs) {
+                if (currentUdk.objectClass != 2) return;
+
                 // Check that persons have both given and last names defined
                 var authorsData = registry.byId(id).data;
 
@@ -233,6 +237,8 @@ define([
 
         _addPublisherValidationRules: function () {
             topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                if (currentUdk.objectClass != 2) return;
+
                 var publisherEntryIdx = 10;
                 var publisherEntryName = UtilSyslist.getSyslistEntryName(ROLE_CODE_SYSLIST, publisherEntryIdx);
 
