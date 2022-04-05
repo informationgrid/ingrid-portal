@@ -34,10 +34,11 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules",
-    "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks"
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisMessdaten"
 ], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisDoiFieldsEditRestrictions,
             bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields,
-            bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks) {
+            bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks, bawMisMessdaten) {
 
     return lang.mixin(behaviours, {
 
@@ -95,6 +96,11 @@ define([
          * Field for contacting REST-API to move files to LFS
          */
         bawLFSLinks: bawLFSLinks,
+
+        /**
+         * Fields for entering measurement values
+         */
+        bawMisMessdaten: bawMisMessdaten,
 
         /**
          * Only allow Katadmin and members of 'DOI-Admin' group to edit DOI fields

@@ -111,7 +111,10 @@ define(["dojo/_base/declare",
                     return item.getAttribute("widgetid");
                 })
                 .filter(function (item) {
-                    return hiddenSubRubrics.indexOf(item) === -1
+                    var isNotInHiddenSubRubric = hiddenSubRubrics.indexOf(item) === -1;
+                    var isTimeRefHidden = item === "timeRefSubType" && domClass.contains("timeRefSubTypeEditor", "hide")
+                        || item === "timeRefDate2" && domClass.contains("timeRefDate2Editor", "hide");
+                    return isNotInHiddenSubRubric && !isTimeRefHidden;
                 });
             
             widgets = widgets.concat(query(".dijitTextBox, .dijitSelect", "sectionTopObject").map(function(item) {return item.getAttribute("widgetid");}));
