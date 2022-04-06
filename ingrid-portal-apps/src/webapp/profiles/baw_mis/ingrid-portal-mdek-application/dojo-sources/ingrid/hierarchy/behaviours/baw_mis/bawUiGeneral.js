@@ -35,24 +35,38 @@ define([
         run: function() {
 
             topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class2") {
+                // Reset everything first
+
+                // Allgemeines > Kurzbezeichnung
+                domClass.add("uiElement5000", "hide");
+                // INSPIRE
+                domClass.remove("uiElement5064", "hide");
+                // Rubrik: Raumbezugssystem
+                domClass.remove("spatialRef", "hide");
+                // Raumbezugssystem
+                domClass.remove("uiElement3500", "hide");
+                // Rubrik: Verfügbarkeit
+                domClass.add("availability", "hide");
+
+
+                var isLiterature = data.objClass === "Class2";
+                var isProject = data.objClass === "Class4";
+
+                // Object-class specific rules
+                if (isLiterature) {
                     // INSPIRE
                     domClass.add("uiElement5064", "hide");
-
                     // Rubrik: Raumbezugssystem
                     domClass.add("spatialRef", "hide");
-
-                    // Rubrik: Zeitbezug
-                    domClass.add("timeRef", "hide");
-                } else {
+                } else if (isProject) {
+                    // Allgemeines > Kurzbezeichnung
+                    domClass.remove("uiElement5000", "hide");
                     // INSPIRE
-                    domClass.remove("uiElement5064", "hide");
-
-                    // Rubrik: Raumbezugssystem
-                    domClass.remove("spatialRef", "hide");
-
-                    // Rubrik: Zeitbezug
-                    domClass.remove("timeRef", "hide");
+                    domClass.add("uiElement5064", "hide");
+                    // Raumbezugssystem
+                    domClass.add("uiElement3500", "hide");
+                    // Rubrik: Verfügbarkeit
+                    domClass.add("availability", "hide");
                 }
             });
 
@@ -92,8 +106,6 @@ define([
             // ----------------------------------------
             // Allgemeines
             // ----------------------------------------
-            // Kurzbezeichnung
-            domClass.add("uiElement5000", "hide");
             // Inspire relevant
             domClass.add("uiElement6000", "hidden");
             // AdV kompatibel checkbox
@@ -126,7 +138,7 @@ define([
             domClass.add("uiElementN014", "hide");
 
             // ----------------------------------------
-            // Fachbezug
+            // Fachbezug: Geodatensatz
             // ----------------------------------------
             // Datensatz/Datenserie
             domClass.add("uiElement5061", "hide");
@@ -144,6 +156,11 @@ define([
             domClass.add("uiElementN003", "hide");
             // Herstellungsprozess
             domClass.add("uiElement3515", "hide");
+
+            // ----------------------------------------
+            // Fachbezug: Projekt
+            // ----------------------------------------
+            domClass.add("refClass4", "hidden");
 
             // ----------------------------------------
             // Datenqualität
