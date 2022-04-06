@@ -36,7 +36,12 @@ define([
         category: "BAW-MIS",
 
         run: function () {
-            topic.subscribe("/onObjectClassChange", function() {
+            topic.subscribe("/onObjectClassChange", function(data) {
+                if (data.objClass !== "Class1") {
+                    // do nothing if the object class isn't geodataset
+                    return;
+                }
+
                 var currentGroups = UtilSecurity.currentGroups;
 
                 // Katadmin and users explicitly added to group 'DOI-Admin'
