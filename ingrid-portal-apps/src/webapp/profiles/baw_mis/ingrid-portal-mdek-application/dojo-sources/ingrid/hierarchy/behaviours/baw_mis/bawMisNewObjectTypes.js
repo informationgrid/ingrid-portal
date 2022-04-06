@@ -35,10 +35,14 @@ define([
         run: function() {
 
             topic.subscribe("/additionalSyslistsLoaded", function() {
-                // out of the existing options, keep only Geodatensatz, Geodatendienst and Literatur for new object type
+                // out of the existing options, keep only Geodatensatz, Geodatendienst, Literatur and Informationssystem for new object type
                 arr = sysLists[UtilSyslist.listIdObjectClass].filter(function (item) {
-                    return item[1] === "1" || item[1] === "2" || item[1] === "3";
+                    // rename Informationssystem to Software
+                    if (item[1] === "6") item[0] = "Software";
+                    
+                    return item[1] === "1" || item[1] === "2" || item[1] === "3" || item[1] === "6";
                 });
+                
 
                 // Define the order in which the options should appear
                 var desired_order = [
