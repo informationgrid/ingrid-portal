@@ -44,6 +44,27 @@ define([
 
                     // Rubrik: Zeitbezug
                     domClass.add("timeRef", "hide");
+                } else if (data.objClass === "Class6") {
+                    // INSPIRE
+                    domClass.add("uiElement5064", "hide");
+
+                    // Rubrik: Raumbezugssystem
+                    domClass.add("spatialRef", "hide");
+
+                    // Rubrik: Zeitbezug
+                    domClass.add("timeRef", "hide");
+
+                    // Sprache der Ressource
+                    domClass.add("uiElement5042", "hide");
+                    
+                    // Zugriffsbeschränkungen
+                    domClass.add("uiElementN025", "hide");
+                    
+                    // Anwendungseinschränkungen
+                    domClass.add("uiElementN026", "hide");
+                    
+                    // Datenformat
+                    domClass.add("uiElement1320", "hide");
                 } else {
                     // INSPIRE
                     domClass.remove("uiElement5064", "hide");
@@ -53,6 +74,18 @@ define([
 
                     // Rubrik: Zeitbezug
                     domClass.remove("timeRef", "hide");
+
+                    // Sprache der Ressource
+                    domClass.remove("uiElement5042", "hide");
+
+                    // Zugriffsbeschränkungen
+                    domClass.remove("uiElementN025", "hide");
+
+                    // Anwendungseinschränkungen
+                    domClass.remove("uiElementN026", "hide");
+
+                    // Datenformat
+                    domClass.remove("uiElement1320", "hide");
                 }
             });
 
@@ -132,7 +165,22 @@ define([
             domClass.add("uiElementN003", "hide");
             // Herstellungsprozess
             domClass.add("uiElement3515", "hide");
-
+            
+            // SOFTWARE
+            // Art des Dienstes
+            domClass.add("uiElement3620", "hide");
+            registry.byId("ref6ServiceType").set("value", 3); // Anwendung
+            // Systemumgebung
+            domClass.add("uiElement3600", "hide");
+            // Historie
+            domClass.add("uiElement3640", "hide");
+            // Basisdaten
+            domClass.add("uiElement3645", "hide");
+            // Erläuterungen
+            domClass.add("uiElement3650", "hide");
+            // Service-Urls
+            domClass.add("uiElement3670", "hide");
+            
             // ----------------------------------------
             // Datenqualität
             // ----------------------------------------
@@ -185,7 +233,6 @@ define([
             domClass.add("uiElement1350", "hide");
             // Eignung/Nutzung
             domClass.add("uiElement5040", "hide");
-
 
 
             // ----------------------------------------
