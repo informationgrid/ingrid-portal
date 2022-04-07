@@ -342,6 +342,16 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 } else {
                     hit = hits.getHits()[0];
                 }
+            } else {
+                String documentId = request.getParameter("docid");
+                hit = new IngridHit();
+                hit.setDocumentId(documentId);
+                hit.setPlugId(iplugId);
+                context.put("docId", documentId);
+                // backward compatibilty where docId was integer
+                try {
+                    hit.putInt( 0, Integer.valueOf( documentId ) );
+                } catch (NumberFormatException ex) { /* ignore */ }
             }
 
             if (hit != null) {
