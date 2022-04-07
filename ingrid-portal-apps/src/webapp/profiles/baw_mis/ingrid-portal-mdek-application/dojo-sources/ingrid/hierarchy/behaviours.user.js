@@ -35,10 +35,11 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks",
-    "ingrid/hierarchy/behaviours/baw_mis/bawMisMessdaten"
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisMessdaten",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisSoftwareType"
 ], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisDoiFieldsEditRestrictions,
             bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields,
-            bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks, bawMisMessdaten) {
+            bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks, bawMisMessdaten, bawMisSoftwareType) {
 
     return lang.mixin(behaviours, {
 
@@ -101,6 +102,11 @@ define([
          * Fields for entering measurement values
          */
         bawMisMessdaten: bawMisMessdaten,
+
+        /**
+         * Adaption for a new object class 'Software'
+         */
+        bawMisSoftwareType: bawMisSoftwareType,
 
         /**
          * Only allow Katadmin and members of 'DOI-Admin' group to edit DOI fields
