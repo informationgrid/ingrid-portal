@@ -823,6 +823,38 @@ define([
                 });
 
                 return uiElementSpan;
+            },
+        
+        addOutlinedSection: function(label, help, fields, options = {}) {
+            var outer = document.createElement("span");
+            domClass.add(outer, "outer");
+            // var afterOuter = document.createElement("div");
+            domClass.add(outer, "inputContainer");
+            var div = document.createElement("div");
+
+            var labelElement = document.createElement("label");
+            if (options.disableHelp) {
+                domClass.add(labelElement, "inActive");
+            } else {
+                labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + help + "\")");
             }
+            labelElement.innerHTML = label;
+
+            var outlined = document.createElement("div");
+            domClass.add(outlined, "outlined");
+            
+            array.forEach(fields, function(field) {
+                outlined.appendChild(field);
+            });
+
+            var fill = construct.create("div", { class:'fill'});
+            outlined.appendChild(fill);
+            
+            div.appendChild(labelElement);
+            div.appendChild(outlined);
+            // afterOuter.appendChild(div)
+            outer.appendChild(div);
+            return outer;
+        }
     })();
 });
