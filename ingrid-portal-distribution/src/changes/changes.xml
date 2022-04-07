@@ -7,6 +7,9 @@
 
     <body>
       <release version="5.10.2-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.2">
+        <action type="update" dev="wemove" issue="2768">
+          IGE (UVP): Aktualisierung Hilfetext
+        </action>
         <action type="fix" dev="wemove" issue="3495">
           UVP-NI: Im Footer des nds. UVP-Portals fehlt der MU-Tag
         </action>
