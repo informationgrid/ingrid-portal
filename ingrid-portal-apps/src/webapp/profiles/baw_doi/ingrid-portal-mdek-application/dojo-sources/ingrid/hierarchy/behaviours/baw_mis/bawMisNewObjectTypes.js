@@ -41,12 +41,12 @@ define([
                     return item[1] === "1" || item[1] === "2" || item[1] === "3" || item[1] === "4";
                 });
 
-                // Rename projct as "Auftrag"
+                // Rename project as "Projekt / Auftrag"
                 if (UtilCatalog.getCatalogLanguage() === "de") {
                     var projectItem = arr.find(function (item) {
                         return item[1] === "4";
                     })
-                    projectItem[0] = "Auftrag";
+                    projectItem[0] = "Projekt / Auftrag";
                 }
 
                 // Define the order in which the options should appear

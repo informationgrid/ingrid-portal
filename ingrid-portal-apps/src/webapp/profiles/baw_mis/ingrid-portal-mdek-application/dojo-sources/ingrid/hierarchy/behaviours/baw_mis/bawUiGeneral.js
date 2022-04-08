@@ -39,6 +39,9 @@ define([
 
                 // Allgemeines > Kurzbezeichnung
                 domClass.add("uiElement5000", "hide");
+                domClass.add("uiElement5000", "optional");
+                domClass.remove("uiElement5000", "additional");
+                domClass.remove("uiElement5000", "content");
                 // INSPIRE
                 domClass.remove("uiElement5064", "hide");
                 // Rubrik: Raumbezugssystem
@@ -61,6 +64,9 @@ define([
                 } else if (isProject) {
                     // Allgemeines > Kurzbezeichnung
                     domClass.remove("uiElement5000", "hide");
+                    domClass.remove("uiElement5000", "optional");
+                    domClass.add("uiElement5000", "additional");
+                    domClass.add("uiElement5000", "content");
                     // INSPIRE
                     domClass.add("uiElement5064", "hide");
                     // Raumbezugssystem
