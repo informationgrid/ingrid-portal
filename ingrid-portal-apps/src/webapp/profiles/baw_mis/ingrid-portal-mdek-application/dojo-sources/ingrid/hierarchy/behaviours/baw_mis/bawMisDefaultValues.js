@@ -49,6 +49,10 @@ define([
                     self._setPublishArea();
                     self._setAccessConstraints();
                     self._setUseAccessConstraints();
+
+                    if (data.objClass === "Class6") {
+                        self._setServiceType();
+                    }
                 }
             });
 
@@ -121,6 +125,10 @@ define([
                 });
             }
             UtilStore.updateWriteStore(id, tableData);
+        },
+
+        _setServiceType: function () {
+            registry.byId("ref6ServiceType").set("value", 3);
         },
 
         _addTableEntriesByEntryNames: function (args) {
