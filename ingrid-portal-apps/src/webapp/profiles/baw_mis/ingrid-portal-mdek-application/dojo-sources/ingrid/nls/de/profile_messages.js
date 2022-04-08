@@ -175,6 +175,7 @@ define({
     "ui.sysList.3950099": "BAW - Datenformat",
 
     "validation.baw.address.role.pointOfContact": "Ein Eintrag für die Institution 'Bundesanstalt für Wasserbau' als 'Ansprechpartner' muss vorhanden sein.",
+    "validation.baw.address.software": "Es müssen mindestens 'Verfahrensbetreuung', 'Entwickler' und 'Eigentümer' eingetragen sein.",
     "validation.baw.bwastr_km.entry.missing": "Km-von und Km-bis müssen entweder beide definiert sein oder sollen beide fehlen.",
     "validation.baw.bwastr_name.missing": "Für jeden Streckenabschnitt muss mindestens den Streckenname angegeben werden.",
     "validation.baw.averageWaterLevel.incomplete": "Die Spalten 'Wasserstand' und 'Maßeinheit' sind verpflichtend.",

@@ -37,6 +37,7 @@ define([
     "ingrid/message"
 ], function (registry, array, declare, lang, dom, domClass, on, topic, RadioButton, Editors, Formatters, dirty, creator, message) {
 
+    subscriptions = [];
     
     return declare(null, {
         title: "Software-Klasse",
@@ -45,21 +46,12 @@ define([
         category: "BAW-MIS",
 
         run: function () {
+            // add alternative codelist for address types
+            sysLists[-505] = [["Verfahrensbetreuung","20","N",""],["Entwickler","21","N",""],["Eigentümer","3","N",""],["Vertrieb","5","N",""]];
+            
             this._createCustomFields();
             
-            // this._createBehaviours();
-            
-            /*on(registry.byId("bawHierarchyLevelName"), "Change", function(value) {
-                if (value === "Messdaten") {
-                    handleHierarchyLevelNameIsMeasurementData();
-                    hideFields(nonMeasurementFields);
-                } else {
-                    handleHierarchyLevelNameIsNotMeasurementData();
-                    if (levelNameForSimulation.indexOf(value) !== -1) {
-                        showFields(nonMeasurementFields);
-                    }
-                }
-            });*/
+            this._createBehaviours();
         },
 
         _createCustomFields: function () {
@@ -92,17 +84,25 @@ define([
         _createBehaviours: function() {
             topic.subscribe("/onObjectClassChange", function(data) {
                 if (data.objClass === "Class6") {
-                    // Adressen: Nur folgende Adresstypen sollen vorhanden sein (entweder Codeliste tauschen oder die Standard-Adressentabelle durch eine neue ersetzen):
-                        // Verfahrensbetreuung
-                        // Entwickler
-                        // Vertrieb
-                        // Eigentümer
-                    // Validierung: Für alle Adresstypen außer Vertrieb soll mindestens eine Adresse vorhanden sein.
-                    
+                    adaptAddresses();
+
+                    adaptLinks();
                     // Folgende Verweisetypen sollen angegeben werden können:
                         // Quellcode-Repository
                         // Dokumentation
                     // Entweder die bestehende Verweise-Tabelle und -Dialogbox verwenden oder durch eine neue ersetzen.
+                    
+                    // Name der Marktsoftware mandatory if radio is yes
+                    handleRequiredState();
+                    
+                    // Erstellungsvertrag -> Vertragsnr. mandatory if date is set
+                    // Erstellungsvertrag -> Datum mandatory if Verstragsnr. is set
+
+                    // Supportvertrag -> Vertragsnr. mandatory if date is set
+                    // Supportvertrag -> Datum mandatory if Verstragsnr. is set
+                    
+                    // HPC text mandatory if checkbox active
+                    // Server text mandatory if checkbox active
                 } else {
 
                 }
@@ -537,6 +537,36 @@ define([
         additionalFields.push(hasNotUsageRights);
         additionalFields.push(registry.byId("usageRightsNotes"));
     }
+
+    function adaptAddresses() {
+        // Adressen: Nur folgende Adresstypen sollen vorhanden sein:
+        // Verfahrensbetreuung,Entwickler,Vertrieb,Eigentümer
+        registry.byId("generalAddress").columns[0].listId = -505
+        
+        // Validierung: Für alle Adresstypen außer Vertrieb soll mindestens eine Adresse vorhanden sein.
+        var subscription = topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+            var addressTypes = array.map(UtilGrid.getTableData("generalAddress"), function (row) {
+                return row.nameOfRelation;
+            });
+
+            var requiredAddressTypes = ["Verfahrensbetreuung", "Entwickler", "Eigentümer"];
+            var containsAllRequiredAddresses = array.every(requiredAddressTypes, function (type) {
+                return addressTypes.indexOf(type) !== -1
+            });
+            if (!containsAllRequiredAddresses) {
+                notPublishableIDs.push(["generalAddress", message.get("validation.baw.address.software")]);
+            }
+        });
+        
+        subscriptions.push(subscription);
+    }
+
+    function adaptLinks() {
+        // codelist 2000
+    }
     
+    function handleRequiredState() {
+        
+    }
 });
 
