@@ -80,6 +80,7 @@ define([
             addErstellungsvertrag(newFieldsToDirtyCheck, additionalFields);
             addSupportvertrag(newFieldsToDirtyCheck, additionalFields);
             addInstallation(newFieldsToDirtyCheck, additionalFields);
+            addInstallationWith(newFieldsToDirtyCheck, additionalFields);
             
             // Verfügbarkeit
             addQuellenrechte(newFieldsToDirtyCheck, additionalFields);
@@ -125,31 +126,78 @@ define([
     }
     
     function addNutzerkreis(newFieldsToDirtyCheck, additionalFields) {
-        creator.addToSection("general", creator.createDomSelectBox({
-            id: "userGroup",
-            name: message.get("ui.obj.baw.software.usergroup.title"),
-            help: message.get("ui.obj.baw.software.usergroup.help"),
-            isMandatory: true,
-            // useSyslist: 0,
-            listEntries: [],
-            style: "width: 100%"
-        }));
-        newFieldsToDirtyCheck.push("userGroup");
-        additionalFields.push(registry.byId("userGroup"));
+
+        creator.addToSection("general", creator.addOutlinedSection(
+            message.get("ui.obj.baw.software.usergroup.title"),
+            message.get("ui.obj.baw.software.usergroup.help"),
+            [
+                creator.createDomCheckbox({
+                    id: "userGroupBAW",
+                    name: message.get("ui.obj.baw.software.usergroup.baw"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomCheckbox({
+                    id: "userGroupWSV",
+                    name: message.get("ui.obj.baw.software.usergroup.wsv"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomCheckbox({
+                    id: "userGroupExtern",
+                    name: message.get("ui.obj.baw.software.usergroup.extern"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomTextarea({
+                    id: "userGroupNotes",
+                    name: message.get("ui.obj.baw.software.usergroup.notes.title"),
+                    help: message.get("ui.obj.baw.software.usergroup.notes.help"),
+                    style: "width: 100%"
+                })
+            ]));
+        var ids = ["userGroupBAW", "userGroupWSV", "userGroupExtern", "userGroupNotes"];
+        array.forEach(ids, function(id) {
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+        });
     }
     
     function addProduktiverEinsatz(newFieldsToDirtyCheck, additionalFields) {
-        creator.addToSection("general", creator.createDomSelectBox({
-            id: "productiveUse",
-            name: message.get("ui.obj.baw.software.productiveUse.title"),
-            help: message.get("ui.obj.baw.software.productiveUse.help"),
-            isMandatory: true,
-            useSyslist: 0,
-            listEntries: [],
-            style: "width: 100%"
-        }));
-        newFieldsToDirtyCheck.push("productiveUse");
-        additionalFields.push(registry.byId("productiveUse"));
+        creator.addToSection("general", creator.addOutlinedSection(
+            message.get("ui.obj.baw.software.productiveUse.title"),
+            message.get("ui.obj.baw.software.productiveUse.help"),
+            [
+                creator.createDomCheckbox({
+                    id: "productiveUseWSVContract",
+                    name: message.get("ui.obj.baw.software.productiveUse.wsvContract"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomCheckbox({
+                    id: "productiveUseFuE",
+                    name: message.get("ui.obj.baw.software.productiveUse.fue"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomCheckbox({
+                    id: "productiveUseOther",
+                    name: message.get("ui.obj.baw.software.productiveUse.other"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomTextarea({
+                    id: "productiveUseNotes",
+                    name: message.get("ui.obj.baw.software.productiveUse.notes.title"),
+                    help: message.get("ui.obj.baw.software.productiveUse.notes.help"),
+                    style: "width: 100%"
+                })
+            ]));
+        var ids = ["productiveUseWSVContract", "productiveUseFuE", "productiveUseOther", "productiveUseNotes"];
+        array.forEach(ids, function(id) {
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+        });
     }
     
     function addErganzungsmodul(newFieldsToDirtyCheck, additionalFields) {
@@ -195,35 +243,26 @@ define([
     function addBetriebssystem(newFieldsToDirtyCheck, additionalFields) {
         var structure = [
             {
-                field: "operatingSystem",
-                name: message.get("ui.obj.baw.software.operatingSystem.title") + "*",
-                type: Editors.ComboboxEditor,
-                formatter: lang.partial(Formatters.SyslistCellFormatter, 0),
-                listId: 0,
-                isMandatory: true,
-                editable: true
-            }
-        ];
-
-        creator.createDomDataGrid({
-            id: "programmingLanguage",
-            name: message.get("ui.obj.baw.software.programmingLanguage.title"),
-            help: message.get("ui.obj.baw.software.programmingLanguage.help"),
-            style: "width: 100%"
-        }, structure, "refClass6");
-        newFieldsToDirtyCheck.push("programmingLanguage");
-        additionalFields.push(registry.byId("programmingLanguage"));
-    }
-    
-    function addProgrammiersprache(newFieldsToDirtyCheck, additionalFields) {
-        var structure = [
+                field: "operatingSystemWindows",
+                name: message.get("ui.obj.baw.software.operatingSystem.windows"),
+                type: Editors.YesNoCheckboxCellEditor,
+                formatter: Formatters.BoolCellFormatter,
+                editable: true,
+                initValue: false, // make checkbox appear on cell click
+                width: "100px"
+            },
             {
-                field: "operatingSystem",
-                name: message.get("ui.obj.baw.software.operatingSystem.title") + "*",
-                type: Editors.ComboboxEditor,
-                formatter: lang.partial(Formatters.SyslistCellFormatter, 0),
-                listId: 0,
-                isMandatory: true,
+                field: "operatingSystemLinux",
+                name: message.get("ui.obj.baw.software.operatingSystem.linux"),
+                type: Editors.YesNoCheckboxCellEditor,
+                formatter: Formatters.BoolCellFormatter,
+                editable: true,
+                initValue: false, // make checkbox appear on cell click
+                width: "100px"
+            },
+            {
+                field: "operatingSystemNotes",
+                name: message.get("ui.obj.baw.software.operatingSystem.notes"),
                 editable: true
             }
         ];
@@ -232,20 +271,44 @@ define([
             id: "operatingSystem",
             name: message.get("ui.obj.baw.software.operatingSystem.title"),
             help: message.get("ui.obj.baw.software.operatingSystem.help"),
+            isMandatory: true,
             style: "width: 100%"
         }, structure, "refClass6");
         newFieldsToDirtyCheck.push("operatingSystem");
         additionalFields.push(registry.byId("operatingSystem"));
     }
     
+    function addProgrammiersprache(newFieldsToDirtyCheck, additionalFields) {
+        var structure = [
+            {
+                field: "programmingLanguage",
+                name: message.get("ui.obj.baw.software.programmingLanguage.title"),
+                type: Editors.ComboboxEditor,
+                formatter: lang.partial(Formatters.SyslistCellFormatter, 395030),
+                listId: 395030,
+                editable: true
+            }
+        ];
+
+        creator.createDomDataGrid({
+            id: "programmingLanguage",
+            name: message.get("ui.obj.baw.software.programmingLanguage.title"),
+            help: message.get("ui.obj.baw.software.programmingLanguage.help"),
+            isMandatory: true,
+            style: "width: 100%"
+        }, structure, "refClass6");
+        newFieldsToDirtyCheck.push("programmingLanguage");
+        additionalFields.push(registry.byId("programmingLanguage"));
+    }
+    
     function addEntwicklungsumgebung(newFieldsToDirtyCheck, additionalFields) {
         var structure = [
             {
                 field: "developmentEnvironment",
-                name: message.get("ui.obj.baw.software.developmentEnvironment.title") + "*",
+                name: message.get("ui.obj.baw.software.developmentEnvironment.title"),
                 type: Editors.ComboboxEditor,
-                formatter: lang.partial(Formatters.SyslistCellFormatter, 0),
-                listId: 0,
+                formatter: lang.partial(Formatters.SyslistCellFormatter, 3950031),
+                listId: 3950031,
                 editable: true
             }
         ];
@@ -264,7 +327,7 @@ define([
         var structure = [
             {
                 field: "library",
-                name: message.get("ui.obj.baw.software.libraries.library") + "*",
+                name: message.get("ui.obj.baw.software.libraries.library"),
                 isMandatory: true,
                 editable: true
             }
@@ -274,6 +337,7 @@ define([
             id: "libraries",
             name: message.get("ui.obj.baw.software.libraries.title"),
             help: message.get("ui.obj.baw.software.libraries.help"),
+            isMandatory: true,
             style: "width: 100%"
         }, structure, "refClass6");
         newFieldsToDirtyCheck.push("libraries");
@@ -346,18 +410,55 @@ define([
     }
     
     function addInstallation(newFieldsToDirtyCheck, additionalFields) {
-        creator.addToSection("refClass6",
-            creator.createDomSelectBox({
-                id: "installation",
-                name: message.get("ui.obj.baw.software.installation.title"),
-                help: message.get("ui.obj.baw.software.installation.help"),
-                isMandatory: true,
-                useSyslist: 0,
-                listEntries: [],
-                style: "width: 100%"
-            }));
-        newFieldsToDirtyCheck.push("installation");
-        additionalFields.push(registry.byId("installation"));
+        creator.addToSection("refClass6", creator.addOutlinedSection(
+            message.get("ui.obj.baw.software.installation.title"),
+            message.get("ui.obj.baw.software.installation.help"), [
+                creator.createDomCheckbox({
+                    id: "installationLocal",
+                    name: message.get("ui.obj.baw.software.installation.local"),
+                    style: "width: 100%",
+                    disableHelp: true
+                }),
+                creator.createDomCheckbox({
+                    id: "installationHPC",
+                    name: message.get("ui.obj.baw.software.installation.hpc"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomTextarea({
+                    id: "installationHPCNotes",
+                    style: "width: 85%"
+                }),
+                creator.createDomCheckbox({
+                    id: "installationServer",
+                    name: message.get("ui.obj.baw.software.installation.server"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomTextarea({
+                    id: "installationServerNotes",
+                    style: "width: 85%"
+                })
+            ]));
+        var ids = ["installationLocal", "installationHPC", "installationHPCNotes", "installationServer", "installationServerNotes"];
+        array.forEach(ids, function (id) {
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+        });
+    }
+
+    function addInstallationWith(newFieldsToDirtyCheck, additionalFields) {
+        creator.addToSection("refClass6", creator.createDomSelectBox({
+            id: "installBy",
+            name: message.get("ui.obj.baw.software.installBy.title"),
+            help: message.get("ui.obj.baw.software.installBy.help"),
+            isMandatory: true,
+            useSyslist: 395032,
+            style: "width: 100%"
+        }));
+        
+        newFieldsToDirtyCheck.push("installBy");
+        additionalFields.push(registry.byId("installBy"));
     }
     
     function addQuellenrechte(newFieldsToDirtyCheck, additionalFields) {

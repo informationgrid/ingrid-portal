@@ -634,7 +634,9 @@ define([
             var select = null;
             var defaultValue = null;
 
-            this.init = function() {};
+            this.init = function() {
+                select = args.column.initValue;
+            };
 
             this.destroy = function() {};
 
