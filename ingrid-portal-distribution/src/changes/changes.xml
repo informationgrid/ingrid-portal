@@ -118,6 +118,9 @@
           <action type="add" dev="wemove" issue="2770">
             IGE(BAW-MIS): IGE-Formular für Messdaten anpassen
           </action>
+          <action type="add" dev="wemove" issue="2771">
+            IGE(BAW-MIS): IGE-Formular für Software anpassen
+          </action>
         </release>
 
         <release version="5.11.0" date="2022-01-19" description="Release 5.11.0">

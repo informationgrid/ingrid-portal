@@ -93,30 +93,12 @@ define([
                     adaptAddresses();
 
                     adaptLinks();
-                    // Folgende Verweisetypen sollen angegeben werden können:
-                        // Quellcode-Repository
-                        // Dokumentation
-                    // Entweder die bestehende Verweise-Tabelle und -Dialogbox verwenden oder durch eine neue ersetzen.
                     
-                    // Name der Marktsoftware mandatory if radio is yes
                     handleRequiredState();
-                    
-                    // Erstellungsvertrag -> Vertragsnr. mandatory if date is set
-                    // Erstellungsvertrag -> Datum mandatory if Verstragsnr. is set
-
-                    // Supportvertrag -> Vertragsnr. mandatory if date is set
-                    // Supportvertrag -> Datum mandatory if Verstragsnr. is set
-                    
-                    // HPC text mandatory if checkbox active
-                    // Server text mandatory if checkbox active
                 } else {
                     removeBehaviours();
                 }
             });
-            
-            // TODO: Name der Marktsoftware required if radio button is yes
-            
-            
         },
     })();
 
@@ -134,6 +116,7 @@ define([
     function addNutzerkreis(newFieldsToDirtyCheck, additionalFields) {
 
         creator.addToSection("general", creator.addOutlinedSection(
+            "userGroup",
             message.get("ui.obj.baw.software.usergroup.title"),
             message.get("ui.obj.baw.software.usergroup.help"),
             [
@@ -171,6 +154,7 @@ define([
     
     function addProduktiverEinsatz(newFieldsToDirtyCheck, additionalFields) {
         creator.addToSection("general", creator.addOutlinedSection(
+            "productiveUse",
             message.get("ui.obj.baw.software.productiveUse.title"),
             message.get("ui.obj.baw.software.productiveUse.help"),
             [
@@ -220,14 +204,13 @@ define([
             name: "supplementaryModule"
         });
 
-        creator.addToSection("refClass6", creator.addOutlinedSection("", "", [
+        creator.addToSection("refClass6", creator.addOutlinedSection("supplementaryModule", message.get("ui.obj.baw.software.supplementaryModule.label"), "", [
             creator.addRadioSurroundingContainer(
                 [hasSupplementaryModule.domNode, hasNotSupplementaryModule.domNode],
                 {
                     id: "supplementaryModule",
                     isMandatory: true,
-                    name: [message.get("ui.obj.baw.software.supplementaryModule.yes"), message.get("ui.obj.baw.software.supplementaryModule.no")],
-                    label: message.get("ui.obj.baw.software.supplementaryModule.label")
+                    name: [message.get("ui.obj.baw.software.supplementaryModule.yes"), message.get("ui.obj.baw.software.supplementaryModule.no")]
                 }
             ),
             creator.createDomTextarea({
@@ -290,8 +273,8 @@ define([
                 field: "programmingLanguage",
                 name: message.get("ui.obj.baw.software.programmingLanguage.title"),
                 type: Editors.ComboboxEditor,
-                formatter: lang.partial(Formatters.SyslistCellFormatter, 395030),
-                listId: 395030,
+                formatter: lang.partial(Formatters.SyslistCellFormatter, 3950030),
+                listId: 3950030,
                 editable: true
             }
         ];
@@ -354,6 +337,7 @@ define([
 
         creator.addToSection("refClass6",
             creator.addOutlinedSection(
+                "creationContract",
                 message.get("ui.obj.baw.software.creationContract.title"),
                 message.get("ui.obj.baw.software.creationContract.help"),
                 [
@@ -383,6 +367,7 @@ define([
 
         creator.addToSection("refClass6",
             creator.addOutlinedSection(
+                "supportContract",
                 message.get("ui.obj.baw.software.supportContract.title"),
                 message.get("ui.obj.baw.software.supportContract.help"),
                 [
@@ -417,6 +402,7 @@ define([
     
     function addInstallation(newFieldsToDirtyCheck, additionalFields) {
         creator.addToSection("refClass6", creator.addOutlinedSection(
+            "installation",
             message.get("ui.obj.baw.software.installation.title"),
             message.get("ui.obj.baw.software.installation.help"), [
                 creator.createDomCheckbox({
@@ -459,7 +445,7 @@ define([
             name: message.get("ui.obj.baw.software.installBy.title"),
             help: message.get("ui.obj.baw.software.installBy.help"),
             isMandatory: true,
-            useSyslist: 395032,
+            useSyslist: 3950032,
             style: "width: 100%"
         }));
         
@@ -481,22 +467,24 @@ define([
             name: "sourceRights"
         });
 
-        creator.addToSection("availability", creator.addOutlinedSection("", "", [
-            creator.addRadioSurroundingContainer(
-                [hasSourceRights.domNode, hasNotSourceRights.domNode], {
-                    id: "sourceRights",
-                    isMandatory: true,
-                    name: [message.get("ui.obj.baw.software.sourceRights.yes"), message.get("ui.obj.baw.software.sourceRights.no")],
-                    label: message.get("ui.obj.baw.software.sourceRights.label")
-                }
-            ),
-            creator.createDomTextarea({
-                id: "sourceRightsNotes",
-                name: message.get("ui.obj.baw.software.sourceRightsNotes.title"),
-                help: message.get("ui.obj.baw.software.sourceRightsNotes.help"),
-                style: "width: 100%"
-            })
-        ]));
+        creator.addToSection("availability", creator.addOutlinedSection("sourceRights",
+            message.get("ui.obj.baw.software.sourceRights.label"),
+            "",
+            [
+                creator.addRadioSurroundingContainer(
+                    [hasSourceRights.domNode, hasNotSourceRights.domNode], {
+                        id: "sourceRights",
+                        isMandatory: true,
+                        name: [message.get("ui.obj.baw.software.sourceRights.yes"), message.get("ui.obj.baw.software.sourceRights.no")]
+                    }
+                ),
+                creator.createDomTextarea({
+                    id: "sourceRightsNotes",
+                    name: message.get("ui.obj.baw.software.sourceRightsNotes.title"),
+                    help: message.get("ui.obj.baw.software.sourceRightsNotes.help"),
+                    style: "width: 100%"
+                })
+            ]));
         newFieldsToDirtyCheck.push("hasSourceRights");
         newFieldsToDirtyCheck.push("hasNotSourceRights");
         newFieldsToDirtyCheck.push("sourceRightsNotes");
@@ -510,31 +498,34 @@ define([
             id: "hasUsageRights",
             checked: false,
             value: "true",
-            name: "sourceRights"
+            name: "usageRights"
         });
         var hasNotUsageRights = new RadioButton({
             id: "hasNotUsageRights",
             checked: false,
             value: "false",
-            name: "sourceRights"
+            name: "usageRights"
         });
 
-        creator.addToSection("availability", creator.addOutlinedSection("", "", [
-            creator.addRadioSurroundingContainer(
-                [hasUsageRights.domNode, hasNotUsageRights.domNode], {
-                    id: "usageRights",
-                    isMandatory: true,
-                    name: [message.get("ui.obj.baw.software.usageRights.yes"), message.get("ui.obj.baw.software.usageRights.no")],
-                    label: message.get("ui.obj.baw.software.usageRights.label")
-                }
-            ),
-            creator.createDomTextarea({
-                id: "usageRightsNotes",
-                name: message.get("ui.obj.baw.software.usageRightsNotes.title"),
-                help: message.get("ui.obj.baw.software.usageRightsNotes.help"),
-                style: "width: 100%"
-            })
-        ]));
+        creator.addToSection("availability", creator.addOutlinedSection(
+            "usageRights",
+            message.get("ui.obj.baw.software.usageRights.label"),
+            "",
+            [
+                creator.addRadioSurroundingContainer(
+                    [hasUsageRights.domNode, hasNotUsageRights.domNode], {
+                        id: "usageRights",
+                        isMandatory: true,
+                        name: [message.get("ui.obj.baw.software.usageRights.yes"), message.get("ui.obj.baw.software.usageRights.no")]
+                    }
+                ),
+                creator.createDomTextarea({
+                    id: "usageRightsNotes",
+                    name: message.get("ui.obj.baw.software.usageRightsNotes.title"),
+                    help: message.get("ui.obj.baw.software.usageRightsNotes.help"),
+                    style: "width: 100%"
+                })
+            ]));
         
         newFieldsToDirtyCheck.push("hasUsageRights");
         newFieldsToDirtyCheck.push("hasNotUsageRights");
@@ -588,7 +579,64 @@ define([
     }
     
     function handleRequiredState() {
-                
+        
+        // Marktsoftware
+        var radioSupplementaryYes = registry.byId("hasSupplementaryModule");
+        var radioSupplementaryNo = registry.byId("hasNotSupplementaryModule");
+        // BAW-Rechte
+        var radioSourceRightsYes = registry.byId("hasSourceRights");
+        var radioSourceRightsNo = registry.byId("hasNotSourceRights");
+        // Nutzung durch Dritte
+        var radioUsageRightsYes = registry.byId("hasUsageRights");
+        var radioUsageRightsNo = registry.byId("hasNotUsageRights");
+        
+        var objectClass = registry.byId("objectClass");
+        
+        var publishSubscription = topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+            if (objectClass.value === "Class6") {
+                if (!radioSupplementaryYes.checked && !radioSupplementaryNo.checked) {
+                    notPublishableIDs.push(["uiElementAddsupplementaryModule", message.get("validation.baw.supplementaryModule.required")]);
+                }
+                if (!radioSourceRightsYes.checked && !radioSourceRightsNo.checked) {
+                    notPublishableIDs.push(["uiElementAddsourceRights", message.get("validation.baw.supplementaryModule.required")]);
+                }
+                if (!radioUsageRightsYes.checked && !radioUsageRightsNo.checked) {
+                    notPublishableIDs.push(["uiElementAddusageRights", message.get("validation.baw.supplementaryModule.required")]);
+                }
+            }
+        });
+        subscriptions.push(publishSubscription);
+        
+        var requiredOnCheck = function(target, checked) {
+            if (checked) domClass.add(target, "required"); else domClass.remove(target, "required");
+        }
+
+        on(radioSupplementaryYes, "change", lang.partial(requiredOnCheck, "uiElementAddnameOfSoftware"));
+        
+        var handleRequiredState = function(field1, field2) {
+            var value1 = registry.byId(field1).value;
+            var value2 = registry.byId(field2).value;
+            if (value1 || value2) {
+                domClass.add("uiElementAdd" + field1, "required");
+                domClass.add("uiElementAdd" + field2, "required");
+            } else {
+                domClass.remove("uiElementAdd" + field1, "required");
+                domClass.remove("uiElementAdd" + field2, "required");
+            }
+        }
+        
+        // Erstellungsvertrag
+        on(registry.byId("creationContractNumber"), "change", lang.partial(handleRequiredState, "creationContractNumber", "creationContractDate"));
+        on(registry.byId("creationContractDate"), "change", lang.partial(handleRequiredState, "creationContractNumber", "creationContractDate"));
+        
+        // Supportvertrag
+        on(registry.byId("supportContractNumber"), "change", lang.partial(handleRequiredState, "supportContractNumber", "supportContractDate"));
+        on(registry.byId("supportContractDate"), "change", lang.partial(handleRequiredState, "supportContractNumber", "supportContractDate"));
+        
+        // Installationsort
+        on(registry.byId("installationHPC"), "change", lang.partial(requiredOnCheck, "uiElementAddinstallationHPCNotes"));
+        on(registry.byId("installationServer"), "change", lang.partial(requiredOnCheck, "uiElementAddinstallationServerNotes"));
+        
     }
     
     function removeBehaviours() {

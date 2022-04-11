@@ -50,11 +50,17 @@ define([
                 domClass.remove("uiElement3500", "hide");
                 // Rubrik: Verfügbarkeit
                 domClass.add("availability", "hide");
+                
                 domClass.remove("timeRef", "hide");
                 domClass.remove("uiElement5042", "hide");
                 domClass.remove("uiElementN025", "hide");
                 domClass.remove("uiElementN026", "hide");
                 domClass.remove("uiElement1320", "hide");
+                
+                // for class: Software
+                domClass.add("uiElementAddpurpose", "hide");
+                domClass.add("uiElementAdduserGroup", "hide");
+                domClass.add("uiElementAddproductiveUse", "hide");
 
 
                 var isLiterature = data.objClass === "Class2";
@@ -87,7 +93,8 @@ define([
                     domClass.add("timeRef", "hide");
 
                     // Sprache der Ressource
-                    domClass.add("uiElement5042", "hide");
+                    // set delayed since another behaviour is changing value
+                    setTimeout(function() { domClass.add("uiElement5042", "hide"); });
                     
                     // Zugriffsbeschränkungen
                     domClass.add("uiElementN025", "hide");
@@ -97,6 +104,14 @@ define([
                     
                     // Datenformat
                     domClass.add("uiElement1320", "hide");
+
+                    // Allgemein
+                    domClass.remove("uiElementAddpurpose", "hide");
+                    domClass.remove("uiElementAdduserGroup", "hide");
+                    domClass.remove("uiElementAddproductiveUse", "hide");
+
+                    // Rubrik: Verfügbarkeit
+                    domClass.remove("availability", "hide");
                 }
             });
 

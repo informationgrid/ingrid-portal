@@ -794,14 +794,16 @@ define([
 
                 var labelSpanElement = document.createElement("span");
                 domClass.add(labelSpanElement, "label left");
-                var labelElement = document.createElement("label");
-                if (additionalField.help) {
-                    labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
-                } else {
-                    domClass.add(labelElement, "inActive");
+                if (additionalField.label) {
+                    var labelElement = document.createElement("label");
+                    if (additionalField.help) {
+                        labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                    } else {
+                        domClass.add(labelElement, "inActive");
+                    }
+                    labelElement.innerHTML = additionalField.label;
+                    labelSpanElement.appendChild(labelElement);
                 }
-                labelElement.innerHTML = additionalField.label;
-                labelSpanElement.appendChild(labelElement);
 
                 domClass.add(uiPaddingDiv, "input");
 
@@ -832,11 +834,13 @@ define([
                 return uiElementSpan;
             },
         
-        addOutlinedSection: function(label, help, fields, options = {}) {
+        addOutlinedSection: function(id, label, help, fields, options = {}) {
             var outer = document.createElement("span");
+            outer.id = "uiElementAdd" + id;
             domClass.add(outer, "outer");
-            // var afterOuter = document.createElement("div");
             domClass.add(outer, "inputContainer");
+            if (options.isMandatory) domClass.add(outer, "required");
+            
             var div = document.createElement("div");
 
             var labelElement = document.createElement("label");
@@ -846,6 +850,8 @@ define([
                 labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + help + "\")");
             }
             labelElement.innerHTML = label;
+            var labelWrapper = construct.create("span", { class:'label'});
+            labelWrapper.appendChild(labelElement);
 
             var outlined = document.createElement("div");
             domClass.add(outlined, "outlined");
@@ -857,7 +863,7 @@ define([
             var fill = construct.create("div", { class:'fill'});
             outlined.appendChild(fill);
             
-            div.appendChild(labelElement);
+            div.appendChild(labelWrapper);
             div.appendChild(outlined);
             // afterOuter.appendChild(div)
             outer.appendChild(div);

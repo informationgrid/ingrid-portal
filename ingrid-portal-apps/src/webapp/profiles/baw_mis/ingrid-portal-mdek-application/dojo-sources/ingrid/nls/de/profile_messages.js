@@ -205,6 +205,7 @@ define({
     "validation.baw.zeroLevel.incomplete": "Die Spalten 'Pegelnullpunkt', 'Maßeinheit' und 'Vertikales Koordinatenreferenzsystem' sind verpflichtend.",
     "validation.baw.gauge.incomplete": "Die Spalte 'Gerätename' ist verpflichtend.",
     "validation.baw.targetParameters.incomplete": "Die Spalten 'Name', 'Art' und 'Maßeinheit' sind verpflichtend.",
+    "validation.baw.supplementaryModule.required": "Bitte wählen Sie eine Option: Ja/Nein",
 
     "error.invalid.psp.number": "Der Wert des PSP-Elements ist ungültig.",
     "error.no.bwastrid.specified": "Die BWaStr.-ID aus den Streckenabschnitten ist ungültig.",
