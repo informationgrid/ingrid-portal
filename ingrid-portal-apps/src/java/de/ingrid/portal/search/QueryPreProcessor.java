@@ -123,17 +123,21 @@ public class QueryPreProcessor {
         IngridQuery query = null;
         try {
             log.debug("The QueryString: " + queryString);
-            
+            query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+
             if(queryString != null && queryString.trim().length() > 0){
+                // Change query to clause query (with phrase search)
+                UtilsSearch.changeQueryToClauseQuery(query);
+
                 // Extend query by property 'portal.search.extend.query'
                 String addToQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_SEARCH_EXTEND_QUERY, "" );
                 if(addToQuery != null && addToQuery.length() > 0){
-                    queryString = UtilsSearch.updateQueryString(addToQuery, request);
+                    IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                    ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                    query.addClause(cp);
                 }
-                query = QueryStringParser.parse(queryString);
-            }else{
-                query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
             }
+
             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
                 query = UtilsFacete.facetePrepareInGridQuery(request, query);
             }

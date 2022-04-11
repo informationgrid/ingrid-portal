@@ -155,7 +155,7 @@ public class UtilsPortletServeResources {
         queryString = UtilsSearch.updateQueryString(queryString, request);
         IngridQuery query = QueryStringParser.parse( queryString );
         if(config != null) {
-            query = UtilsFacete.getQueryFacets(request, config, queryString, query);
+            query = UtilsFacete.getQueryFacets(request, config, query);
         }
         int startPage = 0;
         if(request.getParameter("startPage") != null) {
@@ -311,7 +311,7 @@ public class UtilsPortletServeResources {
     public static void getHttpMarkerUVPMarkerBlp (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
         IngridQuery query = QueryStringParser.parse( queryString );
         if(config != null) {
-            query = UtilsFacete.getQueryFacets(request, config, queryString, query);
+            query = UtilsFacete.getQueryFacets(request, config, query);
         }
         int startPage = 0;
         if(request.getParameter("startPage") != null) {
@@ -415,7 +415,7 @@ public class UtilsPortletServeResources {
         }
         IngridQuery query = QueryStringParser.parse( queryString );
         if(config != null) {
-            query = UtilsFacete.getQueryFacets(request, config, queryString, query);
+            query = UtilsFacete.getQueryFacets(request, config, query);
         }
         String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
         if(stateRanking == null) {
@@ -765,7 +765,7 @@ public class UtilsPortletServeResources {
                 queryString = UtilsSearch.updateQueryString(queryString, request);
                 IngridQuery query = QueryStringParser.parse( queryString );
                 if(config != null) {
-                    query = UtilsFacete.getQueryFacets(request, config, queryString, query);
+                    query = UtilsFacete.getQueryFacets(request, config, query);
                 }
                 if (query.get( "FACETS" ) == null) {
                     ArrayList<IngridDocument> facetQueries = new ArrayList<>();

@@ -22,11 +22,45 @@
  */
 package de.ingrid.portal.search;
 
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+
+import org.apache.portals.messaging.PortletMessaging;
+import org.apache.velocity.context.Context;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvAreaSourcesForm;
-import de.ingrid.portal.global.*;
+import de.ingrid.portal.global.IngridHitWrapper;
+import de.ingrid.portal.global.IngridPersistencePrefs;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.IngridSysCodeList;
+import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsQueryString;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.WMSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
@@ -36,27 +70,17 @@ import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
+import de.ingrid.utils.query.FuzzyFieldQuery;
+import de.ingrid.utils.query.FuzzyTermQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.query.RangeQuery;
 import de.ingrid.utils.query.TermQuery;
+import de.ingrid.utils.query.WildCardFieldQuery;
+import de.ingrid.utils.query.WildCardTermQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
 import de.ingrid.utils.tool.UrlTool;
 import de.ingrid.utils.udk.UtilsCSWDate;
 import de.ingrid.utils.udk.UtilsDate;
-import org.apache.portals.messaging.PortletMessaging;
-import org.apache.velocity.context.Context;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-import java.io.IOException;
-import java.io.NotSerializableException;
-import java.security.Principal;
-import java.util.*;
 
 /**
  * Global STATIC data and utility methods for SEARCH !
@@ -1556,5 +1580,124 @@ public class UtilsSearch {
             return null;
         }
         return null;
+    }
+
+    public static ClauseQuery createClauseQuery(IngridQuery q, boolean required, boolean prohibited) {
+        ClauseQuery clauseQuery = new ClauseQuery(required, prohibited);
+        for(ClauseQuery tmp : q.getClauses()){
+            clauseQuery.addClause(tmp);
+        }
+        for(FieldQuery tmp : q.getDataTypes()){
+            clauseQuery.addField(tmp);
+        }
+        for(FieldQuery tmp : q.getFields()){
+            clauseQuery.addField(tmp);
+        }
+        for(WildCardFieldQuery tmp : q.getWildCardFieldQueries()){
+            clauseQuery.addWildCardFieldQuery(tmp);
+        }
+        for(WildCardTermQuery tmp : q.getWildCardTermQueries()){
+            clauseQuery.addWildCardTermQuery(tmp);
+        }
+        for(FuzzyFieldQuery tmp : q.getFuzzyFieldQueries()){
+            clauseQuery.addFuzzyFieldQuery(tmp);
+        }
+        for(FuzzyTermQuery tmp : q.getFuzzyTermQueries()){
+            clauseQuery.addFuzzyTermQuery(tmp);
+        }
+        for(RangeQuery tmp : q.getRangeQueries()){
+            clauseQuery.addRangeQuery(tmp);
+        }
+        if(q.get("partner") != null){
+            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get("partner")){
+                clauseQuery.addField(tmp);
+            }
+        }
+        if(q.get("provider") != null){
+            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get("provider")){
+                clauseQuery.addField(tmp);
+            }
+        }
+        if(q.getRankingType() != null) {
+            clauseQuery.put( IngridQuery.RANKED, q.getRankingType() );
+        }
+        return clauseQuery;
+    }
+
+    public static void changeQueryToClauseQuery(IngridQuery q) {
+        
+        String origin = q.getString(IngridQuery.ORIGIN);
+
+        ClauseQuery cq = new ClauseQuery(true, false);
+        cq.put(IngridQuery.ORIGIN, origin);
+        q.remove(IngridQuery.ORIGIN);
+
+        for(TermQuery tmp : q.getTerms()){
+            cq.addTerm(tmp);
+        }
+
+        q.remove(IngridQuery.TERM_KEY);
+        
+        for(ClauseQuery tmp : q.getClauses()){
+            cq.addClause(tmp);
+        }
+        q.remove("clause");
+
+        for(FieldQuery tmp : q.getDataTypes()){
+            cq.addField(tmp);
+        }
+
+        for(FieldQuery tmp : q.getFields()){
+            cq.addField(tmp);
+        }
+        q.remove("field");
+
+        for(WildCardFieldQuery tmp : q.getWildCardFieldQueries()){
+            cq.addWildCardFieldQuery(tmp);
+        }
+        q.remove("wildcard_field");
+
+        for(WildCardTermQuery tmp : q.getWildCardTermQueries()){
+            cq.addWildCardTermQuery(tmp);
+        }
+        q.remove("wildcard_term");
+
+        for(FuzzyFieldQuery tmp : q.getFuzzyFieldQueries()){
+            cq.addFuzzyFieldQuery(tmp);
+        }
+        q.remove("fuzzy_field");
+
+        for(FuzzyTermQuery tmp : q.getFuzzyTermQueries()){
+            cq.addFuzzyTermQuery(tmp);
+        }
+        q.remove("fuzzy_term");
+
+        for(RangeQuery tmp : q.getRangeQueries()){
+            cq.addRangeQuery(tmp);
+        }
+        q.remove("range");
+
+        if(q.get("partner") != null){
+            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get("partner")){
+                cq.addField(tmp);
+            }
+            q.remove("partner");
+        }
+
+        if(q.get("provider") != null){
+            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get("provider")){
+                cq.addField(tmp);
+            }
+            q.remove("provider");
+        }
+
+        if(q.get("iplugs") != null){
+            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get("iplugs")){
+                cq.addField(tmp);
+            }
+            q.remove("iplugs");
+        }
+
+        q.addClause(cq);
     }
 }

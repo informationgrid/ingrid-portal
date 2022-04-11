@@ -176,7 +176,7 @@ public class UtilsFacete {
         }
 
         // Set selection to query
-        query = getQueryFacets(request, config, portalTerm, query);
+        query = getQueryFacets(request, config, query, portalTerm);
 
         // Get facet query from config file.
         if(query.get("FACETS") == null){
@@ -194,8 +194,11 @@ public class UtilsFacete {
         }
         return query;
     }
+    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query) throws ParseException {
+        return getQueryFacets(request, config, query, null);
+    }
 
-    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, String queryString, IngridQuery query) throws ParseException {
+    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query, String queryString) throws ParseException {
         query = setFacetQuery(config, query);
         addToQueryMap(request, query);
         addToQueryGeothesaurus(request, query);
@@ -2448,7 +2451,6 @@ public class UtilsFacete {
 
     public static IngridQuery setFacetQuery(List<IngridFacet> configNode, IngridQuery query, String parent) throws ParseException {
         if(query != null) {
-            String origin = query.getString(IngridQuery.ORIGIN);
             String term = "";
             for (IngridFacet ingridFacet : configNode){
                 if(parent == null || parent != ingridFacet.getId()) {
@@ -2458,12 +2460,10 @@ public class UtilsFacete {
                 }
             }
             if(!term.isEmpty()) {
-                if(!origin.equals(term)) {
-                    term = origin + " " + term;
-                }
                 IngridQuery tmpQuery = QueryStringParser.parse(term);
                 if(tmpQuery != null) {
-                    return tmpQuery;
+                    ClauseQuery clauseQuery = UtilsSearch.createClauseQuery(tmpQuery, true, false);
+                    query.addClause(clauseQuery);
                 }
             }
         }
