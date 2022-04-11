@@ -50,6 +50,11 @@ define([
                 domClass.remove("uiElement3500", "hide");
                 // Rubrik: Verfügbarkeit
                 domClass.add("availability", "hide");
+                domClass.remove("timeRef", "hide");
+                domClass.remove("uiElement5042", "hide");
+                domClass.remove("uiElementN025", "hide");
+                domClass.remove("uiElementN026", "hide");
+                domClass.remove("uiElement1320", "hide");
 
 
                 var isLiterature = data.objClass === "Class2";
@@ -190,7 +195,6 @@ define([
             // SOFTWARE
             // Art des Dienstes
             domClass.add("uiElement3620", "hide");
-            registry.byId("ref6ServiceType").set("value", 3); // Anwendung
             // Systemumgebung
             domClass.add("uiElement3600", "hide");
             // Historie
