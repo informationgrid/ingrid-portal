@@ -99,7 +99,7 @@ define([
                     removeBehaviours();
                 }
             });
-        },
+        }
     })();
 
     function addEinsatzzweck(newFieldsToDirtyCheck, additionalFields) {

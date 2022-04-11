@@ -852,7 +852,7 @@ define([
                 labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + help + "\")");
             }
             labelElement.innerHTML = label;
-            var labelWrapper = construct.create("span", { class:'label'});
+            var labelWrapper = construct.create("span", {'class': 'label'});
             labelWrapper.appendChild(labelElement);
 
             var outlined = document.createElement("div");
@@ -867,7 +867,6 @@ define([
             
             div.appendChild(labelWrapper);
             div.appendChild(outlined);
-            // afterOuter.appendChild(div)
             outer.appendChild(div);
             return outer;
         }
