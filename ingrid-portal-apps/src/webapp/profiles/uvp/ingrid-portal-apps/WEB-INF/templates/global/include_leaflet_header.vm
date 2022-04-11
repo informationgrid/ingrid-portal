@@ -121,10 +121,14 @@
         /*** Geocoder ***/
         // OSM Geocoder
         const osmGeocoder = new L.Control.Geocoder({
+            geocoder: L.Control.Geocoder.nominatim({
+                serviceUrl: "https://nominatim.openstreetmap.org/",
+                geocodingQueryParams: { countrycodes: 'de' }
+            }),
             collapsed: false,
             position: 'topright',
             text: 'Address Search',
-            placeholder: 'Suche: z.B. Hannover',
+            placeholder: 'Suche: z.B. Hannover ...',
             defaultMarkGeocode: false
         }).addTo(map);
 
