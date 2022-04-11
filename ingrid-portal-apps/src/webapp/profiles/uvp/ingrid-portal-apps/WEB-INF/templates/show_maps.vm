@@ -25,7 +25,7 @@
     var map = addLeafletMap([osm]);
     var enablePopUp = true;
     var smallIcons = false;
-    
+    addGeocoder(map);
 </script>
 
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
