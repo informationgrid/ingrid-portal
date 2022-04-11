@@ -62,6 +62,7 @@ import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -152,8 +153,20 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, List<IngridFacet> config) throws ParseException, IOException {
-        queryString = UtilsSearch.updateQueryString(queryString, request);
-        IngridQuery query = QueryStringParser.parse( queryString );
+        String portalQueryString = UtilsSearch.updateQueryString("", request);
+        IngridQuery query = QueryStringParser.parse( portalQueryString );
+
+        if(queryString != null && queryString.trim().length() > 0){
+            // Change query to clause query (with phrase search)
+            UtilsSearch.changeQueryToClauseQuery(query);
+
+            String addToQuery = queryString;
+            if(addToQuery != null && addToQuery.length() > 0){
+                IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                query.addClause(cp);
+            }
+        }
         if(config != null) {
             query = UtilsFacete.getQueryFacets(request, config, query);
         }
@@ -309,7 +322,25 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPMarkerBlp (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
-        IngridQuery query = QueryStringParser.parse( queryString );
+        IngridQuery query = null;
+        if(config != null) {
+            String portalQueryString = UtilsSearch.updateQueryString("", request);
+            query = QueryStringParser.parse( portalQueryString );
+
+            if(queryString != null && queryString.trim().length() > 0){
+                // Change query to clause query (with phrase search)
+                UtilsSearch.changeQueryToClauseQuery(query);
+    
+                String addToQuery = queryString;
+                if(addToQuery != null && addToQuery.length() > 0){
+                    IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                    ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                    query.addClause(cp);
+                }
+            }
+        } else {
+            query = QueryStringParser.parse( queryString );
+        }
         if(config != null) {
             query = UtilsFacete.getQueryFacets(request, config, query);
         }
@@ -410,10 +441,25 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPLegendCounter (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
+        IngridQuery query = null;
         if(config != null) {
-            queryString = UtilsSearch.updateQueryString(queryString, request);
+            String portalQueryString = UtilsSearch.updateQueryString("", request);
+            query = QueryStringParser.parse( portalQueryString );
+
+            if(queryString != null && queryString.trim().length() > 0){
+                // Change query to clause query (with phrase search)
+                UtilsSearch.changeQueryToClauseQuery(query);
+    
+                String addToQuery = queryString;
+                if(addToQuery != null && addToQuery.length() > 0){
+                    IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                    ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                    query.addClause(cp);
+                }
+            }
+        } else {
+            query = QueryStringParser.parse( queryString );
         }
-        IngridQuery query = QueryStringParser.parse( queryString );
         if(config != null) {
             query = UtilsFacete.getQueryFacets(request, config, query);
         }
