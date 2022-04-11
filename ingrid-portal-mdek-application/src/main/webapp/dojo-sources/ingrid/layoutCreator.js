@@ -862,7 +862,7 @@ define([
                 outlined.appendChild(field);
             });
 
-            var fill = construct.create("div", { class:'fill'});
+            var fill = construct.create("div", { 'class': 'fill'});
             outlined.appendChild(fill);
             
             div.appendChild(labelWrapper);
