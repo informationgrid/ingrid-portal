@@ -63,7 +63,10 @@ define([
                 .then(lang.hitch(this._addActivationBehaviour));
 
             topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class1") {
+                var isGeodata = data.objClass === "Class1";
+                var isProject = data.objClass === "Class4";
+
+                if (isGeodata || isProject) {
                     domClass.remove("uiElementAdd" + LFS_LINK_TABLE_ID, "hide");
                     registry.byId(LFS_LINK_TABLE_ID).reinitLastColumn(true);
                 } else {

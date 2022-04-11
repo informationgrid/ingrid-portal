@@ -64,8 +64,10 @@
                 #end
             #else
                 <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
-                #if($rs.docuuid && $rs.docuuid.length() > -1)
+                #if($rs.docuuid && $rs.docuuid.length() > 0)
                     <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid#if($detailUseParamPlugid)&plugid=$rs.plugid#end">#renderTitle($rs.title.trim())</a>
+                #elseif($rs.docid && $rs.docid.length() > 0)
+                    <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid">#renderTitle($rs.title.trim())</a>
                 #end
                 </h4>
             #end

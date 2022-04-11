@@ -102,8 +102,10 @@
                             </a>
                         #end
                     #else
-                        #if($rs.docuuid && $rs.docuuid.length() >-1)
+                        #if($rs.docuuid && $rs.docuuid.length() > 0)
                             #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid#if($detailUseParamPlugid)&plugid=$rs.plugid#end  ")
+                        #elseif($rs.docid && $rs.docid.length() > 0)
+                            #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid")
                         #end
                         <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
                             <h2 class="header">$rs.title</h2>
