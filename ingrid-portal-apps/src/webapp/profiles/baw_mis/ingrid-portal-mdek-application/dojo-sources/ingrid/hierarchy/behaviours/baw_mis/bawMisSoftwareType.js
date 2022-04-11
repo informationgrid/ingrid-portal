@@ -34,10 +34,14 @@ define([
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
-    "ingrid/message"
-], function (registry, array, declare, lang, dom, domClass, on, topic, RadioButton, Editors, Formatters, dirty, creator, message) {
+    "ingrid/message",
+    "ingrid/utils/Grid",
+    "ingrid/utils/Syslist"
+], function (registry, array, declare, lang, dom, domClass, on, topic, RadioButton, Editors, Formatters, dirty, creator, message, UtilGrid, UtilSyslist) {
 
     subscriptions = [];
+
+    origCodelist2000 = [];
     
     return declare(null, {
         title: "Software-Klasse",
@@ -46,8 +50,10 @@ define([
         category: "BAW-MIS",
 
         run: function () {
-            // add alternative codelist for address types
+            // add alternative codelist for address types and link types
             sysLists[-505] = [["Verfahrensbetreuung","20","N",""],["Entwickler","21","N",""],["Eigentümer","3","N",""],["Vertrieb","5","N",""]];
+            sysLists[-2000] = [["Quellcode-Repository","20","N","6"],["Dokumentation","21","N","6"]];
+            origCodelist2000 = sysLists[2000];
             
             this._createCustomFields();
             
@@ -104,7 +110,7 @@ define([
                     // HPC text mandatory if checkbox active
                     // Server text mandatory if checkbox active
                 } else {
-
+                    removeBehaviours();
                 }
             });
             
@@ -563,10 +569,37 @@ define([
 
     function adaptLinks() {
         // codelist 2000
+        sysLists[2000] = sysLists[-2000];
+
+        // reset filter to get all data
+        UtilGrid.getTable("linksTo").setRowFilter(null);
+        
+        // update relation type names because of changed codelist
+        var data = UtilGrid.getTableData("linksTo");
+        array.forEach(data, function (entry) {
+            var entryName = UtilSyslist.getSyslistEntryName(2000, entry.relationType);
+            if (entryName != entry.relationType) {
+                entry.relationTypeName = entryName;
+            }
+        });
+        UtilGrid.setTableData("linksTo", data);
+
+        require("ingrid/IgeEvents").setLinksToRelationTypeFilterContent({objClass: "Class" + currentUdk.objectClass});
     }
     
     function handleRequiredState() {
-        
+                
+    }
+    
+    function removeBehaviours() {
+        registry.byId("generalAddress").columns[0].listId = 505;
+        sysLists[2000] = origCodelist2000;
+
+        array.forEach(subscriptions, function (subscription) {
+            subscription.remove();
+        });
+
+        require("ingrid/IgeEvents").setLinksToRelationTypeFilterContent({objClass: "Class" + currentUdk.objectClass});
     }
 });
 
