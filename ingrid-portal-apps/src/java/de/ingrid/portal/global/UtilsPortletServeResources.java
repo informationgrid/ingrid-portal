@@ -804,14 +804,27 @@ public class UtilsPortletServeResources {
             }
         } else {
             if(facet != null) {
+                String portalQueryString = UtilsSearch.updateQueryString("", request);
+                IngridQuery query = QueryStringParser.parse( portalQueryString );
+
                 String queryString = facet.getQuery();
                 if(facet.getToggle() != null && facet.getToggle().isSelect()) {
                     queryString = facet.getToggle().getQuery();
                 }
-                queryString = UtilsSearch.updateQueryString(queryString, request);
-                IngridQuery query = QueryStringParser.parse( queryString );
+
+                if(queryString != null && queryString.trim().length() > 0){
+                    // Change query to clause query (with phrase search)
+                    UtilsSearch.changeQueryToClauseQuery(query);
+        
+                    String addToQuery = queryString;
+                    if(addToQuery != null && addToQuery.length() > 0){
+                        IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                        ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                        query.addClause(cp);
+                    }
+                }
                 if(config != null) {
-                    query = UtilsFacete.getQueryFacets(request, config, query);
+                    query = UtilsFacete.getQueryFacets(request, config, query, facet.getParent().getId());
                 }
                 if (query.get( "FACETS" ) == null) {
                     ArrayList<IngridDocument> facetQueries = new ArrayList<>();

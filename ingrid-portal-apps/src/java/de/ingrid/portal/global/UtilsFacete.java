@@ -176,7 +176,7 @@ public class UtilsFacete {
         }
 
         // Set selection to query
-        query = getQueryFacets(request, config, query, portalTerm);
+        query = getQueryFacets(request, config, query);
 
         // Get facet query from config file.
         if(query.get("FACETS") == null){
@@ -198,8 +198,8 @@ public class UtilsFacete {
         return getQueryFacets(request, config, query, null);
     }
 
-    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query, String queryString) throws ParseException {
-        query = setFacetQuery(config, query);
+    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query, String parentId) throws ParseException {
+        query = setFacetQuery(config, query, parentId);
         addToQueryMap(request, query);
         addToQueryGeothesaurus(request, query);
         addToQueryAttribute(request, query);
