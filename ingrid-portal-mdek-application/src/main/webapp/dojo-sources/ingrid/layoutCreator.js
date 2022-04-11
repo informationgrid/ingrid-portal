@@ -834,7 +834,9 @@ define([
                 return uiElementSpan;
             },
         
-        addOutlinedSection: function(id, label, help, fields, options = {}) {
+        addOutlinedSection: function(id, label, help, fields, options) {
+            if (!options) options = {};
+            
             var outer = document.createElement("span");
             outer.id = "uiElementAdd" + id;
             domClass.add(outer, "outer");
