@@ -36,7 +36,7 @@ define([
             // load custom codelists
             topic.subscribe("/collectAdditionalSyslistsToLoad", function (ids) {
                 ids.push(3950000, 3950001, 3950002, 3950003, 3950004, 3950005, 3950010, 3950011, 3950012, 3950013,
-                    3950020, 3950021);
+                    3950020, 3950021, 3950030, 3950031, 3950032);
             });
 
             topic.subscribe("/additionalSyslistsLoaded", function() {

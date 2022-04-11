@@ -920,47 +920,45 @@ define([
             var objectClass = fullObjectClass.objClass.substring(5);
 
             // set up syslist data and filter according to object class
-            UtilSyslist.readSysListData(2000).then(function(listItems) {
-                var syslist2000Items = UtilSyslist.convertSysListToTableData(listItems);
+            var syslist2000Items = UtilSyslist.convertSysListToTableData(sysLists[2000]);
 
-                var idList = [];
-                array.forEach(syslist2000Items, function(entry) {
-                    // "data" of list item contains relevant classes
-                    if (entry.data) {
-                        var containsClass = array.indexOf(entry.data.split(','), objectClass) !== -1;
-                        if (containsClass) idList.push(entry.entryId);
-                    }
-                });
-
-                var initialItems = [{
-                    // add " " prefix to be first entry in list !
-                    name: " " + message.get("ui.listentry.noFilter"),
-                    // "0" not used in syslist !
-                    entryId: "0",
-                    isDefault: true,
-                    // We set this entry for all classes (to be conform with data field, but not needed anymore)
-                    data: "0,1,2,3,4,5,6"
-                }];
-                var filteredItems = array.filter(syslist2000Items, function(item) {
-                    return array.some(idList, function(id) {
-                        return id == item.entryId;
-                    });
-                });
-
-                // Set new items in store
-                var newItems = initialItems.concat(filteredItems);
-                var storeProps = {
-                    searchAttr: "name",
-                    data: {
-                        label: "name",
-                        identifier: "entryId",
-                        items: newItems
-                    }
-                };
-                registry.byId("linksToRelationTypeFilter").set("store", new Memory(storeProps));
-                //            console.debug("/onObjectClassChange -> New items for relation type filter");
-                //            console.debug(newItems);
+            var idList = [];
+            array.forEach(syslist2000Items, function(entry) {
+                // "data" of list item contains relevant classes
+                if (entry.data) {
+                    var containsClass = array.indexOf(entry.data.split(','), objectClass) !== -1;
+                    if (containsClass) idList.push(entry.entryId);
+                }
             });
+
+            var initialItems = [{
+                // add " " prefix to be first entry in list !
+                name: " " + message.get("ui.listentry.noFilter"),
+                // "0" not used in syslist !
+                entryId: "0",
+                isDefault: true,
+                // We set this entry for all classes (to be conform with data field, but not needed anymore)
+                data: "0,1,2,3,4,5,6"
+            }];
+            var filteredItems = array.filter(syslist2000Items, function(item) {
+                return array.some(idList, function(id) {
+                    return id == item.entryId;
+                });
+            });
+
+            // Set new items in store
+            var newItems = initialItems.concat(filteredItems);
+            var storeProps = {
+                searchAttr: "name",
+                data: {
+                    label: "name",
+                    identifier: "entryId",
+                    items: newItems
+                }
+            };
+            registry.byId("linksToRelationTypeFilter").set("store", new Memory(storeProps));
+            //            console.debug("/onObjectClassChange -> New items for relation type filter");
+            //            console.debug(newItems);
         },
 
         filterLinksToViaRelationType: function(filterKey) {

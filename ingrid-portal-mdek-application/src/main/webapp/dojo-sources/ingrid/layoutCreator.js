@@ -670,15 +670,19 @@ define([
 
                 uiElementSpan.setAttribute("style", additionalField.style);
                 var uiPaddingDiv = document.createElement("div");
-                var labelSpanElement = document.createElement("span");
-                domClass.add(labelSpanElement, "label left");
-                var labelElement = document.createElement("label");
-                if (additionalField.disableHelp) {
-                    domClass.add(labelElement, "inActive");
-                } else {
-                    labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                if (additionalField.name) {
+                    var labelSpanElement = document.createElement("span");
+                    domClass.add(labelSpanElement, "label left");
+                    var labelElement = document.createElement("label");
+                    if (additionalField.disableHelp) {
+                        domClass.add(labelElement, "inActive");
+                    } else {
+                        labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                    }
+                    labelElement.innerHTML = additionalField.name;
+                    labelSpanElement.appendChild(labelElement);
+                    uiPaddingDiv.appendChild(labelSpanElement);
                 }
-                labelElement.innerHTML = additionalField.name;
 
                 if (linkInfo) {
                     var linkSpanElement = construct.create("span", {
@@ -697,9 +701,7 @@ define([
                 //}
 
                 // Build the complete structure
-                labelSpanElement.appendChild(labelElement);
                 uiElementSpan.appendChild(uiPaddingDiv);
-                uiPaddingDiv.appendChild(labelSpanElement);
                 if (linkSpanElement) uiPaddingDiv.appendChild(linkSpanElement);
                 if (type == "Numberbox") {
                     var tableContainer = construct.create("table", {
@@ -749,7 +751,12 @@ define([
                 domClass.add(uiPaddingDiv, "input checkboxContainer");
                 var labelElement = document.createElement("label");
                 //domClass.add(labelElement, "inActive");
-                labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                if (additionalField.disableHelp) {
+                    domClass.add(labelElement, "inActive");
+                    labelElement.setAttribute("for", nodeToInsert.getAttribute("widgetid"));
+                } else {
+                    labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                }
                 labelElement.innerHTML = additionalField.name;
 
                 // Build the complete structure
@@ -787,14 +794,16 @@ define([
 
                 var labelSpanElement = document.createElement("span");
                 domClass.add(labelSpanElement, "label left");
-                var labelElement = document.createElement("label");
-                if (additionalField.help) {
-                    labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
-                } else {
-                    domClass.add(labelElement, "inActive");
+                if (additionalField.label) {
+                    var labelElement = document.createElement("label");
+                    if (additionalField.help) {
+                        labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                    } else {
+                        domClass.add(labelElement, "inActive");
+                    }
+                    labelElement.innerHTML = additionalField.label;
+                    labelSpanElement.appendChild(labelElement);
                 }
-                labelElement.innerHTML = additionalField.label;
-                labelSpanElement.appendChild(labelElement);
 
                 domClass.add(uiPaddingDiv, "input");
 
@@ -823,6 +832,42 @@ define([
                 });
 
                 return uiElementSpan;
+            },
+        
+        addOutlinedSection: function(id, label, help, fields, options = {}) {
+            var outer = document.createElement("span");
+            outer.id = "uiElementAdd" + id;
+            domClass.add(outer, "outer");
+            domClass.add(outer, "inputContainer");
+            if (options.isMandatory) domClass.add(outer, "required");
+            
+            var div = document.createElement("div");
+
+            var labelElement = document.createElement("label");
+            if (options.disableHelp) {
+                domClass.add(labelElement, "inActive");
+            } else {
+                labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + help + "\")");
             }
+            labelElement.innerHTML = label;
+            var labelWrapper = construct.create("span", { class:'label'});
+            labelWrapper.appendChild(labelElement);
+
+            var outlined = document.createElement("div");
+            domClass.add(outlined, "outlined");
+            
+            array.forEach(fields, function(field) {
+                outlined.appendChild(field);
+            });
+
+            var fill = construct.create("div", { class:'fill'});
+            outlined.appendChild(fill);
+            
+            div.appendChild(labelWrapper);
+            div.appendChild(outlined);
+            // afterOuter.appendChild(div)
+            outer.appendChild(div);
+            return outer;
+        }
     })();
 });

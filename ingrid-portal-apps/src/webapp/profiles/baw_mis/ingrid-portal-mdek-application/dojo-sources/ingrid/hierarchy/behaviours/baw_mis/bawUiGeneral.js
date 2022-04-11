@@ -50,10 +50,22 @@ define([
                 domClass.remove("uiElement3500", "hide");
                 // Rubrik: Verfügbarkeit
                 domClass.add("availability", "hide");
+                
+                domClass.remove("timeRef", "hide");
+                domClass.remove("uiElement5042", "hide");
+                domClass.remove("uiElementN025", "hide");
+                domClass.remove("uiElementN026", "hide");
+                domClass.remove("uiElement1320", "hide");
+                
+                // for class: Software
+                domClass.add("uiElementAddpurpose", "hide");
+                domClass.add("uiElementAdduserGroup", "hide");
+                domClass.add("uiElementAddproductiveUse", "hide");
 
 
                 var isLiterature = data.objClass === "Class2";
                 var isProject = data.objClass === "Class4";
+                var isSoftware = data.objClass === "Class6";
 
                 // Object-class specific rules
                 if (isLiterature) {
@@ -67,12 +79,39 @@ define([
                     domClass.remove("uiElement5000", "optional");
                     domClass.add("uiElement5000", "additional");
                     domClass.add("uiElement5000", "content");
+
+                    // Rubrik: Zeitbezug
+                    domClass.add("timeRef", "hide");
+                } else if (isSoftware) {
                     // INSPIRE
                     domClass.add("uiElement5064", "hide");
-                    // Raumbezugssystem
-                    domClass.add("uiElement3500", "hide");
+
+                    // Rubrik: Raumbezugssystem
+                    domClass.add("spatialRef", "hide");
+
+                    // Rubrik: Zeitbezug
+                    domClass.add("timeRef", "hide");
+
+                    // Sprache der Ressource
+                    // set delayed since another behaviour is changing value
+                    setTimeout(function() { domClass.add("uiElement5042", "hide"); });
+                    
+                    // Zugriffsbeschränkungen
+                    domClass.add("uiElementN025", "hide");
+                    
+                    // Anwendungseinschränkungen
+                    domClass.add("uiElementN026", "hide");
+                    
+                    // Datenformat
+                    domClass.add("uiElement1320", "hide");
+
+                    // Allgemein
+                    domClass.remove("uiElementAddpurpose", "hide");
+                    domClass.remove("uiElementAdduserGroup", "hide");
+                    domClass.remove("uiElementAddproductiveUse", "hide");
+
                     // Rubrik: Verfügbarkeit
-                    domClass.add("availability", "hide");
+                    domClass.remove("availability", "hide");
                 }
             });
 
@@ -168,6 +207,20 @@ define([
             // ----------------------------------------
             domClass.add("refClass4", "hidden");
 
+            // SOFTWARE
+            // Art des Dienstes
+            domClass.add("uiElement3620", "hide");
+            // Systemumgebung
+            domClass.add("uiElement3600", "hide");
+            // Historie
+            domClass.add("uiElement3640", "hide");
+            // Basisdaten
+            domClass.add("uiElement3645", "hide");
+            // Erläuterungen
+            domClass.add("uiElement3650", "hide");
+            // Service-Urls
+            domClass.add("uiElement3670", "hide");
+            
             // ----------------------------------------
             // Datenqualität
             // ----------------------------------------
@@ -220,7 +273,6 @@ define([
             domClass.add("uiElement1350", "hide");
             // Eignung/Nutzung
             domClass.add("uiElement5040", "hide");
-
 
 
             // ----------------------------------------

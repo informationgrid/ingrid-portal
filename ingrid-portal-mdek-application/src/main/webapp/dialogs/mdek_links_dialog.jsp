@@ -72,13 +72,10 @@
                     // first do deferred stuff, takes some time, when finished, call init() !
 
                     // read our "Verweisbeziehungen" from syslist
-                    UtilSyslist.readSysListData(2000)
-                    .then(function(syslistData) {
-                        syslist2000Map = UtilSyslist.convertSysListToTableData(syslistData);
-                        init();
-                        console.log("Publishing event: '/afterInitDialog/LinksDialog'");
-                        topic.publish("/afterInitDialog/LinksDialog");
-                    });
+                    syslist2000Map = UtilSyslist.convertSysListToTableData(sysLists[2000]);
+                    init();
+                    console.log("Publishing event: '/afterInitDialog/LinksDialog'");
+                    topic.publish("/afterInitDialog/LinksDialog");
                 }
 
                 function init() {

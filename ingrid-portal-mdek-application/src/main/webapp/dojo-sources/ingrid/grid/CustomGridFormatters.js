@@ -109,7 +109,7 @@ define(["dojo/_base/declare",
             },
 
             BoolCellFormatter: function(row, cell, value, columnDef, dataContext) {
-                return value ? "<div class='center'><img src='img/tick.png'></div>" : "<div class='center'><img src='img/checkbox.png'></div>";
+                return value === true || value === "true" ? "<div class='center'><img src='img/tick.png'></div>" : "<div class='center'><img src='img/checkbox.png'></div>";
             },
 
             FirstEntryFormatter: function(identifier, row, cell, value, columnDef, dataContext) {

@@ -36,18 +36,15 @@ define([
         run: function() {
 
             topic.subscribe("/additionalSyslistsLoaded", function() {
-                // out of the existing options, keep only Geodatensatz, Geodatendienst and Literatur for new object type
+                // out of the existing options, keep only Geodatensatz, Geodatendienst, Literatur and Informationssystem for new object type
                 var arr = sysLists[UtilSyslist.listIdObjectClass].filter(function (item) {
-                    return item[1] === "1" || item[1] === "2" || item[1] === "3" || item[1] === "4";
+                    // rename Informationssystem to Software
+                    if (item[1] === "6") item[0] = "Software";
+                    // Rename project as "Projekt / Auftrag"
+                    if (item[1] === "4") item[0] = "Projekt / Auftrag";
+                    
+                    return item[1] === "1" || item[1] === "2" || item[1] === "3" || item[1] === "4" || item[1] === "6";
                 });
-
-                // Rename project as "Projekt / Auftrag"
-                if (UtilCatalog.getCatalogLanguage() === "de") {
-                    var projectItem = arr.find(function (item) {
-                        return item[1] === "4";
-                    })
-                    projectItem[0] = "Projekt / Auftrag";
-                }
 
                 // Define the order in which the options should appear
                 var desired_order = [
