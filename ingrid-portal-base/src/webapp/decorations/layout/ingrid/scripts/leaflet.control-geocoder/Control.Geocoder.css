@@ -13,6 +13,8 @@
 .leaflet-touch .leaflet-control-geocoder:focus-within {
   border-color: rgba(0,102,153,.6);
   box-shadow: inset 0 0px 1px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 102, 153, 0.60);
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+
 }
 
 .leaflet-control-geocoder a,
