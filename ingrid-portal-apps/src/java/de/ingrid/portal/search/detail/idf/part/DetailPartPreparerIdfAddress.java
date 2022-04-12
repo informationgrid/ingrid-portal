@@ -206,10 +206,18 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                             if (attachedToField.length() > 0) {
                                 link.put("attachedToField", attachedToField);
                             }
-                            link.put("href", "?cmd=doShowObjectDetail&docuuid="+uuid+"&plugid="+this.iPlugId);
+                            String href = "?docuuid=" + uuid;
+                            if(PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID)) {
+                                href += "&plugid=" + this.iPlugId;
+                            }
+                            link.put("href", href);
                         }else{
                             link.put("addressClass", type);
-                            link.put("href", "?cmd=doShowDocument&docuuid="+uuid+"&plugid="+this.iPlugId);
+                            String href = "?docuuid=" + uuid + "&type=address";
+                            if(PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID)) {
+                                href += "&plugid=" + this.iPlugId;
+                            }
+                            link.put("href", href);
                         }
                     }else{
                         link.put("href", "");

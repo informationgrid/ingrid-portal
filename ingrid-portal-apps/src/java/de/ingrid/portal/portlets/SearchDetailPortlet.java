@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -96,14 +96,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     private static final String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/detail/search_detail_generic.vm";
 
     private static final String TEMPLATE_DETAIL_IDF_2_0_0 = "/WEB-INF/templates/detail/search_detail_idf_2_0.vm";
-    
+
     // ecs fields that represent a date, used for date parsing and formating
     private List dateFields = null;
-    
+
     private HashMap replacementFields = new HashMap();
 
     protected XPathUtils xPathUtils = null;
-    
+
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
@@ -166,7 +166,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
         // get fields from config that should be treated as date fields
         dateFields = Arrays.asList(PortalConfig.getInstance().getStringArray(PortalConfig.UDK_FIELDS_DATE));
-        
+
         xPathUtils = new XPathUtils(new IDFNamespaceContext());
         // get translation(replacement) rules from config file
         // map(map)
@@ -184,25 +184,25 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     }
 
     private String convertLangCode(String oldCode) {
-    	if (oldCode.equals("121"))
-    		return Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("de"));
-    	else if (oldCode.equals("94"))
-    		return Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("en"));
-    	else {
-    		return oldCode;
-    	}		
-	}
+        if (oldCode.equals("121"))
+            return Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("de"));
+        else if (oldCode.equals("94"))
+            return Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("en"));
+        else {
+            return oldCode;
+        }
+    }
 
     @Override
-	public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
+    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
-	    long startTimer = 0;
-	    
-	    if (log.isDebugEnabled()) {
-	        log.debug("Start building detail view.");
-	        startTimer = System.currentTimeMillis();
-	    }
-	    
+        long startTimer = 0;
+
+        if (log.isDebugEnabled()) {
+            log.debug("Start building detail view.");
+            startTimer = System.currentTimeMillis();
+        }
+
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
@@ -220,17 +220,21 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         // Geotools
         context.put("geoGmlToWkt", GmlToWktTransformUtil.class);
         context.put("geoWktToGeoJson", WktToGeoJsonTransformUtil.class);
-        
-        context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 
-        context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)); 
+        context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false));
+
+        context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false));
         context.put("mapLinksNewTab", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPS_LINKS_NEW_TAB, false ));
 
         context.put("leafletEpsg", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_EPSG, "3857"));
 
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
-        
+        context.put( "leafletBgLayerOpacity", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY));
+
+        boolean detailUseParamPlugid = PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID);
+        context.put("detailUseParamPlugid", detailUseParamPlugid);
+
         String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
         String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
         if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
@@ -266,20 +270,19 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         request.setAttribute( "restUrlHttpDownloadUVP", restUrl.toString() );
 
         try {
-        	// check whether we come from google (no IngridSessionPreferences)
-        	boolean noIngridSession = false;
-    		IngridSessionPreferences ingridPrefs =
-    			(IngridSessionPreferences) request.getPortletSession().getAttribute(
-    				IngridSessionPreferences.SESSION_KEY, PortletSession.APPLICATION_SCOPE);
-    		if (ingridPrefs == null) {
-            	noIngridSession = true;
-    		}
+            // check whether we come from google (no IngridSessionPreferences)
+            boolean noIngridSession = false;
+            IngridSessionPreferences ingridPrefs =
+                (IngridSessionPreferences) request.getPortletSession().getAttribute(
+                    IngridSessionPreferences.SESSION_KEY, PortletSession.APPLICATION_SCOPE);
+            if (ingridPrefs == null) {
+                noIngridSession = true;
+            }
             context.put("noIngridSession", noIngridSession);
-            	
+
             String testIDF = request.getParameter("testIDF");
             String cswURL = request.getParameter("cswURL");
             String docUuid = request.getParameter("docuuid");
-            String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
             if(iplugId != null) {
                 iplugId = iplugId.toLowerCase();
@@ -290,213 +293,116 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             String iPlugVersion = null;
             Record record = null;
-            
+
             if (iplugId != null && iplugId.length() > 0) {
-
-	            context.put("docUuid", docUuid);
-	            context.put("plugId", iplugId);
-	            
-	            plugDescription = ibus.getIPlug(iplugId);
-	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
-	            
-	            String[] partners = plugDescription.getPartners();
-	            String plugPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER, "bund");
-	            if(partners != null && partners.length > 0) {
-	                if(partners.length > 1) {
-	                    List<String> tmpPartners = new ArrayList<String>(Arrays.asList(partners));
-	                    tmpPartners.remove("bund");
-	                    partners = tmpPartners.toArray(new String[0]);
-	                }
-	                plugPartner = partners[0];
-	                context.put("plugPartner", plugPartner);
-	            }
-	            
-	            if(plugDescription.getProviders() != null) {
-	                ArrayList<String> plugProviders = new ArrayList<>();
-	                for (String provider : plugDescription.getProviders()) {
-	                    String dbProvider = UtilsDB.getProviderFromKey(provider);
-	                    if(dbProvider != null) {
-	                        plugProviders.add(dbProvider);
-	                    }
-                    }
-	                context.put("plugProviders", plugProviders);
-	            }
-
-	            if(plugDescription.getDataSourceName() != null) {
-                    context.put("plugDataSourceName", plugDescription.getDataSourceName());
+                plugDescription = ibus.getIPlug(iplugId);
+                iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+            }
+            // try to get the result for a objects UUID
+            if (docUuid != null && docUuid.length() > 0) {
+                // remove possible invalid characters
+                docUuid = UtilsQueryString.normalizeUuid(docUuid);
+                String qStr = null;
+                String qPlugId = "";
+                if(detailUseParamPlugid) {
+                    qPlugId = "\" iplugs:\"" + iplugId.trim();
                 }
-	            
-	            // try to get the result for a objects UUID
-	            if (docUuid != null && docUuid.length() > 0) {
-	            	// remove possible invalid characters
-	            	docUuid = UtilsQueryString.normalizeUuid(docUuid);
-	            	String qStr = null;
-	                if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_9_DSC_OBJECT)) {
-                	  qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-                  	} else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
-	            		qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
-	            		qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
-	            		qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
-	            		qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
-	            		qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
-	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_ADDRESS)) {
-	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	            	} else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
-	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT)){
-	                    // new iPlug IGE-DSC contains both: objects and addresses!
-	                    if (isAddress) {
-	                        qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score datatype:address";
-	                    } else {
-	                        qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                    }
-	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)){
-	                	qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                } else {
-	            		qStr = docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                }
-	
-	            	IngridQuery q = QueryStringParser.parse(qStr);
-	            	IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
-	            	
-	            	if (hits.length() < 1) {
-	            		log.error("No record found for document uuid:" + docUuid.trim() + " using iplug: " + iplugId.trim());
-	            		
-	            		qStr = Settings.HIT_KEY_ORG_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	            		q = QueryStringParser.parse(qStr);
-		            	hits = ibus.search(q, 1, 1, 0, 3000);
-		            	if(hits.length() < 1){
-		            		log.error("No object record found for document uuid:" + docUuid.trim() + " for field: " + Settings.HIT_KEY_ORG_OBJ_ID);
-		            		
-		            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " ranking:score";
-		  	                q = QueryStringParser.parse(qStr);
-			            	hits = ibus.search(q, 1, 1, 0, 3000);
-			            	if(hits.length() < 1){
-			            		log.error("No object record found for document uuid:" + docUuid.trim() + " for field: " + Settings.HIT_KEY_OBJ_ID);
-			            		
-			            		qStr = Settings.HIT_KEY_ORG_OBJ_ID + ":" + docUuid.trim() + " ranking:score";
-			  	                q = QueryStringParser.parse(qStr);
-				            	hits = ibus.search(q, 1, 1, 0, 3000);
-				            	if(hits.length() < 1){
-				            		log.error("No object record found for document uuid:" + docUuid.trim() + " for field: " + Settings.HIT_KEY_ORG_OBJ_ID);
-				            		
-				            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score datatype:address";
-				  	                q = QueryStringParser.parse(qStr);
-					            	hits = ibus.search(q, 1, 1, 0, 3000);
-					            	if(hits.length() < 1){
-					            		log.error("No address record found for document uuid:" + docUuid.trim() + " for field: " + Settings.HIT_KEY_ADDRESS_ADDRID);
-					            	}else{
-					            		hit = hits.getHits()[0];
-					            		if(plugDescription == null){
-					            			iplugId = hit.getPlugId();
-					            			plugDescription = ibus.getIPlug(iplugId);
-					        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
-					            		}
-					            	}
-				            	}else{
-				            		hit = hits.getHits()[0];
-				            		if(plugDescription == null){
-				            			iplugId = hit.getPlugId();
-				            			plugDescription = ibus.getIPlug(iplugId);
-				        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
-				            		}
-				            	}
-			            	}else{
-			            		hit = hits.getHits()[0];
-			            		if(plugDescription == null){
-			            			iplugId = hit.getPlugId();
-			            			plugDescription = ibus.getIPlug(iplugId);
-			        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
-			            		}
-			            	}
-		            	}else{
-		            		hit = hits.getHits()[0];
-		            	}
-	            	} else {
-	            		hit = hits.getHits()[0];
-	            	}
-	            } else if (altDocumentId != null && altDocumentId.length() > 0) {
-	                hit = new IngridHit();
-                    hit.put("alt_document_id", altDocumentId);
-	                hit.setPlugId(iplugId);
-	                hit.setDocumentId("0");
-	            
-	            } else {
-	                String documentId = request.getParameter("docid");
-	                hit = new IngridHit();
-	                hit.setDocumentId(documentId);
-	                hit.setPlugId(iplugId);
-	                context.put("docId", documentId);
-	                // backward compatibilty where docId was integer
-	                try {
-	                    hit.putInt( 0, Integer.valueOf( documentId ) );
-	                } catch (NumberFormatException ex) { /* ignore */ }
-	            }
-            }else{
-            	log.error("No plugId set for detail.");
-        		if(docUuid != null && docUuid.length() > 0){
-        			String qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " ranking:score";
-        			IngridQuery q = QueryStringParser.parse(qStr);
-        			IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
-	            	if(hits.length() < 1){
-	            		log.error("No object record found for document uuid:" + docUuid.trim() + " for field: " + Settings.HIT_KEY_OBJ_ID);
-	            		
-	            		qStr = Settings.HIT_KEY_ORG_OBJ_ID + ":" + docUuid.trim() + " ranking:score";
-	        			q = QueryStringParser.parse(qStr);
-	        			hits = ibus.search(q, 1, 1, 0, 3000);
-	        			if(hits.length() < 1){
-	        				qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score datatype:address";
-		  	                q = QueryStringParser.parse(qStr);
-			            	hits = ibus.search(q, 1, 1, 0, 3000);
-			            	if(hits.length() < 1){
-			            		log.error("No object record found for document uuid:" + docUuid.trim());
-			            	}else{
-			            		hit = hits.getHits()[0];
-			            		if(plugDescription == null){
-			            			iplugId = hit.getPlugId();
-			            			plugDescription = ibus.getIPlug(iplugId);
-			        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
-			            		}
-			            	}
-	        			}else{
-	        				hit = hits.getHits()[0];
-		            		if(plugDescription == null){
-		            			iplugId = hit.getPlugId();
-		            			plugDescription = ibus.getIPlug(iplugId);
-		        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
-		            		}
-	        			}
-	            	}else{
-	            		hit = hits.getHits()[0];
-	            		if(plugDescription == null){
-	            			iplugId = hit.getPlugId();
-	            			plugDescription = ibus.getIPlug(iplugId);
-	        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
-	            		}
-	            	}
-            	}
+                if (isAddress) {
+                    qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + qPlugId + "\" ranking:score datatype:address";
+                } else {
+                    qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + qPlugId + "\" ranking:score";
+                }
+
+                IngridQuery q = QueryStringParser.parse(qStr);
+                IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
+
+                if (hits.length() == 0) {
+                    log.error("No record found for document uuid:" + docUuid.trim() + (detailUseParamPlugid ? " using iplug: " + iplugId.trim() : ""));
+
+                    qStr = Settings.HIT_KEY_ORG_OBJ_ID + ":\"" + docUuid.trim() + qPlugId + "\" ranking:score";
+                    q = QueryStringParser.parse(qStr);
+                    hits = ibus.search(q, 1, 1, 0, 3000);
+                    if(hits.length() == 0){
+                        log.error("No object record found for document uuid:" + docUuid.trim() + " for field: " + Settings.HIT_KEY_ORG_OBJ_ID);
+                        if (isAddress) {
+                            qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " ranking:score";
+                        } else {
+                            qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score";
+                        }
+                          q = QueryStringParser.parse(qStr);
+                        hits = ibus.search(q, 1, 1, 0, 3000);
+                        if(hits.length() == 0){
+                            log.error("No record found for document uuid:" + docUuid.trim());
+                        }else{
+                            hit = hits.getHits()[0];
+                        }
+                    }else{
+                        hit = hits.getHits()[0];
+                    }
+                } else {
+                    hit = hits.getHits()[0];
+                }
+            } else {
+                String documentId = request.getParameter("docid");
+                hit = new IngridHit();
+                hit.setDocumentId(documentId);
+                hit.setPlugId(iplugId);
+                context.put("docId", documentId);
+                // backward compatibilty where docId was integer
+                try {
+                    hit.putInt( 0, Integer.valueOf( documentId ) );
+                } catch (NumberFormatException ex) { /* ignore */ }
             }
 
             if (hit != null) {
-	            record = ibus.getRecord(hit);
+                if(plugDescription == null){
+                    iplugId = hit.getPlugId();
+                    plugDescription = ibus.getIPlug(iplugId);
+                    iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+                }
+                context.put("docUuid", docUuid);
+                context.put("plugId", iplugId);
+                context.put("docId", hit.getDocumentId());
+
+                String[] partners = plugDescription.getPartners();
+                String plugPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER, "bund");
+                if(partners != null && partners.length > 0) {
+                    if(partners.length > 1) {
+                        List<String> tmpPartners = new ArrayList<String>(Arrays.asList(partners));
+                        tmpPartners.remove("bund");
+                        partners = tmpPartners.toArray(new String[0]);
+                    }
+                    plugPartner = partners[0];
+                    context.put("plugPartner", plugPartner);
+                }
+
+                if(plugDescription.getProviders() != null) {
+                    ArrayList<String> plugProviders = new ArrayList<>();
+                    for (String provider : plugDescription.getProviders()) {
+                        String dbProvider = UtilsDB.getProviderFromKey(provider);
+                        if(dbProvider != null) {
+                            plugProviders.add(dbProvider);
+                        }
+                    }
+                    context.put("plugProviders", plugProviders);
+                }
+
+                if(plugDescription.getDataSourceName() != null) {
+                    context.put("plugDataSourceName", plugDescription.getDataSourceName());
+                }
+                record = ibus.getRecord(hit);
             // TODO: remove code after the iplugs deliver IDF records
             } else if (testIDF != null) {
                 // create IDF record, see below how the record will be filled
                 record = new Record();
-                iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;	
+                iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;
             } else if (cswURL != null) {
                 record = new Record();
-                iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;  
+                iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;
             }
-            
+
             if (record == null) {
-               	log.error("No record found for document id:" + (hit != null ? hit.getDocumentId() : null) + " using iplug: " + iplugId + " for request: " + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getRequestURL() + "?" + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getQueryString());
+                   log.error("No record found for document id:" + (hit != null ? hit.getDocumentId() : null) + " using iplug: " + iplugId + " for request: " + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getRequestURL() + "?" + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getQueryString());
             } else {
 
                 // set language code list
@@ -522,22 +428,22 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 context.put("codeList", new IngridSysCodeList(request.getLocale()));
 
                 DetailDataPreparerFactory ddpf = new DetailDataPreparerFactory(context, iplugId, dateFields, request, response, replacementFields);
-                
+
                 if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT) || iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)) {
-                	setDefaultViewPage(TEMPLATE_DETAIL_IDF_2_0_0);
+                    setDefaultViewPage(TEMPLATE_DETAIL_IDF_2_0_0);
                 } else {
                     setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                 }
-                
+
                 // if "testIDF"-Parameter exist, use DetailDataPreparer for "IDF" version
                 // TODO: remove code after the iplugs deliver IDF records
                 if (testIDF != null) {
                     File file = new File(testIDF);
-                    if(file.exists()){  
+                    if(file.exists()){
                         StringBuilder stringBuilder = new StringBuilder();
                         Scanner scanner = new Scanner(file);
                         try {
-                            while(scanner.hasNextLine()) {        
+                            while(scanner.hasNextLine()) {
                                 stringBuilder.append(scanner.nextLine() + "\n");
                             }
                         } finally {
@@ -546,8 +452,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         record.put("data", stringBuilder.toString());
                         record.put("compressed", "false");
                     }
-                    
-                    DetailDataPreparer detailPreparer; 
+
+                    DetailDataPreparer detailPreparer;
                     detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT);
                     detailPreparer.prepare(record);
                 } else if (cswURL != null) {
@@ -558,7 +464,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         record.put("data", IOUtils.toString(br));
                         record.put("compressed", "false");
                     }
-                    DetailDataPreparer detailPreparer; 
+                    DetailDataPreparer detailPreparer;
                     detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT);
                     detailPreparer.prepare(record);
                 } else {
@@ -566,11 +472,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     if (log.isDebugEnabled()) {
                         startTimer2 = System.currentTimeMillis();
                     }
-	                DetailDataPreparer detailPreparer = ddpf.getDetailDataPreparer(iPlugVersion);
-	                detailPreparer.prepare(record);
-	                if (log.isDebugEnabled()) {
-	                    log.debug("Executed detail preparer '" + detailPreparer.getClass().getName() + "' within " + (System.currentTimeMillis() - startTimer2) + "ms.");
-	                }
+                    DetailDataPreparer detailPreparer = ddpf.getDetailDataPreparer(iPlugVersion);
+                    detailPreparer.prepare(record);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Executed detail preparer '" + detailPreparer.getClass().getName() + "' within " + (System.currentTimeMillis() - startTimer2) + "ms.");
+                    }
                 }
             }
         } catch (NumberFormatException e) {
@@ -587,10 +493,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             log.debug("Finished preparing detail data for view within " + (System.currentTimeMillis() - startTimer) + "ms.");
             startTimer = System.currentTimeMillis();
         }
-        
+
         super.doView(request, response);
-        
-        // Add page title by hit title 
+
+        // Add page title by hit title
         if(context.get("title") != null){
             org.w3c.dom.Element title = response.createElement("title");
             title.setTextContent((String) context.get("title") + " - " + messages.getString("search.detail.portal.institution"));
@@ -617,123 +523,4 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             log.debug("Finished rendering detail data view within " + (System.currentTimeMillis() - startTimer) + "ms.");
         }
     }
-
-
-
-
-
-    /**
-     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
-     */
-	@Override
-    public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
-        String cmd = request.getParameter("cmd");
-        if (cmd == null) {
-        } else if (cmd.equals("doShowAddressDetail")) {
-            String addrId = request.getParameter("addrId");
-            String plugId = DetailDataPreparerHelper.getAddressPlugIdFromPlugId(request.getParameter("plugid"));
-            if(log.isDebugEnabled()){
-            	log.debug("doShowAddressDetail addrId: " + addrId);
-            	log.debug("doShowAddressDetail plugid: " + plugId);
-            }
-            try {
-                IngridHit hit = getAddressHit(addrId, plugId);
-                if(hit != null) {
-                    response.setRenderParameter("docuuid", addrId);
-                    response.setRenderParameter("plugid", hit.getPlugId());
-                    if(log.isDebugEnabled()){
-                    	log.debug("doShowAddressDetail hit.getPlugId(): " + hit.getPlugId());
-                    }
-                    if (hit.get(".alt_document_id") != null) {
-                        response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
-                    }
-                }
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Error fetching address data for address id: " + addrId, e);
-                } else if (log.isInfoEnabled()) {
-                    log.info("Error fetching address data for address id: " + addrId + "(switch to debug mode for exception.)");
-                }
-            }
-        } else if (cmd.equals("doShowObjectDetail")) {
-            String objId = request.getParameter("objId");
-            String plugId = DetailDataPreparerHelper.getPlugIdFromAddressPlugId(request.getParameter("plugid"));
-            if(log.isDebugEnabled()){
-            	log.debug("doShowObjectDetail objId: " + objId);
-            	log.debug("doShowObjectDetail plugid: " + plugId);
-            }
-            try {
-                IngridHit hit = getObjectHit(objId, plugId);
-                if(hit != null) {
-                    response.setRenderParameter("docuuid", objId);
-                    response.setRenderParameter("plugid", hit.getPlugId());
-                    if(log.isDebugEnabled()){
-                    	log.debug("doShowObjectDetail hit.getPlugId(): " + hit.getPlugId());
-                    }
-                    if (hit.get(".alt_document_id") != null) {
-                        response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
-                    }
-                }
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Error fetching object data for object id: " + objId, e);
-                } else {
-                    log.info("Error fetching object data for object id: " + objId + "(switch to debug mode for exception.)");
-                }
-            }
-        } else if (cmd.equals("doShowDocument")) {
-        	if (request.getParameter("docid") != null) {
-            	response.setRenderParameter("docid", request.getParameter("docid"));
-            }
-            if (request.getParameter("docuuid") != null) {
-            	response.setRenderParameter("docuuid", request.getParameter("docuuid"));
-            }
-            response.setRenderParameter("plugid", request.getParameter("plugid"));
-            if (request.getParameter("alt_document_id") != null) {
-                response.setRenderParameter("altdocid", request.getParameter("alt_document_id"));
-            }
-            if (request.getParameter("maxORs") != null) {
-                response.setRenderParameter("maxORs", request.getParameter("maxORs"));
-            }
-            if (request.getParameter("maxSubORs") != null) {
-                response.setRenderParameter("maxSubORs", request.getParameter("maxSubORs"));
-            }
-        }
-    }
-
-
-
-    private IngridHit getAddressHit(String addrId, String iPlugId) {
-        String[] requestedMetadata = new String[7];
-        requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
-        requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
-        requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
-        requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
-        requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
-        requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
-        requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
-        ArrayList result = (ArrayList) DetailDataPreparerHelper.getHits("T02_address.adr_id:".concat(addrId).concat(" iplugs:\"".concat(DetailDataPreparerHelper.getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
-                requestedMetadata, null);
-        if (!result.isEmpty()) {
-            return (IngridHit) result.get(0);
-        } else {
-            return null;
-        }
-    }
-
-    private IngridHit getObjectHit(String objId, String iPlugId) {
-        String[] requestedMetadata = new String[2];
-        requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
-        requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-        ArrayList result = (ArrayList) DetailDataPreparerHelper.getHits("T01_object.obj_id:".concat(objId).concat(" iplugs:\"".concat(DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
-                requestedMetadata, null);
-        if (!result.isEmpty()) {
-            return (IngridHit) result.get(0);
-        } else {
-            return null;
-        }
-    }
-
-
-    
 }

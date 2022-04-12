@@ -26,15 +26,21 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisAuftrag",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisDefaultValues",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisDoiFieldsEditRestrictions",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisHierarchyLevelName",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisKeywordCatalogue",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisLiterature",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisNewObjectTypes",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisSimulationMdFields",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules",
-    "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks"
-], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks) {
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisMessdaten",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisSoftwareType"
+], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisDoiFieldsEditRestrictions,
+            bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisLiterature, bawMisNewObjectTypes, bawMisSimulationMdFields,
+            bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks, bawMisMessdaten, bawMisSoftwareType) {
 
     return lang.mixin(behaviours, {
 
@@ -84,6 +90,11 @@ define([
         bawUiGeneral: bawUiGeneral,
 
         /**
+         * Literature class and cross-references
+         */
+        bawMisLiterature: bawMisLiterature,
+
+        /**
          * Extra validation rules for BAW-MIS
          */
         bawValidationRules: bawValidationRules,
@@ -91,7 +102,22 @@ define([
         /**
          * Field for contacting REST-API to move files to LFS
          */
-        bawLFSLinks: bawLFSLinks
+        bawLFSLinks: bawLFSLinks,
+
+        /**
+         * Fields for entering measurement values
+         */
+        bawMisMessdaten: bawMisMessdaten,
+
+        /**
+         * Adaption for a new object class 'Software'
+         */
+        bawMisSoftwareType: bawMisSoftwareType,
+
+        /**
+         * Only allow Katadmin and members of 'DOI-Admin' group to edit DOI fields
+         */
+        bawMisDoiFieldsEditRestrictions: bawMisDoiFieldsEditRestrictions,
 
     });
 });

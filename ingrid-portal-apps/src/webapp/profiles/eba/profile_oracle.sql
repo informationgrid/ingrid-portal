@@ -13,6 +13,12 @@ CREATE TABLE  ingrid_temp2 (
     temp_value NUMBER(10,0)
 );
 
+-- Hide '/main-search.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/main-search.psml';
+
+-- Hide '/service-contact.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/service-contact.psml';
+
 -- Hide '/cms/cms-1.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-1.psml';
 
@@ -20,7 +26,7 @@ UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-1.psml';
 UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-2.psml';
 
 -- Show '/application/main-application.psml'
-UPDATE page SET is_hidden = 0 WHERE path = '/application/main-application.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
 
 -- Hide '/main-measures.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/main-measures.psml';
@@ -94,6 +100,10 @@ DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_
 -- Delete temporary table
 DROP TABLE ingrid_temp;
 DROP TABLE ingrid_temp2;
+
+UPDATE fragment SET DECORATOR = 'ingrid-teaser' WHERE NAME = 'ingrid-portal-apps::CMSPortlet1';
+UPDATE fragment SET DECORATOR = 'ingrid-teaser' WHERE NAME = 'ingrid-portal-apps::CMSPortlet2';
+UPDATE fragment SET DECORATOR = 'ingrid-teaser' WHERE NAME = 'ingrid-portal-apps::CMSPortlet3';
 
 -- update max keys
 UPDATE ojb_hl_seq SET max_key=max_key+grab_size+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT';

@@ -37,7 +37,7 @@
                                                 <span>$Codelists.getCodeListValue("8001", $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ), $languageCode)</span>
                                             </div>
                                             #set ($mode_time = $UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" )))
-                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" title="$hit.getHitDetail().getTitle()">
+                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()#if($detailUseParamPlugid)&plugid=$hit.getHitDetail().getPlugId()#end" title="$hit.getHitDetail().getTitle()">
                                                 <h2 class="header">
                                                     $hit.getHitDetail().getTitle()
                                                 </h2>
@@ -54,7 +54,7 @@
                                                     <span class="text">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
                                                 </div>
                                             #end
-                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" title="$hit.getHitDetail().getTitle()">
+                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()#if($detailUseParamPlugid)&plugid=$hit.getHitDetail().getPlugId()#end" title="$hit.getHitDetail().getTitle()">
                                                 <span class="ic-ic-arrow arrow"></span>
                                             </a>
                                         </div>

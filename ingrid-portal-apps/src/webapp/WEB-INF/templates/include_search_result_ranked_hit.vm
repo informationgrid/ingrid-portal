@@ -49,29 +49,25 @@
                     #end
                     <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
                     #renderUDKAddressIcon($rs.udk_class $udkAdrClassName)
-                    #if($rs.docuuid && $rs.docuuid.length() > 0)
-                        <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end">#renderTitle($title.trim())</a>
-                    #else
-                        <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end">#renderTitle($title.trim())</a>
+                    #if($rs.docuuid && $rs.docuuid.length() > -1)
+                        <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address#if($detailUseParamPlugid)&plugid=$rs.plugid#end">#renderTitle($title.trim())</a>
                     #end
                     </h4>
                 #else
                     #set($udkObjClassName = $Codelists.getCodeListValue('8000', $rs.udk_class, $languageCode))
                     <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
                     #renderUDKIcon($rs.udk_class $udkObjClassName)
-                    #if($rs.docuuid && $rs.docuuid.length() > 0)
-                        <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end">#renderTitle($rs.title.trim())</a>
-                    #else   
-                        <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end">#renderTitle($rs.title.trim())</a>
+                    #if($rs.docuuid && $rs.docuuid.length() > -1)
+                        <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid#if($detailUseParamPlugid)&plugid=$rs.plugid#end">#renderTitle($rs.title.trim())</a>
                     #end
                     </h4>
                 #end
             #else
                 <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
                 #if($rs.docuuid && $rs.docuuid.length() > 0)
-                    <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid">#renderTitle($rs.title.trim())</a>
-                #else   
-                    <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end">#renderTitle($rs.title.trim())</a>
+                    <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid#if($detailUseParamPlugid)&plugid=$rs.plugid#end">#renderTitle($rs.title.trim())</a>
+                #elseif($rs.docid && $rs.docid.length() > 0)
+                    <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid">#renderTitle($rs.title.trim())</a>
                 #end
                 </h4>
             #end

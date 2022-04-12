@@ -1,6 +1,6 @@
 #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
 <footer id="footer">
-    <div id="navFunctionsWrapper" class="row ob-box-wide ob-box-padded ob-box-center">
+    <div id="navFunctionsWrapper" class="row">
       <div class="medium-7 columns">
         <h2>Diese Seite</h2>
         <ul id="navFunctions">
@@ -17,23 +17,23 @@
         </ul>
       </div>
     </div>
-    <div id="social-media-footer">
-      <div class="socialmedia ob-box-wide ob-box-padded ob-box-center">
+    <div id="social-media-footer" class="hide-for-small-only">
+      <div class="socialmedia">
           <h2 class="aural">Service</h2>
-          <ul class="columns hide-for-small-only">
+          <ul class="columns">
             <li class="navAdvmis"><a class="external" href="http://www.adv-online.de/" title="Externer Link&nbsp;zur AdV Online Webseite (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">AdV-online</a></li>
           </ul>
       </div>
     </div>
-    <div class="copyright row ob-box-wide ob-box-padded ob-box-center">
-      <div class="small-1 medium-2 columns bkg-logo ">
+    <div class="copyright row">
+      <div class="xsmall-6 small-4 medium-2 columns bkg-logo">
         <a target="_blank" href="http://www.adv-online.de/" title="AdV Webseite">
-            <img src="/decorations/layout/ingrid/images/template/advmis_logo.png" alt="Logo">
+            <img src="/decorations/layout/uvp/images/template/advmis_logo.png" alt="Logo">
         </a>
       </div>
-      <div class="legal-links small-12 medium-10 columns">
+      <div class="legal-links small-18 medium-21 columns">
         <div class="row">
-          <div class="columns hide-for-small-only">
+          <div class="columns hide-for-xsmall-only hide-for-small-only">
               #parse("/decorations/layout/ingrid/templates/footer/body_footer_menu.vm")
           </div>
         </div>

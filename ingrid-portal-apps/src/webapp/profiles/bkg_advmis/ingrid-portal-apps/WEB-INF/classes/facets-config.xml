@@ -161,47 +161,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         </facets>
     </facet>
     <facet>
-        <name>INSPIRE</name>
-        <id>inspire</id>
-        <isOpen>true</isOpen>
-        <facets>
-        <!-- INSPIRE-relevant true-->
-            <facet>
-                <name>Ja</name>
-                <query>t04_search.searchterm:inspireidentifiziert</query>
-                <id>inspire_true</id>
-            </facet>
-        <!-- INSPIRE-relevant false -->
-            <facet>
-                <name>Nein</name>
-                <query>-t04_search.searchterm:inspireidentifiziert</query>
-                <id>inspire_false</id>
-            </facet>
-        </facets>
-    </facet>
-    <facet>
-        <name>Opendata</name>
-        <id>opendata</id>
-        <isOpen>true</isOpen>
-        <facets>
-        <!-- Opendata true-->
-           <facet>
-                <name>Ja</name>
-                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
-                <id>opendata_true</id>
-            </facet>
-        <!-- Opendata false-->
-           <facet>
-                <name>Nein</name>
-                <query>-t04_search.searchterm:opendata -t04_search.searchterm:opendataident</query>
-                <id>opendata_false</id>
-            </facet>
-        </facets>
-    </facet>
-    <facet>
         <name>Produktgruppe</name>
         <id>productgroup</id>
-        <isOpen>true</isOpen>
         <!-- Werte aus der Liste für Produktgruppe (ISO Element alternateTitle), Liste siehe unten -->
         <facets>
         <!-- Digitale Landschaftsmodelle -->
@@ -413,6 +374,97 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>Verwaltet von</name>
         <id>maintain</id>
         <field>t02_address.administrative_area_value</field>
-        <isOpen>true</isOpen>
+    </facet>
+    <facet>
+        <name>Opendata</name>
+        <id>opendata</id>
+        <facets>
+        <!-- Opendata true-->
+           <facet>
+                <name>Ja</name>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
+                <id>opendata_true</id>
+            </facet>
+        <!-- Opendata false-->
+           <facet>
+                <name>Nein</name>
+                <query>-t04_search.searchterm:opendata -t04_search.searchterm:opendataident</query>
+                <id>opendata_false</id>
+            </facet>
+        </facets>
+    </facet>
+    <facet>
+        <name>INSPIRE</name>
+        <id>inspire</id>
+        <facets>
+        <!-- INSPIRE-relevant true-->
+            <facet>
+                <name>Ja</name>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
+                <id>inspire_true</id>
+            </facet>
+        <!-- INSPIRE-relevant false -->
+            <facet>
+                <name>Nein</name>
+                <query>-t04_search.searchterm:inspireidentifiziert</query>
+                <id>inspire_false</id>
+            </facet>
+        </facets>
+    </facet>
+    <!-- Kategorie -->
+    <facet>
+        <name>Kategorie</name>
+        <id>category</id>
+        <categoryOnly>true</categoryOnly>
+        <facets>
+        <!-- Anwendung -->
+            <facet>
+                <name>Anwendungen</name>
+                <query>hierarchylevel:application</query>
+                <id>others</id>
+                <parentId>type</parentId>
+                <icon>ic-chemie</icon>
+            </facet>
+        <!-- Geo-Information / Karte -->
+            <facet>
+                <name>Daten</name>
+                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType OR hierarchylevel:tile)</query>
+                <id>data</id>
+                <parentId>type</parentId>
+                <icon>ic-map</icon>
+            </facet>
+        <!-- Geodatendienst -->
+            <facet>
+                <name>Dienste</name>
+                <query>hierarchylevel:service</query>
+                <id>service</id>
+                <parentId>type</parentId>
+                <icon>ic-ic-dienste</icon>
+            </facet>
+        <!-- INSPIRE-relevant -->
+            <facet>
+                <name>INSPIRE</name>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
+                <id>inspire_true</id>
+                <parentId>inspire</parentId>
+                <icon>ic-inspire</icon>
+            </facet>
+        <!-- Opendata -->
+           <facet>
+                <name>Opendata</name>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
+                <id>opendata_true</id>
+                <parentId>opendata</parentId>
+                <icon>ic-opendata</icon>
+            </facet>
+        <!-- AdV-Produkt -->
+           <facet>
+                <name>AdV-Produkt</name>
+                <query>t04_search.searchterm:advmis</query>
+                <id>adv_true</id>
+                <parentId>adv</parentId>
+                <icon>/decorations/layout/ingrid/images/template/adv.jpg</icon>
+            </facet>
+        </facets>
     </facet>
 </facets>

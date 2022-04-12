@@ -1,5 +1,7 @@
 #if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
     <meta name="robots" content="noindex,follow" />
+#elseif($currentPage.startsWith('/service-myportal.psml'))
+    <meta name="robots" content="noindex,nofollow" />
 #else
     <meta name="robots" content="index,follow" />
 #end

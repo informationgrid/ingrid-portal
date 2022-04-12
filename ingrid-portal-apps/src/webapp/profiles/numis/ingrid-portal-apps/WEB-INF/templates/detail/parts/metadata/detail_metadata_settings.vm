@@ -51,6 +51,7 @@
 #set($xPathListTimeTimePeriodInstantPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimeInstant/gml:timePosition")
 #set($xPathListTimeTimePeriodBeginPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition")
 #set($xPathListTimeTimePeriodEndPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition")
+#set($xPathListTimeTimePeriodEndIndeterminatePosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition/@indeterminatePosition")
 ## Status
 #set($xPathListTimeMDProgressCode = "./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue")
 ## Periodizität
@@ -172,10 +173,11 @@
 #### Digitale Repräsentation
 #set($xPathInfo1SpatialRepresentationType = "./gmd:identificationInfo/*/gmd:spatialRepresentationType")
 #set($xPathInfo1MDSpatialRepresentationTypeCode = "gmd:MD_SpatialRepresentationTypeCode/@codeListValue")
-#### Topologieinformation
-#set($xPathInfo1MD_VectorSpatialRepresentationTopologyLevel = "./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue")
 #### Vektorformat
-#set($xPathInfo1MD_VectorSpatialRepresentationGeometricObjects = "./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects")
+#set($xPathInfo1MD_VectorSpatialRepresentationGeometricObjects = "./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation")
+#set($xPathInfo1MD_VectorSpatialRepresentationGeometricObjectsLevel = "./gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue")
+#set($xPathInfo1MD_VectorSpatialRepresentationGeometricObjectsType = "./gmd:geometricObjects/gmd:MD_GeometricObjects/gmd:geometricObjectType/gmd:MD_GeometricObjectTypeCode/@codeListValue")
+#set($xPathInfo1MD_VectorSpatialRepresentationGeometricObjectsCount = "./gmd:geometricObjects/gmd:MD_GeometricObjects/gmd:geometricObjectCount")
 #### Erstellungsmaßstab
 #set($xPathInfo1MDResolution = "./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution")
 #### Symbolkatalog
@@ -199,7 +201,6 @@
     $xPathInfo1LILineageStatement,
     $xPathInfo1SpatialRepresentationType,
     $xPathInfo1MDSpatialRepresentationTypeCode,
-    $xPathInfo1MD_VectorSpatialRepresentationTopologyLevel,
     $xPathInfo1MD_VectorSpatialRepresentationGeometricObjects,
     $xPathInfo1MDResolution,
     $xPathInfo1PortrayalCatalogueInfo,
@@ -539,3 +540,4 @@
 
 ## BAW BWAStr
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_bwa_str.vm")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_additional.vm")

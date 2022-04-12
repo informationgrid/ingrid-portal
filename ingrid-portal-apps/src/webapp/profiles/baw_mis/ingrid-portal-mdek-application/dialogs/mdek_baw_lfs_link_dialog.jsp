@@ -178,6 +178,7 @@
 
             function setValues(data) {
                 if (!data) {
+                    setDefaultValues();
                     return;
                 }
 
@@ -188,6 +189,12 @@
                     registry.byId("lfsLinkURLType").set("value", data.urlType);
                 }, 100);
 
+            }
+
+            function setDefaultValues() {
+                setTimeout(function () {
+                    registry.byId("lfsLinkURLType").set("value", "1");
+                }, 500);
             }
 
             function showReceipt() {

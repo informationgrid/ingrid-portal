@@ -1,0 +1,13 @@
+#if($cmsItemValue)
+<div class="about-wrapper dark" style="background-image: url('/decorations/layout/uvp/images/template/drops-small.svg');">
+    <h2 class="hide-for-large">
+        $cmsItemTitle
+    </h2>
+    <div class="row">
+        <h2 class="show-for-large">
+            $cmsItemTitle
+        </h2>
+        $cmsItemValue
+    </div>
+</div>
+#end

@@ -13,20 +13,26 @@
     function getOSMLayer(attribution){
         var osmUrl='$leafletBgLayerWMTS';
         var osmAttrib='$leafletBgLayerAttribution';
+        var osmOpacity='$leafletBgLayerOpacity';
         if(attribution){
             osmAttrib = osmAttrib + "" + attribution;
         }
-        return new L.TileLayer(osmUrl, {attribution: osmAttrib});
+        return new L.TileLayer(osmUrl, {
+            attribution: osmAttrib,
+            opacity: osmOpacity
+        });
     }
 
     function getWMSLayer(layerUrl, layerName, attribution){
         var osmAttrib='$leafletBgLayerAttribution';
+        var osmOpacity='$leafletBgLayerOpacity';
         if(attribution){
             osmAttrib += attribution;
         }
         return new L.tileLayer.wms(layerUrl, {
             layers: layerName,
-            attribution: osmAttrib
+            attribution: osmAttrib,
+            opacity: osmOpacity
         });
     }
 

@@ -17,7 +17,7 @@
         #parse("/decorations/layout/ingrid/templates/header/head_script_additional.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_style.vm")
     </head>
-    <body>
+#parse("/decorations/layout/ingrid/templates/header/body.vm")
     #if($currentPage != "/main-measures.psml")
         <div class="container">
     #end

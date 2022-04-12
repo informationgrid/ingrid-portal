@@ -176,19 +176,197 @@
                             #end
                             </span>
                         </a>
-                        <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion">
+                        <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
                             <div class="boxes">
                             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
-                            #foreach($subFacet in $facet.getFacets())
-                                #if($isSelected)
-                                    #if($subFacet.isSelect())
-                                        #renderFacetCategoryEntry($subFacet $facet.getId())
+                            #set($count = 0)
+                            #set($isGreaterThanSubFacetsCount = false)
+                            #set($isQueryTypeOR = false)
+                            #if($facet.getQueryType() == "OR")
+                                #set($isQueryTypeOR = true)
+                            #end
+                            #set($listLength = $subFacetsCount)
+                            #if($facet.getListLength() != 0)
+                                #set($listLength = $facet.getListLength())
+                            #end
+                            #if($isSelected)
+                                #set($hasUnselectedDisplayFacet = false)
+                                #if($facet.getToggleGroups())
+                                    #foreach($toggleGroup in $facet.getToggleGroups())
+                                        #set($listedFacets = [])
+                                        #set($listedFacetsIsSelected = false)
+                                        #set($unlistedSelectedFacets = [])
+                                        #set($unlistedFacets = [])
+                                        #foreach($subFacet in $facet.getFacets())
+                                            #if($subFacet.isSelect())
+                                                #if($toggleGroup.indexOf($subFacet.getId()) > -1)
+                                                    #set($add = $listedFacets.add($subFacet))
+                                                    #if($subFacet.getToggle())
+                                                        #if($subFacet.getToggle().isSelect())
+                                                            #set($listedFacetsIsSelected = true)
+                                                        #end
+                                                    #end
+                                                #else
+                                                    #set($add = $unlistedSelectedFacets.add($subFacet))
+                                                #end
+                                            #else 
+                                                #set($add = $unlistedFacets.add($subFacet))
+                                            #end
+                                        #end
+                                        #if(!$listedFacets.isEmpty())
+                                            #set($toggleGroupIds = "")
+                                            #foreach($listedFacet in $listedFacets)
+                                                #if(!$toggleGroupIds.isEmpty())
+                                                    #set($toggleGroupIds = $toggleGroupIds + ",")
+                                                #end
+                                                #if($listedFacet.getToggle())
+                                                    #set($toggleGroupIds = $toggleGroupIds + $listedFacet.getToggle().getId())
+                                                #end
+                                            #end
+                                            #if(!$toggleGroupIds.isEmpty())
+                                                #set ($action = $renderResponse.createActionURL())
+                                                $action.setParameter($facet.getId(), "$toggleGroupIds")
+                                                <div class="form-element boxed toggle-group">
+                                                    <label class="control toggle">
+                                                        <input type="checkbox" #if($listedFacetsIsSelected)checked#end onclick="location.href='$action'">
+                                                        <span class="toggle-slider round"></span>
+                                                    </label>
+                                                    <span class="toggle-label checked #if(!$listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date.on")</span>
+                                                    <span class="toggle-label unchecked #if($listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date.off")</span>
+                                                </div>
+                                                #foreach($listedFacet in $listedFacets)
+                                                    #renderFacetCategoryEntry($listedFacet $facet.getId())
+                                                #end
+                                                #if(!$unlistedSelectedFacets.isEmpty() || !$unlistedFacets.isEmpty())
+                                                    <hr class="no-margin border-dotted">
+                                                #end
+                                            #end
+                                        #end
+                                        #if(!$unlistedSelectedFacets.isEmpty())
+                                            #foreach($unlistedSelectedFacet in $unlistedSelectedFacets)
+                                                #renderFacetCategoryEntry($unlistedSelectedFacet $facet.getId())
+                                            #end
+                                            #if(!$unlistedFacets.isEmpty())
+                                                <hr class="no-margin border-dotted">
+                                            #end
+                                        #end
+                                        #if(!$unlistedFacets.isEmpty())
+                                            #foreach($unlistedFacet in $unlistedFacets)
+                                                #renderFacetCategoryEntry($unlistedFacet $facet.getId())
+                                            #end
+                                        #end
                                     #end
                                 #else
-                                    #renderFacetCategoryEntry($subFacet $facet.getId())
+                                    #foreach($subFacet in $facet.getFacets())
+                                        #if($subFacet.isSelect())
+                                            #renderFacetCategoryEntry($subFacet $facet.getId())
+                                        #elseif($subFacet.isDisplay())
+                                            #set($hasUnselectedDisplayFacet = true)
+                                        #end
+                                    #end
+                                #end
+                                #if($hasUnselectedDisplayFacet)
+                                    <hr class="no-margin border-dotted">
+                                    #foreach($subFacet in $facet.getFacets())
+                                        #if(!$subFacet.isSelect())
+                                            #if($facet.getListLength() != 0 && $count == $listLength)
+                                                #set($isGreaterThanSubFacetsCount = true)
+                                                <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
+                                                    <div class="accordion-item text-right" data-accordion-item="">
+                                                        <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
+                                            #end
+                                            #renderFacetCategoryEntry($subFacet $facet.getId())
+                                            #if($subFacet.isDisplay())
+                                                #set($count = $count + 1)
+                                            #end
+                                        #end
+                                    #end
+                                #end
+                            #else
+                                #if($facet.getToggleGroups())
+                                    #foreach($toggleGroup in $facet.getToggleGroups())
+                                        #set($listedFacets = [])
+                                        #set($listedFacetsIsSelected = false)
+                                        #set($unlistedFacets = [])
+                                        #foreach($subFacet in $facet.getFacets())
+                                            #if($toggleGroup.indexOf($subFacet.getId()) > -1)
+                                                #set($add = $listedFacets.add($subFacet))
+                                                #if($subFacet.getToggle())
+                                                    #if($subFacet.getToggle().isSelect())
+                                                        #set($listedFacetsIsSelected = true)
+                                                    #end
+                                                #end
+                                            #else 
+                                                #set($add = $unlistedFacets.add($subFacet))
+                                            #end
+                                        #end
+                                        #if(!$listedFacets.isEmpty())
+                                            #set($toggleGroupIds = "")
+                                            #foreach($listedFacet in $listedFacets)
+                                                #if(!$toggleGroupIds.isEmpty())
+                                                    #set($toggleGroupIds = $toggleGroupIds + ",")
+                                                #end
+                                                #if($listedFacet.getToggle())
+                                                    #set($toggleGroupIds = $toggleGroupIds + $listedFacet.getToggle().getId())
+                                                #end
+                                            #end
+                                            #if(!$toggleGroupIds.isEmpty())
+                                                #set ($action = $renderResponse.createActionURL())
+                                                $action.setParameter($facet.getId(), "$toggleGroupIds")
+                                                <div class="form-element boxed toggle-group">
+                                                    <label class="control toggle">
+                                                        <input type="checkbox" #if($listedFacetsIsSelected)checked#end onclick="location.href='$action'">
+                                                        <span class="toggle-slider round"></span>
+                                                    </label>
+                                                    <span class="toggle-label checked #if(!$listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date.on")</span>
+                                                    <span class="toggle-label unchecked #if($listedFacetsIsSelected)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date.off")</span>
+                                                </div>
+                                                #foreach($listedFacet in $listedFacets)
+                                                    #renderFacetCategoryEntry($listedFacet $facet.getId())
+                                                #end
+                                                #if(!$unlistedFacets.isEmpty())
+                                                    <hr class="no-margin border-dotted">
+                                                #end
+                                            #end
+                                        #end
+                                        #if(!$unlistedFacets.isEmpty())
+                                            #foreach($unlistedFacet in $unlistedFacets)
+                                                #renderFacetCategoryEntry($unlistedFacet $facet.getId())
+                                            #end
+                                        #end
+                                    #end
+                                #else
+                                    #foreach($subFacet in $facet.getFacets())
+                                        #if($facet.getListLength() != 0 && $count == $listLength)
+                                            #set($isGreaterThanSubFacetsCount = true)
+                                            <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
+                                                <div class="accordion-item text-right" data-accordion-item="">
+                                                    <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="facet.getId()_more" aria-hidden="false" style="display: none;">
+                                        #end
+                                        #renderFacetCategoryEntry($subFacet $facet.getId())
+                                        #if($subFacet.isDisplay() || $subFacet.getFacetValue())
+                                            #set($count = $count + 1)
+                                        #end
+                                    #end
                                 #end
                             #end
-                           </div>
+                            #if($isGreaterThanSubFacetsCount)
+                                            </div>
+                                            <a href="#" class="more" aria-controls="$subFacet.getParent().getId()_more" role="tab" id="$subFacet.getParent().getId()_more-label" aria-expanded="false" aria-selected="false">
+                                                <div class="helper plus">
+                                                    <span class="ic-ic-plus"></span>
+                                                    <span class="text">$MESSAGES.getString("searchResult.facete.category.plus")</span>
+                                                </div>
+                                                <div class="helper minus">
+                                                    <span class="ic-ic-minus"></span>
+                                                    <span class="text">$MESSAGES.getString("searchResult.facete.category.minus")</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                #set($isGreaterThanSubFacetsCount = false)
+                            #end
+                            </div>
                         </div>
                     </li>
                 </ul>
@@ -203,8 +381,8 @@
     <a class="icon" href="$action">
     #set ($action = $renderResponse.createActionURL())
         <span class="ic-ic-cross"></span>
-        <span class="text">$MESSAGES.getString("$treeFacet.getName()")</span>
         <span class="nr-results">($treeFacet.getFacetValue())</span>
+        <span class="text">$MESSAGES.getString("$treeFacet.getName()")</span>
     </a>
     <div class="boxes">
     #set($isSelectedTree = false)
@@ -237,7 +415,12 @@
     <div class="form-element boxed">
         <div class="input-check">
             <div class="control-group">
-                <label class="control control--radio" for="facet-$facet.getId()">
+                #if($facet.getParent().getQueryType() == "OR")
+                    #set($isCheckbox = true)
+                #else
+                    #set($isCheckbox = false)
+                #end
+                <label class="control #if($isCheckbox) control--checkbox #else control--radio #end" for="facet-$facet.getId()">
                     #set ($hasShortName = false)
                     #if($facet.getShortName())
                       #set ($hasShortName = true)
@@ -248,34 +431,28 @@
                     #end
                     <input id="facet-$facet.getId()" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'">
                     <span class="control__indicator"></span>
+                    <span class="nr-results">
+                    #if($number)
+                        ($number)
+                    #else
+                        #if($facet.isSelect() || $facet.isDisplay())
+                        (0)
+                        #elseif($facet.getParent().isSelect() && $facet.isSelect())
+                        (0)
+                        #elseif(!$facet.getParent().isSelect() && !$facet.isSelect())
+                        (0)
+                        #end
+                    #end
+                    </span>
+                    <span class="text">
                     #if($facet.getCodelistId())
                        $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
                     #else
                         $MESSAGES.getString("$facet.getName()")
                     #end
-                    <span class="nr-results">
-                    #if($number)
-                        ($number)
-                    #else
-                        (0)
-                    #end
                     </span>
                 </label>
             </div>
-            #if($facet.getToggle())
-                #set($toggle = $facet.getToggle())
-                #set($toggleIsSelect = $toggle.isSelect())
-                #set ($action = $renderResponse.createActionURL())
-                $action.setParameter("$parentId", "$toggle.getId()")
-                <div class="control-group">
-                    <label class="control toggle">
-                        <input type="checkbox" #if($toggleIsSelect)checked#end onclick="location.href='$action'">
-                        <span class="toggle-slider round"></span>
-                    </label>
-                    <span class="toggle-label checked #if(!$toggleIsSelect)is-hidden#end">$MESSAGES.getString("common.toggle.approval.date")</span>
-                    <span class="toggle-label unchecked #if($toggleIsSelect)is-hidden#end">$MESSAGES.getString("common.toggle.all")</span>
-                </div>
-            #end
         </div>
     </div>
 #end
@@ -384,4 +561,28 @@
             #renderCrossLink($action $MESSAGES.getString("searchResult.facete.wildcard.name.delete"))
         #end
     </form>
+#end
+
+#if($restUrlFacetValue)
+<script>
+    $('.control--checkbox').each(function(index) {
+        var element = $(this);
+        var input = element.find('input');
+        var spanNr = element.find('.nr-results');
+        if(input.length > 0 && spanNr.length > 0) {
+            var id = input.attr('id');
+            var spanNrValue= spanNr.text().trim();
+            if(id && spanNrValue === "(0)") {
+                jQuery.get("$restUrlFacetValue?facetId=" + id.replace('facet-', '') )
+                .done(function(data, textStatus, jqxhr) {
+                    if(data) {
+                        spanNr.text('(' + data + ')');
+                    }
+                })
+                .error(function () {
+                });
+            }
+        }
+    })
+</script>
 #end

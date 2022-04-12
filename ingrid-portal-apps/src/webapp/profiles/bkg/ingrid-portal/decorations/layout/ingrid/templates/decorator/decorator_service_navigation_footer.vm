@@ -17,10 +17,12 @@
         #if($defaultTitle == "ingrid.page.language")
             #set($linkTitle = $defaultTitle)
         #end
+        #set($target = "")
         #if($element.url == "/privacy.psml")
             #set($linkUrl = "https://www.bkg.bund.de/DE/Service/Datenschutz/datenschutz.html")
+            #set($target = "target=\"_blank\"")
         #end
-        <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end><span class="text">$linkName</span></a>
+        <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end $target><span class="text">$linkName</span></a>
       #end
     #end
 #end

@@ -50,9 +50,15 @@ define([
         run: function() {
             var promise = this._createCustomFields();
             topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class1") {
+                var isGeodata = data.objClass === "Class1";
+                var isProject = data.objClass === "Class4";
+
+                if (isGeodata) {
                     domClass.remove("uiElementAdd" + AUFTRAGSNUMMER_ID, "hide");
                     domClass.remove("uiElementAdd" + AUFTRAGSTITEL_ID, "hide");
+                } else if (isProject) {
+                    domClass.remove("uiElementAdd" + AUFTRAGSNUMMER_ID, "hide");
+                    domClass.add("uiElementAdd" + AUFTRAGSTITEL_ID, "hide");
                 } else {
                     domClass.add("uiElementAdd" + AUFTRAGSNUMMER_ID, "hide");
                     domClass.add("uiElementAdd" + AUFTRAGSTITEL_ID, "hide");
@@ -75,7 +81,8 @@ define([
                     id: AUFTRAGSNUMMER_ID,
                     name: message.get("ui.obj.baw.auftragsnummer.title"),
                     help: message.get("ui.obj.baw.auftragsnummer.help"),
-                    isMandatory: true,
+                    // Different from baw_mis Profile
+                    isMandatory: false,
                     visible: "optional",
                     style: "width: 100%"
                 }),
@@ -89,7 +96,8 @@ define([
                     name: message.get("ui.obj.baw.auftragstitel.title"),
                     help: message.get("ui.obj.baw.auftragstitel.help"),
                     visible: "optional",
-                    isMandatory: true,
+                    // Different from baw_mis Profile
+                    isMandatory: false,
                     style: "width: 100%"
                 }),
                 "uiElement1000", "after");

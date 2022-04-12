@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import de.ingrid.mdek.upload.storage.validate.VirusScanException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -140,33 +141,42 @@ public class RemoteServiceVirusScanValidator implements Validator {
     private static class ServiceResponse {
         public String id;
         public Date date;
-        @JsonDeserialize(converter=ResourceToPathConverter.class)
+        @JsonDeserialize(converter = ResourceToPathConverter.class)
         public Path resource;
         public ScanType type;
         public ScanResult scan;
         public boolean complete;
+
         @JsonIgnore
         public ScanStatus getScanStatus() {
             return scan != null ? scan.status : ScanStatus.FINISHED;
         }
+
         @JsonIgnore
         public ScanResultCode getScanResult() {
             return scan != null ? scan.result : ScanResultCode.UNDEFINED;
         }
+
         @JsonIgnore
         public String getScanReport() {
             return scan != null ? scan.report : "";
         }
+
         @JsonIgnore
         public Map<Path, String> getInfections() {
             final Map<Path, String> result = new HashMap<>();
-            final ResourceToPathConverter pathConverter = new ResourceToPathConverter();
             if (scan != null) {
                 for (final InfectionDetail infection : scan.infections) {
-                    result.put(pathConverter.convert(infection.location), infection.virus);
+                    // use the path without any further modification
+                    result.put( Paths.get( infection.location ), infection.virus );
                 }
             }
             return result;
+        }
+
+        @JsonIgnore
+        public Boolean checkScanError(String scanReport) {
+            return scanReport.contains( "errors" ) ? true : false;
         }
     }
 
@@ -259,10 +269,12 @@ public class RemoteServiceVirusScanValidator implements Validator {
             // analyze result
             if (response != null) {
                 final ScanResultCode resultCode = response.getScanResult();
+                String scanReport = response.getScanReport();
+
                 if (resultCode == ScanResultCode.INFECTED) {
                     final Map<Path, String> infections = response.getInfections();
-                    log.warn("Virus found: " + response.getScanReport());
-                    throw new VirusFoundException("Virus found.", path+URL_PATH_SEPARATOR+file, infections);
+                    log.warn("Virus found: " + scanReport);
+                    throw new VirusFoundException("Virus found.", path+URL_PATH_SEPARATOR+file, scanReport, infections);
                 }
                 else if (resultCode != ScanResultCode.OK) {
                     try {
@@ -276,7 +288,13 @@ public class RemoteServiceVirusScanValidator implements Validator {
                 }
                 else {
                     if (log.isDebugEnabled()) {
-                        log.debug("Scan result: " + response.getScanReport());
+                        log.debug("Scan result: " + scanReport);
+                    }
+
+                    // error is found
+                    if( scanReport.contains( "errors" ) ){
+                        log.info("Scan error found.");
+                        throw new VirusScanException("Error during scan.", path+URL_PATH_SEPARATOR+file, scanReport);
                     }
                 }
             }

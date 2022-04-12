@@ -65,13 +65,8 @@ import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
-import de.ingrid.utils.query.FuzzyFieldQuery;
-import de.ingrid.utils.query.FuzzyTermQuery;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.query.RangeQuery;
-import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.query.WildCardFieldQuery;
-import de.ingrid.utils.query.WildCardTermQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.udk.UtilsDate;
@@ -139,7 +134,7 @@ public class UtilsFacete {
      * @param query
      * @throws ParseException
      */
-    public static void facetePrepareInGridQuery (PortletRequest request, IngridQuery query) throws ParseException{
+    public static IngridQuery facetePrepareInGridQuery (PortletRequest request, IngridQuery query) throws ParseException{
 
         // Check for pre prozess doAction.
         String portalTerm = request.getParameter("q");
@@ -181,13 +176,7 @@ public class UtilsFacete {
         }
 
         // Set selection to query
-        setFacetQuery(portalTerm, config, query);
-
-        addToQueryMap(request, query);
-        addToQueryGeothesaurus(request, query);
-        addToQueryAttribute(request, query);
-        addToQueryAreaAddress(request, query);
-        addToQueryWildcard(request, query);
+        query = getQueryFacets(request, config, query);
 
         // Get facet query from config file.
         if(query.get("FACETS") == null){
@@ -203,8 +192,21 @@ public class UtilsFacete {
         if(log.isDebugEnabled()){
             log.debug("Query Facete: " + query);
         }
+        return query;
+    }
+    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query) throws ParseException {
+        return getQueryFacets(request, config, query, null);
     }
 
+    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query, String parentId) throws ParseException {
+        query = setFacetQuery(config, query, parentId);
+        addToQueryMap(request, query);
+        addToQueryGeothesaurus(request, query);
+        addToQueryAttribute(request, query);
+        addToQueryAreaAddress(request, query);
+        addToQueryWildcard(request, query);
+        return query;
+    }
     /**
      * Set facet to context
      *
@@ -241,6 +243,7 @@ public class UtilsFacete {
         context.put( "facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        context.put( "leafletBgLayerOpacity", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY));
 
         String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
         String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
@@ -290,49 +293,73 @@ public class UtilsFacete {
             Set set = new TreeSet(request.getParameterMap().keySet());
             if(config != null){
                 HashMap<String, String> lastSelection = null;
-                boolean facetIsSelect = false;
+                boolean facetIsSelect = false; 
+                boolean isQueryTypeOr = false;
+                String keyQueryTypeOr = null;
+                
+                if(request.getParameter("doMultiFacets") != null) {
+                    isQueryTypeOr = true;
+                    keyQueryTypeOr = request.getParameter("doMultiFacets");
+                    IngridFacet tmpFacet = getFacetById(config, keyQueryTypeOr);
+                    if(tmpFacet.getFacets() != null) {
+                        for(IngridFacet tmpSubFacet : tmpFacet.getFacets()){
+                            if(tmpSubFacet.isSelect()) {
+                                tmpSubFacet.setSelect(false);
+                            }
+                        }
+                    }
+                }
                 for (Iterator<String> iterator = set.iterator(); iterator.hasNext();) {
                     String key = iterator.next();
                     String value = request.getParameter(key);
                     // Set facet selection
                     if(value != null){
+                        if(isQueryTypeOr) {
+                            key = keyQueryTypeOr;
+                            if(key.equals(value)) {
+                               continue;
+                            }
+                        }
                         resetFacetConfigValues(config, null);
                         IngridFacet tmpFacetKey = getFacetById(config, key);
                         if(tmpFacetKey != null){
-                            IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), value);
-                            if(tmpFacetValue != null){
-                                if(tmpFacetValue.isSelect()){
-                                    tmpFacetValue.setSelect(false);
-                                    if(tmpFacetValue.getFacets() != null){
-                                        for(IngridFacet tmpSubFacet : tmpFacetValue.getFacets()){
-                                            tmpSubFacet.setSelect(false);
+                            String[] valueIds = value.split(",");
+                            for (String valueId : valueIds) {
+                                IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), valueId);
+                                if(tmpFacetValue != null){
+                                    if(tmpFacetValue.isSelect()){
+                                        tmpFacetValue.setSelect(false);
+                                        if(tmpFacetValue.getFacets() != null){
+                                            for(IngridFacet tmpSubFacet : tmpFacetValue.getFacets()){
+                                                tmpSubFacet.setSelect(false);
+                                            }
                                         }
+                                    }else{
+                                        tmpFacetValue.setSelect(true);
+                                        facetIsSelect = true;
+                                        // Set last selection
+                                        if(lastSelection == null){
+                                            lastSelection = new HashMap<>();
+                                        }
+                                        lastSelection.put(tmpFacetKey.getId() + ":" + tmpFacetValue.getId(), tmpFacetValue.getId());
                                     }
-                                }else{
-                                    tmpFacetValue.setSelect(true);
-                                    facetIsSelect = true;
-                                    // Set last selection
-                                    if(lastSelection == null){
-                                        lastSelection = new HashMap<>();
+                                    if(isFacetConfigSelect(tmpFacetKey.getFacets())){
+                                        tmpFacetKey.setSelect(facetIsSelect);
                                     }
-                                    lastSelection.put(tmpFacetKey.getId() + ":" + tmpFacetValue.getId(), tmpFacetValue.getId());
+                                    resetFacetConfigValues(config, null);
                                 }
-                                if(isFacetConfigSelect(tmpFacetKey.getFacets())){
-                                    tmpFacetKey.setSelect(facetIsSelect);
-                                }
-                                resetFacetConfigValues(config, null);
-                            }
-                            String queryType = tmpFacetKey.getQueryType();
-                            if(queryType != null && queryType.equals("OR")) {
-                                if(tmpFacetKey.getFacets() != null) {
-                                    for(IngridFacet tmpSubFacet : tmpFacetKey.getFacets()){
-                                        IngridFacet toggle = tmpSubFacet.getToggle();
-                                        if(toggle != null) {
-                                            if(toggle.getId().equals(value)){
-                                                if(toggle.isSelect()) {
-                                                    toggle.setSelect(false);
-                                                } else {
-                                                    toggle.setSelect(true);
+                                String queryType = tmpFacetKey.getQueryType();
+                                if(queryType != null && queryType.equals("OR")) {
+                                    if(tmpFacetKey.getFacets() != null) {
+                                        for(IngridFacet tmpSubFacet : tmpFacetKey.getFacets()){
+                                            IngridFacet toggle = tmpSubFacet.getToggle();
+                                            if(toggle != null) {
+                                                if(toggle.getId().equals(valueId)){
+                                                    if(toggle.isSelect()) {
+                                                        toggle.setSelect(false);
+                                                    } else {
+                                                        toggle.setSelect(true);
+                                                    }
                                                 }
                                             }
                                         }
@@ -2418,126 +2445,29 @@ public class UtilsFacete {
         }
     }
 
-    public static void setFacetQuery(String term, List<IngridFacet> configNode, IngridQuery query) throws ParseException{
-        if(term == null){
-            term = "";
-        }
-        if(term != null){
-            String _term = term;
-            term = "";
+    public static IngridQuery setFacetQuery(List<IngridFacet> configNode, IngridQuery query) throws ParseException {
+        return setFacetQuery(configNode, query, null);
+    }
+
+    public static IngridQuery setFacetQuery(List<IngridFacet> configNode, IngridQuery query, String parent) throws ParseException {
+        if(query != null) {
+            String term = "";
             for (IngridFacet ingridFacet : configNode){
-                if(ingridFacet.getFacets() != null){
-                    term = getQuerySelection(term, ingridFacet.getQueryType(), ingridFacet.getFacets());
-                }
-            }
-            IngridQuery tmpQuery = QueryStringParser.parse(term);
-
-            String origin = query.getString(IngridQuery.ORIGIN);
-            if(!_term.isEmpty() && origin != null && !origin.isEmpty()){
-                ClauseQuery originClause = new ClauseQuery(true, false);
-
-                originClause.put(IngridQuery.ORIGIN, origin);
-                query.remove(IngridQuery.ORIGIN);
-
-                for(TermQuery tmp :query.getTerms()){
-                    originClause.addTerm(tmp);
-                }
-                query.remove(IngridQuery.TERM_KEY);
-                for(ClauseQuery tmp : query.getClauses()){
-                    originClause.addClause(tmp);
-                }
-                query.remove("clause");
-                for(FieldQuery tmp : query.getDataTypes()){
-                    originClause.addField(tmp);
-                }
-                for(FieldQuery tmp : query.getFields()){
-                    originClause.addField(tmp);
-                    tmpQuery.removeFromList("field", tmp);
-                }
-                query.remove("field");
-                for(WildCardFieldQuery tmp : query.getWildCardFieldQueries()){
-                    originClause.addWildCardFieldQuery(tmp);
-                }
-                query.remove("wildcard_field");
-                for(WildCardTermQuery tmp : query.getWildCardTermQueries()){
-                    originClause.addWildCardTermQuery(tmp);
-                }
-                query.remove("wildcard_term");
-                for(FuzzyFieldQuery tmp : query.getFuzzyFieldQueries()){
-                    originClause.addFuzzyFieldQuery(tmp);
-                }
-                query.remove("fuzzy_field");
-                for(FuzzyTermQuery tmp : query.getFuzzyTermQueries()){
-                    originClause.addFuzzyTermQuery(tmp);
-                }
-                query.remove("fuzzy_term");
-                for(RangeQuery tmp : query.getRangeQueries()){
-                    originClause.addRangeQuery(tmp);
-                }
-                query.remove("range");
-                if(query.get("partner") != null){
-                    for(FieldQuery tmp : (ArrayList<FieldQuery>)query.get("partner")){
-                        originClause.addField(tmp);
+                if(parent == null || parent != ingridFacet.getId()) {
+                    if(ingridFacet.getFacets() != null){
+                        term = getQuerySelection(term, ingridFacet.getQueryType(), ingridFacet.getFacets());
                     }
-                    query.remove("partner");
-                }
-                if(query.get("provider") != null){
-                    for(FieldQuery tmp : (ArrayList<FieldQuery>)query.get("provider")){
-                        originClause.addField(tmp);
-                    }
-                    query.remove("provider");
-                }
-                if(query.get("iplugs") != null){
-                    for(FieldQuery tmp : (ArrayList<FieldQuery>)query.get("iplugs")){
-                        originClause.addField(tmp);
-                    }
-                    query.remove("iplugs");
-                }
-
-                query.addClause(originClause);
-            }
-
-            for(TermQuery tmp :tmpQuery.getTerms()){
-                query.addTerm(tmp);
-            }
-            for(ClauseQuery tmp : tmpQuery.getClauses()){
-                query.addClause(tmp);
-            }
-            for(FieldQuery tmp : tmpQuery.getDataTypes()){
-                query.addField(tmp);
-            }
-            for(FieldQuery tmp : tmpQuery.getFields()){
-                query.addField(tmp);
-            }
-            for(WildCardFieldQuery tmp : tmpQuery.getWildCardFieldQueries()){
-                query.addWildCardFieldQuery(tmp);
-            }
-            for(WildCardTermQuery tmp : tmpQuery.getWildCardTermQueries()){
-                query.addWildCardTermQuery(tmp);
-            }
-            for(FuzzyFieldQuery tmp : tmpQuery.getFuzzyFieldQueries()){
-                query.addFuzzyFieldQuery(tmp);
-            }
-            for(FuzzyTermQuery tmp : tmpQuery.getFuzzyTermQueries()){
-                query.addFuzzyTermQuery(tmp);
-            }
-            for(RangeQuery tmp : tmpQuery.getRangeQueries()){
-                query.addRangeQuery(tmp);
-            }
-            if(tmpQuery.get("partner") != null){
-                for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("partner")){
-                    query.addField(tmp);
                 }
             }
-            if(tmpQuery.get("provider") != null){
-                for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("provider")){
-                    query.addField(tmp);
+            if(!term.isEmpty()) {
+                IngridQuery tmpQuery = QueryStringParser.parse(term);
+                if(tmpQuery != null) {
+                    ClauseQuery clauseQuery = UtilsSearch.createClauseQuery(tmpQuery, true, false);
+                    query.addClause(clauseQuery);
                 }
-            }
-            if(tmpQuery.getRankingType() != null) {
-                query.put( IngridQuery.RANKED, tmpQuery.getRankingType() );
             }
         }
+        return query;
     }
 
     private static String getQuerySelection(String term, String type, List<IngridFacet> facets) {
@@ -2547,37 +2477,46 @@ public class UtilsFacete {
                 if(type.equals("OR")){
                     String orQuery = "(";
                     boolean hasSelected = false;
+                    boolean hasSelectedToggle = false;
+                    
                     for(IngridFacet ingridFacet : facets){
                         if(ingridFacet.isSelect()) {
                             hasSelected = true;
+                        }
+                        if(ingridFacet.getToggle() != null && ingridFacet.getToggle().isSelect()) {
+                            hasSelectedToggle = true;
+                        }
+                        if(hasSelected && hasSelectedToggle) {
                             break;
                         }
                     }
                     for(IngridFacet ingridFacet : facets){
                         IngridFacet toggle = ingridFacet.getToggle();
-                        if(!hasSelected) {
-                            if(ingridFacet.getQuery() != null){
-                                String query = ingridFacet.getQuery();
-                                if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
-                                    query = "(" + query + " " + toggle.getQuery() + ")";
-                                }
-                                if(orQuery.equals("(")){
-                                    orQuery += "(" + query + ")";
-                                }else{
-                                    orQuery += " OR (" + query + ")";
-                                }
+                        String query = "";
+                        if(hasSelected && !hasSelectedToggle) {
+                            if(ingridFacet.getQuery() != null && ingridFacet.isSelect()){
+                                query = ingridFacet.getQuery();
                             }
-                        } else {
-                            if((ingridFacet.isSelect() || ingridFacet.isParentHidden()) && ingridFacet.getQuery() != null){
-                                String query = ingridFacet.getQuery();
-                                if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
-                                    query = "(" + query + " " + toggle.getQuery() + ")";
-                                }
-                                if(orQuery.equals("(")){
-                                    orQuery += "(" + query + ")";
-                                }else{
-                                    orQuery += " OR (" + query + ")";
-                                }
+                        } else if(!hasSelected && hasSelectedToggle) {
+                            if(ingridFacet.getQuery() != null){
+                                query = ingridFacet.getQuery();
+                            }
+                            if(toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
+                                query = toggle.getQuery();
+                            }
+                        } else if(hasSelected && hasSelectedToggle) {
+                            if(ingridFacet.getQuery() != null && ingridFacet.isSelect()){
+                                query = ingridFacet.getQuery();
+                            }
+                            if(ingridFacet.getQuery() != null && ingridFacet.isSelect() && toggle != null && toggle.isSelect() && toggle.getQuery() != null) {
+                                query = toggle.getQuery();
+                            }
+                        }
+                        if(!query.isEmpty()) {
+                            if(orQuery.equals("(")){
+                                orQuery += "(" + query + ")";
+                            }else{
+                                orQuery += " OR (" + query + ")";
                             }
                         }
                     }

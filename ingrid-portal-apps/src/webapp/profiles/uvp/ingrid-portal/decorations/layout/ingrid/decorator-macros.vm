@@ -86,6 +86,13 @@
                     <span class="text">$tabName</span>
                 </div>
             </a>
+        #elseif($element.url == "/application/main-application.psml")
+            <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+                <div class="link-menu-tab">
+                    <span class="ic-ic-chemie"></span>
+                    <span class="text">$tabName</span>
+                </div>
+            </a>
         #elseif($element.url == "/search-catalog/search-catalog-hierarchy.psml")
             <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
                 <div class="link-menu-tab">
@@ -206,6 +213,7 @@
                         <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end><span class="text">$linkName</span></a>
                       #end
                     #end
+                    #parse("/decorations/layout/ingrid/templates/decorator/decorator_administration_additional.vm")
                 #end
             #end
         #end

@@ -35,7 +35,54 @@ define([
         run: function() {
 
             topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class2") {
+                // Reset everything first
+
+                // Allgemeines > Kurzbezeichnung
+                domClass.add("uiElement5000", "hide");
+                domClass.add("uiElement5000", "optional");
+                domClass.remove("uiElement5000", "additional");
+                domClass.remove("uiElement5000", "content");
+                // INSPIRE
+                domClass.remove("uiElement5064", "hide");
+                // Rubrik: Raumbezugssystem
+                domClass.remove("spatialRef", "hide");
+                // Raumbezugssystem
+                domClass.remove("uiElement3500", "hide");
+                // Rubrik: Verfügbarkeit
+                domClass.add("availability", "hide");
+                
+                domClass.remove("timeRef", "hide");
+                domClass.remove("uiElement5042", "hide");
+                domClass.remove("uiElementN025", "hide");
+                domClass.remove("uiElementN026", "hide");
+                domClass.remove("uiElement1320", "hide");
+                
+                // for class: Software
+                domClass.add("uiElementAddpurpose", "hide");
+                domClass.add("uiElementAdduserGroup", "hide");
+                domClass.add("uiElementAddproductiveUse", "hide");
+
+
+                var isLiterature = data.objClass === "Class2";
+                var isProject = data.objClass === "Class4";
+                var isSoftware = data.objClass === "Class6";
+
+                // Object-class specific rules
+                if (isLiterature) {
+                    // INSPIRE
+                    domClass.add("uiElement5064", "hide");
+                    // Rubrik: Raumbezugssystem
+                    domClass.add("spatialRef", "hide");
+                } else if (isProject) {
+                    // Allgemeines > Kurzbezeichnung
+                    domClass.remove("uiElement5000", "hide");
+                    domClass.remove("uiElement5000", "optional");
+                    domClass.add("uiElement5000", "additional");
+                    domClass.add("uiElement5000", "content");
+
+                    // Rubrik: Zeitbezug
+                    domClass.add("timeRef", "hide");
+                } else if (isSoftware) {
                     // INSPIRE
                     domClass.add("uiElement5064", "hide");
 
@@ -44,15 +91,27 @@ define([
 
                     // Rubrik: Zeitbezug
                     domClass.add("timeRef", "hide");
-                } else {
-                    // INSPIRE
-                    domClass.remove("uiElement5064", "hide");
 
-                    // Rubrik: Raumbezugssystem
-                    domClass.remove("spatialRef", "hide");
+                    // Sprache der Ressource
+                    // set delayed since another behaviour is changing value
+                    setTimeout(function() { domClass.add("uiElement5042", "hide"); });
+                    
+                    // Zugriffsbeschränkungen
+                    domClass.add("uiElementN025", "hide");
+                    
+                    // Anwendungseinschränkungen
+                    domClass.add("uiElementN026", "hide");
+                    
+                    // Datenformat
+                    domClass.add("uiElement1320", "hide");
 
-                    // Rubrik: Zeitbezug
-                    domClass.remove("timeRef", "hide");
+                    // Allgemein
+                    domClass.remove("uiElementAddpurpose", "hide");
+                    domClass.remove("uiElementAdduserGroup", "hide");
+                    domClass.remove("uiElementAddproductiveUse", "hide");
+
+                    // Rubrik: Verfügbarkeit
+                    domClass.remove("availability", "hide");
                 }
             });
 
@@ -60,6 +119,18 @@ define([
             domClass.add("uiElement3355", "hide");
             // Herausgeber
             domClass.add("uiElement3350", "hide");
+            // Erschienen in
+            domClass.add("uiElement3340", "hide");
+            // Erscheinungsort
+            domClass.add("uiElement3310", "hide");
+            // Band / Heft
+            domClass.add("uiElement3330", "hide");
+            // Seiten
+            domClass.add("uiElement3320", "hide");
+            // Erscheinungsjahr
+            domClass.add("uiElement3300", "hide");
+            // Verlag
+            domClass.add("uiElement3370", "hide");
             // Standort
             domClass.add("uiElement3360", "hide");
             // Dokumententyp
@@ -80,8 +151,6 @@ define([
             // ----------------------------------------
             // Allgemeines
             // ----------------------------------------
-            // Kurzbezeichnung
-            domClass.add("uiElement5000", "hide");
             // Inspire relevant
             domClass.add("uiElement6000", "hidden");
             // AdV kompatibel checkbox
@@ -114,7 +183,7 @@ define([
             domClass.add("uiElementN014", "hide");
 
             // ----------------------------------------
-            // Fachbezug
+            // Fachbezug: Geodatensatz
             // ----------------------------------------
             // Datensatz/Datenserie
             domClass.add("uiElement5061", "hide");
@@ -133,6 +202,25 @@ define([
             // Herstellungsprozess
             domClass.add("uiElement3515", "hide");
 
+            // ----------------------------------------
+            // Fachbezug: Projekt
+            // ----------------------------------------
+            domClass.add("refClass4", "hidden");
+
+            // SOFTWARE
+            // Art des Dienstes
+            domClass.add("uiElement3620", "hide");
+            // Systemumgebung
+            domClass.add("uiElement3600", "hide");
+            // Historie
+            domClass.add("uiElement3640", "hide");
+            // Basisdaten
+            domClass.add("uiElement3645", "hide");
+            // Erläuterungen
+            domClass.add("uiElement3650", "hide");
+            // Service-Urls
+            domClass.add("uiElement3670", "hide");
+            
             // ----------------------------------------
             // Datenqualität
             // ----------------------------------------
@@ -185,7 +273,6 @@ define([
             domClass.add("uiElement1350", "hide");
             // Eignung/Nutzung
             domClass.add("uiElement5040", "hide");
-
 
 
             // ----------------------------------------

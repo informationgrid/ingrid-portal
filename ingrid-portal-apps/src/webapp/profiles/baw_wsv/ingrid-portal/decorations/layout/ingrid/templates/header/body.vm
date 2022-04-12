@@ -1,0 +1,2 @@
+#set($currentPage = $site.getPageOrTemplate().url)
+    <body #if($currentPage == "/main-maps.psml")class="shrink-default"#end>

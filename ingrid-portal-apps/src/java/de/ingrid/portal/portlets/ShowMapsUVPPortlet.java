@@ -58,7 +58,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if (resourceID.equals( "marker_time" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
                 if(!query.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER,
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER,
                         query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM,
                         "P1YT", "PT", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_ADDITIONAL, ""));
                 }
@@ -66,28 +66,44 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if (resourceID.equals( "marker" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
                 if(!query.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
                 }
             }
             // "Raumordnungsverfahren"
+            if (resourceID.equals( "marker2_time" )) {
+                String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
+                if(!query.isEmpty()) {
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER,
+                        query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM,
+                        "P1YT", "PT", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2_ADDITIONAL, ""));
+                }
+            }
             if (resourceID.equals( "marker2" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
                 if(!query.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
                 }
             }
             // "Ausländische Verfahren"
+            if (resourceID.equals( "marker3_time" )) {
+                String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
+                if(!query.isEmpty()) {
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER,
+                        query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM,
+                        "P1YT", "PT", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3_ADDITIONAL, ""));
+                }
+            }
             if (resourceID.equals( "marker3" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
                 if(!query.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
                 }
             }
             // "Negative Vorprüfungen"
             if (resourceID.equals( "marker4_time" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
                 if(!query.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER,
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER,
                         query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM,
                         "P1YT", "PT", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4_ADDITIONAL, ""));
                 }
@@ -95,14 +111,22 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if (resourceID.equals( "marker4" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
                 if(!query.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
                 }
             }
             // "Linienbestimmungen"
+            if (resourceID.equals( "marker5_time" )) {
+                String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_5, "");
+                if(!query.isEmpty()) {
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER,
+                        query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM,
+                        "P1YT", "PT", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_5_ADDITIONAL, ""));
+                }
+            }
             if (resourceID.equals( "marker5" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_5, "");
                 if(!query.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
+                    UtilsPortletServeResources.getHttpMarkerUVPWithNumber(request, response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, query, messages, sysCodeList, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM);
                 }
             }
             if (resourceID.equals( "markerDetail" )) {
@@ -172,11 +196,15 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         if(!mapclientQuery2.isEmpty()){
             restUrl.setResourceID( "marker2" );
             request.setAttribute( "restUrlMarker2", restUrl.toString() );
+            restUrl.setResourceID( "marker2_time" );
+            request.setAttribute( "restUrlMarker2_time", restUrl.toString() );
         }
         String mapclientQuery3 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
         if(!mapclientQuery3.isEmpty()){
             restUrl.setResourceID( "marker3" );
             request.setAttribute( "restUrlMarker3", restUrl.toString() );
+            restUrl.setResourceID( "marker3_time" );
+            request.setAttribute( "restUrlMarker3_time", restUrl.toString() );
         }
         String mapclientQuery4 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
         if(!mapclientQuery4.isEmpty()){
@@ -189,6 +217,8 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         if(!mapclientQuery5.isEmpty()){
             restUrl.setResourceID( "marker5" );
             request.setAttribute( "restUrlMarker5", restUrl.toString() );
+            restUrl.setResourceID( "marker5_time" );
+            request.setAttribute( "restUrlMarker5_time", restUrl.toString() );
         }
 
         restUrl.setResourceID( "markerDetail" );
@@ -215,7 +245,8 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         context.put( "leafletEpsg", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_EPSG, "3857"));
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
-        
+        context.put( "leafletBgLayerOpacity", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY));
+
         String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
         String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
         if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){

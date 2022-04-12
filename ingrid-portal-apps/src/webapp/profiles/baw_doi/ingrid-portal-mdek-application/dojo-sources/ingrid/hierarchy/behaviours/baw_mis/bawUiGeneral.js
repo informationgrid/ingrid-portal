@@ -35,24 +35,44 @@ define([
         run: function() {
 
             topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class2") {
+                // Reset everything first
+
+                // Allgemeines > Kurzbezeichnung
+                domClass.add("uiElement5000", "hide");
+                domClass.add("uiElement5000", "optional");
+                domClass.remove("uiElement5000", "additional");
+                domClass.remove("uiElement5000", "content");
+                // INSPIRE
+                domClass.remove("uiElement5064", "hide");
+                // Rubrik: Raumbezugssystem
+                domClass.remove("spatialRef", "hide");
+                // Raumbezugssystem
+                domClass.remove("uiElement3500", "hide");
+                // Rubrik: Verfügbarkeit
+                domClass.add("availability", "hide");
+
+
+                var isLiterature = data.objClass === "Class2";
+                var isProject = data.objClass === "Class4";
+
+                // Object-class specific rules
+                if (isLiterature) {
                     // INSPIRE
                     domClass.add("uiElement5064", "hide");
-
                     // Rubrik: Raumbezugssystem
                     domClass.add("spatialRef", "hide");
-
-                    // Rubrik: Zeitbezug
-                    domClass.add("timeRef", "hide");
-                } else {
+                } else if (isProject) {
+                    // Allgemeines > Kurzbezeichnung
+                    domClass.remove("uiElement5000", "hide");
+                    domClass.remove("uiElement5000", "optional");
+                    domClass.add("uiElement5000", "additional");
+                    domClass.add("uiElement5000", "content");
                     // INSPIRE
-                    domClass.remove("uiElement5064", "hide");
-
-                    // Rubrik: Raumbezugssystem
-                    domClass.remove("spatialRef", "hide");
-
-                    // Rubrik: Zeitbezug
-                    domClass.remove("timeRef", "hide");
+                    domClass.add("uiElement5064", "hide");
+                    // Raumbezugssystem
+                    domClass.add("uiElement3500", "hide");
+                    // Rubrik: Verfügbarkeit
+                    domClass.add("availability", "hide");
                 }
             });
 
@@ -60,6 +80,18 @@ define([
             domClass.add("uiElement3355", "hide");
             // Herausgeber
             domClass.add("uiElement3350", "hide");
+            // Erschienen in
+            domClass.add("uiElement3340", "hide");
+            // Erscheinungsort
+            domClass.add("uiElement3310", "hide");
+            // Band / Heft
+            domClass.add("uiElement3330", "hide");
+            // Seiten
+            domClass.add("uiElement3320", "hide");
+            // Erscheinungsjahr
+            domClass.add("uiElement3300", "hide");
+            // Verlag
+            domClass.add("uiElement3370", "hide");
             // Standort
             domClass.add("uiElement3360", "hide");
             // Dokumententyp
@@ -80,8 +112,6 @@ define([
             // ----------------------------------------
             // Allgemeines
             // ----------------------------------------
-            // Kurzbezeichnung
-            domClass.add("uiElement5000", "hide");
             // Inspire relevant
             domClass.add("uiElement6000", "hidden");
             // AdV kompatibel checkbox
@@ -114,7 +144,7 @@ define([
             domClass.add("uiElementN014", "hide");
 
             // ----------------------------------------
-            // Fachbezug
+            // Fachbezug: Geodatensatz
             // ----------------------------------------
             // Datensatz/Datenserie
             domClass.add("uiElement5061", "hide");
@@ -132,6 +162,11 @@ define([
             domClass.add("uiElementN003", "hide");
             // Herstellungsprozess
             domClass.add("uiElement3515", "hide");
+
+            // ----------------------------------------
+            // Fachbezug: Projekt
+            // ----------------------------------------
+            domClass.add("refClass4", "hidden");
 
             // ----------------------------------------
             // Datenqualität

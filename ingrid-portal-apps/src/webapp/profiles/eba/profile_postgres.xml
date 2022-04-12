@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
     <name>baw_wsv</name>
-    <description>Portal-Profile Geoportal.EBA</description>
+    <description>Portal-Profile GeoPortal.EBA</description>
     <pages>
+        <page>
+            <name>main-search.psml</name>
+            <hidden>true</hidden>
+        </page>
         <page>
             <name>main-chronicle.psml</name>
             <hidden>true</hidden>
@@ -33,7 +37,11 @@
         </page>
         <page>
             <name>application/main-application.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>service-contact.psml</name>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>default-page.psml</name>
@@ -100,7 +108,34 @@
         </page>
     </pages>
     <files>
-        <!-- COPY GENERAL WSV FILES -->
+        <!-- COPY GENERAL UVP FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-mdek/</src>
+            <dst>ingrid-portal-mdek/</dst>
+        </file>
+        <!-- COPY NUMIS FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../numis/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../numis/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <!-- COPY WSV FILES -->
         <file>
             <action>copy-dir</action>
             <src>../baw_wsv/ingrid-portal/</src>
@@ -121,6 +156,7 @@
             <src>../baw_wsv/ingrid-webmap-client/frontend/src</src>
             <dst>ingrid-webmap-client/frontend/prd</dst>
         </file>
+        <!-- COPY EBA FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal/</src>
@@ -172,6 +208,15 @@
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-teaser' WHERE name = 'ingrid-portal-apps::CMSPortlet1';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-teaser' WHERE name = 'ingrid-portal-apps::CMSPortlet2';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-teaser' WHERE name = 'ingrid-portal-apps::CMSPortlet3';]]>
         </execute>
         <!-- Delete user default-page.psml -->
         <execute>

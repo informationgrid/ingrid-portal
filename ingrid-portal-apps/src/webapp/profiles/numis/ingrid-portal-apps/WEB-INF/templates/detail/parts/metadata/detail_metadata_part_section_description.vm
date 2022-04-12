@@ -35,20 +35,29 @@
                     #set($tmpTitle = "time_reference")
                 #end
             ## Durch die Ressource abgedeckte Zeitspanne
-                #set($atTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodInstantPosition))
-                #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
-                #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
+                #set($atTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodInstantPosition))
+                #set($beginTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodBeginPosition))
+                #set($endTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodEndPosition))
+                #set($fromType = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodEndIndeterminatePosition))
+
+                #set($toIndeterminate = "")
+                #if($tool.hasContent($fromType) && $fromType == 'now')
+                    #set($toIndeterminate = $MESSAGES.getString('search.detail.time.untilNow'))
+                #else
+                    #set($toIndeterminate = $MESSAGES.getString('search.detail.time.untilUnknown'))
+                #end
+
                 #if($tool.hasContent($beginTime) || $tool.hasContent($endTime) || $tool.hasContent($atTime))
                     #if($tool.hasContent($atTime))
-                        #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $atTime")
+                        #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at') $atTime")
                     #elseif($beginTime == $endTime)
-                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $beginTime")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $beginTime")
                     #elseif($beginTime && !$endTime)
-                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since'): $beginTime")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since') $beginTime$toIndeterminate")
                     #elseif(!$beginTime && $endTime)
-                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.to'): $endTime")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.until') $endTime")
                     #elseif($beginTime != $endTime)
-                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
                     #end
                 #end
             ## Status
@@ -70,7 +79,7 @@
             <div class="sub-section">
                 <a class="anchor" id="${hashDetail1}_time_reference_record"></a>
                 #renderGroupTitle($MESSAGES.getString("time_reference_record"))
-        ## Erstellung 
+        ## Erstellung
                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                 #if(!$title.isEmpty())
                     #renderTextTable($title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
@@ -80,7 +89,7 @@
                 #if(!$title.isEmpty())
                     #renderTextTable($title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
                 #end
-        ## letzte Änderung 
+        ## letzte Änderung
                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
                 #if(!$title.isEmpty())
                     #renderTextTable($title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))

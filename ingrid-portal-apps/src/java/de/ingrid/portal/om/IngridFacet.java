@@ -51,6 +51,7 @@ public class IngridFacet {
     private String infoResultSelect;
     private int showOnMoreThan;
     private int colNum;
+    private int listLength;
     private boolean isDependencySelect = false;
     private boolean isHiddenSelect = false;
     private boolean isSelect = false;
@@ -58,7 +59,7 @@ public class IngridFacet {
     private boolean isDisplay = false;
     private boolean categoryOnly = false;
     private IngridFacet toggle;
-    
+    private ArrayList<ArrayList<String>> toggleGroups;
     
     /* Only for partner restriction */
     private boolean isParentHidden = false;
@@ -273,5 +274,17 @@ public class IngridFacet {
     }
     public void setToggle(IngridFacet toggle) {
         this.toggle = toggle;
+    }
+    public int getListLength() {
+        return listLength;
+    }
+    public void setListLength(int listLength) {
+        this.listLength = listLength;
+    }
+    public ArrayList<ArrayList<String>> getToggleGroups() {
+        return toggleGroups;
+    }
+    public void setToggleGroups(ArrayList<ArrayList<String>> toggleGroups) {
+        this.toggleGroups = toggleGroups;
     }
 }

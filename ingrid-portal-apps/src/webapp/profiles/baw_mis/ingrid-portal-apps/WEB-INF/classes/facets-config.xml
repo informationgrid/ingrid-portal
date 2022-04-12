@@ -141,155 +141,48 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <wildcard>bawauftragsnummer</wildcard>
     </facet>
     -->
+    <facet>
+        <name>Abteilung</name>
+        <id>baw_abteilung</id>
+        <facets>
+            <facet>
+                <name>Bautechnik</name>
+                <query>baw_abteilung_short:b</query>
+                <id>bautechnik</id>
+            </facet>
+            <facet>
+                <name>Geotechnik</name>
+                <query>baw_abteilung_short:g</query>
+                <id>geotechnik</id>
+            </facet>
+            <facet>
+                <name>Wasserbau im Binnenbereich</name>
+                <query>baw_abteilung_short:w</query>
+                <id>binnenbereich</id>
+            </facet>
+            <facet>
+                <name>Wasserbau im Küstenbereich</name>
+                <query>baw_abteilung_short:k</query>
+                <id>kuestenbereich</id>
+            </facet>
+            <facet>
+                <name>Zentraler Service</name>
+                <query>baw_abteilung_short:z</query>
+                <id>zentral</id>
+            </facet>
+        </facets>
+    </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Wasserstraße</name>
         <id>wasserstrasse</id>
-        <isOpen>true</isOpen>
-        <facets>
-            <facet>
-                <name>Donau</name>
-                <id>bwastrdonau</id>
-                <query>bwstr-bwastr-id:id_040?</query>
-            </facet>
-            <facet>
-                <name>Elbe</name>
-                <id>bwastrelbe</id>
-                <query>bwstr-bwastr-id:id_070?</query>
-            </facet>
-            <facet>
-                <name>Rhein</name>
-                <id>bwastrrhein</id>
-                <query>bwstr-bwastr-id:id_390?</query>
-            </facet>
-            <!--
-            <facet>
-                <name>Andere Wasserstraße</name>
-                <id>wildcard_wasserstrasse</id>
-                <wildcard>location|bwstr-bwastr_name</wildcard>
-            </facet>
-            -->
-        </facets>
+        <field>bwstr-bwastr_name</field>
+        <listLength>6</listLength>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Verfahren</name>
         <id>simprocess</id>
-        <facets>
-            <facet>
-                <name>BSQUAT</name>
-                <query>simprocess:BSQUAT</query>
-                <id>BSQUAT</id>
-            </facet>
-            <facet>
-                <name>Cascade</name>
-                <query>simprocess:Cascade</query>
-                <id>Cascade</id>
-            </facet>
-            <facet>
-                <name>Delft3D 4</name>
-                <query>simprocess:"Delft3D 4"</query>
-                <id>Delft3D 4</id>
-            </facet>
-            <facet>
-                <name>Delft3D FM</name>
-                <query>simprocess:"Delft3D FM"</query>
-                <id>Delft3D FM</id>
-            </facet>
-            <facet>
-                <name>HEC-6T</name>
-                <query>simprocess:"HEC-6T"</query>
-                <id>HEC-6T</id>
-            </facet>
-            <facet>
-                <name>Hec-Ras</name>
-                <query>simprocess:"Hec-Ras"</query>
-                <id>Hec-Ras</id>
-            </facet>
-            <facet>
-                <name>Hydro-AS</name>
-                <query>simprocess:"Hydro-AS"</query>
-                <id>Hydro-AS</id>
-            </facet>
-            <facet>
-                <name>k-Modell</name>
-                <query>simprocess:"k-Modell"</query>
-                <id>k-Modell</id>
-            </facet>
-            <facet>
-                <name>NCAGGREGATE</name>
-                <query>simprocess:NCAGGREGATE</query>
-                <id>NCAGGREGATE</id>
-            </facet>
-            <facet>
-                <name>NCANALYSE</name>
-                <query>simprocess:NCANALYSE</query>
-                <id>NCANALYSE</id>
-            </facet>
-            <facet>
-                <name>NCAUTO</name>
-                <query>simprocess:NCAUTO</query>
-                <id>NCAUTO</id>
-            </facet>
-            <facet>
-                <name>NCDELTA</name>
-                <query>simprocess:NCDELTA</query>
-                <id>NCDELTA</id>
-            </facet>
-            <facet>
-                <name>NCPLOT</name>
-                <query>simprocess:NCPLOT</query>
-                <id>NCPLOT</id>
-            </facet>
-            <facet>
-                <name>OpenFOAM</name>
-                <query>simprocess:OpenFOAM</query>
-                <id>OpenFOAM</id>
-            </facet>
-            <facet>
-                <name>PeTra2d</name>
-                <query>simprocess:PeTra2d</query>
-                <id>PeTra2d</id>
-            </facet>
-            <facet>
-                <name>Rismo2D</name>
-                <query>simprocess:Rismo2D</query>
-                <id>Rismo2D</id>
-            </facet>
-            <facet>
-                <name>SediMorph</name>
-                <query>simprocess:SediMorph</query>
-                <id>SediMorph</id>
-            </facet>
-            <facet>
-                <name>STAR-CCM+</name>
-                <query>simprocess:"STAR-CCM+"</query>
-                <id>STAR-CCM+</id>
-            </facet>
-            <facet>
-                <name>Telemac</name>
-                <query>simprocess:Telemac</query>
-                <id>Telemac</id>
-            </facet>
-            <facet>
-                <name>UnTRIM</name>
-                <query>simprocess:UnTRIM</query>
-                <id>UnTRIM</id>
-            </facet>
-            <facet>
-                <name>UnTRIM2007</name>
-                <query>simprocess:UnTRIM2007</query>
-                <id>UnTRIM2007</id>
-            </facet>
-            <facet>
-                <name>UnTRIM2009</name>
-                <query>simprocess:UnTRIM2009</query>
-                <id>UnTRIM2009</id>
-            </facet>
-            <facet>
-                <name>kein</name>
-                <query>simprocess:kein</query>
-                <id>kein</id>
-            </facet>
-        </facets>
+        <field>simprocess</field>
+        <listLength>6</listLength>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Modelldaten</name>
@@ -315,38 +208,14 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Räumliche Dimensionalität</name>
         <id>simspatialdimension</id>
-        <facets>
-            <facet>
-                <name>1D</name>
-                <query>simspatialdimension:1D</query>
-                <id>1D</id>
-            </facet>
-            <facet>
-                <name>2D</name>
-                <query>simspatialdimension:2D</query>
-                <id>2D</id>
-            </facet>
-            <facet>
-                <name>2D-hor</name>
-                <query>simspatialdimension:2D-hor</query>
-                <id>2D-hor</id>
-            </facet>
-            <facet>
-                <name>2D-vert</name>
-                <query>simspatialdimension:2D-vert</query>
-                <id>2D-vert</id>
-            </facet>
-            <facet>
-                <name>3D</name>
-                <query>simspatialdimension:3D</query>
-                <id>3D</id>
-            </facet>
-            <facet>
-                <name>none</name>
-                <query>simspatialdimension:none</query>
-                <id>none</id>
-            </facet>
-        </facets>
+        <field>simspatialdimension</field>
+        <listLength>6</listLength>
+    </facet>
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>Datenformate</name>
+        <id>datenformate</id>
+        <field>t017_url_ref.datatype</field>
+        <listLength>6</listLength>
     </facet>
     <!-- Aktualität (Metadaten)-->
     <!-- Kann erweitert werden -->
@@ -404,30 +273,167 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Kategorie -->
     <facet>
-        <name>Kategorie</name>
-        <id>category</id>
+        <name>Wasserstraße</name>
+        <id>category_wasserstrasse</id>
         <categoryOnly>true</categoryOnly>
         <facets>
-            <!-- Rhein -->
-            <facet>
-                <name>Rhein</name>
-                <query>bwstr-bwastr-id:id_390?</query>
-                <id>cat_rhein</id>
-                <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon>
-            </facet>
             <!-- Donau -->
             <facet>
                 <name>Donau</name>
-                <query>bwstr-bwastr-id:id_040?</query>
-                <id>cat_donau</id>
-                <icon>/decorations/layout/ingrid/images/template/icon_donau_mdk.svg</icon>
+                <query>bwstr-bwastr_name.phrase:"donau"</query>
+                <id>Donau</id>
+                <parentId>wasserstrasse</parentId>
+                <!-- <icon>/decorations/layout/ingrid/images/template/icon_donau_mdk.svg</icon> -->
+                <shortcut>Do</shortcut>
+            </facet>
+            <!-- Eider -->
+            <facet>
+                <name>Eider</name>
+                <query>bwstr-bwastr_name.phrase:"eider"</query>
+                <id>Eider</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Ei</shortcut>
             </facet>
             <!-- Elbe -->
             <facet>
                 <name>Elbe</name>
-                <query>bwstr-bwastr-id:id_070?</query>
-                <id>cat_elbe</id>
-                <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon>
+                <query>bwstr-bwastr_name.phrase:"elbe"</query>
+                <id>Elbe</id>
+                <parentId>wasserstrasse</parentId>
+                <!-- <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon> -->
+                <shortcut>El</shortcut>
+            </facet>
+            <!-- Ems -->
+            <facet>
+                <name>Ems</name>
+                <query>bwstr-bwastr_name.phrase:"ems"</query>
+                <id>cat_em</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Em</shortcut>
+            </facet>
+            <!-- Main-Donau-Kanal -->
+            <facet>
+                <name>Main-Donau-Kanal</name>
+                <query>bwstr-bwastr_name.phrase:"main-donau-kanal"</query>
+                <id>Main-Donau-Kanal</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>MDK</shortcut>
+            </facet>
+            <!-- Mittellandkanal -->
+            <facet>
+                <name>Mittellandkanal</name>
+                <query>bwstr-bwastr_name.phrase:"mittellandkanal"</query>
+                <id>Mittellandkanal</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>MLK</shortcut>
+            </facet>
+            <!-- Mosel -->
+            <facet>
+                <name>Mosel</name>
+                <query>bwstr-bwastr_name.phrase:"mosel"</query>
+                <id>Mosel</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Mo</shortcut>
+            </facet>
+            <!-- Neckar -->
+            <facet>
+                <name>Neckar</name>
+                <query>bwstr-bwastr_name.phrase:"neckar"</query>
+                <id>Neckar</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Ne</shortcut>
+            </facet>
+            <!-- Nord-Ostsee-Kanal  -->
+            <facet>
+                <name>Nord-Ostsee-Kanal</name>
+                <query>bwstr-bwastr_name.phrase:"nord-ostsee-kanal"</query>
+                <id>Nord-Ostsee-Kanal</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>NOK</shortcut>
+            </facet>
+            <!-- Nordsee -->
+            <facet>
+                <name>Nordsee</name>
+                <query>bwstr-bwastr_name.phrase:"nordsee"</query>
+                <id>Nordsee</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>NSee</shortcut>
+            </facet>
+            <!-- Oder -->
+            <facet>
+                <name>Oder</name>
+                <query>bwstr-bwastr_name.phrase:"oder"</query>
+                <id>Oder</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Od</shortcut>
+            </facet>
+            <!-- Ostsee -->
+            <facet>
+                <name>Ostsee</name>
+                <query>bwstr-bwastr_name.phrase:"ostsee"</query>
+                <id>Ostsee</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>OSee</shortcut>
+            </facet>
+            <!-- Rhein -->
+            <facet>
+                <name>Rhein</name>
+                <query>bwstr-bwastr_name.phrase:"rhein"</query>
+                <id>Rhein</id>
+                <parentId>wasserstrasse</parentId>
+                <!-- <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon> -->
+                <shortcut>Rh</shortcut>
+            </facet>
+            <!-- Weser -->
+            <facet>
+                <name>Weser</name>
+                <query>bwstr-bwastr_name.phrase:"weser"</query>
+                <id>Weser</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>We</shortcut>
+            </facet>
+        </facets>
+    </facet>
+    <!-- Abteilung -->
+    <facet>
+        <name>Abteilung</name>
+        <id>category_baw_abteilung</id>
+        <categoryOnly>true</categoryOnly>
+        <facets>
+            <facet>
+                <name>Bautechnik</name>
+                <query>baw_abteilung_short:b</query>
+                <id>bautechnik</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>B</shortcut>
+            </facet>
+            <facet>
+                <name>Geotechnik</name>
+                <query>baw_abteilung_short:g</query>
+                <id>geotechnik</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>G</shortcut>
+            </facet>
+            <facet>
+                <name>Wasserbau im Binnenbereich</name>
+                <query>baw_abteilung_short:w</query>
+                <id>binnenbereich</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>W</shortcut>
+            </facet>
+            <facet>
+                <name>Wasserbau im Küstenbereich</name>
+                <query>baw_abteilung_short:k</query>
+                <id>kuestenbereich</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>K</shortcut>
+            </facet>
+            <facet>
+                <name>Zentraler Service</name>
+                <query>baw_abteilung_short:z</query>
+                <id>zentral</id>
+                <parentId>baw_abteilung</parentId>
+                <shortcut>Z</shortcut>
             </facet>
         </facets>
     </facet>

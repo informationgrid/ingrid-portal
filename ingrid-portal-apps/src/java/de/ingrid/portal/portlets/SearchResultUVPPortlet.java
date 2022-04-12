@@ -60,15 +60,6 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
             // "Zulassungsverfahren"
             if (resourceID.equals( "marker" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
-                if(config != null) {
-                    IngridFacet facet = UtilsFacete.getFacetById(config, "procedure_10");
-                    if(facet != null && facet.getToggle() != null) {
-                        IngridFacet facetToggle = facet.getToggle();
-                        if(facetToggle.isSelect() && facetToggle.getQuery() != null) {
-                            query += " " + facetToggle.getQuery();
-                        }
-                    }
-                }
                 if(!query.isEmpty()) {
                     UtilsPortletServeResources.getHttpMarkerUVP(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, request, query, messages, sysCodeList, config);
                 }
@@ -90,16 +81,6 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
             // "Negative Vorprüfungen"
             if (resourceID.equals( "marker4" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
-                if(config != null) {
-                    IngridFacet facet = UtilsFacete.getFacetById(config, "procedure_12");
-                    if(facet != null && facet.getToggle() != null) {
-                        IngridFacet facetToggle = facet.getToggle();
-                        if(facetToggle.isSelect() && facetToggle.getQuery() != null) {
-                            query += " " + facetToggle.getQuery();
-                        }
-                    }
-                }
-
                 if(!query.isEmpty()) {
                     UtilsPortletServeResources.getHttpMarkerUVP(response, UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER, request, query, messages, sysCodeList, config);
                 }
@@ -130,6 +111,14 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                     UtilsPortletServeResources.getHttpMarkerUVPLegendCounter(request, response, queryString, config);
                 }
             }
+            
+            if(resourceID.equals( "facetValue" )){
+                String facetId = request.getParameter("facetId");
+                if(facetId != null) {
+                    UtilsPortletServeResources.getHttpFacetValue(request, response, config, facetId);
+                }
+            }
+
         } catch (Exception e) {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
@@ -181,6 +170,10 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
             restUrl.setResourceID( "legendCounter" );
             request.setAttribute( "restUrlLegendCounter", restUrl.toString() );
         }
+
+        restUrl.setResourceID( "facetValue" );
+        request.setAttribute( "restUrlFacetValue", restUrl.toString() );
+
         super.doView(request, response);
     }
 }

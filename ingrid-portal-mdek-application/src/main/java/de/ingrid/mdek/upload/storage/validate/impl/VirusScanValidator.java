@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.ingrid.mdek.upload.storage.validate.VirusScanException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,6 +47,7 @@ import de.ingrid.mdek.upload.storage.validate.VirusFoundException;
  *   - virusPattern: Regular expression pattern that matches infections reported in the scan command result
  *                   The pattern must contain a capturing group for the virus name (#1) and one for the infected resource (#2)
  *   - cleanPattern: Regular expression pattern applied to the command result that matches, if no virus infection is found
+ *   - errorPattern: Regular expression pattern applied to the command result that matches when an error happens during the scan
  *
  *   NOTE: If neither virusPattern nor cleanPattern match, an error is assumed and will be logged. Validation does NOT fail in this case.
  */
@@ -54,6 +56,7 @@ public class VirusScanValidator implements Validator {
     private static final String CONFIG_KEY_COMMAND       = "command";
     private static final String CONFIG_KEY_VIRUS_PATTERN = "virusPattern";
     private static final String CONFIG_KEY_CLEAN_PATTERN = "cleanPattern";
+    private static final String CONFIG_KEY_ERROR_PATTERN = "errorPattern";
     private static final String CONFIG_KEY_TIMEOUT = "timeout";
 
     private static final String PLACEHOLDER_FILE = "%FILE%";
@@ -61,6 +64,7 @@ public class VirusScanValidator implements Validator {
     private String command;
     private Pattern virusPattern;
     private Pattern cleanPattern;
+    private Pattern errorPattern;
 
     private ExternalCommand scanner = new ExternalCommand();
 
@@ -69,7 +73,7 @@ public class VirusScanValidator implements Validator {
     @Override
     public void initialize(final Map<String, String> configuration) throws IllegalArgumentException {
         // check required configuration parameters
-        for (final String parameter : new String[] {CONFIG_KEY_COMMAND, CONFIG_KEY_VIRUS_PATTERN, CONFIG_KEY_CLEAN_PATTERN}) {
+        for (final String parameter : new String[] {CONFIG_KEY_COMMAND, CONFIG_KEY_VIRUS_PATTERN, CONFIG_KEY_CLEAN_PATTERN, CONFIG_KEY_ERROR_PATTERN}) {
             if (!configuration.containsKey(parameter)) {
                 throw new IllegalArgumentException("Configuration value '"+parameter+"' is required.");
             }
@@ -92,6 +96,8 @@ public class VirusScanValidator implements Validator {
         this.virusPattern = Pattern.compile(virusPattern);
         final String cleanPattern = configuration.get(CONFIG_KEY_CLEAN_PATTERN);
         this.cleanPattern = Pattern.compile(cleanPattern);
+        final String errorPattern = configuration.get(CONFIG_KEY_ERROR_PATTERN);
+        this.errorPattern = Pattern.compile(errorPattern);
     }
 
     @Override
@@ -114,12 +120,24 @@ public class VirusScanValidator implements Validator {
             // analyze result
             final Matcher virusMatcher = virusPattern.matcher(result);
             final Map<Path, String> virusList = new HashMap<>();
+            final Matcher errorMatcher = errorPattern.matcher(result);
+            final String scanResult = result;
+            boolean scanError = false;
+
             while (virusMatcher.find()) {
                 virusList.put(Paths.get(virusMatcher.group(2)), virusMatcher.group(1));
             }
+            while (errorMatcher.find()) {
+                scanError = true;
+            }
+
             if (!virusList.isEmpty()) {
                 log.warn("Virus found: " + result);
-                throw new VirusFoundException("Virus found.", path+"/"+file, virusList);
+                throw new VirusFoundException("Virus found.", path+"/"+file, scanResult, virusList);
+            }
+            else if (scanError) {
+                log.warn("An error occurred during the scan");
+                throw new VirusScanException( "Error during scan.", path+"/"+file, scanResult );
             }
             else if (!cleanPattern.matcher(result).lookingAt()) {
                 log.error("Virus scan failed: " + result);

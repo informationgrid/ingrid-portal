@@ -6,7 +6,145 @@
     </properties>
 
     <body>
-        <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+        <release version="5.12.0" date="2022-04-12" description="Release 5.12.0">
+          <action type="fix" dev="wemove" issue="3222">
+            Überprüfung von Unstimmigkeiten bei der Optimierung der Suche
+          </action>
+          <action type="fix" dev="wemove" issue="3408">
+            Ein '#' oder ein Suchbrgriff mit abschließendem ':' in der Suche führt zu 0 Treffern und einer fehlerhaften Darstellung
+          </action>
+          <action type="update" dev="wemove" issue="2768">
+            IGE (UVP): Aktualisierung Hilfetext
+          </action>
+          <action type="update" dev="wemove" issue="3685">
+            MAPCLIENT: Import von Layern mit Gutter
+          </action>
+          <action type="update" dev="wemove" issue="3277">
+            Portal: Katalogausgabe entsprechend #1358 für AdV-MIS umsetzen
+          </action>
+          <action type="update" dev="wemove" issue="3377">
+            Portal: Detail-Ausgabe für Vektordaten werden nicht vollständig angezeigt
+          </action>
+          <action type="fix" dev="wemove" issue="3654">
+            BKG-Design: Info-Seite "Session abgelaufen"
+          </action>
+          <action type="update" dev="wemove" issue="3669">
+            Vermeidung von Nutzung des MD5 HASH Algorithmus für Kodierung von Passwörtern
+          </action>
+          <action type="update" dev="wemove" issue="3668">
+            Automatische Auflösung von Redirects bei der Darstellung von Vorschaubildern (http -> https)
+          </action>
+          <action type="add" dev="wemove" issue="3665">
+            MAPCLIENT: Import von Layern per Single-Tile
+          </action>
+          <action type="add" dev="wemove" issue="3666">
+            MAPCLIENT: Barrierefreiheit-Link im Footer vom Kartenviewer einbinden
+          </action>
+          <action type="add" dev="wemove" issue="3667">
+            MAPCLIENT: Hilfe-Link im Footer vom Kartenviewer einbinden
+          </action>
+          <action type="fix" dev="wemove" issue="3631">
+            Layouts anpassen für die Suchergebnisseite und die Detaildarstellung im RLP-Profil
+          </action>
+          <action type="fix" dev="wemove" issue="3638">
+            Objektklassen in MetaVer wieder anpassen
+          </action>
+          <action type="update" dev="wemove" issue="3637">
+            Aktualisierung Portal-Layout für das GeoPortal.EBA
+          </action>
+          <action type="update" dev="wemove" issue="3636">
+            Aktualisierung Portal-Layout für das GeoPortal.WSV
+          </action>
+          <action type="update" dev="wemove" issue="3569">
+            Logo in "Print.InGrid.pdf" austauschen
+          </action>
+          <action type="update" dev="wemove">
+            Add 'Hessen' to metaver
+          </action>
+          <action type="fix" dev="wemove" issue="3594">
+            Reload Mapclient - weiße Seite
+          </action>
+          <action type="fix" dev="wemove" issue="3596">
+            IT-Sicherheitsmängel in Docker Basis Images beseitigen
+          </action>
+          <action type="fix" dev="wemove" issue="3584">
+            MAPCLIENT: Dienst-Import über das Portal funktioniert nicht
+          </action>
+          <action type="update" dev="wemove" issue="3399">
+            Fehlermeldung "Layer hinzufügen" in Kartenanwendung
+          </action>
+          <action type="update" dev="wemove" issue="3095">
+            Hintergrundkarten in Metaver - Einbinden der TopPlusOpen-Light Karten
+          </action>
+          <action type="fix" dev="wemove" issue="3544">
+            Portal: "Auswahl anwenden" Button für die räumliche Suche nicht sichtbar
+          </action>
+          <action type="fix" dev="wemove" issue="3545">
+            Mapclient: Teilen von Zeichnung enthält falsche URL
+          </action>
+          <action type="update" dev="wemove" issue="2850">
+            Update MessdatenStorage ElasticSearch
+          </action>
+          <action type="add" dev="wemove" issue="3413">
+            Portal Verbesserung der URL zur Detaildatensuche
+          </action>
+          <action type="fix" dev="wemove" issue="3495">
+            UVP-NI: Im Footer des nds. UVP-Portals fehlt der MU-Tag
+          </action>
+          <action type="update" dev="wemove" issue="3413">
+            Add antivirus scan error handling
+          </action>
+          <action type="update" dev="wemove" issue="3466">
+            UVP: Update Text in pop-up window
+          </action>
+          <action type="update" dev="wemove" issue="2499">
+            BKG: Update > 5.8: Release-Bereitstellung BKG-Profil
+          </action>
+          <action type="fix" dev="wemove" issue="3476">
+            MAPCLIENT: Fehlerhebung beim Import von geschützten Diensten
+          </action>
+          <action type="update" dev="wemove" issue="3411">
+            Neues Passwort bei Aktualisierung eines Accounts
+          </action>
+          <action type="fix" dev="wemove" issue="3412">
+            Problem bei Darstellung der Landing Page für neu angemeldete Benutzer offen
+          </action>
+          <action type="add" dev="wemove" issue="3303">
+            Portal Filter-Facetten im baw_mis Profil anpassen
+          </action>
+          <action type="update" dev="wemove" issue="2618">
+            Katalogausgabe entsprechend #1358 für BKG-MIS umsetzen
+          </action>
+          <action type="update" dev="wemove" issue="3462">
+            Anpassung der Kontexthilfe für Systemumgebung
+          </action>
+          <action type="update" dev="wemove" issue="3286">
+            IGE: Wechsel des Reiters blockiert
+          </action>
+          <action type="add" dev="wemove" issue="2770">
+            IGE(BAW-MIS): IGE-Formular für Messdaten anpassen
+          </action>
+          <action type="add" dev="wemove" issue="2771">
+            IGE(BAW-MIS): IGE-Formular für Software anpassen
+          </action>
+          <action type="update" dev="wemove" issue="3715">
+            IGE(BAW-MIS): Tweak IGE form for projects in BAW profiles
+          </action>
+          <action type="update" dev="wemove" issue="3599">
+            IGE(BAW): Don't restrict DOI-field rights for geodata
+          </action>
+          <action type="update" dev="wemove" issue="2322">
+            IGE(BAW): Set default value of url type in lfs dialog
+          </action>
+          <action type="update" dev="wemove" issue="3681">
+            IGE(BAW): Set default value of url type in lfs dialog
+          </action>
+          <action type="update" dev="wemove" issue="3618">
+            Metaver: Remove time from date display for temporal reference
+          </action>
+          <action type="update" dev="wemove" issue="2377">
+            IGE: Add timeRefDate validation
+          </action>
         </release>
 
         <release version="5.11.0" date="2022-01-19" description="Release 5.11.0">
@@ -134,6 +272,9 @@
           </action>
           <action type="update" dev="wemove" issue="2903">
             Change resource time span data entry
+          </action>
+          <action type="fix" dev="wemove" issue="3652">
+            Fix Zeitbezug display in portal
           </action>
         </release>
 

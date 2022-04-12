@@ -13,12 +13,10 @@
             #set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
         #end
         #if($node.origDocId && !$node.origDocId.isEmpty())
-            #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}&docuuid=${node.origDocId}#if(${node.docId})&docid=${node.docId}#end")
+            #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=${node.origDocId}#if($node.plugType != 'dsc_ecs')&type=address#end#if($detailUseParamPlugid)&plugid=${node.plugId}#end")
         #else
             #if($node.udk_docId && !$node.udk_docId.isEmpty())
-                #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docuuid=${node.udk_docId}#end")
-            #else
-                #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
+                #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=${node.udk_docId}#if($node.plugType != 'dsc_ecs')&type=address#end#if($detailUseParamPlugid)&plugid=${node.plugId}#end")
             #end
         #end
     #else
@@ -277,7 +275,7 @@
                                 leafsHtml = leafsHtml + '</svg>';
                             }
                             if(leafUdkClass !== '1000') {
-                                leafsHtml = leafsHtml + '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=' + leafPlugId + '&amp;docuuid=' + leafDocId + '"> ' + leafName + ' </a>';
+                                leafsHtml = leafsHtml + '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=' + leafDocId + (leaf.plugType !== 'dsc_ecs'? '&type=address' : '') + '#if($detailUseParamPlugid)&amp;plugid=' + leafPlugId + '#end"> ' + leafName + ' </a>';
                             } else {
                                 leafsHtml = leafsHtml + leafName;
                             }

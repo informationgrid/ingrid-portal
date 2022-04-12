@@ -75,8 +75,8 @@ import de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator;
 
 public class UploadVirusScanJobTest extends BaseJobTest {
 
-    private static final Path DOCS_PATH = Paths.get("target", "ingrid-upload-test");
-    private static final Path QUARANTINE_PATH = Paths.get("target", "ingrid-upload-quarantine");
+    private static final Path DOCS_PATH = Paths.get("/target", "ingrid-upload-test");
+    private static final Path QUARANTINE_PATH = Paths.get("/target", "ingrid-upload-quarantine");
 
     private static final String VIRUS_CONTENT = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
 
@@ -87,6 +87,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         put("command", "savscan -f -all -archive -mime %FILE%");
         put("virusPattern", "(?m)^>>> Virus '([^']+)' found in file (.+)$");
         put("cleanPattern", "(?m)^No viruses were discovered.$");
+        put("errorPattern", "(?m)^\\d* error(s\\b|\\b) ((\\was\\b)|(\\were\\b)) encountered.$");
     }};
     private static final Map<String, String> VIRUSSCAN_VALIDATOR_CONFIG_REMOTE = new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
@@ -206,7 +207,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), "");
-        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), "");
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), "");
 
         // set up scan report expectations
         final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
@@ -225,6 +226,45 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
         // no report is sent
         assertEquals(0, this.mockEmailService.emails.size());
+    }
+
+    /**
+     * Test:
+     * - Local scanner setup, error is found during scan, but no virus
+     * @throws Exception
+     */
+    @Test
+    public void testLocalErrorFound() throws Exception {
+        // set up job
+        setupJob(localVirusScanValidator);
+
+        // set up files
+        final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
+        final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), "");
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), "");
+
+        // set up scan report expectations
+        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
+        when(this.scanner.execute(scanCommand)).thenReturn(this.getScanReportError(3));
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        Mockito.verify(this.scanner, times(1)).execute(any());
+
+        assertTrue(this.fileExists(file1));
+        assertTrue(this.fileExists(file2));
+        assertTrue(this.fileExists(file3));
+        assertTrue(this.getTestAppender().hasIssues());
+
+        // report is sent and contains whole scan result
+        assertEquals(1, this.mockEmailService.emails.size());
+
+        final MockEmailService.Email report = this.mockEmailService.emails.get(0);
+        assertEquals("[IGE] Virus Scan Report ERROR", report.subject);
+        assertTrue(report.body.contains("2 errors were encountered."));
+        assertTrue(report.body.contains("End of Scan."));
     }
 
     /**
@@ -307,7 +347,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), VIRUS_CONTENT);
-        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), VIRUS_CONTENT);
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), VIRUS_CONTENT);
 
         // set up scan report expectations
         final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
@@ -336,11 +376,20 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertEquals("[IGE] Virus Scan Report", report.subject);
 
         final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
-        + "Directories to scan: target\\ingrid-upload-test\n"
+        + "Directories to scan: \\target\\ingrid-upload-test\n"
+        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
+        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
+        + "Full Scanning \n"
+        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File2Ä\n"
+        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File3,Ö \n"
+        + "3 files scanned in 5 seconds.\n"
+        + "2 viruses were discovered.\n"
+        + "2 files out of 3 were infected.\n"
+        + "End of Scan.\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
-        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
-        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File3,Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File3,Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
         assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));
@@ -359,7 +408,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), "");
-        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), "");
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), "");
 
         // set up scan response expectations
         Mockito.doAnswer(new MockedServiceExecution(3, new Path[] {})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
@@ -423,7 +472,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), VIRUS_CONTENT);
-        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), VIRUS_CONTENT);
+        final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), VIRUS_CONTENT);
 
         // set up scan response expectations
         Mockito.doAnswer(new MockedServiceExecution(3, new Path[] {file2, file3})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
@@ -449,11 +498,20 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertEquals("[IGE] Virus Scan Report", report.subject);
 
         final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
-        + "Directories to scan: target\\ingrid-upload-test\n"
+        + "Directories to scan: \\target\\ingrid-upload-test\n"
+        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
+        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
+        + "Full Scanning \n"
+        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File2Ä\n"
+        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File3,Ö \n"
+        + "3 files scanned in 5 seconds.\n"
+        + "2 viruses were discovered.\n"
+        + "2 files out of 3 were infected.\n"
+        + "End of Scan.\n"
         + "Found 2 infected file(s)\n"
         + "Moving infected file(s)...\n"
-        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
-        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
+        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File3,Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File3,Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
         assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));
@@ -534,7 +592,6 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     /**
      * Check existence of a test file
      * @param path
-     * @param name
      * @throws IOException
      */
     private boolean fileExists(final Path path) throws IOException {
@@ -544,7 +601,6 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     /**
      * Get the scan report in case of infection
      * @param numFiles
-     * @param files
      * @return String
      */
     private String getScanReportInfected(final int numFiles, final Path... infected) {
@@ -574,6 +630,24 @@ public class UploadVirusScanJobTest extends BaseJobTest {
                 "",
                 "",
                 numFiles+" files scanned in 5 seconds.",
+                "No viruses were discovered.",
+                "End of Scan."
+        );
+    }
+
+    /**
+     * Get the scan report in case of no infection
+     * @param numFiles
+     * @return String
+     */
+    private String getScanReportError(final int numFiles) {
+        return String.join(System.getProperty("line.separator"),
+                "Full Scanning",
+                "",
+                "",
+                "",
+                numFiles+" files scanned in 5 seconds.",
+                "2 errors were encountered.",
                 "No viruses were discovered.",
                 "End of Scan."
         );

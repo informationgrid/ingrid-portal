@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  **************************************************-
-  Ingrid Portal Apps
-  ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  -->
-
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
         "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
 
@@ -218,12 +195,12 @@
     
     <!-- Mein Portal  -->
     <rule>
-        <from>/personalisierungsoptionen</from>
+        <from>/log-in</from>
         <to type="forward">/portal/service-myportal.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-myportal.psml</from>
-        <to>/personalisierungsoptionen</to>
+        <to>/log-in</to>
     </outbound-rule>
     
     <!-- Datenschutzbestimmung   -->
@@ -295,22 +272,7 @@
         <from>/portal/search-detail.psml</from>
         <to>/trefferanzeige</to>
     </outbound-rule>
-    
-    <!-- Help -->
-    <rule enabled="true">
-        <condition type="parameter" name="hkey" operator="equal">(maps-1)</condition>
-        <from>/hilfe(.*)$</from>
-        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe/GeoViewer.WSV</to>
-    </rule>
-    <rule>
-        <from>/hilfe</from>
-        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe/GeoPortal.WSV+Hilfe</to>
-    </rule>
-    <rule>
-        <from>/portal/help.psml</from>
-        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe/GeoPortal.WSV+Hilfe</to>
-    </rule>
-    
+
     <!-- Features -->
     <rule>
         <from>/funktionen</from>
@@ -371,14 +333,20 @@
         <to>/cms1</to>
     </outbound-rule>
     <rule>
-        <from>/cms2</from>
+        <from>/hilfe</from>
         <to type="forward">/portal/cms/cms-2.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/cms/cms-2.psml</from>
-        <to>/cms2</to>
+        <to>/hilfe</to>
     </outbound-rule>
-    
+
+    <!-- Help -->
+    <outbound-rule>
+        <from>/portal/help.psml</from>
+        <to>/hilfe</to>
+    </outbound-rule>
+
     <rule>
         <from>/portal/myportal-create-account.psml</from>
         <to type="redirect">/startseite</to>

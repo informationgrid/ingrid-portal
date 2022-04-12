@@ -168,7 +168,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("mapParamZoom", request.getParameter("zoom") != null ? request.getParameter("zoom"): "");
         context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent"): "");
         context.put("mapParamLayer", request.getParameter("layer") != null ? request.getParameter("layer"): "");
-        
+
+        context.put("detailUseParamPlugid", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID));
+
         // add request language, used to localize the map client
         context.put("languageCode",request.getLocale().getLanguage());
         
@@ -324,6 +326,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 // process query, create QueryDescriptor
                 qd = QueryPreProcessor.createRankedQueryDescriptor(request);
                 if (qd != null) {
+                    query = qd.getQuery();
+                    if(request.getParameter("rank") != null) {
+                        query.put(IngridQuery.RANKED, request.getParameter("rank"));
+                    }
                     controller.addQuery("ranked", qd);
                     SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
                 }

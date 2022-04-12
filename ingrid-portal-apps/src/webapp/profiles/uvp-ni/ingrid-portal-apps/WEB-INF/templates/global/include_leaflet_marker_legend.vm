@@ -7,13 +7,13 @@
                     createLegendEntry(map, mapFilter, [mapMarkers12_time, mapMarkers12], 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv', '', '#if($restUrlMarker4_time)$restUrlMarker4_time#end');
                 }
                 if(legendCounter.countMarker2){
-                    createLegendEntry(map, mapFilter, [mapMarkers13], 'red', 'mapMarkers13', 'Raumordnungsverfahren', 'ro');
+                    createLegendEntry(map, mapFilter, [mapMarkers13_time, mapMarkers13], 'red', 'mapMarkers13', 'Raumordnungsverfahren', 'ro', '', '#if($restUrlMarker2_time)$restUrlMarker2_time#end');
                 }
                 if(legendCounter.countMarker5){
-                    createLegendEntry(map, mapFilter, [mapMarkers14], 'purple', 'mapMarkers14', 'Linienbestimmungen', 'li');
+                    createLegendEntry(map, mapFilter, [mapMarkers14_time, mapMarkers14], 'purple', 'mapMarkers14', 'Linienbestimmungen', 'li', '', '#if($restUrlMarker5_time)$restUrlMarker5_time#end');
                 }
                 if(legendCounter.countMarker3){
-                    createLegendEntry(map, mapFilter, [mapMarkers11], 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av');
+                    createLegendEntry(map, mapFilter, [mapMarkers11_time, mapMarkers11], 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av', '', '#if($restUrlMarker3_time)$restUrlMarker3_time#end');
                 }
                 if(legendCounter.countMarkerDevPlan){
                     createLegendEntry(map, mapFilter, [mapMarkersDevPlan], 'green', 'mapMarkersDevPlan', 'Bauleitplanung', 'blp');

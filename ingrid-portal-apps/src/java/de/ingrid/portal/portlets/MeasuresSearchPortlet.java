@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -57,7 +57,8 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
 
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
-        
+        context.put( "leafletBgLayerOpacity", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY));
+
         String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
         String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
         if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
@@ -71,6 +72,12 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             }
             context.put( "leafletBgLayerWMSName", leafletBgLayerWMSName.toString());
         }
+        context.put( "measureUrl", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MEASURE_URL));
+        context.put( "measureNetworksExclude", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MEASURE_NETWORKS_EXCLUDE));
+        context.put( "measureNetworksInitial", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MEASURE_NETWORKS_INITIAL));
+
+
+
         super.doView(request, response);
     }
 }

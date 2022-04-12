@@ -35,6 +35,7 @@ import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.portal.global.UtilsFacete;
 import de.ingrid.portal.om.IngridFacet;
 import de.ingrid.utils.udk.iso19108.TM_PeriodDuration;
 import de.ingrid.utils.udk.iso19108.TM_PeriodDuration.Interval;
@@ -313,15 +314,20 @@ public class FacetsConfig {
                         ingridFacet.setColNum( Integer.parseInt(node.getValue().toString()) );
                     }
                 }
-                
+
+                if (!facetNode.getChildren( "queryType" ).isEmpty()) {
+                    Node subNode = (Node) facetNode.getChildren( "queryType" ).get( 0 );
+                    ingridFacet.setQueryType( subNode.getValue().toString() );
+                }
+
+                if (!facetNode.getChildren( "listLength" ).isEmpty()) {
+                    Node subNode = (Node) facetNode.getChildren( "listLength" ).get( 0 );
+                    ingridFacet.setListLength( Integer.parseInt(subNode.getValue().toString()) );
+                }
+
                 if (!facetNode.getChildren( "facets" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {
-                        if (!node.getAttributes( "queryType" ).isEmpty()) {
-                            Node subNode = (Node) node.getAttributes( "queryType" ).get( 0 );
-                            ingridFacet.setQueryType( subNode.getValue().toString() );
-                        }
-
                         Node facetsNode = (Node) facetNode.getChildren( "facets" ).get( 0 );
                         if (facetNode != null) {
                             List<ConfigurationNode> subFacet = facetsNode.getChildren( "facet" );
@@ -349,91 +355,137 @@ public class FacetsConfig {
                 if (!facetNode.getChildren( "toggle" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "toggle" ).get( 0 );
                     if (node != null) {
-                        IngridFacet toggle = new IngridFacet();
-                        if (!node.getChildren( "id" ).isEmpty()) {
-                            Node subNode = (Node) node.getChildren( "id" ).get( 0 );
-                            if (subNode != null) {
-                                toggle.setId( subNode.getValue().toString() );
-                            }
-                        }
-                        if (!node.getChildren( "isSelect" ).isEmpty()) {
-                            Node subNode = (Node) node.getChildren( "isSelect" ).get( 0 );
-                            if (subNode != null) {
-                                toggle.setSelect( Boolean.parseBoolean(subNode.getValue().toString()) );
-                            }
-                        }
-                        if (!node.getChildren( "from" ).isEmpty() && !node.getChildren( "to" ).isEmpty()) {
-                            String from = null;
-                            String to = null;
-                            SimpleDateFormat df = new SimpleDateFormat( "yyyyMMdd" );
-                            Calendar cal;
-
-                            // from
-                            Node subNode = (Node) node.getChildren( "from" ).get( 0 );
-                            cal = new GregorianCalendar();
-                            if (subNode != null) {
-                                String value = subNode.getValue().toString();
-                                if (value.equals( "" )) {
-                                    from = "";
-                                } else {
-                                    TM_PeriodDuration pd = TM_PeriodDuration.parse( value );
-                                    if(pd != null) {
-                                        if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
-                                            cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
-                                        }
-                                        
-                                        if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
-                                            cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
-                                        }
-                                        
-                                        if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
-                                            cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
-                                        }
-                                    }
-                                    from = df.format( cal.getTime() );
-                                }
-                            }
-
-                            // to
-                            subNode = (Node) node.getChildren( "to" ).get( 0 );
-                            cal = new GregorianCalendar();
-                            if (subNode != null) {
-                                String value = subNode.getValue().toString();
-                                if (value.equals( "" )) {
-                                    to = "";
-                                } else {
-                                    TM_PeriodDuration pd = TM_PeriodDuration.parse( value );
-                                    if(pd != null) {
-                                        if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
-                                            cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
-                                        }
-                                        
-                                        if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
-                                            cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
-                                        }
-                                        
-                                        if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
-                                            cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
-                                        }
-                                    }
-                                    to = df.format( cal.getTime() );
-                                }
-                            }
-                            subNode = (Node) node.getChildren( "query" ).get( 0 );
-                            if (subNode != null) {
-                                String value = subNode.getValue().toString();
-                                if (from != null && to != null) {
-                                    toggle.setQuery( value.replace( "{FROM}", from ).replace( "{TO}", to ) );
-                                }
-                            }
-                        }
-                        ingridFacet.setToggle(toggle);
+                        addFacetToggle(node, ingridFacet);
                     }
                 }
 
+                if (!facetNode.getChildren( "toggleGroups" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "toggleGroups" ).get( 0 );
+                    if (node != null) {
+                        ArrayList<ArrayList<String>> toggleGroups = new ArrayList<>();
+                        if (!node.getChildren( "toggleGroup" ).isEmpty()) {
+                            Node subNode = (Node) node.getChildren( "toggleGroup" ).get( 0 );
+                            if (subNode != null) {
+                                boolean isSelect = false;
+                                if (!subNode.getAttributes( "isSelect" ).isEmpty()) {
+                                    Node tmpNode = (Node) subNode.getAttributes( "isSelect" ).get( 0 );
+                                    isSelect =  Boolean.parseBoolean(tmpNode.getValue().toString());
+                                }
+                                List<ConfigurationNode> toogleNodes = subNode.getChildren();
+                                if(!toogleNodes.isEmpty()) {
+                                    ArrayList<String> toggleGroupEntries = new ArrayList<>();
+                                    for (ConfigurationNode toggleNode : toogleNodes) {
+                                        String parentId = toggleNode.getChildren("parentId").get(0).getValue().toString();
+                                        toggleGroupEntries.add(parentId);
+                                        IngridFacet tmpFacet = UtilsFacete.getFacetById(ingridFacet.getFacets(), parentId);
+                                        if(tmpFacet != null) {
+                                            addFacetToggle((Node) toggleNode, tmpFacet, true, isSelect);
+                                        }
+                                    }
+                                    if(!toggleGroupEntries.isEmpty()) {
+                                        toggleGroups.add(toggleGroupEntries);
+                                    }
+                                }
+                            }
+                        }
+                        if(!toggleGroups.isEmpty()) {
+                            ingridFacet.setToggleGroups(toggleGroups);
+                        }
+                    }
+                }
                 ingridFacets.add( ingridFacet );
             }
         }
         return ingridFacets;
+    }
+
+    private static void addFacetToggle(Node node, IngridFacet ingridFacet) {
+        addFacetToggle(node, ingridFacet, false, false);
+    }
+
+    private static void addFacetToggle(Node node, IngridFacet ingridFacet, boolean isGroup, boolean isSelectAll) {
+        IngridFacet toggle = new IngridFacet();
+        if (!node.getChildren( "id" ).isEmpty()) {
+            Node subNode = (Node) node.getChildren( "id" ).get( 0 );
+            if (subNode != null) {
+                toggle.setId( subNode.getValue().toString() );
+            }
+        }
+        if(isGroup) {
+            if(isSelectAll) {
+                toggle.setSelect(isSelectAll);
+            }
+        } else if (!node.getChildren( "isSelect" ).isEmpty()) {
+            Node subNode = (Node) node.getChildren( "isSelect" ).get( 0 );
+            if (subNode != null) {
+                toggle.setSelect( Boolean.parseBoolean(subNode.getValue().toString()) );
+            }
+        }
+        if (!node.getChildren( "from" ).isEmpty() && !node.getChildren( "to" ).isEmpty()) {
+            String from = null;
+            String to = null;
+            SimpleDateFormat df = new SimpleDateFormat( "yyyyMMdd" );
+            Calendar cal;
+
+            // from
+            Node subNode = (Node) node.getChildren( "from" ).get( 0 );
+            cal = new GregorianCalendar();
+            if (subNode != null) {
+                String value = subNode.getValue().toString();
+                if (value.equals( "" )) {
+                    from = "";
+                } else {
+                    TM_PeriodDuration pd = TM_PeriodDuration.parse( value );
+                    if(pd != null) {
+                        if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
+                            cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
+                        }
+                        
+                        if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
+                            cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
+                        }
+                        
+                        if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
+                            cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
+                        }
+                    }
+                    from = df.format( cal.getTime() );
+                }
+            }
+
+            // to
+            subNode = (Node) node.getChildren( "to" ).get( 0 );
+            cal = new GregorianCalendar();
+            if (subNode != null) {
+                String value = subNode.getValue().toString();
+                if (value.equals( "" )) {
+                    to = "";
+                } else {
+                    TM_PeriodDuration pd = TM_PeriodDuration.parse( value );
+                    if(pd != null) {
+                        if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
+                            cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
+                        }
+                        
+                        if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
+                            cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
+                        }
+                        
+                        if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
+                            cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
+                        }
+                    }
+                    to = df.format( cal.getTime() );
+                }
+            }
+            subNode = (Node) node.getChildren( "query" ).get( 0 );
+            if (subNode != null) {
+                String value = subNode.getValue().toString();
+                if (from != null && to != null) {
+                    toggle.setQuery( value.replace( "{FROM}", from ).replace( "{TO}", to ) );
+                }
+            }
+        }
+        ingridFacet.setToggle(toggle);
     }
 }

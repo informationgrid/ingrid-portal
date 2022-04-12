@@ -50,9 +50,15 @@ define([
         run: function() {
             var promise = this._createCustomFields();
             topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class1") {
+                var isGeodata = data.objClass === "Class1";
+                var isProject = data.objClass === "Class4";
+
+                if (isGeodata) {
                     domClass.remove("uiElementAdd" + AUFTRAGSNUMMER_ID, "hide");
                     domClass.remove("uiElementAdd" + AUFTRAGSTITEL_ID, "hide");
+                } else if (isProject) {
+                    domClass.remove("uiElementAdd" + AUFTRAGSNUMMER_ID, "hide");
+                    domClass.add("uiElementAdd" + AUFTRAGSTITEL_ID, "hide");
                 } else {
                     domClass.add("uiElementAdd" + AUFTRAGSNUMMER_ID, "hide");
                     domClass.add("uiElementAdd" + AUFTRAGSTITEL_ID, "hide");

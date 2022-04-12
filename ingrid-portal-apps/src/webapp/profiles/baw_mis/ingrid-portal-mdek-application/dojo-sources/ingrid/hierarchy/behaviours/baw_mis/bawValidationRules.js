@@ -36,6 +36,9 @@ define([
         run: function(){
 
             topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                // skip behaviour for Software-type
+                if (registry.byId("objectClass").value === "Class6") return;
+                
                 var roleCodeSyslistId = 505;
                 var ownerSyslistKey = 7;
                 var ownerSyslistName = UtilSyslist.getSyslistEntryName(roleCodeSyslistId, ownerSyslistKey);

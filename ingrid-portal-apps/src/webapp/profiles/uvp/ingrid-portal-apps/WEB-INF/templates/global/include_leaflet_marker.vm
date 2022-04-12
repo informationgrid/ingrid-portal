@@ -94,6 +94,24 @@
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
         }
     });
+    var mapMarkers11_time = L.markerClusterGroup({
+        id: 'mapMarkers11_time',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
     // "Raumordnungsverfahren" markers
     var mapMarkers13 = L.markerClusterGroup({
         id: 'mapMarkers13',
@@ -113,9 +131,45 @@
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-13' + c, iconSize: new L.Point(40, 40) });
         }
     });
+    var mapMarkers13_time = L.markerClusterGroup({
+        id: 'mapMarkers13_time',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-13' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
     // "Linienbestimmungen" markers
     var mapMarkers14 = L.markerClusterGroup({
         id: 'mapMarkers14',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-14' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    var mapMarkers14_time = L.markerClusterGroup({
+        id: 'mapMarkers14_time',
         iconCreateFunction: function (cluster) {
             var childCount = cluster.getChildCount();
             var c = ' marker-cluster-';
@@ -194,8 +248,9 @@
         var mapFilter = $('.map-filter ul li div');
         var overlayers = {};
 #parse ('/WEB-INF/templates/global/include_leaflet_marker_legend.vm')
+
         var mapFilterXs = $('.map-filter-xs');
-        if(mapFilterXs) {
+        if(mapFilterXs && mapFilterXs.length > 0) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
                     createLegendEntry(map, mapFilterXs, [mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', 'style="padding:0px"');
@@ -268,27 +323,45 @@
                 }
             }
             if(mapParamLayers.indexOf('av') > -1){
-                if(mapMarkers11) {
-                    map.addLayer(mapMarkers11);
+                if(mapMarkers11 || mapMarkers11_time) {
                     $('#mapMarkers11').prop('checked', true);
+                    var checkboxTime = $('#mapMarkers11_time');
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(mapMarkers11_time);
+                        checkboxTime.closest('.control-group').removeClass('is-hidden');
+                    } else {
+                        map.addLayer(mapMarkers11);
+                    }
                     if(mapParamLayers.indexOf('av') === -1) {
                         mapParamLayers.push('av');
                     }
                 }
             }
             if(mapParamLayers.indexOf('ro') > -1){
-                if(mapMarkers13) {
-                    map.addLayer(mapMarkers13);
+                if(mapMarkers13 || mapMarkers13_time) {
                     $('#mapMarkers13').prop('checked', true);
+                    var checkboxTime = $('#mapMarkers13_time');
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(mapMarkers13_time);
+                        checkboxTime.closest('.control-group').removeClass('is-hidden');
+                    } else {
+                        map.addLayer(mapMarkers13);
+                    }
                     if(mapParamLayers.indexOf('ro') === -1) {
                         mapParamLayers.push('ro');
                     }
                 }
             }
             if(mapParamLayers.indexOf('li') > -1){
-                if(mapMarkers14) {
-                    map.addLayer(mapMarkers14);
+                if(mapMarkers14 || mapMarkers14_time) {
                     $('#mapMarkers14').prop('checked', true);
+                    var checkboxTime = $('#mapMarkers14_time');
+                    if(checkboxTime.is(':checked')) {
+                        map.addLayer(mapMarkers14_time);
+                        checkboxTime.closest('.control-group').removeClass('is-hidden');
+                    } else {
+                        map.addLayer(mapMarkers14);
+                    }
                     if(mapParamLayers.indexOf('li') === -1) {
                         mapParamLayers.push('li');
                     }
@@ -391,171 +464,99 @@
             if("$restUrlUVPDevPlan") {
                 if(mapMarkersDevPlan.getLayers().length === 0){
                     map.spin(true);
-                    jQuery.get("$restUrlUVPDevPlan")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markersDevPlan){
-                            for (var i = 0; i < markersDevPlan.length; i++) {
-                                var a = markersDevPlan[i];
-                                var id = a.id;
-                                var name = a.name;
-                                var lat = a.lat;
-                                var lon = a.lon;
-                                var iplug = a.iplug;
-                                var popUpHtml = 'Bitte warten ...';
-                                var iconColor = 'green';
-                                var icon = getIcon(smallIcons, iconColor, enablePopUp); 
-                                var marker = L.marker(new L.LatLng(lat,lon), { title: name, icon: icon, interactive: !smallIcons });
-                                marker.bbox = null;
-                                marker.lat = lat;
-                                marker.lon = lon;
-                                marker.iplug = iplug;
-                                if(enablePopUp){
-                                    marker.on('click', onMapClickBLP);
-                                    marker.bindPopup(popUpHtml, popupMarkerOptions);
-                                    marker.on('popupopen', showMarker);
-                                    marker.on('popupclose', hideMarker);
-                                }
-                                mapMarkersDevPlan.addLayer(marker);
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkersDevPlan';
+                    var markerColor = 'green';
+                    loadMarkers("$restUrlUVPDevPlan", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers10') {
             if(mapMarkers10.getLayers().length === 0) {
                 if("$restUrlMarker") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers10, a, 'blue');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers10';
+                    var markerColor = 'blue';
+                    loadMarkers("$restUrlMarker", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers10_time') {
             if(mapMarkers10_time.getLayers().length === 0) {
                 if("$restUrlMarker_time") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker_time")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers10_time, a, 'blue');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers10_time';
+                    var markerColor = 'blue';
+                    loadMarkers("$restUrlMarker_time", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers13') {
             if(mapMarkers13.getLayers().length === 0) {
                 if("$restUrlMarker2") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker2")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers13, a, 'red');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers13';
+                    var markerColor = 'red';
+                    loadMarkers("$restUrlMarker2", 0, marker, markerColor, map);
+                }
+            }
+        } else if(e.layer.options.id === 'mapMarkers13_time') {
+            if(mapMarkers13_time.getLayers().length === 0) {
+                if("$restUrlMarker2_time") {
+                    map.spin(true);
+                    var marker = 'mapMarkers13_time';
+                    var markerColor = 'red';
+                    loadMarkers("$restUrlMarker2_time", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers14') {
             if(mapMarkers14.getLayers().length === 0) {
                 if("$restUrlMarker5") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker5")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers14, a, 'purple');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers14';
+                    var markerColor = 'purple';
+                    loadMarkers("$restUrlMarker5", 0, marker, markerColor, map);
+                }
+            }
+        } else if(e.layer.options.id === 'mapMarkers14_time') {
+            if(mapMarkers14_time.getLayers().length === 0) {
+                if("$restUrlMarker5_time") {
+                    map.spin(true);
+                    var marker = 'mapMarkers14_time';
+                    var markerColor = 'purple';
+                    loadMarkers("$restUrlMarker5_time", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers11') {
             if(mapMarkers11.getLayers().length === 0) {
                 if("$restUrlMarker3") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker3")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers11, a, 'black');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers11';
+                    var markerColor = 'black';
+                    loadMarkers("$restUrlMarker3", 0, marker, markerColor, map);
+                }
+            }
+        } else if(e.layer.options.id === 'mapMarkers11_time') {
+            if(mapMarkers11_time.getLayers().length === 0) {
+                if("$restUrlMarker3_time") {
+                    map.spin(true);
+                    var marker = 'mapMarkers11_time';
+                    var markerColor = 'black';
+                    loadMarkers("$restUrlMarker3_time", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers12') {
             if(mapMarkers12.getLayers().length === 0) {
                 if("$restUrlMarker4") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker4")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers12, a, 'orange');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers12';
+                    var markerColor = 'orange';
+                    loadMarkers("$restUrlMarker4", 0, marker, markerColor, map);
                 }
             }
         } else if(e.layer.options.id === 'mapMarkers12_time') {
             if(mapMarkers12_time.getLayers().length === 0) {
                 if("$restUrlMarker4_time") {
                     map.spin(true);
-                    jQuery.get("$restUrlMarker4_time")
-                    .done(function(data, textStatus, jqxhr) {
-                        map.spin(false);
-                        if(markers){
-                            for (var i = 0; i < markers.length; i++) {
-                                var a = markers[i];
-                                createMarker(mapMarkers12_time, a, 'orange');
-                            }
-                        }
-                    })
-                    .error(function () {
-                      map.spin(false);
-                    });
+                    var marker = 'mapMarkers12_time';
+                    var markerColor = 'orange';
+                    loadMarkers("$restUrlMarker4_time", 0, marker, markerColor, map);
                 }
             }
         }
@@ -579,13 +580,13 @@
         return icon;
     }
     
-    function createPopUp(title, procedure, categories, steps, id) {
+    function createPopUp(title, procedure, categories, steps, id, iplug) {
         var popUpHtml = '';
         if(procedure && procedure.length > 0){
             popUpHtml += '<div class="helper text"><small>' + procedure + '</small></div>';
         }
         
-        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '" target="_blank" title="' + title + '"><h5>' + title + '</h5></a>';
+        popUpHtml += '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=' + id + '#if($detailUseParamPlugid)&plugid=' + iplug + '#end" target="_blank" title="' + title + '"><h5>' + title + '</h5></a>';
         
         if(categories && categories.length > 0){
             var categoryList = [];
@@ -628,6 +629,28 @@
         mapMarkers.addLayer(marker);
     }
 
+    function createMarkerBLP(mapMarkers, a, iconColor) {
+        var id = a.id;
+        var name = a.name;
+        var lat = a.lat;
+        var lon = a.lon;
+        var iplug = a.iplug;
+        var popUpHtml = 'Bitte warten ...';
+        var icon = getIcon(smallIcons, iconColor, enablePopUp); 
+        var marker = L.marker(new L.LatLng(lat,lon), { title: name, icon: icon, interactive: !smallIcons });
+        marker.bbox = null;
+        marker.lat = lat;
+        marker.lon = lon;
+        marker.iplug = iplug;
+        if(enablePopUp){
+            marker.on('click', onMapClickBLP);
+            marker.bindPopup(popUpHtml, popupMarkerOptions);
+            marker.on('popupopen', showMarker);
+            marker.on('popupclose', hideMarker);
+        }
+        mapMarkers.addLayer(marker);
+    }
+
     function onMapClick(e) {
         var popup = e.target.getPopup();
         map.spin(true);
@@ -639,7 +662,8 @@
             var procedure = data[0];
             var categories = data[1];
             var steps = data[2];
-            popup.setContent( createPopUp(title, procedure, categories, steps, uuid) );
+            var iplug = e.target.iplug;
+            popup.setContent( createPopUp(title, procedure, categories, steps, uuid, iplug) );
             popup.update();
         })
         .error(function () {
@@ -730,8 +754,8 @@
                 '<input id="' + id + '_time" name="' + id + '_time" type="checkbox" checked>' +
                 '<span class="toggle-slider round"></span>' +
                 '</label>' +
-                '<span class="toggle-label checked">$MESSAGES.getString("common.toggle.approval.date")</span>'+
-                '<span class="toggle-label unchecked is-hidden">$MESSAGES.getString("common.toggle.all")</span>'+
+                '<span class="toggle-label checked">$MESSAGES.getString("common.toggle.approval.date.on")</span>'+
+                '<span class="toggle-label unchecked is-hidden">$MESSAGES.getString("common.toggle.approval.date.off")</span>'+
                 '</div>';
         }
         html += '</div></div>';
@@ -797,4 +821,19 @@
             });
         }
     };
+    
+    function loadMarkers(url, startPage, marker, markerColor, map) {
+        jQuery.get(url + "?startPage=" + startPage + "&marker=" + marker + "&markerColor=" + markerColor)
+        .done(function(data, textStatus, jqxhr) {
+            startPage += 1;
+            if(data != "") {
+                loadMarkers(url, startPage, marker, markerColor, map);
+            } else {
+                map.spin(false);
+            }
+        })
+        .error(function () {
+            map.spin(false);
+        });
+    }
 </script>

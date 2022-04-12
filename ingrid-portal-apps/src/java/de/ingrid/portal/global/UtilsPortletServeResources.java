@@ -44,7 +44,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -63,6 +62,7 @@ import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -98,28 +98,15 @@ public class UtilsPortletServeResources {
             }
             if(extension.isEmpty()) {
                 try {
-                    URL url = new URL(paramURL);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("HEAD");
-                    if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
-                        UtilsHttpConnection.urlConnectionAuth(con, login, password);
-                    }
-                    String contentType = con.getContentType();
-
-                    if((contentType == null || contentType.startsWith("text/html")) && paramURL.startsWith("http://")) {
-                        url = new URL(paramURL.replace("http://", "https://"));
-                        con = (HttpURLConnection) url.openConnection();
-                        if(StringUtils.isNotEmpty(password)) {
-                            UtilsHttpConnection.urlConnectionAuth(con, login, password);
+                    Map<String, Object> requestHeader = UtilsHttpConnection.urlConnectionHead (paramURL, login, password);
+                    if(!requestHeader.isEmpty()) {
+                        String contentType = (String) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_TYPE);
+                        if(contentType != null) {
+                            extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
                         }
-                        con.setRequestMethod("HEAD");
-                        contentType = con.getContentType();
-                    }
-                    if(contentType != null) {
-                        extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
                     }
                 } catch (Exception e) {
-                    log.error("Error get datatype from: " + paramURL, e);
+                    UtilsLog.logError("Error get datatype from: " + paramURL, e, log);
                 }
             }
         }
@@ -129,23 +116,21 @@ public class UtilsPortletServeResources {
 
     public static void getHttpUrlLength(String paramURL, String login, String password, ResourceResponse response ) throws IOException {
         try {
-            URL url = new URL(paramURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
-                UtilsHttpConnection.urlConnectionAuth(con, login, password);
-            }
-            con.setRequestMethod("HEAD");
+            Map<String, Object> requestHeader = UtilsHttpConnection.urlConnectionHead (paramURL, login, password);
             StringBuilder s = new StringBuilder();
             response.setContentType( "application/javascript" );
             response.getWriter().write( "{" );
-            if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
-                s.append( "\"contentLength\":");
-                s.append( "\"" + con.getContentLength() + "\"" );
+            if(!requestHeader.isEmpty()) {
+                int length = (int) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_LENGTH);
+                if(length != -1) {
+                    s.append( "\"contentLength\":");
+                    s.append( "\"" + requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_LENGTH) + "\"" );
+                    response.getWriter().write( s.toString() );
+                }
             }
-            response.getWriter().write( s.toString() );
             response.getWriter().write( "}" );
         } catch (Exception e) {
-            log.error("Error get contentLength from: " + paramURL, e);
+            UtilsLog.logError("Error get contentLength from: " + paramURL, e, log);
             response.setContentType( "application/javascript" );
             response.getWriter().write( "{}" );
         }
@@ -155,34 +140,45 @@ public class UtilsPortletServeResources {
         try {
             getURLResponse(paramURL, response);
         } catch (Exception e) {
-            log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
+            UtilsLog.logError("Error creating HTTP resource for resource ID: " + resourceID, e, log);
             String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
             log.error( "Try https URL: " + httpsUrl);
             try {
                 getURLResponse(httpsUrl, response);
             } catch (Exception e1) {
-                log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
+                UtilsLog.logError("Error creating HTTPS resource for resource ID: " + resourceID, e, log);
                 response.getWriter().write(paramURL);
             }
         }
     }
 
     public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, List<IngridFacet> config) throws ParseException, IOException {
-        queryString = UtilsSearch.updateQueryString(queryString, request);
-        StringBuilder s = new StringBuilder();
-        s.append("var markers = [");
-        IngridQuery query = QueryStringParser.parse( queryString );
-        if(config != null) {
-            UtilsFacete.setFacetQuery(queryString, config, query);
-            UtilsFacete.addToQueryMap(request, query);
-            UtilsFacete.addToQueryGeothesaurus(request, query);
-            UtilsFacete.addToQueryAttribute(request, query);
-            UtilsFacete.addToQueryAreaAddress(request, query);
-            UtilsFacete.addToQueryWildcard(request, query);
+        String portalQueryString = UtilsSearch.updateQueryString("", request);
+        IngridQuery query = QueryStringParser.parse( portalQueryString );
+
+        if(queryString != null && queryString.trim().length() > 0){
+            // Change query to clause query (with phrase search)
+            UtilsSearch.changeQueryToClauseQuery(query);
+
+            String addToQuery = queryString;
+            if(addToQuery != null && addToQuery.length() > 0){
+                IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                query.addClause(cp);
+            }
         }
+        if(config != null) {
+            query = UtilsFacete.getQueryFacets(request, config, query);
+        }
+        int startPage = 0;
+        if(request.getParameter("startPage") != null) {
+            startPage = Integer.parseInt(request.getParameter("startPage"));
+        }
+        String marker = request.getParameter("marker");
+        String markerColor = request.getParameter("markerColor");
         IBusQueryResultIterator it = new IBusQueryResultIterator( query, requestedFields, IBUSInterfaceImpl.getInstance()
-                .getIBus() );
-        JSONArray jsonData = new JSONArray();
+                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, REQUESTED_FIELDS_UVP_MARKER_NUM);
+        response.setContentType( "application/javascript" );
         if(it != null){
             while (it.hasNext()) {
                 try {
@@ -214,55 +210,57 @@ public class UtilsPortletServeResources {
                         }
                     }
                     jsonDataEntry.put(jsonSteps);
-                    jsonData.put(jsonDataEntry);
+                    response.getWriter().write("createMarker(" + marker + ", " + jsonDataEntry.toString() + ", '" + markerColor + "');");
                 } catch (Exception e) {
-                    log.error("Error write response.", e);
+                    UtilsLog.logError("Error write response.", e, log);
                 }
             }
         }
-        response.setContentType( "application/javascript" );
-        response.getWriter().write("var markers = " + jsonData.toString() + ";");
     }
 
-    public static void getHttpMarkerUVPWithNumber(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize) throws ParseException, IOException {
-        getHttpMarkerUVPWithNumber(response, requestedFields, queryString, messages, sysCodeList, pageSize, null, null, null); 
+    public static void getHttpMarkerUVPWithNumber(ResourceRequest request, ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize) throws ParseException, IOException {
+        getHttpMarkerUVPWithNumber(request, response, requestedFields, queryString, messages, sysCodeList, pageSize, null, null, null); 
     }
 
-    public static void getHttpMarkerUVPWithNumber(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize, String from, String to, String additionalQuery) throws ParseException, IOException {
+    public static void getHttpMarkerUVPWithNumber(ResourceRequest request, ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, int pageSize, String from, String to, String additionalQuery) throws ParseException, IOException {
         if(from != null && to != null && additionalQuery != null) {
             queryString = getTimeQuery(queryString, from, to, additionalQuery);
         }
+        int startPage = 0;
+        if(request.getParameter("startPage") != null) {
+            startPage = Integer.parseInt(request.getParameter("startPage"));
+        }
+        String marker = request.getParameter("marker");
+        String markerColor = request.getParameter("markerColor");
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), requestedFields, IBUSInterfaceImpl.getInstance()
-                .getIBus(), pageSize);
-        JSONArray jsonData = new JSONArray();
+                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, REQUESTED_FIELDS_UVP_MARKER_NUM);
+        response.setContentType( "application/javascript" );
         if(it != null){
             while (it.hasNext()) {
                 IngridHit hit = it.next();
                 IngridHitDetail detail = hit.getHitDetail();
                 try {
-                    JSONArray jsonDataEntry = new JSONArray();
                     String lat = UtilsSearch.getDetailValue( detail, "lat_center", 1);
                     String lng = UtilsSearch.getDetailValue( detail, "lon_center", 1);
                     String title = UtilsSearch.getDetailValue( detail, "title" );
                     String uuid = UtilsSearch.getDetailValue( detail, "t01_object.obj_id" );
                     String iplug = hit.getPlugId();
                     if(!lat.isEmpty() && !lng.isEmpty()) {
+                        JSONArray jsonDataEntry = new JSONArray();
                         jsonDataEntry.put(Double.parseDouble(lat));
                         jsonDataEntry.put(Double.parseDouble(lng));
                         jsonDataEntry.put(title);
                         jsonDataEntry.put(uuid);
                         jsonDataEntry.put(iplug);
-                        jsonData.put(jsonDataEntry);
+                        response.getWriter().write("createMarker(" + marker + ", " + jsonDataEntry.toString() + ", '" + markerColor + "');");
                     } else {
                         log.error("Metadata '" + title + "' with UUID '" + uuid + "' has no location!");
                     }
                 } catch (Exception e) {
-                    log.error("Error write response.", e);
+                    UtilsLog.logError("Error write response.", e, log);
                 }
             }
         }
-        response.setContentType( "application/javascript" );
-        response.getWriter().write("var markers = " + jsonData.toString() + ";");
     }
 
     public static void getHttpMarkerUVPDetail(ResourceResponse response, String[] requestedFields, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
@@ -295,7 +293,7 @@ public class UtilsPortletServeResources {
                     }
                     jsonData.put(jsonSteps);
                 } catch (Exception e) {
-                    log.error("Error write response.", e);
+                    UtilsLog.logError("Error write response.", e, log);
                 }
             }
         }
@@ -305,7 +303,7 @@ public class UtilsPortletServeResources {
 
     public static void getHttpMarkerUVPBoundingBox (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
         JSONArray bbox = new JSONArray();
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString), UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BBOX,
+        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString), REQUESTED_FIELDS_UVP_BBOX,
                 IBUSInterfaceImpl.getInstance().getIBus(), 1, 0, 1 );
         if(it.hasNext()){
             IngridHit hit = it.next();
@@ -324,19 +322,38 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPMarkerBlp (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
-        IngridQuery query = QueryStringParser.parse( queryString );
+        IngridQuery query = null;
         if(config != null) {
-            UtilsFacete.setFacetQuery(queryString, config, query);
-            UtilsFacete.addToQueryMap(request, query);
-            UtilsFacete.addToQueryGeothesaurus(request, query);
-            UtilsFacete.addToQueryAttribute(request, query);
-            UtilsFacete.addToQueryAreaAddress(request, query);
-            UtilsFacete.addToQueryWildcard(request, query);
+            String portalQueryString = UtilsSearch.updateQueryString("", request);
+            query = QueryStringParser.parse( portalQueryString );
+
+            if(queryString != null && queryString.trim().length() > 0){
+                // Change query to clause query (with phrase search)
+                UtilsSearch.changeQueryToClauseQuery(query);
+    
+                String addToQuery = queryString;
+                if(addToQuery != null && addToQuery.length() > 0){
+                    IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                    ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                    query.addClause(cp);
+                }
+            }
+        } else {
+            query = QueryStringParser.parse( queryString );
         }
-        IBusQueryResultIterator it = new IBusQueryResultIterator( query , UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BLP_MARKER, IBUSInterfaceImpl.getInstance()
-                .getIBus(), UtilsPortletServeResources.REQUESTED_FIELDS_UVP_MARKER_NUM );
+        if(config != null) {
+            query = UtilsFacete.getQueryFacets(request, config, query);
+        }
+        int startPage = 0;
+        if(request.getParameter("startPage") != null) {
+            startPage = Integer.parseInt(request.getParameter("startPage"));
+        }
+        String marker = request.getParameter("marker");
+        String markerColor = request.getParameter("markerColor");
+        IBusQueryResultIterator it = new IBusQueryResultIterator( query , REQUESTED_FIELDS_UVP_BLP_MARKER, IBUSInterfaceImpl.getInstance()
+                .getIBus(), REQUESTED_FIELDS_UVP_MARKER_NUM, startPage, REQUESTED_FIELDS_UVP_MARKER_NUM);
         int cnt = 1;
-        JSONArray jsonData = new JSONArray();
+        response.setContentType( "application/javascript" );
         while (it.hasNext()) {
             try {
                 IngridHit hit = it.next();
@@ -354,21 +371,19 @@ public class UtilsPortletServeResources {
                     jsonDataEntry.put("lat", Double.parseDouble( latCenter.trim() ));
                     jsonDataEntry.put("lon", Double.parseDouble( lonCenter.trim() ));
                     jsonDataEntry.put("iplug", hit.getPlugId());
-                    jsonData.put( jsonDataEntry );
+                    response.getWriter().write("createMarkerBLP(" + marker + ", " + jsonDataEntry.toString() + ", '" + markerColor + "');");
                     cnt++;
                 } else {
                     log.error("Metadata '" + blpName + "' has no location!");
                 }
             } catch (Exception e) {
-                log.error("Error get json object.", e);
+                UtilsLog.logError("Error get json object.", e, log);
             }
         }
-        response.setContentType( "application/javascript" );
-        response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
     }
 
     public static void getHttpMarkerUVPMarkerBlpDetail (ResourceResponse response, String queryString) throws IOException, NumberFormatException, JSONException, ParseException {
-        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , UtilsPortletServeResources.REQUESTED_FIELDS_UVP_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
+        IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , REQUESTED_FIELDS_UVP_BLP_MARKER_DETAIL, IBUSInterfaceImpl.getInstance()
                 .getIBus(), 1, 0, 1 );
         int cnt = 1;
         JSONObject jsonData = new JSONObject();
@@ -418,7 +433,7 @@ public class UtilsPortletServeResources {
                 }
                 cnt++;
             } catch (Exception e) {
-                log.error("Error get json object.", e);
+                UtilsLog.logError("Error get json object.", e, log);
             }
         }
         response.setContentType( "application/json" );
@@ -426,15 +441,27 @@ public class UtilsPortletServeResources {
     }
 
     public static void getHttpMarkerUVPLegendCounter (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
-        queryString = UtilsSearch.updateQueryString(queryString, request);
-        IngridQuery query = QueryStringParser.parse( queryString );
+        IngridQuery query = null;
         if(config != null) {
-            UtilsFacete.setFacetQuery(queryString, config, query);
-            UtilsFacete.addToQueryMap(request, query);
-            UtilsFacete.addToQueryGeothesaurus(request, query);
-            UtilsFacete.addToQueryAttribute(request, query);
-            UtilsFacete.addToQueryAreaAddress(request, query);
-            UtilsFacete.addToQueryWildcard(request, query);
+            String portalQueryString = UtilsSearch.updateQueryString("", request);
+            query = QueryStringParser.parse( portalQueryString );
+
+            if(queryString != null && queryString.trim().length() > 0){
+                // Change query to clause query (with phrase search)
+                UtilsSearch.changeQueryToClauseQuery(query);
+    
+                String addToQuery = queryString;
+                if(addToQuery != null && addToQuery.length() > 0){
+                    IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                    ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                    query.addClause(cp);
+                }
+            }
+        } else {
+            query = QueryStringParser.parse( queryString );
+        }
+        if(config != null) {
+            query = UtilsFacete.getQueryFacets(request, config, query);
         }
         String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
         if(stateRanking == null) {
@@ -524,10 +551,8 @@ public class UtilsPortletServeResources {
                     response.getWriter().write( "var legendCounter = {};");
                 }
             }
-        } catch (Exception t) {
-            if (log.isErrorEnabled()) {
-                log.error( "Problems performing Search !", t );
-            }
+        } catch (Exception e) {
+            UtilsLog.logError("Problems performing Search !", e, log);
         }
     }
 
@@ -677,6 +702,10 @@ public class UtilsPortletServeResources {
     }
 
     private static void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
+        getURLResponse(paramURL, response, false);
+    }
+
+    private static void getURLResponse (String paramURL, ResourceResponse response, boolean hasRedirect) throws IOException, URISyntaxException {
         UrlValidator urlValidator = new UrlValidator();
         if(urlValidator.isValid(paramURL)) {
             URL url = new URL(paramURL);
@@ -694,6 +723,11 @@ public class UtilsPortletServeResources {
                     URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
                             Base64.getEncoder().encodeToString(os.toByteArray()));
                     response.getWriter().write(dataUri.toString());
+                }
+            } else if (con.getHeaderField("Location") != null && !hasRedirect){
+                String locationUrl = con.getHeaderField("Location");
+                if(urlValidator.isValid(locationUrl)) {
+                    getURLResponse(locationUrl, response, true);
                 }
             }
         }
@@ -754,5 +788,93 @@ public class UtilsPortletServeResources {
             queryString += " " + additionalQuery.replace("{TO}", to).replace("{FROM}", from);
         }
         return queryString;
+    }
+
+    public static void getHttpFacetValue(ResourceRequest request, ResourceResponse response, ArrayList<IngridFacet> config, String facetId) throws ParseException {
+        IngridFacet facet = UtilsFacete.getFacetById(config, facetId);
+        String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
+        if(stateRanking == null) {
+            stateRanking = "date";
+        }
+        if(facetId.equals("procedure_dev_plan") && stateRanking.equals("date")) {
+            try {
+                response.getWriter().write("0");
+            } catch (IOException e) {
+                UtilsLog.logError("Error write response!", e, log);
+            }
+        } else {
+            if(facet != null) {
+                String portalQueryString = UtilsSearch.updateQueryString("", request);
+                IngridQuery query = QueryStringParser.parse( portalQueryString );
+
+                String queryString = facet.getQuery();
+                if(facet.getToggle() != null && facet.getToggle().isSelect()) {
+                    queryString = facet.getToggle().getQuery();
+                }
+
+                if(queryString != null && queryString.trim().length() > 0){
+                    // Change query to clause query (with phrase search)
+                    UtilsSearch.changeQueryToClauseQuery(query);
+        
+                    String addToQuery = queryString;
+                    if(addToQuery != null && addToQuery.length() > 0){
+                        IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                        ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                        query.addClause(cp);
+                    }
+                }
+                if(config != null) {
+                    query = UtilsFacete.getQueryFacets(request, config, query, facet.getParent().getId());
+                }
+                if (query.get( "FACETS" ) == null) {
+                    ArrayList<IngridDocument> facetQueries = new ArrayList<>();
+                    ArrayList<HashMap<String, String>> facetList = new ArrayList<>();
+                    String tmpQuery = facet.getQuery();
+                    if (!tmpQuery.isEmpty()) {
+                        HashMap<String, String> facetEntry = new HashMap<>();
+                        facetEntry.put("id", "value");
+                        facetEntry.put("query", tmpQuery);
+                        facetList.add(facetEntry);
+                    }
+                    if (!facetList.isEmpty()) {
+                        IngridDocument facets = new IngridDocument();
+                        facets.put("id", "value");
+                        facets.put("classes", facetList);
+                        facetQueries.add(facets);
+                    }
+                    if (!facetQueries.isEmpty()) {
+                        query.put( "FACETS", facetQueries );
+                    }
+                }
+                IngridHits hits;
+                try {
+                    IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+                    hits = ibus.search( query, Settings.SEARCH_RANKED_HITS_PER_PAGE, 1, 0, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ) );
+
+                    if (hits == null) {
+                        if (log.isErrorEnabled()) {
+                            log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+                        }
+                    } else {
+                        if(hits.length() > 0) {
+                            Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
+                            JSONObject obj = new JSONObject();
+                            if(facets != null){
+                                for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
+                                    String key = iterator.next();
+                                    Long value = (Long) facets.get(key);
+                                    response.getWriter().write(value+"");
+                                    break;
+                                }
+                            }
+                        } else {
+                            response.getWriter().write("0");
+                        }
+                    }
+                } catch (Exception e) {
+                    UtilsLog.logError("Problems performing Search !", e, log);
+                }
+            }
+        }
     }
 }

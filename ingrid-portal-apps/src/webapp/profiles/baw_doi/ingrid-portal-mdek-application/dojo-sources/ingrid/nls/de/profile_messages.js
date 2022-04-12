@@ -56,6 +56,24 @@ define({
     "ui.obj.baw.simulation.spatial.dimensionality.title": "Räumliche Dimensionalität",
     "ui.obj.baw.simulation.spatial.dimensionality.help": "Räumliche Dimensionalität der Simulation",
 
+    "ui.obj.baw.literature.handle.title": "Persistenter Handle",
+    "ui.obj.baw.literature.handle.help": "Persistenter Handle für die Publikation als URL z.B. https://hdl.handle.net/20.500.11970/000000",
+    "ui.obj.baw.literature.publisher.title": "Herausgeber (ohne Adressbuch-Eintrag)",
+    "ui.obj.baw.literature.publisher.help": "Angabe des Herausgebers",
+    "ui.obj.baw.literature.author.table.column.family.name": "Nachname",
+    "ui.obj.baw.literature.author.table.column.given.name": "Vorname",
+    "ui.obj.baw.literature.author.table.column.organisation": "Organisation",
+    "ui.obj.baw.literature.author.table.column.author.is.organisation": "Autor ist Organisation",
+    "ui.obj.baw.literature.table.row.identifier": "Identifikator",
+    "ui.obj.baw.literature.author.table.title": "Autoren (ohne Adressbuch-Eintrag)",
+    "ui.obj.baw.literature.author.table.help": "Liste der Autoren, die nicht als Kontakte angelegt sind. Autoren können entweder Personen oder Organisationen sein. Für Personen müssen sowohl Vor- als auch Nachname angegeben werden. Für Organisationen können Vor- und Nachname leer gelassen werden.",
+
+    "ui.obj.baw.literature.xref.table.title": "Literaturverweise",
+    "ui.obj.baw.literature.xref.table.help": "Literaturverweise hinzufügen",
+    "ui.obj.baw.literature.xref.table.new.row": "Hinzufügen",
+    "ui.obj.baw.literature.xref.table.edit.row": "Bearbeiten",
+    "ui.obj.baw.literature.xref.table.new.row.tooltip": "Literaturverweis hinzufügen",
+    "ui.obj.baw.literature.xref.table.row.title": "Literaturverweis",
     "ui.obj.doi.xref.author.table.column.family.name": "Name",
     "ui.obj.doi.xref.author.table.column.given.name": "Vorname",
     "ui.obj.doi.xref.table.help": "Literaturverweise zu anderen Veröffentlichungen hinzufügen",
@@ -78,6 +96,10 @@ define({
 
     "validation.baw.address.role.pointOfContact": "Ein Eintrag für die Institution 'Bundesanstalt für Wasserbau' als 'Ansprechpartner' muss vorhanden sein.",
     "validation.baw.bwastr_km.entry.missing": "Km-von und Km-bis müssen entweder beide definiert sein oder sollen beide fehlen.",
-    "validation.baw.bwastr_name.missing": "Für jeden Streckenabschnitt muss mindestens den Streckenname angegeben werden."
+    "validation.baw.bwastr_name.missing": "Für jeden Streckenabschnitt muss mindestens den Streckenname angegeben werden.",
+    "validation.baw.literature.authors.count": "Mindestens ein Autor muss definiert sein. Autoren können entweder in der Adressen- oder in der Autoren-Tabelle angegeben werden.",
+    "validation.baw.literature.authors.names": "Für Personen müssen sowohl Vor- als auch Nachname angegeben werden.",
+    "validation.baw.literature.publication.date.count": "Das Veröffentlichungsdatum ist eine Pflichtangabe. Es muss genau ein Veröffentlichungsdatum angegeben werden.",
+    "validation.baw.literature.publishers": "Es muss im Metadatensatz genau einen Herausgeber angegeben werden. Herausgeber kann entweder in der Adressen-Tabelle oder im Herausgeber-Textfeld angegeben werden."
 });
 

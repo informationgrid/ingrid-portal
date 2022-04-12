@@ -84,7 +84,9 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         context.put("mapParamZoom", request.getParameter("zoom") != null ? request.getParameter("zoom"): "");
         context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent"): "");
         context.put("mapParamLayer", request.getParameter("layer") != null ? request.getParameter("layer"): "");
-        
+
+        context.put("detailUseParamPlugid", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID));
+
         // read preferences
         PortletPreferences prefs = request.getPreferences();
         String hKey = prefs.getValue("helpKey", null);

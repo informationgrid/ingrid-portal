@@ -23,8 +23,9 @@
 define([
     "dojo/_base/declare",
     "dojo/topic",
+    "ingrid/utils/Catalog",
     "ingrid/utils/Syslist"
-], function(declare, topic, UtilSyslist) {
+], function(declare, topic, UtilCatalog, UtilSyslist) {
 
     return declare(null, {
         title: "Objekttypen",
@@ -36,16 +37,24 @@ define([
 
             topic.subscribe("/additionalSyslistsLoaded", function() {
                 // out of the existing options, keep only Geodatensatz, Geodatendienst and Literatur for new object type
-                arr = sysLists[UtilSyslist.listIdObjectClass].filter(function (item) {
-                    return item[1] === "1" || item[1] === "2" || item[1] === "3";
+                var arr = sysLists[UtilSyslist.listIdObjectClass].filter(function (item) {
+                    return item[1] === "1" || item[1] === "2" || item[1] === "3" || item[1] === "4";
                 });
+
+                // Rename project as "Projekt / Auftrag"
+                if (UtilCatalog.getCatalogLanguage() === "de") {
+                    var projectItem = arr.find(function (item) {
+                        return item[1] === "4";
+                    })
+                    projectItem[0] = "Projekt / Auftrag";
+                }
 
                 // Define the order in which the options should appear
                 var desired_order = [
-                    "4", // Projekt
                     "1", // Geodatensatz
                     "5", // Datensammlung
                     "3", // Geodatendienst
+                    "4", // Projekt
                     "2", // Literatur
                     "6", // Informationssystem
                     "0"  // Fachaufgabe

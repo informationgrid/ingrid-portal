@@ -22,14 +22,11 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-
+import de.ingrid.mdek.upload.storage.validate.Validator;
+import de.ingrid.mdek.upload.storage.validate.ValidatorFactory;
+import de.ingrid.mdek.upload.storage.validate.VirusFoundException;
+import de.ingrid.mdek.upload.storage.validate.VirusScanException;
+import de.ingrid.mdek.util.MdekEmailUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,10 +34,13 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import de.ingrid.mdek.upload.storage.validate.Validator;
-import de.ingrid.mdek.upload.storage.validate.ValidatorFactory;
-import de.ingrid.mdek.upload.storage.validate.VirusFoundException;
-import de.ingrid.mdek.util.MdekEmailUtils;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UploadVirusScanJob extends QuartzJobBean {
 
@@ -96,7 +96,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
 
     /**
      * Set the directories to scan.
-     * @param storage
+     * @param scanDirs
      */
     public void setScanDirs(final List<String> scanDirs) {
         this.scanDirs = scanDirs;
@@ -146,7 +146,16 @@ public class UploadVirusScanJob extends QuartzJobBean {
                 catch (final VirusFoundException vfex) {
                     for (final Path file : vfex.getInfections().keySet()) {
                         infectedFiles.add(file);
+                        // print infection information
+                        log(Level.INFO, "Infection found: " + file.toString() + " - " + vfex.getInfections().get(file).toString(), null);
                     }
+                    // add scan log in case of virus
+                    report.add(vfex.getScanReport());
+                }
+                catch (final VirusScanException vscanex) {
+                    String scanReport = vscanex.getScanReport();
+                    log(Level.WARN, "Error(s) found during the scan: " + scanReport, null);
+                    exceptions.add(vscanex);
                 }
                 catch (final Exception ex) {
                     log(Level.ERROR, "Error scanning directory \""+scanDir+"\"", ex);
@@ -155,8 +164,10 @@ public class UploadVirusScanJob extends QuartzJobBean {
             }
             log(Level.INFO, "Found "+infectedFiles.size()+" infected file(s)", null);
 
-            // cleanup
-            this.doCleanup(infectedFiles);
+            // cleanup (only if virus are found)
+            if (!infectedFiles.isEmpty()){
+                this.doCleanup(infectedFiles);
+            }
 
             log(Level.INFO, "Finished UploadVirusScanJob", null);
         }

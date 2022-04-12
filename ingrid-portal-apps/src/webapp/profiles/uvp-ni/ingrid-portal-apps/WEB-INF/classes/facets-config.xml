@@ -139,20 +139,53 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.procedures</name>
         <id>procedure</id>
         <isOpen>true</isOpen>
-        <facets queryType="OR">
+        <queryType>OR</queryType>
+        <toggleGroups>
+            <toggleGroup isSelect="true">
+                <toggle>
+                    <parentId>procedure_10</parentId>
+                    <id>procedure_10_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:10 (t01_object.mod_time:[{FROM}0* TO {TO}9*] OR approval_date:[{FROM}0* TO {TO}9*])</query>
+                </toggle>
+                <toggle>
+                    <parentId>procedure_12</parentId>
+                    <id>procedure_12_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:12 approval_date:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
+                <toggle>
+                    <parentId>procedure_13</parentId>
+                    <id>procedure_13_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:13 approval_date:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
+                <toggle>
+                    <parentId>procedure_14</parentId>
+                    <id>procedure_14_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:14 approval_date:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
+                <toggle>
+                    <parentId>procedure_11</parentId>
+                    <id>procedure_11_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:11 approval_date:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
+            </toggleGroup>
+        </toggleGroups>
+        <facets>
         <!-- Zulassungsverfahren -->
             <facet>
                 <name>Zulassungsverfahren</name>
                 <query>t01_object.obj_class:10</query>
                 <id>procedure_10</id>
                 <display>true</display>
-                <toggle>
-                    <isSelect>true</isSelect>
-                    <id>procedure_10_time</id>
-                    <from>P1YT</from>
-                    <to>PT</to>
-                    <query>(t01_object.mod_time:[{FROM}0* TO {TO}9*] OR approval_date:[{FROM}0* TO {TO}9*])</query>
-                </toggle>
             </facet>
         <!-- Negative Vorprüfungen -->
             <facet>
@@ -160,13 +193,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:12</query>
                 <id>procedure_12</id>
                 <display>true</display>
-                <toggle>
-                    <isSelect>true</isSelect>
-                    <id>procedure_12_time</id>
-                    <from>P1YT</from>
-                    <to>PT</to>
-                    <query>approval_date:[{FROM}0* TO {TO}9*]</query>
-                </toggle>
             </facet>
         <!-- Raumordnungsverfahren -->
             <facet>
@@ -180,6 +206,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Linienbestimmungen</name>
                 <query>t01_object.obj_class:14</query>
                 <id>procedure_14</id>
+                <display>true</display>
             </facet>
         <!-- Ausländische Vorhaben -->
             <facet>
@@ -201,6 +228,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_NAME">
         <name>searchResult.facete.title.types</name>
         <id>type</id>
+        <isOpen>true</isOpen>
+        <queryType>OR</queryType>
+        <listLength>6</listLength>
         <facets>
         <!-- Wärmeerzeugung, Bergbau und Energie -->
             <facet>

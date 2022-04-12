@@ -111,18 +111,21 @@
 #end
 
 ## URLRefering details
+#set($urlReferenceLink = [])
 #set($urlReferenceLink = $rs.getHitDetail().get("t017_url_ref.url_link"))
+#set($urlReferenceContent = [])
 #set($urlReferenceContent = $rs.getHitDetail().get("t017_url_ref.content"))
+#set($urlReferenceSpecialRef = [])
 #set($urlReferenceSpecialRef = $rs.getHitDetail().get("t017_url_ref.special_ref"))
+#set($urlReferenceDatatype = [])
 #set($urlReferenceDatatype = $rs.getHitDetail().get("t017_url_ref.datatype"))
-
+#set($linksRef = [])
 #if($referenceAllUUID || $urlReferenceLink)
-    #set($linksRef = [])
     #if($referenceAllUUID)
         #set($refCount = 0)
         #foreach($uuid in $referenceAllUUID)
             #set($link = {})
-            #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cmd=doShowDocument&docuuid=$referenceAllUUID.get($refCount)&plugid=$rs.plugid"))
+            #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$referenceAllUUID.get($refCount)#if($detailUseParamPlugid)&plugid=$rs.plugid#end"))
             #set($add = $link.put("type", "$referenceAllClass.get($refCount)"))
             #set($add = $link.put("title", "$referenceAllName.get($refCount)"))
             #set($add = $link.put("serviceType", "$referenceAllType.get($refCount)"))

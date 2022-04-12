@@ -1025,10 +1025,29 @@ a.icon {
     text-transform: none !important;
     margin-bottom: 2rem;
 }
+.category .tabs {
+  background-color: #EAEAEA;
+}
+.category .tabs-title > a:hover {
+  background: transparent;
+  text-decoration: underline;
+}
+.category .tabs .tabs-title > a {
+  color: #4A7CC1;
+}
+.category .tabs .tabs-title > a[aria-selected='true'], .tabs .tabs-title > a:focus {
+  background-color: #EAEAEA;
+  border-bottom: 8px solid #1D4B7B;
+}
+.category .tabs .tabs-title > a[aria-selected="true"], .tabs .tabs-title > a:focus {
+  color: #1D4B7B;
+}
+.category .tabs .tabs-title.is-active .pointer {
+    border-right: 11px solid #1D4B7B;
+}
 .category .tabs-panel.midnight {
     background-color: #EAEAEA;
-    padding-top: 0;
-    padding-bottom: 36px;
+    padding: 24px 0 72px !important;
 }
 .category .teaser .blue-border {
     border-radius: 100px;
@@ -1137,4 +1156,8 @@ footer .footer-buttons-bar .login-buttons .login-form {
 
 .icon-cat_donau, .icon-cat_elbe, .icon-cat_rhein {
     top: 34px !important;
+}
+
+.control input:checked ~ .control__indicator {
+    border: 1px solid #012D47;
 }
