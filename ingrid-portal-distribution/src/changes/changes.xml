@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+          <action type="fix" dev="wemove" issue="3222">
+            Überprüfung von Unstimmigkeiten bei der Optimierung der Suche
+          </action>
+          <action type="fix" dev="wemove" issue="3408">
+            Ein '#' oder ein Suchbrgriff mit abschließendem ':' in der Suche führt zu 0 Treffern und einer fehlerhaften Darstellung
+          </action>
           <action type="update" dev="wemove" issue="2768">
             IGE (UVP): Aktualisierung Hilfetext
           </action>
