@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.12.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0">
+        <release version="5.12.0" date="2022-04-12" description="Release 5.12.0">
           <action type="fix" dev="wemove" issue="3222">
             Überprüfung von Unstimmigkeiten bei der Optimierung der Suche
           </action>
@@ -126,6 +126,24 @@
           </action>
           <action type="add" dev="wemove" issue="2771">
             IGE(BAW-MIS): IGE-Formular für Software anpassen
+          </action>
+          <action type="update" dev="wemove" issue="3715">
+            IGE(BAW-MIS): Tweak IGE form for projects in BAW profiles
+          </action>
+          <action type="update" dev="wemove" issue="3599">
+            IGE(BAW): Don't restrict DOI-field rights for geodata
+          </action>
+          <action type="update" dev="wemove" issue="2322">
+            IGE(BAW): Set default value of url type in lfs dialog
+          </action>
+          <action type="update" dev="wemove" issue="3681">
+            IGE(BAW): Set default value of url type in lfs dialog
+          </action>
+          <action type="update" dev="wemove" issue="3618">
+            Metaver: Remove time from date display for temporal reference
+          </action>
+          <action type="update" dev="wemove" issue="2377">
+            IGE: Add timeRefDate validation
           </action>
         </release>
 
@@ -254,6 +272,9 @@
           </action>
           <action type="update" dev="wemove" issue="2903">
             Change resource time span data entry
+          </action>
+          <action type="fix" dev="wemove" issue="3652">
+            Fix Zeitbezug display in portal
           </action>
         </release>
 
