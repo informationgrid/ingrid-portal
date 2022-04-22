@@ -30,8 +30,8 @@ define([
     ], function (registry, array, declare, topic, UtilSecurity) {
 
     return declare(null, {
-        title: "Eingeschränkte-Rechte-für-DOI-Felder",
-        description: "Nur DOI-Admins das Bearbeiten von DOI-Feldern erlauben.",
+        title: "Eingeschränkte-Schreibrechte-für-Felder",
+        description: "Nur LiteraturAdmins das Bearbeiten von einigen Feldern erlauben.",
         defaultActive: true,
         category: "BAW-MIS",
 
