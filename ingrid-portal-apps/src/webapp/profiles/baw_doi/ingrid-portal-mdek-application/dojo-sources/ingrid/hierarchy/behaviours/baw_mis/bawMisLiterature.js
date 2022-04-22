@@ -59,14 +59,26 @@ define([
 
         _customiseTimeRef: function() {
             topic.subscribe("/onObjectClassChange", function(data) {
-                var objClass = data.objClass;
-                if (objClass === "Class2") {
+
+                var isNewItem = "newNode" === currentUdk.uuid;
+                var publishArea = registry.byId("extraInfoPublishArea");
+
+                var isLiterature = data.objClass === "Class2";
+                if (isLiterature) {
                     domClass.remove("timeRef", "hide");
 
                     // Durch die Ressource abgedeckte Zeitspanne
                     domClass.add("uiElementN011", "hide");
+
+                    if (isNewItem && publishArea) {
+                        publishArea.set("value", "2"); // Intranet
+                    }
                 } else {
                     domClass.remove("uiElementN011", "hide");
+
+                    if (isNewItem && publishArea) {
+                        publishArea.set("value", "1"); // Internet
+                    }
                 }
             });
 
