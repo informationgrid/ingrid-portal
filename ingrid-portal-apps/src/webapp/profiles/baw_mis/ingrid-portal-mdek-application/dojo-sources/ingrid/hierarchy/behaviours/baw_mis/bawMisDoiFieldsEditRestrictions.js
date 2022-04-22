@@ -37,26 +37,40 @@ define([
 
         run: function () {
             topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass !== "Class1") {
-                    // do nothing if the object class isn't geodataset
-                    return;
-                }
+
+                var isGeodata = data.objClass === "Class1";
+                var isLiterature = data.objClass === "Class2";
+
+                var doiIdField = registry.byId('doiId');
+                var doiTypeField = registry.byId('doiType');
+                var publishArea = registry.byId("extraInfoPublishArea");
 
                 var currentGroups = UtilSecurity.currentGroups;
 
-                // Katadmin and users explicitly added to group 'DOI-Admin'
-                var isDoiAdmin = UtilSecurity.currentUser.role === 1 || array.some(currentGroups, function (item) {
-                    return item.name === "DOI-Admin";
+                // Katadmin and users explicitly added to group 'LiteraturAdmin'
+                var isLiteratureAdmin = UtilSecurity.currentUser.role === 1 || array.some(currentGroups, function (item) {
+                    return item.name === "LiteraturAdmin";
                 });
 
-                if (!isDoiAdmin) {
-                    var doiIdField = registry.byId('doiId');
-                    var doiTypeField = registry.byId('doiType');
+                if (isGeodata && !isLiteratureAdmin) {
                     if (doiIdField) {
                         doiIdField.set('disabled', true);
-                    }
-                    if (doiTypeField) {
                         doiTypeField.set('disabled', true);
+                    }
+                } else {
+                    if (doiTypeField) {
+                        doiIdField.set('disabled', false);
+                        doiTypeField.set('disabled', false);
+                    }
+                }
+
+                if (isLiterature && !isLiteratureAdmin) {
+                    if (publishArea) {
+                        publishArea.set('disabled', true);
+                    }
+                } else {
+                    if (publishArea) {
+                        publishArea.set('disabled', false);
                     }
                 }
             });
