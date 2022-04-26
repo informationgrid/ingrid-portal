@@ -147,7 +147,7 @@
                                 <a class="button" href="/log-in">
                                     <span class="text">Login</span>
                                 </a>
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
