@@ -1,5 +1,5 @@
 #if($cmsItemValue)
-<div class="about-wrapper dark" style="background-image: url('/decorations/layout/uvp/images/template/drops-small.svg');">
+<div class="about-wrapper dark" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
     <h2 class="hide-for-large">
         $cmsItemTitle
     </h2>

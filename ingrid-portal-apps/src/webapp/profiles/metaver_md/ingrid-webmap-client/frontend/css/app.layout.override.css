@@ -118,6 +118,11 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 [ga-draw] .ga-draw-buttons > .btn {
   color: #333;
 }
+[ga-draw] .ga-draw-buttons > .btn.btn-danger {
+    color: #FFF;
+    background-color: #012D47;
+    border-color: #012D47;
+}
 [ga-draw] .ga-more li a{
   color: #067B9B;
 }
@@ -145,6 +150,9 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
   border-radius: 32px;
   padding-left: 2.8em;
   padding-right: 2.8em;
+}
+[ga-search] .ga-search-input:focus-visible {
+  outline: 2px solid #33CC99 !important;
 }
 #header {
   left: 0;
@@ -182,6 +190,16 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
   #search-container {
     top: .7em;
   }
+}
+
+[ga-background-selector] .ga-bg-layer,
+[ga-background-selector] .ga-bg-layer-bt {
+  border-color: #1C5868;
+}
+
+[ga-background-selector] .ga-bg-layer:hover,
+[ga-background-selector] .ga-bg-highlight {
+  border-color: #33CC99 !important;
 }
 
 [ga-draw] .ga-draw-disclaimer {

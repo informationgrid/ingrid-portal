@@ -20,6 +20,195 @@
  * limitations under the Licence.
  * **************************************************#
  */
+.btn-default {
+  color: #FFFFFF;
+  background-color: #003063;
+  border-color: #003063;
+}
+.btn-default:hover {
+  color: #FFFFFF;
+  background-color: #005ca9;
+  border-color: #005ca9;
+}
+#menu-button {
+  background-color: #003063;
+  border: 0;
+}
+.ga-more-layers {
+  padding: 8px 5px !important;
+}
+.ga-more-layers a {
+  color: #003063;
+}
+body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
+  color: #003063;
+}
+#pulldown-content .panel > .accordion-toggle {
+  font-weight: bold !important;
+}
+#pulldown-content .panel > .accordion-toggle.collapsed {
+  background-color: #003063;
+}
+#pulldown-content .panel > .accordion-toggle:hover, #pulldown-content .panel > .accordion-toggle:active {
+  text-decoration: none;
+  color: #FFFFFF;
+  background: #005ca9;
+}
+#pulldown-content .panel > .accordion-toggle.light.collapsed {
+  color: #003063;
+}
+#pulldown-content .panel > .accordion-toggle.light:hover, #pulldown-content .panel > .accordion-toggle.light:active {
+  text-decoration: none;
+  color: #666;
+  background: #fff;
+}
+[ga-catalogtree] .ga-catalogitem-leaf {
+  color: #003063;
+}
+[ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected, [ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected:hover, [ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected button {
+  color: #003063;
+}
+#pulldown-content .accordion-toggle, #pulldown-content .panel-body-wide a {
+  color: #003063;
+  font-weight: bold;
+  background-color: #F6F6F6;
+}
+[ga-catalogtree] a.ga-catalogitem-entry label {
+  font-weight: bold;
+}
+[ga-layermanager] li {
+  color: #003063;
+}
+[ga-layermanager] .ga-layer-folded .fa-gear {
+  color: #003063;
+}
+[ga-layermanager] .fa-gear {
+  color: #003063;
+}
+[ga-layermanager] .ga-layer-tools {
+  border-left: 0;
+}
+[ga-layermanager] .ga-layer-infos label:hover, [ga-layermanager] input:hover, [ga-layermanager] select:hover, [ga-layermanager] options:hover {
+  color: #005ca9;
+}
+[ga-layermanager] .ga-layer-tools label {
+  color: #003063;
+}
+[ga-print] button {
+  background-color: #F6F6F6;
+  color: #003063;
+  border: 1px solid #C6CFE2;
+}
+[ga-print] label {
+  color: #003063;
+}
+#drawModeHeader {
+  background-color: #003063;
+  color: #FFF;
+}
+#drawModeHeader .btn-primary  {
+  background-color: #003063;
+  color: #FFF;
+  border: 0px;
+  font-size: 16px;
+}
+[ga-help] button.ga-icon {
+  font-size: 18px;
+}
+[ga-draw] .ga-draw-buttons > .btn {
+  color: #333;
+}
+[ga-draw] .ga-draw-buttons > .btn.btn-danger {
+    color: #FFF;
+    background-color: #005ca9;
+    border-color: #005ca9;
+}
+[ga-draw] .ga-more li a{
+  color: #003063;
+}
+[ga-search] form {
+}
+[ga-search] .fa-remove-sign {
+  font-size: 26px;
+  right: 5px;
+  color: #003063;
+}
+[ga-search] .fa-search, [ga-search] .fa-remove-sign {
+  top: 8px;
+}
+[ga-search] .fa-search {
+  background-color: transparent;
+  border: 0;
+  left: 5px;
+  font-size: 22px;
+  top: 8px;
+  color: #003063;
+}
+[ga-search] .ga-search-input {
+  height: 45px;
+  font-size: 16px;
+  border-radius: 32px;
+  padding-left: 2.8em;
+  padding-right: 2.8em;
+}
+[ga-search] .ga-search-input:focus-visible {
+  outline: 2px solid #003063 !important;
+}
+#header {
+  left: 0;
+  z-index: 500;
+  display: flex;
+}
+#search-container {
+  top: 5rem;
+  max-width: 79.16667%;
+  width: auto;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+  left: 0;
+  flex: 0 0 45%;
+  max-width: 45%;
+}
+#search-container [ga-help] button.ga-icon {
+  font-size: 26px;
+  top: 7px;
+}
+.ga-menu-bt {
+  width: 45px;
+  height: 45px;
+}
+.theme-toggle .topic-modal-toggle {
+  color: #003063;
+}
+@media (max-width: 480px) {
+  .search-focused #search-container {
+    background: transparent;
+  }
+}
+@media (max-width: 768px) {
+  #search-container {
+    top: .7em;
+  }
+}
+
+[ga-background-selector] .ga-bg-layer,
+[ga-background-selector] .ga-bg-layer-bt {
+  border-color: #003063;
+}
+
+[ga-background-selector] .ga-bg-layer:hover,
+[ga-background-selector] .ga-bg-highlight {
+  border-color: #e10019 !important;
+}
+
+[ga-draw] .ga-draw-disclaimer {
+    color: #3A566D;
+}
+
+[ga-draw] .ga-draw-disclaimer a {
+    color: #005ca9;
+}
 
 #loader {
   background:yellow;
