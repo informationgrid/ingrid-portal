@@ -547,6 +547,10 @@ header .menu-tab-row .menu-tab {
 }
 
 @media print, screen and (min-width: 35em) {
+  header .logo a {
+    top: 14px;
+  }
+
   header .menu-tab-row .menu-tab {
     display: inline-block;
   }
@@ -554,6 +558,9 @@ header .menu-tab-row .menu-tab {
 @media print, screen and (min-width: 48em) {
   header .logo {
     width: 25.5em;
+  }
+  header .logo a {
+    top: 22px;
   }
   .header-menu-close { padding: 28px 0px 0 0; }
   footer .footer .logo {
