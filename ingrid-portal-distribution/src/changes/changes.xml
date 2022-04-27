@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.12.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.1">
+          <action type="fix" dev="wemove" issue="3779">
+            UVP: ZIP-Download größer als 2GB werden nicht korrekt heruntergeladen
+          </action>
           <action type="update" dev="wemove" issue="3239">
             ReDesign Hamburger Metadatenkatalog (HMDK)
           </action>
