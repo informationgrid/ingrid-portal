@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.11.2.2" date="2022-xx-xx" description="Release 5.11.2.2">
+          <action type="fix" dev="wemove" issue="3779">
+            UVP: ZIP-Download größer als 2GB werden nicht korrekt heruntergeladen
+          </action>
+        </release>
+
         <release version="5.11.2.1" date="2022-03-11" description="Release 5.11.2.1">
           <action type="update" dev="wemove">
             Add 'Hessen' to metaver
