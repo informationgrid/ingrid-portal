@@ -40,6 +40,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
@@ -77,6 +79,7 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.IPlugVersionInspector;
 import de.ingrid.portal.search.detail.DetailDataPreparer;
 import de.ingrid.portal.search.detail.DetailDataPreparerFactory;
+import de.ingrid.portal.search.detail.DetailDataPreparerHelper;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
