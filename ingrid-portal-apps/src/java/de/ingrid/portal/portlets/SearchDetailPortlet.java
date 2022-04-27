@@ -40,8 +40,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
@@ -79,7 +77,6 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.IPlugVersionInspector;
 import de.ingrid.portal.search.detail.DetailDataPreparer;
 import de.ingrid.portal.search.detail.DetailDataPreparerFactory;
-import de.ingrid.portal.search.detail.DetailDataPreparerHelper;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
@@ -135,11 +132,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 try(
                     OutputStream outputStream = response.getPortletOutputStream();
                     FileInputStream fileInputStream = new FileInputStream(zip.getAbsoluteFile());
-                    BufferedInputStream bufferedInputStream = new java.io.BufferedInputStream(fileInputStream);
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
                 ){
                     response.setContentType( "application/zip" );
                     response.addProperty("Content-Disposition", "attachment; filename=\"" + zip.getName() + "\"");
-                    response.setContentLength(bufferedInputStream.available());
+                    response.addProperty("Content-Length", Long.toString(zip.length()));
                     byte[] buffer = new byte[4096];
                     int len = 0;
                     while ((len = bufferedInputStream.read(buffer)) != -1) {
