@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.13.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.13.0">
+          <action type="fix" dev="wemove" issue="3788">
+            UVP: Mehrfachauswahl unter Facetten "Verfahrenstypen" und "Kategorien" Korrektur
+          </action>
           <action type="fix" dev="wemove" issue="3779">
             UVP: ZIP-Download größer als 2GB werden nicht korrekt heruntergeladen
           </action>
