@@ -1,4 +1,0 @@
-<h4>$MESSAGES.getString('common.result.source')</h4>
-<p>
-    $!rs.source
-</p>
