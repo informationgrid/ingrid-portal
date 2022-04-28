@@ -1,0 +1,4 @@
+<h4>$MESSAGES.getString('common.result.provider')</h4>
+<p>
+    $!rs.provider
+</p>
