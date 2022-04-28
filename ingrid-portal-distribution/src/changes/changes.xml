@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.12.0.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.0.1">
+          <action type="fix" dev="wemove" issue="3788">
+            UVP: Mehrfachauswahl unter Facetten "Verfahrenstypen" und "Kategorien" Korrektur
+          </action>
+        </release>
+
         <release version="5.12.0" date="2022-04-12" description="Release 5.12.0">
           <action type="fix" dev="wemove" issue="3222">
             Überprüfung von Unstimmigkeiten bei der Optimierung der Suche
