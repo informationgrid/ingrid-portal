@@ -24,6 +24,7 @@ package de.ingrid.portal.global;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -346,20 +347,29 @@ public class UtilsFacete {
                                     if(isFacetConfigSelect(tmpFacetKey.getFacets())){
                                         tmpFacetKey.setSelect(facetIsSelect);
                                     }
-                                    resetFacetConfigValues(config, null);
                                 }
-                                String queryType = tmpFacetKey.getQueryType();
-                                if(queryType != null && queryType.equals("OR")) {
-                                    if(tmpFacetKey.getFacets() != null) {
+                            }
+                            String queryType = tmpFacetKey.getQueryType();
+                            if(queryType != null && queryType.equals("OR")) {
+                                if(tmpFacetKey.getFacets() != null) {
+                                    boolean isToggleGroup = false;
+                                    for(IngridFacet tmpSubFacet : tmpFacetKey.getFacets()){
+                                        IngridFacet toggle = tmpSubFacet.getToggle();
+                                        if(toggle != null) {
+                                            if(Arrays.asList(valueIds).indexOf(toggle.getId()) > -1){
+                                                isToggleGroup = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if(isToggleGroup) {
                                         for(IngridFacet tmpSubFacet : tmpFacetKey.getFacets()){
                                             IngridFacet toggle = tmpSubFacet.getToggle();
                                             if(toggle != null) {
-                                                if(toggle.getId().equals(valueId)){
-                                                    if(toggle.isSelect()) {
-                                                        toggle.setSelect(false);
-                                                    } else {
-                                                        toggle.setSelect(true);
-                                                    }
+                                                if(toggle.isSelect()) {
+                                                    toggle.setSelect(false);
+                                                } else {
+                                                    toggle.setSelect(true);
                                                 }
                                             }
                                         }
