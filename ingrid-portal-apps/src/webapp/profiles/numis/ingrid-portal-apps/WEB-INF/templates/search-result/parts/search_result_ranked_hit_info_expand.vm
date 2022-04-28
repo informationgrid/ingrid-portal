@@ -130,6 +130,10 @@
                     <div class="teaser-links">
                         #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
                     </div>
+## Anbieter
+                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
+## Quelle
+                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
                     <!--
                     #if($adminContent)
                         <h6 class="no-margin">Score</h6>
