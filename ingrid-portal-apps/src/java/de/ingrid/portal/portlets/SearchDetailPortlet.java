@@ -78,6 +78,7 @@ import de.ingrid.portal.search.IPlugVersionInspector;
 import de.ingrid.portal.search.detail.DetailDataPreparer;
 import de.ingrid.portal.search.detail.DetailDataPreparerFactory;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
@@ -311,14 +312,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
 
                 IngridQuery q = QueryStringParser.parse(qStr);
-                IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
+                IngridHits hits = ibus.searchAndDetail(q, 1, 1, 0, 3000, PortalConfig.getInstance().getStringArray(PortalConfig.QUERY_DETAIL_REQUESTED_FIELDS));
 
                 if (hits.length() == 0) {
                     log.error("No record found for document uuid:" + docUuid.trim() + (detailUseParamPlugid ? " using iplug: " + iplugId.trim() : ""));
 
                     qStr = Settings.HIT_KEY_ORG_OBJ_ID + ":\"" + docUuid.trim() + qPlugId + "\" ranking:score";
                     q = QueryStringParser.parse(qStr);
-                    hits = ibus.search(q, 1, 1, 0, 3000);
+                    hits = ibus.searchAndDetail(q, 1, 1, 0, 3000, PortalConfig.getInstance().getStringArray(PortalConfig.QUERY_DETAIL_REQUESTED_FIELDS));
                     if(hits.length() == 0){
                         log.error("No object record found for document uuid:" + docUuid.trim() + " for field: " + Settings.HIT_KEY_ORG_OBJ_ID);
                         if (isAddress) {
@@ -327,7 +328,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                             qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score";
                         }
                           q = QueryStringParser.parse(qStr);
-                        hits = ibus.search(q, 1, 1, 0, 3000);
+                        hits = ibus.searchAndDetail(q, 1, 1, 0, 3000, PortalConfig.getInstance().getStringArray(PortalConfig.QUERY_DETAIL_REQUESTED_FIELDS));
                         if(hits.length() == 0){
                             log.error("No record found for document uuid:" + docUuid.trim());
                         }else{
@@ -356,6 +357,13 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     iplugId = hit.getPlugId();
                     plugDescription = ibus.getIPlug(iplugId);
                     iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+                }
+                IngridHitDetail detail = hit.getHitDetail();
+                if(detail != null) {
+                    String title = detail.getTitle();
+                    if(title != null) {
+                        context.put("title", title);
+                    }
                 }
                 context.put("docUuid", docUuid);
                 context.put("plugId", iplugId);

@@ -58,6 +58,7 @@ public class PortalConfig extends PropertiesConfiguration {
 
     /** requested fields for search queries in portal */
     public static final String QUERY_REQUESTED_FIELDS = "portal.query.requestedfields";
+    public static final String QUERY_DETAIL_REQUESTED_FIELDS = "portal.query.detail.requestedfields";
 
     /** default timeout for sns queries in ms */
     public static final String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
