@@ -1043,7 +1043,7 @@
         <portlet-name>Contact</portlet-name>
         <display-name>Contact</display-name>
         <description>This portlet displayes an environment search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.ContactZammadPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.ContactPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
