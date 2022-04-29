@@ -1,0 +1,13 @@
+<div class="social-buttons">
+    #defineUrlParams()
+    #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
+    #set($shareUrl = "${shareUrl}${urlParams}")
+    #set($shareUrlEncode = $esc.url("${shareUrl}"))
+    <a href="mailto:?body=$shareUrlEncode" class="button round social" target="_blank" title="E-Mail">
+        <span class="ic-ic-mailto"></span><span class="text"></span>
+    </a>
+    <button id="share-buttons" class="button round social share" title="$MESSAGES.getString('ingrid.page.share')">
+        <span class="ic-ic-share"></span>
+        <span class="text"></span>
+    </button>
+</div>
