@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.13.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.13.0">
+          <action type="fix" dev="wemove">
+            WSV: Profil Anpassungen
+          </action>
+          <action type="update" dev="wemove">
+            Mapclient: Anpassung der Meldung von Embed-Version
+          </action>
           <action type="fix" dev="wemove" issue="3788">
             UVP: Mehrfachauswahl unter Facetten "Verfahrenstypen" und "Kategorien" Korrektur
           </action>
