@@ -105,9 +105,9 @@ a.icon:hover {
   border: 2px solid #003063;
 }
 header {
-  -webkit-border-image: -webkit-linear-gradient(to right, #e10019, #e10019) 0 1 100%;
-  -moz-border-image: -moz-linear-gradient(to right, #e10019, #e10019) 0 1 100%;
-  border-image: linear-gradient(to right, #e10019, #e10019) 0 1 100%;
+  -webkit-border-image: -webkit-linear-gradient(to right, #003063, #003063) 0 1 100%;
+  -moz-border-image: -moz-linear-gradient(to right, #003063, #003063) 0 1 100%;
+  border-image: linear-gradient(to right, #003063, #003063) 0 1 100%;
 }
 .menu-tab-row .menu-tab .link-menu-tab {
   color: #005ca9;
@@ -187,10 +187,15 @@ header {
 .banner.home h1.green {
   color: #003063;
 }
-.banner.home .home-wrapper .indent span {
-  color: #003063;
+.banner.home h1.green span {
+  display: none;
 }
-
+.banner.home .home-wrapper .indent {
+    padding-left: 0px;
+}
+.banner.home .home-wrapper .indent span {
+  display: none;
+}
 .detail .banner-noimage .page-wrapper {
   background-color: #F6F6F6;
 }
