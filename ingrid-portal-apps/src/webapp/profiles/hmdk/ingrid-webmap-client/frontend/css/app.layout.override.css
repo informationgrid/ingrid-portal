@@ -211,5 +211,5 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 }
 
 #loader {
-  background:yellow;
+  background: #e10019;
 }
