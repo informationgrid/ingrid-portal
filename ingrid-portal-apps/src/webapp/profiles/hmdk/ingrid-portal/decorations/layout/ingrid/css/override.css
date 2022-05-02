@@ -651,6 +651,9 @@ header .menu-tab-row .menu-tab {
   }
 }
 @media print, screen and (min-width: 64em) { 
+  header .logo {
+    width: 29.5em;
+  }
 }
 @media print, screen and (min-width: 78em) {
   .banner.home h1 {
