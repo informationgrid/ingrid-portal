@@ -11,8 +11,8 @@
 	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
 ]>
 <svg version="1.1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="543px" height="82px"
-	 viewBox="0 0 543 82" enable-background="new 0 0 543 82" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="20px" y="0px" width="543px" height="82px"
+	 viewBox="20 0 543 82" enable-background="new 20 0 543 82" xml:space="preserve">
 <font horiz-adv-x="1000">
 <!-- Univers  is a Trademark of Heidelberger Druckmaschinen AG, which may be registered in certain jurisdictions, exclusively licensed through Linotype Library GmbH, a wholly owned subsidiary of Heidelberger Druckmaschinen AG -->
 <font-face font-family="UniversLT-Bold" units-per-em="1000" underline-position="-100" underline-thickness="50"/>
