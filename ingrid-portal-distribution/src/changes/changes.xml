@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.13.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.13.0">
+          <action type="add" dev="wemove" issue="3807">
+            Mapclient - Positionierung über Request an BWaStr-Locator
+          </action>
           <action type="fix" dev="wemove">
             WSV: Profil Anpassungen
           </action>
