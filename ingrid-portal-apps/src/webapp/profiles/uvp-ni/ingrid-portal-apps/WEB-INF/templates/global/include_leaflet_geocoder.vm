@@ -13,7 +13,7 @@
                     collapsed: false,
                     position: 'topright',
                     text: 'Address Search',
-                    placeholder: 'Suche: z.B. Hannover ...',
+                    placeholder: 'Suche: z.B. nach Hannover ...',
                     defaultMarkGeocode: false,
                     errorMessage: 'Keine Ergebnisse ...'
                 }).addTo(map);
@@ -25,12 +25,12 @@
             // coordinates for result
             const coords = [e.geocode.center.lat, e.geocode.center.lng];
             // center map on result
-            map.setView(coords, 16);
+            map.setView(coords, 12);
             // popup for location
             // todo: use custom icon
             const resultMarker = L.marker(coords).addTo(map);
             // add popup to marker with result text
-            resultMarker.bindPopup(e.geocode.name).openPopup();
+            // resultMarker.bindPopup(e.geocode.name).openPopup();
         });
     }
 
