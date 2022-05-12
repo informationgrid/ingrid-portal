@@ -213,7 +213,7 @@ define([
                 formatter: lang.partial(Formatters.SyslistCellFormatter, 101),
                 isMandatory: true,
                 editable: true,
-                width: "200px"
+                width: "130px"
             },
             {
                 field: "description",
@@ -300,6 +300,9 @@ define([
             {
                 field: "name",
                 name: message.get("ui.obj.baw.measuring.targetParameters.name") + "*",
+                type: Editors.ComboboxEditor,
+                listId: 3950021,
+                formatter: lang.partial(Formatters.SyslistCellFormatter, 3950021),
                 isMandatory: true,
                 editable: true,
                 width: "100px"
@@ -308,7 +311,7 @@ define([
                 field: "type",
                 name: message.get("ui.obj.baw.measuring.targetParameters.type") + "*",
                 type: Editors.SelectboxEditor,
-                listId: 3950021,
+                listId: 3950022,
                 formatter: lang.partial(Formatters.SyslistCellFormatter, 3950021),
                 isMandatory: true,
                 editable: true,
