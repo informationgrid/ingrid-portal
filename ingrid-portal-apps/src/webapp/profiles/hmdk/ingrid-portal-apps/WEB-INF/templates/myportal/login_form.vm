@@ -45,7 +45,7 @@
     #end
 </div>
 #else
-    <a class="button logout" href="/Shibboleth.sso/Login" title="$MESSAGES.getString('javax.portlet.title')">
+    <a class="button logout" href="$renderResponse.encodeURL('/portal/service-myportal.psml')" title="$MESSAGES.getString('javax.portlet.title')">
         <span class="text">$MESSAGES.getString('javax.portlet.title')</span>
         <span class="ic-ic-user"></span>
     </a>
