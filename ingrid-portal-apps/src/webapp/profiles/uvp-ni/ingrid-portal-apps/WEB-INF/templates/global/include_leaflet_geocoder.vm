@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.control-geocoder/Control.Geocoder.css">
+<script src="/decorations/layout/ingrid/scripts/leaflet.control-geocoder/Control.Geocoder.min.js"></script>
+
+<script>
+
+    var resultMarker;
+
+    function addNominatimGeocoder(map) {
+        /*** Nominatim Geocoder ***/
+                // OSM Geocoder
+        const osmGeocoder = new L.Control.Geocoder({
+                    geocoder: L.Control.Geocoder.nominatim({
+                        serviceUrl: "https://nominatim.openstreetmap.org/",
+                        geocodingQueryParams: { countrycodes: 'de' }
+                    }),
+                    collapsed: false,
+                    position: 'topright',
+                    text: 'Address Search',
+                    placeholder: 'Suche: z.B. nach Hannover ...',
+                    defaultMarkGeocode: false,
+                    errorMessage: 'Keine Ergebnisse ...'
+                }).addTo(map);
+
+        // handle geocoding result event
+        osmGeocoder.on('markgeocode', e => {
+            // remove previous marker if present
+            if (resultMarker) {
+                map.removeLayer(resultMarker)
+            }
+            // to review result object
+            console.log(e);
+            // coordinates for result
+            const coords = [e.geocode.center.lat, e.geocode.center.lng];
+            // center map on result
+            map.setView(coords, 12);
+            // popup for location
+            // todo: use custom icon
+            resultMarker = L.marker(coords);
+            resultMarker.addTo(map);
+            // add popup to marker with result text
+            // resultMarker.bindPopup(e.geocode.name).openPopup();
+        });
+    }
+
+    addNominatimGeocoder(map);
+
+</script>
