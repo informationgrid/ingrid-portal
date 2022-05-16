@@ -2,6 +2,9 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet.control-geocoder/Control.Geocoder.min.js"></script>
 
 <script>
+
+    var resultMarker;
+
     function addNominatimGeocoder(map) {
         /*** Nominatim Geocoder ***/
                 // OSM Geocoder
@@ -20,6 +23,10 @@
 
         // handle geocoding result event
         osmGeocoder.on('markgeocode', e => {
+            // remove previous marker if present
+            if (resultMarker) {
+                map.removeLayer(resultMarker)
+            }
             // to review result object
             console.log(e);
             // coordinates for result
@@ -28,7 +35,8 @@
             map.setView(coords, 12);
             // popup for location
             // todo: use custom icon
-            const resultMarker = L.marker(coords).addTo(map);
+            resultMarker = L.marker(coords);
+            resultMarker.addTo(map);
             // add popup to marker with result text
             // resultMarker.bindPopup(e.geocode.name).openPopup();
         });
