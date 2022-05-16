@@ -1,20 +1,20 @@
-<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.css" />
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.css"/>
 <script src="/decorations/layout/uvp/scripts/vendor/leaflet.js"></script>
 <script src="/decorations/layout/uvp/scripts/vendor/leaflet.markercluster.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.spin/spin.min.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.spin/leaflet.spin.min.js"></script>
-<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.gesture-handling/leaflet-gesture-handling.min.css" />
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.gesture-handling/leaflet-gesture-handling.min.css"/>
 <script src="/decorations/layout/ingrid/scripts/leaflet.gesture-handling/leaflet-gesture-handling.min.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.wicket/wicket.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.wicket/wicket-leaflet.js"></script>
 
 <script>
-    function getOSMLayer(attribution){
-        var osmUrl='$leafletBgLayerWMTS';
-        var osmAttrib='$leafletBgLayerAttribution';
-        var osmOpacity='$leafletBgLayerOpacity';
-        if(attribution){
+    function getOSMLayer(attribution) {
+        var osmUrl = '$leafletBgLayerWMTS';
+        var osmAttrib = '$leafletBgLayerAttribution';
+        var osmOpacity = '$leafletBgLayerOpacity';
+        if (attribution) {
             osmAttrib = osmAttrib + "" + attribution;
         }
         return new L.TileLayer(osmUrl, {
@@ -23,10 +23,10 @@
         });
     }
 
-    function getWMSLayer(layerUrl, layerName, attribution){
-        var osmAttrib='$leafletBgLayerAttribution';
-        var osmOpacity='$leafletBgLayerOpacity';
-        if(attribution){
+    function getWMSLayer(layerUrl, layerName, attribution) {
+        var osmAttrib = '$leafletBgLayerAttribution';
+        var osmOpacity = '$leafletBgLayerOpacity';
+        if (attribution) {
             osmAttrib += attribution;
         }
         return new L.tileLayer.wms(layerUrl, {
@@ -36,30 +36,30 @@
         });
     }
 
-    function addLeafletMap(baselayers, bounds, latlng, zoom){
+    function addLeafletMap(baselayers, bounds, latlng, zoom) {
         return addLeafletMapWithId('map', baselayers, bounds, latlng, zoom);
     }
 
-    function addLeafletMapWithId(mapId, baselayers, bounds, latlng, zoom){
+    function addLeafletMapWithId(mapId, baselayers, bounds, latlng, zoom) {
         var epsg = L.CRS.EPSG3857;
-        if('${leafletEpsg}'.length > 0) {
+        if ('${leafletEpsg}'.length > 0) {
             epsg = L.CRS.EPSG${leafletEpsg};
         }
         var map = new L.Map(mapId, {
-           crs: epsg,
-           layers: baselayers
+            crs: epsg,
+            layers: baselayers
         });
-        if(bounds){
-          map.fitBounds(bounds);
-        } else if(latlng) {
-          map.setView(latlng, zoom || 6);
+        if (bounds) {
+            map.fitBounds(bounds);
+        } else if (latlng) {
+            map.setView(latlng, zoom || 6);
         } else {
-          map.setView(new L.LatLng(51.3, 10), 6);
+            map.setView(new L.LatLng(51.3, 10), 6);
         }
         return map;
     }
 
-    function addLeafletHomeControl(map, title, position, icon, bounds, padding, fontSize){
+    function addLeafletHomeControl(map, title, position, icon, bounds, padding, fontSize) {
         var HomeControl = L.Control.extend({
             options: {
                 position: position ? position : 'topleft'
@@ -68,26 +68,26 @@
                 var container = L.DomUtil.create('div', 'leaflet-control-home leaflet-bar');
                 var link = L.DomUtil.create('a', icon, container);
                 link.href = '#';
-                if(padding){
-                  link.style.padding = padding;
+                if (padding) {
+                    link.style.padding = padding;
                 }
-                if(fontSize){
-                  link.style.fontSize = fontSize;
+                if (fontSize) {
+                    link.style.fontSize = fontSize;
                 }
                 link.title = title;
                 L.DomEvent.addListener(link, 'click', this._homeClick, this);
                 return container;
             },
-            _homeClick: function(e) {
+            _homeClick: function (e) {
                 L.DomEvent.stop(e);
-                if(bounds){
+                if (bounds) {
                     var features = [];
-                    map.eachLayer(function(layer) {
-                        if(layer && layer.getBounds) {
+                    map.eachLayer(function (layer) {
+                        if (layer && layer.getBounds) {
                             features.push(layer);
                         }
                     })
-                    if(features.length > 0) {
+                    if (features.length > 0) {
                         bounds = L.featureGroup(features).getBounds();
                     }
                     map.fitBounds(bounds);
@@ -97,12 +97,12 @@
         map.addControl(new HomeControl({}));
     }
 
-    function resizeMap(map){
-        if(map){
+    function resizeMap(map) {
+        if (map) {
             map._onResize();
         }
     }
-    
+
     function disableLeafletMapTouchControl(map) {
         map.removeControl(map.zoomControl);
         map.dragging.disable();
@@ -113,4 +113,5 @@
         map.boxZoom.disable();
         map.keyboard.disable();
     }
+
 </script>
