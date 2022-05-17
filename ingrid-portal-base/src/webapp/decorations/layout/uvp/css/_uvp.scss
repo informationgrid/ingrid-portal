@@ -941,9 +941,12 @@ header {
   .login {
     position: absolute;
     right: 0;
-    min-width: 150px;
+    max-width: 150px;
     font-size: 12px;
     margin: 1rem 0 -1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 
     ~ .small-button .ic-ic-hamburger:before {
       content: "\e960";
