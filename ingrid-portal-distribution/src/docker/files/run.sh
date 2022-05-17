@@ -172,6 +172,11 @@ else
         cp $PROFILES_DIR/$PORTAL_PROFILE/profile_postgres.sql webapps/ROOT/WEB-INF/classes/db/migration/postgres/afterMigrate.sql
         cp $PROFILES_DIR/$PORTAL_PROFILE/profile_oracle.sql webapps/ROOT/WEB-INF/classes/db/migration/oracle/afterMigrate.sql
 
+        echo "Hide page '/administration/admin-portal-profile.psml'"
+        echo -n "UPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/mysql/afterMigrate.sql
+        echo -n "UPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/postgres/afterMigrate.sql
+        echo -n "UPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/oracle/afterMigrate.sql
+
         # specific options for UVP
         if [ "$PORTAL_PROFILE" == "uvp" ]; then
             # deactivate behaviours
