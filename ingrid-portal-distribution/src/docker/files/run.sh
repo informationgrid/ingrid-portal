@@ -197,9 +197,9 @@ else
     fi
 
     echo "Hide page '/administration/admin-portal-profile.psml'"
-    echo -n "UPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/mysql/afterMigrate.sql
-    echo -n "UPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/postgres/afterMigrate.sql
-    echo -n "UPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/oracle/afterMigrate.sql
+    echo -e "\nUPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/mysql/afterMigrate.sql
+    echo -e "\nUPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/postgres/afterMigrate.sql
+    echo -e "\nUPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/oracle/afterMigrate.sql
 
     # IGE standalone configuration
     if [ "$STANDALONE_IGE" == "true" ]; then
