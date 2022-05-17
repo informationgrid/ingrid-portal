@@ -352,7 +352,10 @@ define([
             );
 
             topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class1") {
+                var isGeodata = data.objClass === "Class1";
+                var isProject = data.objClass === "Class4";
+
+                if (isGeodata || isProject) {
                     domClass.remove("uiElementAdd" + id, "hide");
                 } else {
                     domClass.add("uiElementAdd" + id, "hide");
