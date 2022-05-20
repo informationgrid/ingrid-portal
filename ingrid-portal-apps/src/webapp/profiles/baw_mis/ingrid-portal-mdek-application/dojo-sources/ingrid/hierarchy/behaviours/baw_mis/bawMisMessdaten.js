@@ -311,8 +311,8 @@ define([
                 field: "type",
                 name: message.get("ui.obj.baw.measuring.targetParameters.type") + "*",
                 type: Editors.SelectboxEditor,
-                listId: 3950022,
-                formatter: lang.partial(Formatters.SyslistCellFormatter, 3950021),
+                listId: 3950014,
+                formatter: lang.partial(Formatters.SyslistCellFormatter, 3950014),
                 isMandatory: true,
                 editable: true,
                 width: "100px"
