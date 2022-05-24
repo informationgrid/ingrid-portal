@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.12.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.2">
+          <action type="add" dev="wemove">
+            Mapclient: Printservice einstellbar über Admin-GUI
+          </action>
+        </release>
+
         <release version="5.12.1" date="2022-05-08" description="Release 5.12.1">
           <action type="fix" dev="wemove" issue="3865">
             Portal: Unstimmigkeiten bei der Validierung von Benutzername
