@@ -10,15 +10,14 @@
                 // OSM Geocoder
         const osmGeocoder = new L.Control.Geocoder({
                     geocoder: L.Control.Geocoder.nominatim({
-                        serviceUrl: "https://nominatim.openstreetmap.org/",
+                        serviceUrl: "$leafletGeocoderServiceUrl",
                         geocodingQueryParams: { countrycodes: 'de' }
                     }),
                     collapsed: false,
                     position: 'topright',
-                    text: 'Address Search',
-                    placeholder: 'Suche: z.B. nach Hannover ...',
+                    placeholder: '$MESSAGES.getString("common.mapclient.geocoder.search.placeholder")',
                     defaultMarkGeocode: false,
-                    errorMessage: 'Keine Ergebnisse ...'
+                    errorMessage: '$MESSAGES.getString("common.mapclient.geocoder.search.errormessage")'
                 }).addTo(map);
 
         // handle geocoding result event
@@ -34,7 +33,6 @@
             // center map on result
             map.setView(coords, 12);
             // popup for location
-            // todo: use custom icon
             resultMarker = L.marker(coords);
             resultMarker.addTo(map);
             // add popup to marker with result text
