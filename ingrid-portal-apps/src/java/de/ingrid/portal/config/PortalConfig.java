@@ -333,6 +333,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MEASURE_NETWORKS_EXCLUDE = "portal.measure.networks.exclude";
     public static final String PORTAL_MEASURE_NETWORKS_INITIAL = "portal.measure.networks.initial";
 
+    public static final String PORTAL_MAPCLIENT_UVP_GEOCODER_SERVICE_URL = "portal.mapclient.uvp.geocoder.service.url";
+
     // private stuff
     private static PortalConfig instance = null;
 
