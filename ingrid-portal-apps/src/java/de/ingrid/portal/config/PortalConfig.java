@@ -326,12 +326,12 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPS_LINKS_NEW_TAB = "portal.map.links.new.tab";
 
     public static final String PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN = "portal.administration.user.enabled.older.than";
-    public static final String PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN = "portal.administration.user.unenabled.older.than";
+    public static final String PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN = "portal.administration.user.unabled.older.than";
     public static final String PORTAL_ADMINISTRATION_USER_UNLOGGED_OLDER_THAN = "portal.administration.user.unlogged.older.than";
 
     public static final String PORTAL_MEASURE_URL = "portal.measure.url";
-    public static final String PORTAL_MEASURE_NETWORKS_EXCLUDE = "portal.measere.networks.exclude";
-    public static final String PORTAL_MEASURE_NETWORKS_INITIAL = "portal.measere.networks.initial";
+    public static final String PORTAL_MEASURE_NETWORKS_EXCLUDE = "portal.measure.networks.exclude";
+    public static final String PORTAL_MEASURE_NETWORKS_INITIAL = "portal.measure.networks.initial";
 
     // private stuff
     private static PortalConfig instance = null;
