@@ -121,7 +121,7 @@ define([
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
 
-            return registry.byId(authorsTableId).promiseInit;
+            return registry.byId(literatureTableId).promiseInit;
         },
 
         _initHandleTextbox: function () {
