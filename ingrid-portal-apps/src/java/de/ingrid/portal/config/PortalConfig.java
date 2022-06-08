@@ -320,6 +320,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_DETAIL_UVP_ZIP_PATH = "portal.detail.uvp.zip.path";
     public static final String PORTAL_DETAIL_UVP_ZIP_UPDATE_MIN = "portal.detail.uvp.zip.update.min";
+    public static final String PORTAL_DETAIL_UVP_ZIP_DELETE_MIN = "portal.detail.uvp.zip.delete.min";
+
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN = "portal.detail.uvp.documents.htaccess.login";
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD = "portal.detail.uvp.documents.htaccess.password";
 
