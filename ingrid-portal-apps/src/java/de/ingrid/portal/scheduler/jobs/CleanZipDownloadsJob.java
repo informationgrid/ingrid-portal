@@ -86,7 +86,7 @@ public class CleanZipDownloadsJob extends IngridMonitorAbstractJob {
         startTimer();
 
         log.info("Executing CleanZipDownloadsJob ...");
-        String dirMain = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_ZIP_PATH, "./data");
+        String dirMain = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_ZIP_PATH, "./");
         Long deleteTime = PortalConfig.getInstance().getLong(PortalConfig.PORTAL_DETAIL_UVP_ZIP_DELETE_MIN, 262800);
         Date startDate = new Date();
         File dirDownload = new File(dirMain + "/downloads");
