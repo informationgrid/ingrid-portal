@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.12.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.2">
+          <action type="update" dev="wemove" issue="3456">
+            Optimierung Sammeldownload-Funktionalität
+          </action>
           <action type="update" dev="wemove" issue="3807">
             Mapclient - Positionierung über Request an BWaStr-Locator (Weitere Optimierung)
           </action>
