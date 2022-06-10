@@ -427,7 +427,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>category.news.title</name>
                 <id>rss</id>
-                <icon>icon-rss-2</icon>
+                <icon>ic-rss</icon>
                 <url>/neuigkeiten</url>
                 <display>true</display>
             </facet>
@@ -437,7 +437,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>datatype:www</query>
                 <id>www</id>
                 <parentId>type</parentId>
-                <icon>icon-log-out-1</icon>
+                <icon>ic-www</icon>
             </facet>
             <!-- Metadaten -->
             <facet>
@@ -445,7 +445,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>datatype:metadata</query>
                 <id>metadata</id>
                 <parentId>type</parentId>
-                <icon>icon-folder-search</icon>
+                <icon>ic-metadata</icon>
             </facet>
         <!-- INSPIRE-relevant -->
             <facet>
@@ -453,7 +453,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
                 <parentId>type</parentId>
-                <icon>icon-globe-2</icon>
+                <icon>ic-inspire</icon>
             </facet>
         <!-- Opendata -->
            <facet>
@@ -461,7 +461,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
                 <parentId>type</parentId>
-                <icon>icon-hotspot-2</icon>
+                <icon>ic-opendata</icon>
             </facet>
         <!-- Karten -->
             <facet>
@@ -469,7 +469,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>capabilities_url:http* datatype:metadata</query>
                 <id>map</id>
                 <parentId>type</parentId>
-                <icon>icon-globe-1</icon>
+                <icon>ic-map</icon>
             </facet>
         </facets>
     </facet>
