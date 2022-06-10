@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.12.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.2">
+        <release version="5.12.2" date="2022-06-10" description="Release 5.12.2">
           <action type="update" dev="wemove" issue="3456">
             Optimierung Sammeldownload-Funktionalität
           </action>
