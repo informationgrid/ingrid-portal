@@ -35,7 +35,7 @@
                                 #renderHrefAction($action $MESSAGES.getString("component.forms.text.filter.clear") "btn btn--secondary btn--small" "width:100%")
                             #end
                             <p>
-                                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%;" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')" "btn btn--primary btn--small")
+                                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%;" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')" "")
                             </p>
                         </div>
                     </div>
@@ -84,13 +84,8 @@
                     #end
                 </table>
             </div>
-            #set ($buttons = ["doDelete", "doRefresh", "doNew"])
+            #set ($buttons = ["doNew", "doRefresh", "doDelete"])
             #renderDBBrowserFooterButtonsDisable($buttons true)
-            <div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
-                <svg class="icon">
-                    <use xlink:href="#arrow-thick"/>
-                </svg>
-            </div>
         </article>
     </form>
 </div>
@@ -106,11 +101,11 @@
             #if($import_message)
                 #renderMessageError($import_message)
             #end
-            <textarea rows="30" cols="125" id="csvData" name="csvData"></textarea>
+            <textarea class="custom-scrollbar" rows="30" cols="125" id="csvData" name="csvData"></textarea>
         </div>
     </div>
     <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "width:100%;" "doImport" "" "btn btn--primary btn--small")
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "width:100%;" "doImport" "" "")
     </div>
 </form>
 

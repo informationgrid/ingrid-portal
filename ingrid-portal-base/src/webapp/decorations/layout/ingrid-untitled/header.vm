@@ -17,13 +17,15 @@
         #parse("/decorations/layout/ingrid/templates/header/head_style.vm")
     </head>
     <body>
+    #if($currentPage != "/main-measures.psml")
+        <div class="container">
+    #end
         #set($mainMenu = $site.getMenu("main-menu"))
         #set($serviceMenu = $site.getMenu("service-menu"))
+        #set($aboutSubMenu = $site.getMenu("sub-menu-about"))
         #set($footerMenu = $site.getMenu("footer-menu"))
-        #if(!$mainMenu.empty)
-            #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
+        #if($serviceMenu && !$serviceMenu.empty)
+            #includeServiceNavigation($serviceMenu $mainMenu $footerMenu $aboutSubMenu)
         #end
-        <div class="page" >
         #parse("/decorations/layout/ingrid/templates/header/body_header.vm")
-        #parse("/decorations/layout/ingrid/templates/header/body_header_additional.vm")
-        #parse("/decorations/layout/ingrid/templates/header/body_breadcrumb.vm")
+            <div class="body" role="main">

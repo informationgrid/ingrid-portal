@@ -180,7 +180,7 @@ header {
   background: #0066A4;
 }
 .banner .search-wrapper {
-  background-image: url('/decorations/layout/uvp/images/template/drops-big.svg') !important;
+  background-image: url('/decorations/layout/ingrid/images/template/drops-big.svg') !important;
 }
 .about {
   margin-bottom: 0;
@@ -1081,7 +1081,7 @@ header .logo img {
 
 @media only screen and (min-width: 37.563em) {
   .socialmedia ul li.navAdvmis a {
-    background: url(/decorations/layout/uvp/images/template/AdV_Logo_SocialMedia.png) no-repeat;
+    background: url(/decorations/layout/ingrid/images/template/AdV_Logo_SocialMedia.png) no-repeat;
     background-size: contain;
   }
 }

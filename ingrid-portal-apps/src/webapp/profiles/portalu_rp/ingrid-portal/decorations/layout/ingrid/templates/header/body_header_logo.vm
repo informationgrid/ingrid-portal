@@ -1,17 +1,17 @@
 <div class="columns xsmall-7 small-7 medium-8 large-8 xlarge-9">
     <div class="logo">
         <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="show-for-large hide-for-xsmall-only" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-            <img src="/decorations/layout/uvp/images/template/logo.png" alt="RLP"/>
+            <img src="/decorations/layout/ingrid/images/template/logo.png" alt="RLP"/>
             <div class="vertical-line"></div>
             <p>PortalU<br>Umweltportal<br>Rheinland-Pfalz</p>
         </a>
         <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-xlarge hide-for-large hide-for-xsmall-only hide-for-small-only" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-            <img src="/decorations/layout/uvp/images/template/logo.png" alt="RLP"/>
+            <img src="/decorations/layout/ingrid/images/template/logo.png" alt="RLP"/>
             <div class="vertical-line"></div>
             <p>PortalU<br>Umweltportal<br>Rheinland-Pfalz</p>
         </a>
         <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-medium" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-            <img src="/decorations/layout/uvp/images/template/logo.png" alt="RLP"/>
+            <img src="/decorations/layout/ingrid/images/template/logo.png" alt="RLP"/>
             <div class="vertical-line"></div>
             <p>Umweltportal<br>Rheinland-Pfalz</p>
         </a>

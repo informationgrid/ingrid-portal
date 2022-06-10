@@ -1,4 +1,0 @@
-## Render kml as table
-#set($tmp = $TOOL.getKML())
-#renderKML($tmp)
-#set($tmp = "")

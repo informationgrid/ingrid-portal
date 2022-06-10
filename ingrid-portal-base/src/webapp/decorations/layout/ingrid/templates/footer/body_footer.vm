@@ -1,29 +1,26 @@
 #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
-    <footer class="footer">
-        <div class="ob-box-padded ob-box-center ob-clear">
-            <div class="footer__top">
+#parse("/decorations/layout/ingrid/templates/footer/body_footer_settings.vm")
+#parse("/decorations/layout/ingrid/templates/footer/body_footer_test.vm")
+<footer>
+    <div class="footer-buttons-bar show-for-medium hide-for-print">
+        #parse("/decorations/layout/ingrid/templates/footer/body_footer_socials.vm")
+        #parse("/decorations/layout/ingrid/templates/footer/body_footer_login.vm")
+        #parse("/decorations/layout/ingrid/templates/footer/body_footer_up.vm")
+    </div>
+    <div class="footer">
+    #if($footerHasHrLine)
+        <hr>
+    #end
+        <div class="row">
+            <div class="$footerCssClassLogo">
                 #parse("/decorations/layout/ingrid/templates/footer/body_footer_logo.vm")
-                <p class="copyright copyright_text">$MESSAGES.getString("ingrid.page.copyright")</p>
+                #parse("/decorations/layout/ingrid/templates/footer/body_footer_copyright.vm")
+            </div>
+            <div class="$footerCssClassMenu">
+                #parse("/decorations/layout/ingrid/templates/footer/body_footer_menu.vm")
             </div>
         </div>
-        <hr class="bx-top-0 bx-bot-0"/>
-        <div class="grid">
-            <div class="column column--3-4-xl">
-                <div class="ob-box-padded ob-box-center ob-clear">
-                    <div class="footer__section">
-                    #parse("/decorations/layout/ingrid/templates/footer/body_footer_menu.vm")
-                    </div>
-                </div>
-            </div>
-            <div class="column column--1-4-xl">
-                <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"/>
-                <div class="ob-box-padded ob-box-center ob-clear">
-                    <div class="footer__section">
-                        <div class="footer__bottom"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer__top-link mq-show-l js-top">$MESSAGES.getString("ingrid.page.top")</div>
-    </footer>
+    </div>
+    #parse("/decorations/layout/ingrid/templates/footer/body_footer_up_link.vm")
+</footer>
 #end

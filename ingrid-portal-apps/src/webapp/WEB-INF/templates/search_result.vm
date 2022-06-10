@@ -1,12 +1,18 @@
-<div id="searchResult">
-    #parse ('/WEB-INF/templates/include_search_result_filter.vm')
+#parse("/WEB-INF/templates/global/include_hit_image_error.vm")
+#parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+#parse("/WEB-INF/templates/search-result/search_result_settings.vm")
+<div id="searchResult" class="row">
+    #parse ("/WEB-INF/templates/include_search_result_filter.vm")
     #if($enableFacete)
-        #renderSearchResultFacetFilter( "is-active" )
+       <div id="filter" class="$filterClass">
+            #parse("/WEB-INF/templates/facete/facete.vm")
+        </div>
     #end
-    <article class="content ob-container">
-        #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-    </article>
+    <div id="results" class="$resultsClass">
+        #parse("/WEB-INF/templates/include_search_result_ranked.vm")
+    </div>
 </div>
-#parse ('/WEB-INF/templates/include_search_result_admin_info.vm')
-#parse ('/WEB-INF/templates/include_search_result_map.vm')
-#parse ('/WEB-INF/templates/global/include_preview_image.vm')
+#parse("/WEB-INF/templates/include_search_result_admin_info.vm")
+#parse("/WEB-INF/templates/include_search_result_map.vm")
+#parse("/WEB-INF/templates/global/include_reference_list_datatype.vm")
+#parse("/WEB-INF/templates/scripts/include_script_filter_scroll.vm")

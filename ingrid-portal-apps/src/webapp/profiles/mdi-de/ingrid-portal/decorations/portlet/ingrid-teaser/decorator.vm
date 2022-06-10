@@ -29,7 +29,7 @@
 
 #if($disableTitle != 1 && $!jetspeed.getTitle($f) && $!jetspeed.getTitle($f).trim().length() > 0)
 <div class="banner subpage">
-  <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+  <div class="subpage-wrapper" style="background-image: url('/decorations/layout/ingrid/images/template/drops-subpage.svg');">
     <div class="$bannerStyle">
       <div class="$bannerHeaderStyle">
         <h1>$!jetspeed.getTitle($f)</h1>

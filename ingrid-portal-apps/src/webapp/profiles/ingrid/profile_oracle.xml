@@ -102,16 +102,13 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="0" row="3">
                     <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="4">
-                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -123,16 +120,13 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="0" row="3">
                     <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="4">
-                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -144,16 +138,13 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="0" row="3">
                     <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="4">
-                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -240,13 +231,13 @@
             <![CDATA[UPDATE folder_menu SET options = '/main-search.psml' WHERE options = '/default-page.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id')]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';]]>
+            <![CDATA[UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-measures.psml';]]>
+            <![CDATA[UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-measures.psml';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-maps.psml';]]>
+            <![CDATA[UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-maps.psml';]]>
         </execute>
         <!-- Set folder "/cms" from display to hidden (only use on profile baw_wsv) -->
         <execute>

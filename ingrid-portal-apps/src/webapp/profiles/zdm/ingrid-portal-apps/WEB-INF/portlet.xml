@@ -963,50 +963,6 @@
             </preference>
         </portlet-preferences>
     </portlet>
-    
-    <portlet id="InfoDefaultPageTeaser">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/default_info.vm</value>
-        </init-param>
-        <portlet-name>InfoDefaultPageTeaser</portlet-name>
-        <display-name>Generisches Informationsportlet</display-name>
-        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
-        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-preferences>
-            <preference>
-                <name>portlet-type</name>
-                <value>ingrid-home</value>
-            </preference>
-            <preference>
-                <name>default-vertical-position</name>
-                <value>5</value>
-            </preference>
-            <preference>
-                <name>infoTemplate</name>
-                <value>/WEB-INF/templates/info_teaser.vm</value>
-            </preference>
-            <preference>
-                <name>titleKey</name>
-                <value>javax.portlet.title</value>
-            </preference>
-            <preference>
-                <name>disableTitle</name>
-                <value>1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--pad-bottom</value>
-            </preference>
-        </portlet-preferences>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
-    </portlet>
 
     <portlet id="IngridWelcomePortlet">
         <init-param>

@@ -1,8 +1,8 @@
-#set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
-    #renderPaginationAndHint($browser "")
-    <div class="table table--striped table--sortable">
-        <table class="js-table-sortable">
+<div class="columns">
+    #set ($action = $renderResponse.createActionURL())
+    <form class="form" action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
+        #renderPaginationAndHint($browser "")
+        <table class="boxed-table">
         #set ($colNames = ["id", "itemKey", "itemDescription"])
         #set ($colTitles = [$MESSAGES.getString('admin.cms.overview.id'), $MESSAGES.getString('admin.cms.overview.short'), $MESSAGES.getString('admin.cms.overview.description')])
         #renderDBBrowserHeader($colNames $colTitles)
@@ -20,7 +20,9 @@
             #end
         #end
         </table>
-    </div>
-    #set ($buttons = ["doRefresh"])
-    #renderDBBrowserFooterButtons($buttons)
-</form>
+        <div class="subtext-submit">
+            #set ($buttons = ["doRefresh"])
+            #renderDBBrowserFooterButtons($buttons)
+        </div>
+    </form>
+</div>

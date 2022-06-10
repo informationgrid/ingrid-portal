@@ -1,3 +1,4 @@
+#parse ('/WEB-INF/templates/global/include_hit_image_error.vm')
 #macro (renderHit $hit)
     #if($hit.is_address)
         #parse ('/WEB-INF/templates/include_search_result_address_hit.vm')
@@ -5,21 +6,27 @@
         #parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
     #end
 #end
-<div id="searchResult">
+<div id="searchResult" class="row">
     #if($enableFacete)
-        #renderSearchResultFacetFilter( "is-active" )
+        <div class="xsmall-24 large-8 xlarge-6 columns">
+            #parse ('/WEB-INF/templates/facete/facete.vm')
+        </div>
     #end
-    <article class="content ob-container">
-        #if($enableFacetSelection || $isSelection)
-            <ul class="tag-group tag-group bx-top-m bx-bot-l">
-                #renderSearchResultFacetSelection($facetConfig $MESSAGES)
-            </ul>
+    <div class="xsmall-24 large-16 xlarge-18 columns">
+        <div class="results-index">
+            <div class="row">
+                #parse ('/WEB-INF/templates/include_search_result_counter.vm')
+            </div>
+        </div>
+        <div class="filters-active">
+            #renderSearchResultFacetSelection($facetConfig $MESSAGES)
+            #if($enableFacetSelection || $isSelection)
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("doRemoveAll", "true")
+                #renderResetLink($action $MESSAGES.getString('searchResult.facet.delete.selection'))
+            #end
             #renderSearchResultFacetSelectionInfoResult($facetConfig $MESSAGES)
-        #end
-        #parse ('/WEB-INF/templates/include_search_result_counter.vm')
-        <hr class="hr-small-full"/>
-        ##parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-        #parse ('/WEB-INF/templates/include_search_result_filter.vm')
+        </div>
         #if($rankedResultList && "$rankedResultList.length()" != "0")
             #foreach($rs in $rankedResultList.getWrapperHits())
                 #if($grouping)
@@ -33,14 +40,14 @@
                     #set ($subHitLeftMargin = 40)
                     #renderHit($rs)
                 #end
-                #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
-              #end
+            #end
+            #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
         #else
-                <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
+            <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
         #end
-        #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
     </article>
 </div>
 #parse ('/WEB-INF/templates/include_search_result_admin_info.vm')
 #parse ('/WEB-INF/templates/include_search_result_map.vm')
-#parse ('/WEB-INF/templates/global/include_preview_image.vm')
+#parse ('/WEB-INF/templates/global/include_reference_list_datatype.vm')
+#parse ('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')

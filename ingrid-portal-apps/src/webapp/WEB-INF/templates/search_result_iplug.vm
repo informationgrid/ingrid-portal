@@ -1,4 +1,5 @@
-<div id="searchResult">
+#parse ('/WEB-INF/templates/global/include_hit_image_error.vm')
+<div id="searchResult" class="row">
     #if($enableFacete)
         #renderSearchResultFacetFilter( "is-active" )
     #end
@@ -7,9 +8,12 @@
             <ul class="tag-group tag-group bx-top-m bx-bot-l">
                 #renderSearchResultFacetSelection($facetConfig $MESSAGES)
             </ul>
-            #renderSearchResultFacetSelectionInfoResult($facetConfig $MESSAGES)
         #end
-        #parse ('/WEB-INF/templates/include_search_result_counter.vm')
+        <div class="results-index">
+            <div class="row">
+                #parse ('/WEB-INF/templates/include_search_result_counter.vm')
+            </div>
+        </div>
         <hr class="hr-small-full"/>
         ##parse ('/WEB-INF/templates/include_search_result_navigation.vm')
         #parse ('/WEB-INF/templates/include_search_result_filter.vm')
@@ -27,4 +31,5 @@
 </div>
 #parse ('/WEB-INF/templates/include_search_result_admin_info.vm')
 #parse ('/WEB-INF/templates/include_search_result_map.vm')
-#parse ('/WEB-INF/templates/global/include_preview_image.vm')
+#parse ('/WEB-INF/templates/global/include_reference_list_datatype.vm')
+#parse ('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')

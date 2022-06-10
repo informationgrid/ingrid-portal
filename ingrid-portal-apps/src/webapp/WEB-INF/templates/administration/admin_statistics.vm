@@ -1,17 +1,9 @@
-<div class="box box--fill box--small">
-    <div class="box__title ob-container">
-        <h4>$MESSAGES.getString('admin.statistics.headline')</h4>
-    </div>
-    <div class="box__content ob-container">
-        <ul class="link-list">
-            <li>
-                <a href="$apacheStatisticsURL">
-                    <svg class="icon">
-                        <use xlink:href="#internal-link"/>
-                    </svg>
-                    $MESSAGES.getString('admin.statistics.apache')
-                </a>
-            </li>
-        </ul>
+<div class="columns">
+    <!-- <h4>$MESSAGES.getString('admin.statistics.headline')</h4> -->
+    <div class="link-list">
+        <a href="$apacheStatisticsURL" class="icon">
+            <span class="ic-ic-arrow"></span>
+            <span class="text">$MESSAGES.getString('admin.statistics.apache')</span>
+        </a>
     </div>
 </div>
