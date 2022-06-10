@@ -54,6 +54,9 @@ h1, h2, h3 {
 h6 {
   color: #333333;
 }
+label {
+  color: #333333;
+}
 a {
   color: #0E8637;
 }
@@ -80,10 +83,13 @@ a.icon:hover {
 }
 .button.round {
   color: #333333;
+  background-color: #EEEEEE;
+  border: 1px solid #0E8637;
 }
 .button.round:hover, .button.round:focus {
   background-color: #666666;
   color: #eaf6ff;
+  border: 1px solid #0E8637;
 }
 .button.outline {
   color: #4EAD46;
@@ -149,7 +155,7 @@ header {
 .menu-sub-links .menu-settings-links {
   background-color: #666666;
 }
-.menu-sub-links .menu-settings-links a{
+.menu-sub-links .menu-settings-links a, .menu-sub-links .menu-settings-links h6 {
   color: #fff;
 }
 .menu-sub-links a + .menu-settings-links {
@@ -362,11 +368,17 @@ header {
   background-color: #FFFFFF;
   border-bottom: 1px solid #0E8637;
 }
+.boxed-table tbody tr:nth-child(even), .boxed-table tfoot {
+  background-color: #EEEEEE;
+}
 table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr {
   color: #0E8637;
 }
 table .dark a {
   text-decoration: none;
+}
+table .dark a:hover {
+  color: #666666;
 }
 .tabs .tabs-title > a {
   color: #0E8637;
@@ -676,7 +688,7 @@ header .menu-tab-row .menu-tab {
 }
 
 h4, h5 {
-    color: #3a566d;
+  color: #333333;
 }
 
 .results-index .result-text {
