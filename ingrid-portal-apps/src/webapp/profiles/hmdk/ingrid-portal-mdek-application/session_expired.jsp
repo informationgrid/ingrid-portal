@@ -38,14 +38,14 @@
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
-        <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/main.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
         <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/uvp/scripts/vendor/jquery.nicescroll.min.js"></script>
-        <script src="/decorations/layout/uvp/scripts/vendor/foundation.min.js"></script>
-        <script src="/decorations/layout/uvp/scripts/vendor/select2.full.js"></script>
-        <script src="/decorations/layout/uvp/scripts/main.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/vendor/jquery.nicescroll.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/vendor/foundation.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/vendor/select2.full.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/main.js"></script>
     </head>
     <body>
         <div class="container">
@@ -74,7 +74,7 @@
                 <div class="row">
                     <div class="columns xsmall-7 small-7 medium-8 large-7 xlarge-7">
                         <div class="logo">
-                            <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="HMDK"/></a>
+                            <a href="/startseite"><img src="/decorations/layout/ingrid/images/template/logo.svg" alt="HMDK"/></a>
                         </div>
                     </div>
                     <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
@@ -109,7 +109,7 @@
             </header>
             <div class="body">
                 <div class="banner subpage">
-                    <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+                    <div class="subpage-wrapper" style="background-image: url('/decorations/layout/ingrid/images/template/drops-subpage.svg');">
                         <div class="row align-center">
                             <div class="large-20 columns dark">
                                 <h1><fmt:message key="ui.entry.session.expired" /></h1>
@@ -138,7 +138,7 @@
                     <div class="row">
                         <div class="xsmall-24 columns">
                             <div class="logo">
-                                <a href="/startseite"><img class="footer__logo" src="/decorations/layout/uvp/images/template/footer-logo.svg" alt="HMDK"></a>
+                                <a href="/startseite"><img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="HMDK"></a>
                             </div>
                             <div class="copyright">
                                 <span class="icon"></span>

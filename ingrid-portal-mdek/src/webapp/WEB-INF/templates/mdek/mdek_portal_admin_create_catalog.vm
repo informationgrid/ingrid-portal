@@ -4,45 +4,33 @@
   #end
 #end
 
-#macro (renderFooter)
-<div class="formfooter" align="right">
-    <div class="media__obj media__obj--right">
-        #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.back')" "width:100%" "doCancel" "" "btn btn--secondary btn--medium")
-    </div>
-    <div class="media__obj media__obj--right">       
-        #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.create')" "width:100%" "doCreateCatalog" "" "btn btn--primary btn--medium")
-    </div>
-</div>
-#end
-
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="GET" name="mdek_portal_admin" id="mdek_portal_admin">
-    <div class="box box--fill box--small">
-        <div class="box__title ob-container">
-            <h4>$MESSAGES.getString('mdek.portaladmin.catalog.new')</h4>
+<div class="columns">
+    <form class="form" action="$action" method="GET" name="mdek_portal_admin" id="mdek_portal_admin">
+        <h4>$MESSAGES.getString('mdek.portaladmin.catalog.new')</h4>
+        <div class="form-element">
+            <label for="plugId">$MESSAGES.getString('mdek.portaladmin.catalog.exist')</label>
         </div>
-        <div class="box__content ob-container">
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                    <label for="plugId">$MESSAGES.getString('mdek.portaladmin.catalog.exist')</label>
-                </div>
-                <div class="media__body">
-                    <select name="plugId">
-                        #displayListItems($plugIdList)
-                    </select>
-                </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                    <label for="userName">$MESSAGES.getString('mdek.portaladmin.administrator')</label>
-                </div>
-                <div class="media__body">
-                    <select name="userName">
-                        #displayListItems($userNameList)
-                    </select>
-                </div>
-            </div>
+        <div class="form-element">
+            <p>
+                <select name="plugId" class="select2">
+                    #displayListItems($plugIdList)
+                </select>
+            </p>
         </div>
-    </div>
-    #renderFooter()
-</form>
+        <div class="form-element">
+            <label for="userName">$MESSAGES.getString('mdek.portaladmin.administrator')</label>
+        </div>
+        <div class="form-element">
+            <p>
+                <select name="userName" class="select2">
+                    #displayListItems($userNameList)
+                </select>
+            </p>
+        </div>
+        <div class="form-element subtext-submit">
+            #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.back')" "" "doCancel" "" "outline")
+            #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.create')" "float:right" "doCreateCatalog" "" "")
+        </div>
+    </form>
+</div>

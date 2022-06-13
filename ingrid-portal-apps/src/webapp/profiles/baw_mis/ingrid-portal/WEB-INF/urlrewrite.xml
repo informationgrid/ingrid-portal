@@ -152,16 +152,6 @@
         <from>/portal/main-maps.psml</from>
         <to>/kartendienste</to>
     </outbound-rule>
-    
-    <!--  Chronik  -->
-    <rule>
-        <from>/chronik</from>
-        <to type="forward">/portal/main-chronicle.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-chronicle.psml</from>
-        <to>/chronik</to>
-    </outbound-rule>
 
     <!-- Über InGrid-Portal  -->
     <rule>

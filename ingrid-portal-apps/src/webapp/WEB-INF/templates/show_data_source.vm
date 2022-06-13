@@ -1,5 +1,6 @@
-<h4>$MESSAGES.getString("show.data.source.connected.databases"):</h4>
-    <ul class="list list--bullets">
+<div class="columns">
+    <h4>$MESSAGES.getString("show.data.source.connected.databases"):</h4>
+    <div class="link-list">
     #foreach($plug in $plugs)
         #set($hideId = "false")
         #foreach($hideIPlugId in $hideIPlugIdList)
@@ -12,7 +13,8 @@
             #end
         #end
         #if($hideId == "false")
-            <li>$plug.getDataSourceName()</li>
+            <p>$plug.getDataSourceName()</p>
         #end
     #end
-    </ul>
+    </div>
+</div>

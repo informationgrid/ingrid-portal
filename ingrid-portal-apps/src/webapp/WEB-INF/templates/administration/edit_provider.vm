@@ -38,7 +38,7 @@
                         <label for="sortkey_partner$!{entityIndex}">#displayFieldLabel("sortkey_partner$!{entityIndex}" $colLabels.get($colIndex))</label>
                     </div>
                     <div class="media__body">
-                        <select name="sortkey_partner$!{entityIndex}">
+                        <select class="select2" name="sortkey_partner$!{entityIndex}">
                         #foreach ($partner in $partners)
                             #if($partner.sortkey == $dbEntity.SortkeyPartner)
                                 <option value="$partner.sortkey" selected="selected">$partner.name</option>

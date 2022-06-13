@@ -1,4 +1,0 @@
-## Zeige in Karte
-#set($tmp = $TOOL.getMapImage())
-#renderMultiLineImage($tmp)
-#set($tmp = "")

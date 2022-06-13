@@ -132,8 +132,6 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_ENABLE_RSS = "portal.enable.rss";
 
-    public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
-
     public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
 
     public static final String PORTAL_ENABLE_DISCLAIMER = "portal.enable.disclaimer";

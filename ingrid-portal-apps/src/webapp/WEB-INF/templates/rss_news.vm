@@ -1,32 +1,36 @@
-<h3>$MESSAGES.getString('news.archive.header')</h3>
-#foreach($rssEntry in $rssEntries)
-<hr>
-<div class="search-result">
-    <h4 class="bx-bot-0">
-        <i class="icon icon-rss-2"></i>
-        <a target="_blank" class="external-link" href="$!rssEntry.link" title="$!rssEntry.title">$!rssEntry.title</a>
-        <small class="bx-bot-0">
-            <span class="tx-darker"><strong>$date.format('dd.MM.yyyy',$rssEntry.publishedDate)</strong></span>
-            <span class="tx-light">$date.format('HH:mm',$rssEntry.publishedDate)</span>
-        </small>
-    </h4>
-    <p>
-      #if ($rssEntry && $rssEntry.description)
-        $strutils.cutString($rssEntry.description, 350)
-      #end  
-    </p>
-    <p>
-        <br />
-        #if($rssEntry.author && $rssEntry.author != "")
-              <strong>$MESSAGES.getString('news.author')</strong>: $rssEntry.author
-        #end
-    </p>
+<div class="columns">
+    <h3>$MESSAGES.getString('news.archive.header')</h3>
+    #foreach($rssEntry in $rssEntries)
+        <div class="teaser-data search">
+            <div>
+                <small class="bx-bot-0">
+                    <span class="tx-darker"><strong>$date.format('dd.MM.yyyy',$rssEntry.publishedDate)</strong></span>
+                    <span class="tx-light">$date.format('HH:mm',$rssEntry.publishedDate)</span>
+                </small>
+                <a target="_blank" class="external-link" href="$!rssEntry.link" title="$!rssEntry.title">
+                    <h2 class="header">
+                        $!rssEntry.title
+                    </h2>
+                </a>
+                <p>
+                    #if ($rssEntry && $rssEntry.description)
+                        $strutils.cutString($rssEntry.description, 350)
+                    #end  
+                </p>
+                #if($rssEntry.author && $rssEntry.author != "")
+                <h6 class="no-margin">$MESSAGES.getString('news.author')</h6>
+                <p>$rssEntry.author</p>
+                #end
+                <a target="_blank" class="external-link" href="$!rssEntry.link" title="$!rssEntry.title">
+                    <span class="ic-ic-arrow arrow"></span>
+                </a>
+            </div>
+        </div>
+    #end
+    <a class="icon" href="$renderResponse.encodeURL('/portal/default-page.psml')">
+        <span class="ic-ic-arrow-left"></span>
+        <span class="text">$MESSAGES.getString('news.archive.back')</span>
+    </a>
+<br>
+<br>
 </div>
-#end
-<hr />
-<div class="media__obj media__obj--left">
-    <a style="width:100%" class="btn btn--secondary btn--medium" href="$renderResponse.encodeURL('/portal/default-page.psml')">$MESSAGES.getString('news.archive.back')</a>
-</div>
-<br />
-<br />
-

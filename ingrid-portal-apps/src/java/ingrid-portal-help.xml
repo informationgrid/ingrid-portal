@@ -46,9 +46,6 @@
                         <a href="?hkey=search-measure-1">Data</a>
                     </li>
                     <li>
-                        <a href="?hkey=search-chronicle-1">Almanac</a>
-                    </li>
-                    <li>
                         <a href="?hkey=maps-1">Maps</a>
                     </li>
                     <li>
@@ -114,8 +111,6 @@
 					Federation and Federal States.</p>
 				<p>
                     <b>Maps</b>: A maps viewer offers the possibility of entering spatial references for the search via interactive maps or else to display digital maps from the search results list directly in InGrid-Portal.</p>
-                <p>
-                    <b>Almanac</b>: When did the Kyoto protocol come into effect? You can find an answer to this and many other questions on historical environment events in the environment chronicle (environment almanac)..</p>
             </content>
         </section>
         <section help-key="about-4">
@@ -417,26 +412,6 @@
                     <li>The time reference of the results encloses the search interval entered.</li>
                 </ul>
             </content>
-        </section>
-        <section help-key="ext-search-time-4">
-            <header>Temporal Reference</header>
-            <content>
-                <p>If you are searching for a date connected with an event of relevance to the environment (e.g. the climate conservation conference in Kyoto), by giving a search term you can search for the event in the Almanac (environment chronicle). All events found by the search are displayed. Using the copy and paste functions of your browser you can paste the data given directly into the time reference field you desire.</p>
-            </content>
-            <section help-key="ext-search-time-5">
-                <header>What is the Almanac (Environmental Chronicle)?</header>
-                <content>
-                    <p>The environmental chronicle is a collection of current and historical events that have significantly influenced our environment situation. As well as the dates of the events, a short description is given of the events as appropriate. </p>
-                    <p>The environment chronicle is being made available via the <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a>of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-time-6">
-                <header>Environment events</header>
-                <content>
-                    <p>All environment events that were found via the search in the almanac (environment chronicle) will be displayed with title and date. By clicking on the event or the plus sign in front of it <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg" alt="*"/> the description of the event will be faded in, and faded out again by clicking on the minus sign
-                            <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image019.jpg" alt="*"/>.</p>
-                </content>
-            </section>
         </section>
     </chapter>
     <chapter>
@@ -1197,35 +1172,6 @@
                 <p>You can display the results grouped either according to the Federation and Federal States or according to the individual information providers (e.g. Federal Ministry of the Environment). This means that all the information of the Federation or of a German Federal State resp. of a provider will be collected in a group and displayed together.</p>
                 <p>If you do not want such a grouping you can select the <i>No</i> setting.</p>
                   </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Almanac</header>
-        <section help-key="search-chronicle-1">
-            <header>Environmental Almanac</header>
-            <content>
-                <p>The environmental almanac is a collection of current and historical events which have significantly influenced our environment situation. As well as the basic data, the environmental almanac provides a short description of the events.</p>
-                <p>The environmental almanac is made available via the  <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt).</p>
-                <p>You can search in a targeted manner for events by submitting a search in the environment chronicle via <i>Search Term</i>, <i>Temporal Relation</i> and <i>Event-Type</i> using the <i>Show</i> button.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-2">
-            <header>Event-Type</header>
-            <content>
-                <p>The environmental almanc lists different event types. In this area you can choose which types of event you are searching for.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-3">
-            <header>Temporal Relation</header>
-            <content>
-                <p>The environment chronicle lists the date for every event upon which it happened. In this area you can give the point in time or the time period in which you are searching for environment-relevant events. </p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-4">
-            <header>Search Term</header>
-            <content>
-                <p>You can enter a search term in this area. Events are searched for containing the search term in the title or in the description.</p>
-            </content>
         </section>
     </chapter>
     <chapter>

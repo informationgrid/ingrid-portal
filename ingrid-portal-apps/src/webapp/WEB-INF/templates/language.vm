@@ -2,6 +2,10 @@
 #if ($lang.equals($selectedLang))is-active#end
 #end
 
+#macro (getPressed $lang)
+#if ($lang.equals($selectedLang)) aria-pressed="true" #else aria-pressed="false" #end
+#end
+
 #macro (getSelectedIcon)
 #if ($lang.equals($selectedLang)) <svg class="icon"><use xlink:href="#tick"/></svg>#end
 #end
@@ -13,33 +17,15 @@
         #if($ls.equals($selectedLang))
             #set($index=$i)
         #end
-        #set($i=$i+1)    
+        #set($i=$i+1)
     #end
     $ListTool.get($languagesNames, $index)
 #end
 
 #set ($action = $renderResponse.createActionURL())
-<div class="header__widget mq-hide-l">
-    <a href="#" class="header__widget__toggle js-header-toggle language">
-        <span class="header__widget__text">#getSelectedValue()</span>
-        <svg class="header__widget__icon icon icon-xs"><use xlink:href="#arrow-thick"/></svg>
-    </a>
-    <div class="metamenu">
-        <form action="$action" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
-            #set($i=0)
-            #foreach($lang in $languagesShort)
-                    <a class="metamenu__link link #getSelected($lang) language_$lang" onclick="submitform($(this), '$lang')">#getSelectedIcon($lang)$ListTool.get($languagesNames, $i)</a>
-                #set($i=$i+1)
-            #end
-        </form>
-    </div>
-</div>
-
-<script>
-function submitform(anchor, lang)
-    {
-        var form = anchor.closest('form');
-        form.append('<input type="hidden" name="lang" value="'+ lang + '"/>');
-        form.submit();
-    }
-</script>
+#set($i=0)
+<h6>$MESSAGES.getString("common.language.title")</h6>
+#foreach($lang in $languagesShort)
+    <a href="javascript:void(0)" onclick="updateURLParamReload('lang', '$lang')" role="button" class="#getSelected($lang)" #getPressed($lang) aria-label="$ListTool.get($languagesNames, $i)">$lang</a>
+    #set($i=$i+1)
+#end

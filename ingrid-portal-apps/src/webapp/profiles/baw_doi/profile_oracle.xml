@@ -8,10 +8,6 @@
             <hidden>true</hidden>
         </page>
         <page>
-            <name>main-chronicle.psml</name>
-            <hidden>true</hidden>
-        </page>
-        <page>
             <name>main-maps.psml</name>
             <hidden>true</hidden>
         </page>
@@ -77,33 +73,6 @@
         </page>
     </pages>
     <files>
-        <!-- COPY GENERAL UVP FILES -->
-        <file>
-            <action>copy-dir</action>
-            <src>../uvp/ingrid-portal/</src>
-            <dst>ingrid-portal/</dst>
-        </file>
-        <file>
-            <action>copy-dir</action>
-            <src>../uvp/ingrid-portal-apps/</src>
-            <dst>ingrid-portal-apps/</dst>
-        </file>
-        <file>
-            <action>copy-dir</action>
-            <src>../uvp/ingrid-portal-mdek/</src>
-            <dst>ingrid-portal-mdek/</dst>
-        </file>
-        <!-- COPY NUMIS FILES -->
-        <file>
-            <action>copy-dir</action>
-            <src>../numis/ingrid-portal-apps/</src>
-            <dst>ingrid-portal-apps/</dst>
-        </file>
-        <file>
-            <action>copy-dir</action>
-            <src>../numis/ingrid-portal/</src>
-            <dst>ingrid-portal/</dst>
-        </file>
         <!-- COPY BAW DOI FILES -->
         <file>
             <action>copy-dir</action>

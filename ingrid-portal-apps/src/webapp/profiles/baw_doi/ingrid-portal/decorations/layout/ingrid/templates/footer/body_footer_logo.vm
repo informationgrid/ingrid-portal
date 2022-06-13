@@ -1,5 +1,5 @@
 <div class="logo">
     <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-        <img class="footer__logo" src="/decorations/layout/uvp/images/template/logo-white.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.footer')"/>
+        <img class="footer__logo" src="/decorations/layout/ingrid/images/template/logo-white.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.footer')"/>
     </a>
 </div>

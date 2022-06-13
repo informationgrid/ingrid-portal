@@ -1,13 +1,19 @@
-#set ($action = $renderResponse.createActionURL())
-<p>
-    #if($helpKey && $helpKey != "index")
-    <a class="link link--big" href="$renderResponse.encodeURL('/portal/help.psml?hkey=index')">
-        <svg class="icon link__icon ob-flip-x">
-            <use xlink:href="#internal-link"/>
-    </svg>
-        <strong>$MESSAGES.getString('help.startpage')</strong>
-    </a>
-    <hr>
-    #end
-</p>
-$help_content
+<div class="search-filtered">
+    <div class="row">
+        <div class="xsmall-24 large-6 xlarge-6 columns">
+            <div class="accordion accordion-filter-group filter" data-accordion data-allow-all-closed="true" role="tablist">
+                <div class="accordion-item accordion-item-filter-group" data-accordion-item>
+                    <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" aria-controls="help-accordion" role="tab" aria-expanded="false" aria-selected="false">Navigation</a>
+                    <div class="accordion-content filter-wrapper js-anchor-navigation" data-tab-content role="tabpanel">
+                        <div class="boxes">
+                            $menu_content
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        $help_content
+    </div>
+</div>
+#parse('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
+#parse('/WEB-INF/templates/scripts/include_script_filter_scroll_activate.vm')

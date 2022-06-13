@@ -1,27 +1,3 @@
-#macro (renderDBBrowserHeaderComp $colNames $colTitles)
-    <thead>
-        <tr>
-            #foreach ($colTitle in $colTitles)
-                #set ($colLink = $renderResponse.createActionURL())
-                #set ($colIndex = $velocityCount - 1)
-                $colLink.setParameter("doSort", "true")
-                $colLink.setParameter("sortColumn", $colNames.get($colIndex))
-                #if ($sortColumn && $sortColumn == $colNames.get($colIndex))
-                    #if($sortAsc)
-                        $colLink.setParameter("desc", "true")
-                    #else
-                        $colLink.setParameter("desc", "false")
-                    #end
-                #else
-                    $colLink.setParameter("desc", "false")
-                #end
-                <th class="table__sort-toggle js-column-sortable"><a href="$colLink" class="contentColumnHead">$colTitle</a></th>
-            #end
-        </tr>
-    </thead>
-#end
-
-
 #macro (fillTable $filterMap $inverse $running)
     #if($running)
         #set ($model = $jobHandler.getRunningJobs())
@@ -54,8 +30,6 @@
         $action.setParameter("id", "$jobId")
         #if($running)
             ##<input id="stop_$count" name="id" type="button" value="x" title="Stop running job" class="btn" style="background-color:red; height:15px; width:15px; padding:0;" />
-        #elseif($entry.getGroup() == "monitor")
-            <td><div class="field-toggle field-toggle--check"><input id="chk_$count" name="id" type="checkbox" value="$jobId" />
         #end
         
         ## for non monitoring jobs
@@ -84,14 +58,19 @@
             #end
             <td><a href="$action">$interval</a></td>
         #else
-            <label class="field-toggle__label field-toggle__label--highlight" for="chk_$count">
-                <span class="field-toggle__icon field-toggle__icon-alt">
-                    <svg class="icon">
-                        <use xlink:href="#tick"/>
-                    </svg>
-                </span>
-                <a href="$action" title="$jobId">$!jobData.getString("component.monitor.general.title")</a>
-            </label></div></td>
+            <td>
+            <div class="form-element boxed">
+                <div class="input-check">
+                    <div class="control-group">
+                        <label class="control control--checkbox" for="chk_$count">
+                            <input id="chk_$count" type="checkbox" name="id" type="checkbox" value="$jobId">
+                            <span class="control__indicator"></span>
+                            $!jobData.getString("component.monitor.general.title")
+                        </label>
+                    </div>
+                </div>
+            </div>
+            </td>
             <td><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
             <td>
             #if($running)
@@ -119,127 +98,101 @@
     #end
 #end
 
-#set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
-    <input name="modelSize" type="hidden" value="#if ($model) $model.size() #end" />
-    <div class="box box--fill box--small">
-        <div class="box__content ob-container">
-            <ul class="link-list">
-                <li><a href="#import"><svg class="icon"><use xlink:href="#internal-link"/></svg>$MESSAGES.getString('component.forms.text.import.iplugs')</a></li>
-            </ul>
-        </div>
-    </div>
-    #set ($buttons = ["doDelete", "doRefresh", "doNew"])
-    <div class="table table--striped table--sortable">
-        <table class="js-table-sortable">
-        #set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status", "component.monitor.general.last.check", "component.monitor.general.last.errorfree.run", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
-        #set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.last.errorfree.run'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
-   
-        #renderDBBrowserHeaderComp($colNames $colTitles)
+<div class="columns">
+    #set ($action = $renderResponse.createActionURL())
+    <form class="form" action="$action" method="post" name="frmContentProvider" id="frmContentMonitor1">
+        <input name="modelSize" type="hidden" value="#if ($model) $model.size() #end" />
+        <table class="boxed-table">
+            #set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status", "component.monitor.general.last.check", "component.monitor.general.last.errorfree.run", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
+            #set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.last.errorfree.run'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
+       
+            #renderDBBrowserHeader($colNames $colTitles)
+        
+            #set ($action = $renderResponse.createActionURL())
+            #set ($count = 0)
+        
+            $action.setParameter('doEdit','Edit')
+            
+            ## running jobs
+            ## there can be only one job at a time be running, because of a StateJob-restriction
+            ## the title will only be rendered if there's any running job
+            $!filterMap.clear()
+            #fillTable($filterMap true true)
     
-        #set ($action = $renderResponse.createActionURL())
-        #set ($count = 0)
-    
-        $action.setParameter('doEdit','Edit')
-        
-        ## running jobs
-        ## there can be only one job at a time be running, because of a StateJob-restriction
-        ## the title will only be rendered if there's any running job
-        $!filterMap.clear()
-        #fillTable($filterMap true true)
-
-        <tr>
-            <th class="table__subheading" colspan="8">Aktive</th>
-        </tr>
-        ## aktive
-        ## clear is important here otherwise the old value would be returned
-        ## to the html output
-        $!filterMap.clear()
-        $!filterMap.put("component.monitor.general.active",0)
-        ## other jobs (they don't have the "active"-key in the map
-        ##$!filterMap.put("component.monitor.general.active",null)
-        #fillTable($filterMap true false)
-        
-        <tr>
-            <th class="table__subheading" colspan="8">Inaktive</th>
-        </tr>
-        
-        ## inaktive
-        ## get the inverse results of the filtered jobs
-        #fillTable($filterMap false false)
+            <tr>
+                <th class="table__subheading" colspan="8">Aktive</th>
+            </tr>
+            ## aktive
+            ## clear is important here otherwise the old value would be returned
+            ## to the html output
+            $!filterMap.clear()
+            $!filterMap.put("component.monitor.general.active",0)
+            ## other jobs (they don't have the "active"-key in the map
+            ##$!filterMap.put("component.monitor.general.active",null)
+            #fillTable($filterMap true false)
+            
+            <tr>
+                <th class="table__subheading" colspan="8">Inaktive</th>
+            </tr>
+            
+            ## inaktive
+            ## get the inverse results of the filtered jobs
+            #fillTable($filterMap false false)
         </table>
-    </div>
-    #renderDBBrowserFooterButtonsDisable($buttons true)
-</form>
-<script>
-ingrid_enableButtonByCheckbox('id', 'doDelete');
-</script>
-<span class="mq-hide-l">&nbsp;</span>
-<hr/>
-#set ($action = $renderResponse.createActionURL())
-<a id="import" name="import"></a>
-<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
-    <div class="box box--fill box--small">
-        <div class="box__content ob-container">
-            <input type="hidden" name="action" value="doImport">
-            <p>
-                $MESSAGES.getString('component.forms.text.import.description')
-                #if($import_message)
-                <br/><br/><span class="portlet-msg-error">$import_message</span><br/>
-                #end
-            </p>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                    <label class="mq-hide-l" for="activate">&nbsp;</label>
-                </div>
-                <div class="media__body">
-                    <div class="field-toggle field-toggle--check">
+        <div class="subtext-submit">
+            #set ($buttons = ["doNew", "doRefresh", "doDelete"])
+            #renderDBBrowserFooterButtonsDisable($buttons true)
+        </div>
+    </form>
+    <script type="text/javascript">
+    ingrid_enableButtonByCheckbox('id', 'doDelete');
+    </script>
+    <hr/>
+    #set ($action = $renderResponse.createActionURL())
+    <a id="import"></a>
+    <form class="form" action="$action" method="post" name="frmContentProvider" id="frmContentMonitor2">
+        <input type="hidden" name="action" value="doImport">
+        <p>
+            $MESSAGES.getString('component.forms.text.import.description')
+            #if($import_message)
+            <br/><br/><span class="portlet-msg-error">$import_message</span><br/>
+            #end
+        </p>
+        <div class="form-element boxed">
+            <div class="input-check">
+                <div class="control-group">
+                    <label class="control control--checkbox" for="activate">
                         <input id="activate" name="activate" value="1" type="checkbox">
-                        <label class="field-toggle__label field-toggle__label--boxed" for="activate">
-                            <span class="field-toggle__icon field-toggle__icon-alt">
-                                <svg class="icon"><use xlink:href="#tick"/></svg>
-                            </span>
-                            $MESSAGES.getString('component.forms.text.import.activate.job')
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                    <label class="mq-hide-l" for="overwrite">&nbsp;</label>
-                </div>
-                <div class="media__body">
-                    <div class="field-toggle field-toggle--check">
-                        <input id="overwrite" name="overwrite" value="1" type="checkbox">
-                        <label class="field-toggle__label field-toggle__label--boxed" for="overwrite">
-                            <span class="field-toggle__icon field-toggle__icon-alt">
-                                <svg class="icon"><use xlink:href="#tick"/></svg>
-                            </span>
-                            $MESSAGES.getString('component.forms.text.import.overwrite.job')
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                    <label class="" for="std_email">$MESSAGES.getString('component.forms.text.import.standard.email')</label>
-                </div>
-                <div class="media__body">
-                    <input class="" id="std_email" name="std_email" value="" type="text">
+                        <span class="control__indicator"></span>
+                        $MESSAGES.getString('component.forms.text.import.activate.job')
+                    </label>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.export.jobs')" "width:100%;" "doExport" "" "btn btn--secondary btn--small")
-    </div>
-    <span>&nbsp;</span>
-    <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.import.jobs')" "width:100%;" "doImport" "" "btn btn--secondary btn--small")
-    </div>
-</form>
-
-<script>
+        <div class="form-element boxed">
+            <div class="input-check">
+                <div class="control-group">
+                    <label class="control control--checkbox" for="overwrite">
+                        <input id="overwrite" name="overwrite" value="1" type="checkbox">
+                        <span class="control__indicator"></span>
+                        $MESSAGES.getString('component.forms.text.import.overwrite.job')
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-element">
+            <label class="" for="std_email">$MESSAGES.getString('component.forms.text.import.standard.email')</label>
+        </div>
+        <div class="form-element">
+            <input class="" id="std_email" name="std_email" value="" type="text">
+        </div>
+        <div class="subtext-submit">
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.export.jobs')" "" "doExport" "" "")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.import.jobs')" "" "doImport" "" "")
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
     function closeDialog() {
         document.getElementById('exportDialog').style.display = "none";
         document.getElementById('blocker').style.display = "none"; 
