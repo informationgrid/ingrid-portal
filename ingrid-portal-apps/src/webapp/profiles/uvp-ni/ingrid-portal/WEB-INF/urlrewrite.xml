@@ -176,15 +176,6 @@
         <to>/kartendienste</to>
     </outbound-rule>
     
-    <!--  Umweltchronik  -->
-    <rule>
-        <from>/umweltchronik</from>
-        <to type="forward">/portal/main-chronicle.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-chronicle.psml</from>
-        <to>/umweltchronik</to>
-    </outbound-rule>
     
     <!-- Über InGrid-Portal  -->
     <rule>

@@ -52,6 +52,21 @@ UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT temp_value FR
 -- Delete 'ingrid-portal-apps::InfoDefaultPageTeaser'
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::InfoDefaultPageTeaser';
 
+-- Delete chronicle
+DELETE FROM folder_menu WHERE options = '/main-chronicle.psml';
+
+INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main_chronicle_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-chronicle.psml')));
+INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main_chronicle_search_fragment_id',(SELECT fragment_id FROM fragment WHERE name = 'ingrid-portal-apps::ChronicleSearch'));
+INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main_chronicle_result_fragment_id',(SELECT fragment_id FROM fragment WHERE name = 'ingrid-portal-apps::ChronicleResult'));
+DELETE FROM fragment_pref_value WHERE pref_id = (SELECT pref_id FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_chronicle_search_fragment_id'));
+DELETE FROM fragment_pref_value WHERE pref_id = (SELECT pref_id FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_chronicle_result_fragment_id'));
+DELETE FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_chronicle_search_fragment_id');
+DELETE FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_chronicle_result_fragment_id');
+DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_chronicle_fragment_id');
+DELETE FROM fragment WHERE fragment_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_chronicle_fragment_id');
+DELETE FROM page_metadata WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-chronicle.psml');
+DELETE FROM page WHERE path = '/main-chronicle.psml';
+
 -- delete temporary table
 DROP TABLE ingrid_temp;
 

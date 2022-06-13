@@ -613,48 +613,6 @@
         </section>
     </chapter>
     <chapter>
-        <header display="false">Chronik</header>
-        <section help-key="search-chronicle-1">
-            <header display="false">Chronik</header>
-            <content>
-                <p>Die <b>Chronik</b> ist eine Sammlung aktueller und
-                    historischer Ereignisse, die unsere Umweltsituation
-                    wesentlich beeinflusst haben. Neben den Eckdaten liefert die
-                    Chronik eine kurze Beschreibung der Ereignisse.</p>
-                <p>Die Chronik wird über den <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> des
-                    Umweltbundesamtes zur Verfügung gestellt.</p>
-                <p>Sie können gezielt nach Ereignissen suchen, indem Sie eine
-                    Suche in der Chronik über Suchbegriff, Zeitbezug und
-                    Ereignistyp über den Button „Anzeigen“ absenden.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-4">
-            <header>Suchbegriff</header>
-            <content>
-                <p>In diesem Bereich können Sie einen Suchbegriff eingeben. Es
-                    wird nach Ereignissen gesucht, die den Suchbegriff im Titel
-                    oder in der Beschreibung enthalten.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-2">
-            <header>Ereignistypen</header>
-            <content>
-                <p>Die Chronik verzeichnet verschiedene Ereignistypen. Sie
-                    können in diesem Bereich wählen, nach welchen Ereignistypen
-                    Sie suchen möchten.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-3">
-            <header>Zeitbezug</header>
-            <content>
-                <p>Die Chronik verzeichnet zu jedem Ereignis das Datum, an
-                    dem es sich ereignet hat. In diesem Bereich Sie können den
-                    Zeitpunkt oder den Zeitraum angeben, in dem Sie nach
-                    umweltrelevanten Ereignissen suchen.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
         <header>Karten</header>
         <section help-key="maps-1">
             <header display="false">Karten</header>
