@@ -670,16 +670,19 @@ header .menu-tab-row .menu-tab {
     margin-bottom: 4px;
 }
 
+.search-filtered .table thead {
+    color: #333333;
+}
+
 .search-filtered .table table {
     background-color: #F6F6F6;
 }
-
 .search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child {
-    color: #0E8637;
+    color: #333333;
 }
 
 .search-filtered .table h4, .search-filtered .table h5 {
-    color: #0E8637;
+    color: #333333;
 }
 
 .search-filtered .teaser-data.is-active h2.header,
