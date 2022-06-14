@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.13.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.13.0">
+          <action type="update" dev="wemove" issue="2293">
+            Übernahme des neuen Layouts auf der Projekt-/Demoseite https://dev.informationgrid.eu/
+          </action>
           <action type="update" dev="wemove" issue="3456">
             Optimierung Sammeldownload-Funktionalität
           </action>
