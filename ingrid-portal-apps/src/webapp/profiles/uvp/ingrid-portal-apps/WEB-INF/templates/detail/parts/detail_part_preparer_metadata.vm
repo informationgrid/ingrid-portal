@@ -161,8 +161,20 @@
                             <br>
                         #end
                         #if($postbox && $postbox.length() > 0)
-                            $postbox
-                            <br>
+                            #set($postboxes = $postbox.split(","))
+                            #foreach($postboxVal in $postboxes)
+                                #if($postboxVal.startsWith("Postbox"))
+                                    #set($postboxVal = $postboxVal.replace("Postbox ", ""))
+                                    #if($postboxVal.indexOf($MESSAGES.getString("postbox_label")) == -1)
+                                       $MESSAGES.getString("postbox_label") $postboxVal
+                                    #else
+                                        $postboxVal
+                                    #end
+                                #else
+                                    $postboxVal
+                                #end
+                                <br>
+                            #end
                             #set($postbox = "")
                         #end
                         #if($country && $country.length() > 0)
