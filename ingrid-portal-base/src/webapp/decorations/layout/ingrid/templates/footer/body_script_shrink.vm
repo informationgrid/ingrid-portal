@@ -1,19 +1,25 @@
 <script>
   // Add shrink class
   var body = $("body");
+  var headerHeight = $('header').height();
+  var bodyHeight = body.height();
+  var headerBodyHeight = headerHeight + bodyHeight;
+  var winOuterHeight = window.outerHeight;
+  var isShrinkable = headerBodyHeight > ((winOuterHeight + 80) * 1.25);
 
-  if(window.pageYOffset > 100) {
+  if(window.pageYOffset > headerHeight && isShrinkable) {
       body.addClass("shrink");
   }
 
   window.onscroll = function(e) {
     var filter = $('.filter');
-    if (this.pageYOffset > 100) {
+    var scrollTop = $(this).scrollTop();
+    winOuterHeight = window.outerHeight;
+    isShrinkable = headerBodyHeight > ((winOuterHeight + 80) * 1.25);
+    if (scrollTop > headerHeight && isShrinkable) {
       body.addClass("shrink");
       if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
         if(filter.length > 0) {
-          var headerHeight = $('header').height();
-          var scrollTop = $(this).scrollTop();
           var content = $('.search-filtered.row, .search-filtered > .row');
           var contentTop = 400;
           var contentMargin = 0;
