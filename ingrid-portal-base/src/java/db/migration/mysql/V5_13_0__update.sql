@@ -60,8 +60,7 @@ DELETE FROM page WHERE path = '/main-chronicle.psml';
 -- Update layout of disclaimer 
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('disclaimer_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/disclaimer.psml')));
 UPDATE fragment SET name = 'ingrid-portal-apps::DisclaimerPortlet' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer_fragment_id');
-TRUNCATE TABLE fragment_pref;
-TRUNCATE TABLE fragment_pref_value;
+TRUNCATE TABLE fragment_pref, fragment_pref_value;
 
 -- delete temporary table
 DROP TABLE IF EXISTS ingrid_temp;
