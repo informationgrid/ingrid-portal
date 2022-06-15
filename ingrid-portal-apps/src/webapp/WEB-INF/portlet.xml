@@ -57,8 +57,8 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>disableTitle</name>
-                <value>1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
             </preference>
             <preference>
                 <name>bannerHeaderStyle</name>
