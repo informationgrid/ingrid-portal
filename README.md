@@ -190,6 +190,13 @@ https://github.com/TomDevs/needsmoredojo
     - Make sure InGrid backend is running
     - Make sure the user (e.g. *mdek*) exists in the database (schema `mdek`, table `user_data`) and the `plug_id` column value (e.g. */ingrid-group:ige-iplug-test*) matches the property `communications.ige.clientName` set up in the InGrid backend.
 
+
+- **Dependencies cannot be resolved**: 
+  - Error messages:
+    - http://0.0.0.0/ during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of maven-default-http-blocker has elapsed or updates are forced.
+  - Solution: 
+    - Set the IntelliJ maven version to the one installed locally and don't use the default one. (Especially since this build does not work with maven versions > 3.6.x)
+
 ### Debugging
 
 When the jetty server is started then the InGrid-Editor can also be debugged via remote debugging. The settings are:
