@@ -64,6 +64,7 @@
 #set($xPathListTimeDate = "./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date")
 
 #set($xPathListTime = [
+    $xPathListTimeTimePeriodInstantPosition,
     $xPathListTimeTimePeriodBeginPosition,
     $xPathListTimeTimePeriodEndPosition,
     $xPathListTimeMDProgressCode,
