@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.12.0.2" date="2022-06-22" description="Release 5.12.0.2">
+          <action type="fix" dev="wemove" issue="3965">
+            UVP: Upload wird unter falscher UUID abgelegt
+          </action>
+        </release>
+      
         <release version="5.12.0.1" date="2022-04-28" description="Release 5.12.0.1">
           <action type="fix" dev="wemove" issue="3788">
             UVP: Mehrfachauswahl unter Facetten "Verfahrenstypen" und "Kategorien" Korrektur
