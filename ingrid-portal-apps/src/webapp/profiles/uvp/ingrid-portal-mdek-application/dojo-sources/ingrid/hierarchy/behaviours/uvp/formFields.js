@@ -81,6 +81,9 @@ define(["dojo/_base/declare",
             aspect.after(igeAction, "onAfterSave", function () {
                 self.updateNegativeUploadLink();
             });
+            topic.subscribe("/afterCloseDialog/ChooseWizard", function() {
+                self.updateNegativeUploadLink();
+            });
 
             // disable editing the address table and automatically set point of contact type
             UtilGrid.getTable("generalAddress").options.editable = false;
@@ -178,7 +181,6 @@ define(["dojo/_base/declare",
                     domClass.add("uiElementAdduvpgCategory", "hide");
                     domClass.add("uiElementAdduvpNegativeRelevantDocs", "hide");
                 }
-                this.updateNegativeUploadLink(true);
 
             } else if (objClass === "Class13" || objClass === "Class14") { // vorgelagerte Verfahren (Raumordnungsverfahren or Linienbestimmungen)
                 domClass.remove("uiElementAdduvpApplicationReceipt", "hide");
@@ -498,7 +500,7 @@ define(["dojo/_base/declare",
         },
 
         updateNegativeUploadLink: function (force) {
-            if (currentUdk.objectClass === 12 || force) {
+            if (registry.byId("objectClass").value === "Class12" || force) {
                 var negativeUploadLink = dom.byId("uvpNegativeRelevantDocs_uploadLink");
                 if (negativeUploadLink) {
                     construct.destroy("uvpNegativeRelevantDocs_uploadHint");
