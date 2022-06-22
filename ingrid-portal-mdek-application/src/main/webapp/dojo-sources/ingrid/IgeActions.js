@@ -1744,7 +1744,12 @@ define([
                 registry.byId("objectName").attr("value", nodeData.objectName, true);
 
             // onchange event
-            registry.byId("objectClass").attr("value", "Class" + nodeData.objectClass, true);
+            var objectClass = registry.byId("objectClass");
+            const className = "Class" + nodeData.objectClass;
+            var containsClass = array.some(objectClass.store.data, function (item) { return item[1] === className });
+            if (containsClass) {
+                objectClass.attr("value", className, true);
+            }
 
             var workStateStr = message.get("general.workState." + nodeData.workState);
             var workStateTitle = "";
