@@ -1745,7 +1745,7 @@ define([
 
             // onchange event
             var objectClass = registry.byId("objectClass");
-            const className = "Class" + nodeData.objectClass;
+            var className = "Class" + nodeData.objectClass;
             var containsClass = array.some(objectClass.store.data, function (item) { return item[1] === className });
             if (containsClass) {
                 objectClass.attr("value", className, true);
