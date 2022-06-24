@@ -41,6 +41,7 @@ define([
     "dijit/form/ComboBox",
     "dijit/form/Select",
     "dijit/form/DateTextBox",
+    "dijit/form/TimeTextBox",
     "dijit/form/NumberSpinner",
     "dijit/form/NumberTextBox",
     "dijit/form/SimpleTextarea",
@@ -52,7 +53,7 @@ define([
     "ingrid/utils/Store",
     "dojo/store/Memory"
 ], function(declare, dom, domClass, construct, request, has, array, lang, Deferred, when, on, query, Grid, menu, message, registry,
-        ValidationTextBox, ComboBox, Selectbox, DateTextBox, NumberSpinner, NumberTextBox, SimpleTextarea, FilteringSelect,
+        ValidationTextBox, ComboBox, Selectbox, DateTextBox, TimeTextBox, NumberSpinner, NumberTextBox, SimpleTextarea, FilteringSelect,
         ItemFileWriteStore, ItemFileReadStore, UtilDOM, UtilSyslist, UtilStore, Memory){
 
     gridManager = {};
@@ -483,6 +484,15 @@ define([
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
 
+            createDomTimeDatebox: function(additionalField) {
+                var inputWidget = new TimeTextBox({
+                    id: this.additionalFieldPrefix + additionalField.id,
+                    name: additionalField.name,
+                    style: "width:100%;" // Datebox does not look nice when to big
+                });
+                return this.addSurroundingContainer(inputWidget.domNode, additionalField);
+            },
+
             createDomTextarea: function(additionalField) {
                 // if a more specific height was given
                 if (additionalField.height)
@@ -539,10 +549,15 @@ define([
                         searchAttr: 'value',
                         store: store,
                         style: "width:100%;",
-                        autoComplete: "false",
+                        autoComplete: false,
                         required: false
                         //sortByLabel: false
                 };
+
+                if (!elementProperties.queryExpr) {
+                    // search 'contains' by default
+                    elementProperties.queryExpr = "*${0}*";
+                }
 
                 if (additionalField.isExtendable == true)
                     var inputWidget = new ComboBox(elementProperties);

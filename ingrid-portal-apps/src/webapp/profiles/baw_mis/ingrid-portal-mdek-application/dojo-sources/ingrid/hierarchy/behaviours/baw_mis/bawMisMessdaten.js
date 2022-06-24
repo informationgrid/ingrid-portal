@@ -30,13 +30,15 @@ define([
     "dojo/dom-construct",
     "dojo/on",
     "dojo/topic",
+    "dijit/form/TimeTextBox",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
     "ingrid/message",
-    "ingrid/utils/Grid"
-], function (registry, array, declare, lang, dom, domClass, construct, on, topic, Editors, Formatters, dirty, creator, message, UtilGrid) {
+    "ingrid/utils/Grid",
+    "ingrid/timezones"
+], function (registry, array, declare, lang, dom, domClass, construct, on, topic, TimeTextBox, Editors, Formatters, dirty, creator, message, UtilGrid, timezones) {
 
     var measurementFields = ["measuringMethod", "spatiality", "measuringDepth", "unitOfMeasurement", "averageWaterLevel",
         "zeroLevel", "drainMin", "drainMax", "gauge", "targetParameters"];
@@ -78,6 +80,8 @@ define([
             addSpatiality(newFieldsToDirtyCheck, additionalFields)
 
             addMeasuringDepth(newFieldsToDirtyCheck, additionalFields);
+            
+            addMeasuringFrequency(newFieldsToDirtyCheck, additionalFields);
 
             addAverageWaterLevel(newFieldsToDirtyCheck, additionalFields);
             
@@ -91,6 +95,9 @@ define([
 
             // Datenqualität
             addDQDescription(newFieldsToDirtyCheck, additionalFields);
+            
+            // Zeitbezug
+            addTimezone(newFieldsToDirtyCheck, additionalFields)
                         
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
         },
@@ -136,7 +143,7 @@ define([
                 id: "measuringDepth",
                 name: message.get("ui.obj.baw.measuring.measuringDepth.title"),
                 help: message.get("ui.obj.baw.measuring.measuringDepth.help"),
-                style: "width: 50%"
+                style: "width: 33%"
             }), "refClass1");
         newFieldsToDirtyCheck.push("measuringDepth");
         additionalFields.push(registry.byId("measuringDepth"));
@@ -147,11 +154,35 @@ define([
                 name: message.get("ui.obj.baw.measuring.unitOfMeasurement.title"),
                 help: message.get("ui.obj.baw.measuring.unitOfMeasurement.help"),
                 useSyslist: 3950020,
-                style: "width: 50%",
+                style: "width: 33%",
                 isExtendable: true
             }), "refClass1");
         newFieldsToDirtyCheck.push("unitOfMeasurement");
         additionalFields.push(registry.byId("unitOfMeasurement"));
+
+        construct.place(
+            creator.createDomSelectBox({
+                id: "heightReferenceSystem",
+                name: message.get("ui.obj.baw.measuring.heightReferenceSystem.title"),
+                help: message.get("ui.obj.baw.measuring.heightReferenceSystem.help"),
+                useSyslist: 101,
+                style: "width: 34%",
+                isExtendable: true
+            }), "refClass1");
+        newFieldsToDirtyCheck.push("heightReferenceSystem");
+        additionalFields.push(registry.byId("heightReferenceSystem"));
+    }
+    
+    function addMeasuringFrequency(newFieldsToDirtyCheck, additionalFields) {
+        construct.place(
+            creator.createDomNumberTextbox({
+                id: "measuringFrequency",
+                name: message.get("ui.obj.baw.measuring.measuringFrequency.title"),
+                help: message.get("ui.obj.baw.measuring.measuringFrequency.help"),
+                style: "width: 50%"
+            }), "refClass1");
+        newFieldsToDirtyCheck.push("measuringFrequency");
+        additionalFields.push(registry.byId("measuringFrequency"));
     }
 
     function addAverageWaterLevel(newFieldsToDirtyCheck, additionalFields) {
@@ -357,6 +388,70 @@ define([
         additionalFields.push(registry.byId("dataQualityDescription"));
     }
     
+    function addTimezone(newFieldsToDirtyCheck, additionalFields) {
+        construct.place(creator.createDomTimeDatebox({
+            id: "startTime",
+            style: "width: 34%"
+        }), "timeRefDate2Editor", "before");
+        newFieldsToDirtyCheck.push("startTime");
+        
+        construct.place(creator.createDomTimeDatebox({
+            id: "endTime",
+            style: "width: 34%"
+        }), "timeRefDate2Editor", "after");
+        newFieldsToDirtyCheck.push("endTime");
+        
+        construct.place(dom.byId("timeRefSubTypeEditor"), "uiElementAddstartTime", "after");
+        construct.place(dom.byId("timeRefDate2Editor"), "timeRefSubTypeEditor", "after");
+        domClass.add("uiElementAddendTime", "hide");
+        dom.byId("timeRefDate2Editor").style["margin-left"] = "33%";
+        dom.byId("timeRefDate2Editor").style["width"] = "33%";
+        
+        // update date with time information
+        var startDate = registry.byId("timeRefDate1");
+        var startTime = registry.byId("startTime");
+        var endDate = registry.byId("timeRefDate2");
+        var endTime = registry.byId("endTime");
+        on(startTime, "change", function(value) {
+            var time = value.toTimeString().split(":");
+            startDate.value.setHours(+time[0], +time[1], +time[2].split(" ")[0]);
+            startDate.set("value", startDate.value)
+        });
+        on(startDate, "change", function(value) {
+            startTime.attr("value", value);
+        });
+        on(endTime, "change", function(value) {
+            var time = value.toTimeString().split(":");
+            endDate.value.setHours(+time[0], +time[1], +time[2].split(" ")[0]);
+            endDate.set("value", endDate.value)
+        });
+        on(endDate, "change", function(value) {
+            endTime.attr("value", value);
+        });
+
+        var toggleEndTime = function (show) {
+            if (show) {
+                domClass.remove("uiElementAddendTime", "hide");
+            } else {
+                domClass.add("uiElementAddendTime", "hide");
+            }
+        };
+        var subType = registry.byId("timeRefSubType");
+        on(registry.byId("timeRefType"), "change", function(value) { toggleEndTime(value === "fromType" && subType === "von"); });
+        on(subType, "change", function(value) { toggleEndTime(value === "von"); });
+        
+        construct.place(
+            creator.createDomSelectBox({
+                id: "timezone",
+                name: message.get("ui.obj.baw.timezone.title"),
+                help: message.get("ui.obj.baw.timezone.help"),
+                listEntries: timezones.getAll(),
+                style: "width: 100%"
+            }), "uiElementAddendTime", "after");
+        newFieldsToDirtyCheck.push("timezone");
+        additionalFields.push(registry.byId("timezone"));
+    }
+    
     function handleHierarchyLevelNameIsMeasurementData() {
         showFields(measurementFields);
         
@@ -366,7 +461,6 @@ define([
         domClass.add("uiElement3565", "hide");
         domClass.add("uiElement5071", "hide");
         domClass.add("uiElement5069", "hide");
-        domClass.add("uiElement3530", "hide");
         
         // "Durch die Ressource abgedeckte Zeitspanne" required
         domClass.add("uiElementN011", "required");
@@ -381,7 +475,6 @@ define([
         domClass.remove("uiElement3565", "hide");
         domClass.remove("uiElement5071", "hide");
         domClass.remove("uiElement5069", "hide");
-        domClass.remove("uiElement3530", "hide");
 
         // "Durch die Ressource abgedeckte Zeitspanne" optional
         domClass.remove("uiElementN011", "required");
@@ -402,21 +495,27 @@ define([
     function addMeasuringDepthBehaviour() {
         var depth = registry.byId("measuringDepth")
         var unit = registry.byId("unitOfMeasurement")
+        var height = registry.byId("heightReferenceSystem")
         
         var toggleState = function() {
             const requiredForDepth = depth.value !== "" && !isNaN(depth.value);
             const requiredForUnit = unit.value !== "";
-            if (requiredForDepth || requiredForUnit) {
+            const requiredForHeight = height.value !== "";
+            
+            if (requiredForDepth || requiredForUnit || requiredForHeight) {
                 domClass.add("uiElementAddmeasuringDepth", "required");
                 domClass.add("uiElementAddunitOfMeasurement", "required");
+                domClass.add("uiElementAddheightReferenceSystem", "required");
             } else {
                 domClass.remove("uiElementAddmeasuringDepth", "required");
                 domClass.remove("uiElementAddunitOfMeasurement", "required");
+                domClass.remove("uiElementAddheightReferenceSystem", "required");
             }
         };
         
         on(depth, "Change", toggleState);
         on(unit, "Change", toggleState);
+        on(height, "Change", toggleState);
     }
     
     function addTableValidations() {
