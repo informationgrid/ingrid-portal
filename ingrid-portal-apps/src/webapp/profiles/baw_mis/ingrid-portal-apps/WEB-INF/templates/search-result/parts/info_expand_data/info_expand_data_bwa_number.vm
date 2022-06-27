@@ -1,2 +1,2 @@
-## PSP-Element
+## Auftragsnummer
 #set($bwa_num = $rs.get("detail").get("bawauftragsnummer"))

@@ -24,8 +24,8 @@ define({
     "dialog.doi.xref.title": "Literaturverweis",
     "dialog.simulation.parameter.title": "Simulationsparameter/-Größe",
 
-    "ui.obj.baw.auftragsnummer.title": "PSP-Element",
-    "ui.obj.baw.auftragsnummer.help": "PSP-Element",
+    "ui.obj.baw.auftragsnummer.title": "Auftragsnummer",
+    "ui.obj.baw.auftragsnummer.help": "Auftragsnummer",
     "ui.obj.baw.auftragstitel.title": "Auftragstitel",
     "ui.obj.baw.auftragstitel.help": "Titel des BAW/WSV Auftrags",
     "ui.obj.baw.bwastr.table.column.km_end": "Km-bis",
