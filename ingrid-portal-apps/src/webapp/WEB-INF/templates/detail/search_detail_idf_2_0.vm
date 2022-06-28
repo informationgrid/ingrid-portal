@@ -1289,13 +1289,13 @@
 #if($renderElements)
     #renderElements($renderElements)
 #else
-    <section class="block block--padded">
-        <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
-            <article class="content ob-container ob-box-wide">
-                #renderMessageError($MESSAGES.getString("error_no_details_available"))
-            </article>
+    <div class="detail" id="detail">
+        <div class="row search-filtered">
+            <div class="columns">
+               #renderMessageError($MESSAGES.getString("error_no_details_available"))
+            </div>
         </div>
-    </section>
+    </div>
 #end
 #parse('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
 #parse('/WEB-INF/templates/scripts/include_script_filter_scroll_activate.vm')
