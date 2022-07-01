@@ -13,7 +13,7 @@
             #end
         #end
         #if($hideId == "false")
-            <p>$plug.getDataSourceName()</p>
+            <p>$plug.getDataSourceName() #if($isAdmin)($plug.getPlugId())#end</p>
         #end
     #end
     </div>
