@@ -490,40 +490,42 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(url.length() > 0){
                         HashMap<String, Object> link = new HashMap<>();
                         link.put("hasLinkIcon", true);
-                      if (isDownload) {
-                          link.put("isDownload", isDownload);
+                        if (isDownload) {
+                            link.put("isDownload", isDownload);
                           
-                      } else {
-                          link.put("isExtern", true);
-                      }
+                        } else {
+                            link.put("isExtern", true);
+                        }
 
-                      if(!applicationProfile.isEmpty()) {
-                          link.put("serviceType", applicationProfile);
-                      }
+                        if(!applicationProfile.isEmpty()) {
+                            link.put("serviceType", applicationProfile);
+                        }
 
-                      if (url.contains( PortalConfig.getInstance().getString(PortalConfig.ATOM_DOWNLOAD_CLIENT_PREFIX, "https://metaver.de/search/dls/service/") )) {
-                          String urlAtom = transformAtomDownloadLink(url);
-                          link.put("href", urlAtom);
-                          System.out.println("Put this ATOM . HREF:  "+ urlAtom);
-                      } else {
-                          link.put("href", url);
-                      }
+                        String atomPrefix = PortalConfig.getInstance().getString(PortalConfig.ATOM_DOWNLOAD_CLIENT_PREFIX, "");
+                        String atomClientUrl = PortalConfig.getInstance().getString( PortalConfig.ATOM_DOWNLOAD_CLIENT_URL, "" );
 
-                      if(name.length() > 0){
-                          link.put("title", name);
-                        }else{
+                        if(!atomClientUrl.isEmpty() && !atomPrefix.isEmpty() && url.contains( atomPrefix )) {
+                            String urlAtom = transformAtomDownloadLink( atomClientUrl, url );
+                            link.put( "href", urlAtom );
+                        } else {
+                            link.put("href", url);
+                        }
+
+                        if(name.length() > 0){
+                            link.put("title", name);
+                        } else {
                             link.put("title", url);
-                      }
-                      if (description.length() > 0) {
-                          link.put("description", description);
-                      }
-                      if (attachedToField.length() > 0) {
-                          link.put("attachedToField", attachedToField);
-                      }
-                      if (size.length() > 0) {
-                          link.put("linkInfo", "[" + roundSize + " MB]");
-                      }
-                      linkList.add(link);
+                        }
+                        if (description.length() > 0) {
+                            link.put("description", description);
+                        }
+                        if (attachedToField.length() > 0) {
+                            link.put("attachedToField", attachedToField);
+                        }
+                        if (size.length() > 0) {
+                            link.put("linkInfo", "[" + roundSize + " MB]");
+                        }
+                        linkList.add(link);
                     }
                 }
             }
@@ -1752,9 +1754,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return hasAccessConstraints;
     }
 
-    private String transformAtomDownloadLink(String url) {
+    private String transformAtomDownloadLink(String atomUrl, String url) {
         String atomObjUuid = url.substring(url.lastIndexOf("/")+1);
-        String atomUrl = PortalConfig.getInstance().getString(PortalConfig.ATOM_DOWNLOAD_CLIENT_URL, "https://metaver.de/search/dls/#?serviceId=") + atomObjUuid;
-        return atomUrl;
+        String href = atomUrl + atomObjUuid;
+        return href;
     }
 }
