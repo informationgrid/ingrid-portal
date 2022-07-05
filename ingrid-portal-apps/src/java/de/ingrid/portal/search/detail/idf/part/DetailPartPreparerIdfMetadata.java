@@ -501,7 +501,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                           link.put("serviceType", applicationProfile);
                       }
 
-                      link.put("href", url);
+                      if (url.contains( PortalConfig.getInstance().getString(PortalConfig.ATOM_DOWNLOAD_CLIENT_PREFIX, "https://metaver.de/search/dls/service/") )) {
+                          String urlAtom = transformAtomDownloadLink(url);
+                          link.put("href", urlAtom);
+                          System.out.println("Put this ATOM . HREF:  "+ urlAtom);
+                      } else {
+                          link.put("href", url);
+                      }
 
                       if(name.length() > 0){
                           link.put("title", name);
@@ -1744,5 +1750,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             }
         }
         return hasAccessConstraints;
+    }
+
+    private String transformAtomDownloadLink(String url) {
+        String atomObjUuid = url.substring(url.lastIndexOf("/")+1);
+        String atomUrl = PortalConfig.getInstance().getString(PortalConfig.ATOM_DOWNLOAD_CLIENT_URL, "https://metaver.de/search/dls/#?serviceId=") + atomObjUuid;
+        return atomUrl;
     }
 }

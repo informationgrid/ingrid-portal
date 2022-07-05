@@ -256,6 +256,9 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
 
+    public static final String ATOM_DOWNLOAD_CLIENT_URL = "atom.download.client.url";
+    public static final String ATOM_DOWNLOAD_CLIENT_PREFIX = "atom.download.client.prefix";
+
     public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";
     public static final String PORTAL_MAPCLIENT_QUERY_ADDITIONAL = "portal.mapclient.query.additional";
     public static final String PORTAL_MAPCLIENT_QUERY_2 = "portal.mapclient.query.2";
