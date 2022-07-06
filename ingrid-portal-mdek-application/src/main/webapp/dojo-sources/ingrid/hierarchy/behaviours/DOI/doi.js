@@ -44,65 +44,8 @@ define(["dojo/_base/declare",
 
         createFields: function () {
             var self = this;
-            var rubric = "links";
             var newFieldsToDirtyCheck = [];
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
-
-            // create div element to insert new field at correct place
-            var container = this.createOutlinedWrapper(rubric);
-
-            /*
-             * DOI - Field
-             */
-            var id = "doiId";
-            construct.place(
-                creator.createDomTextbox({
-                    id: id,
-                    style: "width: 50%",
-                    name: message.get("doi.id"),
-                    help: message.get("doi.id.helpMessage"),
-                    visible: "show"
-                }),
-                container);
-            newFieldsToDirtyCheck.push(id);
-            var doiField = registry.byId(id);
-            additionalFields.push(doiField);
-
-            this.addValidationToDOI(doiField);
-
-
-            /*
-             * Type
-             */
-            id = "doiType";
-            construct.place(
-                creator.createDomSelectBox({
-                    id: id,
-                    name: message.get("doi.type"),
-                    help: message.get("doi.type.helpMessage"),
-                    listEntries: [
-                        {id: "1", value: "Audiovisual"},
-                        {id: "2", value: "Collection"},
-                        {id: "3", value: "DataPaper"},
-                        {id: "4", value: "Dataset"},
-                        {id: "5", value: "Event"},
-                        {id: "6", value: "Image"},
-                        {id: "7", value: "InteractiveResource"},
-                        {id: "8", value: "Model"},
-                        {id: "9", value: "PhysicalObject"},
-                        {id: "10", value: "Service"},
-                        {id: "11", value: "Software"},
-                        {id: "12", value: "Sound"},
-                        {id: "13", value: "Text"},
-                        {id: "14", value: "Workflow"}
-                    ],
-                    isExtendable: true,
-                    visible: "show",
-                    style: "width:50%"
-                }),
-                container);
-            newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
 
             /*
              * Export Button
@@ -122,30 +65,68 @@ define(["dojo/_base/declare",
                     }
                 }
             });
-            construct.place(exportButton.domNode, container);
+            
+            // create div element to insert new field at correct place
+            // var container = this.createOutlinedWrapper(rubric);
+            creator.addToSection("links",
+                creator.addOutlinedSection("doiDataCite", message.get("doi.title"), null, [
+                    creator.createDomTextbox({
+                        id: "doiId",
+                        style: "width: 50%",
+                        name: message.get("doi.id"),
+                        help: message.get("doi.id.helpMessage"),
+                        visible: "show"
+                    }),
+                    creator.createDomSelectBox({
+                        id: "doiType",
+                        name: message.get("doi.type"),
+                        help: message.get("doi.type.helpMessage"),
+                        listEntries: [
+                            {id: "1", value: "Audiovisual"},
+                            {id: "2", value: "Collection"},
+                            {id: "3", value: "DataPaper"},
+                            {id: "4", value: "Dataset"},
+                            {id: "5", value: "Event"},
+                            {id: "6", value: "Image"},
+                            {id: "7", value: "InteractiveResource"},
+                            {id: "8", value: "Model"},
+                            {id: "9", value: "PhysicalObject"},
+                            {id: "10", value: "Service"},
+                            {id: "11", value: "Software"},
+                            {id: "12", value: "Sound"},
+                            {id: "13", value: "Text"},
+                            {id: "14", value: "Workflow"}
+                        ],
+                        isExtendable: true,
+                        visible: "show",
+                        style: "width:50%"
+                    }),
+                    exportButton.domNode
+                ], {disableHelp: true})
+            );
 
-            // fix float container
-            construct.place(construct.create("div", {"class": 'clear'}), container);
+            /*
+             * DOI - Field
+             */
+            var id = "doiId";
+            newFieldsToDirtyCheck.push(id);
+            var doiField = registry.byId(id);
+            additionalFields.push(doiField);
+
+            this.addValidationToDOI(doiField);
+
+            /*
+             * Type
+             */
+            id = "doiType";
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
         },
 
         hasUnsavedChanges: function() {
             return dirty.dirtyFlag;
-        },
-
-        createOutlinedWrapper: function (rubric) {
-            var insertNode = construct.create("span", {"class": 'outer'});
-            var div = construct.create("div");
-            var labelSpan = construct.create("span", {"class": 'label'});
-            var label = construct.create("label", {"innerHTML": message.get("doi.title"), "class": "inActive"});
-            labelSpan.appendChild(label);
-            var outlined = construct.create("div", {"class": 'outlined'});
-            insertNode.appendChild(div);
-            div.appendChild(labelSpan);
-            div.appendChild(outlined);
-            construct.place(insertNode, rubric);
-            return outlined;
         },
 
         addValidationToDOI: function (field) {
