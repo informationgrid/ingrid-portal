@@ -1255,16 +1255,21 @@
 
 ## Render elements
 #macro (renderElements $elements)
-        #foreach($e in $elements)
-            #if($e.type)
-                #if($e.type=="render")
-                    #set ($TOOL = $e.preparer)
-                    #parse ($TOOL.templateName)
-                #elseif($e.type=="html")
-                    $e.body
+    #set($hasAddMapScript = false)
+    #foreach($e in $elements)
+        #if($e.type)
+            #if($e.type=="render")
+                #set ($TOOL = $e.preparer)
+                #parse ($TOOL.templateName)
+            #elseif($e.type=="html")
+                #if(!$hasAddMapScript)
+                    #set($hasAddMapScript = true)
+                    #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                 #end
+                $e.body
             #end
         #end
+    #end
 #end
 
 ## ***************************
