@@ -251,9 +251,15 @@ define([
                     name: message.get("ui.obj.baw.software.operatingSystem.linux"),
                     style: "width: 15%",
                     disableHelp: true
+                }),
+                creator.createDomTextarea({
+                    id: "operatingSystemNotes",
+                    name: message.get("ui.obj.baw.software.operatingSystem.notes.title"),
+                    help: message.get("ui.obj.baw.software.operatingSystem.notes.help"),
+                    style: "width: 100%"
                 })
             ]));
-        var ids = ["operatingSystemWindows", "operatingSystemLinux"];
+        var ids = ["operatingSystemWindows", "operatingSystemLinux", "operatingSystemNotes"];
         array.forEach(ids, function(id) {
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
