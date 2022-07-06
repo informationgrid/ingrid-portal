@@ -307,7 +307,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>Ems</name>
                 <query>bwstr-bwastr_name.phrase:"ems"</query>
-                <id>cat_em</id>
+                <id>Ems</id>
                 <parentId>wasserstrasse</parentId>
                 <shortcut>Em</shortcut>
             </facet>
