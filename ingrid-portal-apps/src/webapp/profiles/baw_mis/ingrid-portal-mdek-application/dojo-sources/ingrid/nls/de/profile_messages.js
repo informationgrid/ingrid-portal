@@ -212,7 +212,7 @@ define({
     "ui.sysList.3950021": "BAW - Physikalische Parameter und Zustandsgrößen",
     "ui.sysList.3950031": "BAW - Software-Entwicklungsumgebung",
     "ui.sysList.3950032": "BAW - Software-Installationsmethode",
-    "ui.sysList.3950031": "BAW - HPC",
+    "ui.sysList.3950033": "BAW - HPC",
 
     "validation.baw.address.role.pointOfContact": "Ein Eintrag für die Institution 'Bundesanstalt für Wasserbau' als 'Ansprechpartner' muss vorhanden sein.",
     "validation.baw.address.software": "Es müssen mindestens 'Verfahrensbetreuung', 'Entwickler' und 'Eigentümer' eingetragen sein.",
