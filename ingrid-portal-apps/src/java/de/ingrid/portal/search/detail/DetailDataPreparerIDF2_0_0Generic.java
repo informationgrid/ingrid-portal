@@ -220,10 +220,10 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 	}
 
     private Locale getDocLanguageLocale(Node node) {
-        String xpathExpression = "./gmd:language/gmd:LanguageCode/@codeListValue";
+        String xpathExpression = "./idf:body/idf:idfMdMetadata/gmd:language/gmd:LanguageCode/@codeListValue";
         if (XPathUtils.nodeExists(node, xpathExpression)) {
             Node tmpNode = XPathUtils.getNode(node, xpathExpression);
-            String tmpLanguageCode = tmpNode.getTextContent().trim();
+            String tmpLanguageCode = tmpNode.getNodeValue();
             return  new Locale(tmpLanguageCode.equals("eng") ? "en" : "de", "", "");
         }
         return new Locale("de", "", "");
