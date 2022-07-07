@@ -326,7 +326,6 @@ define([
             id: "libraries",
             name: message.get("ui.obj.baw.software.libraries.title"),
             help: message.get("ui.obj.baw.software.libraries.help"),
-            isMandatory: true,
             style: "width: 100%"
         }, structure, "refClass6");
         newFieldsToDirtyCheck.push("libraries");
