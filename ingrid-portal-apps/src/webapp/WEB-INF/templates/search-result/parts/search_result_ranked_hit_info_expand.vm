@@ -1,5 +1,5 @@
-#if(($referenceAllUUID && $referenceAllUUID.size() > 0) || $urlReferenceLink || $coords.size() > 0)
-    <a id="${moreId}" class="js-expander #if($isMoreId)is-hidden#end" title="$MESSAGES.getString('searchResult.info.more')" href="#" #if($coords.size() > 0)onclick="resizeMap(map${moreId})"#end>
+#if(($referenceAllUUID && $referenceAllUUID.size() > 0) || $urlReferenceLink.size() > 0 || $coords.size() > 1)
+    <a id="${moreId}" class="js-expander #if($isMoreId)is-hidden#end" title="$MESSAGES.getString('searchResult.info.more')" href="#" #if($coords.size() > 1)onclick="resizeMap(map${moreId})"#end>
         <span class="icon  ic-ic-plus"></span>
         <span class="text">$MESSAGES.getString('searchResult.info.more')</span>
     </a>
@@ -147,7 +147,7 @@
                     #end
                 #end
             </div>
-            #if(($coords.size() > 0) ||
+            #if(($coords.size() > 1) ||
                 ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty()) ||
                 $hasOtherAreaDetails || 
                 $rs.wms_url
@@ -158,7 +158,7 @@
                 #set($hasSwipe = false)
                 #set($hasAreaAsPreview = false)
                 
-                #if($coords.size() > 0 || $hasOtherAreaDetails)
+                #if($coords.size() > 1 || $hasOtherAreaDetails)
                     #set($hasArea = true)
                 #end
                 #if($rs.additional_html_1 && !$rs.additional_html_1.isEmpty())
