@@ -508,7 +508,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, title);
         }
         // Add page doi by hit for dublin-core
-        if(context.get("doi") != null){
+        if(context.get("doiHeadMeta") != null){
             org.w3c.dom.Element link = response.createElement("link");
             link.setAttribute("rel", "schema.DC");
             link.setAttribute("href", "http://purl.org/dc/elements/1.1/");
@@ -521,7 +521,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             }
             org.w3c.dom.Element meta = response.createElement("meta");
             meta.setAttribute("name", "DC.identifier");
-            meta.setAttribute("content", (String) context.get("doi"));
+            meta.setAttribute("content", (String) context.get("doiHeadMeta"));
             response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, meta);
         }
         if (log.isDebugEnabled()) {
