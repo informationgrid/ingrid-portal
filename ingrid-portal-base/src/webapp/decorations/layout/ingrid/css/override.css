@@ -252,6 +252,10 @@ header {
   margin-bottom: 24px;
 }
 
+.teaser-data.search .js-expander-content .button {
+  border: 0px;
+}
+
 .tabs-content {
   background: transparent;
 }
@@ -704,7 +708,7 @@ h4, h5 {
     color: #FFFFFF;
 }
 .js-expander-toggle-all a.icon:focus {
-    background: #067B9B;
+    background: #333333;
     color: #FFFFFF;
 }
 .nr-results {
