@@ -10,19 +10,19 @@
     ## Zitat für diesen Datensatz
         #parse("/WEB-INF/templates/detail/parts/metadata/bibliographical_info/bibliographical_info_citation.vm")
     ## Digital Object Identifier (DOI)
-    #if($doi)
+    #if($doiIdType)
         #set($doiTable = {})
         #set($put = $doiTable.put("type", "table"))
         #set($put = $doiTable.put("title", $MESSAGES.getString("doi")))
         #set($put = $doiTable.put("head", [$MESSAGES.getString('doi.id'), $MESSAGES.getString('doi.type')]))
         #set($list = [])
-        #if($doi.id)
-            #set($add = $list.add("$doi.id"))
+        #if($doiIdType.id)
+            #set($add = $list.add("$doiIdType.id"))
         #else
             #set($add = $list.add(""))
         #end
-        #if($doi.type)
-            #set($add = $list.add("$doi.type"))
+        #if($doiIdType.type)
+            #set($add = $list.add("$doiIdType.type"))
         #else
             #set($add = $list.add(""))
         #end

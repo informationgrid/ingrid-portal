@@ -46,7 +46,7 @@
                         </li>
                     #end
                 ## Bibliografische Angaben
-                    #if(($getBibliographies && $getBibliographies.size() > 0) || $doi || ($getCitations && $getCitations.size() > 0))
+                    #if(($getBibliographies && $getBibliographies.size() > 0) || $doiIdType || ($getCitations && $getCitations.size() > 0))
                         #set($hasDetail10 = true)
                         <li class="accordion-item" data-accordion-item>
                             <a href="#${hashDetail10}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail10}-accordion-label">
