@@ -155,6 +155,10 @@ header {
 .menu-sub-links .menu-settings-links {
   background-color: #666666;
 }
+.menu-sub-links .menu-settings-links a:hover {
+    color: #666666;
+    background-color: #FFFFFF;
+}
 .menu-sub-links .menu-settings-links a, .menu-sub-links .menu-settings-links h6 {
   color: #fff;
 }
@@ -320,6 +324,9 @@ header {
 }
 .teaser .teaser-number {
   background: #EEEEEE !important;
+}
+.teaser .teaser-link .teaser-number {
+  color: #333333;
 }
 .filter-group .accordion-item .accordion-title {
   color: #0E8637;
