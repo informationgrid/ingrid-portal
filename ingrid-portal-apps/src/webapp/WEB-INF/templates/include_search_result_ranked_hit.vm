@@ -24,6 +24,7 @@
     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_info_expand_data.vm")
 
     #if ($rs.title)
+        #set($hitTitle = "#renderTitle($rs.title)")
         <div class="data">
             <div class="teaser-data search #if($isMoreId)is-active#end">
                 #renderServiceTypeList($serviceTypes true)
@@ -59,8 +60,8 @@
                         #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
                         #renderSearchTerm($searchTerm)
                         #set($detailLink ="$!rs.url")
-                        <a href="$detailLink" title="$stringTool.htmlescape($rs.title)" target="_blank" class="external-link">
-                            <h2 class="header">$rs.title</h2>
+                        <a href="$detailLink" title="$stringTool.htmlescape($hitTitle)" target="_blank" class="external-link">
+                            <h2 class="header">$hitTitle</h2>
                         </a>
                 #elseif($rs.type == "detail-style")
                     #if($rs.udk_class)
@@ -68,17 +69,17 @@
                             #set($udkAdrClassNameKey = "udk_adr_class_name_$rs.udk_class")
                             #set($udkAdrClassName = $MESSAGES.getString($udkAdrClassNameKey))
                             #if($rs.udk_class == "2")
-                                #if($rs.title)#set($title = "$rs.title")#end
+                                #if($hitTitle)#set($title = "$hitTitle")#end
                                 #if($rs.address_salutation)#set($title = "$title$rs.address_salutation ")#end
                                 #if($rs.address_firstname)#set($title = "$title$rs.address_firstname")#end
                                 #if($rs.address_lastname)#set($title = "$title $rs.address_lastname")#end
                             #elseif($rs.udk_class == "3")
-                                #if($rs.title && $rs.title != "")#set($title = "$rs.title ")#end
+                                #if($hitTitle && $hitTitle != "")#set($title = "$hitTitle ")#end
                                 #if($rs.address_salutation && $rs.address_salutation != "")#set($title = "$title, $rs.address_salutation ")#end
                                 #if($rs.address_firstname && $rs.address_firstname != "")#set($title = "$title$rs.address_firstname")#end
                                 #if($rs.address_lastname && $rs.address_lastname != "")#set($title = "$title $rs.address_lastname")#end
                             #else
-                                #set($title = "$rs.title")
+                                #set($title = "$hitTitle")
                             #end
                             #if($rs.docuuid && $rs.docuuid.length() > -1)
                                 #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address#if($detailUseParamPlugid)&plugid=$rs.plugid#end")
@@ -86,8 +87,8 @@
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_addr.vm")
                             #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
                             #renderSearchTerm($searchTerm)
-                            <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
-                                <h2 class="header">$rs.title</h2>
+                            <a href="$detailLink" title="$stringTool.htmlescape($hitTitle)">
+                                <h2 class="header">$hitTitle</h2>
                             </a>
                         #else
                             #set($udkObjClassName = $Codelists.getCodeListValue('8000', $rs.udk_class, $languageCode))
@@ -97,8 +98,8 @@
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_obj.vm")
                             #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
                             #renderSearchTerm($searchTerm $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.has_access_constraint" ))
-                            <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
-                                <h2 class="header">$rs.title</h2>
+                            <a href="$detailLink" title="$stringTool.htmlescape($hitTitle)">
+                                <h2 class="header">$hitTitle</h2>
                             </a>
                         #end
                     #else
@@ -107,8 +108,8 @@
                         #elseif($rs.docid && $rs.docid.length() > 0)
                             #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid")
                         #end
-                        <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
-                            <h2 class="header">$rs.title</h2>
+                        <a href="$detailLink" title="$stringTool.htmlescape($hitTitle)">
+                            <h2 class="header">$hitTitle</h2>
                         </a>
                     #end
                 #else
@@ -119,7 +120,7 @@
                     #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
                     #renderSearchTerm($searchTerm)
                     <h2 class="header">
-                        $rs.title
+                        $hitTitle
                     </h2>
                 #end
                 ##set($tmp = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" ))
@@ -143,7 +144,7 @@
                 </p>
                 #end
                 #renderServiceTypeList($serviceTypes true true)
-                <a href="$detailLink" title="$stringTool.htmlescape("$MESSAGES.getString('common.detail.arrow.prefix') $rs.title")" #if($rs.url) target="_blank" class="external-link" #end>
+                <a href="$detailLink" title="$stringTool.htmlescape("$MESSAGES.getString('common.detail.arrow.prefix') $hitTitle")" #if($rs.url) target="_blank" class="external-link" #end>
                     <span class="ic-ic-arrow arrow"></span>
                 </a>
                 #if(!$rs.url)
