@@ -6,6 +6,18 @@
     </properties>
 
     <body>
+        <release version="5.12.4-SNAPSHOT" date="2022-xx-xx" description="Release 5.12.4">
+          <action type="fix" dev="wemove">
+            Portal: Fix Benutzer löschen
+          </action>
+          <action type="update" dev="wemove">
+            Mapclient: Anpassungen für Apache Security Headers
+          </action>
+          <action type="fix" dev="wemove">
+            Portal: Fix Darstellung von Postfach in der Detaildarstellung
+          </action>
+        </release>
+
         <release version="5.12.2" date="2022-06-10" description="Release 5.12.2">
           <action type="update" dev="wemove" issue="3456">
             Optimierung Sammeldownload-Funktionalität
