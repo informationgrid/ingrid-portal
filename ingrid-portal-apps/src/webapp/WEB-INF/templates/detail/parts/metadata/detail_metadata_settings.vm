@@ -59,7 +59,7 @@
 ## Intervall der Erhebung
 #set($xPathListTimeUserDefinedMaintenanceFrequency = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency")
 ## Erläuterung zum Zeitbezug
-#set($xPathListTimeMaintenanceNote = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote")
+#set($xPathListTimeMaintenanceNote = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString")
 ## Zeitbezug der Ressource
 #set($xPathListTimeDate = "./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date")
 
@@ -188,11 +188,11 @@
 #### Schlüsselkatalog
 #set($xPathInfo1MDFeatureCatalogueDescriptionFeatureCatalogueCitation = "./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation")
 #### Datengrundlage
-#set($xPathInfo1LISourceDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description")
+#set($xPathInfo1LISourceDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString")
 #### Sachdaten/Attributinformation
 #set($xPathInfo1MDFeatureCatalogueDescriptionFeatureTypes = "./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes")
 #### Herstellungsprozess
-#set($xPathInfo1LIProcessStep = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description")
+#set($xPathInfo1LIProcessStep = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString")
 #### Identifikator der Datenquelle
 #set($xPathInfo1MDIdentifierCode = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code")
 #### Identifikator der Datenquelle (older iplug)

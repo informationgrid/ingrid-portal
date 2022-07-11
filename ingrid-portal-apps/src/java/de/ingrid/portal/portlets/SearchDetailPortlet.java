@@ -503,9 +503,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
         // Add page title by hit title
         if(context.get("title") != null){
-            org.w3c.dom.Element title = response.createElement("title");
-            title.setTextContent((String) context.get("title") + " - " + messages.getString("search.detail.portal.institution"));
-            response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, title);
+            String title = (String) context.get("title");
+            // Remove localisation
+            if(title != null) {
+                title = title.split("#locale-")[0];
+            }
+            org.w3c.dom.Element titleElement = response.createElement("title");
+            titleElement.setTextContent(title + " - " + messages.getString("search.detail.portal.institution"));
+            response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, titleElement);
         }
         // Add page doi by hit for dublin-core
         if(context.get("doiHeadMeta") != null){
