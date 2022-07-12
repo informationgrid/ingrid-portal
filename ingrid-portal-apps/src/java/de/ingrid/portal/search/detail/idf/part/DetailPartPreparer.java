@@ -336,7 +336,6 @@ public class DetailPartPreparer {
                     continue;
                 }
                 constraintSource = removePraefix(constraintSource);
-                constraintSource = removeLocalisation(constraintSource);
                 // parse JSON
                 boolean isJSON = false;
                 // try to get the license source from other constraints (#1066)
@@ -390,13 +389,13 @@ public class DetailPartPreparer {
                             if(replaceUseConstraintsSourcePrefix && constraintSource.startsWith("Quellenvermerk: ")) {
                                 constraintSource = constraintSource.replace(messages.getString("Quellenvermerk: "), "");
                             }
-                            furtherOtherConstraints.add( constraintSource );
+                            furtherOtherConstraints.add( removeLocalisation(constraintSource) );
                         }
                     } else {
                         if(replaceUseConstraintsSourcePrefix && constraintSource.startsWith("Quellenvermerk: ")) {
-                            constraintSource = constraintSource.replace(messages.getString("Quellenvermerk: "), "");
+                            constraintSource = constraintsTextXpathAnchor.replace(messages.getString("Quellenvermerk: "), "");
                         }
-                        furtherOtherConstraints.add( constraintSource );
+                        furtherOtherConstraints.add( removeLocalisation(constraintSource) );
                     }
                 } else if(displayJSON){
                     String finalValue = getValueFromCodeList(licenceList, constraints);
@@ -419,10 +418,10 @@ public class DetailPartPreparer {
                         // we have a URL from JSON
                         if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() ) ) {
                             // we have a different license name from JSON, render it with link
-                            value = String.format(messages.getString("constraints.use.link"), restrictionInfo, url, name, finalValue);
+                            value = String.format(messages.getString("constraints.use.link"), restrictionInfo, url, name, removeLocalisation(finalValue));
                         } else {
                             // no license name, render whole text with link
-                            value = String.format(messages.getString("constraints.use.link.noname"), restrictionInfo, url, finalValue);
+                            value = String.format(messages.getString("constraints.use.link.noname"), restrictionInfo, url, removeLocalisation(finalValue));
                         }
                     } else {
                         // NO URL
@@ -1063,7 +1062,10 @@ public class DetailPartPreparer {
     }
 
     public String removeLocalisation (String locString){
-        return locString.split("#locale-")[0];
+        if(locString != null) { 
+            return locString.split("#locale-")[0];
+        }
+        return locString;
     }
 
     public String getTemplateName() {
