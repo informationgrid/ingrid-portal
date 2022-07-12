@@ -144,6 +144,9 @@ public class DetailPartPreparer {
                 }
             }
         }
+        if(value != null) {
+            value = removeLocalisation(value);
+        }
         return value;
     }
 
@@ -333,6 +336,7 @@ public class DetailPartPreparer {
                     continue;
                 }
                 constraintSource = removePraefix(constraintSource);
+                constraintSource = removeLocalisation(constraintSource);
                 // parse JSON
                 boolean isJSON = false;
                 // try to get the license source from other constraints (#1066)
