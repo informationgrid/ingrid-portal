@@ -94,7 +94,7 @@ public class DetailPartPreparer {
 
         this.namespaceUri = IDFNamespaceContext.NAMESPACE_URI_IDF;
         this.messages = (IngridResourceBundle) context.get("MESSAGES");
-        this.sysCodeList = new IngridSysCodeList(request.getLocale());
+        this.sysCodeList = context.get("codeList") != null ? (IngridSysCodeList) context.get("codeList") : new IngridSysCodeList(request.getLocale());
         this.uuid = this.request.getParameter("docuuid");
 
         xPathUtils = new XPathUtils(new IDFNamespaceContext());

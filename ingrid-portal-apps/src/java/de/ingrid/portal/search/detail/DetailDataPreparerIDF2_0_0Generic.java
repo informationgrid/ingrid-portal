@@ -114,9 +114,11 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 			XPathUtils.getXPathInstance(new IDFNamespaceContext());
 
 			Element root = idfDoc.getDocumentElement();
+            context.put("codeList", new IngridSysCodeList(getDocLanguageLocale(root)));
+			this.sysCodeList = new IngridSysCodeList(getDocLanguageLocale(root));
+
 			transformNode(renderElements, root);
     		context.put("renderElements", renderElements);
-            context.put("codeList", new IngridSysCodeList(getDocLanguageLocale(root)));
 		}
 
 	}
