@@ -243,7 +243,7 @@
 #### Weitere bibliographische Angaben
 #set($xPathInfo2CICitationOtherCitationDetails = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails")
 #### Erläuterung zum Fachbezug
-#set($xPathInfo2SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation")
+#set($xPathInfo2SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation/gco:CharacterString")
 
 #set($xPathListInformationType2 = [
     "${xPathInfo2CICitationCitedResponsibleParty}/${xPathInfo2IndividualName}",
@@ -272,13 +272,13 @@
 #### Erstellungsmaßstab
 #set($xPathInfo3MDResolution ="./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution")
 #### Systemumgebung
-#set($xPathInfo3EnvironmentDescription = "./gmd:identificationInfo/*/gmd:environmentDescription")
+#set($xPathInfo3EnvironmentDescription = "./gmd:identificationInfo/*/gmd:environmentDescription/gco:CharacterString")
 #### Historie
-#set($xPathInfo3LIProcessStepDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description")
+#set($xPathInfo3LIProcessStepDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString")
 #### Basisdaten
-#set($xPathInfo3LISourceDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description")
+#set($xPathInfo3LISourceDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString")
 #### Erläuterung zum Fachbezug
-#set($xPathInfo3SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation")
+#set($xPathInfo3SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation/gco:CharacterString")
 #### Erläuterung zum Fachbezug (*)
 #set($xPathInfo3SupplementalInformationAbstract = "./gmd:identificationInfo/*/gmd:supplementalInformation/gmd:abstract")
 #### Operationen
@@ -308,7 +308,7 @@
 ## Beteiligte
 #set($xPathInfo4IndividualName = "./gmd:individualName")
 ## Erläuterung des Fachbezug
-#set($xPathInfo4SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation")
+#set($xPathInfo4SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation/gco:CharacterString")
 
 #set($xPathListInformationType4 = [
     "${xPathInfo4CICitationCitedResponsibleParty}/${xPathInfo4IndividualName}",
@@ -326,7 +326,7 @@
 #### Methode/Datengrundlage
 #set($xPathInfo5LISourceDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString")
 #### Erläuterungen zum Fachbezug
-#set($xPathInfo5SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation")
+#set($xPathInfo5SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation/gco:CharacterString")
 
 #set($xPathListInformationType5 = [
     $xPathInfo5MDFeatureCatalogueDescriptionIncludedWithDataset,
@@ -342,13 +342,13 @@
 #### Version
 #set($xPathInfo6ServiceTypeVersion = "./gmd:identificationInfo/*/srv:serviceTypeVersion")
 #### Systemumgebung
-#set($xPathInfo6EnvironmentDescription = "./gmd:identificationInfo/*/gmd:environmentDescription")
+#set($xPathInfo6EnvironmentDescription = "./gmd:identificationInfo/*/gmd:environmentDescription/gco:CharacterString")
 #### Historie
-#set($xPathInfo6LIProcessStepDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description")
+#set($xPathInfo6LIProcessStepDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString")
 #### Basisdaten
-#set($xPathInfo6LISourceDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description")
+#set($xPathInfo6LISourceDescription = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString")
 #### Erläuterung zum Fachbezug
-#set($xPathInfo6SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation")
+#set($xPathInfo6SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation/gco:CharacterString")
 #### Service-URL
 #set($xPathInfo6ContainsOperations = "./gmd:identificationInfo/*/srv:containsOperations")
 

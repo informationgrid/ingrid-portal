@@ -711,7 +711,7 @@ public class DetailPartPreparer {
                     String xpathValue = xPathUtils.getString(node, xpathExpressionDependOn).trim();
                     if(xpathValue.equals(dependOn)){
                         if(xPathUtils.nodeExists(node, xpathExpression)){
-                            value = xPathUtils.getString(node, xpathExpression);
+                            value = removeLocalisation(xPathUtils.getString(node, xpathExpression));
                             break;
                         }
                     }

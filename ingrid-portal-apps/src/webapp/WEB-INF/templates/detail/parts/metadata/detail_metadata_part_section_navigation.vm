@@ -213,7 +213,13 @@
                 #if($tabtitle)
                     #set($hasDetail7 = true)
                     <li class="accordion-item" data-accordion-item>
-                        <a href="#${hashDetail7}" class="accordion-title js-anchor-target"><span class="text">$tabtitle</span></a>
+                        <a href="#${hashDetail7}" class="accordion-title js-anchor-target">
+                            <span class="text">$tabtitle</span>
+                        </a>
+                        <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail7}-accordion-label" id="${hashDetail7}-accordion">
+                            <div class="boxes">
+                            </div>
+                        </div>
                     </li>
                 #end
             ## Datensatzbeschreibung
