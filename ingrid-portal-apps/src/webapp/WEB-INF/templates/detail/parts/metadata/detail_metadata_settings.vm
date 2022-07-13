@@ -421,7 +421,7 @@
 #set($xPathKeywordsTopicCategory = "./gmd:identificationInfo/*/gmd:topicCategory")
 
 #set($xPathListKeywords = [
-    "${xPathKeywordsDescriptiveKeywords}/[not(contains(./gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title,'Service'))]",
+    "${xPathKeywordsDescriptiveKeywords}[not(contains(./gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title,'Service'))]",
     $xPathKeywordsTopicCategory
 ])
 
