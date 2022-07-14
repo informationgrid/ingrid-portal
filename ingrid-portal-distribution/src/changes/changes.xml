@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.13.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.13.0">
+          <action type="add" dev="wemove" issue="4016">
+            Mapclient: Konfiguration der Infobox der einzelnen Layer
+          </action>
           <action type="fix" dev="wemove">
             Portal: Fix Benutzer löschen
           </action>
