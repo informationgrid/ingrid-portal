@@ -1,2 +1,0 @@
-## Datum
-    #renderTextTable($MESSAGES.getString("t01_object.mod_time") $TOOL.getTimeStamp("./gmd:dateStamp"))
