@@ -257,7 +257,12 @@ header {
 }
 
 .teaser-data.search .js-expander-content .button {
-  border: 0px;
+  border: 1px solid #0E8637;
+}
+
+.teaser-data.search .js-expander-content .button:hover {
+  background-color: #666666;
+  color: #FFFFFF;
 }
 
 .tabs-content {

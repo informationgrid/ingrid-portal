@@ -138,7 +138,7 @@ $('.js-expander-close').on('click', function (event) {
 $('.js-toggle-all-expander-collapse').on('click', function (event) {
   event.preventDefault();
   $(this).addClass("is-active").siblings().removeClass('is-active');
-  var jsExpanders = $('.data .teaser-data .js-expander');
+  var jsExpanders = $('.data .teaser-data > .js-expander');
   for (var i = 0; i < jsExpanders.length; i++) {
     var jsExpander = jsExpanders.get(i);
     expander.close(jsExpander.id, true);
@@ -148,7 +148,7 @@ $('.js-toggle-all-expander-collapse').on('click', function (event) {
 $('.js-toggle-all-expander-expand').on('click', function (event) {
   event.preventDefault();
    $(this).addClass("is-active").siblings().removeClass('is-active');
-   var jsExpanders = $('.data .teaser-data .js-expander');
+   var jsExpanders = $('.data .teaser-data > .js-expander');
    for (var i = 0; i < jsExpanders.length; i++) {
      var jsExpander = jsExpanders.get(i);
      expander.open(jsExpander.id, true);
