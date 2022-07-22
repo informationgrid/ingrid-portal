@@ -7,7 +7,10 @@
 
     <body>
         <release version="5.14.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.14.0">
-          <action type="update" dev="wemove" issue="1314">
+          <action type="add" dev="wemove" issue="3598">
+           UVP: Mehrfachauswahl (#3317) in UVP-Verbundportal umsetzen
+          </action>
+          <action type="add" dev="wemove" issue="1314">
            Portal: geforderte Passwortkomplexität soll per Default erhöht werden
           </action>
         </release>
