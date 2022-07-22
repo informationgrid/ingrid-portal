@@ -1,4 +1,9 @@
 ## render "Get XML"-link displayed next to the title
-#if ($rs.csw_link)
-    <a target="_blank" class="tag tag--small external-link" href='$rs.csw_link' title='$MESSAGES.getString('common.result.show.xml')'>XML</a>
+#if ($rs.csw_link && ($rs.get("plugDescr").getDataTypes().indexOf("csw") > -1 || $rs.get("plugDescr").getDataTypes().indexOf("dsc_ecs") > -1))
+<p class="teaser-links-content">
+    <a class="icon external-link" href="$rs.csw_link" title="$MESSAGES.getString('xml_link')" target="_blank" rel="noopener noreferrer">
+        <span class="ic-ic-download"></span>
+      <span class="text">$MESSAGES.getString('xml_link_label')</span>
+    </a>
+</p>
 #end

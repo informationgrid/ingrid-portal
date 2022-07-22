@@ -293,7 +293,7 @@ public class AdminUserPortlet extends ContentPortlet {
         ArrayList<UserInfo> unloggedUser = new ArrayList<>();
         ArrayList<UserInfo> unloggedUserOlderThan = new ArrayList<>();
         for (UserInfo userInfo : rows) {
-            if(!userInfo.getRoles().equals("guest")) {
+            if(userInfo.getRoles() != null && !userInfo.getRoles().equals("guest")) {
                 if(userInfo.isEnable()) {
                     enabledUser.add(userInfo);
                     addUserToList(enabledUserOlderThan, userInfo, PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN, 365), userInfo.isEnable());
@@ -889,6 +889,7 @@ public class AdminUserPortlet extends ContentPortlet {
                         sa.removeAttribute(key);
                     }
                     userManager.updateUser(user);
+                    userManager.removeUser(id);
 
                     // Delete other DB entries
                     session = HibernateUtil.currentSession();
@@ -913,7 +914,7 @@ public class AdminUserPortlet extends ContentPortlet {
                     }
                     tx.commit();
                     // Delete security_principal_assoc
-                    deleteEntries = session.createCriteria(IngridSecurityPrincipalAssoc.class).add(Restrictions.eq("id", user.getId())).list();
+                    deleteEntries = session.createCriteria(IngridSecurityPrincipalAssoc.class).add(Restrictions.eq("fromPrincipalId", user.getId())).list();
                     it = deleteEntries.iterator();
                     tx = session.beginTransaction();
                     while (it.hasNext()) {
@@ -922,10 +923,11 @@ public class AdminUserPortlet extends ContentPortlet {
                         session.delete((IngridSecurityPrincipalAssoc) obj);
                     }
                     tx.commit();
-                    userManager.removeUser(id);
                 }
             } catch (Exception e) {
                 log.error("Registration Error: Failed to remove user " + id);
+            } finally {
+                HibernateUtil.closeSession();
             }
 
         } catch (Exception e) {

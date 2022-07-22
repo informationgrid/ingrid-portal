@@ -26,7 +26,7 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisAuftrag",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisDefaultValues",
-    "ingrid/hierarchy/behaviours/baw_mis/bawMisDoiFieldsEditRestrictions",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisEditRestrictions",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisHierarchyLevelName",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisKeywordCatalogue",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisLiterature",
@@ -38,7 +38,7 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisMessdaten",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisSoftwareType"
-], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisDoiFieldsEditRestrictions,
+], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisEditRestrictions,
             bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisLiterature, bawMisNewObjectTypes, bawMisSimulationMdFields,
             bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks, bawMisMessdaten, bawMisSoftwareType) {
 
@@ -115,9 +115,9 @@ define([
         bawMisSoftwareType: bawMisSoftwareType,
 
         /**
-         * Only allow Katadmin and members of 'DOI-Admin' group to edit DOI fields
+         * Only allow Katadmin and members of 'LiteraturAdmin' group to edit DOI fields
          */
-        bawMisDoiFieldsEditRestrictions: bawMisDoiFieldsEditRestrictions,
+        bawMisEditRestrictions: bawMisEditRestrictions,
 
     });
 });

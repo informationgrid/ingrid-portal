@@ -71,8 +71,18 @@ define(["dojo/_base/declare",
             // TODO: additional fields according to #490 and #473
 
             var self = this;
+            var igeAction = require("ingrid/IgeActions");
             topic.subscribe("/onObjectClassChange", function(clazz) {
                 self.prepareDocument(clazz);
+            });
+            aspect.after(igeAction, "onAfterLoad", function () {
+                self.updateNegativeUploadLink();
+            });
+            aspect.after(igeAction, "onAfterSave", function () {
+                self.updateNegativeUploadLink();
+            });
+            topic.subscribe("/afterCloseDialog/ChooseWizard", function() {
+                self.updateNegativeUploadLink();
             });
 
             // disable editing the address table and automatically set point of contact type
@@ -398,9 +408,20 @@ define(["dojo/_base/declare",
              */
             id = "uvpNegativeRelevantDocs";
             newFieldsToDirtyCheck.push(id);
-            creator.createDomDataGrid({ id: id, name: message.get("uvp.form.negative.relevantDocs"), help: message.get("uvp.form.negative.relevantDocs.helpMessage"), isMandatory: false, visible: "required", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
-                this.uvpPhaseField.getDocTableStructure(), rubric);
-            this.uvpPhaseField.addUploadLink(id);
+            creator.createDomDataGrid({
+                    id: id,
+                    name: message.get("uvp.form.negative.relevantDocs"),
+                    help: message.get("uvp.form.negative.relevantDocs.helpMessage"),
+                    isMandatory: false,
+                    visible: "required",
+                    rows: "1",
+                    forceGridHeight: false,
+                    style: "width:100%",
+                    contextMenu: "EXPIRED_GRID",
+                    moveRows: true
+                },
+                this.uvpPhaseField.getDocTableStructure(),
+                rubric);
             additionalFields.push(registry.byId(id));
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
@@ -476,6 +497,17 @@ define(["dojo/_base/declare",
             aspect.after(igeActions, "onAfterLoad", function() {
                 zoomToBoundingBox();
             });
+        },
+
+        updateNegativeUploadLink: function (force) {
+            if (registry.byId("objectClass").value === "Class12" || force) {
+                var negativeUploadLink = dom.byId("uvpNegativeRelevantDocs_uploadLink");
+                if (negativeUploadLink) {
+                    construct.destroy("uvpNegativeRelevantDocs_uploadHint");
+                    construct.destroy(negativeUploadLink.parentNode);
+                }
+                this.uvpPhaseField.addUploadLink("uvpNegativeRelevantDocs");
+            }
         }
     })();
 });

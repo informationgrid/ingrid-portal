@@ -107,7 +107,7 @@ public class UtilsUvpZipDownload {
                     if(xPathUtils.nodeExists(root, xpathExpression)) {
                         title = xPathUtils.getString(root, xpathExpression);
                     }
-                    String downloadPath = UtilsUvpZipDownload.createDownloadPath(PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_ZIP_PATH, "./data"), plugid, uuid);
+                    String downloadPath = UtilsUvpZipDownload.createDownloadPath(PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_ZIP_PATH, "./"), plugid, uuid);
                     xpathExpression = "//idf:idfMdMetadata/steps/step[docs/doc]";
                     if(xPathUtils.nodeExists(root, xpathExpression)) {
                         zip = createDownload(uuid, title, downloadPath, xPathUtils.getNodeList(root, xpathExpression), messages, xPathUtils);

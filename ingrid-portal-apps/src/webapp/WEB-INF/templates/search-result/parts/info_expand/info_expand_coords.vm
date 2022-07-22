@@ -1,0 +1,29 @@
+#if($rs.get("plugDescr").getDataTypes().indexOf("wfs") > -1)
+    #if($tmpY1 && $tmpY2 && $tmpX1 && $tmpX2)
+        #renderFactTitle($MESSAGES.getString("common.place"))
+        
+        #addEntry($MESSAGES.getString("common.place.north"), $tmpY1)
+        #addEntry($MESSAGES.getString("common.place.west"), $tmpX1)
+        #addEntry($MESSAGES.getString("common.place.east"), $tmpX2)
+        #addEntry($MESSAGES.getString("common.place.south"), $tmpY2)
+    #end
+    
+    #macro(addEntry $coordsTitle $coordsValue)
+        <div class="table table--lined">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>
+                            $coordsTitle
+                        </th>
+                        <td>
+                            <p>
+                                $coordsValue
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    #end
+#end

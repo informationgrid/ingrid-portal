@@ -1,3 +1,5 @@
-<a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
-    <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.footer')"/>
-</a>
+<div class="logo">
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+        <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.footer')"/>
+    </a>
+</div>

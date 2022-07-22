@@ -18,6 +18,9 @@ var editParamsE = '';
 var editParamsN = '';
 var editParamsZ = '';
 var isBackHistory = false;
+#if($mapUserId)
+var mapUserId = '$mapUserId';
+#end
 
 if($hasKML){
     var kml = '$kmlUrl';

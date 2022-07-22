@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  **************************************************-
-  Ingrid Portal Base
-  ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  -->
-
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
         "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
 
@@ -176,16 +153,6 @@
         <to>/kartendienste</to>
     </outbound-rule>
     
-    <!--  Umweltchronik  -->
-    <rule>
-        <from>/umweltchronik</from>
-        <to type="forward">/portal/main-chronicle.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-chronicle.psml</from>
-        <to>/umweltchronik</to>
-    </outbound-rule>
-    
     <!-- Über InGrid-Portal  -->
     <rule>
         <from>/hintergrundinformationen</from>
@@ -218,12 +185,12 @@
     
     <!-- Mein Portal  -->
     <rule>
-        <from>/personalisierungsoptionen</from>
+        <from>/log-in</from>
         <to type="forward">/portal/service-myportal.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-myportal.psml</from>
-        <to>/personalisierungsoptionen</to>
+        <to>/log-in</to>
     </outbound-rule>
     
     <!-- Datenschutzbestimmung   -->
@@ -275,7 +242,7 @@
         <from>/portal/disclaimer.psml</from>
         <to>/impressum</to>
     </outbound-rule>
-    
+
     <!-- Barrierefreiheit  -->
     <rule>
         <from>/barrierefreiheit</from>

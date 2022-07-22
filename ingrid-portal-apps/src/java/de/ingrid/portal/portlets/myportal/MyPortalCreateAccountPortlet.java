@@ -229,7 +229,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
                 CreateAccountForm.class);
         f.clearErrors();
         f.populate(request);
-        if (!f.validate() && !isTokenValid) {
+        if (!f.validate() || !isTokenValid) {
             return;
         }
 

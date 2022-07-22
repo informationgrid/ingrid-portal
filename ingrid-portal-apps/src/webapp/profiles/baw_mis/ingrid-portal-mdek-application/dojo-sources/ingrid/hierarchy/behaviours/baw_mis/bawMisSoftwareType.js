@@ -27,6 +27,7 @@ define([
     "dojo/_base/lang",
     "dojo/dom",
     "dojo/dom-class",
+    "dojo/dom-construct",
     "dojo/on",
     "dojo/topic",
     "dijit/form/RadioButton",
@@ -37,7 +38,7 @@ define([
     "ingrid/message",
     "ingrid/utils/Grid",
     "ingrid/utils/Syslist"
-], function (registry, array, declare, lang, dom, domClass, on, topic, RadioButton, Editors, Formatters, dirty, creator, message, UtilGrid, UtilSyslist) {
+], function (registry, array, declare, lang, dom, domClass, domConstruct, on, topic, RadioButton, Editors, Formatters, dirty, creator, message, UtilGrid, UtilSyslist) {
 
     subscriptions = [];
 
@@ -95,8 +96,11 @@ define([
                     adaptLinks();
                     
                     handleRequiredState();
+                    
+                    hideDoi();
                 } else {
                     removeBehaviours();
+                    showDoi();
                 }
             });
         }
@@ -230,41 +234,37 @@ define([
     }
     
     function addBetriebssystem(newFieldsToDirtyCheck, additionalFields) {
-        var structure = [
-            {
-                field: "operatingSystemWindows",
-                name: message.get("ui.obj.baw.software.operatingSystem.windows"),
-                type: Editors.YesNoCheckboxCellEditor,
-                formatter: Formatters.BoolCellFormatter,
-                editable: true,
-                initValue: false, // make checkbox appear on cell click
-                width: "100px"
-            },
-            {
-                field: "operatingSystemLinux",
-                name: message.get("ui.obj.baw.software.operatingSystem.linux"),
-                type: Editors.YesNoCheckboxCellEditor,
-                formatter: Formatters.BoolCellFormatter,
-                editable: true,
-                initValue: false, // make checkbox appear on cell click
-                width: "100px"
-            },
-            {
-                field: "operatingSystemNotes",
-                name: message.get("ui.obj.baw.software.operatingSystem.notes"),
-                editable: true
-            }
-        ];
 
-        creator.createDomDataGrid({
-            id: "operatingSystem",
-            name: message.get("ui.obj.baw.software.operatingSystem.title"),
-            help: message.get("ui.obj.baw.software.operatingSystem.help"),
-            isMandatory: true,
-            style: "width: 100%"
-        }, structure, "refClass6");
-        newFieldsToDirtyCheck.push("operatingSystem");
-        additionalFields.push(registry.byId("operatingSystem"));
+        creator.addToSection("refClass6", creator.addOutlinedSection(
+            "operatingSystem",
+            message.get("ui.obj.baw.software.operatingSystem.title"),
+            message.get("ui.obj.baw.software.operatingSystem.help"),
+            [
+                creator.createDomCheckbox({
+                    id: "operatingSystemWindows",
+                    name: message.get("ui.obj.baw.software.operatingSystem.windows"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomCheckbox({
+                    id: "operatingSystemLinux",
+                    name: message.get("ui.obj.baw.software.operatingSystem.linux"),
+                    style: "width: 15%",
+                    disableHelp: true
+                }),
+                creator.createDomTextarea({
+                    id: "operatingSystemNotes",
+                    name: message.get("ui.obj.baw.software.operatingSystem.notes.title"),
+                    help: message.get("ui.obj.baw.software.operatingSystem.notes.help"),
+                    style: "width: 100%"
+                })
+            ]));
+        var ids = ["operatingSystemWindows", "operatingSystemLinux", "operatingSystemNotes"];
+        array.forEach(ids, function(id) {
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+        });
+        
     }
     
     function addProgrammiersprache(newFieldsToDirtyCheck, additionalFields) {
@@ -326,7 +326,6 @@ define([
             id: "libraries",
             name: message.get("ui.obj.baw.software.libraries.title"),
             help: message.get("ui.obj.baw.software.libraries.help"),
-            isMandatory: true,
             style: "width: 100%"
         }, structure, "refClass6");
         newFieldsToDirtyCheck.push("libraries");
@@ -401,6 +400,35 @@ define([
     }
     
     function addInstallation(newFieldsToDirtyCheck, additionalFields) {
+        var structureHlrName = [
+            {
+                field: "text",
+                name: message.get("ui.obj.baw.software.installation.hlrName"),
+                type: Editors.ComboboxEditor,
+                formatter: lang.partial(Formatters.SyslistCellFormatter, 3950033),
+                listId: 3950033,
+                editable: true
+            }
+        ];
+        creator.createDomDataGrid({
+            id: "installationHLRNames",
+            name: message.get("ui.obj.baw.software.installationHLRNames.title"),
+            help: message.get("ui.obj.baw.software.installationHLRNames.help"),
+            style: "width: 85%"
+        }, structureHlrName, "refClass6");
+        var structureServerName = [
+            {
+                field: "text",
+                name: message.get("ui.obj.baw.software.installation.serverName"),
+                editable: true
+            }
+        ];
+        creator.createDomDataGrid({
+            id: "installationServerNames",
+            name: message.get("ui.obj.baw.software.installationServerNames.title"),
+            help: message.get("ui.obj.baw.software.installationServerNames.help"),
+            style: "width: 85%"
+        }, structureServerName, "refClass6");
         creator.addToSection("refClass6", creator.addOutlinedSection(
             "installation",
             message.get("ui.obj.baw.software.installation.title"),
@@ -412,27 +440,25 @@ define([
                     disableHelp: true
                 }),
                 creator.createDomCheckbox({
-                    id: "installationHPC",
-                    name: message.get("ui.obj.baw.software.installation.hpc"),
+                    id: "installationHLR",
+                    name: message.get("ui.obj.baw.software.installation.hlr"),
+                    disableHelp: true,
                     style: "width: 15%",
-                    disableHelp: true
-                }),
-                creator.createDomTextarea({
-                    id: "installationHPCNotes",
-                    style: "width: 85%"
                 }),
                 creator.createDomCheckbox({
                     id: "installationServer",
                     name: message.get("ui.obj.baw.software.installation.server"),
+                    disableHelp: true,
                     style: "width: 15%",
-                    disableHelp: true
-                }),
-                creator.createDomTextarea({
-                    id: "installationServerNotes",
-                    style: "width: 85%"
                 })
             ]));
-        var ids = ["installationLocal", "installationHPC", "installationHPCNotes", "installationServer", "installationServerNotes"];
+        
+        domConstruct.place("uiElementAddinstallationHLRNames", "uiElementAddinstallationHLR", "after");
+        domConstruct.place("uiElementAddinstallationServerNames", "uiElementAddinstallationServer", "after");
+        registry.byId("installationHLRNames").reinitLastColumn(true);
+        registry.byId("installationServerNames").reinitLastColumn(true);
+        
+        var ids = ["installationLocal", "installationHLR", "installationHLRNames", "installationServer", "installationServerNames"];
         array.forEach(ids, function (id) {
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
@@ -634,9 +660,21 @@ define([
         on(registry.byId("supportContractDate"), "change", lang.partial(handleRequiredState, "supportContractNumber", "supportContractDate"));
         
         // Installationsort
-        on(registry.byId("installationHPC"), "change", lang.partial(requiredOnCheck, "uiElementAddinstallationHPCNotes"));
-        on(registry.byId("installationServer"), "change", lang.partial(requiredOnCheck, "uiElementAddinstallationServerNotes"));
+        on(registry.byId("installationHLR"), "change", lang.partial(requiredOnCheck, "uiElementAddinstallationHLRNames"));
+        on(registry.byId("installationServer"), "change", lang.partial(requiredOnCheck, "uiElementAddinstallationServerNames"));
         
+    }
+    
+    function hideDoi() {
+        if (dom.byId("uiElementAdddoiDataCite")) {
+            domClass.add("uiElementAdddoiDataCite", "hide");
+        }
+    }
+    
+    function showDoi() {
+        if (dom.byId("uiElementAdddoiDataCite")) {
+            domClass.remove("uiElementAdddoiDataCite", "hide");
+        }
     }
     
     function removeBehaviours() {

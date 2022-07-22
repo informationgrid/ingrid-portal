@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,7 @@
  * **************************************************#
  */
 /**
- * 
+ *
  */
 package de.ingrid.portal.search.detail;
 
@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -63,18 +64,18 @@ import de.ingrid.utils.xml.XPathUtils;
  * - split object_access and object_use (no table, instead multiple lines).
  */
 public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
-	
+
 	private static final Logger		log							= LoggerFactory.getLogger(DetailDataPreparerIDF2_0_0Generic.class);
-	
+
 	private Context					context;
 	private String					iPlugId;
 	private RenderRequest			request;
 	private RenderResponse			response;
 	private IngridResourceBundle	messages;
 	private IngridSysCodeList		sysCodeList;
-	
+
 	private List<DetailPartPreparer> preparer;
-	
+
 	public DetailDataPreparerIDF2_0_0Generic(Context context, String iPlugId, RenderRequest request, RenderResponse response) {
 		this.context = context;
 		this.iPlugId = iPlugId;
@@ -83,22 +84,22 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 		messages = (IngridResourceBundle) context.get("MESSAGES");
 		sysCodeList = new IngridSysCodeList(request.getLocale());
 	}
-	
+
 	/*
-	 * (non-Javadoc)	 * 
+	 * (non-Javadoc)	 *
 	 * @see
 	 * de.ingrid.portal.search.detail.DetailDataPreparer#prepare(de.ingrid.utils
 	 * .dsc.Record)
 	 */
 	public void prepare(Record record) throws XPathExpressionException, SAXException, ParserConfigurationException, IOException {
-		
+
 	    String idfString = IdfTool.getIdfDataFromRecord(record);
 		List<RenderElement> renderElements = new ArrayList();
-		
+
 		if(idfString != null){
 			if(log.isDebugEnabled()){
 				log.debug(idfString);
-			} 
+			}
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setNamespaceAware(true);
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -109,21 +110,24 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 			DocumentBuilder db;
 			db = dbf.newDocumentBuilder();
 			Document idfDoc = db.parse(new InputSource(new StringReader(idfString)));
-			
+
 			XPathUtils.getXPathInstance(new IDFNamespaceContext());
-			
+
 			Element root = idfDoc.getDocumentElement();
+            context.put("codeList", new IngridSysCodeList(getDocLanguageLocale(root)));
+			this.sysCodeList = new IngridSysCodeList(getDocLanguageLocale(root));
+
 			transformNode(renderElements, root);
     		context.put("renderElements", renderElements);
-		} 
-		
+		}
+
 	}
-	
+
 	private void transformNode(List<RenderElement> renderElements, Node node) {
     	String localTagName = node.getLocalName();
     	String nameSpaceUri = node.getNamespaceURI();
     	boolean isGenericIdfNode = false;
-        
+
     	if(localTagName != null && nameSpaceUri != null){
     		if(localTagName.equals("head") && nameSpaceUri.equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
         		// Render title node
@@ -135,10 +139,10 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
             	// Get title (if not exist on head tag) from metadata or address tag
             	getTitle(node);
 				getDoi(node);
-            	
+
             	DetailPartPreparer dpp = findDetailPartPreparer(localTagName, nameSpaceUri);
             	if(dpp != null){
-            		// Render 
+            		// Render
             		dpp.init(node, this.iPlugId,this.request,this.response, this.context);
             		RenderElement renderElement = new RenderElement();
             		renderElement.setType("render");
@@ -154,7 +158,7 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
     		renderHtmlTag(renderElements, node, isGenericIdfNode);
     	}
 	}
-	
+
 	private void getTitle(Node node) {
 		String title = (String) context.get("title");
     	if(title == null || title.length() == 0){
@@ -167,7 +171,7 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
     	        }
     		}
     	}
-    	
+
     	title = (String) context.get("title");
     	if(title == null || title.length() == 0){
     		String xpathExpression = "./idf:hierarchyParty";
@@ -178,7 +182,7 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 				if(XPathUtils.nodeExists(tmpNode, "./idf:addressType")){
 					addressType = XPathUtils.getString(tmpNode, "./idf:addressType").trim();
 				}
-				
+
 				if(addressType.equals("2")){
 					if(XPathUtils.nodeExists(tmpNode, "./idf:addressIndividualName")){
 						tmpTitle = getIndividualName(XPathUtils.getString(tmpNode, "./idf:addressIndividualName").trim());
@@ -192,10 +196,10 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 				}else{
 					if(XPathUtils.nodeExists(tmpNode, "./idf:addressOrganisationName")){
 						tmpTitle = XPathUtils.getString(tmpNode, "./idf:addressOrganisationName").trim();
-					}	
-					
+					}
+
 				}
-				
+
 				if(tmpTitle.length() > 0 ){
 					context.put("title",tmpTitle);
 				}
@@ -204,23 +208,33 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 	}
 
 	private void getDoi(Node node){
-		String doi = (String) context.get("doi");
+		String doi = (String) context.get("doiHeadMeta");
 		if(doi == null || doi.length() == 0){
 			String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString[contains(text(),'doi')]";
 			if (XPathUtils.nodeExists(node, xpathExpression)) {
 				Node tmpNode = XPathUtils.getNode(node, xpathExpression);
 				String tmpDoi = tmpNode.getTextContent().trim();
 				if(tmpDoi.length() > 0){
-					context.put("doi",tmpDoi);
+					context.put("doiHeadMeta",tmpDoi);
 				}
 			}
 		}
 	}
 
+    private Locale getDocLanguageLocale(Node node) {
+        String xpathExpression = "./idf:body/idf:idfMdMetadata/gmd:language/gmd:LanguageCode/@codeListValue";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            Node tmpNode = XPathUtils.getNode(node, xpathExpression);
+            String tmpLanguageCode = tmpNode.getNodeValue();
+            return  new Locale(tmpLanguageCode.equals("eng") ? "en" : "de", "", "");
+        }
+        return new Locale("de", "", "");
+    }
+
 	private DetailPartPreparer findDetailPartPreparer(String localTagName, String nameSpaceUri){
 		DetailPartPreparer dpp = null;
 		if(localTagName != null && nameSpaceUri != null){
-			if ((localTagName.equals("idfMdMetadata") && nameSpaceUri.equals(IDFNamespaceContext.NAMESPACE_URI_IDF)) 
+			if ((localTagName.equals("idfMdMetadata") && nameSpaceUri.equals(IDFNamespaceContext.NAMESPACE_URI_IDF))
 					|| (localTagName.equals("MD_Metadata") && nameSpaceUri.equals(IDFNamespaceContext.NAMESPACE_URI_GMD)) ) {
 	    		dpp = new DetailPartPreparerIdfMetadata();
 	        } else if((localTagName.equals("idfResponsibleParty") && nameSpaceUri.equals(IDFNamespaceContext.NAMESPACE_URI_IDF))
@@ -234,9 +248,9 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 		}
 		return dpp;
 	}
-	
+
 	private void renderGenericTag(List<RenderElement> renderElements, Node node){
-        if (!node.getNodeName().equals("idf:html") && !node.getNodeName().equals("html") 
+        if (!node.getNodeName().equals("idf:html") && !node.getNodeName().equals("html")
                 && !node.getNodeName().equals("idf:body") && !node.getNodeName().equals("body")) {
             RenderElement renderElement = new RenderElement();
             renderElement.setType("html");
@@ -260,18 +274,18 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
             }
         }
     }
-	
+
 	private void renderHtmlTag(List<RenderElement> renderElements, Node node, boolean isGenericIdfNode){
 		renderGenericTag(renderElements, node);
-        
+
         if(node.hasChildNodes()){
         	for (int i=0; i< node.getChildNodes().getLength(); i++) {
     	        transformNode(renderElements, node.getChildNodes().item(i));
     	    }
         }
-        
+
         if (isGenericIdfNode && node.getNodeType() != Node.TEXT_NODE) {
-            if (!node.getNodeName().equals("idf:html") && !node.getNodeName().equals("html") 
+            if (!node.getNodeName().equals("idf:html") && !node.getNodeName().equals("html")
                     && !node.getNodeName().equals("idf:body") && !node.getNodeName().equals("body")) {
                 RenderElement renderElement = new RenderElement();
                 renderElement.setType("html");
@@ -289,14 +303,14 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
             }
         }
 	}
-	
+
 	private String getIndividualName(String value) {
 		String[] valueSpitter = value.split(",");
-		
+
 		String name = "";
 		for (int j=valueSpitter.length; 0 < j ;j--){
 			name = name + " " + valueSpitter[j-1];
-		}	
+		}
 		return name;
 	}
 }

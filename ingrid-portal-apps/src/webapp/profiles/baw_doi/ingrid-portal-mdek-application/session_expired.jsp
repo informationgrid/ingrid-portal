@@ -43,14 +43,14 @@
         <meta name="copyright" content="© Bundesanstalt f&uuml;r Wasserbau" />
         <meta name="robots" content="index,follow" />
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
-        <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/main.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
         <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/uvp/scripts/vendor/jquery.nicescroll.min.js"></script>
-        <script src="/decorations/layout/uvp/scripts/vendor/foundation.min.js"></script>
-        <script src="/decorations/layout/uvp/scripts/vendor/select2.full.js"></script>
-        <script src="/decorations/layout/uvp/scripts/main.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/vendor/jquery.nicescroll.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/vendor/foundation.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/vendor/select2.full.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/main.js"></script>
     </head>
     <body>
         <div class="container">
@@ -79,9 +79,9 @@
                 <div class="row">
                     <div class="columns xsmall-7 small-7 medium-8 large-7 xlarge-9">
                         <div class="logo">
-                            <a href="/startseite" class="hide-for-xlarge hide-for-xsmall-only hide-for-small-only"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="BAW"/></a>
-                            <a href="/startseite" class="show-for-xlarge hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="BAW"/></a>
-                            <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="BAW"/></a>
+                            <a href="/startseite" class="hide-for-xlarge hide-for-xsmall-only hide-for-small-only"><img src="/decorations/layout/ingrid/images/template/logo.svg" alt="BAW"/></a>
+                            <a href="/startseite" class="show-for-xlarge hide-for-xsmall-only"><img src="/decorations/layout/ingrid/images/template/logo.svg" alt="BAW"/></a>
+                            <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/ingrid/images/template/logo.svg" alt="BAW"/></a>
                         </div>
                     </div>
                     <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
@@ -110,7 +110,7 @@
             </header>
             <div class="body">
                 <div class="banner subpage">
-                    <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/waves-subpage.svg');">
+                    <div class="subpage-wrapper" style="background-image: url('/decorations/layout/ingrid/images/template/waves-subpage.svg');">
                         <div class="row align-center">
                             <div class="large-20 columns dark">
                                 <h1><fmt:message key="ui.entry.session.expired" /></h1>
@@ -140,7 +140,7 @@
                     <div class="row">
                         <div class="xsmall-24 medium-24 large-11 xlarge-12 columns">
                             <div class="logo">
-                                <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo-white.svg" alt="BAW"/></a>
+                                <a href="/startseite"><img src="/decorations/layout/ingrid/images/template/logo-white.svg" alt="BAW"/></a>
                             </div>
                         </div>
                         <div class="xsmall-24 small-24 large-13 xlarge-12 columns button-up">

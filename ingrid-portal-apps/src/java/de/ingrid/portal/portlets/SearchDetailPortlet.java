@@ -40,8 +40,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
@@ -79,8 +77,8 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.IPlugVersionInspector;
 import de.ingrid.portal.search.detail.DetailDataPreparer;
 import de.ingrid.portal.search.detail.DetailDataPreparerFactory;
-import de.ingrid.portal.search.detail.DetailDataPreparerHelper;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
@@ -135,11 +133,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 try(
                     OutputStream outputStream = response.getPortletOutputStream();
                     FileInputStream fileInputStream = new FileInputStream(zip.getAbsoluteFile());
-                    BufferedInputStream bufferedInputStream = new java.io.BufferedInputStream(fileInputStream);
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
                 ){
                     response.setContentType( "application/zip" );
                     response.addProperty("Content-Disposition", "attachment; filename=\"" + zip.getName() + "\"");
-                    response.setContentLength(bufferedInputStream.available());
+                    response.addProperty("Content-Length", Long.toString(zip.length()));
                     byte[] buffer = new byte[4096];
                     int len = 0;
                     while ((len = bufferedInputStream.read(buffer)) != -1) {
@@ -314,14 +312,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
 
                 IngridQuery q = QueryStringParser.parse(qStr);
-                IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
+                IngridHits hits = ibus.searchAndDetail(q, 1, 1, 0, 3000, PortalConfig.getInstance().getStringArray(PortalConfig.QUERY_DETAIL_REQUESTED_FIELDS));
 
                 if (hits.length() == 0) {
                     log.error("No record found for document uuid:" + docUuid.trim() + (detailUseParamPlugid ? " using iplug: " + iplugId.trim() : ""));
 
                     qStr = Settings.HIT_KEY_ORG_OBJ_ID + ":\"" + docUuid.trim() + qPlugId + "\" ranking:score";
                     q = QueryStringParser.parse(qStr);
-                    hits = ibus.search(q, 1, 1, 0, 3000);
+                    hits = ibus.searchAndDetail(q, 1, 1, 0, 3000, PortalConfig.getInstance().getStringArray(PortalConfig.QUERY_DETAIL_REQUESTED_FIELDS));
                     if(hits.length() == 0){
                         log.error("No object record found for document uuid:" + docUuid.trim() + " for field: " + Settings.HIT_KEY_ORG_OBJ_ID);
                         if (isAddress) {
@@ -330,7 +328,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                             qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score";
                         }
                           q = QueryStringParser.parse(qStr);
-                        hits = ibus.search(q, 1, 1, 0, 3000);
+                        hits = ibus.searchAndDetail(q, 1, 1, 0, 3000, PortalConfig.getInstance().getStringArray(PortalConfig.QUERY_DETAIL_REQUESTED_FIELDS));
                         if(hits.length() == 0){
                             log.error("No record found for document uuid:" + docUuid.trim());
                         }else{
@@ -344,14 +342,16 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
             } else {
                 String documentId = request.getParameter("docid");
-                hit = new IngridHit();
-                hit.setDocumentId(documentId);
-                hit.setPlugId(iplugId);
-                context.put("docId", documentId);
-                // backward compatibilty where docId was integer
-                try {
-                    hit.putInt( 0, Integer.valueOf( documentId ) );
-                } catch (NumberFormatException ex) { /* ignore */ }
+                if(documentId != null) {
+                    hit = new IngridHit();
+                    hit.setDocumentId(documentId);
+                    hit.setPlugId(iplugId);
+                    context.put("docId", documentId);
+                    // backward compatibilty where docId was integer
+                    try {
+                        hit.putInt( 0, Integer.valueOf( documentId ) );
+                    } catch (NumberFormatException ex) { /* ignore */ }
+                }
             }
 
             if (hit != null) {
@@ -359,6 +359,13 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     iplugId = hit.getPlugId();
                     plugDescription = ibus.getIPlug(iplugId);
                     iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+                }
+                IngridHitDetail detail = hit.getHitDetail();
+                if(detail != null) {
+                    String title = detail.getTitle();
+                    if(title != null) {
+                        context.put("title", title);
+                    }
                 }
                 context.put("docUuid", docUuid);
                 context.put("plugId", iplugId);
@@ -498,12 +505,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
         // Add page title by hit title
         if(context.get("title") != null){
-            org.w3c.dom.Element title = response.createElement("title");
-            title.setTextContent((String) context.get("title") + " - " + messages.getString("search.detail.portal.institution"));
-            response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, title);
+            String title = (String) context.get("title");
+            // Remove localisation
+            if(title != null) {
+                title = title.split("#locale-")[0];
+            }
+            org.w3c.dom.Element titleElement = response.createElement("title");
+            titleElement.setTextContent(title + " - " + messages.getString("search.detail.portal.institution"));
+            response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, titleElement);
         }
         // Add page doi by hit for dublin-core
-        if(context.get("doi") != null){
+        if(context.get("doiHeadMeta") != null){
             org.w3c.dom.Element link = response.createElement("link");
             link.setAttribute("rel", "schema.DC");
             link.setAttribute("href", "http://purl.org/dc/elements/1.1/");
@@ -516,7 +528,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             }
             org.w3c.dom.Element meta = response.createElement("meta");
             meta.setAttribute("name", "DC.identifier");
-            meta.setAttribute("content", (String) context.get("doi"));
+            meta.setAttribute("content", (String) context.get("doiHeadMeta"));
             response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, meta);
         }
         if (log.isDebugEnabled()) {

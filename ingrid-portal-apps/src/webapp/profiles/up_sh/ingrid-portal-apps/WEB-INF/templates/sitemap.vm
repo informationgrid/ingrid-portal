@@ -36,15 +36,6 @@
                     <span class="text">$MESSAGES.getString("sitemap.area.main.maps")</span>
                 </a>
             #end
-            #if($enableChronicle)
-                #set ($link = $renderResponse.encodeURL("/portal/main-chronicle.psml"))
-                <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.chronicle.tooltip")">
-                    <span class="ic-ic-arrow-right"></span>
-                    <span class="text">$MESSAGES.getString("sitemap.area.main.chronicle")</span>
-                </a>
-                $MESSAGES.resetMsgParams()
-                $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
-            #end
             #if ($enableApplication)
                 #set ($link = $renderResponse.encodeURL("/portal/application/main-application.psml"))
                 <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.application.main.tooltip")">

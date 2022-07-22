@@ -1,15 +1,10 @@
 <!-- Popup -->
-<div class="popup">
-    <header class="popup__header">
-        <div class="popup__close link--alt ob-flt-r js-popup-close">
-            <svg class="icon"><use xlink:href="#cross" /></svg>
-            <span class="mq-hide-m"></span>
-        </div>
-        <h4 class="popup__title bx-top-0 bx-bot-0">$MESSAGES.getString("ingrid.page.help")</h4>
-    </header>
-    <section class="popup__content ob-container">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.</p>
-        <p><a href="#">Read more</a></p>
-    </section>
+<div class="popup help-popup">
+    <div class="headline popup__header">
+        <p class="popup__title medium">$MESSAGES.getString("ingrid.page.help")</p>
+        <button type="button" class="button round popup__close js-popup-close"><span class="ic-ic-cross"></span></button>
+    </div>
+    <div class="popup__content text-box">
+        <p></p>
+    </div>
 </div>

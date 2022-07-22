@@ -1,2 +1,2 @@
 #### DOI
-#set($doi = $TOOL.getDOI())
+#set($doiIdType = $TOOL.getDOI())

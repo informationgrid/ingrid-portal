@@ -58,6 +58,7 @@ public class PortalConfig extends PropertiesConfiguration {
 
     /** requested fields for search queries in portal */
     public static final String QUERY_REQUESTED_FIELDS = "portal.query.requestedfields";
+    public static final String QUERY_DETAIL_REQUESTED_FIELDS = "portal.query.detail.requestedfields";
 
     /** default timeout for sns queries in ms */
     public static final String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
@@ -130,8 +131,6 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_ENABLE_SOURCES = "portal.enable.sources";
 
     public static final String PORTAL_ENABLE_RSS = "portal.enable.rss";
-
-    public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
 
     public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
 
@@ -257,6 +256,9 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
 
+    public static final String ATOM_DOWNLOAD_CLIENT_URL = "atom.download.client.url";
+    public static final String ATOM_DOWNLOAD_CLIENT_PREFIX = "atom.download.client.prefix";
+
     public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";
     public static final String PORTAL_MAPCLIENT_QUERY_ADDITIONAL = "portal.mapclient.query.additional";
     public static final String PORTAL_MAPCLIENT_QUERY_2 = "portal.mapclient.query.2";
@@ -319,18 +321,22 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_DETAIL_UVP_ZIP_PATH = "portal.detail.uvp.zip.path";
     public static final String PORTAL_DETAIL_UVP_ZIP_UPDATE_MIN = "portal.detail.uvp.zip.update.min";
+    public static final String PORTAL_DETAIL_UVP_ZIP_DELETE_MIN = "portal.detail.uvp.zip.delete.min";
+
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN = "portal.detail.uvp.documents.htaccess.login";
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD = "portal.detail.uvp.documents.htaccess.password";
 
     public static final String PORTAL_MAPS_LINKS_NEW_TAB = "portal.map.links.new.tab";
 
     public static final String PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN = "portal.administration.user.enabled.older.than";
-    public static final String PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN = "portal.administration.user.unenabled.older.than";
+    public static final String PORTAL_ADMINISTRATION_USER_UNENABLED_OLDER_THAN = "portal.administration.user.unabled.older.than";
     public static final String PORTAL_ADMINISTRATION_USER_UNLOGGED_OLDER_THAN = "portal.administration.user.unlogged.older.than";
 
     public static final String PORTAL_MEASURE_URL = "portal.measure.url";
-    public static final String PORTAL_MEASURE_NETWORKS_EXCLUDE = "portal.measere.networks.exclude";
-    public static final String PORTAL_MEASURE_NETWORKS_INITIAL = "portal.measere.networks.initial";
+    public static final String PORTAL_MEASURE_NETWORKS_EXCLUDE = "portal.measure.networks.exclude";
+    public static final String PORTAL_MEASURE_NETWORKS_INITIAL = "portal.measure.networks.initial";
+
+    public static final String PORTAL_MAPCLIENT_UVP_GEOCODER_SERVICE_URL = "portal.mapclient.uvp.geocoder.service.url";
 
     // private stuff
     private static PortalConfig instance = null;

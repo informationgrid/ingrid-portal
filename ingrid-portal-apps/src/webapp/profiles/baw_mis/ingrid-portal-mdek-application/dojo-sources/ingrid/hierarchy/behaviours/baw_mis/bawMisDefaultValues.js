@@ -46,7 +46,6 @@ define([
                     self._setInspireThemes();
                     self._setIsoTopics();
                     self._setCharsetData();
-                    self._setPublishArea();
                     self._setAccessConstraints();
                     self._setUseAccessConstraints();
 
@@ -91,10 +90,6 @@ define([
             if (datasetCharsetWidget && !datasetCharsetWidget.get("value")) {
                 datasetCharsetWidget.set("value", datasetCharsetUtf8Value);
             }
-        },
-
-        _setPublishArea: function () {
-            registry.byId("extraInfoPublishArea").set("value", "2");
         },
 
         _setAccessConstraints: function () {

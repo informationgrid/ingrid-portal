@@ -87,6 +87,11 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
 
         context.put("detailUseParamPlugid", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID));
 
+        String user = request.getRemoteUser();
+        if(user != null){
+            context.put("mapUserId", user);
+        }
+
         // read preferences
         PortletPreferences prefs = request.getPreferences();
         String hKey = prefs.getValue("helpKey", null);

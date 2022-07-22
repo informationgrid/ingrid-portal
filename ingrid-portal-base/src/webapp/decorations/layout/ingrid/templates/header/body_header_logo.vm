@@ -1,6 +1,7 @@
-<div class="header__widgets__section">
-    <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')">
-        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')">
-    </a>
+<div class="columns xsmall-7 small-7 medium-7 large-7 xlarge-7">
+    <div class="logo" role="banner">
+        <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+            <img src="/decorations/layout/ingrid/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
+        </a>
+    </div>
 </div>

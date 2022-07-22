@@ -137,6 +137,7 @@ define([
     "dijit/form/FilteringSelect",
     "dijit/form/ComboBox",
     "dijit/form/DateTextBox",
+    "dijit/form/TimeTextBox",
     "dijit/form/CheckBox",
     "dijit/form/NumberTextBox",
     "ingrid/IgeEvents",
@@ -159,7 +160,7 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/requiredChecks"
-], function(declare, lang, array, date, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, NumberTextBox, igeEvents,
+], function(declare, lang, array, date, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, TimeTextBox, CheckBox, NumberTextBox, igeEvents,
     ingridObjectLayout, ingridAddressLayout, message, dialog, UtilUI, UtilAddress, UtilList, UtilTree, UtilStore, UtilString, UtilSyslist, UtilGrid, UtilGeneral, UtilDOM, UtilSecurity, dirty,
     CustomGrid, rules, checks) {
     return declare(null, {
@@ -1744,7 +1745,12 @@ define([
                 registry.byId("objectName").attr("value", nodeData.objectName, true);
 
             // onchange event
-            registry.byId("objectClass").attr("value", "Class" + nodeData.objectClass, true);
+            var objectClass = registry.byId("objectClass");
+            var className = "Class" + nodeData.objectClass;
+            var containsClass = array.some(objectClass.store.data, function (item) { return item[1] === className });
+            if (containsClass) {
+                objectClass.attr("value", className, true);
+            }
 
             var workStateStr = message.get("general.workState." + nodeData.workState);
             var workStateTitle = "";
@@ -1966,7 +1972,7 @@ define([
                         currentFieldWidget.invalidate();
                     } else if (currentFieldWidget instanceof CheckBox) {
                         currentFieldWidget.attr("value", false, true);
-                    } else if (currentFieldWidget instanceof DateTextBox) {
+                    } else if (currentFieldWidget instanceof DateTextBox || currentFieldWidget instanceof TimeTextBox) {
                         currentFieldWidget.attr("value", null, true);
                     } else {
                         if (currentFieldWidget.valueAsTableData) {
@@ -2008,6 +2014,8 @@ define([
                                     currentFieldWidget.attr("value", currentField.value, true);
                                 else
                                     currentFieldWidget.attr("value", currentField.listId, true);
+                            } else if (currentFieldWidget instanceof TimeTextBox) {
+                                currentFieldWidget.attr("value", new Date('1970-01-01T' + currentField.value + '+01:00'))
                             } else if (currentFieldWidget instanceof DateTextBox) {
                                 if (currentFieldWidget.storeAsTimestamp) {
                                     currentFieldWidget.attr("value", new Date(+currentField.value));
@@ -2465,8 +2473,8 @@ define([
             // -- Time --
             nodeData.timeRefType = registry.byId("timeRefType").get("value");
             if (nodeData.timeRefType == "fromType") nodeData.timeRefType = registry.byId("timeRefSubType").get("value");
-            var timeFrom = registry.byId("timeRefDate1").get("value");
-            var timeTo = registry.byId("timeRefDate2").get("value");
+            var timeFrom = registry.byId("timeRefDate1").value;
+            var timeTo = registry.byId("timeRefDate2").value;
 
             if (nodeData.timeRefType == "bis") {
                 if (timeFrom !== "") {

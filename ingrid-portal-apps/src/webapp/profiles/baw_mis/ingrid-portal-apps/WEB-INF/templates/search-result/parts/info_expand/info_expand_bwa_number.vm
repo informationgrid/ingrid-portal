@@ -1,5 +1,5 @@
-## PSP-Element
+## Auftragsnummer
 #if($bwa_num)
-#renderFactTitle("PSP-Element")
+#renderFactTitle("Auftragsnummer")
         <p>$bwa_num.get(0)</p>
 #end

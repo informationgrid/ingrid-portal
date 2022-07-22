@@ -1,85 +1,51 @@
-<article class="content ob-container ob-box-narrow ob-box-center">
-    $contactIntroPostEmail
-</article>
-<section class="block block--padded">
-    <div class="ob-box-wide ob-box-center">
-        <article class="content ob-container ob-box-narrow ob-box-center">
-            <h4>$MESSAGES.getString('contact.form')</h4>
-            #set ($action = $renderResponse.createActionURL())
-            <form action="$action" method="post" name="contact" id="contact" enctype="multipart/form-data">
-                ## yummy fields
-                #parse ("/WEB-INF/templates/contact/contact_yummy.vm")
-                ## real fields
-                #displayFormError()
-                <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
-                    </div>
-                    <div class="media__body">
-                        <textarea name="user_message" id="bemerkungen" #addErrorFormClass('user_message') tabindex="0" required="required">#getFieldValue('user_message')</textarea>
-                        #addErrorFormMessage('user_message')
-                    </div>
+<div class="columns">
+    <div>$contactIntroPostEmail</div>
+    <div class="search-filtered">
+        <h2>$MESSAGES.getString('contact.form')</h2>
+        #set ($action = $renderResponse.createActionURL())
+        <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
+            ## yummy fields
+            #parse ("/WEB-INF/templates/contact/contact_yummy.vm")
+            ## real fields
+            #displayFormError()
+            <div class="form-element">
+                <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
+                <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen" rows="10" #addErrorFormMessagePlaceholder('user_message') tabindex="0" required="required">#getFieldValue('user_message')</textarea>
+            </div>
+            <div class="form-element">
+                <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
+                <input type="text" id="xx2" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') #addErrorFormMessagePlaceholder('user_firstname') autocomplete="given-name" tabindex="0" required="required"/>
+            </div>
+            <div class="form-element">
+                <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
+                <input type="text" id="xx3" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') #addErrorFormMessagePlaceholder('user_lastname') autocomplete="family-name" tabindex="0" required="required"/>
+            </div>
+            <div class="form-element">
+                <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
+                <input type="text" id="xx4" name="user_company" value="#getFieldValue('user_company')" autocomplete="organization" tabindex="0"/>
+            </div>
+            <div class="form-element">
+                <label for="xx5">$MESSAGES.getString('contact.form.phone')</label>
+                <input type="text" id="xx5" name="user_phone" value="#getFieldValue('user_phone')" autocomplete="tel" tabindex="0"/>
+            </div>
+            <div class="form-element">
+                <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
+                <input type="text" id="xx6" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email') autocomplete="email" tabindex="0" required="required"/>
+                #addErrorFormMessagePlaceholderWithInputCheck('user_email')
+            </div>
+            #if ($uploadEnable)
+                <div class="form-element">
+                    <label >$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
+                    <input type="file" id="upload" name="upload" tabindex="0">
                 </div>
-                <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
-                    </div>
-                    <div class="media__body">
-                        <input type="text" id="xx2" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') autocomplete="given-name" tabindex="0" required="required"/>
-                        #addErrorFormMessage('user_firstname')
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
-                    </div>
-                    <div class="media__body">
-                        <input type="text" id="xx3" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') autocomplete="family-name" tabindex="0" required="required"/>
-                        #addErrorFormMessage('user_lastname')
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
-                    </div>
-                    <div class="media__body">
-                        <input type="text" id="xx4" name="user_company" value="#getFieldValue('user_company')" autocomplete="organization" tabindex="0"/>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="xx5">$MESSAGES.getString('contact.form.phone')</label>
-                    </div>
-                    <div class="media__body">
-                        <input type="text" id="xx5" name="user_phone" value="#getFieldValue('user_phone')" autocomplete="tel" tabindex="0"/>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
-                    </div>
-                    <div class="media__body">
-                        <input type="text" id="xx6" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') autocomplete="email" tabindex="0" required="required"/>
-                        #addErrorFormMessage('user_email')
-                    </div>
-                </div>
-                #if ($uploadEnable)
-                    <div class="media">
-                        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                            <label >$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
-                        </div>
-                        <div class="media__body">
-                            <input type="file" id="upload" name="upload" tabindex="0"/>
-                        </div>
-                    </div>
-                #end
-                <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-                    #renderInputButtonClass($MESSAGES.getString('common.form.button.submit') "" "" $MESSAGES.getString('common.form.button.submit.tooltip') "btn btn--primary btn--small")
-                </div>
-            </form>
-        </article>
+            #end
+            <hr>
+            <div class="subtext-submit">
+                <button type="submit" class="button">$MESSAGES.getString('common.form.button.submit')</button>
+            </div>
+        </form>
     </div>
-</section>
+</div>
 <script>
     var error = $actionForm.hasErrors();
     if(error){

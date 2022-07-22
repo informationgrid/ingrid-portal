@@ -15,7 +15,7 @@ Features
 - faceted search on the InGrid data space
 - Administration GUI to manage aspects of the portal and the InGrid Installation
 - detailed view on the provided data
-- map client to display geo spatial data, such as connected Web Map Services or KML Data
+- map client to display geo-spatial data, such as connected Web Map Services or KML Data
 - JavaScript based comfortable meta data editor
 
 Requirements
@@ -40,7 +40,7 @@ Execute
 java -jar ingrid-portal-x.x.x-installer.jar
 ```
 
-and follow the install instructions.
+and follow the installation instructions.
 
 Obtain further information at http://www.ingrid-oss.eu/ (sorry only in German)
 
@@ -79,7 +79,7 @@ This setup only works with the IntelliJ Ultimate edition.
 
 *Known Problems: The map portlet does not work.*
 
-First the maven project with all the necessary sub projects must be imported and built.
+First the maven project with all the necessary subprojects must be imported and built.
 
 Next some paths need to be configured. In the Project Settings (Menu "Project Structure" or "Module Settings"), in the 
 Facets -> Web section, make sure the following paths are configured, keep other default configurations:
@@ -109,7 +109,7 @@ In the tab Deployment add the following artifacts with the respective Applicatio
 |ingrid-portal-mdek-application:war exploded|/ingrid-portal-mdek-application|
 
 Please note that IntelliJ switches per default the minus (-) for underscores (_) in the application context, 
-double check your entries in the field.
+double-check your entries in the field.
 
 Next deploy the database, ibus and elasticsearch with docker:
 ```
@@ -189,6 +189,13 @@ https://github.com/TomDevs/needsmoredojo
   - Solution: 
     - Make sure InGrid backend is running
     - Make sure the user (e.g. *mdek*) exists in the database (schema `mdek`, table `user_data`) and the `plug_id` column value (e.g. */ingrid-group:ige-iplug-test*) matches the property `communications.ige.clientName` set up in the InGrid backend.
+
+
+- **Dependencies cannot be resolved**: 
+  - Error messages:
+    - http://0.0.0.0/ during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of maven-default-http-blocker has elapsed or updates are forced.
+  - Solution: 
+    - Set the IntelliJ maven version to the one installed locally and don't use the default one. (Especially since this build does not work with maven versions > 3.6.x)
 
 ### Debugging
 

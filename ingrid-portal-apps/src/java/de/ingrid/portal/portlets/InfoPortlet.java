@@ -94,7 +94,6 @@ public class InfoPortlet extends GenericVelocityPortlet {
             context.put("enablePartner", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_PARTNER, Boolean.FALSE));
             context.put("enableSources", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SOURCES, Boolean.FALSE));
             context.put("enableMaps", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, Boolean.FALSE));
-            context.put("enableChronicle", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_CHRONICLE, Boolean.FALSE));
             context.put("enableSearchCatalog", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG, Boolean.FALSE));
             context.put("enablePrivacy", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_PRIVACY, Boolean.FALSE));
             context.put("enableAccessibility", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ACCESSIBILITY, Boolean.FALSE));
@@ -106,7 +105,6 @@ public class InfoPortlet extends GenericVelocityPortlet {
         }
         
         if(myView.equalsIgnoreCase(INFO_TEASER_TEMPLATE)){
-            // For chronicle teaser
             // NOTICE: WE FETCH FROM DATABASE AND DON'T HAVE ALL DETAILS !!!
             String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
             IngridHitDetail[] details = DBAnniversaryInterfaceImpl.getInstance().getAnniversaries(new Date(), lang);
@@ -181,9 +179,6 @@ public class InfoPortlet extends GenericVelocityPortlet {
                 if(request.getParameter( "isMeasure" ) != null){
                     // redirect to our page with URL parameters for bookmarking
                     actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_MEASURES + SearchState.getURLParamsCatalogueSearch(request, null)));
-                } else if(request.getParameter( "isChronicle" ) != null){
-                    // redirect to our page with URL parameters for bookmarking
-                    actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CHRONICLE + SearchState.getURLParamsCatalogueSearch(request, null)));
                 }
             }
     }

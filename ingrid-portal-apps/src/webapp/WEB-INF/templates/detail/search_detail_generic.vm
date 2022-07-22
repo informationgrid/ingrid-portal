@@ -1,8 +1,15 @@
 #macro (renderUDKEntry $r $entryName)
     #if($tool.hasContent($r.get($entryName)))
-        <p><strong>$entryName:</strong><br>
-        $r.get($entryName).replaceAll("\n","<br>")
-        </p>
+        <div class="table table--lined">
+            <table>
+                <tr>
+                    <th>$entryName</th>
+                    <td>
+                        <p>$r.get($entryName).replaceAll("\n","<br>")</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
     #end
 #end
 
@@ -24,6 +31,32 @@
     #end
 #end
 
+#macro (renderFiles)
+    #if($fileList)
+        <div class="section">
+        #foreach ($file in $fileList)
+            #if($file.parenttyp == "image")
+                <p>
+                    <strong>$file.title</strong>
+                </p>
+                <p>
+                    <img src="/ingrid-portal-apps/filehelper/file?$file.filename" alt="$file.filename" title="$file.filename"></a>
+                </p>
+            #else
+                <p>
+                    <strong>$file.title</strong>
+                </p>
+                <p>
+                    <img alt="interner Link" src="/ingrid-portal-apps/images/icn_linkintern.gif"/>
+                    <a href="/ingrid-portal-apps/filehelper/file?$file.filename" class="download_link" type="$file.mimetyp" title="$file.filename">$MESSAGES.getString('search.detail.download'): $file.filename</a><br>
+                </p>
+                ##<p><embed src="/ingrid-portal-apps/filehelper/file?$file.path" autostart="false" type="$file.typ" pluginspage="http://www.apple.com/quicktime/download/"></p>
+            #end
+        #end
+        </div>
+    #end
+#end
+
 ## ***************************
 ## include the header here
 ## ***************************
@@ -38,64 +71,102 @@
 #set($pageDescription = $pageDescription.replace('"',"'"))
 #set($pageDescription = $stringTools.cutString($pageDescription, 300))
 
-<section class="block block--padded">
-    <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
-        <article class="content ob-container ob-box-wide">
-            #set ($action = $renderResponse.createActionURL())
-            <div id="content_full">
-            #if($rec)
-                <div class="section-header">
-                    <h1>#if($tool.hasContent($rec.get("title")))$rec.get("title")#else$MESSAGES.getString("common.result.noTitle")#end</h1>
+#if($rec)
+<div class="detail" id="detail">
+    <div class="banner-noimage m-filter">
+        <div class="page-wrapper" style="background-image: url('/decorations/layout/ingrid/images/template/drops-subpage.svg');">
+            <div class="row">
+                <div class="xsmall-24 large-6 xlarge-6 columns">
+                    <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')" title="$MESSAGES.getString("search.detail.back.to.results")">
+                        <span class="ic-ic-arrow-left"></span>
+                        <span class="text text-normal">$MESSAGES.getString("search.detail.back.to.results")</span>
+                    </a>
                 </div>
-                <span class="clearer"></span>
-                <div class="section">
-                <p class="float_right"></p>
-                <p class="float_left"></p>
-                <span class="clearer"></span>
-                <p>#if($tool.hasContent($rec.get("summary")))$rec.get("summary")#end</p>
-                <div class="line"><hr /></div>
-                #renderRec($rec 0)
+                <div class="xsmall-24 large-18 xlarge-18 columns">
+                    <h2>#if($tool.hasContent($rec.get("title")))$rec.get("title")#else$MESSAGES.getString("common.result.noTitle")#end</h2>
                 </div>
-            #else
-                <p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-            #end
-            
-            #foreach ($file in $fileList)
-                #if($file.parenttyp == "image")
-                    <p>
-                        <strong>$file.title</strong>
-                    </p>
-                    <p>
-                        <img src="/ingrid-portal-apps/filehelper/file?$file.filename" alt="$file.filename" title="$file.filename"></a>
-                    </p>
-                #else
-                    <p>
-                        <strong>$file.title</strong>
-                    </p>
-                    <p>
-                        <img alt="interner Link" src="/ingrid-portal-apps/images/icn_linkintern.gif"/>
-                        <a href="/ingrid-portal-apps/filehelper/file?$file.filename" class="download_link" type="$file.mimetyp" title="$file.filename">$MESSAGES.getString('search.detail.download'): $file.filename</a><br>
-                    </p>
-                    ##<p><embed src="/ingrid-portal-apps/filehelper/file?$file.path" autostart="false" type="$file.typ" pluginspage="http://www.apple.com/quicktime/download/"></p>
-                #end
-            #end
             </div>
-        </article>
+        </div>
     </div>
-</section>
+    <div class="row nav-content search-filtered">
+        #set($getDescription = $rec.get("summary"))
+        <div class="xsmall-24 large-6 xlarge-6 columns">
+            <div class="accordion accordion-filter-group filter" data-accordion data-allow-all-closed="true" role="tablist">
+                <div class="accordion-item accordion-item-filter-group" data-accordion-item>
+                    <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="detail-accordion-label" aria-expanded="false" aria-selected="false">Inhalt</a>
+                    <div class="accordion-content filter-wrapper" data-tab-content role="tabpanel" aria-labelledby="detail-accordion-label" aria-hidden="true" id="detail-content-accordion">
+                        <ul class="accordion filter-group nav-group" data-accordion data-allow-all-closed="true" role="tablist">
+                            ## Beschreibung
+                            <li class="accordion-item" data-accordion-item>
+                                <a href="#detail_description" class="accordion-title js-anchor-target" aria-controls="detail_description-accordion" role="tab" id="detail_description-accordion-label">
+                                    <span class="text">$MESSAGES.getString("detail_description")</span>
+                                </a>
+                                <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="detail_description-accordion-label" id="detail_description-accordion">
+                                    <div class="boxes">
+                                    </div>
+                                </div>
+                            </li>
+                            ## Fachinformationen
+                            <li class="accordion-item" data-accordion-item>
+                                <a href="#detail_info" class="accordion-title js-anchor-target" aria-controls="detail_info-accordion" role="tab" id="detail_info-accordion-label">
+                                    <span class="text">$MESSAGES.getString("subject_reference_tab")</span>
+                                </a>
+                                <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="detail_info-accordion-label" aria-hidden="true" id="detail_info-accordion">
+                                    <div class="boxes">
+                                        <a class="js-anchor-target-entry" href="#detail_info_technical_information">
+                                            <span class="text">$MESSAGES.getString("technical_information")</span>
+                                        </a>
+                                    </div>
+                                 </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="anchor" id="detail_overview"></a>
+        <div class="xsmall-24 large-18 xlarge-18 columns">
+            <div class="data">
+            </div>
+            #if($getDescription)
+            <div class="section">
+                <a class="anchor" id="detail_description"></a>
+                <h3>$MESSAGES.getString("detail_description")</h3>
+                <div class="js-expand-box js-expand-text js-non-expand-text">
+                    ## Beschreibung
+                    <div class="js-expand-text-content">
+                        <p>$getDescription</p>
+                    </div>
+                    <div class="desc-fade"></div>
+                </div>
+                <button type="button" class="js-open-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.more')">
+                    $MESSAGES.getString('search.detail.info.more')
+                </button>
+                <button type="button" class="js-close-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.less')">
+                    $MESSAGES.getString('search.detail.info.less')
+                </button>
+            </div>
+            #end
+            <div class="section">
+                <a class="anchor" id="detail_info"></a>
+                <h3>$MESSAGES.getString("subject_reference_tab")</h3>
+                <div class="sub-section">
+                    <a class="anchor" id="detail_info_technical_information"></a>
+                    <h4>$MESSAGES.getString("technical_information")</h4>
+                    #renderRec($rec 0)
+                </div>
+            </div>
+            #renderFiles()
+        </div>
+    </div>
+</div>
+#else
+<div class="detail" id="detail">
+    <div class="row search-filtered">
+        <div class="columns">
+            #renderMessageError($MESSAGES.getString("error_no_details_available"))
+            #renderFiles()
+        </div>
+    </div>
+</div>
+#end

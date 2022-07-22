@@ -861,7 +861,7 @@ a img[title='SNS'] {
   color: #FFFFFF;
 }
 .home-wrapper {
-  background-image: url('/decorations/layout/uvp/images/template/stage-overlay.svg') !important;
+  background-image: url('/decorations/layout/ingrid/images/template/stage-overlay.svg') !important;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: right bottom !important;
@@ -996,7 +996,7 @@ h6 {
   color: #003064;
 }
 .search-wrapper {
-  background-image: url('/decorations/layout/uvp/images/template/stage-overlay.svg') !important;
+  background-image: url('/decorations/layout/ingrid/images/template/stage-overlay.svg') !important;
   background-position: 0 30% !important;
   background-size: cover;
 }
@@ -1287,7 +1287,7 @@ ul li::before {
   color: #ffffff;
 }
 .subpage-wrapper {
-  background-image: url('/decorations/layout/uvp/images/template/stage-overlay.svg') !important;
+  background-image: url('/decorations/layout/ingrid/images/template/stage-overlay.svg') !important;
   background-position: 0 30% !important;
   background-size: cover;
 }

@@ -1,0 +1,16 @@
+## Additional Fields Example
+################################
+#if($hasDetail7)
+    <div class="section">
+    #set($tabtitle = $TOOL.getValueFromXPath($xPathAdditionalFields))
+    <a class="anchor" id="${hashDetail7}"></a>
+    #renderSectionTitle($MESSAGES.getString("$tabtitle"))
+    #set($nodelist = $TOOL.getNodeListFromXPath($xPathAdditionalFieldsData))
+    #foreach($number in [1..$nodelist.getLength()])
+        #set($additionalFieldContent = $TOOL.getValueFromXPath("${xPathAdditionalFieldsData}[$number]/idf:data"))
+        #if($additionalFieldContent)
+            #renderTextTable($TOOL.getValueFromXPath("${xPathAdditionalFieldsData}[$number]/idf:title[@lang='$lang']") $TOOL.removeLocalisation($additionalFieldContent))
+        #end
+    #end
+    </div>
+#end

@@ -1,26 +1,17 @@
 #macro (renderNode $node)
     #set ($action = $renderResponse.createActionURL())
     $action.setParameter('nodeId',$node.id)
-    <ul class="js-accordion-multi">
     ## UDK Object/Address render params
     #set($nodeTitle = $MESSAGES.getString($node.getName()))
     #if($tool.hasContent(${node.udk_class}))
-        #if ($node.plugType == 'dsc_ecs')
-            ## objects
-            #set($nodeAlt = $Codelists.getCodeListValue('8000', $node.udk_class, $languageCode))
-        #else
-            ## addresses
-            #set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
-        #end
         #if($node.origDocId && !$node.origDocId.isEmpty())
-            #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=${node.origDocId}#if($node.plugType != 'dsc_ecs')&type=address#end#if($detailUseParamPlugid)&plugid=${node.plugId}#end")
+            #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=${node.origDocId}#if($node.plugType != 'dsc_ecs')&type=address#end#if($detailUseParamPlugid)$plugid=${node.plugId}#end")
         #else
             #if($node.udk_docId && !$node.udk_docId.isEmpty())
-                #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=${node.udk_docId}#if($node.plugType != 'dsc_ecs')&type=address#end#if($detailUseParamPlugid)&plugid=${node.plugId}#end")
+                #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=${node.udk_docId}#if($node.plugType != 'dsc_ecs')&type=address#end#if($detailUseParamPlugid)$plugid=${node.plugId}#end")
             #end
         #end
     #else
-        #set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
         #set($nodeUrl = '')
     #end
     #if($node.isOpen())
@@ -32,55 +23,49 @@
     #set($nodeId = $node.id)
     #set($linkId = "${nodeLevel}-${nodeId}")
     #if ($node.expandable)
-        <li class="tree__item tree__toggle #if($node.isOpen())is-active#end">
-            <a id="$linkId" href="#$linkId" onclick="updateLeaf('$linkId', true, event)">
-                <svg class="tree__toggle__icon icon">
-                    <use xlink:href="#plus"/>
-                </svg>
-                <svg class="tree__toggle__icon icon">
-                    <use xlink:href="#minus"/>
-                </svg>
-            </a>
-            #if($nodeUrl != '')
-                #if ($node.plugType == 'dsc_ecs')
-                    #renderUDKIcon(${node.udk_class} $nodeAlt)
-                #else
-                    #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
-                #end
-            #end
-            #if($nodeUrl != '' && $node.udk_class != "1000")
-                <a href="$nodeUrl">
-                    $nodeTitle
-                </a>
-            #else
+        <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
+            <li class="accordion-item #if($node.isOpen())is-active#end">
+        #if($nodeUrl != '')
+            <div class="accordion-item-sub">
+                <span class="icon">
+                    <a id="$linkId" href="#$linkId" onclick="updateLeaf('$linkId', true, event)" #if($node.isOpen()) class="ic-ic-minus" #else class="ic-ic-plus"#end></a>
+                    #if($node.udk_class != "1000")
+                        <a href="$nodeUrl">
+                            $nodeTitle
+                         </a>
+                    #else
+                        <span>$nodeTitle</span>
+                    #end
+                </span>
+            </div>
+        #else
+            <a class="accordion-title" id="$linkId" href="$action" onclick="updateLeaf('$linkId', true, event)" aria-controls="${node.id}-accordion" role="tab">
                 $nodeTitle
-            #end
-        </li>
-        <li class="tree__content js-accordion-content #if(!$node.isOpen())is-hidden#end">
-            ## render sub nodes
+            </a>
+        #end
+        ## render sub nodes
+        <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="$linkId" id="${node.id}-accordion">
             #foreach($childNode in $node.getChildren())
-                #renderNode($childNode)
+               #renderNode($childNode)
             #end
-        </li>
+        </div>
+            </li>
+        </ul>
     #else
         #if($nodeUrl != '')
-        <li class="tree__item tree__toggle">
-            #if ($node.plugType == 'dsc_ecs')
-                #renderUDKIcon(${node.udk_class} $nodeAlt)
-            #else
-                #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
-            #end
-            #if($nodeUrl != '' && $node.udk_class != "1000")
-                <a href="$nodeUrl">
-                    $nodeTitle
+            <div class="accordion-item-sub">
+                <a href="$nodeUrl" class="icon">
+                    #if ($node.plugType == 'dsc_ecs')
+                        #set($udkObjClassName = $Codelists.getCodeListValue('8000', $node.udk_class, $request.getLocale().getLanguage()))
+                        #renderUDKIcon(${node.udk_class} $nodeTitle $udkObjClassName)
+                    #else
+                        #set($udkAddrClassName = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
+                        #renderUDKAddressIcon(${node.udk_class} $nodeTitle $udkAddrClassName)
+                    #end
                 </a>
-            #else
-                $nodeTitle
-            #end
-        </li>
+            </div>
         #end
     #end
-    </ul>
 #end
 
 <script>
@@ -143,34 +128,34 @@
         });
     }
 
-    function getLeafIcon(udkClass, type) {
+    function getLeafIcon(udkClass, type, altTitle, title) {
         if(udkClass) {
             if(udkClass !== '1000') {
                 if (type === 'dsc_ecs') {
                     if(udkClass === '0') {
-                        return '<use xlink:href="#checklist"/>'
+                        return '<span class="ic-ic-zulassungsverfahren" title="' + altTitle + '"></span><span class="text">' + title + '</span>'
                     } else if(udkClass === '1') {
-                        return '<use xlink:href="#globe"/>';
+                        return '<span class="ic-ic-karte" title="' + altTitle + '"></span><span class="text">' + title + '</span>';
                     } else if(udkClass === '2') {
-                        return '<use xlink:href="#book"/>';
+                        return '<span class="ic-ic-katalog" title="' + altTitle + '"></span><span class="text">' + title + '</span>';
                     } else if(udkClass === '3') {
-                        return '<use xlink:href="#gears"/>';
+                        return '<span class="ic-ic-dienste" title="' + altTitle + '"></span><span class="text">' + title + '</span>';
                     } else if(udkClass === '4') {
-                        return '<use xlink:href="#folder"/>';
+                        return '<span class="ic-ic-projekt" title="' + altTitle + '"></span><span class="text">' + title + '</span>';
                     } else if(udkClass === '5') {
-                        return '<use xlink:href="#database"/>';
+                        return '<span class="ic-ic-metadaten" title="' + altTitle + '"></span><span class="text">' + title + '</span>';
                     } else if(udkClass === '6') {
-                        return '<use xlink:href="#molecule"/>';
+                        return '<span class="ic-ic-chemie" title="' + altTitle + '"></span><span class="text">' + title + '</span>';
                     }
                 } else {
                     if(udkClass === '0') {
-                        return '<use xlink:href="#building"/>'
+                        return '<span class="ic-ic-intituition" title="' + altTitle + '"></span><span class="text">' + title + '</span>'
                     } else if(udkClass === '1') {
-                        return '<use xlink:href="#group"/>';
+                        return '<span class="ic-ic-einheit" title="' + altTitle + '"></span><span class="text">' + title + '</span>';
                     } else if(udkClass === '2') {
-                        return '<use xlink:href="#users"/>';
+                        return '<span class="ic-ic-people" title="' + altTitle + '"></span><span class="text">' + title + '</span>';
                     } else if(udkClass === '3') {
-                        return '<use xlink:href="#envelope"/>';
+                        return '<span class="ic-ic-mailto" title="' + altTitle + '"></span><span class="text">' + title + '</span>';
                     }
                 }
             }
@@ -191,14 +176,18 @@
         var params = getQueryStringParameter(param);
         var paramsSplit = params ? params.split(',') : [];
         if (element) {
-            var parent = element.parent();
-            if (parent) {
-                var leafContent = parent.parent().find('.tree__content').first();
+            var elementAccordion = element.parent('span').parent('.accordion-item-sub');
+            var parent = elementAccordion.parent('.accordion-item');
+            if (elementAccordion.length > 0) {
+                // Render udk elements
+                var leafContent = elementAccordion.parent().find('.accordion-content').first();
                 if(updateParams) {
                     if (parent.hasClass('is-active')) {
                         parent.removeClass('is-active');
+                        element.removeClass('ic-ic-minus');
+                        element.addClass('ic-ic-plus');
                         if(leafContent.length !== 0) {
-                            leafContent.addClass('is-hidden');
+                            leafContent.css('display', '');
                         }
                         if(params) {
                             var index = paramsSplit.indexOf(id);
@@ -209,8 +198,11 @@
                         }
                     } else {
                         parent.addClass('is-active');
+                        element.removeClass('ic-ic-plus');
+                        element.addClass('ic-ic-minus');
+                        
                         if(leafContent.length !== 0) {
-                            leafContent.removeClass('is-hidden');
+                            leafContent.css('display', 'block');
                         }
                         if(!params) {
                             params = id;
@@ -225,14 +217,59 @@
                 } else {
                     parent.addClass('is-active');
                     if(leafContent.length !== 0) {
-                        leafContent.removeClass('is-hidden');
+                        leafContent.css('display', 'block');
                     }
                 }
                 if(leafContent.length !== 0 && leafContent.children().length > 0) {
                     hasLeafContent = true;
                 } else {
                     if(leafContent) {
-                        leafContent.append('<ul class="js-accordion-multi"><li class="tree__item tree__toggle">$MESSAGES.getString('searchCatHierarchy.tree.loading')</li></ul>');
+                        leafContent.append('<div class="accordion-item-sub">$MESSAGES.getString('searchCatHierarchy.tree.loading')</div>');
+                    }
+                }
+            } else {
+                // Render main accordion
+                var parent = element.parent('.accordion-item');
+                var leafContent = element.parent().find('.accordion-content').first();
+                if(updateParams) {
+                    if (parent.hasClass('is-active')) {
+                        parent.removeClass('is-active');
+                        if(leafContent.length !== 0) {
+                            leafContent.css('display', '');
+                        }
+                        if(params) {
+                            var index = paramsSplit.indexOf(id);
+                            if (index !== -1) {
+                              paramsSplit.splice(index, 1);
+                            }
+                            updateQueryStringParameter(param, paramsSplit.toString());
+                        }
+                    } else {
+                        parent.addClass('is-active');
+                        if(leafContent.length !== 0) {
+                            leafContent.css('display', 'block');
+                        }
+                        if(!params) {
+                            params = id;
+                        } else {
+                            var index = paramsSplit.indexOf(id);
+                            if (index === -1) {
+                                params = params + ',' + id;
+                            }
+                        }
+                        updateQueryStringParameter(param, params);
+                    }
+                } else {
+                    parent.addClass('is-active');
+                    if(leafContent.length !== 0) {
+                        leafContent.css('display', 'block');
+                    }
+                }
+                if(leafContent.length !== 0 && leafContent.children().length > 0) {
+                    hasLeafContent = true;
+                } else {
+                    if(leafContent) {
+                        leafContent.append('<div class="accordion-item-sub">$MESSAGES.getString('searchCatHierarchy.tree.loading')</div>');
                     }
                 }
             }
@@ -256,34 +293,33 @@
                             var leafUdkClass = leaf.udk_class;
                             var leafIcon = getLeafIcon(leaf.udk_class, leaf.plugType, leafTitle, leafName);
 
-                            leafsHtml = leafsHtml + '<ul class="js-accordion-multi">';
-                            leafsHtml = leafsHtml + '<li class="tree__item tree__toggle">';
                             if (leaf.expandable) {
-                                leafsHtml = leafsHtml + '<a id="' + leafLevel + '-' + leafId + '" href="#' + leafLevel + '-' + leafId + '" onclick="updateLeaf(\'' + leafLevel + '-' + leafId + '\', true, event)">';
-                                leafsHtml = leafsHtml + '<svg class="tree__toggle__icon icon">';
-                                leafsHtml = leafsHtml + '<use xlink:href="#plus"/>';
-                                leafsHtml = leafsHtml + '</svg>';
-                                leafsHtml = leafsHtml + '<svg class="tree__toggle__icon icon">';
-                                leafsHtml = leafsHtml + '<use xlink:href="#minus"/>';
-                                leafsHtml = leafsHtml + '</svg>';
-                                leafsHtml = leafsHtml + '</a>';
-                            }
-                            if (leafTitle) {
-                                leafsHtml = leafsHtml + '<svg class="icon globe__icon">';
-                                leafsHtml = leafsHtml + '<title>' + leafTitle + '</title>';
-                                leafsHtml = leafsHtml + leafIcon;
-                                leafsHtml = leafsHtml + '</svg>';
-                            }
-                            if(leafUdkClass !== '1000') {
-                                leafsHtml = leafsHtml + '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=' + leafDocId + (leaf.plugType !== 'dsc_ecs'? '&type=address' : '') + '#if($detailUseParamPlugid)&amp;plugid=' + leafPlugId + '#end"> ' + leafName + ' </a>';
+                                leafsHtml = leafsHtml + '<ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >';
+                                leafsHtml = leafsHtml + '<li class="accordion-item">';
+                                leafsHtml = leafsHtml + '<div class="accordion-item-sub">';
+                                leafsHtml = leafsHtml + '<span class="icon">';
+                                leafsHtml = leafsHtml + '<a id="' + leafLevel + '-' + leafId + '" href="#' + leafLevel + '-' + leafId + '" onclick="updateLeaf(\'' + leafLevel + '-' + leafId + '\', true, event)" class="ic-ic-plus"></a>';
+                                if(leafUdkClass !== '1000') {
+                                    leafsHtml = leafsHtml + '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=' + leafDocId + (leaf.plugType !== 'dsc_ecs'? '&type=address' : '') + '#if($detailUseParamPlugid)plugid=' + leafPlugId + '#end">';
+                                    leafsHtml = leafsHtml + leafName + ' </a>';
+                                } else {
+                                    leafsHtml = leafsHtml + '<span>' + leafName + '</span>';
+                                }
+                                leafsHtml = leafsHtml + '</span>';
+                                leafsHtml = leafsHtml + '</div>';
+                                leafsHtml = leafsHtml + '<div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="' + leafLevel + '-' + leafId + '" id="' + id + '-accordion"></div>';
+                                leafsHtml = leafsHtml + '</li>';
+                                leafsHtml = leafsHtml + '</ul>';
                             } else {
-                                leafsHtml = leafsHtml + leafName;
+                                leafsHtml = leafsHtml + '<div class="accordion-item-sub">';
+                                if(leafUdkClass !== '1000') {
+                                    leafsHtml = leafsHtml + '<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=' + leafDocId + (leaf.plugType !== 'dsc_ecs'? '&type=address' : '') + '#if($detailUseParamPlugid)plugid=' + leafPlugId + '#end" class="icon">';
+                                    leafsHtml = leafsHtml + leafIcon + ' </a>';
+                                } else {
+                                    leafsHtml = leafsHtml + '<span>' + leafName + '</span>';
+                                }
+                                leafsHtml = leafsHtml + '</div>';
                             }
-                            leafsHtml = leafsHtml + '</li>';
-                            if (leaf.expandable) {
-                                leafsHtml = leafsHtml + '<li class="tree__content js-accordion-content is-hidden"></li>';
-                            }
-                            leafsHtml = leafsHtml + '</ul>';
                         }
                     }
                     if (leafsHtml.length > 0) {
@@ -298,14 +334,12 @@
     }
 </script>
 
-<div class="tree bx-bot-l">
+<div class="columns catalog">
     #foreach($plugNode in $ps.plugsRoot.getChildren())
         #renderNode($plugNode)
     #end
-</div>
-#set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" name="extsearch" id="extsearch">
-    <p class="media__obj">
+    #set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" name="extsearch" id="extsearch">
         #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
-    </p>
-</form>
+    </form>
+</div>

@@ -8,10 +8,6 @@
             <hidden>true</hidden>
         </page>
         <page>
-            <name>main-chronicle.psml</name>
-            <hidden>true</hidden>
-        </page>
-        <page>
             <name>main-about-data-source.psml</name>
             <hidden>true</hidden>
         </page>
@@ -102,10 +98,6 @@
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
-        </file>
-        <file>
-            <action>copy-dir</action>
-            <src>ingrid-portal-mdek/</src>
         </file>
         <file>
             <action>copy-dir</action>

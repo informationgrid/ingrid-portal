@@ -105,13 +105,8 @@ else
 
         # NUMIS extends UVP layout
         if [ "$PORTAL_PROFILE" == "numis" ]; then
-            echo "Copying profile files from parent (uvp) into portal directories ..."
-            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
-            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
-            cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
             if [ "$NI_SWITCH_PORTAL" ]; then
-                sed -i 's/uvp.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/footer.vm
-                sed -i 's/uvp.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid-untitled/footer.vm
+                sed -i 's/uvp.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/templates/footer/body_popup.vm
             fi
         fi
 
@@ -124,40 +119,27 @@ else
             cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
             cp -R $PROFILES_DIR/uvp/ingrid-webmap-client/* webapps/ingrid-webmap-client
             if [ "$NI_SWITCH_PORTAL" ]; then
-                sed -i 's/numis.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/footer.vm
-                sed -i 's/numis.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid-untitled/footer.vm
+                sed -i 's/numis.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/templates/footer/body_popup.vm
             fi
         fi
 
-        # Profile extends UVP and NUMIS layout
-        if [ "$PORTAL_PROFILE" == "bkg" ] || [ "$PORTAL_PROFILE" == "bkg_advmis" ] || [ "$PORTAL_PROFILE" == "portalu_rp" ] || [ "$PORTAL_PROFILE" == "up_sh" ] || [ "$PORTAL_PROFILE" == "metaver_md" ] || [ "$PORTAL_PROFILE" == "baw_doi" ] || [ "$PORTAL_PROFILE" == "baw_mis" ] || [ "$PORTAL_PROFILE" == "mdi-de" ] || [ "$PORTAL_PROFILE" == "baw_wsv" ] || [ "$PORTAL_PROFILE" == "eba" ]; then
-            echo "Copying profile files from parent (uvp) into portal directories ..."
-            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
-            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
-            cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
+        if [ "$PORTAL_PROFILE" == "baw_mis" ]; then
+            echo "Copying profile files from parent (baw_doi) into portal directories ..."
+            cp -R $PROFILES_DIR/baw_doi/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/baw_doi/ingrid-portal-apps/* webapps/ingrid-portal-apps
+        fi
 
-            echo "Copying profile files from parent (numis) into portal directories ..."
-            cp -R $PROFILES_DIR/numis/ingrid-portal/* webapps/ROOT
-            cp -R $PROFILES_DIR/numis/ingrid-portal-apps/* webapps/ingrid-portal-apps
-            
-            if [ "$PORTAL_PROFILE" == "baw_mis" ]; then
-                echo "Copying profile files from parent (baw_doi) into portal directories ..."
-                cp -R $PROFILES_DIR/baw_doi/ingrid-portal/* webapps/ROOT
-                cp -R $PROFILES_DIR/baw_doi/ingrid-portal-apps/* webapps/ingrid-portal-apps
-            fi
+        if [ "$PORTAL_PROFILE" == "eba" ]; then
+            echo "Copying profile files from parent (baw_wsv) into portal directories ..."
+            cp -R $PROFILES_DIR/baw_wsv/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/baw_wsv/ingrid-portal-apps/* webapps/ingrid-portal-apps
+        fi
 
-            if [ "$PORTAL_PROFILE" == "eba" ]; then
-                echo "Copying profile files from parent (baw_wsv) into portal directories ..."
-                cp -R $PROFILES_DIR/baw_wsv/ingrid-portal/* webapps/ROOT
-                cp -R $PROFILES_DIR/baw_wsv/ingrid-portal-apps/* webapps/ingrid-portal-apps
-            fi
-
-            if [ "$PORTAL_PROFILE" == "bkg_advmis" ]; then
-                echo "Copying profile files from parent (bkg) into portal directories ..."
-                cp -R $PROFILES_DIR/bkg/ingrid-portal/* webapps/ROOT
-                cp -R $PROFILES_DIR/bkg/ingrid-portal-apps/* webapps/ingrid-portal-apps
-            fi
-       fi
+        if [ "$PORTAL_PROFILE" == "bkg_advmis" ]; then
+            echo "Copying profile files from parent (bkg) into portal directories ..."
+            cp -R $PROFILES_DIR/bkg/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/bkg/ingrid-portal-apps/* webapps/ingrid-portal-apps
+        fi
 
         echo "Copying profile files into portal directories ..."
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
@@ -195,6 +177,11 @@ else
     else
         echo "No specific portal profile used."
     fi
+
+    echo "Hide page '/administration/admin-portal-profile.psml'"
+    echo -e "\nUPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/mysql/afterMigrate.sql
+    echo -e "\nUPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/postgres/afterMigrate.sql
+    echo -e "\nUPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-portal-profile.psml';" >> webapps/ROOT/WEB-INF/classes/db/migration/oracle/afterMigrate.sql
 
     # IGE standalone configuration
     if [ "$STANDALONE_IGE" == "true" ]; then

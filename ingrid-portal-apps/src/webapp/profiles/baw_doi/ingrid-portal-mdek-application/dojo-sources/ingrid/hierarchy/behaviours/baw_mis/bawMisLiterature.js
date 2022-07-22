@@ -40,10 +40,9 @@ define([
     "ingrid/menu",
     "ingrid/message",
     "ingrid/utils/General",
-    "ingrid/utils/Store",
-    "ingrid/utils/Syslist"
+    "ingrid/utils/Store"
 ], function(MenuItem, MenuSeparator, registry, array, declare, lang, Deferred, dom, domClass, construct, all, topic,
-            Editors, Formatters, dirty, creator, menu, message, UtilGeneral, UtilStore, UtilSyslist) {
+            Editors, Formatters, dirty, creator, menu, message, UtilGeneral, UtilStore) {
 
     const ROLE_CODE_SYSLIST = 505;
 
@@ -59,14 +58,26 @@ define([
 
         _customiseTimeRef: function() {
             topic.subscribe("/onObjectClassChange", function(data) {
-                var objClass = data.objClass;
-                if (objClass === "Class2") {
+
+                var isNewItem = "newNode" === currentUdk.uuid;
+                var publishArea = registry.byId("extraInfoPublishArea");
+
+                var isLiterature = data.objClass === "Class2";
+                if (isLiterature) {
                     domClass.remove("timeRef", "hide");
 
                     // Durch die Ressource abgedeckte Zeitspanne
                     domClass.add("uiElementN011", "hide");
+
+                    if (isNewItem && publishArea) {
+                        publishArea.set("value", "2"); // Intranet
+                    }
                 } else {
                     domClass.remove("uiElementN011", "hide");
+
+                    if (isNewItem && publishArea) {
+                        publishArea.set("value", "1"); // Internet
+                    }
                 }
             });
 
@@ -94,22 +105,6 @@ define([
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
-            // Authors table
-            var authorsTableId = this._initObjClass2AuthorsTable();
-            this._addAuthorsTableValidationRules();
-
-            newFieldsToDirtyCheck.push(authorsTableId);
-            additionalFields.push(registry.byId(authorsTableId));
-            registry.byId(authorsTableId).reinitLastColumn(true);
-
-
-            // Publisher
-            var publisherTextboxId = this._initPublisherTextbox();
-            this._addPublisherValidationRules();
-
-            newFieldsToDirtyCheck.push(publisherTextboxId);
-            additionalFields.push(registry.byId(publisherTextboxId));
-
 
             // Handles
             var handleTextboxId = this._initHandleTextbox();
@@ -127,143 +122,6 @@ define([
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
 
             return registry.byId(authorsTableId).promiseInit;
-        },
-
-        _initObjClass2AuthorsTable: function() {
-            var id = "bawLiteratureAuthorsTable";
-            var structure = [
-                {
-                    field: "authorGivenName",
-                    name: message.get("ui.obj.baw.literature.author.table.column.given.name"),
-                    type: Editors.TextCellEditor,
-                    editable: true,
-                    isMandatory: false,
-                    width: "230px"
-                },
-                {
-                    field: "authorFamilyName",
-                    name: message.get("ui.obj.baw.literature.author.table.column.family.name"),
-                    type: Editors.TextCellEditor,
-                    editable: true,
-                    isMandatory: false,
-                    width: "230px"
-                },
-                {
-                    field: "authorOrganisation",
-                    name: message.get("ui.obj.baw.literature.author.table.column.organisation"),
-                    type: Editors.TextCellEditor,
-                    editable: true,
-                    isMandatory: false,
-                    width: "auto"
-                }
-            ];
-            creator.createDomDataGrid({
-                id: id,
-                name: message.get("ui.obj.baw.literature.author.table.title"),
-                help: message.get("ui.obj.baw.literature.author.table.help"),
-                style: "width: 100%"
-            }, structure, "general");
-
-            topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class2") {
-                    domClass.remove("uiElementAdd" + id, "hidden");
-                } else {
-                    domClass.add("uiElementAdd" + id, "hidden");
-                }
-            });
-
-            return id;
-        },
-
-        _addAuthorsTableValidationRules: function() {
-            var id = "bawLiteratureAuthorsTable";
-            // Validation rules
-            topic.subscribe("/onBeforeObjectPublish", function (notPublishableIDs) {
-                if (currentUdk.objectClass != 2) return;
-
-                // Check that persons have both given and last names defined
-                var authorsData = registry.byId(id).data;
-
-                var hasInvalidRows = array.some(authorsData, function (row) {
-                    var hasGivenName = UtilGeneral.hasValue(row.authorGivenName);
-                    var hasFamilyName = UtilGeneral.hasValue(row.authorFamilyName);
-
-                    return (hasGivenName && !hasFamilyName)
-                        || (!hasGivenName && hasFamilyName);
-                })
-
-                if (hasInvalidRows) {
-                    notPublishableIDs.push([id, message.get("validation.baw.literature.authors.names")]);
-                }
-
-                // Check that at least one author is defined
-                if (authorsData.length === 0) { // No authors in the custom table for authors
-                    var authorEntryIdx = 11;
-                    var authorEntryName = UtilSyslist.getSyslistEntryName(ROLE_CODE_SYSLIST, authorEntryIdx);
-
-                    var addressTableId = "generalAddress";
-                    var addressTableHasAuthors = array.some(registry.byId(addressTableId).data, function (row) {
-                        return row.nameOfRelation === authorEntryName;
-                    });
-
-                    // No authors even in the addresses table
-                    if (!addressTableHasAuthors) {
-                        notPublishableIDs.push([id, message.get("validation.baw.literature.authors.count")]);
-                    }
-                }
-            });
-        },
-
-        _initPublisherTextbox: function () {
-            var id = "bawLiteraturePublisher";
-            construct.place(
-                creator.createDomTextbox({
-                    id: id,
-                    name: message.get("ui.obj.baw.literature.publisher.title"),
-                    help: message.get("ui.obj.baw.literature.publisher.help"),
-                    style: "width: 100%"
-                }), "general");
-
-            topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class2") {
-                    domClass.remove("uiElementAdd" + id, "hidden");
-                } else {
-                    domClass.add("uiElementAdd" + id, "hidden");
-                }
-            });
-
-            return id;
-        },
-
-        _addPublisherValidationRules: function () {
-            topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
-                if (currentUdk.objectClass != 2) return;
-
-                var publisherEntryIdx = 10;
-                var publisherEntryName = UtilSyslist.getSyslistEntryName(ROLE_CODE_SYSLIST, publisherEntryIdx);
-
-                var addressTableId = "generalAddress";
-                var publishers = array.filter(registry.byId(addressTableId).data, function (row) {
-                    return row.nameOfRelation === publisherEntryName;
-                });
-
-                var publisherTextboxId = "bawLiteraturePublisher";
-                var publisherTextbox = registry.byId(publisherTextboxId);
-
-                console.log(publishers);
-                console.log(publisherCount);
-                var publisherCount = publishers.length;
-                if (UtilGeneral.hasValue(publisherTextbox.get("value"))) {
-                    publisherCount++;
-                    console.log(publisherCount);
-                }
-
-                if (publisherCount !== 1) {
-                    var msg = message.get("validation.baw.literature.publishers");
-                    notPublishableIDs.push([addressTableId, msg]);
-                    notPublishableIDs.push([publisherTextboxId, msg]);
-                }
-            });
         },
 
         _initHandleTextbox: function () {
@@ -340,7 +198,10 @@ define([
             );
 
             topic.subscribe("/onObjectClassChange", function(data) {
-                if (data.objClass === "Class1") {
+                var isGeodata = data.objClass === "Class1";
+                var isProject = data.objClass === "Class4";
+
+                if (isGeodata || isProject) {
                     domClass.remove("uiElementAdd" + id, "hide");
                 } else {
                     domClass.add("uiElementAdd" + id, "hide");

@@ -7,30 +7,31 @@
         #set($wildcard_item_term = $wildcard_item.get("term"))
     #end
 #end
-<div class="sidebar__widget js-accordion-multi">
-    <div id="facet_wildcard_header_$node.getId()" class="sidebar__widget__title filter__title js-accordion-toggle #if($wildcard_item_term)is-active#end">
-        $MESSAGES.getString("$node.getName()")
-        <svg class="filter__title__icon icon">
-            <use xlink:href="#arrow-thick" >
-        </svg>
-    </div>
-    <div id="facet_wildcard_content_$node.getId()" class="sidebar__widget__content--pushed js-accordion-content #if(!$wildcard_item_term)is-hidden#end">
-        #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
-        <br>
-        #set ($action = $renderResponse.createActionURL())
-        $action.setParameter("wildcard_id", "$node.getId()")
-        $action.setParameter("wildcard", "$node.getWildcard()")
-        <form action="$action" method="post" name="wildcard_$node.getId()">
-            <div class="search-form ob-clear ob-flex">
-                <input class="field" type="text" name="termWildcard_$node.getId()" id="termWildcard_$node.getId()" #if($wildcard_item_term)value="$wildcard_item_term"#end />
-                <button type="submit" name="doSearchWildcard_$node.getId()" value="$MESSAGES.getString("searchResult.facete.wildcard.name.search.button")" class="btn btn--primary btn--icon-transition" style="min-width:0;">
-                    <svg class="icon"><use xlink:href="#magnifier"/></svg>
-                </button>
-            </div>
-            #if($wildcard_item_term)
-                $action.setParameter("doClearSearchWildcard", "$node.getId()")
-                #renderCrossLink($action $MESSAGES.getString("searchResult.facete.wildcard.name.delete"))
-            #end
-        </form>
-    </div>
-</div>
+<ul class="accordion filter-group" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
+    <li class="accordion-item #if($wildcard_item_term)is-active#end" data-accordion-item>
+        <a href="" class="accordion-title" aria-controls="facet_wildcard_$node.getId()-accordion" role="tab" id="facet_wildcard_$node.getId()-label" #if($wildcard_item_term)aria-expanded="true" aria-selected="true"#end>
+            <span class="text">$MESSAGES.getString("$node.getName()")</span>
+        </a>
+        <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="facet_wildcard_$node.getId()-label" id="facet_wildcard_$node.getId()-accordion" #if(!$wildcard_item_term)aria-hidden="true"#end>
+            #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
+            <br>
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("wildcard_id", "$node.getId()")
+            $action.setParameter("wildcard", "$node.getWildcard()")
+            <form action="$action" method="post" name="wildcard_$node.getId()">
+                <p>
+                    <input class="field" type="text" name="termWildcard_$node.getId()" id="termWildcard_$node.getId()"
+                    #if($wildcard_item_term)
+                        value="$wildcard_item_term"
+                    #end
+                    />
+                </p>
+                #renderInputButtonDialog($MESSAGES.getString("searchResult.facete.wildcard.name.search.button") "" "doSearchWildcard_$node.getId()" $MESSAGES.getString("searchResult.facete.wildcard.name.search.button") "button filter_submit" "width:100%;")
+                #if($wildcard_item_term)
+                    $action.setParameter("doClearSearchWildcard", "$node.getId()")
+                    #renderCrossLink($action $MESSAGES.getString("searchResult.facete.wildcard.name.delete"))
+                #end
+            </form>
+        </div>
+    </li>
+</ul>

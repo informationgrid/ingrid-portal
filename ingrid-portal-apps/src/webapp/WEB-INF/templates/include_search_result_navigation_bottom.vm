@@ -1,4 +1,4 @@
-<div class="pagination bx-top-xl bx-bot-xl">
+<div>
 ## RANKED (left column stuff)
 #if($grouping)
     #if($grouping == 'domain')
@@ -9,10 +9,4 @@
 #else
     #renderRankedPageNavigation($rankedPageSelector true)
 #end
-</div>
-
-<div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
-    <svg class="icon">
-        <use xlink:href="#arrow-thick"/>
-     </svg>
 </div>

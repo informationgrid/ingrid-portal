@@ -65,9 +65,13 @@ public class ShowDataSourcePortlet extends GenericVelocityPortlet {
 
         String[] hideIPlugIdList = PortalConfig.getInstance().getStringArray(PortalConfig.HIDE_IPLUG_ID_LIST);
         if(hideIPlugIdList != null){
-        	context.put("hideIPlugIdList", hideIPlugIdList);
+            context.put("hideIPlugIdList", hideIPlugIdList);
         }
-               
+        
+        String user = request.getRemoteUser();
+        if(user != null && user.equals("admin")){
+            context.put("isAdmin", true);
+        }
         try {
             // set up plug list for view, remove plugs with same name !
             PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllActiveIPlugs();

@@ -57,9 +57,6 @@
         <value>search-topics-1</value>
       </preference>
     </fragment>
-    <fragment id="home-5" type="portlet" name="ingrid-portal-apps::InfoDefaultPageTeaser">
-      <property layout="OneColumn" name="row" value="5" />
-    </fragment>
   </fragment>
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>

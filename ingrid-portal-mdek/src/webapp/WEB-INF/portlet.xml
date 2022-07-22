@@ -21,10 +21,6 @@
                 <name>titleKey</name>
                 <value>mdek.title.entry</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -48,10 +44,6 @@
                 <name>titleKey</name>
                 <value>mdek.title.portaladmin</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
         </portlet-preferences>
     </portlet>
     
@@ -74,10 +66,6 @@
             <preference>
                 <name>titleKey</name>
                 <value>mdek.title.adminlogin</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
             </preference>
         </portlet-preferences>
     </portlet>
