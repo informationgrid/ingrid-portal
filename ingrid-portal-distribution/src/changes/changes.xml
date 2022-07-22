@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.13.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.13.0">
+        <release version="5.13.0" date="2022-07-22" description="Release 5.13.0">
           <action type="update" dev="wemove" issue="4044">
            Portal: erweiterte Suchergebnisse - vollständige Linkliste erst nach Aufruf anzeigen
           </action>
