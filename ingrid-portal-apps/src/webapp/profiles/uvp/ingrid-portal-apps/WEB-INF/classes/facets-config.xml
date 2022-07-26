@@ -768,7 +768,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         </facets>
     </facet>
     <facet>
-        <name>Bundesländern</name>
+        <name>searchResult.facete.title.states</name>
         <id>category_state</id>
         <categoryOnly>true</categoryOnly>
         <facets>
