@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -72,7 +72,7 @@ define([
                 return value;
         },
 
-        //check passed string: returns false if undefined or null or length==0 
+        //check passed string: returns false if undefined or null or length==0
         hasValue: function(stringValue) {
             return UtilGeneral.hasValue(stringValue);
         },
@@ -90,7 +90,8 @@ define([
 
             if (connUrl.toLowerCase().indexOf("request=getcapabilities") == -1) {
                 if (connUrl.indexOf("?") == -1) {
-                    connUrl = connUrl + "?";
+                    // if getCapabilities-URL does not contain '?' it'll be not modified (#3369)
+                    return connUrl;
                 }
                 if (!(connUrl.lastIndexOf("?") == connUrl.length - 1) && !(connUrl.lastIndexOf("&") == connUrl.length - 1)) {
                     connUrl = connUrl + "&";
@@ -107,9 +108,9 @@ define([
             }
             return connUrl;
         },
-        
-        stripTags: function(str) { 
-            return domConstruct.create("div", { innerHTML: str }).textContent; 
-        } 
+
+        stripTags: function(str) {
+            return domConstruct.create("div", { innerHTML: str }).textContent;
+        }
     })();
 });
