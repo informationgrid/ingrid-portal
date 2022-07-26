@@ -1240,6 +1240,28 @@ header {
       right: 0;
     }
   }
+  p.teaser-link {
+    .teaser-number {
+      position: inherit;
+      display: inherit;
+    }
+    a {
+      display: inline-block;
+      font-size: 14px;
+      
+      .teaser-number {
+        font-size: 12px;
+        padding: 2px 12px;
+      }
+    }
+    .teaser-link-list {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 0;
+    }
+  }
 }
 .teaser:hover, .tabs-content .tabs-panel .teaser:hover {
   cursor: pointer;
