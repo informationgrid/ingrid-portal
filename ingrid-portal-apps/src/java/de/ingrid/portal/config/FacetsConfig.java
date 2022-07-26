@@ -95,6 +95,10 @@ public class FacetsConfig {
                     }
                 }
 
+                if (ingridFacet.getId() == null) {
+                    ingridFacet.setId("");
+                }
+
                 if (parentFacet != null) {
                     ingridFacet.setParent( parentFacet );
                 }
@@ -140,7 +144,13 @@ public class FacetsConfig {
                 if (!facetNode.getChildren( "query" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "query" ).get( 0 );
                     if (node != null) {
-                        ingridFacet.setQuery( (String) node.getValue() );
+                        String query = (String) node.getValue();
+                        String parentQuery = "";
+                        if(parentFacet.getQuery() != null) {
+                            parentQuery = parentFacet.getQuery();
+                            query = parentQuery + " " + query;
+                        }
+                        ingridFacet.setQuery( query );
                     }
                 }
 

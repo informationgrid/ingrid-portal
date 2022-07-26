@@ -112,7 +112,14 @@
                     #if($parentFacetParam)
                         #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
                     #end
-                    #if($facet.getUrl())
+                    #set($paramToggle = "")
+                    #addToggleParams($config $paramToggle)
+                    #if(!$paramToggle.isEmpty())
+                        #set($facetParam = "$facetParam$paramToggle")
+                    #end
+                    #if($facet.getFacets())
+                        <p class="teaser-link">
+                    #elseif($facet.getUrl())
                         <a class="teaser-link" href="$facet.getUrl()">
                     #else
                         <a class="teaser-link" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
@@ -131,7 +138,43 @@
                             <span class="text">$MESSAGES.getString($facet.getName())</span>
                         #end
                     #end
-                        #if($facet.getQuery())
+                    #if($facet.getFacets())
+                        <span class="teaser-link-list">
+                        #foreach ($subFacet in $facet.getFacets())
+                            #set($subPf = $facet.getParentId())
+                            #set($facetParam = "$subPf:$facet.getId();")
+                            #set($facetValue = 0)
+                            #if($hits.get("FACETS").get("$facet.getId():$subFacet.getId()") && $hits.get("FACETS").get("$facet.getId():$subFacet.getId()") != "0")
+                                #set($facetValue = $hits.get("FACETS").get("$facet.getId():$subFacet.getId()"))
+                            #end
+                            #if($facetValue > 0)
+                                #if(!$paramToggle.isEmpty())
+                                    #set($facetParam = "$facetParam$paramToggle")
+                                #end
+                                #if($subFacet.getParentId())
+                                    #if(!$subFacet.getId().isEmpty())
+                                        #set($facetParam = "$facetParam$subFacet.getParentId():$subFacet.getId();")
+                                    #end
+                                #end
+                                #set($facetLink = "$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam")
+                                #if($subFacet.getUrl())
+                                    #set($facetLink = "$subFacet.getUrl()$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam")
+                                #end
+                                #if($subFacet.getQuery())
+                                     #if($subFacet.getQuery().indexOf("ranking:date") > -1)
+                                        #set($facetLink = "$facetLink&rank=date")
+                                     #end
+                                #end
+                                <a #if($subFacet.getUrl())target="_blank" #end href="$facetLink" title="$subFacet.getName() ($facet.getName())">
+                                    $subFacet.getName()
+                                    <span class="teaser-number">
+                                        $facetValue
+                                    </span>
+                                </a>
+                            #end
+                        #end
+                        </span>
+                    #elseif($facet.getQuery())
                         <span class="teaser-number">
                             #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
                                 $hits.get("FACETS").get("$facetId:$facet.getId()")
@@ -139,8 +182,12 @@
                                 0
                             #end
                         </span>
-                        #end
-                    </a>
+                    #end
+                    #if($facet.getFacets())
+                        </p>
+                    #else
+                        </a>
+                    #end
                 </div>
             </div>
         #end
@@ -163,6 +210,26 @@
         #end
     #else
        <i class="bx-top-s icon-question-mark #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"></i>
+    #end
+#end
+
+#macro (addToggleParams $tmpFacets $param)
+    #if($tmpFacets)
+        #foreach($tmpFacet in $tmpFacets)
+            #set($length = $tmpFacet.getFacets().size() - 1)
+            #foreach($num in [0..$length])
+                #if($tmpFacet.getFacets().get($num))
+                    #set($tmpParentToggleFacet = $tmpFacet.getFacets().get($num)) 
+                    #if($tmpParentToggleFacet.getToggle())
+                        #set($tmpToggleFacet = $tmpParentToggleFacet.getToggle())
+                        #if($tmpToggleFacet.isSelect())
+                            #set($param = "$param$tmpFacet.getId():$tmpToggleFacet.getId();")
+                        #end
+                    #end
+                #end
+            #end
+        #end
+        
     #end
 #end
 
