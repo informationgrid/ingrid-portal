@@ -796,84 +796,79 @@ public class UtilsPortletServeResources {
         if(stateRanking == null) {
             stateRanking = "date";
         }
-        if(facetId.equals("procedure_dev_plan") && stateRanking.equals("date")) {
-            try {
-                response.getWriter().write("0");
-            } catch (IOException e) {
-                UtilsLog.logError("Error write response!", e, log);
+        if(facet != null) {
+            String portalQueryString = UtilsSearch.updateQueryString("", request);
+            IngridQuery query = QueryStringParser.parse( portalQueryString );
+
+            String queryString = facet.getQuery();
+            if(facet.getToggle() != null && facet.getToggle().isSelect()) {
+                queryString = facet.getToggle().getQuery();
             }
-        } else {
-            if(facet != null) {
-                String portalQueryString = UtilsSearch.updateQueryString("", request);
-                IngridQuery query = QueryStringParser.parse( portalQueryString );
 
-                String queryString = facet.getQuery();
-                if(facet.getToggle() != null && facet.getToggle().isSelect()) {
-                    queryString = facet.getToggle().getQuery();
+            if(queryString != null && queryString.trim().length() > 0){
+                // Change query to clause query (with phrase search)
+                UtilsSearch.changeQueryToClauseQuery(query);
+    
+                String addToQuery = queryString;
+                if(addToQuery != null && addToQuery.length() > 0){
+                    if(stateRanking.equals("date")){
+                        addToQuery += " -procedure:dev_plan ranking:date";
+                    }
+                    IngridQuery addQuery = QueryStringParser.parse(addToQuery);
+                    ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
+                    query.addClause(cp);
                 }
+            }
+            if(config != null) {
+                query = UtilsFacete.getQueryFacets(request, config, query, facet.getParent().getId());
+            }
+            if (query.get( "FACETS" ) == null) {
+                ArrayList<IngridDocument> facetQueries = new ArrayList<>();
+                ArrayList<HashMap<String, String>> facetList = new ArrayList<>();
+                String tmpQuery = facet.getQuery();
+                if (!tmpQuery.isEmpty()) {
+                    HashMap<String, String> facetEntry = new HashMap<>();
+                    facetEntry.put("id", "value");
+                    facetEntry.put("query", tmpQuery);
+                    facetList.add(facetEntry);
+                }
+                if (!facetList.isEmpty()) {
+                    IngridDocument facets = new IngridDocument();
+                    facets.put("id", "value");
+                    facets.put("classes", facetList);
+                    facetQueries.add(facets);
+                }
+                if (!facetQueries.isEmpty()) {
+                    query.put( "FACETS", facetQueries );
+                }
+            }
+            IngridHits hits;
+            try {
+                IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+                hits = ibus.search( query, Settings.SEARCH_RANKED_HITS_PER_PAGE, 1, 0, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ) );
 
-                if(queryString != null && queryString.trim().length() > 0){
-                    // Change query to clause query (with phrase search)
-                    UtilsSearch.changeQueryToClauseQuery(query);
-        
-                    String addToQuery = queryString;
-                    if(addToQuery != null && addToQuery.length() > 0){
-                        IngridQuery addQuery = QueryStringParser.parse(addToQuery);
-                        ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
-                        query.addClause(cp);
+                if (hits == null) {
+                    if (log.isErrorEnabled()) {
+                        log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
                     }
-                }
-                if(config != null) {
-                    query = UtilsFacete.getQueryFacets(request, config, query, facet.getParent().getId());
-                }
-                if (query.get( "FACETS" ) == null) {
-                    ArrayList<IngridDocument> facetQueries = new ArrayList<>();
-                    ArrayList<HashMap<String, String>> facetList = new ArrayList<>();
-                    String tmpQuery = facet.getQuery();
-                    if (!tmpQuery.isEmpty()) {
-                        HashMap<String, String> facetEntry = new HashMap<>();
-                        facetEntry.put("id", "value");
-                        facetEntry.put("query", tmpQuery);
-                        facetList.add(facetEntry);
-                    }
-                    if (!facetList.isEmpty()) {
-                        IngridDocument facets = new IngridDocument();
-                        facets.put("id", "value");
-                        facets.put("classes", facetList);
-                        facetQueries.add(facets);
-                    }
-                    if (!facetQueries.isEmpty()) {
-                        query.put( "FACETS", facetQueries );
-                    }
-                }
-                IngridHits hits;
-                try {
-                    IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-                    hits = ibus.search( query, Settings.SEARCH_RANKED_HITS_PER_PAGE, 1, 0, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ) );
-
-                    if (hits == null) {
-                        if (log.isErrorEnabled()) {
-                            log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+                } else {
+                    if(hits.length() > 0) {
+                        Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
+                        JSONObject obj = new JSONObject();
+                        if(facets != null){
+                            for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
+                                String key = iterator.next();
+                                Long value = (Long) facets.get(key);
+                                response.getWriter().write(value+"");
+                                break;
+                            }
                         }
                     } else {
-                        if(hits.length() > 0) {
-                            Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
-                            JSONObject obj = new JSONObject();
-                            if(facets != null){
-                                for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
-                                    String key = iterator.next();
-                                    Long value = (Long) facets.get(key);
-                                    response.getWriter().write(value+"");
-                                    break;
-                                }
-                            }
-                        } else {
-                            response.getWriter().write("0");
-                        }
+                        response.getWriter().write("0");
                     }
-                } catch (Exception e) {
-                    UtilsLog.logError("Problems performing Search !", e, log);
                 }
+            } catch (Exception e) {
+                UtilsLog.logError("Problems performing Search !", e, log);
             }
         }
     }
