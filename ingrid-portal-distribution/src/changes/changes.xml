@@ -19,6 +19,12 @@
           <action type="add" dev="wemove" issue="1314">
            Portal: geforderte Passwortkomplexität soll per Default erhöht werden
           </action>
+          <action type="add" dev="wemove" issue="1314">
+            Portal: geforderte Passwortkomplexität soll per Default erhöht werden
+          </action>
+          <action type="fix" dev="wemove" issue="4113">
+            Portal: Shorten CSW links. Remove superfluous parameters iplug and elementSetName
+          </action>
         </release>
 
         <release version="5.13.0" date="2022-07-22" description="Release 5.13.0">
