@@ -411,7 +411,7 @@ public class QueryResultPostProcessor {
                 }
 
         		if (isMetadata && !cswUrl.isEmpty()) {
-                    String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+hit.getPlugId()+"&elementSetName=full";
+                    String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id;
                     hit.put(Settings.RESULT_KEY_CSW_INTERFACE_URL, cswUrl + parameter);
                 }
             }
