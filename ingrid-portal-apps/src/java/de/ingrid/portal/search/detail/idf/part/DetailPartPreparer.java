@@ -198,7 +198,7 @@ public class DetailPartPreparer {
                 return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
             }
         } catch (Exception e) {
-            log.error("Error on getDateFormatValue.", e);
+            log.error("Error on getDateFormatValue() for input: " + value);
         }
         return value;
     }
@@ -1062,7 +1062,7 @@ public class DetailPartPreparer {
     }
 
     public String removeLocalisation (String locString){
-        if(locString != null) { 
+        if(locString != null) {
             return locString.split("#locale-")[0];
         }
         return locString;
