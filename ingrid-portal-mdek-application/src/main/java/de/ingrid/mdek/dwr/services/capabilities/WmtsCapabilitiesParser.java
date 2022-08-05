@@ -97,7 +97,7 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
         List<String> mappedVersionList = mapVersionsFromCodelist(MdekSysList.OBJ_SERV_VERSION_WMS.getDbValue(), versionList, versionSyslistMap);
         result.setVersions(mappedVersionList);
 
-        String version = versionList.get(0);
+//        String version = versionList.get(0);
         
         // Fees
         result.setFees(xPathUtils.getString(doc, XPATH_EXP_WMTS_FEES));
@@ -143,19 +143,23 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
                         ID_OP_PLATFORM_HTTP_POST, ID_OP_PLATFORM_HTTP_POST, ID_OP_PLATFORM_HTTP_POST });
         if (!getCapabilitiesOp.getAddressList().isEmpty()) {
             getCapabilitiesOp.setName("GetCapabilities");
-            getCapabilitiesOp.setMethodCall("GetCapabilities");
+            // do not set method call so that it doesn't appear in ISO (#3651)
+            // getCapabilitiesOp.setMethodCall("GetCapabilities");
     
-            List<OperationParameterBean> paramList = new ArrayList<>();
+            // also do not set any parameters (#3651)
+            /*List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("SERVICE=WMTS", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
             paramList.add(new OperationParameterBean("SECTIONS=Contents", "Comma-separated unordered list of zero or more names of sections of service metadata document to be returned in service metadata document", "", true, false));
             paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is \"increased\" whenever any change is made in complete service metadata document", "", true, false));
             paramList.add(new OperationParameterBean("ACCEPTFORMATS= text/xml", "Comma-separated prioritized sequence of zero or more response formats desired by client, with preferred formats listed first", "", true, false));
-            getCapabilitiesOp.setParamList(paramList);
+            getCapabilitiesOp.setParamList(paramList);*/
             operations.add(getCapabilitiesOp);
         }
-
+        
+        // Only import GetCapabilities - Operation (#3651)
+/*
         // Operation - GetTile
         OperationBean getTileOp = mapToOperationBean(doc,
                 new String[]{
@@ -214,9 +218,8 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
 
             getFeatureInfoOp.setParamList(paramList);
             operations.add(getFeatureInfoOp);
-        }
+        }*/
 
-        
         result.setOperations(operations);
         return result;
         

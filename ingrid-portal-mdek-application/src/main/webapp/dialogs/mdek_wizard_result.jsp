@@ -297,7 +297,8 @@ require([
         if (!found) {
             operations.unshift({
                 name: "GetCapabilities",
-                methodCall: "GetCapabilities",
+                // do not set method call so that it doesn't appear in ISO (#3651)
+                // methodCall: "GetCapabilities",
                 addressList: [capabilitiesUrl],
                 platform: [7],
                 paramList: []
