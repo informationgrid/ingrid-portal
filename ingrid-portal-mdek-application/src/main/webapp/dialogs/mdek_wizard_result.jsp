@@ -286,6 +286,8 @@ require([
     }
 
     function addGetCapabilitiesIfNone(operations, capabilitiesUrl) {
+        if (!operations) return;
+        
         var found = false;
         for (var i = 0; i < operations.length; i++) {
             if (operations[i].name === "GetCapabilities") {
