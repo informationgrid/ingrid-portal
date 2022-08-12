@@ -694,9 +694,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     public HashMap<String, Object> getAPACitationElements(Node node, Map<String, String> xpathExpressions){
         HashMap<String, Object> element = new HashMap<>();
         if (xpathExpressions.containsKey("rootName") && xPathUtils.nodeExists(node, xpathExpressions.get("rootName"))){
-            String value = getAPACitationValueFromXpath("name", node, xpathExpressions.get("name"), xpathExpressions.get("rootName"));
-            if ((value == null || value.trim().isEmpty()) && xpathExpressions.containsKey("org_name")) {
-                String org = getAPACitationValueFromXpath("org_name", node, xpathExpressions.get("org_name"));
+            String value = getAPACitationValueFromXpath("name", node, xpathExpressions.get("author_person"), xpathExpressions.get("rootName"));
+            if ((value == null || value.trim().isEmpty()) && xpathExpressions.containsKey("author_org")) {
+                String org = getAPACitationValueFromXpath("org_name", node, xpathExpressions.get("author_org"));
                 if (org != null) {element.put("authors", org);}
             } else {
                 element.put("authors", value);
