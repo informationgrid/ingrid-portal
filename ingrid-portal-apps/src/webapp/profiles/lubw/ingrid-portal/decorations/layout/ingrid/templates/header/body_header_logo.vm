@@ -1,0 +1,13 @@
+<div class="columns xsmall-7 small-7 medium-8 large-7 xlarge-9">
+    <div class="logo" role="banner">
+        <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-xlarge hide-for-xsmall-only hide-for-small-only" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+            <img src="/decorations/layout/ingrid/images/template/logo-numis-mobile.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
+        </a>
+        <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="show-for-xlarge hide-for-xsmall-only" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+            <img src="/decorations/layout/ingrid/images/template/logo-numis-mit-tag.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
+        </a>
+        <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-medium" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+            <img src="/decorations/layout/ingrid/images/template/logo-xsmall.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
+        </a>
+    </div>
+</div>
