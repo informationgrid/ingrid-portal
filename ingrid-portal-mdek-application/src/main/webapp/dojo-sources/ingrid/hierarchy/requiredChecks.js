@@ -113,7 +113,8 @@ define(["dojo/_base/declare",
                 .filter(function (item) {
                     var isNotInHiddenSubRubric = hiddenSubRubrics.indexOf(item) === -1;
                     var isTimeRefHidden = item === "timeRefSubType" && domClass.contains("timeRefSubTypeEditor", "hide")
-                        || item === "timeRefDate2" && domClass.contains("timeRefDate2Editor", "hide");
+                        || item === "timeRefDate2" && domClass.contains("timeRefDate2Editor", "hide")
+                        || item === "endTime" && domClass.contains("uiElementAddendTime", "hide");
                     return isNotInHiddenSubRubric && !isTimeRefHidden;
                 });
             
