@@ -1,10 +1,6 @@
 <div class="columns xsmall-7 small-7 medium-8 large-7 xlarge-9">
     <div class="logo" role="banner">
-        <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-xlarge hide-for-xsmall-only hide-for-small-only" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-            <img src="/decorations/layout/ingrid/images/template/bw-wappen.png" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
-            <div class="text">Landesanstalt für Umwelt<br>Baden-Württemberg</div>
-        </a>
-        <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="show-for-xlarge hide-for-xsmall-only" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+        <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-xsmall-only hide-for-small-only" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
             <img src="/decorations/layout/ingrid/images/template/bw-wappen.png" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
             <div class="text">Landesanstalt für Umwelt<br>Baden-Württemberg</div>
         </a>

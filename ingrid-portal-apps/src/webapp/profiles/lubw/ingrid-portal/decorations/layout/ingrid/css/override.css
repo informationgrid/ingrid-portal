@@ -614,6 +614,7 @@ table .dark a {
   border-right: 11px solid #006ec5;
 }
 
+/* footer */
 footer .footer {
   padding: 0;
   background-color: #3f3f3f;
@@ -631,8 +632,8 @@ footer .footer .footer-menu-entries a {
 footer .footer .footer-menu-entries a:hover {
   box-shadow: inset 0 -1px #fff;
 }
-footer .footer .row:last-of-type {
-  padding-bottom: 16px;
+footer .footer .row {
+  padding: 16px 0;
 }
 footer .footer .columns .footer-menu-entries {
   display: flex;
@@ -659,7 +660,7 @@ footer .footer .logo {
   margin-right: 10px;
 }
 footer hr {
-  margin: 0 0 16px;
+  display: none;
 }
 footer .footer-top-link {
   background-color: #006ec5;
@@ -1136,6 +1137,7 @@ h4, h5 {
   color: #3a566d;
 }
 
+/* search results page */
 .results-index .result-text {
   color: #3a566d;
 }
