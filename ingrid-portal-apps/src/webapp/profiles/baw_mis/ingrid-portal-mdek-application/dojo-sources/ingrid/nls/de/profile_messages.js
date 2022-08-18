@@ -93,7 +93,7 @@ define({
     "ui.obj.baw.measuring.zeroLevel.help": "",
     "ui.obj.baw.measuring.zeroLevel.zeroLevel": "Pegelnullpunkt",
     "ui.obj.baw.measuring.zeroLevel.unitOfMeasurement": "Maßeinheit",
-    "ui.obj.baw.measuring.zeroLevel.verticalCoordinateReferenceSystem": "Höhenbezugsszstem",
+    "ui.obj.baw.measuring.zeroLevel.verticalCoordinateReferenceSystem": "Höhenbezugssystem",
     "ui.obj.baw.measuring.zeroLevel.description": "Beschreibung",
     "ui.obj.baw.measuring.drainMin.title": "Abfluss Q min [m³/s]",
     "ui.obj.baw.measuring.drainMin.help": "",
