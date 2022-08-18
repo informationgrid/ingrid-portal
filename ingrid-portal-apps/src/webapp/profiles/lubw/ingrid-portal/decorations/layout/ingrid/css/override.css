@@ -220,7 +220,7 @@ a:hover, a:focus {
   color: #296e4b;
 }
 a.icon:hover {
-  color: #1D4B7B;
+  color: #024731;
 }
 
 .button {
@@ -759,6 +759,21 @@ footer .footer-top-link:focus {
   display: none;
 }
 
+/* sitemap page */
+.sitemap h4 {
+  font-size: 28px;
+  font-family: EB-Garamond-Bold, sans-serif;
+  border-bottom: 1px solid #3f3f3f;
+}
+.sitemap .link-list a {
+  font-family: Gudea-Bold, sans-serif;
+  font-weight: unset;
+}
+.sitemap .link-list .search-result--nested a {
+  font-family: Gudea-Regular, sans-serif;
+}
+
+
 .select2-container--default .select2-selection--single::after {
   color: #006ec5;
 }
@@ -836,7 +851,6 @@ footer .footer-top-link:focus {
 .nav-desktop__dropdown a {
   position: relative;
   display: block;
-  color: #FFFFFF;
   text-align: left;
   color: #fff;
   font-size: 14px !important;
