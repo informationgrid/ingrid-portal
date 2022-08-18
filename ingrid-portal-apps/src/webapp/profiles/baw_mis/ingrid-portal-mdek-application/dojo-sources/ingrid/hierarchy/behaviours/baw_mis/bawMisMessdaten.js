@@ -110,16 +110,25 @@ define([
     })();
 
     function addMeasuringMethod(newFieldsToDirtyCheck, additionalFields) {
-        construct.place(
-            creator.createDomSelectBox({
-                id: "measuringMethod",
-                name: message.get("ui.obj.baw.measuring.method.title"),
-                help: message.get("ui.obj.baw.measuring.method.help"),
+        var structure = [
+            {
+                field: "measuringMethod",
+                name: message.get("ui.obj.baw.measuring.method.title") + "*",
+                type: Editors.ComboboxEditor,
+                formatter: lang.partial(Formatters.SyslistCellFormatter, 3950011),
+                listId: 3950011,
                 isMandatory: true,
-                useSyslist: 3950011,
-                style: "width: 100%",
-                isExtendable: true
-            }), "refClass1");
+                editable: true
+            }
+        ];
+
+        creator.createDomDataGrid({
+            id: "measuringMethod",
+            name: message.get("ui.obj.baw.measuring.method.title"),
+            help: message.get("ui.obj.baw.measuring.method.help"),
+            isMandatory: true,
+            style: "width: 100%"
+        }, structure, "refClass1");
         newFieldsToDirtyCheck.push("measuringMethod");
         additionalFields.push(registry.byId("measuringMethod"));
     }
