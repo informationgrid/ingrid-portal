@@ -727,10 +727,39 @@ footer .footer-top-link:focus {
   background-color: #024731;
 }
 
-.select2-container--default .select2-selection--single::after {
-  color: #006ec5;
+/* contact form page */
+[type='text'], [type='password'], [type='date'], [type='datetime'], [type='datetime-local'],
+[type='month'], [type='week'], [type='email'], [type='number'], [type='search'], [type='tel'],
+[type='time'], [type='url'], [type='color'], textarea {
+  border: 0;
+  box-shadow: unset;
+  border-radius: 0;
+  background-color: #eae8de;
+  border-bottom: 2px solid #3f3f3f;
+}
+[type='text']:focus, [type='password']:focus, [type='date']:focus, [type='datetime']:focus,
+[type='datetime-local']:focus, [type='month']:focus, [type='week']:focus, [type='email']:focus,
+[type='number']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus,
+[type='url']:focus, [type='color']:focus, textarea:focus {
+  border: 0;
+  box-shadow: unset;
+  background-color: #eae8de;
+  border-bottom: 2px solid #3f3f3f;
+  outline-offset: 5px;
+  outline: 3px solid #296e4b !important;
+}
+.form-element label {
+  color: #3f3f3f;
+  font-family: Gudea-Bold, sans-serif;
 }
 .form-element .control {
+  color: #296e4b;
+}
+.search-filtered hr {
+  display: none;
+}
+
+.select2-container--default .select2-selection--single::after {
   color: #006ec5;
 }
 .accordion-content {
@@ -903,6 +932,7 @@ header .menu-tab-row .menu-tab {
   border: unset;
   border-radius: 5px;
   box-shadow: none;
+  background-color: #fff;
 }
 .input-search .button.large {
   top: 5px;
