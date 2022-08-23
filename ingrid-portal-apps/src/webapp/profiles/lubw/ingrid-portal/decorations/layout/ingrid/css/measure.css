@@ -84,14 +84,14 @@ graph {
 /* drop down container */
 .chosen-container .chosen-results li.highlighted {
   color: #3f3f3f;
-  background-color: #eae8de !important;
+  background-color: #f4f2e9 !important;
   background-image: unset;
 }
 .chosen-container .chosen-single,
 .chosen-container-active.chosen-with-drop .chosen-single {
   color: #3f3f3f;
   border: 2px solid #3f3f3f;
-  background: #eae8de;
+  background: #f4f2e9;
   line-height: 32px;
   box-shadow: unset;
 }
@@ -109,7 +109,7 @@ graph {
 }
 
 .irs-bar {
-  background-color: #eae8de;
+  background-color: #f4f2e9;
 }
 .irs-line {
   background: unset;
@@ -129,17 +129,17 @@ graph {
   border-radius: 0 !important;
 }
 .btn-default:hover {
-  background-color: #eae8de;
+  background-color: #f4f2e9;
 }
 .btn.active, .btn.active:hover {
   color: #000;
-  background-color: #eae8de;
+  background-color: #f4f2e9;
   box-shadow: unset;
   border: 2px solid #3f3f3f;
 }
 .btn-default:focus, .btn-default:active {
   color: #000;
-  background-color: #eae8de;
+  background-color: #f4f2e9;
   box-shadow: unset;
 }
 
@@ -160,8 +160,8 @@ graph {
   width: 35px;
   height: 35px;
   font-size: 28px;
-  background: #296e4b;
   color: #FFF !important;;
+  background: #296e4b;
   border-radius: 50% !important;
   display: flex;
   align-items: center;
