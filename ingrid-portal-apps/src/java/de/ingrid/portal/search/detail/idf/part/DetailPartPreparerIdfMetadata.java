@@ -432,18 +432,17 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i<nodeList.getLength();i++){
-                String url = "";
-                String name = "";
-                String description = "";
-                String attachedToField = "";
-                String applicationProfile = "";
-                String size = "";
-                float roundSize = 0;
-
                 NodeList onLineList = xPathUtils.getNodeList(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine");
-                
+
                 for (int j=0; j<onLineList.getLength();j++){
-                    
+                    String url = "";
+                    String name = "";
+                    String description = "";
+                    String attachedToField = "";
+                    String applicationProfile = "";
+                    String size = "";
+                    float roundSize = 0;
+
                     xpathExpression = "./*/gmd:linkage/gmd:URL";
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         url = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
