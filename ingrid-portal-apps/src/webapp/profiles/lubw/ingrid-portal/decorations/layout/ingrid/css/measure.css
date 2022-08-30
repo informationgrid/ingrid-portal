@@ -1,0 +1,184 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ *
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ *
+ * http://ec.europa.eu/idabc/eupl5
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+/* custom fonts */
+@font-face {
+  font-family: 'EB-Garamond-Regular';
+  src: url('../../ingrid/fonts/EBGaramond/EBGaramond-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'EB-Garamond-Bold';
+  src: url('../../ingrid/fonts/EBGaramond/EBGaramond-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Gudea-Regular';
+  src: url('../../ingrid/fonts/Gudea/Gudea-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Gudea-Bold';
+  src: url('../../ingrid/fonts/Gudea/Gudea-Bold.ttf') format('truetype');
+}
+
+app {
+  color: #3f3f3f;
+  font-family: Gudea-Regular, sans-serif;
+}
+graph {
+  top: 120px;
+}
+.title {
+  font-weight: unset;
+  font-family: Gudea-Bold, sans-serif;
+}
+.collapse.in p, .collapse.in a {
+  color: #3f3f3f;
+  font-size: 16px;
+}
+.sidebar {
+  top: 0 !important;
+  left: 0 !important;
+}
+.sidebar .sidebar-tabs {
+  background-color: #296e4b !important;
+}
+.sidebar.collapsed {
+  top: 10px !important;
+  left: 10px !important;
+}
+.main-title {
+  font-family: Gudea-Regular, sans-serif;
+  background: #296e4b !important;
+}
+.tooltipContent a,
+.tooltipContent .collapse.in a {
+  font-size: 14px;
+  font-weight: unset !important;
+  font-family: Gudea-Bold, sans-serif !important;
+}
+.content .value {
+  font-family: Gudea-Regular, sans-serif;
+}
+.header .back {
+  background-color: #296e4b !important;
+}
+
+/* drop down container */
+.chosen-container .chosen-results li.highlighted {
+  color: #3f3f3f;
+  background-color: #f4f2e9 !important;
+  background-image: unset;
+}
+.chosen-container .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single {
+  color: #3f3f3f;
+  border: 2px solid #3f3f3f;
+  background: #f4f2e9;
+  line-height: 32px;
+  box-shadow: unset;
+}
+.chosen-container .chosen-drop {
+  border-radius: 0;
+  margin-top: 3px;
+  border: 2px solid #3f3f3f;
+}
+.chosen-container .chosen-results li.group-result {
+  font-weight: unset;
+  font-family: Gudea-Bold, sans-serif;
+}
+.controls {
+  padding-bottom: 30px;
+}
+
+.irs-bar {
+  background-color: #f4f2e9;
+}
+.irs-line {
+  background: unset;
+}
+.irs-slider {
+  background: #fffef9;
+  border-radius: 50%;
+  border: 1px solid #3f3f3f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #296e4b;
+}
+
+/* buttons */
+.btn {
+  border-radius: 0 !important;
+}
+.btn-default:hover {
+  background-color: #f4f2e9;
+}
+.btn.active, .btn.active:hover {
+  color: #000;
+  background-color: #f4f2e9;
+  box-shadow: unset;
+  border: 2px solid #3f3f3f;
+}
+.btn-default:focus, .btn-default:active {
+  color: #000;
+  background-color: #f4f2e9;
+  box-shadow: unset;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  color: #FFF;
+  font-size: 24px;
+  top: 10px;
+  right: 13px;
+}
+
+.leaflet-bar {
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: unset;
+}
+.leaflet-bar a {
+  width: 35px;
+  height: 35px;
+  font-size: 28px;
+  color: #FFF !important;;
+  background: #296e4b;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+.leaflet-bar a .fa {
+  font-size: 22px;
+  color: #FFF !important;;
+}
+.leaflet-bar a:hover {
+  width: 35px;
+  height: 35px;
+  font-size: 28px;
+  color: #FFF !important;;
+  background: #024731;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
