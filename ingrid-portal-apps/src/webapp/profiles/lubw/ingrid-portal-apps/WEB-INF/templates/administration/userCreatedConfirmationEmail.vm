@@ -7,7 +7,7 @@ Ihre Zugangsdaten wurden geändert!
 Ihre neuen Login-Daten finden Sie hier:
 #end
 #else
-Willkommen bei NUMIS! 
+Willkommen bei LUBW! 
 
 Für Sie wurde ein Zugang angelegt:
 #end
@@ -24,4 +24,4 @@ $!{map.get("returnURL")}
 #end
 Mit freundlichen Grüßen,
 
-Ihr NUMIS Team
+Ihr LUBW Team

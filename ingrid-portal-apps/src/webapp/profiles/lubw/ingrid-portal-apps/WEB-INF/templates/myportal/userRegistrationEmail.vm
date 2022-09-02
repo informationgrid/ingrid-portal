@@ -1,6 +1,6 @@
 Hallo $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
 
-Willkommen im NUMIS-Portal! 
+Willkommen im LUBW-Portal! 
 Vielen Dank für Ihre Anmeldung.
 
 Bitte verifizieren Sie Ihre Anmeldung durch den nachfolgenden Link.
@@ -9,4 +9,4 @@ $!{map.get("returnURL")}
 
 Mit freundlichen Grüßen,
 
-Ihr NUMIS Team
+Ihr LUBW Team
