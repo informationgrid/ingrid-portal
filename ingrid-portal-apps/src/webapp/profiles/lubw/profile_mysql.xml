@@ -83,15 +83,10 @@
             <action>copy-dir</action>
             <src>ingrid-portal/</src>
         </file>
-<!--        <file>-->
-<!--            <action>copy-dir</action>-->
-<!--            <src>ingrid-webmap-client/</src>-->
-<!--        </file>-->
-<!--        <file>-->
-<!--            <action>copy-dir</action>-->
-<!--            <src>ingrid-webmap-client/frontend/src</src>-->
-<!--            <dst>ingrid-webmap-client/frontend/prd</dst>-->
-<!--        </file>-->
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/</src>
+        </file>
     </files>
     <sql>
         <execute>
