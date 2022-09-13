@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.13.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.13.1">
+          <action type="fix" dev="wemove" issue="4258">
+            Fehler bei kombiniertem WMS-Layer
+          </action>
           <action type="fix" dev="wemove" issue="4176">
             Falsche Darstellung von geharvesteten Metadaten (Codelistübernahme)
           </action>
@@ -14,13 +17,13 @@
             Direkte Auswahl ("Highlighten") der Geometrie
           </action>
           <action type="add" dev="wemove" issue="2515">
-           UVP: Bundesländer auf der Startseite anzeigen
+            UVP: Bundesländer auf der Startseite anzeigen
           </action>
           <action type="add" dev="wemove" issue="3598">
-           UVP: Mehrfachauswahl (#3317) in UVP-Verbundportal umsetzen
+            UVP: Mehrfachauswahl (#3317) in UVP-Verbundportal umsetzen
           </action>
           <action type="add" dev="wemove" issue="1314">
-           Portal: geforderte Passwortkomplexität soll per Default erhöht werden
+            Portal: geforderte Passwortkomplexität soll per Default erhöht werden
           </action>
           <action type="fix" dev="wemove" issue="4113">
             Portal: Shorten CSW links. Remove superfluous parameters iplug and elementSetName
