@@ -10,6 +10,9 @@
           <action type="fix" dev="wemove" issue="4258">
             Fehler bei kombiniertem WMS-Layer
           </action>
+          <action type="add" dev="wemove" issue="4259">
+            WFS Feature über individuelle Attribute highlighten
+          </action>
           <action type="fix" dev="wemove" issue="4176">
             Falsche Darstellung von geharvesteten Metadaten (Codelistübernahme)
           </action>
