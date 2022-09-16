@@ -829,6 +829,9 @@ a[class*="js-expander"] span.text {
   border-bottom: 1px solid #3f3f3f !important;
   border-radius: 0 !important;
 }
+.filter .nav-group .accordion-item.is-active .accordion-title {
+  background-color: #f4f2e9;
+}
 .nav-group .accordion-item .accordion-title span,
 .nav-group .accordion-item.is-active .accordion-title span {
   color: #3f3f3f;
