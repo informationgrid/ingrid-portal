@@ -1304,3 +1304,6 @@
 #end
 #parse('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
 #parse('/WEB-INF/templates/scripts/include_script_filter_scroll_activate.vm')
+
+## Copy button
+#parse("/WEB-INF/templates/global/include_reference_copy_button.vm")

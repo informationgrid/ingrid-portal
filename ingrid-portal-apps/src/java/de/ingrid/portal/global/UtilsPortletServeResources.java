@@ -97,16 +97,18 @@ public class UtilsPortletServeResources {
                 extension = "wmts";
             }
             if(extension.isEmpty()) {
-                try {
-                    Map<String, Object> requestHeader = UtilsHttpConnection.urlConnectionHead (paramURL, login, password);
-                    if(!requestHeader.isEmpty()) {
-                        String contentType = (String) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_TYPE);
-                        if(contentType != null) {
-                            extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                if(paramURL.startsWith("http://") || paramURL.startsWith("https://")) {
+                    try {
+                        Map<String, Object> requestHeader = UtilsHttpConnection.urlConnectionHead (paramURL, login, password);
+                        if(!requestHeader.isEmpty()) {
+                            String contentType = (String) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_TYPE);
+                            if(contentType != null) {
+                                extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                            }
                         }
+                    } catch (Exception e) {
+                        UtilsLog.logError("Error get datatype from: " + paramURL, e, log);
                     }
-                } catch (Exception e) {
-                    UtilsLog.logError("Error get datatype from: " + paramURL, e, log);
                 }
             }
         }
