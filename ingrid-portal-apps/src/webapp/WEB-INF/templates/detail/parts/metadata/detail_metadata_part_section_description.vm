@@ -26,7 +26,7 @@
         </button>
         #end
     ## Zeitbezug
-        #if($TOOL.aNodeOfListExist($xPathListTime))
+        #if($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))
             <div class="sub-section">
                 <a class="anchor" id="${hashDetail1}_time_reference"></a>
                 #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
@@ -49,7 +49,7 @@
 
                 #if($tool.hasContent($beginTime) || $tool.hasContent($endTime) || $tool.hasContent($atTime))
                     #if($tool.hasContent($atTime))
-                        #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at') $atTime")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $atTime")
                     #elseif($beginTime == $endTime)
                         #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $beginTime")
                     #elseif($beginTime && !$endTime)
@@ -60,6 +60,8 @@
                         #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
                     #end
                 #end
+            ## Zeitliche Genauigkeit
+                #parse("/WEB-INF/templates/detail/parts/metadata/description/description_time_measurement.vm")
             ## Status
                 #renderTextTable($MESSAGES.getString("t01_object.time_status") $TOOL.getValueFromXPath($xPathListTimeMDProgressCode, "523") "text-capitalize")
             ## Periodizität
