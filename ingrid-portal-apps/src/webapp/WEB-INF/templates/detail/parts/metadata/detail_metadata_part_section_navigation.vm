@@ -17,13 +17,13 @@
                         </li>
                     #end
                 ## Beschreibung
-                    #if($TOOL.aNodeOfListExist($xPathListTime) || $TOOL.aNodeOfListExist($xPathListTimeDate) || $getAlternateTitle || $getDescription)
+                    #if($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeDates && $getTimeDates.getLength() > 0) || $getAlternateTitle || $getDescription)
                         #set($hasDetail1 = true)
                         <li class="accordion-item" data-accordion-item>
                             <a href="#${hashDetail1}" class="accordion-title js-anchor-target" aria-controls="${hashDetail1}-accordion" role="tab" id="${hashDetail1}-accordion-label">
                                 <span class="text">$MESSAGES.getString("detail_description")</span>
                             </a>
-                            <div class="accordion-content" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail1}-accordion-label" id="${hashDetail1}-accordion">
+                            <div class="accordion-content #if(!$TOOL.aNodeOfListExist($xPathListTime) || (!$getTimeDates || $getTimeDates.getLength() == 0))is-hidden#end" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail1}-accordion-label" id="${hashDetail1}-accordion">
                                 <div class="boxes">
                                     #if($TOOL.aNodeOfListExist($xPathListTime))
                                         #set($tmpHash = "${hashDetail1}_time_reference")
@@ -35,8 +35,7 @@
                                         #set($tmpTitle = $MESSAGES.getString($tmpTitle))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
-                                    #set($nodelist = $TOOL.getNodeListFromXPath($xPathListTimeDate))
-                                    #if($nodelist)
+                                    #if($getTimeDates && $getTimeDates.getLength() > 0)
                                         #set($tmpHash = "${hashDetail1}_time_reference_record")
                                         #set($tmpTitle = $MESSAGES.getString("time_reference_record"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
