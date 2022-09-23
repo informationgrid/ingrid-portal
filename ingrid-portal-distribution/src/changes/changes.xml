@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.13.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.13.2">
+          <action type="add" dev="wemove" issue="4270">
+            Verbesserung der Absicherung der Formular-Aktionen im MapClient
+          </action>
+        </release>
+
         <release version="5.13.1" date="2022-09-13" description="Release 5.13.1">
           <action type="fix" dev="wemove" issue="4258">
             Fehler bei kombiniertem WMS-Layer
