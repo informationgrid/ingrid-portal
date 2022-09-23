@@ -105,7 +105,7 @@ public class UtilsUvpZipDownload {
                     String title = plugid.replaceAll(":", "#") + uuid;
                     String xpathExpression = "//idf:idfMdMetadata/name";
                     if(xPathUtils.nodeExists(root, xpathExpression)) {
-                        title = xPathUtils.getString(root, xpathExpression);
+                        title = xPathUtils.getString(root, xpathExpression).trim();
                     }
                     String downloadPath = UtilsUvpZipDownload.createDownloadPath(PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_ZIP_PATH, "./"), plugid, uuid);
                     xpathExpression = "//idf:idfMdMetadata/steps/step[docs/doc]";
@@ -125,7 +125,7 @@ public class UtilsUvpZipDownload {
     }
 
     public static File createDownload(String uuid, String title, String downloadPath, NodeList docParentNode, IngridResourceBundle messages, XPathUtils xPathUtils) {
-        String zipName = downloadPath + "/" + title.replaceAll("[\\\\/:*?\"<>|]", "_") + ".zip";
+        String zipName = downloadPath + "/" + UtilsString.cutString(title.replaceAll("[\\\\/:*?\"<>|]", "_"), 250 - downloadPath.length()) + ".zip";
         File zipFile = new File(zipName);
         File processFile = new File(downloadPath + "/PROCESS_RUNNING");
         File statsJsonFile = new File(downloadPath + "/stats.json");
@@ -256,8 +256,8 @@ public class UtilsUvpZipDownload {
                                         Node doc = docList.item(k);
                                         // Download links and add to ZIP
                                         if(xPathUtils.nodeExists(doc, "./link")) {
-                                            String link = xPathUtils.getString(doc, "./link");
-                                            String label = xPathUtils.getString(doc, "./label");
+                                            String link = xPathUtils.getString(doc, "./link").trim();
+                                            String label = xPathUtils.getString(doc, "./label").trim();
                                             if(docFilenames.indexOf(label) > -1) {
                                                 int count = 1;
                                                 for (int l = 0; l < docFilenames.size(); l++) {
@@ -296,6 +296,7 @@ public class UtilsUvpZipDownload {
                                                                 if(!link.isEmpty()) {
                                                                     label += "-" + link.replaceAll("[\\\\/:*?\"<>|]", "_");
                                                                 }
+                                                                label = UtilsString.cutString(label, 250 - downloadPath.length());
                                                                 label += ".html";
                                                             }
                                                         } else {
