@@ -10,6 +10,15 @@
           <action type="fix" dev="wemove" issue="4113">
             Portal: Shorten CSW links. Remove superfluous parameters iplug and elementSetName
           </action>
+          <action type="fix" dev="wemove" issue="3369">
+           IGE: Handle getCapabilities-URLs without ? as RESTful
+          </action>
+          <action type="update" dev="wemove" issue="3651">
+           IGE: Change import of WMTS getCapabilities
+          </action>
+          <action type="fix" dev="wemove" issue="3962">
+            IGE: Fix display of wrong error on time reference
+          </action>
         </release>
 
         <release version="5.12.4" date="2022-07-11" description="Release 5.12.4">
