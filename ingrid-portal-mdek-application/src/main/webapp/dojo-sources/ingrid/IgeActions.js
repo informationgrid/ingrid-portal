@@ -1872,26 +1872,33 @@ define([
             }
 
 
+            var timeRef1 = registry.byId("timeRefDate1");
+            var timeRef2 = registry.byId("timeRefDate2");
             if (nodeData.timeRefType == "bis") {
                 if (nodeData.timeRefDate2) {
-                    registry.byId("timeRefDate1").attr("value", nodeData.timeRefDate2, true);
+                    timeRef1.attr("value", nodeData.timeRefDate2, true);
                 } else {
-                    registry.byId("timeRefDate1").reset();
+                    timeRef1.reset();
                 }
-                registry.byId("timeRefDate2").reset();
+                timeRef2.reset();
 
             } else {
                 if (nodeData.timeRefDate1) {
-                    registry.byId("timeRefDate1").attr("value", nodeData.timeRefDate1, true);
+                    timeRef1.attr("value", nodeData.timeRefDate1, true);
                 } else {
-                    registry.byId("timeRefDate1").reset();
+                    timeRef1.reset();
                 }
                 if (nodeData.timeRefType == "von" && nodeData.timeRefDate2) {
-                    registry.byId("timeRefDate2").attr("value", nodeData.timeRefDate2, true);
+                    timeRef2.attr("value", nodeData.timeRefDate2, true);
                 } else {
-                    registry.byId("timeRefDate2").reset();
+                    timeRef2.reset();
                 }
             }
+            // the min-max-constraints must be re-validated after set (#3962)
+            setTimeout(function() {
+                timeRef1.validate();
+                timeRef2.validate();
+            });
 
             registry.byId("timeRefStatus").attr("value", nodeData.timeRefStatus, true);
             registry.byId("timeRefPeriodicity").attr("value", nodeData.timeRefPeriodicity, true);

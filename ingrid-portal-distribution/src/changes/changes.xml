@@ -46,6 +46,9 @@
           <action type="update" dev="wemove" issue="3651">
            IGE: Change import of WMTS getCapabilities
           </action>
+          <action type="fix" dev="wemove" issue="3962">
+           IGE: Fix display of wrong error on time reference
+          </action>
         </release>
 
         <release version="5.13.0" date="2022-07-22" description="Release 5.13.0">
