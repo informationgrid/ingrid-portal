@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.12.6" date="2022-XX-XX" description="Release 5.12.6">
+        <release version="5.12.6" date="2022-09-28" description="Release 5.12.6">
           <action type="fix" dev="wemove" issue="4113">
             Portal: Shorten CSW links. Remove superfluous parameters iplug and elementSetName
           </action>
