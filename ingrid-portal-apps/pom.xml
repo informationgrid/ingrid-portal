@@ -19,7 +19,7 @@
 
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
-    <measurement.client.version>2.0.2-SNAPSHOT</measurement.client.version>
+    <measurement.client.version>2.0.3</measurement.client.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
