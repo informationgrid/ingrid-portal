@@ -143,7 +143,6 @@ public class QueryResultPostProcessor {
      *
      * @param hit
      * @param detail
-     * @param ds
      */
     private static void processDSCHit(IngridHitWrapper hit, IngridHitDetail detail) {
         String tmpString = null;
@@ -411,7 +410,7 @@ public class QueryResultPostProcessor {
                 }
 
         		if (isMetadata && !cswUrl.isEmpty()) {
-                    String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+hit.getPlugId()+"&elementSetName=full";
+                    String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id;
                     hit.put(Settings.RESULT_KEY_CSW_INTERFACE_URL, cswUrl + parameter);
                 }
             }
@@ -425,7 +424,8 @@ public class QueryResultPostProcessor {
     private static String addCapabilitiesInformation(String url) throws UnsupportedEncodingException {
         if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
             if (url.indexOf('?') == -1) {
-                url += "?";
+                // handle getCapabilities URLs without a '?' as RESTful (#3369)
+                return url;
             }
             if (!url.endsWith("?")) {
                 url += "&";

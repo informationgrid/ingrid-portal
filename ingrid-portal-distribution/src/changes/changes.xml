@@ -6,6 +6,54 @@
     </properties>
 
     <body>
+        <release version="5.14.0" date="2022-10-04" description="Release 5.14.0">
+          <action type="fix" dev="wemove" issue="4317">
+            Portal - Dokumente - Download als ZIP-Datei - Zip-Datei Leer
+          </action>
+          <action type="add" dev="wemove" issue="4270">
+            Verbesserung der Absicherung der Formular-Aktionen im MapClient
+          </action>
+          <action type="fix" dev="wemove" issue="4258">
+            Fehler bei kombiniertem WMS-Layer
+          </action>
+          <action type="add" dev="wemove" issue="4259">
+            WFS Feature über individuelle Attribute highlighten
+          </action>
+          <action type="fix" dev="wemove" issue="4176">
+            Falsche Darstellung von geharvesteten Metadaten (Codelistübernahme)
+          </action>
+          <action type="add" dev="wemove" issue="4114">
+            Direkte Auswahl ("Highlighten") der Geometrie
+          </action>
+          <action type="add" dev="wemove" issue="2515">
+            UVP: Bundesländer auf der Startseite anzeigen
+          </action>
+          <action type="add" dev="wemove" issue="3598">
+            UVP: Mehrfachauswahl (#3317) in UVP-Verbundportal umsetzen
+          </action>
+          <action type="add" dev="wemove" issue="1314">
+            Portal: geforderte Passwortkomplexität soll per Default erhöht werden
+          </action>
+          <action type="add" dev="wemove" issue="1314">
+            Portal: geforderte Passwortkomplexität soll per Default erhöht werden
+          </action>
+          <action type="fix" dev="wemove" issue="4113">
+            Portal: Shorten CSW links. Remove superfluous parameters iplug and elementSetName
+          </action>
+          <action type="fix" dev="wemove" issue="3369">
+           IGE: Handle getCapabilities-URLs without ? as RESTful
+          </action>
+          <action type="update" dev="wemove" issue="3651">
+           IGE: Change import of WMTS getCapabilities
+          </action>
+          <action type="fix" dev="wemove" issue="3962">
+           IGE: Fix display of wrong error on time reference
+          </action>
+          <action type="fix" dev="wemove" issue="4169">
+            Messwerte-Client: Umbenennung LÜN gleitender 24-Mittelwert in PM1024
+          </action>
+        </release>
+
         <release version="5.13.0" date="2022-07-22" description="Release 5.13.0">
           <action type="update" dev="wemove" issue="4044">
            Portal: erweiterte Suchergebnisse - vollständige Linkliste erst nach Aufruf anzeigen

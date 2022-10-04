@@ -278,6 +278,10 @@ else
 
     fi
 
+    if [ "$UVP_EXTERNAL_PORTAL_NI" ]; then
+        sed -i 's/uvp.niedersachsen.de/'${UVP_EXTERNAL_PORTAL_NI}'/' webapps/ingrid-portal-apps/WEB-INF/classes/facets-config.xml
+    fi
+
     touch ./initialized
 fi
 

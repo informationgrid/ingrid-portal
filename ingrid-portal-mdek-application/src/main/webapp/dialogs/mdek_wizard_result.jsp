@@ -7,12 +7,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-  
+
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-  
+
   http://ec.europa.eu/idabc/eupl5
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -68,18 +68,18 @@ require([
         console.log("Publishing event: '/afterInitDialog/WizardResults'");
         topic.publish("/afterInitDialog/WizardResults");
     });
-    
+
     function createDOMElements() {
-        
+
         // initialize data grids
-        
+
         var assistantDescriptorTableStructure = [
             {field: 'selection',name: 'selection',width: '30px', formatter: gridFormatters.BoolCellFormatter, type: gridEditors.YesNoCheckboxCellEditor, editable: true},
             {field: 'label',name: 'label',width: '600px'},
             {field: 'source',name: 'source',width: '60px'}
         ];
         layoutCreator.createDataGrid("assistantDescriptorTable", null, assistantDescriptorTableStructure, null);
-        
+
         var assistantSpatialRefTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: gridFormatters.BoolCellFormatter, type: gridEditors.YesNoCheckboxCellEditor, editable: true},
             {field: 'label',name: "<fmt:message key='dialog.wizard.create.spatial.name' />",width: '310px'},
@@ -89,7 +89,7 @@ require([
             {field: 'latitude2',name: "<fmt:message key='dialog.wizard.create.spatial.latitude2' />",width: '80px'}
         ];
         layoutCreator.createDataGrid("assistantSpatialRefTable", null, assistantSpatialRefTableStructure, null);
-        
+
         var assistantTimeRefTableStructure = [
             {field: 'selection',name: "<fmt:message key='dialog.wizard.create.time.select' />",width: '60px'},
             //{field: 'name',name: "<fmt:message key='dialog.wizard.create.time.description' />",width: '346px'},
@@ -98,14 +98,14 @@ require([
             {field: 'type',name: "<fmt:message key='dialog.wizard.create.time.type' />",width: '80px'}
         ];
         layoutCreator.createDataGrid("assistantTimeRefTable", null, assistantTimeRefTableStructure, null);
-        
+
         var assistantTimeEventsTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: gridFormatters.BoolCellFormatter, type: gridEditors.YesNoCheckboxCellEditor, editable: true},
             {field: 'date',name: "<fmt:message key='dialog.wizard.create.time.date' />",width: '150px', formatter: gridFormatters.DateCellFormatter},
             {field: 'type',name: "<fmt:message key='dialog.wizard.create.time.type' />",width: '150px', formatter: lang.partial(gridFormatters.SyslistCellFormatter, 502)}
         ];
         layoutCreator.createDataGrid("assistantTimeEventsTable", null, assistantTimeEventsTableStructure, null);
-        
+
         var assistantCrsTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: gridFormatters.BoolCellFormatter, type: gridEditors.YesNoCheckboxCellEditor, editable: true},
             {field: 'id',name: "<fmt:message key='dialog.wizard.create.crs.id' />",width: '100px'},
@@ -118,14 +118,14 @@ require([
             {field: 'label',name: "<fmt:message key='dialog.wizard.create.keywords.label' />",width: '660px'}
         ];
         layoutCreator.createDataGrid("assistantKeywordsTable", null, assistantKeywordsTableStructure, null);
-        
+
         var assistantConformityTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: gridFormatters.BoolCellFormatter, type: gridEditors.YesNoCheckboxCellEditor, editable: true},
             {field: 'specification',name: "<fmt:message key='dialog.wizard.create.conformity.specification' />", width: '560px'}, // 6005
             {field: 'level',name: "<fmt:message key='dialog.wizard.create.conformity.level' />", width: '100px', formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6000)}
         ];
         layoutCreator.createDataGrid("assistantConformityTable", null, assistantConformityTableStructure, null);
-        
+
         var assistantOnlineResourcesTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: gridFormatters.BoolCellFormatter, type: gridEditors.YesNoCheckboxCellEditor, editable: true},
             {field: 'url',name: "<fmt:message key='dialog.wizard.create.links.name' />",width: '500px'},
@@ -133,7 +133,7 @@ require([
         ];
         layoutCreator.createDataGrid("assistantOnlineResourcesTable", null, assistantOnlineResourcesTableStructure, null);
         layoutCreator.createDataGrid("assistantResourceLocatorsTable", null, assistantOnlineResourcesTableStructure, null);
-        
+
         var assistantAddressTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: gridFormatters.BoolCellFormatter, type: gridEditors.YesNoCheckboxCellEditor, editable: true},
             {field: 'firstname',name: "<fmt:message key='dialog.wizard.create.address.firstname' />",width: '200px'},
@@ -142,21 +142,21 @@ require([
             {field: 'action',name: "<fmt:message key='dialog.wizard.create.datasets.action' />", width: '120px'}
         ];
         layoutCreator.createDataGrid("assistantAddressTable", null, assistantAddressTableStructure, null);
-        
+
         var assistantAccessTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: gridFormatters.BoolCellFormatter, type: gridEditors.YesNoCheckboxCellEditor, editable: true},
             {field: 'label',name: "<fmt:message key='dialog.wizard.create.keywords.label' />", width: '300px'}
         ];
         layoutCreator.createDataGrid("assistantAccessTable", null, assistantAccessTableStructure, null);
-        
+
         var assistantDatasetsTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: gridFormatters.BoolCellFormatter, type: gridEditors.YesNoCheckboxCellEditor, editable: true},
             {field: 'title',name: "<fmt:message key='dialog.wizard.create.datasets.label' />", width: '540px'},
             {field: 'action',name: "<fmt:message key='dialog.wizard.create.datasets.action' />", width: '120px'}
         ];
         layoutCreator.createDataGrid("assistantDatasetsTable", null, assistantDatasetsTableStructure, null);
-        
-        
+
+
         // connect all checkboxes to the behavior to select all table rows
         query( ".allSelector input" ).forEach( function( item ) {
             var descriptorCheckbox = registry.byId( item.id );
@@ -187,16 +187,16 @@ require([
         } );
         UtilGrid.getTable( tableId ).invalidate();
     }
-    
+
     function checkAll(value) {
-        // click on each check box to set to wanted state 
+        // click on each check box to set to wanted state
         query("#resultContainer .dijitCheckBoxInput").forEach( function(box) {
             if (box.checked !== value) {
                 //box.click();
                 registry.byId(box.id).set("value", value);
             }
         });
-        
+
         // time ref table has radio buttons where we will select the first one
         var eventList = UtilGrid.getTableData( "assistantTimeRefTable" );
         if ( eventList.length > 0 ) {
@@ -223,7 +223,7 @@ require([
         } else {
             domClass.add( "assistantHtmlContentContainer", "hide" );
         }
-        
+
         if (!isService) {
             domClass.add( "assistantFeesContainer", "hide" );
             domClass.add( "assistantAccessConstraintsContainer", "hide" );
@@ -268,7 +268,7 @@ require([
         UtilGrid.setTableData( "assistantDatasetsTable", [] );
         registry.byId( "assistantDatasetsTableCheckbox" ).setValue( false );
     }
-    
+
     function toggleContainers() {
         // all grids
         query("#resultsContainer .ui-widget").forEach(function(grid) {
@@ -284,13 +284,38 @@ require([
             }
         });
     }
-    
+
+    function addGetCapabilitiesIfNone(operations, capabilitiesUrl) {
+        if (!operations) return;
+        
+        var found = false;
+        for (var i = 0; i < operations.length; i++) {
+            if (operations[i].name === "GetCapabilities") {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            operations.unshift({
+                name: "GetCapabilities",
+                // do not set method call so that it doesn't appear in ISO (#3651)
+                // methodCall: "GetCapabilities",
+                addressList: [capabilitiesUrl],
+                platform: [7],
+                paramList: []
+            });
+        }
+    }
+
     // Updates the input fields with values from the given topic map
-    function updateInputFields(topicMap, fields, isWebsite) {
+    function updateInputFields(topicMap, fields, isWebsite, capabilitiesUrl) {
         registry.byId( "assistantHtmlTitle" ).setValue( UtilString.stripTags( fields.title ) );
         registry.byId( "assistantHtmlContent" ).setValue( fields.content );
         dialogWizardResults.isWebsite = isWebsite;
         dialogWizardResults.databean = topicMap;
+
+        addGetCapabilitiesIfNone(dialogWizardResults.databean.operations, capabilitiesUrl);
 
         var indexedDocument = topicMap.indexedDocument;
         var thesaTopicList = topicMap.thesaTopics;
@@ -390,7 +415,7 @@ require([
             registry.byId( "assistantServiceType" ).set( "value", topicMap.dataServiceType );
 
         }
-        
+
         // Events (creation, published, ...)
         if (eventsList) {
             UtilStore.updateWriteStore( "assistantTimeEventsTable", eventsList );
@@ -445,7 +470,7 @@ require([
             });
             UtilStore.updateWriteStore( "assistantAddressTable", addressesList );
         }
-        
+
         // Coupled Resources
         if (topicMap.coupledResources) {
             array.forEach(topicMap.coupledResources, function(res) {
@@ -463,7 +488,7 @@ require([
 
         // only show input fields with content!
         toggleContainers();
-        
+
         console.debug( "finished update" );
     }
 
@@ -518,7 +543,7 @@ require([
                 } );
             }
         } );
-        
+
         if (accessToAdd.length > 0) {
             registry.byId( "availabilityAccessConstraints" ).setData( accessToAdd );
         }
@@ -528,7 +553,7 @@ require([
             registry.byId( "ref3ServiceType" ).setValue( registry.byId( "assistantServiceType" ).getValue() );
         }
 
-        // Add Thesaurus Topics 
+        // Add Thesaurus Topics
         var thesaList = UtilGrid.getTableData( "assistantDescriptorTable" );
         for ( var i in thesaList) {
             // If checkbox is selected
@@ -565,7 +590,7 @@ require([
                 var type = locationList[i].type;
                 var targetGrid = "spatialRefAdminUnit";
                 if ( type === "F" || !topicId ) targetGrid = "spatialRefLocation";
-                
+
                 var storeData = UtilGrid.getTableData( targetGrid );
                 var storedTopicIdx = null;
                 var storedTopic = null;
@@ -757,7 +782,7 @@ require([
                             def.resolve();
                         } );
                     } );
-        
+
                 } else {
                     // the address already exists so just link to it!
                     // for the link we just need the uuid and the nameOfRelation; other attributes
@@ -793,31 +818,30 @@ require([
         // add versions and operations automatically of a capabilities document!
         if (dialogWizardResults.databean) {
             var serviceType = dialogWizardResults.databean.serviceType;
-            
             if (serviceType) {
                 if (serviceType.indexOf( "CSW" ) != -1) {
                     UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 207 ] ) );
-    
+
                 } else if (serviceType.indexOf( "WMS" ) != -1) {
                     UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 202 ] ) );
-    
+
                 } else if (serviceType.indexOf( "WFS" ) != -1) {
                     UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 201 ] ) );
-    
+
                 } else if (serviceType.indexOf( "WCTS" ) != -1) {
-    
+
                 } else if (serviceType.indexOf( "WCS" ) != -1) { // WCS does not exist yet
                     UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 203 ] ) );
                     registry.byId( "ref3Explanation" ).setValue( "WCS Service" );
-    
+
                 }
-    
+
                 // Versions
                 if (dialogWizardResults.databean.versions) {
                     UtilStore.updateWriteStore( "ref3ServiceVersion", UtilList
                             .listToTableData( dialogWizardResults.databean.versions ) );
                 }
-    
+
                 // Operations
                 // Prepare the operation table for display.
                 // Add table indices to the main obj and paramList
@@ -870,7 +894,7 @@ require([
         // wait for adding keywords AND addresses to be finished
         defKeywords.then( function() {
             defAddresses.then( function() {
-            
+
                 // add references to datasets/layers or create new objects
                 var datasets = UtilGrid.getTableData( "assistantDatasetsTable" );
                 var coupledResources = [];
@@ -891,13 +915,13 @@ require([
                                 }
                                 return dialogWizardResults.createDataset( dataset, addressesToAdd );
                             } );
-                            
+
                         } else {
                             coupledResources.push( dataset );
                         }
                     }
                 } );
-                
+
                 var addCoupledResourceInfo = function( obj ) {
                     obj.relationType = "3600";
                     obj.relationTypeName = "Verweis zu Daten";
@@ -908,14 +932,14 @@ require([
                     UtilList.addIcons([obj]);
                     return obj;
                 };
-                
+
                 var addCoupledResourcesInfo = function( resources ) {
                     array.forEach( resources, function(obj) {
                         addCoupledResourceInfo( obj );
                     } );
                     return resources;
                 };
-        
+
                 promise.then( function(lastResult) {
                     if (lastResult) {
                         resolveArray.push( lastResult );
@@ -943,7 +967,7 @@ require([
             });
         });
     }
-    
+
     function prepareTopics( keywords, topics ) {
         var conTopics = [];
         array.forEach( topics, function( topic, i ) {
@@ -955,7 +979,7 @@ require([
         });
         return conTopics;
     }
-    
+
     function createDataset(data, addresses) {
         var def = new Deferred();
         var parentNode = UtilTree.getNodeById("dataTree", currentUdk.parentUuid);
@@ -972,7 +996,7 @@ require([
                     console.log("Adding addresses to layer: ", addresses);
                     objNode.generalAddressTable = addresses;
                 }
-                
+
                 objNode.spatialRefLocationTable = data.spatialRefLocationTable;
                 console.log("data of layer: ", data);
                 var keywords = UtilList.tableDataToList( data.thesaurusTermsTable, "title" );
@@ -994,10 +1018,10 @@ require([
                             UtilUI.updateBlockerDivInfo( "layers" );
                             def.resolve( bean );
                         },
-                        errorHandler:function(message) { 
-                            console.log("errorHandler::"+message); 
-                            UtilUI.removeBlockerDivInfo( "layers" ); 
-                            UtilUI.exitLoadingState(); 
+                        errorHandler:function(message) {
+                            console.log("errorHandler::"+message);
+                            UtilUI.removeBlockerDivInfo( "layers" );
+                            UtilUI.exitLoadingState();
                             displayErrorMessage(message);
                         },
                         exceptionHandler:function(errorString) {
@@ -1021,7 +1045,7 @@ require([
 
         return def;
     }
-        
+
     function createNewUrl(uri, title, relName) {
         var newUrl = {};
 
@@ -1077,7 +1101,7 @@ require([
 
         <div id="resultContainer" class="inputContainer" style="/* margin-top: 115px; margin-bottom: 20px; overflow: auto;*/">
             <span class="label"><h2><fmt:message key="dialog.wizard.create.result" /></h2></span>
-            
+
             <span class="outer">
                 <div>
                     <span id="assistantTitleContainer">
@@ -1085,7 +1109,7 @@ require([
                             <span class="input" style="margin-bottom: 5px;"><input type="checkbox" name="assistantHtmlTitleCheckbox" id="assistantHtmlTitleCheckbox" data-dojo-type="dijit/form/CheckBox" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8066)"><fmt:message key="dialog.wizard.create.addTitle" /></label></span>
                         </div>
                         <div class="inputContainer">
-                            <span class="input" style="margin-bottom: 5px;"><input type="text" id="assistantHtmlTitle" data-dojo-type="dijit/form/ValidationTextBox" style="width:100%;" /></span> 
+                            <span class="input" style="margin-bottom: 5px;"><input type="text" id="assistantHtmlTitle" data-dojo-type="dijit/form/ValidationTextBox" style="width:100%;" /></span>
                         </div>
                     </span>
                 </div>
@@ -1098,7 +1122,7 @@ require([
                             <span class="input"><input type="checkbox" name="assistantDescriptionCheckbox" id="assistantDescriptionCheckbox" data-dojo-type="dijit/form/CheckBox" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8067)"><fmt:message key="dialog.wizard.create.addDescription" /></label></span>
                         </div>
                         <div class="inputContainer">
-                            <span class="input" style="margin-bottom: 5px;"><input type="text" mode="textarea" id="assistantDescription" data-dojo-type="dijit/form/SimpleTextarea" rows="5" style="width:100%;" /></span> 
+                            <span class="input" style="margin-bottom: 5px;"><input type="text" mode="textarea" id="assistantDescription" data-dojo-type="dijit/form/SimpleTextarea" rows="5" style="width:100%;" /></span>
                         </div>
                     </span>
                 </div>
@@ -1111,12 +1135,12 @@ require([
                             <span class="input"><input type="checkbox" name="assistantHtmlContentCheckbox" id="assistantHtmlContentCheckbox" data-dojo-type="dijit/form/CheckBox" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8068)"><fmt:message key="dialog.wizard.create.addContent" /></label></span>
                         </div>
                         <div class="inputContainer">
-                            <span class="input"><input type="text" mode="textarea" id="assistantHtmlContent" data-dojo-type="dijit/form/SimpleTextarea" rows="5" style="width:100%;" /></span> 
+                            <span class="input"><input type="text" mode="textarea" id="assistantHtmlContent" data-dojo-type="dijit/form/SimpleTextarea" rows="5" style="width:100%;" /></span>
                         </div>
                     </span>
                 </div>
             </span>
-            
+
             <span class="outer halfWidth">
                 <div>
                     <span id="assistantFeesContainer">
@@ -1124,24 +1148,24 @@ require([
                             <span class="input"><input type="checkbox" name="assistantFeesCheckbox" id="assistantFeesCheckbox" data-dojo-type="dijit/form/CheckBox" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10200)"><fmt:message key="dialog.wizard.create.addFees" /></label></span>
                         </div>
                         <div class="inputContainer">
-                            <span class="input" style="margin-bottom: 5px;"><input type="text" mode="textarea" id="assistantFees" data-dojo-type="dijit/form/SimpleTextarea" rows="5" style="width:100%;" /></span> 
+                            <span class="input" style="margin-bottom: 5px;"><input type="text" mode="textarea" id="assistantFees" data-dojo-type="dijit/form/SimpleTextarea" rows="5" style="width:100%;" /></span>
                         </div>
                     </span>
                 </div>
             </span>
-            
+
             <span class="outer halfWidth">
                 <div id="assistantAccessConstraintsContainer">
                     <span class="label"><label for="assistantAccessTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10201)"><fmt:message key="dialog.wizard.create.accessConstraints" /></label></span>
                     <div class="tableContainer" style="margin-bottom: 5px;">
-                         <div id="assistantAccessTable" interactive="true" autoEdit="true" class="hideTableHeader"></div> 
+                         <div id="assistantAccessTable" interactive="true" autoEdit="true" class="hideTableHeader"></div>
                     </div>
                     <div class="checkboxContainer">
                         <label class="inActive input allSelector"><input type="checkbox" name="assistantAccessTableCheckbox" id="assistantAccessTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllAccess" /></label>
                     </div>
                 </div>
             </span>
-            
+
             <span class="outer halfWidth">
                 <div>
                     <span id="assistantServiceTypeContainer">
@@ -1149,12 +1173,12 @@ require([
                             <span class="input"><input type="checkbox" name="assistantServiceTypeCheckbox" id="assistantServiceTypeCheckbox" data-dojo-type="dijit/form/CheckBox" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10202)"><fmt:message key="dialog.wizard.create.serviceType" /></label></span>
                         </div>
                         <div class="inputContainer">
-                            <span class="input" style="margin-bottom: 5px;"><input id="assistantServiceType" style="width:100%;" /></span> 
+                            <span class="input" style="margin-bottom: 5px;"><input id="assistantServiceType" style="width:100%;" /></span>
                         </div>
                     </span>
                 </div>
             </span>
-            
+
             <span class="outer">
                 <div>
                     <span class="label"><label for="assistantDescriptorTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8069)"><fmt:message key="dialog.wizard.create.descriptors" /></label></span>
@@ -1185,7 +1209,7 @@ require([
                     </div>
                 </div>
             </span>
-            
+
             <span class="outer">
                 <div>
                     <span class="label"><label for="assistantOnlineResourcesTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10203)"><fmt:message key="dialog.wizard.create.onlineResources" /></label></span>
@@ -1200,7 +1224,7 @@ require([
                     </div>
                 </div>
             </span>
-            
+
             <span class="outer">
                 <div id="assistantResourceLocatorsContainer">
                     <span class="label"><label for="assistantResourceLocatorsTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10204)"><fmt:message key="dialog.wizard.create.resourceLocators" /></label></span>
@@ -1215,7 +1239,7 @@ require([
                     </div>
                 </div>
             </span>
-            
+
             <span class="outer">
                 <div>
                     <span class="label"><label for="assistantCRSTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10205)"><fmt:message key="dialog.wizard.create.crs" /></label></span>
@@ -1230,7 +1254,7 @@ require([
                     </div>
                 </div>
             </span>
-            
+
             <span class="outer">
                 <div>
                     <span class="label"><label for="assistantKeywordsTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10206)"><fmt:message key="dialog.wizard.create.keywords" /></label></span>
@@ -1245,7 +1269,7 @@ require([
                     </div>
                 </div>
             </span>
-            
+
             <span class="outer">
                 <div id="assistantConformitiesContainer">
                     <span class="label"><label for="assistantConformityTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10207)"><fmt:message key="dialog.wizard.create.conformity" /></label></span>
@@ -1260,7 +1284,7 @@ require([
                     </div>
                 </div>
             </span>
-            
+
             <span class="outer halfWidth">
                 <div>
                     <span class="label"><label for="assistantTimeRefTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10208)"><fmt:message key="dialog.wizard.create.timeSpan" /></label></span>
@@ -1297,7 +1321,7 @@ require([
                     </div>
                 </div>
             </span>
-            
+
             <span class="outer">
                 <div id="assistantDatasetsContainer">
                     <span class="label"><label for="assistantDatasetsTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10210)"><fmt:message key="dialog.wizard.create.datasets" /></label></span>

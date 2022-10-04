@@ -61,7 +61,10 @@
 ## Erläuterung zum Zeitbezug
 #set($xPathListTimeMaintenanceNote = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString")
 ## Zeitbezug der Ressource
-#set($xPathListTimeDate = "./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date")
+#set($xPathListTimeDate = "./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:date]")
+#set($getTimeDates = $TOOL.getNodeListFromXPath($xPathListTimeDate))
+## Zeitliche Genauigkeit
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_time_measurement.vm")
 
 #set($xPathListTime = [
     $xPathListTimeTimePeriodInstantPosition,

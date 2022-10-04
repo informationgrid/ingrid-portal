@@ -109,7 +109,7 @@ require([
             domClass.add( dom.byId("btnWizardCancel"), "hide" );
             domClass.add( dom.byId("btnWizardSearch"), "hide" );
             assistantUrl.set( "disabled", true );
-            dialogWizardResults.updateInputFields(data, {title: capBean.title, content: null});
+            dialogWizardResults.updateInputFields(data, {title: capBean.title, content: null}, false, url);
             dialogWizardResults.showResults(true, false, true);
         };
         

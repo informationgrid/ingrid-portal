@@ -1,0 +1,4 @@
+## Zeitliche Genauigkeit
+#set($xPathListTimeMeasurement = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AccuracyOfATimeMeasurement/gmd:result/gmd:DQ_QuantitativeResult")
+#set($getTimeMeasurementValue = $TOOL.getValueFromXPath("${xPathListTimeMeasurement}/gmd:value/gco:Record"))
+#set($getTimeMeasurementUnit = $TOOL.getValueFromXPath("${xPathListTimeMeasurement}/gmd:valueUnit/gml:UnitDefinition/gml:catalogSymbol"))

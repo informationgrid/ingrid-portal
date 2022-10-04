@@ -92,3 +92,6 @@
 #else
     <p><strong>$MESSAGES.getString('common.result.interrupted')</strong><br /><br /></p>
 #end
+
+## Copy button
+#parse("/WEB-INF/templates/global/include_reference_copy_button.vm")

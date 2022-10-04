@@ -56,12 +56,12 @@
             #renderLinkListImageLimit($tmpTitle $getLinks false false 2 "")
         </div>
         #end
-    ## BAW Auftrag
-        #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_aggregate_data_set_name.vm")
     ## Zitat für diesen Datensatz
         #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_citation.vm")
     ## Lizenz
         #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_license.vm")
+    ## BAW Auftrag
+        #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_aggregate_data_set_name.vm")
     ## Kontakt
         #if($xPathUsePointOfContactSortNodes && $xPathUsePointOfContactSortNodes.size() > 0)
             #renderMultiLineAddresses("" $xPathUsePointOfContactSortNodes false true)

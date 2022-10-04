@@ -432,18 +432,17 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i<nodeList.getLength();i++){
-                String url = "";
-                String name = "";
-                String description = "";
-                String attachedToField = "";
-                String applicationProfile = "";
-                String size = "";
-                float roundSize = 0;
-
                 NodeList onLineList = xPathUtils.getNodeList(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine");
-                
+
                 for (int j=0; j<onLineList.getLength();j++){
-                    
+                    String url = "";
+                    String name = "";
+                    String description = "";
+                    String attachedToField = "";
+                    String applicationProfile = "";
+                    String size = "";
+                    float roundSize = 0;
+
                     xpathExpression = "./*/gmd:linkage/gmd:URL";
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         url = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
@@ -694,9 +693,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     public HashMap<String, Object> getAPACitationElements(Node node, Map<String, String> xpathExpressions){
         HashMap<String, Object> element = new HashMap<>();
         if (xpathExpressions.containsKey("rootName") && xPathUtils.nodeExists(node, xpathExpressions.get("rootName"))){
-            String value = getAPACitationValueFromXpath("name", node, xpathExpressions.get("name"), xpathExpressions.get("rootName"));
-            if ((value == null || value.trim().isEmpty()) && xpathExpressions.containsKey("org_name")) {
-                String org = getAPACitationValueFromXpath("org_name", node, xpathExpressions.get("org_name"));
+            String value = getAPACitationValueFromXpath("name", node, xpathExpressions.get("author_person"), xpathExpressions.get("rootName"));
+            if ((value == null || value.trim().isEmpty()) && xpathExpressions.containsKey("author_org")) {
+                String org = getAPACitationValueFromXpath("org_name", node, xpathExpressions.get("author_org"));
                 if (org != null) {element.put("authors", org);}
             } else {
                 element.put("authors", value);
@@ -1484,7 +1483,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             elementLink.put("hasLinkIcon", true);
             elementLink.put("isDownload", true);
             elementLink.put("title", messages.getString("xml_link"));
-            elementLink.put("href", cswUrl + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + this.uuid + "&iplug=" + this.iPlugId + "&elementSetName=full");
+            elementLink.put("href", cswUrl + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + this.uuid);
         }
         return elementLink;
     }

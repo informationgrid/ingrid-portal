@@ -381,7 +381,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         </facets>
     </facet>
     <facet>
-        <name>Bundesländer</name>
+        <name>Bundesländern</name>
         <id>state</id>
         <categoryOnly>true</categoryOnly>
         <facets>

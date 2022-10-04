@@ -1,0 +1,114 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+
+@font-face {
+  font-family: 'Gudea-Regular';
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/Gudea/Gudea-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Gudea-Bold';
+  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/Gudea/Gudea-Bold.ttf') format('truetype');
+}
+
+
+#search-container {
+  width: 50%;
+  min-width: 250px;
+  margin: 25px auto 0;
+  float: unset;
+  left: unset;
+  z-index: 10;
+}
+[ga-search] .ga-search-input {
+  height: 50px;
+}
+[ga-search] .fa-remove-sign, [ga-search] .fa-search {
+  height: 50px;
+}
+[ga-search] .fa-search {
+  border: unset;
+  background-color: unset;
+}
+[ga-search] .ga-search-results-header {
+  color: #3f3f3f;
+  background-color: #f4f2e9;
+  font-family: "Gudea-Bold", sans-serif;
+}
+[ga-search] .ga-search-results-container .ga-search-item {
+  font-size: 14px;
+  font-family: "Gudea-Regular", sans-serif;
+}
+[ga-search] .ga-search-results-container .ga-search-results .ga-search-result:hover {
+  background-color: #3f3f3f;
+}
+input[type=text], input[type=password], input[type=email], input[type=search], select {
+  font-size: 16px;
+  font-family: "Gudea-Regular", sans-serif;
+  border: 2px solid #296e4b;
+}
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=search]:focus,
+select:focus {
+  outline: 0;
+  border: 2px solid #296e4b;
+  box-shadow: unset;
+}
+:focus-visible {
+  outline: 3px solid #296e4b !important;
+  outline-offset: 5px !important;
+  border-radius: 0 !important;
+}
+#pulldown-content .panel > .accordion-toggle.collapsed {
+  font-family: "Gudea-Regular", sans-serif;
+  background-color: #296e4b;
+}
+#pulldown-content .panel > .accordion-toggle:hover, #pulldown-content .panel > .accordion-toggle:active {
+  color: #fff;
+  background: #024731;
+}
+#pulldown-content .panel>.accordion-toggle, .ga-pulldown-shown #menu-button .ga-hidden-collapsed {
+  font-family: "Gudea-Bold", sans-serif;
+  font-weight: unset;
+}
+#drawModeHeader {
+  color: white;
+  background-color: #296e4b;
+}
+.pull-right a {
+  color: #fff;
+}
+.pull-right a:focus, a:hover {
+  color: #fff;
+}
+[ga-scale-line] .ol-scale-line .ol-scale-line-inner {
+  color: #fff;
+  border: 2px solid #fff;
+}
+.ol-control button i, button.ga-btn i {
+  color: #296e4b;
+}
+#footer {
+  background-color: #296e4b;
+}

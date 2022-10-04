@@ -750,7 +750,7 @@
             '</div>';
         if(markers.length > 1 && restUrlTime && restUrlTime.length > 0) {
             html += '<div class="control-group is-hidden">' +
-                '<label class="control toggle">' +
+                '<label class="control toggle" title="$MESSAGES.getString("common.toggle.approval.date.tooltip")">' +
                 '<input id="' + id + '_time" name="' + id + '_time" type="checkbox" checked>' +
                 '<span class="toggle-slider round"></span>' +
                 '</label>' +

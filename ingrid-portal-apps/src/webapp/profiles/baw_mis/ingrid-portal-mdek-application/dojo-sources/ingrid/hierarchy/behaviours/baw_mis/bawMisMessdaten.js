@@ -44,7 +44,7 @@ define([
         "zeroLevel", "drainMin", "drainMax", "gauge", "targetParameters"];
 
     var nonMeasurementFields = ["simProcess", "simSpatialDimension", "simModelTypeTable", "simParamTable"];
-    
+
     return declare(null, {
         title: "Messdaten",
         description: "Formularfelder für die Eingabe von Messdaten",
@@ -53,9 +53,9 @@ define([
 
         run: function () {
             this._createCustomFields();
-            
+
             this._createBehaviours();
-            
+
             var levelNameForSimulation = ["Datei", "Simulationslauf", "Simulationsmodell", "Szenario ", "Variante"];
             on(registry.byId("bawHierarchyLevelName"), "Change", function(value) {
                 if (value === "Messdaten") {
@@ -80,46 +80,55 @@ define([
             addSpatiality(newFieldsToDirtyCheck, additionalFields)
 
             addMeasuringDepth(newFieldsToDirtyCheck, additionalFields);
-            
+
             addMeasuringFrequency(newFieldsToDirtyCheck, additionalFields);
 
             addAverageWaterLevel(newFieldsToDirtyCheck, additionalFields);
-            
+
             addZeroLevel(newFieldsToDirtyCheck, additionalFields);
-            
+
             addDrain(newFieldsToDirtyCheck, additionalFields);
-            
+
             addGauge(newFieldsToDirtyCheck, additionalFields);
-            
+
             addTargetParameters(newFieldsToDirtyCheck, additionalFields);
 
             // Datenqualität
             addDQDescription(newFieldsToDirtyCheck, additionalFields);
-            
+
             // Zeitbezug
             addTimezone(newFieldsToDirtyCheck, additionalFields)
-                        
+
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
         },
 
         _createBehaviours: function() {
             addMeasuringDepthBehaviour();
-            
+
             addTableValidations();
         }
     })();
 
     function addMeasuringMethod(newFieldsToDirtyCheck, additionalFields) {
-        construct.place(
-            creator.createDomSelectBox({
-                id: "measuringMethod",
-                name: message.get("ui.obj.baw.measuring.method.title"),
-                help: message.get("ui.obj.baw.measuring.method.help"),
+        var structure = [
+            {
+                field: "measuringMethod",
+                name: message.get("ui.obj.baw.measuring.method.title") + "*",
+                type: Editors.ComboboxEditor,
+                formatter: lang.partial(Formatters.SyslistCellFormatter, 3950011),
+                listId: 3950011,
                 isMandatory: true,
-                useSyslist: 3950011,
-                style: "width: 100%",
-                isExtendable: true
-            }), "refClass1");
+                editable: true
+            }
+        ];
+
+        creator.createDomDataGrid({
+            id: "measuringMethod",
+            name: message.get("ui.obj.baw.measuring.method.title"),
+            help: message.get("ui.obj.baw.measuring.method.help"),
+            isMandatory: true,
+            style: "width: 100%"
+        }, structure, "refClass1");
         newFieldsToDirtyCheck.push("measuringMethod");
         additionalFields.push(registry.byId("measuringMethod"));
     }
@@ -172,7 +181,7 @@ define([
         newFieldsToDirtyCheck.push("heightReferenceSystem");
         additionalFields.push(registry.byId("heightReferenceSystem"));
     }
-    
+
     function addMeasuringFrequency(newFieldsToDirtyCheck, additionalFields) {
         construct.place(
             creator.createDomNumberTextbox({
@@ -215,7 +224,7 @@ define([
         newFieldsToDirtyCheck.push("averageWaterLevel");
         additionalFields.push(registry.byId("averageWaterLevel"));
     }
-    
+
     function addZeroLevel(newFieldsToDirtyCheck, additionalFields) {
         var structure = [
             {
@@ -262,7 +271,7 @@ define([
         newFieldsToDirtyCheck.push("zeroLevel");
         additionalFields.push(registry.byId("zeroLevel"));
     }
-    
+
     function addDrain(newFieldsToDirtyCheck, additionalFields) {
         construct.place(
             creator.createDomNumberTextbox({
@@ -375,7 +384,7 @@ define([
         newFieldsToDirtyCheck.push("targetParameters");
         additionalFields.push(registry.byId("targetParameters"));
     }
-    
+
     function addDQDescription(newFieldsToDirtyCheck, additionalFields) {
         construct.place(
             creator.createDomTextbox({
@@ -387,26 +396,26 @@ define([
         newFieldsToDirtyCheck.push("dataQualityDescription");
         additionalFields.push(registry.byId("dataQualityDescription"));
     }
-    
+
     function addTimezone(newFieldsToDirtyCheck, additionalFields) {
         construct.place(creator.createDomTimeDatebox({
             id: "startTime",
             style: "width: 34%"
         }), "timeRefDate2Editor", "before");
         newFieldsToDirtyCheck.push("startTime");
-        
+
         construct.place(creator.createDomTimeDatebox({
             id: "endTime",
             style: "width: 34%"
         }), "timeRefDate2Editor", "after");
         newFieldsToDirtyCheck.push("endTime");
-        
+
         construct.place(dom.byId("timeRefSubTypeEditor"), "uiElementAddstartTime", "after");
         construct.place(dom.byId("timeRefDate2Editor"), "timeRefSubTypeEditor", "after");
         domClass.add("uiElementAddendTime", "hide");
         dom.byId("timeRefDate2Editor").style["margin-left"] = "33%";
         dom.byId("timeRefDate2Editor").style["width"] = "33%";
-        
+
         // update date with time information
         var startDate = registry.byId("timeRefDate1");
         var startTime = registry.byId("startTime");
@@ -439,7 +448,7 @@ define([
         var subType = registry.byId("timeRefSubType");
         on(registry.byId("timeRefType"), "change", function(value) { toggleEndTime(value === "fromType" && subType === "von"); });
         on(subType, "change", function(value) { toggleEndTime(value === "von"); });
-        
+
         construct.place(
             creator.createDomSelectBox({
                 id: "timezone",
@@ -451,24 +460,24 @@ define([
         newFieldsToDirtyCheck.push("timezone");
         additionalFields.push(registry.byId("timezone"));
     }
-    
+
     function handleHierarchyLevelNameIsMeasurementData() {
         showFields(measurementFields);
-        
+
         // show DQ-rubric
         domClass.remove("refClass1DQ", "hidden");
         domClass.add("ref1ContentDQTables", "hide");
         domClass.add("uiElement3565", "hide");
         domClass.add("uiElement5071", "hide");
         domClass.add("uiElement5069", "hide");
-        
+
         // "Durch die Ressource abgedeckte Zeitspanne" required
         domClass.add("uiElementN011", "required");
     }
-    
+
     function handleHierarchyLevelNameIsNotMeasurementData() {
         hideFields(measurementFields);
-        
+
         // hide DQ-rubric
         domClass.add("refClass1DQ", "hidden");
         domClass.remove("ref1ContentDQTables", "hide");
@@ -496,12 +505,12 @@ define([
         var depth = registry.byId("measuringDepth")
         var unit = registry.byId("unitOfMeasurement")
         var height = registry.byId("heightReferenceSystem")
-        
+
         var toggleState = function() {
             const requiredForDepth = depth.value !== "" && !isNaN(depth.value);
             const requiredForUnit = unit.value !== "";
             const requiredForHeight = height.value !== "";
-            
+
             if (requiredForDepth || requiredForUnit || requiredForHeight) {
                 domClass.add("uiElementAddmeasuringDepth", "required");
                 domClass.add("uiElementAddunitOfMeasurement", "required");
@@ -512,12 +521,12 @@ define([
                 domClass.remove("uiElementAddheightReferenceSystem", "required");
             }
         };
-        
+
         on(depth, "Change", toggleState);
         on(unit, "Change", toggleState);
         on(height, "Change", toggleState);
     }
-    
+
     function addTableValidations() {
         topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
             array.forEach(UtilGrid.getTableData("averageWaterLevel"), function (row) {
@@ -525,19 +534,19 @@ define([
                     notPublishableIDs.push(["averageWaterLevel", message.get("validation.baw.averageWaterLevel.incomplete")]);
                 }
             });
-            
+
             array.forEach(UtilGrid.getTableData("zeroLevel"), function (row) {
                 if (!row.zeroLevel || !row.unitOfMeasurement || !row.verticalCoordinateReferenceSystem) {
                     notPublishableIDs.push(["zeroLevel", message.get("validation.baw.zeroLevel.incomplete")]);
                 }
             });
-            
+
             array.forEach(UtilGrid.getTableData("gauge"), function (row) {
                 if (!row.name) {
                     notPublishableIDs.push(["gauge", message.get("validation.baw.gauge.incomplete")]);
                 }
             });
-            
+
             array.forEach(UtilGrid.getTableData("targetParameters"), function (row) {
                 if (!row.name || !row.type || !row.unitOfMeasurement) {
                     notPublishableIDs.push(["targetParameters", message.get("validation.baw.targetParameters.incomplete")]);

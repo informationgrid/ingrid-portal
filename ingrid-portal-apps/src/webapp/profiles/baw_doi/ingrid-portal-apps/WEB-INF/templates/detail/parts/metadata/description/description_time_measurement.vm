@@ -1,0 +1,3 @@
+#if($getTimeMeasurementValue && $getTimeMeasurementUnit)
+    #renderTextTable($MESSAGES.getString('search.detail.time.measurement') "$getTimeMeasurementValue $getTimeMeasurementUnit")
+#end

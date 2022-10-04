@@ -1,7 +1,13 @@
 ## BAW Auftragsnummer
 #set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
+#if($type == 4)
+    #set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
+#end
 ## BAW Auftragstitel
 #set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString"))
+#if($type == 4)
+    #set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"))
+#end
 ## BAW BWAStrCenter
 #set($bawstrCenterLongitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lon']/idf:data"))
 #set($bawstrCenterLatitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lat']/idf:data"))
@@ -71,8 +77,8 @@
                     #set($bwastr_id = $bwastr_id.substring(0, 2) + "01")
                 #end
                 #set($add = $bwastr.add(["'$bwastr_id'", "'$tmpBwaStrValuesSplit.get(1)'", "'$tmpBwaStrValuesSplit.get(2)'"]))
-           #end
-       #end
+            #end
+        #end
     #end
 #end
 

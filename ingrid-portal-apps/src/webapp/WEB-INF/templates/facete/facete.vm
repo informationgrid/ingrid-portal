@@ -227,7 +227,7 @@
                                                 #set ($action = $renderResponse.createActionURL())
                                                 $action.setParameter($facet.getId(), "$toggleGroupIds")
                                                 <div class="form-element boxed toggle-group">
-                                                    <label class="control toggle">
+                                                    <label class="control toggle" title="$MESSAGES.getString("common.toggle.approval.date.tooltip")">
                                                         <input type="checkbox" #if($listedFacetsIsSelected)checked#end onclick="location.href='$action'">
                                                         <span class="toggle-slider round"></span>
                                                     </label>
@@ -314,7 +314,7 @@
                                                 #set ($action = $renderResponse.createActionURL())
                                                 $action.setParameter($facet.getId(), "$toggleGroupIds")
                                                 <div class="form-element boxed toggle-group">
-                                                    <label class="control toggle">
+                                                    <label class="control toggle" title="$MESSAGES.getString("common.toggle.approval.date.tooltip")">
                                                         <input type="checkbox" #if($listedFacetsIsSelected)checked#end onclick="location.href='$action'">
                                                         <span class="toggle-slider round"></span>
                                                     </label>

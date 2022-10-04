@@ -134,90 +134,93 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
  -->
  
 <facets>
-    <!-- Bundesländer -->
-    <facet sort="SORT_BY_NAME">
-        <name>searchResult.facete.title.states</name>
-        <id>state</id>
+    <!-- Verfahrenstypen -->
+    <facet>
+        <name>searchResult.facete.title.procedures</name>
+        <id>procedure</id>
+        <isOpen>true</isOpen>
+        <queryType>OR</queryType>
+        <toggleGroups>
+            <toggleGroup isSelect="true">
+                <toggle>
+                    <parentId>procedure_10</parentId>
+                    <id>procedure_10_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:10 (t01_object.mod_time:[{FROM}0* TO {TO}9*] OR approval_date:[{FROM}0* TO {TO}9*])</query>
+                </toggle>
+                <toggle>
+                    <parentId>procedure_12</parentId>
+                    <id>procedure_12_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:12 approval_date:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
+                <toggle>
+                    <parentId>procedure_13</parentId>
+                    <id>procedure_13_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:13 approval_date:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
+                <toggle>
+                    <parentId>procedure_14</parentId>
+                    <id>procedure_14_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:14 approval_date:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
+                <toggle>
+                    <parentId>procedure_11</parentId>
+                    <id>procedure_11_time</id>
+                    <from>P1YT</from>
+                    <to>PT</to>
+                    <query>t01_object.obj_class:11 approval_date:[{FROM}0* TO {TO}9*]</query>
+                </toggle>
+            </toggleGroup>
+        </toggleGroups>
         <facets>
+        <!-- Zulassungsverfahren -->
             <facet>
-                <id>bw</id>
-                <name>Baden-Württemberg</name>
-                <query>partner:bw</query>
+                <name>Zulassungsverfahren</name>
+                <query>t01_object.obj_class:10</query>
+                <id>procedure_10</id>
+                <display>true</display>
             </facet>
+        <!-- Negative Vorprüfungen -->
             <facet>
-                <id>by</id>
-                <name>Bayern</name>
-                <query>partner:by</query>
+                <name>Negative Vorprüfungen</name>
+                <query>t01_object.obj_class:12</query>
+                <id>procedure_12</id>
+                <display>true</display>
             </facet>
+        <!-- Raumordnungsverfahren -->
             <facet>
-                <id>be</id>
-                <name>Berlin</name>
-                <query>partner:be</query>
+                <name>Raumordnungsverfahren</name>
+                <query>t01_object.obj_class:13</query>
+                <id>procedure_13</id>
+                <display>true</display>
             </facet>
+        <!-- Linienbestimmungen -->
             <facet>
-                <id>bb</id>
-                <name>Brandenburg</name>
-                <query>partner:bb</query>
+                <name>Linienbestimmungen</name>
+                <query>t01_object.obj_class:14</query>
+                <id>procedure_14</id>
+                <display>true</display>
             </facet>
+        <!-- Ausländische Vorhaben -->
             <facet>
-                <id>hb</id>
-                <name>Bremen</name>
-                <query>partner:hb</query>
+                <name>Ausländische Vorhaben</name>
+                <query>t01_object.obj_class:11</query>
+                <id>procedure_11</id>
+                <display>true</display>
             </facet>
+        <!-- Bauleitplanung -->
             <facet>
-                <id>hh</id>
-                <name>Hamburg</name>
-                <query>partner:hh</query>
-            </facet>
-            <facet>
-                <id>he</id>
-                <name>Hessen</name>
-                <query>partner:he</query>
-            </facet>
-            <facet>
-                <id>mv</id>
-                <name>Mecklenburg-Vorpommern</name>
-                <query>partner:mv</query>
-            </facet>
-            <facet>
-                <id>ni</id>
-                <name>Niedersachsen</name>
-                <query>partner:ni</query>
-            </facet>
-            <facet>
-                <id>nw</id>
-                <name>Nordrhein-Westfalen</name>
-                <query>partner:nw</query>
-            </facet>
-            <facet>
-                <id>rp</id>
-                <name>Rheinland-Pfalz</name>
-                <query>partner:rp</query>
-            </facet>
-            <facet>
-                <id>sl</id>
-                <name>Saarland</name>
-                <query>partner:sl</query>
-            </facet>
-            <facet>
-                <id>sn</id>
-                <name>Sachsen</name>
-                <query>partner:sn</query>
-            </facet>
-            <facet>
-                <id>st</id>
-                <name>Sachsen-Anhalt</name>
-                <query>partner:st</query>
-            </facet>
-            <facet>
-                <id>sh</id>
-                <name>Schleswig-Holstein</name>
-                <query>partner:sh</query>
-            </facet>
-            <facet>
-                <id>th</id>
-                <name>Thüringen</name>
-                <query>partner:th</query>
+                <name>Bauleitplanung</name>
+                <query>procedure:dev_plan</query>
+                <id>procedure_dev_plan</id>
+                <display>true</display>
             </facet>
         </facets>
     </facet>
@@ -225,6 +228,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_NAME">
         <name>searchResult.facete.title.types</name>
         <id>type</id>
+        <isOpen>true</isOpen>
+        <queryType>OR</queryType>
+        <listLength>6</listLength>
         <facets>
         <!-- Wärmeerzeugung, Bergbau und Energie -->
             <facet>
@@ -361,55 +367,110 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
-    <!-- Verfahrenstypen -->
-    <facet>
-        <name>searchResult.facete.title.procedures</name>
-        <id>procedure</id>
+    <!-- Bundesländer -->
+    <facet sort="SORT_BY_NAME">
+        <name>searchResult.facete.title.states</name>
+        <id>state</id>
+        <queryType>OR</queryType>
         <facets>
-        <!-- Zulassungsverfahren -->
             <facet>
-                <name>Zulassungsverfahren</name>
-                <query>t01_object.obj_class:10</query>
-                <id>procedure_10</id>
+                <id>bw</id>
+                <name>Baden-Württemberg</name>
+                <query>partner:bw</query>
                 <display>true</display>
             </facet>
-        <!-- Raumordnungsverfahren -->
             <facet>
-                <name>Raumordnungsverfahren</name>
-                <query>t01_object.obj_class:13</query>
-                <id>procedure_13</id>
+                <id>by</id>
+                <name>Bayern</name>
+                <query>partner:by</query>
                 <display>true</display>
             </facet>
-        <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
             <facet>
-                <name>Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht</name>
-                <query>t01_object.obj_class:14</query>
-                <id>procedure_14</id>
-            </facet>
-        <!-- Ausländische Vorhaben -->
-            <facet>
-                <name>Ausländische Vorhaben</name>
-                <query>t01_object.obj_class:11</query>
-                <id>procedure_11</id>
+                <id>be</id>
+                <name>Berlin</name>
+                <query>partner:be</query>
                 <display>true</display>
             </facet>
-        <!-- Bauleitplanung -->
             <facet>
-                <name>Bauleitplanung</name>
-                <query>procedure:dev_plan</query>
-                <id>procedure_dev_plan</id>
+                <id>bb</id>
+                <name>Brandenburg</name>
+                <query>partner:bb</query>
                 <display>true</display>
             </facet>
-            <!-- Negative Vorprüfungen -->
             <facet>
-                <name>Negative Vorprüfungen</name>
-                <query>t01_object.obj_class:12</query>
-                <id>procedure_12</id>
+                <id>hb</id>
+                <name>Bremen</name>
+                <query>partner:hb</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>hh</id>
+                <name>Hamburg</name>
+                <query>partner:hh</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>he</id>
+                <name>Hessen</name>
+                <query>partner:he</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>mv</id>
+                <name>Mecklenburg-Vorpommern</name>
+                <query>partner:mv</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>ni</id>
+                <name>Niedersachsen</name>
+                <query>partner:ni</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>nw</id>
+                <name>Nordrhein-Westfalen</name>
+                <query>partner:nw</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>rp</id>
+                <name>Rheinland-Pfalz</name>
+                <query>partner:rp</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>sl</id>
+                <name>Saarland</name>
+                <query>partner:sl</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>sn</id>
+                <name>Sachsen</name>
+                <query>partner:sn</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>st</id>
+                <name>Sachsen-Anhalt</name>
+                <query>partner:st</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>sh</id>
+                <name>Schleswig-Holstein</name>
+                <query>partner:sh</query>
+                <display>true</display>
+            </facet>
+            <facet>
+                <id>th</id>
+                <name>Thüringen</name>
+                <query>partner:th</query>
                 <display>true</display>
             </facet>
         </facets>
     </facet>
-
     <!-- Aktualität -->
     <facet>
         <name>searchResult.facete.title.time</name>
@@ -690,6 +751,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>Bauleitplanung</name>
                 <query>procedure:dev_plan</query>
+                <parentId>procedure</parentId>
                 <id>procedure_dev_plan</id>
                 <icon>ic-B</icon>
                 <display>true</display>
@@ -702,6 +764,335 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_12</id>
                 <icon>ic-N</icon>
                 <display>true</display>
+            </facet>
+        </facets>
+    </facet>
+    <facet>
+        <name>searchResult.facete.title.states</name>
+        <id>category_state</id>
+        <categoryOnly>true</categoryOnly>
+        <facets>
+            <facet>
+                <name>Baden-Württemberg</name>
+                <query>partner:bw</query>
+                <id>bw</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/bw.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Bayern</name>
+                <query>partner:by</query>
+                <id>by</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/by.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Berlin</name>
+                <query>partner:be</query>
+                <id>be</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/be.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Brandenburg</name>
+                <query>partner:bb</query>
+                <id>bb</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/bb.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Bremen</name>
+                <query>partner:hb</query>
+                <id>hb</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/hb.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Hamburg</name>
+                <query>partner:hh</query>
+                <id>hh</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/hh.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Hessen</name>
+                <query>partner:he</query>
+                <id>he</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/he.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Mecklenburg-Vorpommern</name>
+                <query>partner:mv</query>
+                <id>mv</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/mv.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Niedersachsen</name>
+                <query>partner:ni</query>
+                <id>ni</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/ni.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                        <url>https://uvp.niedersachsen.de</url>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                        <url>https://uvp.niedersachsen.de</url>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Nordrhein-Westfalen</name>
+                <query>partner:nw</query>
+                <id>nw</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/nw.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Rheinland-Pfalz</name>
+                <query>partner:rp</query>
+                <id>rp</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/rp.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Saarland</name>
+                <query>partner:sl</query>
+                <id>sl</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/sl.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Sachsen</name>
+                <query>partner:sn</query>
+                <id>sn</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/sn.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Sachsen-Anhalt</name>
+                <query>partner:st</query>
+                <id>st</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/st.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Schleswig-Holstein</name>
+                <query>partner:sh</query>
+                <id>sh</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/sh.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
+            </facet>
+            <facet>
+                <name>Thüringen</name>
+                <query>partner:th</query>
+                <id>th</id>
+                <parentId>state</parentId>
+                <icon>/ingrid-portal-apps/images/partner/svg/th.svg</icon>
+                <facets>
+                    <facet>
+                        <name>Bauleitplanung</name>
+                        <query>procedure:dev_plan</query>
+                        <id>procedure_dev_plan</id>
+                        <parentId>procedure</parentId>
+                    </facet>
+                    <facet>
+                        <name>UVP-Vorhaben</name>
+                        <query>-procedure:dev_plan ranking:date</query>
+                        <parentId>procedure</parentId>
+                    </facet>
+                </facets>
             </facet>
         </facets>
     </facet>
