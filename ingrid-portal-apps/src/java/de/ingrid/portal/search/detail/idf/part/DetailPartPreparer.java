@@ -393,7 +393,7 @@ public class DetailPartPreparer {
                         }
                     } else {
                         if(replaceUseConstraintsSourcePrefix && constraintSource.startsWith("Quellenvermerk: ")) {
-                            constraintSource = constraintsTextXpathAnchor.replace(messages.getString("Quellenvermerk: "), "");
+                            constraintSource = constraintSource.replace(messages.getString("Quellenvermerk: "), "");
                         }
                         furtherOtherConstraints.add( removeLocalisation(constraintSource) );
                     }
