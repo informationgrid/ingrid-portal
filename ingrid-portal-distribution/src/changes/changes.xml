@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.13.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.13.2">
+          <action type="fix" dev="wemove" issue="4345">
+            Fehler in BKG-MIS-Release 5.13.1
+          </action>
           <action type="fix" dev="wemove" issue="4317">
             Portal - Dokumente - Download als ZIP-Datei - Zip-Datei Leer
           </action>
