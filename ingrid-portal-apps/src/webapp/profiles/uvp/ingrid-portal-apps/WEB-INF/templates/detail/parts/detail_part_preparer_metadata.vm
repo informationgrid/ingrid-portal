@@ -480,46 +480,5 @@
         </svg>
     </h3>
 #end
-<script>
-    $( document ).ready(function() {
-        $('a.download').each(function(index) {
-            var a = $(this);
-            var aParent = a.parent(); 
-            if(a){
-                if(a.length > 0){
-                    var href = a[0].href;
-                    var spanParent = aParent.find('span.text');
-                    if(spanParent){
-                        var span = spanParent.find('span.downloadText');
-                        if(href && span){
-                            getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent(href), span);
-                        }
-                    }
-                }
-            }
-        });
-        $('.zip-download').each(function(index) {
-            var docuuid = '$docUuid';
-            var plugid = '$plugId';
-            if(docuuid !== '' && plugid !== '') {
-                var element = $(this);
-                element.append('<span>$MESSAGES.getString("search.detail.download.zip.prepare")</span>');
-                var http = new XMLHttpRequest();
-                http.open('GET', '$restUrlHttpDownloadUVPCreate?docuuid=' + docuuid + '&plugid=' + plugid, true);
-                http.onreadystatechange = function() {
-                    if (this.readyState == this.DONE) {
-                        if (this.status === 200) {
-                            element.find('span').addClass('is-hidden');
-                            if(this.response != "") {
-                                var content = '<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> </a>';
-                                content = content + '<span class="text"><span class="downloadText">' + convertFileSize(this.response, true, true) + '</span></span>'
-                                element.append(content);
-                            }
-                        }
-                    }
-                };
-                http.send();
-            }
-        });
-    });
-</script>
+#parse('/WEB-INF/templates/global/include_reference_list_file_size.vm')
+#parse('/WEB-INF/templates/global/include_reference_zip_download.vm')

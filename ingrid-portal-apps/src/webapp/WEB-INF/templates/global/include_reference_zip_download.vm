@@ -1,0 +1,27 @@
+<script>
+    $( document ).ready(function() {
+        $('.zip-download').each(function(index) {
+            var docuuid = '$docUuid';
+            var plugid = '$plugId';
+            if(docuuid !== '' && plugid !== '') {
+                var element = $(this);
+                element.append('<span>$MESSAGES.getString("search.detail.download.zip.prepare")</span>');
+                var http = new XMLHttpRequest();
+                http.open('GET', '$restUrlHttpDownloadUVPCreate?docuuid=' + docuuid + '&plugid=' + plugid, true);
+                http.onreadystatechange = function() {
+                    if (this.readyState == this.DONE) {
+                        if (this.status === 200) {
+                            element.find('span').addClass('is-hidden');
+                            if(this.response != "") {
+                                var content = '<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> </a>';
+                                content = content + '<span class="text"><span class="downloadText">' + convertFileSize(this.response, true, true) + '</span></span>'
+                                element.append(content);
+                            }
+                        }
+                    }
+                };
+                http.send();
+            }
+        });
+    });
+</script>
