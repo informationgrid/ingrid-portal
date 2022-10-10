@@ -1,20 +1,24 @@
 <script>
     $( document ).ready(function() {
-        $('a.download').each(function(index) {
-            var a = $(this);
-            var aParent = a.parent(); 
-            if(a){
-                if(a.length > 0){
-                    var href = a[0].href;
-                    var spanParent = aParent.find('span.text');
-                    if(spanParent){
-                        var span = spanParent.find('span.downloadText');
-                        if(href && span){
-                            getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent(href), span);
+        document.addEventListener('scroll', (e) => {
+            $('a.download').each(function(index) {
+                var a = $(this);
+                var aParent = a.parent(); 
+                if(a){
+                    if(a.length > 0){
+                        if(elementInViewport(a[0])) {
+                            var href = a[0].href;
+                            var spanParent = aParent.find('span.text');
+                            if(spanParent){
+                                var span = spanParent.find('span.downloadText');
+                                if(href && span && span.text().length == 0){
+                                    getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent(href), span);
+                                }
+                            }
                         }
                     }
                 }
-            }
+            });
         });
     });
 </script>
