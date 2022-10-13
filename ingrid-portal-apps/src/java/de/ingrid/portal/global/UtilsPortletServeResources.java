@@ -93,7 +93,9 @@ public class UtilsPortletServeResources {
                 extension = "wms";
             } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
                 extension = "wfs";
-            } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
+            } else if(paramURL.toLowerCase().indexOf("service=wcs") > -1) {
+                extension = "wcs";
+            } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1 || paramURL.toLowerCase().indexOf("wmtscapabilities.xml") > -1) {
                 extension = "wmts";
             }
             if(extension.isEmpty()) {
