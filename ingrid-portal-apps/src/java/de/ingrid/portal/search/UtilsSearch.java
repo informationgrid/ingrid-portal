@@ -1818,4 +1818,20 @@ public class UtilsSearch {
         }
         return null;
     }
+    public static String getServiceParamByContent(String content) {
+        if (content.contains("<csw:Capabilities")) {
+            return "CSW";
+        } else if(content.contains("WMT_MS_Capabilities")) {
+            return "WMS";
+        } else if(content.contains("WMS_Capabilities")) {
+            return "WMS";
+        } else if(content.contains("WCS_Capabilities")) {
+            return "WCS";
+        } else if(content.contains("<Capabilities")) {
+            return "WMTS";
+        } else if(content.contains("WFS_Capabilities")) {
+            return "WFS";
+        }
+        return null;
+    }
 }

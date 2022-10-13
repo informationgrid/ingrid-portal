@@ -23,6 +23,7 @@
 package de.ingrid.portal.global;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -30,6 +31,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +49,28 @@ public class UtilsHttpConnection {
         String userAuth = login + ":" + password;
         String encoding = Base64.getEncoder().encodeToString(userAuth.getBytes());
         conn.setRequestProperty("Authorization", "Basic " + encoding);
+    }
+    public static String urlConnection(String paramUrl) {
+        return urlConnection(paramUrl, null, null);
+     }
+
+    public static String urlConnection(String paramUrl, String login, String password) {
+        try {
+            URL url = new URL(paramUrl);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            if(StringUtils.isNotEmpty(login) && StringUtils.isNotEmpty(password)) {
+                UtilsHttpConnection.urlConnectionAuth(con, login, password);
+            }
+            InputStream in = con.getInputStream();
+            String encoding = con.getContentEncoding();
+            encoding = encoding == null ? "UTF-8" : encoding;
+
+            return IOUtils.toString( in, encoding );
+        } catch (IOException e) {
+            UtilsLog.logError("Error load url: " + paramUrl, e, log);
+        }
+        return "";
     }
 
     public static Map<String, Object> urlConnectionHead(String paramUrl) {
