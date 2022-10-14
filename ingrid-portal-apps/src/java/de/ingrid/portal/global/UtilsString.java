@@ -534,16 +534,4 @@ public class UtilsString {
     public static int parseInt(String string) {
         return Integer.parseInt(string);
     }
-
-    public static boolean containsLetters(String string) {
-        if (string == null || string.isEmpty()) {
-            return false;
-        }
-        for (int i = 0; i < string.length(); ++i) {
-            if (Character.isLetter(string.charAt(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

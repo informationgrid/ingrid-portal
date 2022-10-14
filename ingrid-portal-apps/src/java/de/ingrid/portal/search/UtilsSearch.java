@@ -70,6 +70,7 @@ import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.PlugDescription;
+import de.ingrid.utils.capabilities.CapabilitiesUtils;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.FuzzyFieldQuery;
@@ -80,6 +81,7 @@ import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.query.WildCardFieldQuery;
 import de.ingrid.utils.query.WildCardTermQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
+import de.ingrid.utils.tool.StringUtil;
 import de.ingrid.utils.tool.UrlTool;
 import de.ingrid.utils.udk.UtilsCSWDate;
 import de.ingrid.utils.udk.UtilsDate;
@@ -1705,13 +1707,9 @@ public class UtilsSearch {
     
     public static String getHitShortcut(String serviceTypeVersion, String serviceType) {
         if(serviceTypeVersion != null) {
-            Pattern pattern = Pattern.compile("(?<=(\\:| ))(.*?)(?=\\ )");
-            Matcher matcher = pattern.matcher(serviceTypeVersion);
-            if (UtilsString.containsLetters(serviceTypeVersion) && matcher.find()) {
-                String match = matcher.group(0);
-                if(match != null && !match.isEmpty()) {
-                    return match;
-                }
+            String service = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
+            if(service != null && !service.isEmpty()) {
+                return service;
             }
         }
         if(serviceType != null) {
@@ -1722,7 +1720,7 @@ public class UtilsSearch {
             }
         }
         if(serviceTypeVersion != null) {
-            if(UtilsString.containsLetters(serviceTypeVersion)) {
+            if(StringUtil.containsLetters(serviceTypeVersion)) {
                 return serviceTypeVersion;
             }
         }
