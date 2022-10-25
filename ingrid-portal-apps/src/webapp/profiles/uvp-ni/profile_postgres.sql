@@ -56,6 +56,12 @@ UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 -- Show '/rsspage.psml'
 UPDATE page SET is_hidden = 0 WHERE path = '/rsspage.psml';
 
+-- Hide 'mdek/mdek_portal_admin.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/mdek/mdek_portal_admin.psml';
+
+-- Set folder "/mdek" to hidden
+UPDATE folder SET is_hidden = 1 WHERE path = '/mdek';
+
 -- Delete all '/_user/<USER>/default-page.psml'
 DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';
 
