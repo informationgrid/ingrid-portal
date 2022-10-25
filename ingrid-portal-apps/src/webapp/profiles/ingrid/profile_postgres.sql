@@ -127,6 +127,9 @@ UPDATE folder SET is_hidden = 1 WHERE path = '/cms';
 -- Set folder "/application" from display to hidden (only use on profile baw_wsv)
 UPDATE folder SET is_hidden = 1 WHERE path = '/application';
 
+-- Set folder "/mdek" to display
+UPDATE folder SET is_hidden = 0 WHERE path = '/mdek';
+
 -- Show '/language.link'
 UPDATE link   SET is_hidden = 0 WHERE path = '/language.link';
 
