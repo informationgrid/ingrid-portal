@@ -242,6 +242,9 @@
         <execute>
             <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/application']]>
         </execute>
+        <execute>
+            <![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/mdek']]>
+        </execute>
         <!-- DONE with tmp_table -->
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>
