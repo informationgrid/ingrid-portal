@@ -53,6 +53,12 @@ UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT temp_value FR
 UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/main-measures.psml';
 UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';
 
+-- Set folder "/application" to display
+UPDATE folder SET is_hidden = 0 WHERE path = '/application';
+
+-- Show '/application/main-application.psml'
+UPDATE page SET is_hidden = 0 WHERE path = '/application/main-application.psml';
+
 -- Delete all '/_user/<USER>/default-page.psml'
 DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';
 

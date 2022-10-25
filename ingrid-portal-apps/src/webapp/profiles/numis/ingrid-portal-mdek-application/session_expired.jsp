@@ -76,17 +76,16 @@
             </div>
             <header>
                 <div class="row">
-                    <div class="columns xsmall-7 small-7 medium-8 large-7 xlarge-9">
+                    <div class="columns xsmall-7 small-7 medium-8 large-6 xlarge-9">
                         <div class="logo">
                             <div class="switch">
                                 <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
                             </div>
-                            <a href="/startseite" class="hide-for-xlarge hide-for-xsmall-only hide-for-small-only"><img src="/decorations/layout/ingrid/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
                             <a href="/startseite" class="show-for-xlarge hide-for-xsmall-only"><img src="/decorations/layout/ingrid/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
                             <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/ingrid/images/template/logo-xsmall.svg" alt="NUMIS"/></a>
                         </div>
                     </div>
-                    <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
+                    <div class="columns xsmall-16 small-15 medium-15 large-15 xlarge-12 nav-tabs">
                         <div class="menu-tab-row">
                             <a class="menu-tab" href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">
                                 <div class="link-menu-tab">
@@ -110,6 +109,12 @@
                                 <div class="link-menu-tab">
                                     <span class="ic-ic-datenkataloge"></span>
                                     <span class="text">Kataloge</span>
+                                </div>
+                            </a>
+                            <a class="menu-tab " href="api" title="API Übersicht">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-datenkataloge"></span>
+                                    <span class="text">API</span>
                                 </div>
                             </a>
                         </div>
