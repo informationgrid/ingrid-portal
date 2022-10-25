@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.14.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.14.1">
+          <action type="add" dev="wemove" issue="4374">
+            Erstellung neuer Bereich "APIs"
+          </action>
           <action type="update" dev="wemove" issue="4337">
             Log-in niedersächsischer UVP Editor (IGE-NG)
           </action>
