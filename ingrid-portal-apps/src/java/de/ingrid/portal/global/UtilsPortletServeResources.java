@@ -106,7 +106,7 @@ public class UtilsPortletServeResources {
                             String contentType = (String) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_TYPE);
                             if(contentType != null) {
                                 extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
-                                if(extension.equalsIgnoreCase("xml")){
+                                if(contentType.contains("/xml") || contentType.contains("+xml")){
                                     String content = UtilsHttpConnection.urlConnection (paramURL, login, password);
                                     String capExtension = UtilsSearch.getServiceParamByContent(content);
                                     if(capExtension != null){

@@ -1817,18 +1817,21 @@ public class UtilsSearch {
         return null;
     }
     public static String getServiceParamByContent(String content) {
-        if (content.contains("<csw:Capabilities")) {
+        String contentLowerCase = content.toLowerCase();
+        if (contentLowerCase.contains("<csw:capabilities")) {
             return "CSW";
-        } else if(content.contains("WMT_MS_Capabilities")) {
+        } else if(contentLowerCase.contains("wmt_ms_capabilities")) {
             return "WMS";
-        } else if(content.contains("WMS_Capabilities")) {
+        } else if(contentLowerCase.contains("wms_capabilities")) {
             return "WMS";
-        } else if(content.contains("WCS_Capabilities")) {
+        } else if(contentLowerCase.contains("wcs_capabilities")) {
             return "WCS";
-        } else if(content.contains("<Capabilities")) {
+        } else if(contentLowerCase.contains("<capabilities")) {
             return "WMTS";
-        } else if(content.contains("WFS_Capabilities")) {
+        } else if(contentLowerCase.contains("wfs_capabilities")) {
             return "WFS";
+        } else if(contentLowerCase.contains("<feed") && contentLowerCase.contains("/atom")) {
+            return "ATOM";
         }
         return null;
     }
