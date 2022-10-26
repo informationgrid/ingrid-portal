@@ -129,7 +129,7 @@
                     #set($postalcode = $TOOL.getValueFromXPath("./addresses/address[$number]/postalcode"))
                     #set($country = $TOOL.getValueFromXPath("./addresses/address[$number]/country"))
                     #set($postbox = $TOOL.getValueFromXPath("./addresses/address[$number]/postbox"))
-                    #if($showHitPartnerLogo)
+                    #if($plugPartner && $showHitPartnerLogo)
                         #set($partnerTitleKey = "common.result.partner.${plugPartner}")
                         <div class="teaser-logo-partner">
                             <img src="/ingrid-portal-apps/images/partner/svg/${plugPartner}.svg" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/>
@@ -155,18 +155,13 @@
                             <br>
                             #set($street = "")
                         #end
-                        #set($place = "")
                         #if($postalcode && $postalcode.length() > 0)
-                            #set($place = "$place $postalcode")
+                            $postalcode"
                         #end
                         #if($city && $city.length() > 0)
-                            #set($place = "$place $city")
+                            $city
                         #end
                         #if($city && $city.length() > 0 || $postalcode && $postalcode.length() > 0)
-                            #if($showHitPartnerLogo && $plugPartnerString)
-                                #set($place = "$place, $plugPartnerString")
-                            #end
-                            $place
                             #set($postalcode = "")
                             #set($city = "")
                             <br>
@@ -187,6 +182,10 @@
                                 <br>
                             #end
                             #set($postbox = "")
+                        #end
+                        #if($showHitPartnerLogo && $plugPartnerString)
+                            $plugPartnerString
+                            <br>
                         #end
                         #if($country && $country.length() > 0)
                             $country
