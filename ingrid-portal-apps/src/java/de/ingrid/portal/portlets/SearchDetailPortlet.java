@@ -384,10 +384,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     plugPartner = partners[0];
                     context.put("plugPartner", plugPartner);
                     String[] excludeExtendPartners = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_EXCLUDE_EXTEND_PARTNER);
+                    boolean hasToExclude = false;
                     for (String excludeExtendPartner : excludeExtendPartners) {
-                        if(!excludeExtendPartner.equals(plugPartner)){
-                            context.put("plugPartnerString", UtilsDB.getPartnerFromKey(plugPartner));
+                        if(excludeExtendPartner.equals(plugPartner)){
+                            hasToExclude = true;
                         }
+                    }
+                    if(!hasToExclude){
+                        context.put("plugPartnerString", UtilsDB.getPartnerFromKey(plugPartner));
                     }
                 }
 
