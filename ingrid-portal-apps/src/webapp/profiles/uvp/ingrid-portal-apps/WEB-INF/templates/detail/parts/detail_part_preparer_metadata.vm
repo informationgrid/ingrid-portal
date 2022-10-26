@@ -129,6 +129,12 @@
                     #set($postalcode = $TOOL.getValueFromXPath("./addresses/address[$number]/postalcode"))
                     #set($country = $TOOL.getValueFromXPath("./addresses/address[$number]/country"))
                     #set($postbox = $TOOL.getValueFromXPath("./addresses/address[$number]/postbox"))
+                    #if($showHitPartnerLogo)
+                        #set($partnerTitleKey = "common.result.partner.${plugPartner}")
+                        <div class="teaser-logo-partner">
+                            <img src="/ingrid-portal-apps/images/partner/svg/${plugPartner}.svg" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/>
+                        </div>
+                    #end
                     <h4 class="no-margin">$MESSAGES.getString("search.detail.uvp.address.type")</h4>
                     <p>
                     #set($nodelistParent = $TOOL.getNodeListFromXPath("./addresses/address[$number]/parent"))
@@ -149,13 +155,18 @@
                             <br>
                             #set($street = "")
                         #end
+                        #set($place = "")
                         #if($postalcode && $postalcode.length() > 0)
-                            $postalcode
+                            #set($place = "$place $postalcode")
                         #end
                         #if($city && $city.length() > 0)
-                            $city
+                            #set($place = "$place $city")
                         #end
                         #if($city && $city.length() > 0 || $postalcode && $postalcode.length() > 0)
+                            #if($showHitPartnerLogo && $plugPartnerString)
+                                #set($place = "$place, $plugPartnerString")
+                            #end
+                            $place
                             #set($postalcode = "")
                             #set($city = "")
                             <br>

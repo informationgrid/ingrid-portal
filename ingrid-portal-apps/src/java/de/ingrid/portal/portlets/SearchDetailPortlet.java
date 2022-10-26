@@ -230,6 +230,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
         context.put( "leafletBgLayerOpacity", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY));
 
+        context.put("showHitPartnerLogo", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_PARTNER_LOGO, false));
+
         boolean detailUseParamPlugid = PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID);
         context.put("detailUseParamPlugid", detailUseParamPlugid);
 
@@ -381,6 +383,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     }
                     plugPartner = partners[0];
                     context.put("plugPartner", plugPartner);
+                    String[] excludeExtendPartners = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_EXCLUDE_EXTEND_PARTNER);
+                    for (String excludeExtendPartner : excludeExtendPartners) {
+                        if(!excludeExtendPartner.equals(plugPartner)){
+                            context.put("plugPartnerString", UtilsDB.getPartnerFromKey(plugPartner));
+                        }
+                    }
                 }
 
                 if(plugDescription.getProviders() != null) {
