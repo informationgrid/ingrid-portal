@@ -47,6 +47,7 @@ ENV UPLOAD_PARTS_DIR=/tmp/ingrid/upload/parts/
 ENV TOYBOX_SRC=https\\:\\/\\/d16ahjtmf9d1au\\.cloudfront\\.net\\/inject\\.bundle\\.js
 ENV JAVA_OPTS='-Dfile.encoding=UTF8'
 ENV MAPCLIENT_DISABLED=false
+ENV IGE_DISABLED=false
 
 # user, group ingrid (1000:1000) is created in base image
 COPY --chown=1000:1000 --from=builder /tmp/distribution/ /opt/ingrid/ingrid-portal/
