@@ -156,7 +156,7 @@
                             #set($street = "")
                         #end
                         #if($postalcode && $postalcode.length() > 0)
-                            $postalcode"
+                            $postalcode
                         #end
                         #if($city && $city.length() > 0)
                             $city
