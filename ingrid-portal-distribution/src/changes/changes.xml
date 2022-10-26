@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+          <action type="add" dev="wemove" issue="1806">
+            UVP: Darstellung des Bundeslandes oder des Landkreises in dem das Vorhaben erfolgt
+          </action>
           <action type="add" dev="wemove" issue="4374">
             Erstellung neuer Bereich "APIs"
           </action>
