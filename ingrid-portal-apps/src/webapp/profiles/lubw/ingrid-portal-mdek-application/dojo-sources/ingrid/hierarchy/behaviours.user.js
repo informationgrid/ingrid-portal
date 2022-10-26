@@ -23,14 +23,20 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/lubw/oac"
-], function(lang, behaviours, oac) {
+    "ingrid/hierarchy/behaviours/lubw/oac",
+    "ingrid/hierarchy/behaviours/lubw/environmentDescription"
+], function(lang, behaviours, oac, environmentDescription) {
 
     return lang.mixin(behaviours, {
 
         /**
          *
          */
-        lubwOac: oac
+        lubwOac: oac,
+
+        /**
+         *
+         */
+        lubwEnvironmentDescription: environmentDescription
     });
 });
