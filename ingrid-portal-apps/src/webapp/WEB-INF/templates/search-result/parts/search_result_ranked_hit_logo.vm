@@ -13,7 +13,7 @@
 #if(!$rs.is_address)
     #if($showHitPartnerLogo)
         <div class="teaser-logo-partner">
-            #if($rs.partnerKey != "all")
+            #if($rs.partnerKey != "all" && $partner != "bund")
                 #set($partnerTitleKey = "common.result.partner.${partner}")
                 <img src="/ingrid-portal-apps/images/partner/svg/${partner}.svg" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/>
             #end
