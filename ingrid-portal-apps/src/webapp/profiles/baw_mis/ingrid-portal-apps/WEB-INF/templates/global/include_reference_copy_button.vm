@@ -3,21 +3,49 @@
     var href = this.href;
     var os = getOS();
     var addButton = false;
+    var hrefChanged = false;
+    var clipboardText = '';
+    var domain = '';
     if(os === 'Windows') {
-      href = href.replaceAll('https://dl.datenfinder.baw.de/KA/', '\\\\lfs-ka.all.baw.de\\Ablage\\KA\\');
-      href = href.replaceAll('https://dl.datenfinder.baw.de/HH/', '\\\\lfs-hh.all.baw.de\\Ablage\\HH\\');
+      if(href.indexOf('https://dl.datenfinder.baw.de/KA/') > -1) {
+        domain = '';
+        var replaceString = domain + '/net/lfs-hh/Ablage/HH/';
+        href = href.replaceAll('https://dl.datenfinder.baw.de/KA/', replaceString);
+        hrefChanged = true;
+      }
+      if(href.indexOf('https://dl.datenfinder.baw.de/HH/') > -1) {
+        domain = 'file://lfs-hh.all.baw.de';
+        var replaceString = domain + '/Ablage/HH/';
+        href = href.replaceAll('https://dl.datenfinder.baw.de/HH/', replaceString);
+        hrefChanged = true;
+      }
     } else {
-      href = href.replaceAll('https://dl.datenfinder.baw.de/KA/', 'smb://lfs-ka.all.baw.de/Ablage/KA/');
-      href = href.replaceAll('https://dl.datenfinder.baw.de/HH/', 'smb://lfs-hh.all.baw.de/Ablage/HH/');
+      if(href.indexOf('https://dl.datenfinder.baw.de/KA/') > -1) {
+        domain = 'smb://lfs-ka.all.baw.de';
+        var replaceString = domain + '/Ablage/KA/';
+        href = href.replaceAll('https://dl.datenfinder.baw.de/KA/', replaceString);
+        hrefChanged = true;
+      }
+      if(href.indexOf('https://dl.datenfinder.baw.de/HH/') > -1) {
+        domain = '';
+        var replaceString = domain + '/net/lfs-hh/Ablage/HH/';
+        href = href.replaceAll('https://dl.datenfinder.baw.de/HH/', replaceString);
+        hrefChanged = true;
+      }
     }
     if(this.href !== href || this.href.indexOf('file:') == 0) {
+      this.style.pointerEvents = 'none';
       addButton = true;
     }
     this.href = href;
+    if(hrefChanged) {
+      clipboardText += domain;
+      clipboardText += this.pathname;
+    }
     if(addButton) {
       var parent = $(this).parent();
       ## Add copy button
-      var copyBtn = $('<button class="btn copy" data-clipboard-text="' + this.href+ '" style="float:right" title="$MESSAGES.getString('common.link.copy')"><span class="ic-ic-copy"></span></button>');
+      var copyBtn = $('<button class="btn copy" data-clipboard-text="' + (clipboardText || this.href) + '" style="float:right" title="$MESSAGES.getString('common.link.copy')"><span class="ic-ic-copy"></span></button>');
       parent.append(copyBtn);
       ## Add info button to title
       var infoBtn = $('<a href="#" class="js-popup copy" data-content="$MESSAGES.getString('common.link.copy.help')" style="float:right;"><span class="ic-ic-info"></span></a>');
