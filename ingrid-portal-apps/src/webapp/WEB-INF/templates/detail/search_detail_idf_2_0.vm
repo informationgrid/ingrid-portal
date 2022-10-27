@@ -891,7 +891,7 @@
                     #set($content = $content + "$citation.publisher. ")
                 #end
                 #if($tool.hasContent($citation.doi))
-                    #set($content = $content + '<a class="external-link" href="' + $citation.doi + '" target="_blank">' + "$citation.doi</a>")
+                    #set($content = $content + '<a class="external-link" href="' + $citation.doi + '" target="_blank" title="' + $citation.doi + '">' + "$citation.doi</a>")
                 #end
             #end
             #if(!$content.isEmpty())
