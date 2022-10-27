@@ -23,9 +23,9 @@
                             <a href="#${hashDetail1}" class="accordion-title js-anchor-target" aria-controls="${hashDetail1}-accordion" role="tab" id="${hashDetail1}-accordion-label">
                                 <span class="text">$MESSAGES.getString("detail_description")</span>
                             </a>
-                            <div class="accordion-content #if(!$TOOL.aNodeOfListExist($xPathListTime) || (!$getTimeDates || $getTimeDates.getLength() == 0) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))is-hidden#end" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail1}-accordion-label" id="${hashDetail1}-accordion">
+                            <div class="accordion-content #if(!$TOOL.aNodeOfListExist($xPathListTime) && (!$getTimeDates || $getTimeDates.getLength() == 0) && (!$getTimeMeasurementValue && !$getTimeMeasurementUnit))is-hidden#end" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail1}-accordion-label" id="${hashDetail1}-accordion">
                                 <div class="boxes">
-                                    #if($TOOL.aNodeOfListExist($xPathListTime))
+                                    #if($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))
                                         #set($tmpHash = "${hashDetail1}_time_reference")
                                         #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
                                             #set($tmpTitle = "time_reference_content")

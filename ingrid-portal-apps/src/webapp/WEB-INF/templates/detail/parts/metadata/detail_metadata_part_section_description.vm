@@ -34,6 +34,7 @@
                 #else
                     #set($tmpTitle = "time_reference")
                 #end
+                #renderGroupTitle($MESSAGES.getString("$tmpTitle"))
             ## Durch die Ressource abgedeckte Zeitspanne
                 #set($atTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodInstantPosition))
                 #set($beginTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodBeginPosition))
