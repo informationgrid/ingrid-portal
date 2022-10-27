@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.14.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.14.1">
+          <action type="update" dev="wemove" issue="4167">
+            Portal: Anpassungen in den Detail- und Suchtreffer-Ansichten
+          </action>
           <action type="add" dev="wemove" issue="4351">
             Portal: Bibliografische Angaben auch im baw_mis Profil implementieren
           </action>
