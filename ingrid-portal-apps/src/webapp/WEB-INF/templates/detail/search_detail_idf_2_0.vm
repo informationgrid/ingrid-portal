@@ -876,7 +876,7 @@
         #foreach($citation in $entry)
             #set($content = "")
             #if($tool.hasContent($citation.uuid) && $tool.hasContent($citation.title))
-                #set($content = $content + '<a class="external-link" href=?docuuid=' + $citation.uuid + '" target="_blank" title="' + $citation.title + '">' + "$citation.title</a>")
+                #set($content = $content + '<a class="external-link" href="?docuuid=' + $citation.uuid + '" target="_blank" title="' + $citation.title + '">' + "$citation.title</a>")
             #else
                 #if($tool.hasContent($citation.authors))
                     #set($content = $content + "<b>$citation.authors</b> ")
