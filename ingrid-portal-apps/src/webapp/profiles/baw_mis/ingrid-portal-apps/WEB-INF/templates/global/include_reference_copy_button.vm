@@ -1,52 +1,61 @@
 <script>
   var all = $('.list-item a.icon').map(function() {
-    var href = this.href;
     var os = getOS();
     var addButton = false;
     var hrefChanged = false;
+    var hrefWin = '';
+    var hrefLin = '';
+    var domainWin = '';
+    var domainLin = '';
     var clipboardText = '';
-    var domain = '';
-    if(os === 'Windows') {
-      if(href.indexOf('https://dl.datenfinder.baw.de/KA/') > -1) {
-        domain = '';
-        var replaceString = domain + '/net/lfs-hh/Ablage/HH/';
-        href = href.replaceAll('https://dl.datenfinder.baw.de/KA/', replaceString);
-        hrefChanged = true;
-      }
-      if(href.indexOf('https://dl.datenfinder.baw.de/HH/') > -1) {
-        domain = 'file://lfs-hh.all.baw.de';
-        var replaceString = domain + '/Ablage/HH/';
-        href = href.replaceAll('https://dl.datenfinder.baw.de/HH/', replaceString);
-        hrefChanged = true;
-      }
-    } else {
-      if(href.indexOf('https://dl.datenfinder.baw.de/KA/') > -1) {
-        domain = 'smb://lfs-ka.all.baw.de';
-        var replaceString = domain + '/Ablage/KA/';
-        href = href.replaceAll('https://dl.datenfinder.baw.de/KA/', replaceString);
-        hrefChanged = true;
-      }
-      if(href.indexOf('https://dl.datenfinder.baw.de/HH/') > -1) {
-        domain = '';
-        var replaceString = domain + '/net/lfs-hh/Ablage/HH/';
-        href = href.replaceAll('https://dl.datenfinder.baw.de/HH/', replaceString);
-        hrefChanged = true;
-      }
+    var replaceString = '';
+
+    if(this.href.indexOf('https://dl.datenfinder.baw.de/KA/') > -1) {
+      ## windows
+      domainWin = 'file://lfs-ka.all.baw.de';
+      replaceString = domainWin + '/Ablage/KA/';
+      hrefWin = this.href.replaceAll('https://dl.datenfinder.baw.de/KA/', replaceString);
+      ## linux
+      domainLin = 'smb://lfs-ka.all.baw.de';
+      replaceString = domainLin + '/Ablage/KA/'
+      hrefLin = this.href.replaceAll('https://dl.datenfinder.baw.de/KA/', replaceString);
+      hrefChanged = true;
     }
-    if(this.href !== href || this.href.indexOf('file:') == 0) {
+    if(this.href.indexOf('https://dl.datenfinder.baw.de/HH/') > -1) {
+      ## windows
+      domainWin = 'file://lfs-hh.all.baw.de';
+      replaceString = domainWin + '/Ablage/HH/'
+      hrefWin = this.href.replaceAll('https://dl.datenfinder.baw.de/HH/', replaceString);
+      ## linux
+      domainLin = '';
+      replaceString = domainLin + '/net/lfs-hh/Ablage/HH/';
+      hrefLin = this.href.replaceAll('https://dl.datenfinder.baw.de/HH/', replaceString);
+      hrefChanged = true;hrefChanged = true;
+    }
+    if((this.href !== hrefWin && this.href !== hrefLin) || this.href.indexOf('file:') == 0) {
       this.style.pointerEvents = 'none';
       addButton = true;
     }
-    this.href = href;
-    if(hrefChanged) {
-      clipboardText += domain;
-      clipboardText += this.pathname;
+    if(os === 'Windows') {
+      this.href = hrefWin;
+      if(hrefChanged) {
+        clipboardText += domainWin;
+        clipboardText += this.pathname;
+      }
+    } else {
+      this.href = hrefLin;
+      if(hrefChanged) {
+        clipboardText += domainLin;
+        clipboardText += this.pathname;
+      }
     }
     if(addButton) {
       var parent = $(this).parent();
       ## Add copy button
       var copyBtn = $('<button class="btn copy" data-clipboard-text="' + (clipboardText || this.href) + '" style="float:right" title="$MESSAGES.getString('common.link.copy')"><span class="ic-ic-copy"></span></button>');
       parent.append(copyBtn);
+      var infoLinks = $('<p><b>Windows</b>: ' + hrefWin + '<br><b>Linux</b>: ' + hrefLin + '</p>');
+      parent.append(infoLinks);
       ## Add info button to title
       var infoBtn = $('<a href="#" class="js-popup copy" data-content="$MESSAGES.getString('common.link.copy.help')" style="float:right;"><span class="ic-ic-info"></span></a>');
       var header = parent.closest('.sub-section').children('h4');
