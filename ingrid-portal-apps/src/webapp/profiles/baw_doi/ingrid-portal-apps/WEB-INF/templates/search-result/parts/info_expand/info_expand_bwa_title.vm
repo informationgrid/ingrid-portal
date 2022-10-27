@@ -1,5 +1,5 @@
 ## Auftragstitel
-#if($bwa_title)
-#renderFactTitle("Auftragstitel")
-        <p>$bwa_title.get(0)</p>
+#if($bwa_title && !$bwa_title.isEmpty())
+    #renderFactTitle("Auftragstitel")
+    <p>$bwa_title.get(0)</p>
 #end

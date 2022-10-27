@@ -709,6 +709,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             String value = getAPACitationValueFromXpath("title", node, xpathExpressions.get("title"));
             if (value != null) {element.put("title", value);}
         }
+        if (xpathExpressions.containsKey("uuid") && xPathUtils.nodeExists(node, xpathExpressions.get("uuid"))){
+            String value = getAPACitationValueFromXpath("uuid", node, xpathExpressions.get("uuid"));
+            if (value != null) {element.put("uuid", value);}
+        }
         if (xpathExpressions.containsKey("publisher") && xPathUtils.nodeExists(node, xpathExpressions.get("publisher"))){
             String value = getAPACitationValueFromXpath("publisher", node, xpathExpressions.get("publisher"));
             if (value != null) {element.put("publisher", value);}

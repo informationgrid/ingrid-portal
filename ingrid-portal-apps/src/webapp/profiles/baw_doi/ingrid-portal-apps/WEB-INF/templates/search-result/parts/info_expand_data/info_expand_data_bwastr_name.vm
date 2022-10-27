@@ -1,5 +1,8 @@
 ## Ortslage
-#set($bwastr_name = $rs.get("detail").get("bwstr-bwastr_name"))
+#set($bwastr_name = "")
+#if($rs.get("detail"))
+    #set($bwastr_name = $rs.get("detail").get("bwstr-bwastr_name"))
+#end
 
 ## BwaStr ID data
 #set($bwastr = [])

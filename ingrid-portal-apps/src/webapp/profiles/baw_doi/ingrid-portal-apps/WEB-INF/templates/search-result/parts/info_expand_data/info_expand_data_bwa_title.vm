@@ -1,2 +1,5 @@
 ## Auftragstitel
-#set($bwa_title = $rs.get("detail").get("bawauftragstitel"))
+#set($bwa_title = "")
+#if($rs.get("detail"))
+    #set($bwa_title = $rs.get("detail").get("bawauftragstitel"))
+#end

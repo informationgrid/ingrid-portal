@@ -875,20 +875,24 @@
         #set($list = [])
         #foreach($citation in $entry)
             #set($content = "")
-            #if($tool.hasContent($citation.authors))
-                #set($content = $content + "<b>$citation.authors</b> ")
-            #end
-            #if($tool.hasContent($citation.year))
-                #set($content = $content + "<b>($citation.year):</b> ")
-            #end
-            #if($tool.hasContent($citation.title))
-                #set($content = $content + "<i>$citation.title</i>#if($tool.hasContent($citation.doi_type)) [$citation.doi_type]#end. ")
-            #end
-            #if($tool.hasContent($citation.publisher))
-                #set($content = $content + "$citation.publisher. ")
-            #end
-            #if($tool.hasContent($citation.doi))
-                #set($content = $content + '<a class="external-link" href="' + $citation.doi + '" target="_blank">' + "$citation.doi</a>")
+            #if($tool.hasContent($citation.uuid) && $tool.hasContent($citation.title))
+                #set($content = $content + '<a class="external-link" href=?docuuid=' + $citation.uuid + '" target="_blank" title="' + $citation.title + '">' + "$citation.title</a>")
+            #else
+                #if($tool.hasContent($citation.authors))
+                    #set($content = $content + "<b>$citation.authors</b> ")
+                #end
+                #if($tool.hasContent($citation.year))
+                    #set($content = $content + "<b>($citation.year):</b> ")
+                #end
+                #if($tool.hasContent($citation.title))
+                    #set($content = $content + "<i>$citation.title</i>#if($tool.hasContent($citation.doi_type)) [$citation.doi_type]#end. ")
+                #end
+                #if($tool.hasContent($citation.publisher))
+                    #set($content = $content + "$citation.publisher. ")
+                #end
+                #if($tool.hasContent($citation.doi))
+                    #set($content = $content + '<a class="external-link" href="' + $citation.doi + '" target="_blank">' + "$citation.doi</a>")
+                #end
             #end
             #if(!$content.isEmpty())
                 #set($add = $list.add($content))
