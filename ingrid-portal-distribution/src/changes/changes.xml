@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+          <action type="update" dev="wemove" issue="4371">
+            Portal: Inhaltliche Anpassungen für LUBW Profil
+          </action>
           <action type="update" dev="wemove" issue="4167">
             Portal: Anpassungen in den Detail- und Suchtreffer-Ansichten
           </action>
