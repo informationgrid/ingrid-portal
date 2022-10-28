@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.14.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.14.1">
+          <action type="add" dev="wemove" issue="4376">
+            Direkte Anzeige, wenn nur ein Layer im WMS existiert
+          </action>
           <action type="update" dev="wemove" issue="4371">
             Portal: Inhaltliche Anpassungen für LUBW Profil
           </action>
