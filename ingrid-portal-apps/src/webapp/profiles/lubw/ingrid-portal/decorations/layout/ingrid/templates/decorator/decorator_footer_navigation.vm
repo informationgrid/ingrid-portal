@@ -1,0 +1,26 @@
+#* include service navigation component *#
+#macro (includeFooterNavigation $_menu)
+<div class="footer-menu-entries" role="navigation" aria-label="Navigation Footer">
+    #foreach($element in $_menu.elements.iterator())
+      #if($element.elementType == "option")
+        #set($linkTitle = $element.getTitle($preferedLocale))
+        #set($linkName = $element.getShortTitle($preferedLocale))
+        ## read localized title from resource with title from psml as key !
+        #if($linkTitle.startsWith('ingrid'))
+            #set($linkTitle = $MESSAGES.getString($linkTitle))
+            #set($linkName = $MESSAGES.getString($linkName))
+        #end
+        #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        ## obfuscate email addresse (webmaster)
+        #if($linkUrl && $linkUrl.contains("@"))
+            #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
+        #end
+        #if($element.url == "/help.psml" || $element.url =="/service-sitemap.psml")
+            <a href="$linkUrl" title="$linkTitle" class="icon"><span class="text">$linkName</span></a>
+        #else
+            <a href="$linkUrl" title="$linkTitle" class="icon" target="_blank"><span class="text">$linkName</span></a>
+        #end
+      #end
+    #end
+</div>
+#end

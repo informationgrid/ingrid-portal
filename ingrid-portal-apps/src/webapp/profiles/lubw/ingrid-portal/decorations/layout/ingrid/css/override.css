@@ -821,6 +821,16 @@ a[class*="js-expander"] span.text {
   font-family: EB-Garamond-Regular, sans-serif;
   text-transform: capitalize !important;
 }
+.accordion-title[role="tab"] {
+  color: #3f3f3f;
+  background-color: #f4f2e9;
+  border-radius: unset !important;
+}
+.accordion-title[role="tab"]:hover, .accordion-title[role="tab"]:focus {
+  box-shadow: unset;
+  border: solid 2px #3f3f3f;
+  padding: 22px 22px 22px 38px;
+}
 .filter .nav-group:first-of-type .accordion-item .accordion-title {
   border-top: 1px solid #3f3f3f;
 }
@@ -943,9 +953,13 @@ table .dark a {
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered,
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-  padding: 0.8rem 1.3rem;
+  min-height: 56px;
   line-height: unset;
+  padding: 0.8rem 1.3rem;
   font-family: Gudea-Regular, sans-serif;
+}
+.select2-container--default .select2-results__option[aria-disabled=true] {
+  min-height: 44px;
 }
 ul.select2-results__options {
   border-radius: 0;

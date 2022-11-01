@@ -156,7 +156,7 @@
     <!-- Über InGrid-Portal  -->
     <rule>
         <from>/hintergrundinformationen</from>
-        <to type="forward">/portal/main-about.psml</to>
+        <to type="redirect">https://www.lubw.baden-wuerttemberg.de/die-lubw</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about.psml</from>
