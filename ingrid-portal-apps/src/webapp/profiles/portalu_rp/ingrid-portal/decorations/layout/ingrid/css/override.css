@@ -1228,7 +1228,7 @@ footer .footer .logo a img{
   color: #4a4a4a;
 }
 
-.icon:hover span {
+a.icon:hover span {
   color: #B52743;
 }
 
@@ -1244,9 +1244,6 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
 }
 .popup .headline, .button[disabled], .button[disabled]:hover {
   background-color: #871D33;
-}
-.form-element .input-check, .form-element .input-check:hover {
-  background-color: transparent;
 }
 
 /* error page */
