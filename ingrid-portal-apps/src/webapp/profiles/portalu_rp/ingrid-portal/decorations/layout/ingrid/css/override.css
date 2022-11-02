@@ -767,8 +767,8 @@ header .menu-tab-row .menu-tab {
     text-align: left;
   }
   h4, .h4 {
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    margin-bottom: 0.65rem;
   }
 }
 @media print, screen and (max-width: 63.9375em) {
@@ -968,6 +968,7 @@ header .logo a .vertical-line {
 .menu-main-links a, .header-menu a {
   font-family: Arial, sans-serif !important;
   color: #871D33;
+  font-weight: bold;
 }
 
 /* search simple */
@@ -1210,6 +1211,7 @@ footer .footer .logo a img{
 /* catalogue */
 .accordion-title {
   font-family: Arial, sans-serif;
+  font-weight: bold !important;
   color: #871D33;
   background-color: #F6F6F6;
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
@@ -1224,6 +1226,10 @@ footer .footer .logo a img{
 }
 .icon span {
   color: #4a4a4a;
+}
+
+.icon:hover span {
+  color: #B52743;
 }
 
 /* user administration */
@@ -1342,4 +1348,22 @@ footer .footer-buttons-bar .login-buttons .login-form {
 
 .teaser-data .helper, .teaser-data p {
   color: #4a4a4a;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.search-filtered .table table th:first-child {
+  font-family: Arial, sans-serif;
+  font-weight: bold !important;
+}
+
+.search-filtered .table:not(.table--lined) table tr th {
+  font-family: Arial, sans-serif;
+  font-weight: bold !important;
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-family: Arial, sans-serif;
+  font-weight: bold !important;
 }
