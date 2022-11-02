@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.14.1-SNAPSHOT" date="2022-xx-xx" description="Release 5.14.1">
+          <action type="update" dev="wemove" issue="3631">
+            Layouts anpassen für die Suchergebnisseite und die Detaildarstellung im RLP-Profil
+          </action>
           <action type="add" dev="wemove" issue="4230">
             Kartenclient METAVER - Webatlas farbe/grau ersetzen durch basemap.de Web Raster farbe/grau
           </action>
