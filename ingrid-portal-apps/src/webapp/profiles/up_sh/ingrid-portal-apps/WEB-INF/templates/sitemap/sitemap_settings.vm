@@ -4,4 +4,4 @@
 #set($linkAttrDisclaimer = '')
 #set($linkAttrPrivacy = '')
 #set($linkAttrAccessibility = '')
-#set($showSubMenuAbout = true)
+#set($showSubMenuAbout = false)
