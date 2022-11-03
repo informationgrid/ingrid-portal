@@ -21,6 +21,7 @@
  * **************************************************#
  */
 define({
+    "dialog.doi.xref.title": "Literaturverweis",
     "dialog.simulation.parameter.title": "Simulationsparameter/-Größe",
     "dialog.lfs.link.parameter.title": "Links zum Langfristspeicher",
     "dialog.lfs.move.warn": "Achtung: die Daten werden hiermit in den Langfristspeicher verschoben und können dort nicht mehr verändert oder gelöscht werden! Daher prüfen Sie bitte sorgfältig die Inhalte, Namen, etc. von Ihrer Datei / Ihrem Verzeichnis, bevor Sie auf Ok klicken.",
