@@ -23,6 +23,7 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
+    "ingrid/hierarchy/behaviours/baw_doi/bawDoiCrossReferences",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisAuftrag",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisDefaultValues",
@@ -38,11 +39,16 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisLFSLinks",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisMessdaten",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisSoftwareType"
-], function(lang, behaviours, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisEditRestrictions,
+], function(lang, behaviours, bawDoiCrossReferences, bawMisAuftrag, bawMisCodelists, bawMisDefaultValues, bawMisEditRestrictions,
             bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisLiterature, bawMisNewObjectTypes, bawMisSimulationMdFields,
             bawMisWaterwaysTable, bawUiGeneral, bawValidationRules, bawLFSLinks, bawMisMessdaten, bawMisSoftwareType) {
 
     return lang.mixin(behaviours, {
+
+        /**
+         * Cross-References table for DOIs
+         */
+        bawDoiCrossReferenceBehaviours: bawDoiCrossReferences,
 
         /**
          * BAW-Auftragsinformationen
