@@ -61,11 +61,13 @@
                     <span class="text">$MESSAGES.getString("sitemap.area.main.about")</span>
                 </a>
                 <div class="search-result--nested">
-                    #set ($link = $renderResponse.encodeURL("/portal/main-about.psml"))
-                    <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.portrait.tooltip")" $linkAttrPortrait>
-                        <span class="ic-ic-arrow-right"></span>
-                        <span class="text">$MESSAGES.getString("sitemap.area.main.portrait")</span>
-                    </a>
+                    #if($showSubMenuAbout)
+                        #set ($link = $renderResponse.encodeURL("/portal/main-about.psml"))
+                        <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.portrait.tooltip")" $linkAttrPortrait>
+                            <span class="ic-ic-arrow-right"></span>
+                            <span class="text">$MESSAGES.getString("sitemap.area.main.portrait")</span>
+                        </a>
+                    #end
                     #if($enablePartner)
                         #set ($link = $renderResponse.encodeURL("/portal/main-about-partner.psml"))
                         <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.provider.tooltip")">

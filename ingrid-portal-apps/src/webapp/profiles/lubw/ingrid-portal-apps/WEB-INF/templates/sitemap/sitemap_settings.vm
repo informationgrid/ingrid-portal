@@ -4,3 +4,4 @@
 #set($linkAttrDisclaimer = 'target="_blank"')
 #set($linkAttrPrivacy = 'target="_blank"')
 #set($linkAttrAccessibility = 'target="_blank"')
+#set($showSubMenuAbout = true)
