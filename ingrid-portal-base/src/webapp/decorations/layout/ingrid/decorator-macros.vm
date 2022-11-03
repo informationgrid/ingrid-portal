@@ -160,7 +160,7 @@
                         #if($defaultTitle == "ingrid.page.language")
                             #set($linkTitle = $defaultTitle)
                         #end
-                        <a href="$linkUrl" class="header-menu-entry #if($isSelected)is-active#end" title="$linkTitle"><span class="text">$linkName</span></a>
+                        #parse("/decorations/layout/ingrid/templates/decorator/decorator_main_sub_navigation.vm")
                     #end
                 #else
                     <a href="$linkUrl" class="header-menu-entry #if($isSelected)is-active#end" title="$linkTitle"><span class="text">$linkName</span></a>
