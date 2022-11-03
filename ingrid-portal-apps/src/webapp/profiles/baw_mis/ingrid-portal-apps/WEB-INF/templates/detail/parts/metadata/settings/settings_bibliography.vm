@@ -1,9 +1,0 @@
-## Literaturverweise
-#set($xPathBibliography = "./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue='crossReference']")
-#if($TOOL.nodeExist($xPathBibliography))
-    #set($xPathBibliographyExpressions = {
-        "uuid" : "${xPathBibliography}/gmd:aggregateDataSetName/@uuidref",
-        "title" : "${xPathBibliography}/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString"
-    })
-    #set($getBibliographies = $TOOL.getListAPACitation($xPathBibliographyExpressions, "."))
-#end
