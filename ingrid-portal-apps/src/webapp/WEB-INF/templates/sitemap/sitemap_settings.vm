@@ -1,0 +1,6 @@
+#set($linkAttrAbout = '')
+#set($linkAttrPortrait = '')
+#set($linkAttrContact = '')
+#set($linkAttrDisclaimer = '')
+#set($linkAttrPrivacy = '')
+#set($linkAttrAccessibility = '')
