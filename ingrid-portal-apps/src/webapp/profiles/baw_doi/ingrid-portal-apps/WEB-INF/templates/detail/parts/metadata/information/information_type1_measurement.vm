@@ -1,34 +1,34 @@
 ## Messdaten
 ## Verfahren
-    #renderTextListTable($MESSAGES.getString("Verfahren") $TOOL.getListOfValuesFromXPath($xPathMeasurementInfoMethod, "."))
+    #renderTextListTable($MESSAGES.getString("search.detail.measurement.infomethod") $TOOL.getListOfValuesFromXPath($xPathMeasurementInfoMethod, "."))
 ## Räumlichkeit
-    #renderTextTable($MESSAGES.getString("Räumlichkeit") $TOOL.getValueFromXPath($xPathMeasurementInfoSpatialOrientation))
+    #renderTextTable($MESSAGES.getString("search.detail.measurement.spatialorientation") $TOOL.getValueFromXPath($xPathMeasurementInfoSpatialOrientation))
 ## Abfluss Q min
-    #renderTextTable($MESSAGES.getString("Abfluss Q min") $TOOL.getValueFromXPath($xPathMeasurementInfoMinDischarge))
+    #renderTextTable($MESSAGES.getString("search.detail.measurement.mindischarge") $TOOL.getValueFromXPath($xPathMeasurementInfoMinDischarge))
 ## Abfluss Q max
-    #renderTextTable($MESSAGES.getString("Abfluss Q max") $TOOL.getValueFromXPath($xPathMeasurementInfoMaxDischarge))
+    #renderTextTable($MESSAGES.getString("search.detail.measurement.maxdischarge") $TOOL.getValueFromXPath($xPathMeasurementInfoMaxDischarge))
 ## Frequenz der Messung
-    #renderTextTable($MESSAGES.getString("Frequenz der Messung") $TOOL.getValueFromXPath($xPathMeasurementInfoMeasurementFrequency))
+    #renderTextTable($MESSAGES.getString("search.detail.measurement.measurementfrequency") $TOOL.getValueFromXPath($xPathMeasurementInfoMeasurementFrequency))
 ## Beschreibung der Datenqualität
-    #renderTextTable($MESSAGES.getString("Beschreibung der Datenqualität") $TOOL.getValueFromXPath($xPathMeasurementInfoDataQualityDescription))
-
+    #renderTextTable($MESSAGES.getString("search.detail.measurement.dataqualitydescription") $TOOL.getValueFromXPath($xPathMeasurementInfoDataQualityDescription))
 ## Messtiefe
-    #set($headTitles = [$MESSAGES.getString("Messtiefe"), $MESSAGES.getString("Maßeinheit"), $MESSAGES.getString("Höhenbezugssystem")])
+    #set($headTitles = [$MESSAGES.getString("search.detail.measurement.measurementdepth.depth"), $MESSAGES.getString("search.detail.measurement.measurementdepth.uom"), $MESSAGES.getString("search.detail.measurement.measurementdepth.verticalcrs")])
     #set($headXpathExpressions = ["./depth", "./uom", "./verticalCRS"])
-    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Messtiefe"), $xPathMeasurementInfoMeasurementDepth, $headTitles, $headXpathExpressions))
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("search.detail.measurement.measurementdepth"), $xPathMeasurementInfoMeasurementDepth, $headTitles, $headXpathExpressions))
 ## Gemittelter Wasserstand, auf den sich die Messwerte beziehen
-    #set($headTitles = [$MESSAGES.getString("Wasserstand"), $MESSAGES.getString("Maßeinheit")])
+    #set($headTitles = [$MESSAGES.getString("search.detail.measurement.meanwaterlevel.waterlevel"), $MESSAGES.getString("search.detail.measurement.meanwaterlevel.uom")])
     #set($headXpathExpressions = ["./waterLevel", "./uom"])
-    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Gemittelter Wasserstand, auf den sich die Messwerte beziehen"), $xPathMeasurementInfoMeanWaterLevel, $headTitles, $headXpathExpressions))
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("search.detail.measurement.meanwaterlevel"), $xPathMeasurementInfoMeanWaterLevel, $headTitles, $headXpathExpressions))
 ## Pegelnullpunkt
-    #set($headTitles = [$MESSAGES.getString("Pegelnullpunkt"), $MESSAGES.getString("Maßeinheit"), $MESSAGES.getString("Höhenbezugssystem"), $MESSAGES.getString("Beschreibung")])
+    #set($headTitles = [$MESSAGES.getString("search.detail.measurement.gaugedatum.datum"), $MESSAGES.getString("search.detail.measurement.gaugedatum.uom"), $MESSAGES.getString("search.detail.measurement.gaugedatum.verticalcrs"), $MESSAGES.getString("search.detail.measurement.gaugedatum.description")])
     #set($headXpathExpressions = ["./datum", "./uom", "./verticalCRS", "./description"])
-    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Pegelnullpunkt"), $xPathMeasurementInfoGaugeDatum, $headTitles, $headXpathExpressions))
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("search.detail.measurement.gaugedatum"), $xPathMeasurementInfoGaugeDatum, $headTitles, $headXpathExpressions))
 ## Messgerät
-    #set($headTitles = [$MESSAGES.getString("Gerätename"), $MESSAGES.getString("Geräte-ID"), $MESSAGES.getString("Gerätemodell"), $MESSAGES.getString("Beschreibung")])
+    #set($headTitles = [$MESSAGES.getString("search.detail.measurement.measurementdevice.name"), $MESSAGES.getString("search.detail.measurement.measurementdevice.id"), $MESSAGES.getString("search.detail.measurement.measurementdevice.model"), $MESSAGES.getString("search.detail.measurement.measurementdevice.description")])
     #set($headXpathExpressions = ["./name", "./id", "./model", "./description"])
-    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Messgerät"), $xPathMeasurementInfoMeasurementDevice, $headTitles, $headXpathExpressions))
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("search.detail.measurement.measurementdevice"), $xPathMeasurementInfoMeasurementDevice, $headTitles, $headXpathExpressions))
 ## Zielparameter und -Größen
-    #set($headTitles = [$MESSAGES.getString("Name"), $MESSAGES.getString("Art"), $MESSAGES.getString("Maßeinheit"), $MESSAGES.getString("Formel/Funktion")])
+    #set($headTitles = [$MESSAGES.getString("search.detail.measurement.measuredquantities.name"), $MESSAGES.getString("search.detail.measurement.measuredquantities.type"), $MESSAGES.getString("search.detail.measurement.measuredquantities.uom"), $MESSAGES.getString("search.detail.measurement.measuredquantities.calculationformula")])
     #set($headXpathExpressions = ["./name", "./type", "./uom", "./calculationFormula"])
-    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Zielparameter und -Größen"), $xPathMeasurementInfoMeasuredQuantities, $headTitles, $headXpathExpressions))
+    #set($headCodeList = ["3950021", "3950014", "3950020"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("search.detail.measurement.measuredquantities"), $xPathMeasurementInfoMeasuredQuantities, $headTitles, $headXpathExpressions, $headCodeList))
