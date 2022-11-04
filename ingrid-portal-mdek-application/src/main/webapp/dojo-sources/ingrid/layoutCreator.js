@@ -461,7 +461,7 @@ define([
                     maxLength: additionalField.size,
                     name: additionalField.name,
                     style: "width:100%;",
-                    format: additionalField.formatter ?? function (value, constraints) {
+                    format: function (value, constraints) {
                         var displayedValue = this.get('displayedValue');
                         if (Math.abs(dojo.number.parse(value) - dojo.number.parse(displayedValue)) < 1.0e-6) {
                             return displayedValue;
