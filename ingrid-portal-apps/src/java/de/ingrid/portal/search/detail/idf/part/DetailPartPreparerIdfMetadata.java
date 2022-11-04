@@ -1527,6 +1527,24 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return element;
     }
 
+
+    public List getRegionKey() {
+        String regionKey = getValueFromXPath("./idf:regionKey/key");
+        String regionKeyUrl = getValueFromXPath("./idf:regionKey/url");
+        ArrayList<Map> list = new ArrayList<>();
+
+        if (regionKey != null && regionKeyUrl != null) {
+
+            Map link = new HashMap();
+            link.put("title", regionKey);
+            link.put("hasLinkIcon", true);
+            link.put("isExtern", true);
+            link.put("href", regionKeyUrl);
+            list.add(link);
+        }
+        return list;
+    }
+
     /*
      * Private functiions
      *
