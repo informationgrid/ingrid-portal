@@ -5,6 +5,8 @@
     #renderGroupTitle($MESSAGES.getString("technical_information"))
 ## Identifikator
     #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_identificator.vm")
+## Messdaten
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_measurement.vm")
 ## Digitale Repräsentation
     #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_representation_type.vm")
 ## Vektorformat

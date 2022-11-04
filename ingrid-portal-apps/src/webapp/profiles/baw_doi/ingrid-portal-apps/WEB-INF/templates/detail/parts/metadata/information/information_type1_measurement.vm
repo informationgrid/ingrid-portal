@@ -1,0 +1,34 @@
+## Messdaten
+## Verfahren
+    #renderTextListTable($MESSAGES.getString("Verfahren") $TOOL.getListOfValuesFromXPath($xPathMeasurementInfoMethod, "."))
+## Räumlichkeit
+    #renderTextTable($MESSAGES.getString("Räumlichkeit") $TOOL.getValueFromXPath($xPathMeasurementInfoSpatialOrientation))
+## Abfluss Q min
+    #renderTextTable($MESSAGES.getString("Abfluss Q min") $TOOL.getValueFromXPath($xPathMeasurementInfoMinDischarge))
+## Abfluss Q max
+    #renderTextTable($MESSAGES.getString("Abfluss Q max") $TOOL.getValueFromXPath($xPathMeasurementInfoMaxDischarge))
+## Frequenz der Messung
+    #renderTextTable($MESSAGES.getString("Frequenz der Messung") $TOOL.getValueFromXPath($xPathMeasurementInfoMeasurementFrequency))
+## Beschreibung der Datenqualität
+    #renderTextTable($MESSAGES.getString("Beschreibung der Datenqualität") $TOOL.getValueFromXPath($xPathMeasurementInfoDataQualityDescription))
+
+## Messtiefe
+    #set($headTitles = [$MESSAGES.getString("Messtiefe"), $MESSAGES.getString("Maßeinheit"), $MESSAGES.getString("Höhenbezugssystem")])
+    #set($headXpathExpressions = ["./depth", "./uom", "./verticalCRS"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Messtiefe"), $xPathMeasurementInfoMeasurementDepth, $headTitles, $headXpathExpressions))
+## Gemittelter Wasserstand, auf den sich die Messwerte beziehen
+    #set($headTitles = [$MESSAGES.getString("Wasserstand"), $MESSAGES.getString("Maßeinheit")])
+    #set($headXpathExpressions = ["./waterLevel", "./uom"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Gemittelter Wasserstand, auf den sich die Messwerte beziehen"), $xPathMeasurementInfoMeanWaterLevel, $headTitles, $headXpathExpressions))
+## Pegelnullpunkt
+    #set($headTitles = [$MESSAGES.getString("Pegelnullpunkt"), $MESSAGES.getString("Maßeinheit"), $MESSAGES.getString("Höhenbezugssystem"), $MESSAGES.getString("Beschreibung")])
+    #set($headXpathExpressions = ["./datum", "./uom", "./verticalCRS", "./description"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Pegelnullpunkt"), $xPathMeasurementInfoGaugeDatum, $headTitles, $headXpathExpressions))
+## Messgerät
+    #set($headTitles = [$MESSAGES.getString("Gerätename"), $MESSAGES.getString("Geräte-ID"), $MESSAGES.getString("Gerätemodell"), $MESSAGES.getString("Beschreibung")])
+    #set($headXpathExpressions = ["./name", "./id", "./model", "./description"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Messgerät"), $xPathMeasurementInfoMeasurementDevice, $headTitles, $headXpathExpressions))
+## Zielparameter und -Größen
+    #set($headTitles = [$MESSAGES.getString("Name"), $MESSAGES.getString("Art"), $MESSAGES.getString("Maßeinheit"), $MESSAGES.getString("Formel/Funktion")])
+    #set($headXpathExpressions = ["./name", "./type", "./uom", "./calculationFormula"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("Zielparameter und -Größen"), $xPathMeasurementInfoMeasuredQuantities, $headTitles, $headXpathExpressions))
