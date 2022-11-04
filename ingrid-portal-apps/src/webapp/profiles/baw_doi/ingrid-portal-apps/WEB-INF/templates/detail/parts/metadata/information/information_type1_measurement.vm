@@ -30,5 +30,4 @@
 ## Zielparameter und -Größen
     #set($headTitles = [$MESSAGES.getString("search.detail.measurement.measuredquantities.name"), $MESSAGES.getString("search.detail.measurement.measuredquantities.type"), $MESSAGES.getString("search.detail.measurement.measuredquantities.uom"), $MESSAGES.getString("search.detail.measurement.measuredquantities.calculationformula")])
     #set($headXpathExpressions = ["./name", "./type", "./uom", "./calculationFormula"])
-    #set($headCodeList = ["3950021", "3950014", "3950020"])
-    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("search.detail.measurement.measuredquantities"), $xPathMeasurementInfoMeasuredQuantities, $headTitles, $headXpathExpressions, $headCodeList))
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("search.detail.measurement.measuredquantities"), $xPathMeasurementInfoMeasuredQuantities, $headTitles, $headXpathExpressions))
