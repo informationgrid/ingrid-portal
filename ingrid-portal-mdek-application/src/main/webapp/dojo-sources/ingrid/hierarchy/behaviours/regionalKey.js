@@ -28,7 +28,7 @@ define([
     "dojo/dom-construct",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
-    "ingrid/message",
+    "ingrid/message"
 ], function (registry, array, declare, lang, construct, dirty, creator, message) {
 
     return declare(null, {
