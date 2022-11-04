@@ -39,6 +39,9 @@
         #set($tmp = "")
     ## Administrative Einheit (Gemeindenummer)
         #renderTextListTable($MESSAGES.getString("t011_township.township_no") $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
+    ##    #renderTextListTable($MESSAGES.getString("t011_township.township_no") $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
+    ## Regionalschlüssel
+        #renderLinkListTable($MESSAGES.getString("search.detail.regionKey") $TOOL.getRegionKey())
     ## Höhe
         #renderTable($TOOL.getAreaHeight($xPathPresentEXExtent))
     ## Erläuterung zum Raumbezug
