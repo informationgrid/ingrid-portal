@@ -216,6 +216,8 @@
     $xPathInfo1MDIdentifierCode,
     $xPathInfo1RSIdentifierCode
 ])
+## Messdaten (BAW)
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_measurement.vm")
 
 #### Type 2
 #set($xPathInfo2CICitationCitedResponsibleParty = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty")
