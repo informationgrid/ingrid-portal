@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -86,7 +86,8 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/priorityDataset",
         "ingrid/hierarchy/behaviours/spatialScope",
         "ingrid/hierarchy/behaviours/axisDimensionTable",
-        "ingrid/hierarchy/behaviours/DOI/doi"
+        "ingrid/hierarchy/behaviours/DOI/doi",
+        "ingrid/hierarchy/behaviours/regionalKey"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message,
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
@@ -96,7 +97,7 @@ define(["dojo/_base/declare",
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
             timeRefTable, timeRefDate, timeRefIntervalUnit,
             extraInfoLangData, extraInfoCharSetData,
-            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, priorityDataset, spatialScope, axisDim, doi) {
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, priorityDataset, spatialScope, axisDim, doi, regionalKey) {
 
     return declare(null, {
 
@@ -183,6 +184,11 @@ define(["dojo/_base/declare",
          * Add new fields for DOI and functionality for export.
          */
         doi: doi,
+
+        /**
+         * Add Regionalschlüssel field.
+         */
+        regionalKey: regionalKey,
 
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,
