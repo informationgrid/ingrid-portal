@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -57,7 +57,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         this.templateName = "/WEB-INF/templates/detail/parts/detail_part_preparer_metadata.vm";
         this.localTagName = "idfMdMetadata";
     }
-    
+
     public String getUdkObjectClassType() {
         String xpathExpression = ".";
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
@@ -65,17 +65,17 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             if(node.hasChildNodes()){
                 String hierachyLevel = "";
                 String hierachyLevelName = "";
-                
+
                 xpathExpression = "./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue";
                 if(xPathUtils.nodeExists(node, xpathExpression)){
                     hierachyLevel = xPathUtils.getString(node, xpathExpression).trim();
                 }
-                
+
                 xpathExpression = "./gmd:hierarchyLevelName/gco:CharacterString";
                 if(xPathUtils.nodeExists(node, xpathExpression)){
                     hierachyLevelName = xPathUtils.getString(node, xpathExpression).trim();
                 }
-                
+
                 if(hierachyLevel.equalsIgnoreCase("service")){
                     return "3";
                 }else if(hierachyLevel.equalsIgnoreCase("application")){
@@ -99,9 +99,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
             }
         }
-        return "1"; 
+        return "1";
     }
-    
+
     public String getTitle(){
         String value = null;
         String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString";
@@ -111,7 +111,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return value;
     }
-    
+
     public String getTimeStamp(String xpathExpression){
         String value = null;
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
@@ -164,11 +164,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
     public String getDescription(){
         String value = null;
-        
+
         String xpathExpressionAbstract = "./idf:abstract";
         Node abstractParentNode = rootNode;
         Node node = xPathUtils.getNode(rootNode, "./gmd:identificationInfo/*");
-        
+
         if (!xPathUtils.nodeExists(abstractParentNode, xpathExpressionAbstract)) {
             xpathExpressionAbstract = "./gmd:abstract";
             abstractParentNode = node;
@@ -181,7 +181,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
         return value;
     }
-    
+
     public Map<String, Object> getMapImage(){
         return getMapImage(null, false);
     }
@@ -201,12 +201,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         // since this link will be going to the webmap-client, the service must be WMS!
                         getCapUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( getCapUrl, ServiceType.WMS );
                         getCapUrl = UtilsVelocity.urlencode( getCapUrl + "||");
-                        
+
                         String layerIdentifier = getLayerIdentifier(null);
                         if(!layerIdentifier.equals("NOT_FOUND")) {
                             getCapUrl += UtilsVelocity.urlencode(layerIdentifier);
                         }
-                        
+
                         if(!getCapUrl.isEmpty()) {
                             map = addBigMapLink(crossReferenceNode.getParentNode(), getCapUrl, false, partner, isNewLayout);
                             if(!hasAccessConstraints(crossReferenceNode.getParentNode())) {
@@ -220,7 +220,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
                 map = getCapabilityUrls(xpathExpression);
             }
-            
+
         // otherwise try within distribution info or SV_OperationMetadata
         } else if ( getUdkObjectClassType().equals("3")  && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
             String capabilitiesUrl = getCapabilityUrl();
@@ -233,30 +233,30 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             // show preview image (with map link information if provided)
             map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
         }
-        
+
         return map;
     }
-    
+
     public List<HashMap<String, Object>> getReference(String xpathExpression){
-        return getReference(xpathExpression, false); 
+        return getReference(xpathExpression, false);
     }
-        
+
     public List<HashMap<String, Object>> getReference(String xpathExpression, boolean isCoupled){
         ArrayList<HashMap<String, Object>> linkList = new ArrayList<>();
-        
+
         int limitReferences = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_VIEW_LIMIT_REFERENCES, 100);
-        
+
         String serviceType = null;
-        
+
         serviceType = xPathUtils.getString(rootNode, "./gmd:identificationInfo/*/srv:serviceType");
         if(serviceType != null){
             serviceType = serviceType.trim();
         }
-        
+
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i<nodeList.getLength();i++){
-                
+
                 if (linkList.size() >= limitReferences){
                     HashMap<String, Object> link = new HashMap<>();
                     link.put("type", "html");
@@ -282,31 +282,31 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 if(tmp != null){
                     uuid = tmp.trim();
                 }
-                
+
                 xpathExpression = "./idf:objectName";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
                     title = tmp.trim();
                 }
-                
+
                 xpathExpression = "./idf:objectType";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
                     type = tmp.trim();
                 }
-                
+
                 xpathExpression = "./idf:attachedToField";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
                     attachedToField = tmp.trim();
                 }
-                
+
                 xpathExpression = "./idf:attachedToField/@entry-id";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
                     entryId = tmp.trim();
                 }
-                
+
                 xpathExpression = "./idf:description";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
@@ -318,13 +318,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 if(tmp != null){
                     objServiceType = tmp.trim();
                 }
-                
+
                 xpathExpression = "./idf:serviceUrl";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
                     serviceUrl = tmp.trim();
                 }
-                
+
                 xpathExpression = "./idf:graphicOverview";
                 tmpList = xPathUtils.getStringArray(node, xpathExpression);
                 if(tmpList != null){
@@ -357,7 +357,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }else{
                     link.put("href", "");
                 }
-                
+
                 if(isCoupled && entryId.equals("3600")){
                     // add map links to data objects from services
                     if (type.equals("3")) {
@@ -447,22 +447,22 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         url = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
                     }
-                    
+
                     xpathExpression = "./*/gmd:description";
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         description = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
                     }
-                    
+
                     xpathExpression = "./*/gmd:name";
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         name = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
                     }
-                    
+
                     xpathExpression = "./*/idf:attachedToField";
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         attachedToField = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
                     }
-                    
+
                     if(attachedToField.isEmpty()) {
                         xpathExpression = "./*/gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue";
                         if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
@@ -472,7 +472,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             }
                         }
                     }
-                    
+
                     xpathExpression = "./*/gmd:applicationProfile";
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         applicationProfile = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
@@ -491,7 +491,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         link.put("hasLinkIcon", true);
                         if (isDownload) {
                             link.put("isDownload", isDownload);
-                          
+
                         } else {
                             link.put("isExtern", true);
                         }
@@ -531,7 +531,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return linkList;
     }
-    
+
     public List<String> getIndexInformationKeywords(String xpathExpression, String keywordType) {
         List<String> listSearch = new ArrayList<>();
         List<String> listGemet = new ArrayList<>();
@@ -541,48 +541,48 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
-            
+
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 String type = "";
                 String thesaurusName = "";
-                
+
                 // type
                 xpathExpression = "./gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     type = xPathUtils.getString(node, xpathExpression);
                 }
-                
+
                 // thesaurus
                 xpathExpression = "./gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     thesaurusName = xPathUtils.getString(node, xpathExpression).trim();
                 }
-                
+
                 // keywords
                 xpathExpression = "./gmd:MD_Keywords/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     NodeList keywordNodeList = xPathUtils.getNodeList(node, xpathExpression);
                     for (int j = 0; j < keywordNodeList.getLength(); j++) {
                         Node keywordNode = keywordNodeList.item(j);
-                        String value = xPathUtils.getString(keywordNode, ".").trim(); 
+                        String value = xPathUtils.getString(keywordNode, ".").trim();
                         if(value.length() < 1){
                             value = xPathUtils.getString(keywordNode, ".").trim();
                         }
                         boolean isHidden = false;
-                        
+
                         if(value != null){
                             List hiddenKeywordList = PortalConfig.getInstance().getList(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
                             if(hiddenKeywordList != null){
                                 for(int h=0; h < hiddenKeywordList.size(); h++){
                                     String hiddenValue = (String) hiddenKeywordList.get(h);
                                     if(value.equalsIgnoreCase(hiddenValue.toLowerCase())){
-                                        isHidden = true; 
+                                        isHidden = true;
                                         break;
                                     }
                                 }
                             }
-                            
+
                             // "Service Classification, version 1.0"
                             if (!isHidden && !thesaurusName.contains("Service")) {
                                 // "UMTHES Thesaurus"
@@ -773,7 +773,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
     public Map getAvailability(String xpathExpression) {
         HashMap element = new HashMap();
-        
+
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             Node node = xPathUtils.getNode(rootNode, xpathExpression);
             if (node.hasChildNodes()) {
@@ -782,7 +782,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     NodeList nodeList = xPathUtils.getNodeList(node, xpathExpression);
                     element.put("type", "table");
                     element.put("title", messages.getString("data_format"));
-                    
+
                     ArrayList head = new ArrayList();
                     head.add(messages.getString("t0110_avail_format.name"));
                     head.add(messages.getString("t0110_avail_format.version"));
@@ -791,24 +791,24 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     element.put("head", head);
                     ArrayList body = new ArrayList();
                     element.put("body", body);
-                    
+
                     for (int i = 0; i < nodeList.getLength(); i++) {
                         Node childNode = nodeList.item(i);
                         ArrayList row = new ArrayList();
-                        
+
                         String name = "";
                         String version = "";
-                        
+
                         xpathExpression = "./gmd:name";
                         if (xPathUtils.nodeExists(childNode, xpathExpression)) {
                             name = xPathUtils.getString(childNode, xpathExpression).trim();
                         }
-                        
+
                         xpathExpression = "./gmd:version";
                         if (xPathUtils.nodeExists(childNode, xpathExpression)) {
                             version = xPathUtils.getString(childNode, xpathExpression).trim();
                         }
-                        
+
                         if(!name.equals("Geographic Markup Language (GML)") && !version.equals("unknown")){
                             xpathExpression = "./gmd:name";
                             if (xPathUtils.nodeExists(childNode, xpathExpression)) {
@@ -816,14 +816,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             } else {
                                 row.add("");
                             }
-                            
+
                             xpathExpression = "./gmd:version";
                             if (xPathUtils.nodeExists(childNode, xpathExpression)) {
                                 row.add(notNull(version));
                             } else {
                                 row.add("");
                             }
-                            
+
                             xpathExpression = "./gmd:fileDecompressionTechnique";
                             if (xPathUtils.nodeExists(childNode, xpathExpression)) {
                                 String value = xPathUtils.getString(childNode, xpathExpression).trim();
@@ -831,7 +831,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             } else {
                                 row.add("");
                             }
-                            
+
                             xpathExpression = "./gmd:specification";
                             if (xPathUtils.nodeExists(childNode, xpathExpression)) {
                                 String value = xPathUtils.getString(childNode, xpathExpression).trim();
@@ -840,7 +840,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 row.add("");
                             }
                         }
-                        
+
                         if (!isEmptyRow(row)) {
                             body.add(row);
                         }
@@ -853,7 +853,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
     public Map getMediumOptions(String xpathExpression) {
         HashMap element = new HashMap();
-        
+
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             Node node = xPathUtils.getNode(rootNode, xpathExpression);
             xpathExpression = "./gmd:transferOptions";
@@ -868,12 +868,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 element.put("head", head);
                 ArrayList body = new ArrayList();
                 element.put("body", body);
-                
+
                 for (int i = 0; i < nodeList.getLength(); i++) {
                     Node nodeListItem = nodeList.item(i);
                     ArrayList row = new ArrayList();
                     if(xPathUtils.nodeExists(nodeListItem, "./gmd:MD_DigitalTransferOptions/gmd:offLine")){
-                        
+
                         xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:offLine/gmd:MD_Medium/gmd:name/gmd:MD_MediumNameCode/@codeListValue";
                         if (xPathUtils.nodeExists(nodeListItem, xpathExpression)) {
                             String value = xPathUtils.getString(nodeListItem, xpathExpression).trim();
@@ -881,21 +881,21 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         } else {
                             row.add("");
                         }
-                        
+
                         xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:transferSize";
                         if (xPathUtils.nodeExists(nodeListItem, xpathExpression)) {
                             row.add(notNull(xPathUtils.getString(nodeListItem, xpathExpression)).trim());
                         } else {
                             row.add("");
                         }
-                        
+
                         xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:offLine/gmd:MD_Medium/gmd:mediumNote";
                         if (xPathUtils.nodeExists(nodeListItem, xpathExpression)) {
                             row.add(notNull(xPathUtils.getString(nodeListItem, xpathExpression)).trim());
                         } else {
                             row.add("");
                         }
-                        
+
                         if (!isEmptyRow(row)) {
                             body.add(row);
                         }
@@ -905,15 +905,15 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return element;
     }
-    
+
     public Map getConformityData(String xpathExpression) {
         HashMap element = new HashMap();
-        
+
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             element.put("type", "table");
             element.put("title", messages.getString("object_conformity"));
-            
+
             ArrayList head = new ArrayList();
             head.add(messages.getString("object_conformity.specification"));
             head.add(messages.getString("object_conformity.publication_date"));
@@ -922,12 +922,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             element.put("head", head);
             ArrayList body = new ArrayList();
             element.put("body", body);
-            
+
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if(xPathUtils.nodeExists(node, "./gmd:DQ_DomainConsistency")){
                     ArrayList row = new ArrayList();
-                    
+
                     xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString";
                     if (xPathUtils.nodeExists(node, xpathExpression)) {
                         String value = xPathUtils.getString(node, xpathExpression).trim();
@@ -978,7 +978,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     } else {
                         row.add("");
                     }
-                    
+
                     if (!isEmptyRow(row)) {
                         body.add(row);
                     }
@@ -987,35 +987,35 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return element;
     }
-    
-    
+
+
     public List getServiceClassification(String xpathExpression) {
         ArrayList list = new ArrayList();
-        
+
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
-            
+
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 String thesaurusName = "";
-                
+
                 // thesaurus
                 xpathExpression = "./gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     thesaurusName = xPathUtils.getString(node, xpathExpression).trim();
                 }
-                
+
                 // keywords
                 xpathExpression = "./gmd:MD_Keywords/gmd:keyword";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     NodeList keywordNodeList = xPathUtils.getNodeList(node, xpathExpression);
                     for (int j = 0; j < keywordNodeList.getLength(); j++) {
                         Node keywordNode = keywordNodeList.item(j);
-                        String value = xPathUtils.getString(keywordNode, ".").trim(); 
+                        String value = xPathUtils.getString(keywordNode, ".").trim();
                         if(value.length() < 1){
                             value = xPathUtils.getString(keywordNode, ".").trim();
                         }
-                        
+
                         // "Service Classification, version 1.0"
                         if (thesaurusName.contains("Service")) {
                             String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
@@ -1023,7 +1023,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 value = tmpValue;
                             }
                             list.add(value);
-                        } 
+                        }
                     }
                 }
             }
@@ -1031,10 +1031,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         sortList(list);
         return list;
     }
-    
+
     public Map<String, Object> getReferenceObject(String xpathExpression) {
         HashMap element = new HashMap();
-        
+
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList childNodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             ArrayList<String> listDominator = new ArrayList<>();
@@ -1045,21 +1045,21 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
                     listDominator.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim());
                 }
-                
+
                 xpathExpression = "./gmd:distance/gco:Distance[@uom='meter']";
                 if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
                     listMeter.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim());
                 }
-                
+
                 xpathExpression = "./gmd:distance/gco:Distance[@uom='dpi']";
                 if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
                     listDpi.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim());
                 }
             }
-            
+
             element.put("type", "table");
             element.put("title", messages.getString("t011_obj_serv_scale"));
-            
+
             ArrayList head = new ArrayList();
             head.add(messages.getString("t011_obj_serv_scale.scale").concat(" 1:x"));
             head.add(messages.getString("t011_obj_serv_scale.resolution_ground").concat(" m"));
@@ -1067,11 +1067,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             element.put("head", head);
             ArrayList body = new ArrayList();
             element.put("body", body);
-            
+
             for (int i = 0; i < listDominator.size(); i++) {
                 ArrayList row = new ArrayList();
                 int value;
-                
+
                 value = listDominator.size();
                 if (value != 0) {
                     if(value > i){
@@ -1082,7 +1082,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 } else {
                     row.add("");
                 }
-                
+
                 value = listMeter.size();
                 if (value != 0) {
                     if(value > i){
@@ -1093,7 +1093,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 } else {
                     row.add("");
                 }
-                
+
                 value = listDpi.size();
                 if (value != 0) {
                     if(value > i){
@@ -1104,7 +1104,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 } else {
                     row.add("");
                 }
-                
+
                 if (!isEmptyRow(row)) {
                     body.add(row);
                 }
@@ -1112,7 +1112,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return element;
     }
-    
+
     public Map getConnectionPoints(String xpathExpression) {
         String serviceType = getValueFromXPath("./gmd:identificationInfo/*/srv:serviceType");
         if(serviceType != null){
@@ -1121,7 +1121,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         HashMap element = new HashMap();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
-            
+
             for (int i=0; i<nodeList.getLength();i++){
                 if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
                     Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
@@ -1154,7 +1154,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
                         if (!hasAccessConstraints()) {
                             element.put("title", messages.getString("search.detail.showGetCapabilityUrl"));
-                            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) 
+                            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)
                                     && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
                                 HashMap elementMapLink = new HashMap();
                                 elementMapLink.put("type", "linkLine");
@@ -1177,7 +1177,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return element;
     }
-    
+
     public Map<String, Object> getAreaGeothesaurus(String xpathExpression){
         HashMap element = new HashMap();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
@@ -1193,14 +1193,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         subjectEntries.add(domainValue);
                     }
                 }
-                
+
                 // "Geothesaurus-Raumbezug"
                 xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicBoundingBox";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     NodeList subNodeList = xPathUtils.getNodeList(node, xpathExpression);
                     element.put("type", "table");
                     element.put("title", messages.getString("geothesaurus_spacial_reference"));
-                    
+
                     ArrayList head = new ArrayList();
                     head.add("");
                     head.add(messages.getString("spatial_ref_value_x1"));
@@ -1208,12 +1208,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     element.put("head", head);
                     ArrayList body = new ArrayList();
                     element.put("body", body);
-                    
+
                     ArrayList numbers = new ArrayList();
                     numbers.add(subjectEntries.size());
                     numbers.add(subNodeList.getLength());
-                    int maxRows = getGreatestInt(numbers); 
-                    
+                    int maxRows = getGreatestInt(numbers);
+
                     for (int j = 0; j < maxRows; j++) {
                         Node childNode = subNodeList.item(j);
                         ArrayList row = new ArrayList();
@@ -1231,14 +1231,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         if (xPathUtils.nodeExists(childNode, "./gmd:westBoundLongitude") && xPathUtils.nodeExists(childNode, "./gmd:southBoundLatitude")) {
                             String valueW = xPathUtils.getString(childNode, "./gmd:westBoundLongitude").trim();
                             String valueS = xPathUtils.getString(childNode, "./gmd:southBoundLatitude").trim();
-                            row.add((Math.round(Double.parseDouble(valueW) * 1000000) / 1000000.0) + "\u00B0/" + (Math.round(Double.parseDouble(valueS) * 1000000) / 1000000.0) + "\u00B0");
+                            row.add((Math.round(Double.parseDouble(valueW) * 1000) / 1000.0) + "\u00B0/" + (Math.round(Double.parseDouble(valueS) * 1000) / 1000.0) + "\u00B0");
                         } else {
                             row.add("");
                         }
                         if (xPathUtils.nodeExists(childNode, "./gmd:eastBoundLongitude") && xPathUtils.nodeExists(childNode, "./gmd:northBoundLatitude")) {
                             String valueE = xPathUtils.getString(childNode, "./gmd:eastBoundLongitude").trim();
                             String valueN = xPathUtils.getString(childNode,  "./gmd:northBoundLatitude").trim();
-                            row.add((Math.round(Double.parseDouble(valueE) * 1000000) / 1000000.0) + "\u00B0/" + (Math.round(Double.parseDouble(valueN) * 1000000) / 1000000.0) + "\u00B0");
+                            row.add((Math.round(Double.parseDouble(valueE) * 1000) / 1000.0) + "\u00B0/" + (Math.round(Double.parseDouble(valueN) * 1000) / 1000.0) + "\u00B0");
                         } else {
                             row.add("");
                         }
@@ -1252,7 +1252,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return element;
     }
-    
+
     public Map<String, Object> getAreaHeight(String xpathExpression){
         HashMap element = new HashMap();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
@@ -1263,10 +1263,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     element.put("type", "table");
                     element.put("title", messages.getString("t01_object.vertical_extent"));
-                    
+
                     ArrayList head = new ArrayList();
-                    head.add(messages.getString("t01_object.vertical_extent_maximum"));
                     head.add(messages.getString("t01_object.vertical_extent_minimum"));
+                    head.add(messages.getString("t01_object.vertical_extent_maximum"));
                     head.add(messages.getString("t01_object.vertical_extent_unit"));
                     head.add(messages.getString("t01_object.vertical_extent_vdatum"));
                     element.put("head", head);
@@ -1277,19 +1277,19 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         for (int j = 0; j < subNodeList.getLength(); j++) {
                             Node childNode = subNodeList.item(j);
                             ArrayList row = new ArrayList();
-                            
-                            // "Maximum"
-                            xpathExpression = "./gmd:maximumValue";
-                            if(xPathUtils.nodeExists(childNode, xpathExpression)){
-                                row.add(notNull(xPathUtils.getString(childNode, xpathExpression)).trim());
-                            }
-                            
+
                             // "Minimum"
                             xpathExpression = "./gmd:minimumValue";
                             if(xPathUtils.nodeExists(childNode, xpathExpression)){
                                 row.add(notNull(xPathUtils.getString(childNode, xpathExpression)).trim());
                             }
-                            
+
+                            // "Maximum"
+                            xpathExpression = "./gmd:maximumValue";
+                            if(xPathUtils.nodeExists(childNode, xpathExpression)){
+                                row.add(notNull(xPathUtils.getString(childNode, xpathExpression)).trim());
+                            }
+
                             String rowValue;
                             // "Maßeinheit"
                             xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@uom";
@@ -1299,9 +1299,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             }else{
                                 row.add("");
                             }
-                            
+
                             // "Vertikaldatum"
-                            String verticalDatum = "" ; 
+                            String verticalDatum = "" ;
                             xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name";
                             if(xPathUtils.nodeExists(childNode, xpathExpression)){
                                 rowValue = xPathUtils.getString(childNode, xpathExpression).trim();
@@ -1311,7 +1311,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     verticalDatum = rowValue;
                                 }
                             }
-                            
+
                             if(StringUtils.isEmpty(verticalDatum)) {
                                 xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:identifier";
                                 if(xPathUtils.nodeExists(childNode, xpathExpression)){
@@ -1334,7 +1334,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     }
                                 }
                             }
-                            
+
                             row.add(verticalDatum);
                             if (!isEmptyRow(row)) {
                                 body.add(row);
@@ -1370,18 +1370,18 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i<nodeList.getLength(); i++){
-                String codeSpace = ""; 
+                String codeSpace = "";
                 String code = "";
                 xpathExpression = "./gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code";
                 if (xPathUtils.nodeExists(nodeList.item(i), xpathExpression)) {
                     code = xPathUtils.getString(nodeList.item(i), xpathExpression).trim();
                 }
-                
+
                 xpathExpression = "./gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:codeSpace";
                 if (xPathUtils.nodeExists(nodeList.item(i), xpathExpression)) {
                     codeSpace = xPathUtils.getString(nodeList.item(i), xpathExpression).trim();
                 }
-                
+
                 String value = "";
                 if(!code.isEmpty() && !codeSpace.isEmpty()){
                     if(code.contains("EPSG")){
@@ -1437,7 +1437,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String nameOfMeasure = null;
                 String description = null;
                 String content = "";
-                
+
                 if(node != null){
                     xpathExpression = "./gmd:nameOfMeasure";
                     if(xPathUtils.nodeExists(node, xpathExpression)){
@@ -1455,7 +1455,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(xPathUtils.nodeExists(node, xpathExpression)){
                         symbol = xPathUtils.getString(node, xpathExpression).trim();
                     }
-                    
+
                     if ((description != null || nameOfMeasure != null) && (checkDescription.equals(description) || checkNameOfMeasure.equalsIgnoreCase(nameOfMeasure))){
                         value.append(content);
                         if(symbol != null){
@@ -1468,7 +1468,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return value.toString();
     }
-    
+
     public String addLinkToGetXML() {
         String htmlLink = null;
         String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
@@ -1477,7 +1477,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return htmlLink;
     }
-    
+
     public HashMap addLinkElementToGetXML() {
         HashMap elementLink = null;
         String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
@@ -1565,7 +1565,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     String serviceType = xPathUtils.getString(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/gmd:CI_OnLineFunctionCode");
                     if (urlValue.toLowerCase().contains("request=getcapabilities") && urlValue.toLowerCase().contains("service=wms") &&
                             (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))) {
-                        // also add an identifier to select the correct layer in the map client 
+                        // also add an identifier to select the correct layer in the map client
                         map = addBigMapLink(node, urlValue + "||" + getLayerIdentifier(null), true);
                         // ADD FIRST ONE FOUND !!!
                         mapLinkAdded = true;
@@ -1581,7 +1581,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return map;
     }
-    
+
     private HashMap<String,Object> getPreviewImage(String xpathExpression) {
         ArrayList<HashMap<String, String>> urls = getPreviewImageUrl(xpathExpression);
         HashMap<String,Object> elementCapabilities = new HashMap<>();
@@ -1605,7 +1605,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return elementCapabilities;
     }
-    
+
     private String getLayerIdentifier(Node crossReference) {
         if (getUdkObjectClassType().equals("1")) {
             String href = xPathUtils.getString(rootNode, "./gmd:identificationInfo/gmd:MD_DataIdentification/@uuid");
@@ -1616,20 +1616,20 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             String origId = xPathUtils.getString(crossReference, "./@orig-uuid");
             String uuid   = xPathUtils.getString(crossReference, "./@uuid");
             String xpathExpression = "./gmd:identificationInfo/*/srv:operatesOn";
-            
+
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i < nodeList.getLength(); i++){
                 Node node = nodeList.item(i);
-            
+
                 String uuidRef = xPathUtils.getString(node, "./@uuidref");
                 String href = xPathUtils.getString(node, "./@xlink:href");
-                
+
                 if (uuidRef != null && (uuidRef.equals(uuid) || uuidRef.equals(origId))) {
                     return href;
                 }
             }
         }
-        
+
         return "NOT_FOUND";
     }
 
@@ -1707,28 +1707,28 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 elementMapLink.put("src", imageUrl.get("name"));
                 if(elementMapLink.get("href") == null) {
                     elementMapLink.put("href", imageUrl.get("name"));
-                } 
+                }
                 elementMapLink.put("description", imageUrl.get("description"));
                 list.add(elementMapLink);
             }
         }
-        
+
         elementCapabilities.put("type", "multiLineImage");
         elementCapabilities.put("elements", list);
         elementCapabilities.put("width", "full");
         return elementCapabilities;
     }
-    
+
     private ArrayList<HashMap<String, String>> getPreviewImageUrl(String xpathExpression) {
         if (xpathExpression == null)
             xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
-        
+
         ArrayList<HashMap<String, String>> values = new ArrayList<>();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-                HashMap<String, String> map = new HashMap<>(); 
+                HashMap<String, String> map = new HashMap<>();
                 map.put("name", node.getTextContent());
                 xpathExpression = "../../gmd:fileDescription/gco:CharacterString";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
@@ -1740,12 +1740,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return values;
     }
-    
+
     private String getCapabilityUrl() {
         String url = null;
         String serviceType = null;
         String xpathExpression = "";
-        
+
         xpathExpression = "./gmd:identificationInfo/*/srv:serviceType";
         if(xPathUtils.nodeExists(this.rootNode, xpathExpression)){
             serviceType = xPathUtils.getString(this.rootNode, xpathExpression);
@@ -1769,7 +1769,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if (xPathUtils.nodeExists(node, xpathExpression)) {
             String hasAccessConstraintsValue = xPathUtils.getString(node, xpathExpression).trim();
             if(hasAccessConstraintsValue.length() > 0){
-                hasAccessConstraints = Boolean.parseBoolean(hasAccessConstraintsValue); 
+                hasAccessConstraints = Boolean.parseBoolean(hasAccessConstraintsValue);
             }
         }
         return hasAccessConstraints;
