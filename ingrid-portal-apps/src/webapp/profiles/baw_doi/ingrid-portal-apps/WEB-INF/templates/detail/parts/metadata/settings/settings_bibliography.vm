@@ -9,5 +9,5 @@
         "title": "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString",
         "publisher": "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='publisher'][1]/gmd:organisationName/gco:CharacterString",
         "doi": "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"})
-    #set($getBibliographies = $TOOL.getListAPACitation($xPathBibliographyExpressions, "./gmd:identificationInfo/*/gmd:aggregationInfo"))
+    #set($getBibliographies = $TOOL.getListAPACitation($xPathBibliographyExpressions, "./gmd:identificationInfo/*/gmd:aggregationInfo[./gmd:MD_AggregateInformation/gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue='crossReference']"))
 #end
