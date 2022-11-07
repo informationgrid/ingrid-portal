@@ -23,7 +23,6 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/baw_doi/bawDoiCrossReferences",
     "ingrid/hierarchy/behaviours/baw_doi/bawDoiPublicationRestriction",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisAuftrag",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
@@ -37,16 +36,11 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisAuftrag, bawMisCodelists,
+], function(lang, behaviours,  bawDoiPublicationRestriction, bawMisAuftrag, bawMisCodelists,
             bawMisDefaultValues, bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisLiterature, bawMisMessdaten,
             bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
-
-        /**
-         * Cross-References table for DOIs
-         */
-        bawDoiCrossReferenceBehaviours: bawDoiCrossReferences,
 
         /**
          * Allow publication of objects only for Cat-admin
