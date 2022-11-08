@@ -29,6 +29,8 @@
 #set($hashDetail9 = "metadata_info")
 #set($hasDetail10 = false)
 #set($hashDetail10 = "bibliographical_info")
+#set($hasDetail11 = false)
+#set($hashDetail11 = "detail_time")
 
 #set($showMetadataClassType = true)
 
@@ -47,6 +49,7 @@
 #set($getDescription = $TOOL.valueHTMLEscape($TOOL.getDescription()))
 
 ## Zeitbezug
+#set($isTimeInDescription = true)
 ## Durch die Ressource abgedeckte Zeitspanne
 #set($xPathListTimeTimePeriodInstantPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimeInstant/gml:timePosition")
 #set($xPathListTimeTimePeriodBeginPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition")

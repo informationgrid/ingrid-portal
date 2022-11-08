@@ -34,6 +34,8 @@
             #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_description.vm")
         ## Bibliografische Angaben
             #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_bibliographical_info.vm")
+        ## Zeitbezug
+            #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_time.vm")
         ## Darstellung
             #parse("/WEB-INF/templates/detail/parts/metadata/detail_metadata_part_section_presentation.vm")
         ## Verweise und Downloads
