@@ -12,30 +12,30 @@
 
     if(this.href.indexOf('https://dl.datenfinder.baw.de/KA/') > -1) {
       ## windows
-      domainWin = '\\\\lfs-ka.all.baw.de';
-      replaceString = domainWin + '\\Ablage\\KA\\';
+      domainWin = '\\\\lfs-ka.all.baw.de\\Ablage';
+      replaceString = domainWin + '\\KA\\';
       hrefWin = this.href.replaceAll('https://dl.datenfinder.baw.de/KA/', replaceString);
       hrefWin = hrefWin.replaceAll('/', '\\');
       clipboardTextWin += domainWin;
       clipboardTextWin += this.pathname.replaceAll('/', '\\');
       ## linux
-      domainLin = 'smb://lfs-ka.all.baw.de';
-      replaceString = domainLin + '/Ablage/KA/'
+      domainLin = 'smb://lfs-ka.all.baw.de/Ablage';
+      replaceString = domainLin + '/KA/'
       hrefLin = this.href.replaceAll('https://dl.datenfinder.baw.de/KA/', replaceString);
       clipboardTextLin += domainLin;
       clipboardTextLin += this.pathname;
     }
     if(this.href.indexOf('https://dl.datenfinder.baw.de/HH/') > -1) {
       ## windows
-      domainWin = '\\\\lfs-hh.all.baw.de';
-      replaceString = domainWin + '\\Ablage\\HH\\'
+      domainWin = '\\\\lfs-hh.all.baw.de\\Ablage';
+      replaceString = domainWin + '\\HH\\'
       hrefWin = this.href.replaceAll('https://dl.datenfinder.baw.de/HH/', replaceString);
       hrefWin = hrefWin.replaceAll('/', '\\');
       clipboardTextWin += domainWin;
       clipboardTextWin += this.pathname.replaceAll('/', '\\');
       ## linux
-      domainLin = '';
-      replaceString = domainLin + '/net/lfs-hh/Ablage/HH/';
+      domainLin = '/net/lfs-hh/Ablage';
+      replaceString = domainLin + '/HH/';
       hrefLin = this.href.replaceAll('https://dl.datenfinder.baw.de/HH/', replaceString);
       clipboardTextLin += domainLin;
       clipboardTextLin += this.pathname;
