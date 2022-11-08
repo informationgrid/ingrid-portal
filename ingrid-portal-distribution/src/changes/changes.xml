@@ -43,6 +43,9 @@
           <action type="fix" dev="wemove" issue="4345">
             Fehler in BKG-MIS-Release 5.13.1
           </action>
+          <action type="add" dev="wemove" issue="3928">
+            Portal/IGE: Feld Regionalschlüssel hinzugefügt.
+          </action>
         </release>
 
         <release version="5.14.0" date="2022-10-04" description="Release 5.14.0">
