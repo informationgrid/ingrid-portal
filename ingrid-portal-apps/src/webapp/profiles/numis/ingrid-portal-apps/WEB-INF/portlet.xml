@@ -775,7 +775,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>row</value>
+                <value>search-filtered row content-small</value>
             </preference>
        </portlet-preferences>
     </portlet>
