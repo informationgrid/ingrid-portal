@@ -67,9 +67,9 @@ define([
             // show field only for classes 1 and 3
             topic.subscribe("/onObjectClassChange", function (data) {
                 if (data.objClass === "Class1" || data.objClass === "Class3") {
-                    domClass.remove(dom.byId("widget_regionKey"), "hide");
+                    domClass.remove(dom.byId("uiElementAddregionKey"), "hide");
                 } else {
-                    domClass.add(dom.byId("widget_regionKey"), "hide");
+                    domClass.add(dom.byId("uiElementAddregionKey"), "hide");
                 }
             });
 
