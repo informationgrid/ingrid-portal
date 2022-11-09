@@ -25,11 +25,14 @@ define([
     "dojo/_base/array",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/dom",
+    "dojo/dom-class",
     "dojo/dom-construct",
+    "dojo/topic",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
     "ingrid/message"
-], function (registry, array, declare, lang, construct, dirty, creator, message) {
+], function (registry, array, declare, lang, dom, domClass, construct, topic, dirty, creator, message) {
 
     return declare(null, {
         title: "Regionalschlüssel",
@@ -59,6 +62,16 @@ define([
 
             var regionKeyWidget = registry.byId(id);
             additionalFields.push(regionKeyWidget);
+
+
+            // show field only for classes 1 and 3
+            topic.subscribe("/onObjectClassChange", function (data) {
+                if (data.objClass === "Class1" || data.objClass === "Class3") {
+                    domClass.remove(dom.byId("widget_regionKey"), "hide");
+                } else {
+                    domClass.add(dom.byId("widget_regionKey"), "hide");
+                }
+            });
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
             return registry.byId(id).promiseInit;
