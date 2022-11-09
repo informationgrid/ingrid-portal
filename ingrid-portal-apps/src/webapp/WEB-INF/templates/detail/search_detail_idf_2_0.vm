@@ -718,6 +718,41 @@
     #end
 #end
 
+#macro (renderTableAsList $title $entry)
+    #if($tool.hasContent($entry.get("body")))
+        <div class="table">
+            #if($entry.title)
+                <h5>$entry.title</h5>
+            #end
+            <table>
+            #set($num = 0)
+            #foreach($th in $entry.head)
+                #set($body = $entry.body.get($num))
+                #if($body && $body.size() > 0)
+                    <tr>
+                    #if($tool.hasContent($entry.get("head")))
+                        <th>$th</th>
+                    #else
+                        <th></th>
+                    #end
+                        <td>
+                    #foreach($td in $body)
+                        <p>$td</p>
+                    #end
+                        </td>
+                    </tr>
+                #end
+                #set($num = $num + 1)
+            #end
+            </table>
+        </div>
+    #else
+        #if($space != "")
+            #renderTextTable($title $space)
+        #end
+    #end
+#end
+
 ## Render text in line
 #macro (renderTextLine $entry)
     #if($tool.hasContent($entry.body))

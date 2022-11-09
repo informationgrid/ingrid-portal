@@ -328,6 +328,9 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN = "portal.detail.uvp.documents.htaccess.login";
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD = "portal.detail.uvp.documents.htaccess.password";
 
+    public static final String PORTAL_DETAIL_DISTANCE_DPI = "portal.detail.distance.dpi";
+    public static final String PORTAL_DETAIL_DISTANCE_METER = "portal.detail.distance.meter";
+
     public static final String PORTAL_MAPS_LINKS_NEW_TAB = "portal.map.links.new.tab";
 
     public static final String PORTAL_ADMINISTRATION_USER_ENABLED_OLDER_THAN = "portal.administration.user.enabled.older.than";

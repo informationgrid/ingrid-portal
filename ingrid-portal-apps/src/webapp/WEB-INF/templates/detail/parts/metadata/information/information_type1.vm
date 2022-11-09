@@ -15,7 +15,7 @@
     #set($headCodeList = ["528", "515"])
     #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_vector"), $xPathInfo1MD_VectorSpatialRepresentationGeometricObjects, $headTitles, $headXpathExpressions, $headCodeList))
 ## Erstellungsmaßstab
-    #renderTable($TOOL.getReferenceObject($xPathInfo1MDResolution))
+    #renderTableAsList("" $TOOL.getReferenceObject($xPathInfo1MDResolution))
 ## Symbolkatalog
     #set($headTitles = [$MESSAGES.getString("t011_obj_geo_symc.symbol_cat"),$MESSAGES.getString("t011_obj_geo_symc.symbol_date"),$MESSAGES.getString("t011_obj_geo_symc.edition")])
     #set($headXpathExpressions = ["./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:title","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:edition"])

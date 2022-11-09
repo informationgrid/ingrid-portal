@@ -1045,15 +1045,26 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
                     listDominator.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim());
                 }
-
-                xpathExpression = "./gmd:distance/gco:Distance[@uom='meter']";
+                xpathExpression = "./gmd:distance/gco:Distance/@uom";
+                String[] distanceDPI = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_DISTANCE_DPI);
+                String[] distanceMeter = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_DISTANCE_METER);
                 if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
-                    listMeter.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim());
-                }
-
-                xpathExpression = "./gmd:distance/gco:Distance[@uom='dpi']";
-                if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
-                    listDpi.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim());
+                    String uom = xPathUtils.getString(childNodeList.item(j), xpathExpression).trim();
+                    if (Arrays.asList(distanceDPI).indexOf(uom) > -1) {
+                        xpathExpression = "./gmd:distance/gco:Distance[@uom='" + uom + "']";
+                        if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
+                            listDpi.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim().concat(" " + uom));
+                        }
+                    } else if(Arrays.asList(distanceMeter).indexOf(uom) > -1){
+                        xpathExpression = "./gmd:distance/gco:Distance[@uom='" + uom + "']";
+                        // IGE set uom as 'meter'
+                        if(uom.equals("meter")) {
+                            uom = "m";
+                        }
+                        if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
+                            listMeter.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim().concat(" " + uom));
+                        }
+                    }
                 }
             }
 
@@ -1062,53 +1073,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
             ArrayList head = new ArrayList();
             head.add(messages.getString("t011_obj_serv_scale.scale").concat(" 1:x"));
-            head.add(messages.getString("t011_obj_serv_scale.resolution_ground").concat(" m"));
-            head.add(messages.getString("t011_obj_serv_scale.resolution_scan").concat(" dpi"));
+            head.add(messages.getString("t011_obj_serv_scale.resolution_ground"));
+            head.add(messages.getString("t011_obj_serv_scale.resolution_scan"));
             element.put("head", head);
             ArrayList body = new ArrayList();
             element.put("body", body);
-
-            for (int i = 0; i < listDominator.size(); i++) {
-                ArrayList row = new ArrayList();
-                int value;
-
-                value = listDominator.size();
-                if (value != 0) {
-                    if(value > i){
-                        row.add(notNull((String) listDominator.get(i)));
-                    }else{
-                        row.add("");
-                    }
-                } else {
-                    row.add("");
-                }
-
-                value = listMeter.size();
-                if (value != 0) {
-                    if(value > i){
-                        row.add(notNull((String) listMeter.get(i)));
-                    }else {
-                        row.add("");
-                    }
-                } else {
-                    row.add("");
-                }
-
-                value = listDpi.size();
-                if (value != 0) {
-                    if(value > i){
-                        row.add(notNull((String) listDpi.get(i)));
-                    }else{
-                        row.add("");
-                    }
-                } else {
-                    row.add("");
-                }
-
-                if (!isEmptyRow(row)) {
-                    body.add(row);
-                }
-            }
+            body.add(listDominator);
+            body.add(listMeter);
+            body.add(listDpi);
         }
         return element;
     }
