@@ -1138,7 +1138,7 @@ h6 {
   background-color: #F2F2F2;
 }
 
-.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child {
+.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child, .search-filtered .table.table--lined--list table th:first-child {
   color: #004188;
 }
 
@@ -1223,6 +1223,7 @@ span.icon span {
 /* detail page */
 .slab-bold, .table.table--lined table th
 , .search-filtered .table.list table tr td:first-child,
+.search-filtered .table.table--lined--list table th:first-child,
 .search-filtered .table.list .list_entry {
   font-family: AvenirNextLTPro-Demi, sans-serif !important;
 }

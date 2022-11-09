@@ -1278,7 +1278,7 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
     background-color: #F6F6F6;
 }
 
-.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child {
+.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child, .search-filtered .table.table--lined--list table th:first-child {
     color: #871D33;
 }
 

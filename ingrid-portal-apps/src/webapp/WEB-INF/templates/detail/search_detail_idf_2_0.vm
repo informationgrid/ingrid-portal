@@ -720,7 +720,7 @@
 
 #macro (renderTableAsList $title $entry)
     #if($tool.hasContent($entry.get("body")))
-        <div class="table">
+        <div class="table table--lined--list">
             #if($entry.title)
                 <h5>$entry.title</h5>
             #end
