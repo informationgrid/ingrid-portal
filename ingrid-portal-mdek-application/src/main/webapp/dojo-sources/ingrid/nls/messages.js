@@ -588,7 +588,7 @@ define({
         "ui.obj.spatial.height.geodeticSystem": "Geodetic System",
         "ui.obj.spatial.description": "Comment",
         "ui.obj.spatial.regionKey": "Regionalschlüssel",
-        "ui.obj.spatial.regionKeyHelp": "Amtlicher Regionalschlüssel (ARS) des Statistischen Bundesamtes: hier als ergänzende Angabe zur BoundingBox. Es sind nur jene Ziffern des ARS anzugeben, die die jeweilige administrative Ebene abbilden (Gemeinde = 12 Stellen; Gemeindeverband = ersten 9 Stellen; Bundesland = ersten 2 Stellen; Nationalstaat 'Bundesrepublik Deutschland' = '0'",
+        "ui.obj.spatial.regionKeyHelp": "Amtlicher Regionalschlüssel (ARS) des Statistischen Bundesamtes: hier als ergänzende Angabe zur BoundingBox. Es sind nur jene Ziffern des ARS anzugeben, die die jeweilige administrative Ebene abbilden (Gemeinde = 12 Stellen; Gemeindeverband = ersten 9 Stellen; Bundesland = ersten 2 Stellen; Nationalstaat 'Bundesrepublik Deutschland' = '0'. Die Angabe des Regionalschlüssels ermöglicht die Präzissierung der Beschreibung der räumlichen Ausdehung einer Geodatenressource und sollte nur angegeben werden, wenn der geometrische Umring einer administrativen Einheit zutreffend ist und die Geodatenressource vollständig darin liegt.",
         "ui.obj.time.title": "Time Reference",
         "ui.obj.time.timeRefTable.title": "Dataset Time",
         "ui.obj.time.timeRefTable.header.date": "Date*",
