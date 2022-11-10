@@ -10,6 +10,9 @@
           <action type="update" dev="wemove" issue="4552">
             RLP: Deaktivierung von Facetten in der Suche
           </action>
+          <action type="update" dev="wemove" issue="4465">
+            Portal: Bezeichnung "Objekt-ID" ersetzen
+          </action>
           <action type="update" dev="wemove" issue="4450">
             Portal: Label "Ansprechpartner (Metadatum)" ändern
           </action>
