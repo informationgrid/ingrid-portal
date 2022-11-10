@@ -572,8 +572,8 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         #end
         #if($searchterms.contains("opendata"))
             <div class="helper icon info">
-                <span class="ic-ic-opendata" title="Opendata"></span>
-                <span class="text">Opendata</span>
+                <span class="ic-ic-opendata" title="Open Data"></span>
+                <span class="text">Open Data</span>
             </div>
         #end
         </div>

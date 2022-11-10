@@ -376,16 +376,16 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <field>t02_address.administrative_area_value</field>
     </facet>
     <facet>
-        <name>Opendata</name>
+        <name>Open Data</name>
         <id>opendata</id>
         <facets>
-        <!-- Opendata true-->
+        <!-- Open Data true-->
            <facet>
                 <name>Ja</name>
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata_true</id>
             </facet>
-        <!-- Opendata false-->
+        <!-- Open Data false-->
            <facet>
                 <name>Nein</name>
                 <query>-t04_search.searchterm:opendata -t04_search.searchterm:opendataident</query>
@@ -449,9 +449,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <parentId>inspire</parentId>
                 <icon>ic-inspire</icon>
             </facet>
-        <!-- Opendata -->
+        <!-- Open Data -->
            <facet>
-                <name>Opendata</name>
+                <name>Open Data</name>
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata_true</id>
                 <parentId>opendata</parentId>
