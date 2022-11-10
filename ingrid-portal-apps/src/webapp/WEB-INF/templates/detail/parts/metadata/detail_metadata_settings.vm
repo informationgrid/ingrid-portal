@@ -410,7 +410,6 @@
 #### Bestellinformationen
 #set($xPathAdditionalInfoOrderingInstructions = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions/gco:CharacterString")
 
-
 #set($xPathListAdditionalInfo = [
     $xPathAdditionalInfoMDClassificationCode,
     $xPathAdditionalInfoSpecificUsage,
@@ -419,8 +418,10 @@
     $xPathAdditionalInfoExportCriteria,
     $xPathAdditionalInfoIdentificationInfoLanguageCode,
     $xPathAdditionalInfoDQDataQualityReport,
-    "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format",
-    "${xPathAdditionalInfoMDDistribution}./gmd:transferOptions",
+    "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format/gmd:name[string-length(text()) > 0] ",
+    "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format/gmd:version[string-length(text()) > 0] ",
+    "${xPathAdditionalInfoMDDistribution}/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine",
+    "${xPathAdditionalInfoMDDistribution}/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:transferSize",
     $xPathAdditionalInfoOrderingInstructions
 ])
 
