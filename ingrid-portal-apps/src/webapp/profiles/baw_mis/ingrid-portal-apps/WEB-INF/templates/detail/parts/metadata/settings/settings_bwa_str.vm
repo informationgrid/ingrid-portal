@@ -1,10 +1,10 @@
 ## BAW Auftragsnummer
-#set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
+#set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = 'largerWorkCitation']/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
 #if($type == 4)
     #set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
 #end
 ## BAW Auftragstitel
-#set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString"))
+#set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = 'largerWorkCitation']/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString"))
 #if($type == 4)
     #set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"))
 #end

@@ -17,16 +17,48 @@
                         </li>
                     #end
                 ## Beschreibung
-                    #if($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeDates && $getTimeDates.getLength() > 0) || $getAlternateTitle || $getDescription  || ($getTimeMeasurementValue && $getTimeMeasurementUnit))
+                    #if($getAlternateTitle || $getDescription || ($isTimeInDescription && ($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeDates && $getTimeDates.getLength() > 0) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))))
                         #set($hasDetail1 = true)
                         <li class="accordion-item" data-accordion-item>
                             <a href="#${hashDetail1}" class="accordion-title js-anchor-target" aria-controls="${hashDetail1}-accordion" role="tab" id="${hashDetail1}-accordion-label">
                                 <span class="text">$MESSAGES.getString("detail_description")</span>
                             </a>
-                            <div class="accordion-content #if(!$TOOL.aNodeOfListExist($xPathListTime) || (!$getTimeDates || $getTimeDates.getLength() == 0) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))is-hidden#end" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail1}-accordion-label" id="${hashDetail1}-accordion">
+                            <div class="accordion-content #if(!$isTimeInDescription || (!$TOOL.aNodeOfListExist($xPathListTime) && (!$getTimeDates || $getTimeDates.getLength() == 0) && (!$getTimeMeasurementValue && !$getTimeMeasurementUnit)))is-hidden#end" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail1}-accordion-label" id="${hashDetail1}-accordion">
                                 <div class="boxes">
-                                    #if($TOOL.aNodeOfListExist($xPathListTime))
-                                        #set($tmpHash = "${hashDetail1}_time_reference")
+                                    #if($isTimeInDescription)
+                                        #if($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))
+                                            #set($tmpHash = "${hashDetail1}_time_reference")
+                                            #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
+                                                #set($tmpTitle = "time_reference_content")
+                                            #else
+                                                #set($tmpTitle = "time_reference")
+                                            #end
+                                            #set($tmpTitle = $MESSAGES.getString($tmpTitle))
+                                            #renderSubNavigation($tmpTitle $tmpHash)
+                                        #end
+                                        #if($getTimeDates && $getTimeDates.getLength() > 0)
+                                            #set($tmpHash = "${hashDetail1}_time_reference_record")
+                                            #set($tmpTitle = $MESSAGES.getString("time_reference_record"))
+                                            #renderSubNavigation($tmpTitle $tmpHash)
+                                        #end
+                                    #end
+                                </div>
+                            </div>
+                        </li>
+                    #end
+                ## Bibliografische Angaben
+                    #parse("/WEB-INF/templates/detail/parts/metadata/navigation/navigation_bibliographies.vm")
+                ## Zeitbezug
+                #if(!$isTimeInDescription && ($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeDates && $getTimeDates.getLength() > 0) || ($getTimeMeasurementValue && $getTimeMeasurementUnit)))
+                        #set($hasDetail11 = true)
+                        <li class="accordion-item" data-accordion-item>
+                            <a href="#${hashDetail11}" class="accordion-title js-anchor-target" aria-controls="${hashDetail11}-accordion" role="tab" id="${hashDetail11}-accordion-label">
+                                <span class="text">$MESSAGES.getString("time_reference")</span>
+                            </a>
+                            <div class="accordion-content #if(!$TOOL.aNodeOfListExist($xPathListTime) && (!$getTimeDates || $getTimeDates.getLength() == 0) && (!$getTimeMeasurementValue && !$getTimeMeasurementUnit))is-hidden#end" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail11}-accordion-label" id="${hashDetail11}-accordion">
+                                <div class="boxes">
+                                    #if($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))
+                                        #set($tmpHash = "${hashDetail11}_time_reference")
                                         #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
                                             #set($tmpTitle = "time_reference_content")
                                         #else
@@ -36,23 +68,10 @@
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #if($getTimeDates && $getTimeDates.getLength() > 0)
-                                        #set($tmpHash = "${hashDetail1}_time_reference_record")
+                                        #set($tmpHash = "${hashDetail11}_time_reference_record")
                                         #set($tmpTitle = $MESSAGES.getString("time_reference_record"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
-                                </div>
-                            </div>
-                        </li>
-                    #end
-                ## Bibliografische Angaben
-                    #if(($getBibliographies && $getBibliographies.size() > 0) || $doiIdType || ($getCitations && $getCitations.size() > 0))
-                        #set($hasDetail10 = true)
-                        <li class="accordion-item" data-accordion-item>
-                            <a href="#${hashDetail10}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail10}-accordion-label">
-                                <span class="text">$MESSAGES.getString("bibliographical_info")</span>
-                            </a>
-                            <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetai10}-accordion-label" id="${hashDetail10}-accordion">
-                                <div class="boxes">
                                 </div>
                             </div>
                         </li>

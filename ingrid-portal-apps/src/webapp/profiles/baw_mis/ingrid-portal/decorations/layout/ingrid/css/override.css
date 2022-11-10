@@ -1078,7 +1078,7 @@ a.icon {
   color: #1D4B7B;
 }
 
-.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child {
+.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child, .search-filtered .table.table--lined--list table th:first-child {
     color: #2C63B1;
 }
 

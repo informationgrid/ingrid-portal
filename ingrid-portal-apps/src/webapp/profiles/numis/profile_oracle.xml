@@ -28,6 +28,10 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>application/main-application.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -113,6 +117,9 @@
         </execute>
         <execute>
             <![CDATA[UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml']]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/application']]>
         </execute>
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>

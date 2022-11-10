@@ -7,8 +7,50 @@
 
     <body>
         <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+          <action type="update" dev="wemove" issue="4486">
+            Portal: Detailanzeige - Bodenauflösung - alle (metrischen) Einheiten ermöglichen
+          </action>
+          <action type="add" dev="wemove" issue="4486">
+            Portalanzeige Koordinatensysteme
+          </action>
+          <action type="update" dev="wemove" issue="3631">
+            Layouts anpassen für die Suchergebnisseite und die Detaildarstellung im RLP-Profil
+          </action>
+          <action type="add" dev="wemove" issue="4230">
+            Kartenclient METAVER - Webatlas farbe/grau ersetzen durch basemap.de Web Raster farbe/grau
+          </action>
+          <action type="add" dev="wemove" issue="4378">
+            Portal: Zusätzliche Felder OAC und environmentDescription für LUBW Profil
+          </action>
+          <action type="add" dev="wemove" issue="4447">
+            PORTAL: Entfernen von IGE-Applikation bei Installation über Docker
+          </action>
+          <action type="add" dev="wemove" issue="4376">
+            Direkte Anzeige, wenn nur ein Layer im WMS existiert
+          </action>
+          <action type="update" dev="wemove" issue="4371">
+            Portal: Inhaltliche Anpassungen für LUBW Profil
+          </action>
+          <action type="update" dev="wemove" issue="4167">
+            Portal: Anpassungen in den Detail- und Suchtreffer-Ansichten
+          </action>
+          <action type="add" dev="wemove" issue="4351">
+            Portal: Bibliografische Angaben auch im baw_mis Profil implementieren
+          </action>
+          <action type="add" dev="wemove" issue="1806">
+            UVP: Darstellung des Bundeslandes oder des Landkreises in dem das Vorhaben erfolgt
+          </action>
+          <action type="add" dev="wemove" issue="4374">
+            Erstellung neuer Bereich "APIs"
+          </action>
+          <action type="update" dev="wemove" issue="4337">
+            Log-in niedersächsischer UVP Editor (IGE-NG)
+          </action>
           <action type="fix" dev="wemove" issue="4345">
             Fehler in BKG-MIS-Release 5.13.1
+          </action>
+          <action type="add" dev="wemove" issue="3928">
+            Portal/IGE: Feld Regionalschlüssel hinzugefügt.
           </action>
         </release>
 

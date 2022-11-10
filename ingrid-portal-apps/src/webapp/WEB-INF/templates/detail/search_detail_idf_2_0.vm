@@ -718,6 +718,41 @@
     #end
 #end
 
+#macro (renderTableAsList $title $entry)
+    #if($tool.hasContent($entry.get("body")))
+        <div class="table table--lined--list">
+            #if($entry.title)
+                <h5>$entry.title</h5>
+            #end
+            <table>
+            #set($num = 0)
+            #foreach($th in $entry.head)
+                #set($body = $entry.body.get($num))
+                #if($body && $body.size() > 0)
+                    <tr>
+                    #if($tool.hasContent($entry.get("head")))
+                        <th>$th</th>
+                    #else
+                        <th></th>
+                    #end
+                        <td>
+                    #foreach($td in $body)
+                        <p>$td</p>
+                    #end
+                        </td>
+                    </tr>
+                #end
+                #set($num = $num + 1)
+            #end
+            </table>
+        </div>
+    #else
+        #if($space != "")
+            #renderTextTable($title $space)
+        #end
+    #end
+#end
+
 ## Render text in line
 #macro (renderTextLine $entry)
     #if($tool.hasContent($entry.body))
@@ -875,20 +910,24 @@
         #set($list = [])
         #foreach($citation in $entry)
             #set($content = "")
-            #if($tool.hasContent($citation.authors))
-                #set($content = $content + "<b>$citation.authors</b> ")
-            #end
-            #if($tool.hasContent($citation.year))
-                #set($content = $content + "<b>($citation.year):</b> ")
-            #end
-            #if($tool.hasContent($citation.title))
-                #set($content = $content + "<i>$citation.title</i>#if($tool.hasContent($citation.doi_type)) [$citation.doi_type]#end. ")
-            #end
-            #if($tool.hasContent($citation.publisher))
-                #set($content = $content + "$citation.publisher. ")
-            #end
-            #if($tool.hasContent($citation.doi))
-                #set($content = $content + '<a class="external-link" href="' + $citation.doi + '" target="_blank">' + "$citation.doi</a>")
+            #if($tool.hasContent($citation.uuid) && $tool.hasContent($citation.title))
+                #set($content = $content + '<a class="external-link" href="?docuuid=' + $citation.uuid + '" target="_blank" title="' + $citation.title + '">' + "$citation.title</a>")
+            #else
+                #if($tool.hasContent($citation.authors))
+                    #set($content = $content + "<b>$citation.authors</b> ")
+                #end
+                #if($tool.hasContent($citation.year))
+                    #set($content = $content + "<b>($citation.year):</b> ")
+                #end
+                #if($tool.hasContent($citation.title))
+                    #set($content = $content + "<i>$citation.title</i>#if($tool.hasContent($citation.doi_type)) [$citation.doi_type]#end. ")
+                #end
+                #if($tool.hasContent($citation.publisher))
+                    #set($content = $content + "$citation.publisher. ")
+                #end
+                #if($tool.hasContent($citation.doi))
+                    #set($content = $content + '<a class="external-link" href="' + $citation.doi + '" target="_blank" title="' + $citation.doi + '">' + "$citation.doi</a>")
+                #end
             #end
             #if(!$content.isEmpty())
                 #set($add = $list.add($content))
@@ -1041,7 +1080,7 @@
     #end
 #end
 
-#macro (renderLinkListTable $title $entryList $cssClass)
+#macro (renderLinkListTable $title $entryList $cssClass $expandable $expandableId)
     #if($tool.hasContent($entryList))
     <div class="table table--lined ${cssClass}">
         <table>
@@ -1050,9 +1089,37 @@
                 <th>$title</th>
             #end
                 <td>
+                #if($expandable)
+                    #set($listCount = 0)
+                    #set($listLimit = 5)
+                    #set($listExpand = false)
+                    #set($paramMore = $request.getParameter("more"))
+                    #if($paramMore && $paramMore.indexOf($expandableId) > -1)
+                        #set($isMoreId = true)
+                    #end
+                    #foreach($entry in $entryList)
+                        #if($listCount >= $listLimit && $listExpand == false)
+                            #set($listExpand = true)
+                            <button type="button" id="$expandableId" class="js-expander js-open-expand-text button outline $expandableId #if($isMoreId)is-hidden #end" title="$MESSAGES.getString('searchResult.info.links.more')">
+                                $MESSAGES.getString('search.detail.info.more')
+                            </button>
+                            <div class="js-expander-content $expandableId #if(!$isMoreId)is-hidden#end">
+                        #end
+                        #renderLinkLine($entry)
+                        #set($listCount = $listCount + 1)
+                    #end
+                    #if($listExpand)
+                        #set($listExpand = false)
+                        </div>
+                        <button type="button" class="js-open-expand-text button outline js-expander-close $expandableId #if(!$isMoreId)is-hidden #end" title="$MESSAGES.getString('searchResult.info.links.less')">
+                            $MESSAGES.getString('search.detail.info.less')
+                        </button>
+                    #end
+                #else
                     #foreach($entry in $entryList)
                         #renderLinkLine($entry)
                     #end
+                #end
                 </td>
             </tr>
         </table>

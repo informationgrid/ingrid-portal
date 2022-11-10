@@ -737,7 +737,7 @@ header .menu-tab-row .menu-tab {
     background-color: #F6F6F6;
 }
 
-.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child {
+.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child, .search-filtered .table.table--lined--list table th:first-child {
     color: #333333;
 }
 

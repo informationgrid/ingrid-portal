@@ -151,7 +151,7 @@ header .button .ic-ic-hamburger:before {
 }
 .category .text-center h2 {
   font-size: 32px;
-  text-transform: capitalize;
+  text-transform: unset;
   font-family: EB-Garamond-Bold, sans-serif;
   margin: 0;
   padding-bottom: 12px;
@@ -865,6 +865,18 @@ a[class*="js-expander"] span.text {
   border-width: 0 3px 3px 0;
 }
 
+/* informationsanbieter */
+[id="16__17"] .accordion-title {
+  color: #3f3f3f;
+  background-color: #f4f2e9;
+  border-radius: unset !important;
+  transition: background-color 0.25s;
+}
+[id="16__17"] .accordion-title:hover {
+  box-shadow: unset;
+  background-color: #eae8e1;
+}
+
 /* administrator::users */
 .form-element .is-invalid-input {
   background-color: #f4f2e9;
@@ -943,9 +955,13 @@ table .dark a {
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered,
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-  padding: 0.8rem 1.3rem;
+  min-height: 56px;
   line-height: unset;
+  padding: 0.8rem 1.3rem;
   font-family: Gudea-Regular, sans-serif;
+}
+.select2-container--default .select2-results__option[aria-disabled=true] {
+  min-height: 44px;
 }
 ul.select2-results__options {
   border-radius: 0;

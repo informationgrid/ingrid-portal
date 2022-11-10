@@ -5,7 +5,7 @@
     <pages>
         <page>
             <name>main-measures.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>main-maps.psml</name>
@@ -35,9 +35,6 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
             </portlets>
@@ -50,9 +47,6 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
             </portlets>
@@ -65,9 +59,6 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
             </portlets>
@@ -82,6 +73,10 @@
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek-application/</src>
         </file>
         <file>
             <action>copy-dir</action>

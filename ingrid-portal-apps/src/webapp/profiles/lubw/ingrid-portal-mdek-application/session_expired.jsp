@@ -31,13 +31,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
-        <title>NUMIS - Das nieders&auml;chsische Umweltportal</title>
+        <title>LUBW - Landesanstalt f&uuml;r Umwelt Baden-W&uuml;rttemberg</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="NUMIS, das nieders&auml;chsische Umweltportal, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="description" content="LUBW, das nieders&auml;chsische Umweltportal, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="&copy; Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
-        <meta name="keywords" lang="de" content="NUMIS, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
+        <meta name="keywords" lang="de" content="LUBW, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="&copy; Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
         <meta name="robots" content="index,follow" />
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
@@ -60,15 +60,14 @@
                     <div class="highlighted">
                         <a href="/freitextsuche" class="header-menu-entry " title="Freitextsuche nach Umweltinformationen"><span class="text">Suche</span></a>
                         <a href="/kartendienste" class="header-menu-entry " title="Interaktive thematische Karten"><span class="text">Karten</span></a>
-                        <a href="/messwertsuche" class="header-menu-entry " title="Umweltmessdaten"><span class="text">Messwerte</span></a>
                         <a href="/datenkataloge" class="header-menu-entry " title="Datenkataloge"><span class="text">Kataloge</span></a>
-                        <a href="/hintergrundinformationen" class="header-menu-entry " title="Hintergrundinformationen zu NUMIS"><span class="text">Über NUMIS</span></a>
+                        <a href="/hintergrundinformationen" class="header-menu-entry " title="Hintergrundinformationen zu LUBW"><span class="text">Über LUBW</span></a>
                         <a href="/informationsanbieter" class="header-menu-entry " title="Kooperationspartner und Informationsanbieter"><span class="text">Anbieter</span></a>
                         <a href="/datenquellen" class="header-menu-entry " title="Angeschlossene Datenbanken"><span class="text">Datenquellen</span></a>
                     </div>
-                    <a href="/hilfe" title="Erläuterungen zur Nutzung von NUMIS - Neues Fenster öffnet sich"><span class="text">Hilfe</span></a>
-                    <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an NUMIS"><span class="text">Kontakt</span></a>
-                    <a href="/inhaltsverzeichnis" title="Alle Inhalte von NUMIS auf einen Blick"><span class="text">Inhalt</span></a>
+                    <a href="/hilfe" title="Erläuterungen zur Nutzung von LUBW - Neues Fenster öffnet sich"><span class="text">Hilfe</span></a>
+                    <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an LUBW"><span class="text">Kontakt</span></a>
+                    <a href="/inhaltsverzeichnis" title="Alle Inhalte von LUBW auf einen Blick"><span class="text">Inhalt</span></a>
                     <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss"><span class="text">Impressum</span></a>
                     <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen"><span class="text">Datenschutz</span></a>
                     <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit"><span class="text">Barrierefreiheit</span></a>
@@ -78,12 +77,14 @@
                 <div class="row">
                     <div class="columns xsmall-7 small-7 medium-8 large-7 xlarge-9">
                         <div class="logo">
-                            <div class="switch">
-                                <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
-                            </div>
-                            <a href="/startseite" class="hide-for-xlarge hide-for-xsmall-only hide-for-small-only"><img src="/decorations/layout/ingrid/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
-                            <a href="/startseite" class="show-for-xlarge hide-for-xsmall-only"><img src="/decorations/layout/ingrid/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
-                            <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/ingrid/images/template/logo-xsmall.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="hide-for-xsmall-only hide-for-small-only">
+                                <img src="/decorations/layout/ingrid/images/template/bw-wappen.png" alt="LUBW"/>
+                                <div class="text">Landesanstalt für Umwelt<br>Baden-Württemberg</div>
+                            </a>
+                            <a href="/startseite')" class="hide-for-medium">
+                                <img src="/decorations/layout/ingrid/images/template/bw-wappen.png" alt="LUBW"/>
+                                <div class="text">Landesanstalt für Umwelt<br>Baden-Württemberg</div>
+                            </a>
                         </div>
                     </div>
                     <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
@@ -98,12 +99,6 @@
                                 <div class="link-menu-tab">
                                     <span class="ic-ic-karten"></span>
                                     <span class="text">Karten</span>
-                                </div>
-                            </a>
-                            <a class="menu-tab " href="/messwertsuche" title="Umweltmessdaten">
-                                <div class="link-menu-tab">
-                                    <span class="ic-ic-chemie"></span>
-                                    <span class="text">Messwerte</span>
                                 </div>
                             </a>
                             <a class="menu-tab " href="/datenkataloge" title="Datenkataloge">
@@ -154,18 +149,18 @@
                     <div class="row">
                         <div class="xsmall-24 medium-24 large-24 xlarge-9 columns">
                             <div class="logo">
-                                <a href="/startseite"><img class="footer__logo" src="/decorations/layout/ingrid/images/template/logo.svg" alt="NUMIS"/></a>
+                                <a href="/startseite"><img class="footer__logo" src="/decorations/layout/ingrid/images/template/bw-wappen.png" alt="LUBW"/></a>
                             </div>
                             <div class="copyright">
                                 <span class="icon"></span>
-                                <span class="text copyright_text">Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</span>
+                                <span class="text copyright_text">LUBW - Landesanstalt für Umwelt Baden-Württemberg</span>
                             </div>
                         </div>
                         <div class="xsmall-24 small-24 large-24 xlarge-15 columns">
                             <div class="footer-menu-entries">
-                                <a href="/hilfe" title="Erläuterungen zur Nutzung von NUMIS - Neues Fenster öffnet sich" class="icon"><span class="text">Hilfe</span></a>
-                                <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an NUMIS" class="icon"><span class="text">Kontakt</span></a>
-                                <a href="/inhaltsverzeichnis" title="Alle Inhalte von NUMIS auf einen Blick" class="icon"><span class="text">Inhalt</span></a>
+                                <a href="/hilfe" title="Erläuterungen zur Nutzung von LUBW - Neues Fenster öffnet sich" class="icon"><span class="text">Hilfe</span></a>
+                                <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an LUBW" class="icon"><span class="text">Kontakt</span></a>
+                                <a href="/inhaltsverzeichnis" title="Alle Inhalte von LUBW auf einen Blick" class="icon"><span class="text">Inhalt</span></a>
                                 <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" class="icon"><span class="text">Impressum</span></a>
                                 <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" class="icon"><span class="text">Datenschutz</span></a>
                                 <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit" class="icon"><span class="text">Barrierefreiheit</span></a>
@@ -174,27 +169,6 @@
                     </div>
                 </div>
             </footer>
-            <div class="popup switch-popup">
-                <div class="row">
-                    <div class="popup__content text-box">
-                        <div class="list-item">
-                            <button type="button" class="button round popup__close js-popup-close" data-box=".switch-popup"><span class="ic-ic-cross"></span></button>
-                            <a class="switch-link numis">
-                                <span class="ic-ic-check"></span>
-                                <img src="/decorations/layout/ingrid/images/template/logo-numis-mit-tag.svg" alt="NUMIS" class="hide-for-xsmall-only">
-                                <img src="/decorations/layout/ingrid/images/template/logo-numis-mobile.svg" alt="NUMIS" class="show-for-xsmall-only">
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a class="switch-link uvp" href="https://uvp.niedersachsen.de">
-                                <span class=""></span>
-                                <img src="/decorations/layout/ingrid/images/template/logo-uvp-mit-tag.svg" alt="UVP" class="hide-for-xsmall-only">
-                                <img src="/decorations/layout/ingrid/images/template/logo-uvp-mobile.svg" alt="UVP" class="show-for-xsmall-only">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </body>
     <script src="/decorations/layout/ingrid/scripts/all.js"></script>

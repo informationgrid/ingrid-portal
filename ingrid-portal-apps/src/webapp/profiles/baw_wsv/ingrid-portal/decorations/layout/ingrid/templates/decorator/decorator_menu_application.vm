@@ -1,0 +1,6 @@
+<a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+    <div class="link-menu-tab">
+        <span class="ic-ic-administration"></span>
+        <span class="text">$tabName</span>
+    </div>
+</a>

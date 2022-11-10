@@ -1,0 +1,14 @@
+## Zeitbezug
+################################
+#if($hasDetail11)
+<div class="section">
+    <a class="anchor" id="${hashDetail11}"></a>
+    #renderSectionTitle($MESSAGES.getString("time_reference"))
+    <div class="row columns">
+    ## Zeitbezug
+        #if(!$isTimeInDescription)
+            #parse("/WEB-INF/templates/detail/parts/metadata/description/description_time.vm")
+        #end
+    </div>
+</div>
+#end

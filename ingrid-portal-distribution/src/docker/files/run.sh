@@ -282,6 +282,11 @@ else
         sed -i 's/uvp.niedersachsen.de/'${UVP_EXTERNAL_PORTAL_NI}'/' webapps/ingrid-portal-apps/WEB-INF/classes/facets-config.xml
     fi
 
+    if [ "$IGE_DISABLED" == "true" ]; then
+        rm -rf webapps/ingrid-portal-mdek-application*
+        rm -rf conf/Catalina/localhost/ingrid-portal-mdek-application.xml
+    fi
+
     touch ./initialized
 fi
 

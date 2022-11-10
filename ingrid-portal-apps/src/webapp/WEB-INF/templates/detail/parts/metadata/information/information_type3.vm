@@ -14,7 +14,7 @@
 ## Version des Services
     #renderTextListTable($MESSAGES.getString("t011_obj_serv_version.version") $TOOL.getListOfValuesFromXPath($xPathInfo3ServiceTypeVersion, "."))
 ## Erstellungsmaßstab
-    #renderTable($TOOL.getReferenceObject($xPathInfo3MDResolution))
+    #renderTableAsList("" $TOOL.getReferenceObject($xPathInfo3MDResolution))
 ## Systemumgebung
     #renderTextTable($MESSAGES.getString("t011_obj_serv.environment") $TOOL.getValueFromXPath($xPathInfo3EnvironmentDescription))
 ## Historie

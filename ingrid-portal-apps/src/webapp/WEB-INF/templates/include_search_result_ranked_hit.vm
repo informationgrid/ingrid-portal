@@ -1,17 +1,5 @@
 ## Renders Single Hit
     #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
-    
-    ## Set partner
-    #set($partner = "bund")
-    #if($rs.partnerKey)
-        #set($partners =  $rs.partnerKey.split(","))
-        #foreach($tmpPartner in $partners)
-            #if($tmpPartner.trim() != $partner)
-              #set($partner = $tmpPartner.trim())
-              #break
-            #end
-        #end
-    #end
 
     ## Set service types
     #set($serviceTypeShortcut = "")
@@ -33,16 +21,7 @@
         <div class="data">
             <div class="teaser-data search #if($isMoreId)is-active#end">
                 #renderServiceTypeList($serviceTypes true)
-                #if(!$rs.is_address)
-                    #if($showHitPartnerLogo)
-                        <div class="teaser-logo-partner">
-                            #if($rs.partnerKey != "all")
-                                #set($partnerTitleKey = "common.result.partner.${partner}")
-                                <img src="/ingrid-portal-apps/images/partner/svg/${partner}.svg" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/>
-                            #end
-                        </div>
-                    #end
-                #end
+                #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_logo.vm")
                 #if($rs.url)
                     #set($urlTitle = $MESSAGES.getString('common.tooltip.link.extern.result'))
                     #if ($rs.url_type && $rs.url_type == "pdf")
@@ -109,7 +88,7 @@
                         #end
                     #else
                         #if($rs.docuuid && $rs.docuuid.length() > 0)
-                            #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid#if($detailUseParamPlugid)&plugid=$rs.plugid#end  ")
+                            #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid#if($detailUseParamPlugid)&plugid=$rs.plugid#end")
                         #elseif($rs.docid && $rs.docid.length() > 0)
                             #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid")
                         #end

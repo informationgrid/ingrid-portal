@@ -81,7 +81,7 @@ a.icon:hover {
   top: 0;
 }
 .button {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif !important;
   font-weight: bold;
   background-color: #871D33;
 }
@@ -147,7 +147,7 @@ header a.icon.is-selected {
   text-decoration: none;
 }
 .menu-tab-row .menu-tab .link-menu-tab {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif !important;
   font-weight: bold;
   color: #4A4A4A;
 }
@@ -191,7 +191,7 @@ header a.icon.is-selected {
   color: #FFFFFF;
 }
 .menu-sub-links .login_user {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif !important;
   color: #871D33;
 }
 .banner {
@@ -425,7 +425,7 @@ footer .footer .columns div {
   margin: 10px auto;
 }
 footer .footer .copyright span {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif !important;
   color: #4A4A4A;
 }
 footer .footer .logo {
@@ -767,8 +767,8 @@ header .menu-tab-row .menu-tab {
     text-align: left;
   }
   h4, .h4 {
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    margin-bottom: 0.65rem;
   }
 }
 @media print, screen and (max-width: 63.9375em) {
@@ -953,7 +953,7 @@ header .logo a .vertical-line {
   }
   header .logo a p {
     font-size: 24px;
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif !important;
     font-weight: bold;
     line-height: 26px;
     top: 0px;
@@ -968,6 +968,7 @@ header .logo a .vertical-line {
 .menu-main-links a, .header-menu a {
   font-family: Arial, sans-serif !important;
   color: #871D33;
+  font-weight: bold;
 }
 
 /* search simple */
@@ -1209,7 +1210,8 @@ footer .footer .logo a img{
 
 /* catalogue */
 .accordion-title {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif !important;
+  font-weight: bold !important;
   color: #871D33;
   background-color: #F6F6F6;
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
@@ -1226,6 +1228,10 @@ footer .footer .logo a img{
   color: #4a4a4a;
 }
 
+a.icon:hover span {
+  color: #B52743;
+}
+
 /* user administration */
 .boxed-table tbody tr:nth-child(even) {
   background-color: #fff6f6;
@@ -1238,9 +1244,6 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
 }
 .popup .headline, .button[disabled], .button[disabled]:hover {
   background-color: #871D33;
-}
-.form-element .input-check, .form-element .input-check:hover {
-  background-color: transparent;
 }
 
 /* error page */
@@ -1275,7 +1278,7 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
     background-color: #F6F6F6;
 }
 
-.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child {
+.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child, .search-filtered .table.table--lined--list table th:first-child {
     color: #871D33;
 }
 
@@ -1342,4 +1345,32 @@ footer .footer-buttons-bar .login-buttons .login-form {
 
 .teaser-data .helper, .teaser-data p {
   color: #4a4a4a;
+}
+
+body {
+  font-family: Arial, sans-serif !important;
+}
+
+.search-filtered .table table th:first-child {
+  font-family: Arial, sans-serif !important;
+  font-weight: bold !important;
+}
+
+.search-filtered .table:not(.table--lined) table tr th {
+  font-family: Arial, sans-serif !important;
+  font-weight: bold !important;
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-family: Arial, sans-serif !important;
+  font-weight: bold !important;
+}
+
+.slab-bold {
+  font-family: Arial, sans-serif !important;
+  font-weight: bold !important;
+}
+
+.form-element label {
+  font-family: Arial, sans-serif !important;
+  font-weight: bold !important;
 }

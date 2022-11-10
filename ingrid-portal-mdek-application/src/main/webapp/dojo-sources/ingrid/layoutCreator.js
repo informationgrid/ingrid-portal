@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -441,6 +441,7 @@ define([
                     name: additionalField.name,
                     style: "width:100%;"
                 });
+                if (additionalField.validator) inputWidget.validator = additionalField.validator;
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
 
@@ -848,16 +849,16 @@ define([
 
                 return uiElementSpan;
             },
-        
+
         addOutlinedSection: function(id, label, help, fields, options) {
             if (!options) options = {};
-            
+
             var outer = document.createElement("span");
             outer.id = "uiElementAdd" + id;
             domClass.add(outer, "outer");
             domClass.add(outer, "inputContainer");
             if (options.isMandatory) domClass.add(outer, "required");
-            
+
             var div = document.createElement("div");
 
             var labelElement = document.createElement("label");
@@ -872,14 +873,14 @@ define([
 
             var outlined = document.createElement("div");
             domClass.add(outlined, "outlined");
-            
+
             array.forEach(fields, function(field) {
                 outlined.appendChild(field);
             });
 
             var fill = construct.create("div", { 'class': 'fill'});
             outlined.appendChild(fill);
-            
+
             div.appendChild(labelWrapper);
             div.appendChild(outlined);
             outer.appendChild(div);

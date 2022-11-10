@@ -1,0 +1,22 @@
+## Set partner
+#set($partner = "bund")
+#if($rs.partnerKey)
+    #set($partners =  $rs.partnerKey.split(","))
+    #foreach($tmpPartner in $partners)
+        #if($tmpPartner.trim() != $partner)
+          #set($partner = $tmpPartner.trim())
+          #break
+        #end
+    #end
+#end
+
+#if(!$rs.is_address)
+    #if($showHitPartnerLogo)
+        <div class="teaser-logo-partner">
+            #if($rs.partnerKey != "all" && $partner != "bund")
+                #set($partnerTitleKey = "common.result.partner.${partner}")
+                <img src="/ingrid-portal-apps/images/partner/svg/${partner}.svg" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/>
+            #end
+        </div>
+    #end
+#end

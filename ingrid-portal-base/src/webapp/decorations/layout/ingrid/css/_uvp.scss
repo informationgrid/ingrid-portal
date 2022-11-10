@@ -1981,6 +1981,19 @@ footer {
       }
     }
   }
+  
+  .table.table--lined--list {
+    table {
+      table-layout: fixed;
+      display: block;
+      overflow-x: auto;
+    
+      tr th {
+        font-weight: normal;
+        font-family: "Roboto-Bold";
+      }
+    }
+  }
 
   .table.list {
 
