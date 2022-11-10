@@ -501,6 +501,11 @@ public class UtilsSearch {
         return values.toString();
     }
 
+    public static String[] getDetailValueList(IngridHit detail, String key) {
+        String values = getDetailValue(detail, key, null, true, 0);
+        return values.split(DETAIL_VALUES_SEPARATOR);
+    }
+
     /**
      * Returns all values stored with the passed key by filter duplicate values and returns them as one
      * String (concatenated with ", ").
