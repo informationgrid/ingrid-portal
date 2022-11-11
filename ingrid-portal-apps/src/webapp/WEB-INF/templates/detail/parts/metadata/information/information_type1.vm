@@ -34,4 +34,6 @@
     #renderTextListTable($MESSAGES.getString("t011_obj_geo_supplinfo.feature_type") $TOOL.getListOfValuesFromXPath($xPathInfo1MDFeatureCatalogueDescriptionFeatureTypes, "."))
 ## Herstellungsprozess
     #renderTextTable($MESSAGES.getString("t011_obj_geo.method") $TOOL.getValueFromXPath($xPathInfo1LIProcessStep))
+## Geometrie-Kontext
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_geometrie_context.vm")
 </div>

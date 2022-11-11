@@ -1,0 +1,61 @@
+## Geometrie-Kontext
+#set($nodelist = $TOOL.getNodeListFromXPath($xPathInfo1MD_GeometryContext))
+#set($size = $nodelist.getLength())
+#if($size > 0)
+<div class="table table--lined--sub ">
+    <h5>$MESSAGES.getString("search.detail.geometrics.context")</h5>
+    <table>
+    <thead>
+        <tr>
+            <th>$MESSAGES.getString("search.detail.geometrics.context.type")</th>
+            <th>$MESSAGES.getString("search.detail.geometrics.context.name")</th>
+            <th colspan="2">$MESSAGES.getString("search.detail.geometrics.context.description")</th>
+        </tr>
+    </thead>
+    <tbody>
+    #foreach($tmpNum in [1..$size])
+        <tr>
+        ## Main Info
+        #set($tmpXPath = "(${xPathInfo1MD_GeometryContext})[$tmpNum]")
+        #set($tmpNode = $TOOL.getNodeFromXPath($tmpXPath))
+        
+        ## Sub Info
+        #set($xPathInfo1MD_GeometryContext_features = "./igctx:geometricFeature/igctx:NominalFeature/igctx:featureAttributes/igctx:FeatureAttributes/igctx:attribute/igctx:RegularFeatureAttribute")
+        #set($subNodelist = $TOOL.getNodeListFromXPath("${xPathInfo1MD_GeometryContext_features}", $tmpNode))
+        #set($subSize = $subNodelist.getLength())
+        #set($rowSpan = $subSize + 2)
+        ## Name
+            <td class="rowspan" rowspan="$rowSpan">
+                $TOOL.getValueFromXPath("./igctx:geometryType/gco:CharacterString", "", $tmpNode)
+            </td>
+        ## Geometrie-Typ
+            <td class="rowspan" rowspan="$rowSpan">
+                $TOOL.getValueFromXPath("./igctx:geometricFeature/igctx:NominalFeature/igctx:featureName/gco:CharacterString", "", $tmpNode)
+            </td>
+        ## Beschreibung
+            <td colspan="4">
+                $TOOL.getValueFromXPath("./igctx:geometricFeature/igctx:NominalFeature/igctx:featureDescription/gco:CharacterString", "", $tmpNode)
+            </td>
+            #if($subSize > 0)
+        </tr>
+                <tr class="table--sub--header">
+                    <th>$MESSAGES.getString("search.detail.geometrics.context.feature.code")</th>
+                    <th colspan="3">$MESSAGES.getString("search.detail.geometrics.context.feature.description")</th>
+                </tr>
+                #foreach($tmpSubNum in [1..$subSize])
+                <tr class="table--sub--content">
+                    #set($tmpSubXPath = "(${tmpXPath}/${xPathInfo1MD_GeometryContext_features})[$tmpSubNum]")
+                    #set($tmpSubNode = $TOOL.getNodeFromXPath($tmpSubXPath))
+                    ## Code
+                    <td>$TOOL.getValueFromXPath("./igctx:attributeCode/gco:CharacterString", "", $tmpSubNode)</td>
+                    ## Beschreibung
+                    <td colspan="3">$TOOL.getValueFromXPath("./igctx:attributeDescription/gco:CharacterString", "", $tmpSubNode)</td>
+                </tr>
+                #end
+            #else
+        </tr>
+            #end
+    #end
+    </tbody>
+    </table>
+#end
