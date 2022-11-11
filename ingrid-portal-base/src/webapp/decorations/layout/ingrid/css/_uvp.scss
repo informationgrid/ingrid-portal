@@ -1993,7 +1993,25 @@ footer {
       }
     }
   }
-
+  .table.table--lined--sub {
+    .table--sub--header {
+      th {
+        color: $blue-prov;
+        border: 1px solid #FFFFFF;
+      }
+    }
+    .table--sub--content {
+      td {
+        border: 1px solid #FFFFFF;
+      }
+      td:first-child {
+        text-align: center;
+      }
+    }
+    .rowspan {
+      border-bottom: 1px solid #FFFFFF;
+    }
+  }
   .table.list {
 
     table {
