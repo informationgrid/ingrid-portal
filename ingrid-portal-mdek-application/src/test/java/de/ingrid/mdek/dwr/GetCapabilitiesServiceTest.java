@@ -561,7 +561,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WCS"));
         assertThat(result.getDataServiceType(), is(3));
-        assertThat(result.getVersions().get(0), is("1.0.0"));
+        assertThat(result.getVersions().get(0), is("OGC:WCS 1.0.0"));
         assertThat(result.getTitle(), is("deegree WCS"));
         assertThat(result.getDescription(), is("deegree WCS being OGC WCS 1.0.0 reference implementation"));
         
@@ -603,8 +603,8 @@ public class GetCapabilitiesServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WCS"));
         assertThat(result.getDataServiceType(), is(3));
-        assertThat(result.getVersions().get(0), is("1.0.0"));
-        assertThat(result.getVersions().get(1), is("1.1.2"));
+        assertThat(result.getVersions().get(0), is("OGC:WCS 1.0.0"));
+        assertThat(result.getVersions().get(1), is("OGC:WCS 1.1.2"));
         assertThat(result.getTitle(), is("CubeWerx Demonstation WCS"));
         assertThat(result.getDescription(), is("A demonstration server used to illustrate CubeWerx's compilance with the Web Coverage Service 1.1.0 implementation specification"));
         
@@ -646,9 +646,9 @@ public class GetCapabilitiesServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WCS"));
         assertThat(result.getDataServiceType(), is(3));
-        assertThat(result.getVersions().get(0), is("2.0.1"));
-        assertThat(result.getVersions().get(1), is("1.1.1"));
-        assertThat(result.getVersions().get(2), is("1.1.0"));
+        assertThat(result.getVersions().get(0), is("OGC:WCS 2.0.1"));
+        assertThat(result.getVersions().get(1), is("OGC:WCS 1.1.1"));
+        assertThat(result.getVersions().get(2), is("OGC:WCS 1.1.0"));
         assertThat(result.getTitle(), is("INSPIRE-WCS Digitales Geländemodell Gitterweite 200 m"));
         assertThat(result.getDescription(), is("INSPIRE Downloaddienst des Digitalen Geländemodell Gitterweite 200 m für dasGebiet der Bundesrepublik Deutschland.Zur einheitlichen Beschreibung des Reliefs des Gebietes der BundesrepublikDeutschland werden im Rahmen des ATKIS®-Projektes durch die deutscheLandesvermessung Digitale Geländemodelle (DGM) unterschiedlicher Qualitätsstufenaufgebaut.Das Digitale Geländemodell DGM200 beschreibt die Geländeformen der Erdoberflächedurch eine in einem regelmäßigen Gitter angeordnete, in Lage und Höhegeoreferenzierte Punktmenge. Die Gitterweite beträgt 200 m.Die Visualisierung des Reliefs erfolgt nach den Stilvorgaben von INSPIRE für dasThema Elevetaion."));
         

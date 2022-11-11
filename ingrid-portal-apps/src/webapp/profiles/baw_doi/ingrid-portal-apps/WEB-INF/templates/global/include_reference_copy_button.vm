@@ -42,7 +42,6 @@
     }
     if((hrefWin.length > 0 && hrefLin.length > 0) &&
      ((this.href !== hrefWin && this.href !== hrefLin) || this.href.indexOf('file:') == 0)) {
-      this.style.pointerEvents = 'none';
       addButton = true;
     }
     if(addButton) {

@@ -80,7 +80,7 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
         
         result.setTitle(xPathUtils.getString(doc, XPATH_EXP_WCS_TITLE));
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_WCS_ABSTRACT));
-        result.setVersions(getNodesContentAsList(doc, XPATH_EXP_WCS_VERSION));
+        result.setVersions(addOGCtoVersions(getNodesContentAsList(doc, XPATH_EXP_WCS_VERSION)));
         
         // Fees
         result.setFees(xPathUtils.getString(doc, XPATH_EXP_WCS_FEES));

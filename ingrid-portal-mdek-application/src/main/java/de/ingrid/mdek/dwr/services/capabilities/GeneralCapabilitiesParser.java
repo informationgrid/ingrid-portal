@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -271,6 +272,13 @@ public class GeneralCapabilitiesParser {
             }
         }
         return mappedVersionList;
+    }
+    
+    // TODO: should be mapped from a special codelist which only allows certain versions (this is for IGE-NG)
+    protected List<String> addOGCtoVersions(List<String> versions) {
+        return versions.stream()
+                .map(version -> "OGC:WCS " + version)
+                .collect(Collectors.toList());
     }
     
     protected List<UrlBean> getOnlineResources(Document doc, String xPath) {

@@ -112,6 +112,9 @@
           <action type="fix" dev="wemove" issue="4169">
             Messwerte-Client: Umbenennung LÜN gleitender 24-Mittelwert in PM1024
           </action>
+          <action type="fix" dev="wemove" issue="4364">
+            IGE: GetCapabilities-Assistent für WCS-Dienste - in serviceTypeVersion fehlt Präfix "OGC:WCS"
+          </action>
         </release>
 
         <release version="5.13.0" date="2022-07-22" description="Release 5.13.0">
