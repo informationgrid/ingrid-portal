@@ -500,24 +500,51 @@ function addLayerWKT(map, wkt, coords) {
   }
 }
 
-function addLayerBounds(map, coords) {
-  coords.forEach(function(coord) {
+function addLayerBounds(map, coords, inverted) {
+  if(inverted) {
+    var geojson = {
+      type: "Feature",
+      properties: {},
+      geometry: {
+        type: "Polygon",
+        coordinates: []
+      }
+    };
+    coords.forEach(function(coord) {
       var y1Coord = coord[2];
       var x1Coord = coord[1];
       var y2Coord = coord[4];
       var x2Coord = coord[3];
       if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
-          if(x1Coord === x2Coord && y1Coord === y2Coord) {
-              var marker = L.marker([y1Coord, x1Coord]);
-              marker.bindTooltip(coord[0], {direction: 'center'});
-              map.addLayer(marker);
-          } else {
-              var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
-              mapLayerBounds.bindTooltip(coord[0], {direction: 'center'});
-              map.addLayer(mapLayerBounds);
-          }
+        if(x1Coord === x2Coord && y1Coord === y2Coord) {
+        } else {
+          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
+          geojson.geometry.coordinates.push(mapLayerBounds.toGeoJSON().geometry.coordinates[0]);
+        }
       }
-  });
+    });
+    L.geoJson(geojson, {
+      invert: true
+    }).addTo(map);
+  } else {
+    coords.forEach(function(coord) {
+      var y1Coord = coord[2];
+      var x1Coord = coord[1];
+      var y2Coord = coord[4];
+      var x2Coord = coord[3];
+      if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
+        if(x1Coord === x2Coord && y1Coord === y2Coord) {
+          var marker = L.marker([y1Coord, x1Coord]);
+          marker.bindTooltip(coord[0], {direction: 'center'});
+          map.addLayer(marker);
+        } else {
+          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
+          mapLayerBounds.bindTooltip(coord[0], {direction: 'center'});
+          map.addLayer(mapLayerBounds);
+        }
+      }
+    });
+  }
 }
 
 function updateURLParamReload(key, value) {
