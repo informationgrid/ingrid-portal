@@ -394,8 +394,10 @@ define([
 
         newFieldsToDirtyCheck.push("supportContractNumber");
         newFieldsToDirtyCheck.push("supportContractDate");
+        newFieldsToDirtyCheck.push("supportContractNotes");
         additionalFields.push(registry.byId("supportContractNumber"));
         additionalFields.push(registry.byId("supportContractDate"));
+        additionalFields.push(registry.byId("supportContractNotes"));
         
     }
     
