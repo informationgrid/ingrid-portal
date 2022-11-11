@@ -431,6 +431,7 @@ define([
             startTime.attr("value", value);
         });
         on(endTime, "change", function(value) {
+            if (!value) return;
             var time = value.toTimeString().split(":");
             endDate.value.setHours(+time[0], +time[1], +time[2].split(" ")[0]);
             endDate.set("value", endDate.value)
