@@ -169,6 +169,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent"): "");
         context.put("mapParamLayer", request.getParameter("layer") != null ? request.getParameter("layer"): "");
 
+        context.put( "leafletBboxInverted", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_INVERTED));
         context.put("detailUseParamPlugid", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID));
 
         // add request language, used to localize the map client

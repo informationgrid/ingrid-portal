@@ -284,6 +284,7 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS = "portal.mapclient.leaflet.bg.layer.wms";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION = "portal.mapclient.leaflet.bg.layer.attribution";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY = "portal.mapclient.leaflet.bg.layer.opacity";
+    public static final String PORTAL_MAPCLIENT_LEAFLET_BBOX_INVERTED = "portal.mapclient.leaflet.bbox.inverted";
 
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN = "portal.mapclient.uvp.category.dev.plan";
 
