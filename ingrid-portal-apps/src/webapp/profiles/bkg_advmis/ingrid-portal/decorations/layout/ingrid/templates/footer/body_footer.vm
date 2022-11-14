@@ -1,5 +1,8 @@
 #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
 <footer id="footer">
+    <div class="footer-buttons-bar show-for-medium hide-for-print">
+        #parse("/decorations/layout/ingrid/templates/footer/body_footer_up.vm")
+    </div>
     <div id="navFunctionsWrapper" class="row">
       <div class="medium-7 columns">
         <h2>Diese Seite</h2>
@@ -44,5 +47,6 @@
         </div>
       </div>
     </div>
+    #parse("/decorations/layout/ingrid/templates/footer/body_footer_up_link.vm")
 </footer>
 #end
