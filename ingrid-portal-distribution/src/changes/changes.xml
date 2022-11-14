@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+          <action type="add" dev="wemove" issue="4484">
+            Portal: Anzeige der räumlichen Ausdehnung ändern
+          </action>
           <action type="add" dev="wemove" issue="4366">
             Portal: Geometriekontext-Attribute im UP sichtbar machen
           </action>
