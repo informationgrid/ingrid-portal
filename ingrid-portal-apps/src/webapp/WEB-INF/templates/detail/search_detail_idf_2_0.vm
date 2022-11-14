@@ -718,10 +718,10 @@
     #end
 #end
 
-#macro (renderTableAsList $title $entry)
+#macro (renderTableAsList $title $entry $hideTitle)
     #if($tool.hasContent($entry.get("body")))
-        <div class="table table--lined--list">
-            #if($entry.title)
+        <div class="table #if($hideTitle) table--lined #else table--lined--list #end">
+            #if(!$hideTitle && $entry.title)
                 <h5>$entry.title</h5>
             #end
             <table>

@@ -173,6 +173,7 @@
 ## Fachinformationen
 #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
 #set($checkOtherInformation = false)
+#set($hideResolutionTitle = false)
 
 #### Type 1
 #### Fachliche Grundlage
