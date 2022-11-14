@@ -21,14 +21,14 @@
     #set($xPathMeasurementInfoMeasurementDepth = "./gmd:identificationInfo/*/measurementInfo/MeasurementDepth")
     #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMeasurementDepth))
 ## Gemittelter Wasserstand, auf den sich die Messwerte beziehen
-    #set($xPathMeasurementInfoMeanWaterLevel = "./gmd:identificationInfo/*/measurementInfo/MeanWaterLevel/meanWaterLevel")
+    #set($xPathMeasurementInfoMeanWaterLevel = "./gmd:identificationInfo/*/measurementInfo/MeanWaterLevel")
     #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMeanWaterLevel))
 ## Pegelnullpunkt
-    #set($xPathMeasurementInfoGaugeDatum = "./gmd:identificationInfo/*/measurementInfo/GaugeDatum/gaugeDatum")
+    #set($xPathMeasurementInfoGaugeDatum = "./gmd:identificationInfo/*/measurementInfo/GaugeDatum")
     #set($add = $xPathListInformationType1.add($xPathMeasurementInfoGaugeDatum))
 ## Messgerät
-    #set($xPathMeasurementInfoMeasurementDevice = "./gmd:identificationInfo/*/measurementInfo/MeasurementDevice/measurementDevice")
+    #set($xPathMeasurementInfoMeasurementDevice = "./gmd:identificationInfo/*/measurementInfo/MeasurementDevice")
     #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMeasurementDevice))
 ## Zielparameter und -Größen
-    #set($xPathMeasurementInfoMeasuredQuantities = "./gmd:identificationInfo/*/measurementInfo/MeasuredQuantities/measuredQuantities")
+    #set($xPathMeasurementInfoMeasuredQuantities = "./gmd:identificationInfo/*/measurementInfo/MeasuredQuantities")
     #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMeasuredQuantities))
