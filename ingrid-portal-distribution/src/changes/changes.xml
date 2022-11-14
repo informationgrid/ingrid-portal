@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+          <action type="add" dev="wemove" issue="4504">
+            Portal: Button "nach oben"
+          </action>
           <action type="add" dev="wemove" issue="4216">
             Portal: Detailanzeige - Bodenauflösung - alle (metrischen) Einheiten ermöglichen
           </action>

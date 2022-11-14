@@ -1066,3 +1066,9 @@ a.icon:focus {
 header .logo img {
   width: 90%;
 }
+
+.button.social:hover {
+  background-color: #333333 !important;
+  color: #FFFFFF !important;
+  border: 1px solid transparent;
+}

@@ -1085,3 +1085,9 @@ header .logo img {
     background-size: contain;
   }
 }
+
+.button.social:hover {
+  background-color: #333333 !important;
+  color: #FFFFFF !important;
+  border: 1px solid transparent;
+}
