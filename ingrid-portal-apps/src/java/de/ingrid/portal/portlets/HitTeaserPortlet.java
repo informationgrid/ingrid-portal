@@ -82,7 +82,8 @@ public class HitTeaserPortlet extends GenericVelocityPortlet {
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
         context.put( "leafletBgLayerOpacity", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY));
         context.put( "leafletBboxInverted", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_INVERTED));
-
+        context.put( "leafletBboxColor", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_COLOR));
+        
         context.put("detailUseParamPlugid", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID));
 
         String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);

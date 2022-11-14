@@ -434,7 +434,7 @@ function getQueryStringParameter(key) {
 
 }
 
-function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
+function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, inverted) {
   var promises = [];
   ids.forEach(function(id){
     var request =  $.ajax({
@@ -474,42 +474,35 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
         map.spin(false);
       } else {
         if(wkt) {
-          addLayerWKT(map, wkt, coords);
+          addLayerWKT(map, wkt, coords, bboxColor, inverted);
         } else if (coords) {
-          addLayerBounds(map, coords);
+          addLayerBounds(map, coords, bboxColor, inverted);
         }
         map.spin(false);
       }
     });
   } else {
     if(wkt) {
-      addLayerWKT(map, wkt, coords);
+      addLayerWKT(map, wkt, coords, bboxColor, inverted);
     } else if (coords) {
-      addLayerBounds(map, coords);
+      addLayerBounds(map, coords, bboxColor, inverted);
     }
   }
 }
 
-function addLayerWKT(map, wkt, coords) {
+function addLayerWKT(map, wkt, coords, bboxColor, inverted) {
   var features = L.geoJSON(JSON.parse(wkt));
   if(features) {
       features.addTo(map);
       map.fitBounds(features.getBounds());
   } else {
-      addLayerBounds(map, coords);
+      addLayerBounds(map, coords, bboxColor, inverted);
   }
 }
 
-function addLayerBounds(map, coords, inverted) {
+function addLayerBounds(map, coords, bboxColor, inverted) {
   if(inverted) {
-    var geojson = {
-      type: "Feature",
-      properties: {},
-      geometry: {
-        type: "Polygon",
-        coordinates: []
-      }
-    };
+    var geojson = [];
     coords.forEach(function(coord) {
       var y1Coord = coord[2];
       var x1Coord = coord[1];
@@ -518,13 +511,14 @@ function addLayerBounds(map, coords, inverted) {
       if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
         if(x1Coord === x2Coord && y1Coord === y2Coord) {
         } else {
-          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
-          geojson.geometry.coordinates.push(mapLayerBounds.toGeoJSON().geometry.coordinates[0]);
+          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {});
+          geojson.push(mapLayerBounds.toGeoJSON());
         }
       }
     });
     L.geoJson(geojson, {
-      invert: true
+      invert: true,
+      color: bboxColor
     }).addTo(map);
   } else {
     coords.forEach(function(coord) {
@@ -538,7 +532,7 @@ function addLayerBounds(map, coords, inverted) {
           marker.bindTooltip(coord[0], {direction: 'center'});
           map.addLayer(marker);
         } else {
-          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
+          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: bboxColor, weight: 1});
           mapLayerBounds.bindTooltip(coord[0], {direction: 'center'});
           map.addLayer(mapLayerBounds);
         }
