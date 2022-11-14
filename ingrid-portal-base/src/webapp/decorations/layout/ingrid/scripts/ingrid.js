@@ -434,7 +434,7 @@ function getQueryStringParameter(key) {
 
 }
 
-function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, inverted) {
+function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, bboxFillOpacity, inverted) {
   var promises = [];
   ids.forEach(function(id){
     var request =  $.ajax({
@@ -474,33 +474,33 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, inverte
         map.spin(false);
       } else {
         if(wkt) {
-          addLayerWKT(map, wkt, coords, bboxColor, inverted);
+          addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted);
         } else if (coords) {
-          addLayerBounds(map, coords, bboxColor, inverted);
+          addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted);
         }
         map.spin(false);
       }
     });
   } else {
     if(wkt) {
-      addLayerWKT(map, wkt, coords, bboxColor, inverted);
+      addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted);
     } else if (coords) {
-      addLayerBounds(map, coords, bboxColor, inverted);
+      addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted);
     }
   }
 }
 
-function addLayerWKT(map, wkt, coords, bboxColor, inverted) {
+function addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted) {
   var features = L.geoJSON(JSON.parse(wkt));
   if(features) {
       features.addTo(map);
       map.fitBounds(features.getBounds());
   } else {
-      addLayerBounds(map, coords, bboxColor, inverted);
+      addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted);
   }
 }
 
-function addLayerBounds(map, coords, bboxColor, inverted) {
+function addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted) {
   if(inverted) {
     var geojson = [];
     coords.forEach(function(coord) {
@@ -518,7 +518,9 @@ function addLayerBounds(map, coords, bboxColor, inverted) {
     });
     L.geoJson(geojson, {
       invert: true,
-      color: bboxColor
+      color: bboxColor,
+      fillOpacity: bboxFillOpacity,
+      weight: 1
     }).addTo(map);
   } else {
     coords.forEach(function(coord) {
