@@ -48,6 +48,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import de.ingrid.utils.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
@@ -286,6 +287,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String testIDF = request.getParameter("testIDF");
             String cswURL = request.getParameter("cswURL");
             String docUuid = request.getParameter("docuuid");
+            String oac = request.getParameter("oac");
+            if (oac == null) {
+                // be lenient here, we don't care about capitalization :)
+                oac = request.getParameter("OAC");
+            }
             String iplugId = request.getParameter("plugid");
             if(iplugId != null) {
                 iplugId = iplugId.toLowerCase();
@@ -344,6 +350,22 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     }
                 } else {
                     hit = hits.getHits()[0];
+                }
+            }
+            // if no UUID is set, but an OAC is set, retrieve the document and the UUID from there
+            else if (oac != null && oac.length() > 0) {
+                // remove possible invalid characters
+                oac = UtilsQueryString.normalizeUuid(oac);
+                String qStr = "oac:\"" + oac + "\" ranking:score";
+
+                IngridQuery q = QueryStringParser.parse(qStr);
+                IngridHits hits = ibus.searchAndDetail(q, 1, 1, 0, 3000, PortalConfig.getInstance().getStringArray(PortalConfig.QUERY_DETAIL_REQUESTED_FIELDS));
+
+                if (hits.length() == 0) {
+                    log.error("No record found for document oac:" + oac.trim());
+                } else {
+                    hit = hits.getHits()[0];
+                    docUuid = hit.getString(IngridDocument.DOCUMENT_ID);
                 }
             } else {
                 String documentId = request.getParameter("docid");
