@@ -40,7 +40,7 @@ define([
         defaultActive: true,
 
         run: function () {
-            var sourceIdElement = "uiElementN008"; // Freier Raumbezug
+            var sourceIdElement = "uiElementN009"; // Freier Raumbezug
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
