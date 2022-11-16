@@ -246,18 +246,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>datatype:address</query>
                 <id>address</id>
             </facet>
-        <!-- Fachdatenbanken -->
-            <facet>
-                <name>searchResult.facete.datatype.fis</name>
-                <query>datatype:fis</query>
-                <id>fis</id>
-            </facet>
-        <!-- Weitere Daten -->
-            <facet>
-                <name>searchResult.facete.datatype.other</name>
-                <query>datatype:dsc_other</query>
-                <id>other</id>
-            </facet>
         </facets>
     </facet>
     <!-- Aktualität (Metadaten)-->
