@@ -35,10 +35,10 @@
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="LUBW, das nieders&auml;chsische Umweltportal, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
-        <meta name="author" content="&copy; Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
+        <meta name="description" content="LUBW, die Landesanstalt f&uuml;r Umwelt Baden-W&uuml;rttemberg, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="author" content="&copy; LUBW - Landesanstalt f&uuml;r Umwelt Baden-W&uuml;rttemberg" />
         <meta name="keywords" lang="de" content="LUBW, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
-        <meta name="copyright" content="&copy; Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
+        <meta name="copyright" content="&copy; LUBW - Landesanstalt f&uuml;r Umwelt Baden-W&uuml;rttemberg" />
         <meta name="robots" content="index,follow" />
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/main.css" />
