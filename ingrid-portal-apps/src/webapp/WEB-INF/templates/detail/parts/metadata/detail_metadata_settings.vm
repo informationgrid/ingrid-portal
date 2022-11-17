@@ -182,6 +182,9 @@
     "${xPathUseAccessConstraints}/gmd:MD_RestrictionCode/@codeListValue"
 ])
 
+## Software
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_software.vm")
+
 ## Fachinformationen
 #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
 #set($checkOtherInformation = false)
