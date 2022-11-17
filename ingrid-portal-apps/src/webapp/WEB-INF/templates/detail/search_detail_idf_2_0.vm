@@ -646,12 +646,12 @@
     #end
 #end
 
-#macro (renderTableSymbols $entry $symbolColumn $symbolList $increaseColumns)
-    #renderTableTitle("" $entry "" $symbolColumn $symbolList $increaseColumns)
+#macro (renderTableSymbols $entry $symbolColumn $symbolList $increaseColumns $additionalRows $headCenter)
+    #renderTableTitle("" $entry "" $symbolColumn $symbolList $increaseColumns $additionalRows $headCenter)
 #end
 
 
-#macro (renderTableTitle $title $entry $space $symbolColumn $symbolList $increaseColumns)
+#macro (renderTableTitle $title $entry $space $symbolColumn $symbolList $increaseColumns $additionalRows $setCenter)
     #if($tool.hasContent($entry.get("body")))
         <div class="table">
             #if($entry.title)
@@ -669,7 +669,7 @@
                                 #set($isIncreaseColumn = true)
                             #end
                         #end
-                        <th #if($isIncreaseColumn)class="column--increase"#end>$th</th>
+                        <th #if($isIncreaseColumn)class="column--increase"#end #if($setCenter) style="text-align:center;"#end>$th</th>
                         #set($num = $num + 1)
                     #end
                     </tr>
@@ -687,8 +687,8 @@
                             <td>$td</td>
                         #end
                     #else
-                        #if($symbolColumn == $num)
-                        <td class="symbol">
+                        #if($symbolColumn.indexOf($num) > -1)
+                        <td class="symbol" #if($setCenter) style="text-align:center;"#end>
                             #if($symbolList)
                                 #foreach($symbolEntry in $symbolList)
                                     #if($symbolEntry.value == $td)
@@ -708,6 +708,18 @@
                     #set($num = $num + 1)
                 #end
                 </tr>
+            #end
+            #foreach($additionalRow in $additionalRows)
+                #if($additionalRow)
+                    #set($additionalRowValue = $TOOL.getValueFromXPath($additionalRow.xpath))
+                    #if($additionalRowValue)
+                    <tr>
+                        <th>$additionalRow.title</th>
+                        #set($colspan = $entry.head.size() - 1)
+                        <td colspan="$colspan">$TOOL.getValueFromXPath($additionalRow.xpath)</td>
+                    </tr>
+                    #end
+                #end
             #end
             </table>
         </div>
@@ -737,7 +749,11 @@
                     #end
                         <td>
                     #foreach($td in $body)
+                        #if($td)
                         <p>$td</p>
+                        #else
+                        <p>-</p>
+                        #end
                     #end
                         </td>
                     </tr>

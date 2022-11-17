@@ -757,7 +757,7 @@ public class DetailPartPreparer {
 
                 for (int j=0; j<headXpathExpressions.size();j++){
                     String headXpathExpression = headXpathExpressions.get(j);
-                    if(xPathUtils.nodeExists(node, headXpathExpression)){
+                    if(headXpathExpression != null && !headXpathExpression.isEmpty() && xPathUtils.nodeExists(node, headXpathExpression)){
                         NodeList valueNodeList = xPathUtils.getNodeList(node, headXpathExpression);
                         StringBuilder valueConcated = new StringBuilder("");
                         for (int k=0; k<valueNodeList.getLength();k++) {
@@ -765,7 +765,7 @@ public class DetailPartPreparer {
                                 valueConcated.append(";");
                             }
                             String value = valueNodeList.item( k ).getTextContent().trim();
-                            if(headXpathExpression.endsWith("date")){
+                            if(headXpathExpression.endsWith("date") || headXpathExpression.endsWith("datum")){
                                 value = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
                                 valueConcated.append(value);
                                 break;

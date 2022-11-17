@@ -46,10 +46,56 @@
     "${xPathBAWDataQuality}/${xPathBawUnit}",
     "${xPathBAWDataQuality}/${xPathBawValue}"
 ])
+
 #if($TOOL.aNodeOfListExist($xPathListInformationTypeBawMis))
     #set($checkOtherInformation = true)
 #end
 
+## Einsatzzweck
+#set($xPathInfo6Einsatzzweck = "./gmd:identificationInfo/*/software/einsatzzweck")
+## Nutzerkreis
+#set($xPathInfo6Nutzerkreis = "./gmd:identificationInfo/*/software/Nutzerkreis")
+## Produktiver Einsatz
+#set($xPathInfo6ProduktiverEinsatz = "./gmd:identificationInfo/*/software/ProduktiverEinsatz")
+## Ergänzungsmodul zu Marktsoftware
+#set($xPathInfo6ErgaenzungsModul = "./gmd:identificationInfo/*/software/ErgaenzungsModul")
+## Betriebssystem
+#set($xPathInfo6Betriebssystem = "./gmd:identificationInfo/*/software/Betriebssystem")
+## Programmiersprache
+#set($xPathInfo6Programmiersprache = "./gmd:identificationInfo/*/software/Programmiersprache/programmiersprache")
+## Entwicklungsumgebung
+#set($xPathInfo6Entwicklungsumgebung = "./gmd:identificationInfo/*/software/Entwicklungsumgebung/entwicklungsumgebung")
+## Bibliotheken
+#set($xPathInfo6Bibliotheken = "./gmd:identificationInfo/*/software/Bibliotheken")
+## Erstellungsvertrag
+#set($xPathInfo6Erstellungsvertrag = "./gmd:identificationInfo/*/software/Erstellungsvertrag")
+## Supportvertrag
+#set($xPathInfo6Supportvertrag = "./gmd:identificationInfo/*/software/Supportvertrag")
+## Installationsort
+#set($xPathInfo6Installationsort = "./gmd:identificationInfo/*/software/Installationsort")
+## Installation über
+#set($xPathInfo6InstallationsMethode = "./gmd:identificationInfo/*/software/installationsMethode")
+## BAW-Rechte an den Quellen
+#set($xPathInfo6QuellCodeRechte = "./gmd:identificationInfo/*/software/QuellCodeRechte")
+## Rechte bei Nutzung der SW durch Dritte
+#set($xPathInfo6NutzungsRechte = "./gmd:identificationInfo/*/software/NutzungsRechte")
+
+#set($xPathListInformationType6 = [
+    $xPathInfo6Einsatzzweck,
+    $xPathInfo6Nutzerkreis,
+    $xPathInfo6ProduktiverEinsatz,
+    $xPathInfo6ErgaenzungsModul,
+    $xPathInfo6Betriebssystem,
+    $xPathInfo6Programmiersprache,
+    $xPathInfo6Entwicklungsumgebung,
+    $xPathInfo6Bibliotheken,
+    $xPathInfo6Erstellungsvertrag,
+    $xPathInfo6Supportvertrag,
+    $xPathInfo6Installationsort,
+    $xPathInfo6InstallationsMethode,
+    $xPathInfo6QuellCodeRechte,
+    $xPathInfo6NutzungsRechte
+])
 ## BwaStr location
 #set($bwastrIds = $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
 #set($bwastr = [])

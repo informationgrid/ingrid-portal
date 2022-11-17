@@ -19,7 +19,7 @@
     ## Sprache des Datensatzes
         #renderTextListTable($MESSAGES.getString("t01_object.data_language") $TOOL.getLanguageValues($TOOL.getListOfValuesFromXPath($xPathAdditionalInfoIdentificationInfoLanguageCode,".")))
     ## Konformität
-        #renderTableSymbols ($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport) 2 $tmpConformityDataSymbols [0])
+        #renderTableSymbols ($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport) [2] $tmpConformityDataSymbols [0])
     ## Datenformat
         #renderTable($TOOL.getAvailability($xPathAdditionalInfoMDDistribution))
     ## Medien
