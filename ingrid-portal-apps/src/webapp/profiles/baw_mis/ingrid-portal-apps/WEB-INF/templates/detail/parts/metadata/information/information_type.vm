@@ -72,13 +72,15 @@
     ## Erstellungsvertrag
         #set($tableHead = [])
         #set($tableBody = [])
-        #if($TOOL.nodeExist("${xPathInfo6Erstellungsvertrag}/vertragsNummer"))
+        #set($tmpXPath = "${xPathInfo6Erstellungsvertrag}/vertragsNummer")
+        #if($TOOL.nodeExist($tmpXPath))
             #set($add = $tableHead.add("Vertragsnr"))
-            #set($add = $tableBody.add([$TOOL.getValueFromXPath("${xPathInfo6Erstellungsvertrag}/vertragsNummer", ".")]))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
         #end
-        #if($TOOL.nodeExist("${xPathInfo6Erstellungsvertrag}/datum"))
+        #set($tmpXPath = "${xPathInfo6Erstellungsvertrag}/datum")
+        #if($TOOL.nodeExist($tmpXPath))
             #set($add = $tableHead.add("Datum"))
-            #set($add = $tableBody.add([$TOOL.convertDateString($TOOL.getValueFromXPath("${xPathInfo6Erstellungsvertrag}/datum", "."))]))
+            #set($add = $tableBody.add([$TOOL.convertDateString($TOOL.getValueFromXPath($tmpXPath, "."))]))
         #end
         #if($tableHead.size() > 0)
             #set($tmp = {})
@@ -90,17 +92,20 @@
     ## Supportvertrag
         #set($tableHead = [])
         #set($tableBody = [])
-        #if($TOOL.nodeExist("${xPathInfo6Supportvertrag}/vertragsNummer"))
+        #set($tmpXPath = "${xPathInfo6Supportvertrag}/vertragsNummer")
+        #if($TOOL.nodeExist($tmpXPath))
             #set($add = $tableHead.add("Vertragsnr"))
-            #set($add = $tableBody.add([$TOOL.getValueFromXPath("${xPathInfo6Supportvertrag}/vertragsNummer", ".")]))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
         #end
-        #if($TOOL.nodeExist("${xPathInfo6Supportvertrag}/datum"))
+        #set($tmpXPath = "${xPathInfo6Supportvertrag}/datum")
+        #if($TOOL.nodeExist($tmpXPath))
             #set($add = $tableHead.add("Datum"))
-            #set($add = $tableBody.add([$TOOL.convertDateString($TOOL.getValueFromXPath("${xPathInfo6Supportvertrag}/datum", "."))]))
+            #set($add = $tableBody.add([$TOOL.convertDateString($TOOL.getValueFromXPath($tmpXPath, "."))]))
         #end
-        #if($TOOL.nodeExist("${xPathInfo6Supportvertrag}/anmerkungen"))
+        #set($tmpXPath = "${xPathInfo6Supportvertrag}/anmerkungen")
+        #if($TOOL.nodeExist($tmpXPath))
             #set($add = $tableHead.add("Anmerkungen"))
-            #set($add = $tableBody.add([$TOOL.getValueFromXPath("${xPathInfo6Supportvertrag}/anmerkungen", ".")]))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
         #end
         #if($tableHead.size() > 0)
             #set($tmp = {})
@@ -112,17 +117,30 @@
     ## Installationsort
         #set($tableHead = [])
         #set($tableBody = [])
-        #if($TOOL.nodeExist("${xPathInfo6Installationsort}/lokal"))
+        #set($tmpXPath = "${xPathInfo6Installationsort}/lokal")
+        #if($TOOL.nodeExist($tmpXPath))
             #set($add = $tableHead.add("Lokal"))
-            #set($add = $tableBody.add([$TOOL.getValueFromXPath("${xPathInfo6Installationsort}/lokal", ".")]))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
         #end
-        #if($TOOL.nodeExist("${xPathInfo6Installationsort}/HLR/hlrName"))
+        #set($tmpXPath = "${xPathInfo6Installationsort}/HLR/hlr")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("HLR"))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
+        #end
+        #set($tmpXPath = "${xPathInfo6Installationsort}/HLR/hlrName")
+        #if($TOOL.nodeExist($tmpXPath))
             #set($add = $tableHead.add("Name des HLRs"))
-            #set($add = $tableBody.add($TOOL.getListOfValuesFromXPath("${xPathInfo6Installationsort}/HLR/hlrName", ".")))
+            #set($add = $tableBody.add($TOOL.getListOfValuesFromXPath($tmpXPath, ".")))
         #end
-        #if($TOOL.nodeExist("${xPathInfo6Installationsort}/Server/servername"))
+        #set($tmpXPath = "${xPathInfo6Installationsort}/Server/server")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Server"))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
+        #end
+        #set($tmpXPath = "${xPathInfo6Installationsort}/Server/servername")
+        #if($TOOL.nodeExist($tmpXPath))
             #set($add = $tableHead.add("Servername"))
-            #set($add = $tableBody.add($TOOL.getListOfValuesFromXPath("${xPathInfo6Installationsort}/Server/servername", ".")))
+            #set($add = $tableBody.add($TOOL.getListOfValuesFromXPath($tmpXPath, ".")))
         #end
         #if($tableHead.size() > 0)
             #set($tmp = {})
@@ -132,10 +150,6 @@
             #renderTableAsList("" $tmp)
         #end
     ## Installation über
-        #set($xPathInfo6InstallationsMethode = "./software/installationsMethode")
-    ## BAW-Rechte an den Quellen
-        #set($xPathInfo6QuellCodeRechte = "./software/QuellCodeRechte")
-    ## Rechte bei Nutzung der SW durch Dritte
-        #set($xPathInfo6NutzungsRechte = "./software/NutzungsRechte")
+        #renderTextTable("Installation &uuml;ber" $TOOL.getValueFromXPath($xPathInfo6InstallationsMethode))
     </div>
 #end
