@@ -35,7 +35,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-geo</artifactId>
-      <version>5.11.0</version>
+      <version>5.15.0.3324-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -185,7 +185,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-client</artifactId>
-      <version>3.6.2</version>
+      <version>5.15.0.3324-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>net.sf.ehcache</groupId>
@@ -196,8 +196,8 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication</artifactId>
-      <version>5.11.0</version>
-    </dependency>
+      <version>5.15.0.3324-SNAPSHOT</version>
+    </dependency><!--
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication-authentication</artifactId>
@@ -208,7 +208,7 @@
           <artifactId>log4j</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
@@ -315,9 +315,9 @@
       <version>2.1.0</version>
     </dependency>
     <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <version>5.0.0</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
     </dependency>
     <dependency>
       <groupId>jakarta.xml.bind</groupId>

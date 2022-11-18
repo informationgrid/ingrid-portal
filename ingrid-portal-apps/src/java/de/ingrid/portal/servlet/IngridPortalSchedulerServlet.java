@@ -22,9 +22,9 @@
  */
 package de.ingrid.portal.servlet;
 
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;

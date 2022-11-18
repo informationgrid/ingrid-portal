@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import jakarta.servlet.jsp.jstl.core.Config;
+import javax.servlet.jsp.jstl.core.Config;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
