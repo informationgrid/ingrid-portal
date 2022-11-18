@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.14.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.14.2">
+          <action type="update" dev="wemove" issue="4502">
+            BKG-MIS - Neustart des Docker-Container verursacht Löschung von Einstellung
+          </action>
           <action type="update" dev="wemove" issue="4498">
             Ministeriumsname aktualisieren
           </action>
