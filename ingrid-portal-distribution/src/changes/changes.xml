@@ -11,7 +11,7 @@
             RLP: Deaktivierung von Facetten in der Suche
           </action>
           <action type="update" dev="wemove" issue="4502">
-            BKG-MIS - Neustart des Docker-Container verursacht Löschung von Einstellung
+            Portal: Neustart des Docker-Container verursacht Löschung von Einstellung
           </action>
           <action type="update" dev="wemove" issue="4498">
             Ministeriumsname aktualisieren
