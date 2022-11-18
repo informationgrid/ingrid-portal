@@ -262,7 +262,7 @@ public abstract class ContentPortlet extends GenericVelocityPortlet {
      */
     protected boolean doViewNew(RenderRequest request) {
         try {
-            Object[] newEntity = { dbEntityClass.newInstance() };
+            Object[] newEntity = { dbEntityClass.getDeclaredConstructor().newInstance() };
 
             Context context = getContext(request);
             context.put(CONTEXT_MODE, CONTEXTV_MODE_NEW);
@@ -663,7 +663,7 @@ public abstract class ContentPortlet extends GenericVelocityPortlet {
             longIds = (Long[]) Array.newInstance(Long.class, strIds.length);
             for (int i = 0; i < strIds.length; i++) {
                 try {
-                    longIds[i] = new Long(strIds[i]);
+                    longIds[i] = Long.valueOf(strIds[i]);
                 } catch (Exception ex) {
                     log.error("Error on convertIds." , ex);
                 }

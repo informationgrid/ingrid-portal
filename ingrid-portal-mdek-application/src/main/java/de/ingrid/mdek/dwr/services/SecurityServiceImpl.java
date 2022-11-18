@@ -26,7 +26,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import de.ingrid.mdek.persistence.db.model.RepoUser;
 import de.ingrid.mdek.userrepo.UserRepoManager;

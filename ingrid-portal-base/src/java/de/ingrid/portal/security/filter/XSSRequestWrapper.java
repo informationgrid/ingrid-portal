@@ -24,8 +24,8 @@ package de.ingrid.portal.security.filter;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 
 import de.ingrid.portal.security.util.XSSUtil;
  

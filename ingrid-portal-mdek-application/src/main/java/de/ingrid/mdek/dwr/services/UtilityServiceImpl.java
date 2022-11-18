@@ -26,7 +26,7 @@ import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import de.ingrid.mdek.SpringConfiguration;
 import org.apache.log4j.Logger;

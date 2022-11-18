@@ -79,7 +79,7 @@ public class IngridSessionPreferences extends HashMap {
         try {
             obj = get(key);
             if (obj == null) {
-                obj = cl.newInstance();
+                obj = cl.getDeclaredConstructor().newInstance();
                 put(key, obj);
             }
         } catch (Exception e) {

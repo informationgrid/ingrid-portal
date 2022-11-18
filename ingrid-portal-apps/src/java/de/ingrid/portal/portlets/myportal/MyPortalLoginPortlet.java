@@ -38,7 +38,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.jetspeed.CommonPortletServices;

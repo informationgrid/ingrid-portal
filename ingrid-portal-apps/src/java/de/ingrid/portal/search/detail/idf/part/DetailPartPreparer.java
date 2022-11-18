@@ -41,7 +41,7 @@ import org.w3c.dom.NodeList;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

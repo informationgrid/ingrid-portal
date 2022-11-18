@@ -25,7 +25,7 @@ package de.ingrid.mdek.upload;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.WebApplicationException;
+import jakarta.ws.rs.WebApplicationException;
 
 public class ValidationException extends WebApplicationException implements UploadException {
 

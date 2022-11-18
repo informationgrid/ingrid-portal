@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import de.ingrid.mdek.persistence.db.model.RepoUser;
 import de.ingrid.mdek.userrepo.UserRepoManager;

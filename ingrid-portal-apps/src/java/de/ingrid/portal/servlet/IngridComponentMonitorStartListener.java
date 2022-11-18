@@ -22,8 +22,8 @@
  */
 package de.ingrid.portal.servlet;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class IngridComponentMonitorStartListener implements ServletContextListen
     private static final Logger log = LoggerFactory.getLogger(IngridComponentMonitorStartListener.class);
 
     /**
-     * @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)
+     * @see jakarta.servlet.ServletContextListener#contextInitialized(jakarta.servlet.ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0) {
         // start ibus communication
@@ -65,7 +65,7 @@ public class IngridComponentMonitorStartListener implements ServletContextListen
     }
 
     /**
-     * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
+     * @see jakarta.servlet.ServletContextListener#contextDestroyed(jakarta.servlet.ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0) {
         // start monitor scheduler

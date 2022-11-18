@@ -22,7 +22,7 @@
  */
 package de.ingrid.mdek.upload.auth;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * AuthService defines the interface for classes, that handle authorization requests.

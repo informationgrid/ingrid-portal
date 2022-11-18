@@ -36,6 +36,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>3.0.2</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.portals.bridges</groupId>
       <artifactId>portals-bridges-velocity</artifactId>
     </dependency>

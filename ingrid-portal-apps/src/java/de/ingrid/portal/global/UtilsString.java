@@ -189,7 +189,7 @@ public class UtilsString {
                 String entity = s1.substring(i + 1, semi);
                 Integer iso;
                 if (entity.charAt(0) == '#') {
-                    iso = new Integer(entity.substring(1));
+                    iso = Integer.valueOf(entity.substring(1));
                 } else {
                     iso = (Integer) e2i.get(entity);
                 }

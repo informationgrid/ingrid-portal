@@ -25,7 +25,7 @@ package de.ingrid.mdek.handler;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.MdekUtils.MdekSysList;

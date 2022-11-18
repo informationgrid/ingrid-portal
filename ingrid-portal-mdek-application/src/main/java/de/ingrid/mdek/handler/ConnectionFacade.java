@@ -22,7 +22,7 @@
  */
 package de.ingrid.mdek.handler;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;

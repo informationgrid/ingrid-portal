@@ -135,13 +135,14 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.portals.jetspeed-2</groupId>
-      <artifactId>jetspeed-commons</artifactId>
-      <scope>provided</scope>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>3.0.2</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
+      <groupId>org.apache.portals.jetspeed-2</groupId>
+      <artifactId>jetspeed-commons</artifactId>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -157,14 +158,15 @@
         <version>4.35.1</version>
         <configuration>
           <activeRecipes>
-            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
+            <recipe>org.openrewrite.java.migrate.UpgradeJava17</recipe>
+            <recipe>org.openrewrite.java.migrate.JavaxMigrationToJakarta</recipe>
           </activeRecipes>
         </configuration>
         <dependencies>
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-testing-frameworks</artifactId>
-            <version>1.29.0</version>
+            <artifactId>rewrite-migrate-java</artifactId>
+            <version>1.13.0</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -211,6 +213,14 @@
           <defaultOriginUrl>https://github.com/informationgrid/ingrid-portal</defaultOriginUrl>
           <noDeploy>true</noDeploy>
           <autoVersionSubmodules>true</autoVersionSubmodules>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jdeprscan-plugin</artifactId>
+        <version>3.0.0-alpha-1</version>
+        <configuration>
+          <release>11</release>
         </configuration>
       </plugin>
     </plugins>

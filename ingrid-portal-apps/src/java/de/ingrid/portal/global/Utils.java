@@ -33,11 +33,11 @@ import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.*;
-import javax.mail.internet.*;
+import jakarta.activation.DataHandler;
+import jakarta.activation.DataSource;
+import jakarta.activation.FileDataSource;
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -143,7 +143,7 @@ public class Utils {
 	public static ActionForm addActionForm(PortletRequest request, String afKey, Class afClass, int scope) {
 		ActionForm af = null;
 		try {
-			af = (ActionForm) afClass.newInstance();
+			af = (ActionForm) afClass.getDeclaredConstructor().newInstance();
 			af.init();
 			request.getPortletSession().setAttribute(afKey, af, scope);
 		} catch (Exception ex) {
@@ -163,7 +163,7 @@ public class Utils {
 	 * Return <code>true</code> only if
 	 * <ul>
 	 * <li> <code>aEmailAddress</code> can successfully construct an
-	 * {@link javax.mail.internet.InternetAddress}
+	 * {@link jakarta.mail.internet.InternetAddress}
 	 * <li> when parsed with a "@" delimiter, <code>aEmailAddress</code>
 	 * contains two tokens which satisfy
 	 * {@link hirondelle.web4j.util.Util#textHasContent}.
