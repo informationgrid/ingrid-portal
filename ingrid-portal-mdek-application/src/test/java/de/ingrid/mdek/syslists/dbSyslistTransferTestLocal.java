@@ -31,8 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -53,7 +53,7 @@ public class dbSyslistTransferTestLocal {
 
     private HashMap codeListsFromFile;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
     }
 
@@ -62,7 +62,7 @@ public class dbSyslistTransferTestLocal {
      * and that the DB-one is used as the default (for reading)!
      */
     @Test
-    public void readFromDbAndWriteToFile() {
+    void readFromDbAndWriteToFile() {
         initializeAndWait();
 
         // read codelists from default source (db)

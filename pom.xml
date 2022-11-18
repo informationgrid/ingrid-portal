@@ -152,6 +152,23 @@
     <!-- <resources><resource><directory>src/main/resources</directory><excludes><exclude>*.xml</exclude><exclude>*.properties</exclude><exclude>*.bak</exclude></excludes></resource></resources>-->
     <plugins>
       <plugin>
+        <groupId>org.openrewrite.maven</groupId>
+        <artifactId>rewrite-maven-plugin</artifactId>
+        <version>4.35.1</version>
+        <configuration>
+          <activeRecipes>
+            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
+          </activeRecipes>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-testing-frameworks</artifactId>
+            <version>1.29.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>

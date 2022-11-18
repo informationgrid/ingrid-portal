@@ -217,6 +217,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.9.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>de.ingrid.mdek</groupId>
       <artifactId>ingrid-mdek-api</artifactId>
       <scope>provided</scope>
@@ -551,12 +557,6 @@
       <groupId>velocity</groupId>
       <artifactId>velocity</artifactId>
       <version>1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
