@@ -24,7 +24,7 @@ package de.ingrid.mdek.handler;
 
 import java.io.File;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

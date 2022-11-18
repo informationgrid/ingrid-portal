@@ -24,7 +24,7 @@ package de.ingrid.mdek.security;
 
 import java.util.List;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * This interface is used for implementations of user authentification used when

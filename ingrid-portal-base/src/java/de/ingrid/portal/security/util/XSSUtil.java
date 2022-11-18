@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.FilterConfig;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 

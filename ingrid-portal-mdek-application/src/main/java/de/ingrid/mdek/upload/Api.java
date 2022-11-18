@@ -28,7 +28,7 @@ import java.io.UncheckedIOException;
 import java.net.URI;
 import java.util.Arrays;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.FormParam;
