@@ -25,11 +25,12 @@ package de.ingrid.mdek.quartz.jobs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -60,7 +61,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.util.reflection.FieldSetter;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.quartz.JobExecutionContext;
@@ -72,6 +72,7 @@ import de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException;
 import de.ingrid.mdek.upload.storage.validate.impl.ExternalCommand;
 import de.ingrid.mdek.upload.storage.validate.impl.RemoteServiceVirusScanValidator;
 import de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator;
+import org.springframework.test.util.ReflectionTestUtils;
 
 public class UploadVirusScanJobTest extends BaseJobTest {
 
@@ -174,8 +175,8 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         super.setUp();
 
         MockitoAnnotations.initMocks(this);
-        new FieldSetter(localVirusScanValidator, localVirusScanValidator.getClass().getDeclaredField("scanner")).set(scanner);
-        new FieldSetter(remoteVirusScanValidator, remoteVirusScanValidator.getClass().getDeclaredField("serviceClient")).set(serviceClient);
+        ReflectionTestUtils.setField(localVirusScanValidator, "scanner", this.scanner);
+        ReflectionTestUtils.setField(remoteVirusScanValidator, "serviceClient", this.serviceClient);
 
         localVirusScanValidator.initialize(VIRUSSCAN_VALIDATOR_CONFIG_LOCAL);
         remoteVirusScanValidator.initialize(VIRUSSCAN_VALIDATOR_CONFIG_REMOTE);

@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -78,7 +78,7 @@ public class SNSUpdateJobGazetteerTest {
         when(connFacade.getCurrentPlugId()).thenReturn( "test-plug-mock" );
         when(connFacade.getMdekCallerCatalog()).thenReturn( callerCatalog );
         
-        when(context.get( Matchers.any() )).thenReturn(-1);
+        when(context.get( ArgumentMatchers.any() )).thenReturn(-1);
 
     }
     
@@ -192,7 +192,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         when(callerCatalog.getSpatialReferences( "test-plug-id", new SpatialReferenceType[] { SpatialReferenceType.GEO_THESAURUS }, "test-user-id" )).thenReturn( getTestSpatialReferenceMariental(null)  );
         
@@ -245,7 +245,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -299,7 +299,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -362,7 +362,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -431,7 +431,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -492,7 +492,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -548,7 +548,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -601,7 +601,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );

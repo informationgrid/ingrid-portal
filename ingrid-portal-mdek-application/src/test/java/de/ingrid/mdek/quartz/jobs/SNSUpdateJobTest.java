@@ -34,7 +34,7 @@ import java.util.Locale;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -79,7 +79,7 @@ public class SNSUpdateJobTest {
         when(connFacade.getCurrentPlugId()).thenReturn( "test-plug-mock" );
         when(connFacade.getMdekCallerCatalog()).thenReturn( callerCatalog );
         
-        when(context.get( Matchers.any() )).thenReturn(-1);
+        when(context.get( ArgumentMatchers.any() )).thenReturn(-1);
 
     }
     
@@ -151,7 +151,7 @@ public class SNSUpdateJobTest {
                 return null;
             }
         })
-                .when(callerCatalog).updateSearchTerms(Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+                .when(callerCatalog).updateSearchTerms(ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
 
         when(callerCatalog.getSearchTerms("test-plug-id", new SearchtermType[]{SearchtermType.UMTHES, SearchtermType.GEMET}, "test-user-id")).thenReturn(getTestSnsTerms()  );
         when(callerCatalog.getSearchTerms("test-plug-id", new SearchtermType[]{SearchtermType.FREI},                         "test-user-id")).thenReturn(getTestFreeTerms());
@@ -195,7 +195,7 @@ public class SNSUpdateJobTest {
                 return null;
             }
         })
-                .when(callerCatalog).updateSearchTerms(Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+                .when(callerCatalog).updateSearchTerms(ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
 
         // START Process
         snsUpdateJob.executeInternal(context);

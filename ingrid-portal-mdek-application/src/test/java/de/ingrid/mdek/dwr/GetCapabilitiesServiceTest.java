@@ -47,7 +47,7 @@ import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.dwr.services.CatalogService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -143,11 +143,11 @@ public class GetCapabilitiesServiceTest {
         when(connFacade.getMdekCallerQuery()).thenReturn( callerQuery );
         IngridDocument doc = new IngridDocument();
         doc.putBoolean( IJobRepository.JOB_INVOKE_SUCCESS, false );
-        when(callerQuery.queryHQLToMap( Matchers.contains("test-plug-mock"), Matchers.anyString(), Matchers.anyInt(), Matchers.anyString())).thenReturn( doc );
+        when(callerQuery.queryHQLToMap( ArgumentMatchers.contains("test-plug-mock"), ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.anyString())).thenReturn( doc );
     }
 
     /**
-     * Test method for {@link de.ingrid.mdek.dwr.services.GetCapabilitiesService#getCapabilitiesCSW(org.w3c.dom.Document)}.
+     * Test method for {@link de.ingrid.mdek.dwr.services.GetCapabilitiesService#getCapabilitiesData(org.w3c.dom.Document)}.
      * @throws IOException 
      * @throws SAXException 
      * @throws ParserConfigurationException 
