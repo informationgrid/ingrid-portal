@@ -51,7 +51,7 @@ define([
                     id: id,
                     name: message.get("ui.obj.lubw.oac.title"),
                     help: message.get("ui.obj.lubw.oac.help"),
-                    isMandatory: true,
+                    isMandatory: false,
                     visible: "show",
                     style: "width:100%" }),
                 sourceIdElement, "after"

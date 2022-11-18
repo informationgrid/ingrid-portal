@@ -50,7 +50,7 @@ define([
                     id: id,
                     name: message.get("ui.obj.lubw.environmentDescription.title"),
                     help: message.get("ui.obj.lubw.environmentDescription.help"),
-                    isMandatory: true,
+                    isMandatory: false,
                     visible: "show",
                     style: "width:100%" }),
                 creationProcessElement, "after"

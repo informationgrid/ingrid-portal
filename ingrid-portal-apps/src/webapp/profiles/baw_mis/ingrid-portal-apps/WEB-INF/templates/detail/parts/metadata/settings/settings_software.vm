@@ -1,0 +1,7 @@
+## Software
+## BAW-Rechte an den Quellen
+    #set($xPathSoftwareQuellCodeRechte = "./gmd:identificationInfo/*/software/QuellCodeRechte")
+    #set($add = $xPathListUse.add($xPathSoftwareQuellCodeRechte))
+## Rechte bei Nutzung der SW durch Dritte
+    #set($xPathSoftwareNutzungsRechte = "./gmd:identificationInfo/*/software/NutzungsRechte")
+    #set($add = $xPathListUse.add($xPathSoftwareNutzungsRechte))

@@ -44,6 +44,18 @@
     #set($hasAccessConstraints = "N")
 #end
 
+#set($tmpBooleanSymbols = [])
+#set($tmpBooleanSymbol = {})
+#set($tmpBooleanValue = $TOOL.getNameFromCodeList("600", "1"))
+#set($put = $tmpBooleanSymbol.put("value", true))
+#set($put = $tmpBooleanSymbol.put("symbol", "<span class='ic-ic-check' title='$tmpBooleanValue'></span>"))
+#set($add = $tmpBooleanSymbols.add($tmpBooleanSymbol))
+#set($tmpBooleanSymbol = {})
+#set($tmpBooleanValue = $TOOL.getNameFromCodeList("600", "0"))
+#set($put = $tmpBooleanSymbol.put("value", false))
+#set($put = $tmpBooleanSymbol.put("symbol", "<span class='ic-ic-cross' title='$tmpBooleanValue'></span>"))
+#set($add = $tmpBooleanSymbols.add($tmpBooleanSymbol))
+
 ## Beschreibung
 #set($getAlternateTitle = $TOOL.getAlternateTitle())
 #set($getDescription = $TOOL.valueHTMLEscape($TOOL.getDescription()))
@@ -169,6 +181,9 @@
 #set($xPathListUse = [
     "${xPathUseAccessConstraints}/gmd:MD_RestrictionCode/@codeListValue"
 ])
+
+## Software
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_software.vm")
 
 ## Fachinformationen
 #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
