@@ -67,7 +67,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.4</version>
+        <version>3.3.2</version>
         <configuration>
           <warSourceExcludes>
             start_dev.jsp,TEST_*.*,test_*.*,dev_*.*,dojo-sources/util/**,dojo-sources/dojo/**,dojo-sources/dijit/**,dojo-sources/dojox/**,dojo-sources/ingrid/**,META-INF/context-develop.xml
