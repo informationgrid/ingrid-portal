@@ -45,7 +45,7 @@ import org.apache.logging.log4j.Level;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.quartz.JobExecutionContext;
@@ -866,20 +866,20 @@ public class UploadCleanupJobTest extends BaseJobTest {
 
             // set up stub for file query
             when(this.mdekCallerQuery.queryHQLToMap(
-                    ArgumentMatchers.eq(plugId),
-                    ArgumentMatchers.matches("select fdLink.data.*"+publishedPattern+".*fdLink.fieldKey = 'link'.*"),
-                    ArgumentMatchers.eq(null),
-                    ArgumentMatchers.eq("")
+                    Matchers.eq(plugId),
+                    Matchers.matches("select fdLink.data.*"+publishedPattern+".*fdLink.fieldKey = 'link'.*"),
+                    Matchers.eq(null),
+                    Matchers.eq("")
             )).thenReturn(this.createResponse(nullResults ? null : results));
 
             // set up stub for expiry sub queries
             for (int i=0, count=references.size(); i<count; i++) {
                 final List<IngridDocument> subResults = Stream.of(results.get(i)).collect(Collectors.toList());
                 when(this.mdekCallerQuery.queryHQLToMap(
-                        ArgumentMatchers.eq(plugId),
-                        ArgumentMatchers.matches("select fdExpires.data.*"+publishedPattern+".*fdExpires.sort = "+i+".*"),
-                        ArgumentMatchers.eq(null),
-                        ArgumentMatchers.eq("")
+                        Matchers.eq(plugId),
+                        Matchers.matches("select fdExpires.data.*"+publishedPattern+".*fdExpires.sort = "+i+".*"),
+                        Matchers.eq(null),
+                        Matchers.eq("")
                 )).thenReturn(this.createResponse(nullResults ? null : subResults));
             }
             index++;

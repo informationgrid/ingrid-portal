@@ -33,7 +33,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -44,7 +43,6 @@ import de.ingrid.codelists.model.CodeListEntry;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 import de.ingrid.utils.xml.XMLSerializer;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring/application-context.xml"})
 public class dbSyslistTransferTestLocal {
 
