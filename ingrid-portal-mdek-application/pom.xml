@@ -33,7 +33,7 @@
     <sonar.exclusions>
       src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*
     </sonar.exclusions>
-    <spring.version>5.3.14</spring.version>
+    <spring.version>5.3.24</spring.version>
   </properties>
 
   <!-- ==================== Build Configuration ==================== -->
@@ -231,7 +231,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>1.5.6</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid.mdek</groupId>
@@ -443,7 +442,6 @@
     <dependency>
       <groupId>taglibs</groupId>
       <artifactId>standard</artifactId>
-      <version>1.1.2</version>
     </dependency>
     <dependency>
       <groupId>org.quartz-scheduler</groupId>
@@ -557,7 +555,6 @@
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>2.6</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
@@ -572,7 +569,6 @@
     <dependency>
       <groupId>commons-httpclient</groupId>
       <artifactId>commons-httpclient</artifactId>
-      <version>3.1</version>
     </dependency>
     <dependency>
       <groupId>net.sf.opencsv</groupId>
@@ -592,13 +588,12 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>2.5.6</version>
+      <version>5.3.24</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>
-      <version>1.4.01</version>
     </dependency>
     <!-- need geo-utils to calculate bounding boxes in other formats -->
     <dependency>

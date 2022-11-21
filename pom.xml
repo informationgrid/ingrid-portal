@@ -158,15 +158,14 @@
         <version>4.35.1</version>
         <configuration>
           <activeRecipes>
-            <recipe>org.openrewrite.java.migrate.UpgradeJava17</recipe>
-            <recipe>org.openrewrite.java.migrate.JavaxMigrationToJakarta</recipe>
+            <recipe>org.openrewrite.java.spring.framework.UpgradeSpringFramework_5_3</recipe>
           </activeRecipes>
         </configuration>
         <dependencies>
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-migrate-java</artifactId>
-            <version>1.13.0</version>
+            <artifactId>rewrite-spring</artifactId>
+            <version>4.29.0</version>
           </dependency>
         </dependencies>
       </plugin>
