@@ -297,10 +297,6 @@ header {
   font-size: 74px;
   content: "\e96e"
 }
-.teaser .teaser-link .ic-opendata:before {
-  font-size: 74px;
-  content: "\e91a";
-}
 .teaser .teaser-link .ic-map:before {
   font-size: 74px;
   content: "\e96c";
@@ -1035,6 +1031,13 @@ header .logo img {
   border: 1px solid transparent;
 }
 
+.teaser .teaser-link .ic-opendata:before {
+  content: url("/decorations/layout/ingrid/images/template/opendata.png") !important;
+}
+
+.teaser:hover .teaser-link .ic-opendata:before {
+  content: url("/decorations/layout/ingrid/images/template/opendata-hover.png") !important;
+}
 .ic-ic-opendata:before {
-  content: "\e91a"
+  content: url("/decorations/layout/ingrid/images/template/opendata-hit.png");
 }
