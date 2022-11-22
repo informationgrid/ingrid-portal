@@ -1033,6 +1033,7 @@ header .logo img {
 
 .teaser .teaser-link .ic-opendata:before {
   content: url("/decorations/layout/ingrid/images/template/opendata.png") !important;
+  margin-left: -23px
 }
 
 .teaser:hover .teaser-link .ic-opendata:before {
