@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.14.2-SNAPSHOT" date="2022-xx-xx" description="Release 5.14.2">
+          <action type="update" dev="wemove" issue="4573">
+            MVIS-Client ausschließen von Messnetze
+          </action>
           <action type="add" dev="wemove" issue="4306">
             Barrierefreiheit Karten (Einbetten)
           </action>
