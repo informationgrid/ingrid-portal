@@ -184,21 +184,23 @@ public class DetailPartPreparer {
     }
 
     public String getDateFormatValue (String value, Boolean withTime) {
-        try {
-            Calendar cal = DatatypeConverter.parseDateTime(value);
-            if(cal != null){
-                if(cal.getTime() != null && withTime){
-                    int hours = cal.getTime().getHours();
-                    int minutes = cal.getTime().getMinutes();
-                    int seconds = cal.getTime().getSeconds();
-                    if(hours > 0 || minutes > 0 || seconds > 0){
-                        return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(cal.getTime());
+        if(value != null && !value.isEmpty()) {
+            try {
+                Calendar cal = DatatypeConverter.parseDateTime(value);
+                if(cal != null){
+                    if(cal.getTime() != null && withTime){
+                        int hours = cal.getTime().getHours();
+                        int minutes = cal.getTime().getMinutes();
+                        int seconds = cal.getTime().getSeconds();
+                        if(hours > 0 || minutes > 0 || seconds > 0){
+                            return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(cal.getTime());
+                        }
                     }
+                    return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
                 }
-                return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
+            } catch (Exception e) {
+                log.error("Error on getDateFormatValue() for input: " + value);
             }
-        } catch (Exception e) {
-            log.error("Error on getDateFormatValue() for input: " + value);
         }
         return value;
     }

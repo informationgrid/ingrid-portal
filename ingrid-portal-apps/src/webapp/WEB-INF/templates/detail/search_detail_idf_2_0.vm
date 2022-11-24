@@ -687,7 +687,7 @@
                             <td>$td</td>
                         #end
                     #else
-                        #if($symbolColumn.indexOf($num) > -1)
+                        #if($symbolColumn && $symbolColumn.indexOf($num) > -1)
                         <td class="symbol" #if($setCenter) style="text-align:center;"#end>
                             #if($symbolList)
                                 #foreach($symbolEntry in $symbolList)

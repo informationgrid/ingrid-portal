@@ -1033,7 +1033,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     public Map<String, Object> getReferenceObject(String xpathExpression) {
-        HashMap element = new HashMap();
+        HashMap element = null;
 
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList childNodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
@@ -1043,7 +1043,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             for (int j = 0; j < childNodeList.getLength(); j++) {
                 xpathExpression = "./gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator";
                 if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
-                    listDominator.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim());
+                    String tmpValue = xPathUtils.getString(childNodeList.item(j), xpathExpression).trim();
+                    if(!tmpValue.isEmpty()) {
+                        listDominator.add(tmpValue);
+                    }
                 }
                 xpathExpression = "./gmd:distance/gco:Distance/@uom";
                 String[] distanceDPI = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_DISTANCE_DPI);
@@ -1053,7 +1056,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if (Arrays.asList(distanceDPI).indexOf(uom) > -1) {
                         xpathExpression = "./gmd:distance/gco:Distance[@uom='" + uom + "']";
                         if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
-                            listDpi.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim().concat(" " + uom));
+                            String tmpValue = xPathUtils.getString(childNodeList.item(j), xpathExpression).trim();
+                            if(!tmpValue.isEmpty()) {
+                                listDpi.add(tmpValue.concat(" " + uom));
+                            }
                         }
                     } else if(Arrays.asList(distanceMeter).indexOf(uom) > -1){
                         xpathExpression = "./gmd:distance/gco:Distance[@uom='" + uom + "']";
@@ -1062,25 +1068,31 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             uom = "m";
                         }
                         if (xPathUtils.nodeExists(childNodeList.item(j), xpathExpression)) {
-                            listMeter.add(xPathUtils.getString(childNodeList.item(j), xpathExpression).trim().concat(" " + uom));
+                            String tmpValue = xPathUtils.getString(childNodeList.item(j), xpathExpression).trim();
+                            if(!tmpValue.isEmpty()) {
+                                listMeter.add(tmpValue.concat(" " + uom));
+                            }
                         }
                     }
                 }
             }
 
-            element.put("type", "table");
-            element.put("title", messages.getString("t011_obj_serv_scale"));
-
-            ArrayList head = new ArrayList();
-            head.add(messages.getString("t011_obj_serv_scale.scale").concat(" 1:x"));
-            head.add(messages.getString("t011_obj_serv_scale.resolution_ground"));
-            head.add(messages.getString("t011_obj_serv_scale.resolution_scan"));
-            element.put("head", head);
-            ArrayList body = new ArrayList();
-            element.put("body", body);
-            body.add(listDominator);
-            body.add(listMeter);
-            body.add(listDpi);
+            if(!listDominator.isEmpty() || !listMeter.isEmpty() || !listDpi.isEmpty()) {
+                element = new HashMap();
+            
+                element.put("type", "table");
+                element.put("title", messages.getString("t011_obj_serv_scale"));
+                ArrayList head = new ArrayList();
+                head.add(messages.getString("t011_obj_serv_scale.scale").concat(" 1:x"));
+                head.add(messages.getString("t011_obj_serv_scale.resolution_ground"));
+                head.add(messages.getString("t011_obj_serv_scale.resolution_scan"));
+                element.put("head", head);
+                ArrayList body = new ArrayList();
+                element.put("body", body);
+                body.add(listDominator);
+                body.add(listMeter);
+                body.add(listDpi);
+            }
         }
         return element;
     }
