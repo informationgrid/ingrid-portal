@@ -73,11 +73,24 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             context.put( "leafletBgLayerWMSName", leafletBgLayerWMSName.toString());
         }
         context.put( "measureUrl", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MEASURE_URL));
-        context.put( "measureNetworksExclude", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MEASURE_NETWORKS_EXCLUDE));
-        context.put( "measureNetworksInitial", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MEASURE_NETWORKS_INITIAL));
-
-
-
+        String[] measureNetworksExclude = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MEASURE_NETWORKS_EXCLUDE);
+        String excludeNetworks = "";
+        for (String network : measureNetworksExclude) {
+            if(!excludeNetworks.isEmpty()) {
+                excludeNetworks += ",";
+            }
+            excludeNetworks += network; 
+        }
+        context.put( "measureNetworksExclude", excludeNetworks);
+        String[] measureNetworksInit = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MEASURE_NETWORKS_INITIAL);
+        String initNetworks = "";
+        for (String network : measureNetworksInit) {
+            if(!initNetworks.isEmpty()) {
+                initNetworks += ",";
+            }
+            initNetworks += network; 
+        }
+        context.put( "measureNetworksInitial", initNetworks);
         super.doView(request, response);
     }
 }

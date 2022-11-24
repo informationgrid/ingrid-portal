@@ -216,14 +216,16 @@
 #macro (addToggleParams $tmpFacets $param)
     #if($tmpFacets)
         #foreach($tmpFacet in $tmpFacets)
-            #set($length = $tmpFacet.getFacets().size() - 1)
-            #foreach($num in [0..$length])
-                #if($tmpFacet.getFacets().get($num))
-                    #set($tmpParentToggleFacet = $tmpFacet.getFacets().get($num)) 
-                    #if($tmpParentToggleFacet.getToggle())
-                        #set($tmpToggleFacet = $tmpParentToggleFacet.getToggle())
-                        #if($tmpToggleFacet.isSelect())
-                            #set($param = "$param$tmpFacet.getId():$tmpToggleFacet.getId();")
+            #if($tmpFacet.getFacets().size())
+                #set($length = $tmpFacet.getFacets().size() - 1)
+                #foreach($num in [0..$length])
+                    #if($tmpFacet.getFacets().get($num))
+                        #set($tmpParentToggleFacet = $tmpFacet.getFacets().get($num)) 
+                        #if($tmpParentToggleFacet.getToggle())
+                            #set($tmpToggleFacet = $tmpParentToggleFacet.getToggle())
+                            #if($tmpToggleFacet.isSelect())
+                                #set($param = "$param$tmpFacet.getId():$tmpToggleFacet.getId();")
+                            #end
                         #end
                     #end
                 #end
