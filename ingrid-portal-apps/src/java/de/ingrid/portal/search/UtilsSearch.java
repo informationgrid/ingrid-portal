@@ -1825,13 +1825,14 @@ public class UtilsSearch {
         String contentLowerCase = content.toLowerCase();
         if (contentLowerCase.contains("<csw:capabilities")) {
             return "CSW";
-        } else if(contentLowerCase.contains("wmt_ms_capabilities")) {
+        } else if(contentLowerCase.contains("wmt_ms_capabilities")
+            || contentLowerCase.contains("wms_capabilities")) {
             return "WMS";
-        } else if(contentLowerCase.contains("wms_capabilities")) {
-            return "WMS";
-        } else if(contentLowerCase.contains("wcs_capabilities")) {
+        } else if(contentLowerCase.contains("wcs_capabilities")
+            || contentLowerCase.contains("wcs:capabilities")
+            || (contentLowerCase.contains("<capabilities") && contentLowerCase.contains("www.opengis.net/wcs/"))) {
             return "WCS";
-        } else if(contentLowerCase.contains("<capabilities")) {
+        } else if(contentLowerCase.contains("<capabilities") && contentLowerCase.contains("www.opengis.net/wmts/")) {
             return "WMTS";
         } else if(contentLowerCase.contains("wfs_capabilities")) {
             return "WFS";
