@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.14.4" date="xxxx-xx-xx" description="Release 5.14.4">
+          <action type="update" dev="wemove" issue="4072">
+            UVP: Textanpassung länderspezifische Seiten
+          </action>
+        </release>
+
         <release version="5.14.3" date="2022-12-07" description="Release 5.14.3">
           <action type="add" dev="wemove" issue="4576">
             Portal: Zugangsbeschränkungen in der Suche und auf der Detailseite in den Infoboxen anzeigen (LUBW)
