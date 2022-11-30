@@ -1,6 +1,6 @@
 #set($linkAttrAbout = 'target="_blank"')
 #set($linkAttrPortrait = 'target="_blank"')
-#set($linkAttrContact = 'target="_blank"')
+#set($linkAttrContact = '')
 #set($linkAttrDisclaimer = 'target="_blank"')
 #set($linkAttrPrivacy = 'target="_blank"')
 #set($linkAttrAccessibility = 'target="_blank"')

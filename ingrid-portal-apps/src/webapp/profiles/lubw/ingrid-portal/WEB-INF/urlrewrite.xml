@@ -226,7 +226,7 @@
     <!-- Kontakt   -->
     <rule>
         <from>/kontakt</from>
-        <to type="redirect">https://www.lubw.baden-wuerttemberg.de/kontakt</to>
+        <to type="forward">/portal/service-contact.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-contact.psml</from>
