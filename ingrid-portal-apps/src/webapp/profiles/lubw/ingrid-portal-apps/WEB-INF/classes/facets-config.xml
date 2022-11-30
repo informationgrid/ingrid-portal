@@ -132,201 +132,50 @@ Beispiele:
 **********
 Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dialog)
  -->
- 
+
 <facets>
     <!-- Ergebnistypen -->
     <facet>
         <name>searchResult.facete.title.types</name>
         <id>type</id>
         <facets>
-        <!-- Webseiten -->
+            <!-- Geodatensätze -->
             <facet>
-                <name>searchResult.facete.datatype.www</name>
-                <query>datatype:www</query>
-                <id>www</id>
+                <name>searchResult.facete.metaclass.map</name>
+                <query>t01_object.obj_class:1</query>
+                <id>map</id>
             </facet>
-        <!-- Metadaten -->
+            <!-- Download-Dienste -->
             <facet>
-                <name>searchResult.facete.title.metaclass</name>
-                <query>datatype:metadata</query>
-                <id>metadata</id>
-                <facets>
-              <!-- INSPIRE-relevant -->
-                    <facet>
-<!--                    <name>searchResult.facete.metaclass.inspire</name> -->
-                        <name>INSPIRE</name>
-                        <query>t04_search.searchterm:inspireidentifiziert</query>
-                        <id>inspire_metadata</id>
-                    </facet>
-              <!-- Open Data -->
-                     <facet>
-                        <name>Open Data</name>
-                        <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
-                        <id>opendata_metadata</id>
-                    </facet>
-                <!-- Organisationseinheit / Fachaufgabe -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.job</name>
-                        <query>t01_object.obj_class:0</query>
-                        <id>job</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>0</codelist-entry-id>
-                    </facet>
-                <!-- Dienst /Anwendung / Informationssystem -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.service</name>
-                        <query>t01_object.obj_class:6</query>
-                        <id>service</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>6</codelist-entry-id>
-                    </facet>
-                <!-- Geo-Information / Karte -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.map</name>
-                        <query>t01_object.obj_class:1</query>
-                        <id>map</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>1</codelist-entry-id>
-                    </facet>
-                <!-- Dokument / Bericht / Literatur -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.document</name>
-                        <query>t01_object.obj_class:2</query>
-                        <id>document</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>2</codelist-entry-id>
-                    </facet>
-                <!-- Geodatendienst -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.geoservice</name>
-                        <query>t01_object.obj_class:3</query>
-                        <id>geoservice</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>3</codelist-entry-id>
-                    </facet>
-                <!-- Vorhaben / Projekt / Programm -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.project</name>
-                        <query>t01_object.obj_class:4</query>
-                        <id>project</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>4</codelist-entry-id>
-                    </facet>
-                <!-- Datensammlung / Datenbank -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.database</name>
-                        <query>t01_object.obj_class:5</query>
-                        <id>database</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>5</codelist-entry-id>
-                    </facet>
-                </facets>
+                <name>Download-Dienste</name>
+                <query>t011_obj_serv.type:download</query>
+                <id>download</id>
             </facet>
-        <!-- INSPIRE-relevant -->
+            <!-- Darstellungsdienste -->
+            <facet>
+                <name>Darstellungsdienste</name>
+                <query>t011_obj_serv_version.version_value:"OGC:WFS" OR t011_obj_serv_version.version_value:"OGC:WMS" OR t011_obj_serv_version.version_value:"OGC:WMTS" OR t011_obj_serv_version.version_value:"ATOM"</query>
+                <id>geoservice</id>
+                <parentId>type</parentId>
+                <icon>ic-map</icon>
+            </facet>
+            <!-- Umwelt-Daten und -Karten Online -->
+            <facet>
+                <name>Umwelt-Daten und -Karten Online</name>
+                <query>t017_url_ref.url_link:*udo.lubw.baden-wuerttemberg.de*</query>
+                <id>environment</id>
+            </facet>
+            <!-- INSPIRE -->
             <facet>
                 <name>INSPIRE</name>
                 <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
             </facet>
-        <!-- Open Data -->
-           <facet>
+            <!-- Open Data -->
+            <facet>
                 <name>Open Data</name>
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
-            </facet>
-        <!-- Karten -->
-            <facet>
-                <name>searchResult.facete.datatype.map</name>
-                <query>capabilities_url:http* datatype:metadata</query>
-                <id>map</id>
-            </facet>
-        <!-- Themen -->
-        <!-- Kann nicht erweitert werden -->
-            <facet sort="SORT_BY_VALUE_DESC">
-                <name>searchResult.facete.title.topic</name>
-                <query>datatype:topics</query>
-                <id>topic</id>
-            </facet>
-        <!-- Rechtsvorschriften -->
-            <facet>
-                <name>searchResult.facete.datatype.law</name>
-                <query>datatype:law</query>
-                <id>law</id>
-            </facet>
-        <!-- Forschungsprojekte -->
-            <facet>
-                <name>searchResult.facete.datatype.research</name>
-                <query>datatype:research</query>
-                <id>research</id>
-            </facet>
-        <!-- Messwerte -->
-            <facet sort="SORT_BY_VALUE_DESC">
-                <name>searchResult.facete.datatype.measure</name>
-                <query>datatype:measure</query>
-                <id>measure</id>
-                <facets>
-                    <facet>
-                        <name>searchResult.facete.measures.radiation</name>
-                        <query>topic:radiation</query>
-                        <id>radiation</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.measures.air</name>
-                        <query>topic:air</query>
-                        <id>air</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.measures.water</name>
-                        <query>topic:water</query>
-                        <id>water</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.measures.misc</name>
-                        <query>topic:misc</query>
-                        <id>misc</id>
-                    </facet>
-                </facets>
-            </facet>
-        <!-- Service -->
-            <facet sort="SORT_BY_VALUE_DESC">
-                <name>searchResult.facete.title.service</name>
-                <query>datatype:service</query>
-                <id>service</id>
-                <facets>
-                    <facet>
-                        <name>searchResult.facete.service.press</name>
-                        <query>topic:press</query>
-                        <id>press</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.service.publication</name>
-                        <query>topic:publication</query>
-                        <id>publication</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.service.event</name>
-                        <query>topic:event</query>
-                        <id>event</id>
-                    </facet>
-                </facets>
-            </facet>
-        <!-- Adressen -->
-            <facet>
-                <name>searchResult.facete.datatype.address</name>
-                <query>datatype:address</query>
-                <id>address</id>
-            </facet>
-        <!-- Fachdatenbanken -->
-            <facet>
-                <name>searchResult.facete.datatype.fis</name>
-                <query>datatype:fis</query>
-                <id>fis</id>
-            </facet>
-        <!-- Weitere Daten -->
-            <facet>
-                <name>searchResult.facete.datatype.other</name>
-                <query>datatype:dsc_other</query>
-                <id>other</id>
             </facet>
         </facets>
     </facet>
@@ -381,10 +230,10 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Anbieter -->
     <!-- Standard - Kann nicht erweitert werden -->
-    <facet sort="SORT_BY_VALUE_DESC">
-        <name>searchResult.facete.title.provider</name>
-        <id>provider</id>
-    </facet>
+    <!--    <facet sort="SORT_BY_VALUE_DESC">-->
+    <!--        <name>searchResult.facete.title.provider</name>-->
+    <!--        <id>provider</id>-->
+    <!--    </facet>-->
     <!-- Attribute (Forschungsprojekte)-->
     <!-- Standard - Kann nicht erweitert werden -->
     <facet>
@@ -398,31 +247,31 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>category</id>
         <categoryOnly>true</categoryOnly>
         <facets>
-            <!-- RSS -->
+            <!-- Geodatensätze -->
             <facet>
-                <name>category.news.title</name>
-                <id>rss</id>
-                <icon>ic-rss</icon>
-                <url>/neuigkeiten</url>
-                <display>true</display>
-            </facet>
-            <!-- Webseiten -->
-            <facet>
-                <name>searchResult.facete.datatype.www</name>
-                <query>datatype:www</query>
-                <id>www</id>
+                <name>searchResult.facete.metaclass.map</name>
+                <query>t01_object.obj_class:1</query>
+                <id>map</id>
                 <parentId>type</parentId>
-                <icon>ic-www</icon>
+                <icon>ic-earth</icon>
             </facet>
-            <!-- Metadaten -->
+            <!-- Download-Dienste -->
             <facet>
-                <name>searchResult.facete.title.metaclass</name>
-                <query>datatype:metadata</query>
-                <id>metadata</id>
+                <name>Download-Dienste</name>
+                <query>t011_obj_serv.type:download</query>
+                <id>download</id>
                 <parentId>type</parentId>
-                <icon>ic-metadata</icon>
+                <icon>ic-download</icon>
             </facet>
-        <!-- INSPIRE-relevant -->
+            <!-- Darstellungsdienste -->
+            <facet>
+                <name>Darstellungsdienste</name>
+                <query>t011_obj_serv_version.version_value:"OGC:WFS" OR t011_obj_serv_version.version_value:"OGC:WMS" OR t011_obj_serv_version.version_value:"OGC:WMTS" OR t011_obj_serv_version.version_value:"ATOM"</query>
+                <id>geoservice</id>
+                <parentId>type</parentId>
+                <icon>ic-maps</icon>
+            </facet>
+            <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
                 <query>t04_search.searchterm:inspireidentifiziert</query>
@@ -430,21 +279,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <parentId>type</parentId>
                 <icon>ic-inspire</icon>
             </facet>
-        <!-- Open Data -->
-           <facet>
-                <name>Open Data</name>
-                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
-                <id>opendata</id>
-                <parentId>type</parentId>
-                <icon>ic-opendata</icon>
-            </facet>
-        <!-- Karten -->
+            <!-- Umwelt-Daten und -Karten Online -->
             <facet>
-                <name>searchResult.facete.datatype.map</name>
-                <query>capabilities_url:http* datatype:metadata</query>
-                <id>map</id>
+                <name>Umwelt-Daten und -Karten Online</name>
+                <query>t017_url_ref.url_link:*udo.lubw.baden-wuerttemberg.de*</query>
+                <id>environment</id>
                 <parentId>type</parentId>
-                <icon>ic-map</icon>
+                <icon>ic-leaf</icon>
             </facet>
         </facets>
     </facet>

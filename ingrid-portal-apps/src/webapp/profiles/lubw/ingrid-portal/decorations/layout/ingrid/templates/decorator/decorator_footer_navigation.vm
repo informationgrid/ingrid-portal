@@ -15,7 +15,7 @@
         #if($linkUrl && $linkUrl.contains("@"))
             #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
-        #if($element.url == "/help.psml" || $element.url =="/service-sitemap.psml")
+        #if($element.url == "/help.psml" || $element.url =="/service-sitemap.psml" || $element.url =="/service-contact.psml")
             <a href="$linkUrl" title="$linkTitle" class="icon"><span class="text">$linkName</span></a>
         #else
             <a href="$linkUrl" title="$linkTitle" class="icon" target="_blank"><span class="text">$linkName</span></a>
