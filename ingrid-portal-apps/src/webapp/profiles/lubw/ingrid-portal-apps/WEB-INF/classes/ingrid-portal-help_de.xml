@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Hilfe zu InGrid-Portal</header>
+        <header>Hilfe zu Umweltgeodaten für Baden-Württemberg finden</header>
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
@@ -11,10 +11,7 @@
                         <a href="?hkey=search-1">Suche</a>
                     </li>
                     <li>
-                        <a href="?hkey=search-measure-1">Messwerte</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-catalog-1">Kataloge</a>
+                        <a href="?hkey=search-catalog-1">Themenübersicht</a>
                     </li>
                     <li>
                         <a href="?hkey=maps-1">Karte</a>
@@ -24,12 +21,6 @@
                     </li>
                     <li>
                         <a href="?hkey=search-category-1">Kategorien</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=rss-news-1">Aktuelles</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=myingrid-1">Anmeldung</a>
                     </li>
                 </ul>
             </content>
@@ -666,9 +657,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>Kataloge</header>
+        <header>Themenübersicht</header>
         <section help-key="search-catalog-1">
-            <header>Kataloge</header>
+            <header>Themenübersicht</header>
             <content>
                 <p>Recherchieren Sie in den Daten- und Geodatenkatalogen von 
                    Partnern und Informationsanbietern. Die Kataloge sind hierarchisch aufgebaut 
@@ -679,29 +670,6 @@
                    Ansprechpartner aufgeführt. Durch einen Klick auf ein Objekt
                    oder eine Adresse werden detaillierte Informationen 
                    angezeigt. </p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Messwerte</header>
-        <section help-key="search-measure-1">
-            <header>Messwerte Kartenviewer</header>
-            <content>
-                <p>Im Bereich <b>Messwerte</b> aus dem Hauptmenü werden Ihnen aktuelle Messwerte direkt
-                   innerhalb eines Kartenviewers zur Verfügung gestellt. Der Themenschwerpunkt liegt 
-                   hierbei auf den Bereichen Strahlung, Luft und Wasser.
-                   Die Messstationen werden direkt auf der Karte visualisiert und können per Klick
-                   verfeinert werden. Verschiedene Filter ermöglichen die Einschränkung auf Stationen, Messparameter oder Zeiträume.
-                   Innerhalb von Diagrammen können Messwerte verschiedener Stationen verglichen werden.</p>
-                <p>Eine ausführliche Hilfe findet sich innerhalb der Anwendung unter dem Info Button.</p>
-            </content>
-        </section>
-        <section help-key="search-measure-2">
-            <header>Messwerte Kategorisierung</header>
-            <content>
-                <p>Zusätzlich zur Darstellung im Messwerte Kartenviewer können auch Daten diesem Bereich zugeordnet werden.
-                   In den Suchkategorien finden sich die Unterkategorien Strahlung, Luft und Klima oder Wasser zur Recherche.</p>
-                <p>Verschiedene Web-Seiten können beim Indexieren diesen Kategorien zugeordnet werden.</p>
             </content>
         </section>
     </chapter>
@@ -1008,103 +976,6 @@
             <header>Durchstöbern Sie das Portal nach Kategorien</header>
             <content>
                 <p>Durch die Auswahl einer Kategorie, werden Ihnen alle vorhandenen Treffer der ausgewählten Kategorie im Portal angezeigt.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Aktuelles</header>
-        <section help-key="rss-news-1">
-            <header>Aktuelles</header>
-            <content>
-                <p>Unter <b>Aktuelles</b> werden aktuelle
-                    Meldungen von Informationsanbietern auf der Startseite gelistet. Die aktuellste Meldung steht
-                    dabei immer oben. Es wird jeweils nur der Titel und eine
-                    Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
-                    auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
-                <p>Ältere Meldungen, die nicht mehr auf der Startseite angezeigt
-                    werden, werden in dem Meldungsarchiv abgelegt. Sie können
-                    diese Meldungen einsehen, indem Sie auf den Link
-                    <b>Weitere Meldungen</b> klicken.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Themen</header>
-        <section help-key="search-topics-1">
-            <header>Themen</header>
-            <content>
-                <p>Wenn Sie einen schnellen Überblick über ein Thema 
-                   gewinnen möchten, recherchieren Sie am besten im Bereich 
-                   <b>Themen</b>. Hier finden Sie ausgewählte 
-                   Informationen, die Ihnen einen schnellen Einstieg in 
-                   21 Themen bieten.</p>
-                <p>Verschiedene Web-Seiten können beim Indexieren den einzelnen Themen zugewiesen werden.</p>
-                <p>Tipp: Wenn Sie auf der InGrid-Portal-Startseite auf ein Thema 
-                   klicken (z.B. Wasser), wird Ihnen die entsprechende 
-                   Ergebnisliste direkt angezeigt.</p>              
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Service</header>
-        <section help-key="search-service-1">
-            <header>Pressemitteilungen, Publikationen und Veranstaltungen</header>
-            <content>
-                <p>Im Bereich <b>Service</b> können Sie nach Pressemitteilungen,
-                  Publikationen und Veranstaltungen recherchieren.</p>
-                <p>Verschiedene Web-Seiten können beim Indexieren diesem Bereich zugeordnet werden.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Anmeldung</header>
-        <section help-key="myingrid-1">
-            <header>Anmeldung</header>
-            <content>
-                <p>Über die Anmeldung erhalten Sie Zugang zum InGrid Editor innerhalb des Portals, sofern Sie als IGE Benutzer eingerichtet sind</p>
-                <p>Der Systemadministrator kann verschiedenste Aspekte des Portals administrieren, wie z.B. die Quelle der Nachrichten unter Aktuelles oder Portal Inhalte pflegen.</p>
-                <p>Haben Sie bereits einen Benutzernamen und ein Passwort, so
-                    geben Sie beides hier ein und klicken auf <b>Anmelden</b>.</p>
-            </content>
-            <section help-key="myingrid-2">
-                <header>Neuer Benutzer</header>
-                <content>
-                    <p>Haben Sie noch keinen Benutzernamen und Passwort, so
-                        klicken Sie auf <b>Neuer
-                        Benutzer</b>. Damit werden Sie zu dem Formular
-                        <b>Anmeldung</b> durchgeschaltet.</p>
-                    <p>Bitte füllen Sie das Formular aus. Die Angaben mit
-                        Sternchen * sind Pflichtangaben, die ausgefüllt werden
-                        müssen. Alle anderen Angaben sind freiwillig.</p>
-                </content>
-            </section>
-            <section help-key="myingrid-3">
-                <header>Passwort vergessen?</header>
-                <content>
-                    <p>Wenn Sie Ihr Passwort vergessen haben, klicken Sie auf
-                        den Link <b>Passwort vergessen?</b>. Sie
-                        werden dann zu dem entsprechenden Formular geführt, in
-                        dem Sie Ihre E-Mail-Adresse eingeben können. Nach dem
-                        Absenden bekommen Sie umgehend Ihren Benutzernamen und
-                        Ihr Passwort zugesandt.</p>
-                </content>
-            </section>
-        </section>
-        <section help-key="myingrid-4">
-            <header>Nutzerprofil bearbeiten</header>
-            <content>
-                <p>Dieser Link führt Sie zu dem Formular mit Ihren bisherigen
-                    Angaben. Haben sich Ihre Daten geändert, so können Sie diese
-                    Änderungen jetzt nachtragen.</p>
-                <p>Die Angaben mit Sternchen * sind Pflichtangaben, die
-                    ausgefüllt werden müssen. Alle anderen Angaben sind freiwillig.</p>
-            </content>
-        </section>
-        <section help-key="myingrid-5">
-            <header>Logout</header>
-            <content>
-                <p>Über das Logout verlassen Sie den personalisierten Bereich
-                    und kommen zurück auf die Startseite von InGrid-Portal mit seinen Standard-Voreinstellungen.</p>
             </content>
         </section>
     </chapter>
