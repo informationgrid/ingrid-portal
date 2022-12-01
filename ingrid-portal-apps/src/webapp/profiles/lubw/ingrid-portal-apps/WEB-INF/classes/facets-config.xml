@@ -145,25 +145,29 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:1</query>
                 <id>map</id>
             </facet>
-            <!-- Download-Dienste -->
+            <!-- Download-Dienst WFS -->
             <facet>
-                <name>Download-Dienste</name>
-                <query>t011_obj_serv.type:download</query>
-                <id>download</id>
+                <name>Download-Dienst WFS</name>
+                <query>t011_obj_serv_version.version_value:"OGC:WFS"</query>
+                <id>download-wfs</id>
             </facet>
-            <!-- Darstellungsdienste -->
+            <!-- Download-Dienste ATOM-Feed -->
             <facet>
-                <name>Darstellungsdienste</name>
-                <query>t011_obj_serv_version.version_value:"OGC:WFS" OR t011_obj_serv_version.version_value:"OGC:WMS" OR t011_obj_serv_version.version_value:"OGC:WMTS" OR t011_obj_serv_version.version_value:"ATOM"</query>
-                <id>geoservice</id>
-                <parentId>type</parentId>
-                <icon>ic-map</icon>
+                <name>Download-Dienst ATOM-Feed</name>
+                <query>t011_obj_serv_version.version_value:"ATOM"</query>
+                <id>download-atom</id>
             </facet>
-            <!-- Umwelt-Daten und -Karten Online -->
+            <!-- Darstellungsdienst WMS -->
             <facet>
-                <name>Umwelt-Daten und -Karten Online</name>
-                <query>t017_url_ref.url_link:*udo.lubw.baden-wuerttemberg.de*</query>
-                <id>environment</id>
+                <name>Darstellungsdienst WMS</name>
+                <query>t011_obj_serv_version.version_value:"OGC:WMS"</query>
+                <id>map-wms</id>
+            </facet>
+            <!-- Darstellungsdienst WMS -->
+            <facet>
+                <name>Darstellungsdienst WMTS</name>
+                <query>t011_obj_serv_version.version_value:"OGC:WMTS"</query>
+                <id>map-wmts</id>
             </facet>
             <!-- INSPIRE -->
             <facet>
@@ -176,6 +180,12 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Open Data</name>
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
+            </facet>
+            <!-- Umwelt-Daten und -Karten Online -->
+            <facet>
+                <name>UDO-Daten</name>
+                <query>t017_url_ref.url_link:*udo.lubw.baden-wuerttemberg.de*</query>
+                <id>udo-data</id>
             </facet>
         </facets>
     </facet>
@@ -257,17 +267,17 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Download-Dienste -->
             <facet>
-                <name>Download-Dienste</name>
-                <query>t011_obj_serv.type:download</query>
-                <id>download</id>
+                <name>Download-Dienst WFS</name>
+                <query>t011_obj_serv_version.version_value:"OGC:WFS"</query>
+                <id>download-wfs</id>
                 <parentId>type</parentId>
                 <icon>ic-download</icon>
             </facet>
             <!-- Darstellungsdienste -->
             <facet>
-                <name>Darstellungsdienste</name>
-                <query>t011_obj_serv_version.version_value:"OGC:WFS" OR t011_obj_serv_version.version_value:"OGC:WMS" OR t011_obj_serv_version.version_value:"OGC:WMTS" OR t011_obj_serv_version.version_value:"ATOM"</query>
-                <id>geoservice</id>
+                <name>Darstellungsdienst WMS</name>
+                <query>t011_obj_serv_version.version_value:"OGC:WMS"</query>
+                <id>map-wms</id>
                 <parentId>type</parentId>
                 <icon>ic-maps</icon>
             </facet>
@@ -283,7 +293,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>Umwelt-Daten und -Karten Online</name>
                 <query>t017_url_ref.url_link:*udo.lubw.baden-wuerttemberg.de*</query>
-                <id>environment</id>
+                <id>udo-data</id>
                 <parentId>type</parentId>
                 <icon>ic-leaf</icon>
             </facet>
