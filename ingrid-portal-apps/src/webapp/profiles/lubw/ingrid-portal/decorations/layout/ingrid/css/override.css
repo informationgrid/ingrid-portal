@@ -578,6 +578,9 @@ a.teaser-data:nth-last-of-type(2) {
 .results-index .result-text {
   color: #3f3f3f;
 }
+.icon--info .helper.icon.info {
+  max-width: 100%;
+}
 .nr-results {
   color: #296e4b;
 }
