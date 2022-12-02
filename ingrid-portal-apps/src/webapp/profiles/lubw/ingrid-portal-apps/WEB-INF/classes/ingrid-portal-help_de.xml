@@ -2,31 +2,6 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Hilfe zu Umweltgeodaten für Baden-Württemberg finden</header>
-        <section help-key="index">
-            <header>Hilfethemen</header>
-            <content>
-                <ul>
-                    <li>
-                        <a href="?hkey=search-1">Suche</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-catalog-1">Themenübersicht</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=maps-1">Karte</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=about-1">Über die LUBW</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-category-1">Kategorien</a>
-                    </li>
-                </ul>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
         <header>Über die LUBW</header>
         <section help-key="about-1">
             <header>Porträt</header>
