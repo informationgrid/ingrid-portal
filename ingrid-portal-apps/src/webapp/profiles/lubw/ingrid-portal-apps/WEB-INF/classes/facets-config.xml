@@ -185,7 +185,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <!-- Umwelt-Daten und -Karten Online -->
             <facet>
                 <name>UDO-Daten</name>
-                <query>t017_url_ref.url_link:*udo.lubw.baden-wuerttemberg.de*</query>
+                <query>t017_url_ref.url_link:"*udo.lubw.baden-wuerttemberg.de*"</query>
                 <id>udo-data</id>
             </facet>
         </facets>
@@ -293,7 +293,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <!-- Umwelt-Daten und -Karten Online -->
             <facet>
                 <name>Umwelt-Daten und -Karten Online</name>
-                <query>t017_url_ref.url_link:*udo.lubw.baden-wuerttemberg.de*</query>
+                <query>t017_url_ref.url_link:"*udo.lubw.baden-wuerttemberg.de*"</query>
                 <id>udo-data</id>
                 <parentId>type</parentId>
                 <icon>ic-leaf</icon>
