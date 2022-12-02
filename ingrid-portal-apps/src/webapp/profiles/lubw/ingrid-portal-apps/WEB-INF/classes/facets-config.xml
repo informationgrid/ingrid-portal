@@ -138,6 +138,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.types</name>
         <id>type</id>
+        <isOpen>true</isOpen>
         <facets>
             <!-- Geodatensätze -->
             <facet>
