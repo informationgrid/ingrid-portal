@@ -60,6 +60,8 @@
         #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_citation.vm")
     ## Lizenz
         #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_license.vm")
+    ## Zugriffsbeschränkungen
+        #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_restriction.vm")
     ## BAW Auftrag
         #parse("/WEB-INF/templates/detail/parts/metadata/factsheet/factsheet_aggregate_data_set_name.vm")
     ## Kontakt

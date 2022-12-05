@@ -1,0 +1,5 @@
+## Zugriffsbeschränkungen
+#if($accessConstraints && $accessConstraints.size() > 0)
+    #set($tmp2 = [$accessConstraints.get(0)])
+    #renderTextList($MESSAGES.getString("object_access.restriction_value") $tmp2)
+#end
