@@ -66,6 +66,7 @@ import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.utils.IngridDocument;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 
 /**
@@ -273,7 +274,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
     	} catch (HibernateException e) {
     		// Hibernate Exception. Rollback the role change and the transaction
-    		if (s.getTransaction() != null && s.getTransaction().wasCommitted()) {
+    		if (s.getTransaction() != null && s.getTransaction().getStatus() == TransactionStatus.COMMITTED) {
     			s.getTransaction().rollback();
     		}
 
