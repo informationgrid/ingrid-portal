@@ -22,8 +22,8 @@
  */
 package de.ingrid.mdek.upload;
 
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
 public class NotAuthorizedException extends WebApplicationException {
 

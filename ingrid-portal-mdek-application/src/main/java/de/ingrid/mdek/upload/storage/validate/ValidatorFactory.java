@@ -69,7 +69,7 @@ public class ValidatorFactory {
             for (final Map.Entry<String, ValidatorDef> validatorsEntry : encodedConfiguration.entrySet()) {
                 final String validatorName = validatorsEntry.getKey();
                 final ValidatorDef validatorDef = validatorsEntry.getValue();
-                final Validator instance = (Validator)Class.forName(validatorDef.impl).getDeclaredConstructor().newInstance();
+                final Validator instance = (Validator)Class.forName(validatorDef.impl).newInstance();
                 instance.initialize(validatorDef.properties);
                 validatorMap.put(validatorName, instance);
             }

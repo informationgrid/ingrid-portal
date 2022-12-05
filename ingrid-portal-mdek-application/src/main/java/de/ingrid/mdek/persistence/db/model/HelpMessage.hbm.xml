@@ -27,7 +27,7 @@
 <hibernate-mapping package="de.ingrid.mdek.persistence.db.model">
    <class name="HelpMessage" table="help_messages">
       <id name="id" type="long" column="id">
-         <generator class="hilo"/>
+         <generator class="increment"/>
       </id>
       <version name="version" type="integer" column="version"/>
       <property name="guiId" type="integer" column="gui_id"/>

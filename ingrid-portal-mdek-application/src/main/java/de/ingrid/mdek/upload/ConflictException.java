@@ -25,8 +25,8 @@ package de.ingrid.mdek.upload;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
 import de.ingrid.mdek.upload.storage.StorageItem;
 
