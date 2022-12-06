@@ -148,7 +148,7 @@ elif [ -f $INGRID_HOME/bin/env.sh ]; then
 fi
 
 # INGRID: needed for TomCat 5.5.27+ when it complains about '"' in *.jsp
-JAVA_OPTS="$JAVA_OPTS $INGRID_OPTS -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false -Duser.language=de"
+JAVA_OPTS="$JAVA_OPTS $INGRID_OPTS -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false -Duser.language=de --add-opens=java.xml/com.sun.org.apache.xml.internal.dtm.ref=ALL-UNNAMED"
 
 # INGRID:
 # include a jmx script, if available, i.e. to specify jmx port, etc.
