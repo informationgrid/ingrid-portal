@@ -1,0 +1,4 @@
+## USED IN LUBW
+<a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="side-logo" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+    <img src="/decorations/layout/ingrid/images/template/lubw_logo.png" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
+</a>
