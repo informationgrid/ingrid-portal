@@ -184,7 +184,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Umwelt-Daten und -Karten Online -->
             <facet>
-                <name>UDO-Daten</name>
+                <name>UDO</name>
                 <query>t017_url_ref.url_link:"*udo.lubw.baden-wuerttemberg.de*"</query>
                 <id>udo-data</id>
             </facet>
