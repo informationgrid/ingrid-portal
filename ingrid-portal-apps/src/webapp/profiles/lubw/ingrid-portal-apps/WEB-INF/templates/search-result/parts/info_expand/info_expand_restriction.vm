@@ -1,0 +1,54 @@
+## Zugriffsbeschränkung
+##hello :) <br>
+##1: $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_access.restriction_key" , 1 ) <br>
+##2: $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_access.restriction_value" , 1 ) <br>
+##3: $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ) <br>
+##---<br>
+##$rs.getHitDetail()
+##goodbye (:
+#set($restrictionKey = "")
+#set($restrictionValue = "")
+#if($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_access.restriction_key" , 1 ))
+    #set($restrictionKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_access.restriction_key" , 1 ))
+#end
+#if($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_access.restriction_value" , 1 ))
+    #set($restrictionValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_access.restriction_value" , 1 ))
+#end
+#if(($restrictionKey && !$restrictionKey.isEmpty()) || ($restrictionValue && !$restrictionValue.isEmpty()))
+    #set($restrictionName = $Codelists.getCodeListValue("6010", $restrictionKey, $languageCode))
+    #if($restrictionName.isEmpty())
+        #set($restrictionName = $Codelists.getCodeListValue("6010", $restrictionKey, "de"))
+    #end
+    #set($restrictionUrl = "")
+    #if($UTIL_SEARCH.getCodeListDataValue("6010", $restrictionKey, "url", $request.getLocale()))
+        #set($restrictionUrl = $UTIL_SEARCH.getCodeListDataValue("6010", $restrictionKey, "url", $request.getLocale()))
+    #end
+    <div class="sub-section">
+    #renderFactTitle($MESSAGES.getString("searchResult.info.restriction"))
+    #if($restrictionUrl && !$restrictionUrl.isEmpty())
+                <p>
+                    <a class="icon external-link" href="$restrictionUrl" title="$stringTool.htmlescape($restrictionName)" target="_blank" rel="noopener noreferrer">
+                        <span class="ic-ic-external"></span>
+                        <span class="text">$restrictionName</span>
+                    </a>
+                </p>
+    #elseif($restrictionName && !$restrictionName.isEmpty())
+        <p>$restrictionName</p>
+    #else
+        #if($restrictionValue && !$restrictionValue.isEmpty())
+            #set($restrictionName = $UTIL_SEARCH.getCodeListDataStringValue($restrictionValue, "name"))
+            #set($restrictionUrl = $UTIL_SEARCH.getCodeListDataStringValue($restrictionValue, "url"))
+            #if($restrictionUrl && $restrictionName)
+                <p>
+                    <a class="icon external-link" href="$restrictionUrl" title="$stringTool.htmlescape($restrictionName)" target="_blank" rel="noopener noreferrer">
+                        <span class="ic-ic-external"></span>
+                        <span class="text">$restrictionName</span>
+                    </a>
+                </p>
+            #else
+                 <p>$restrictionValue</p>
+            #end
+        #end
+    #end
+    </div>
+#end
