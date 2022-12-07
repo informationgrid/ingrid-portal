@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+          <action type="add" dev="wemove" issue="4576">
+            Portal: Zugangsbeschränkungen in der Suche und auf der Detailseite in den Infoboxen anzeigen (LUBW)
+          </action>
+          <action type="add" dev="wemove" issue="4583">
+            Portal: Anpassungen der Hilfe-Seite für LUBW Profil
+          </action>
           <action type="update" dev="wemove" issue="4072">
             UVP: Textanpassung länderspezifische Seiten
           </action>
