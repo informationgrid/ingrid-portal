@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.14.3-SNAPSHOT" date="2022-xx-xx" description="Release 5.14.3">
+        <release version="5.14.3" date="2022-12-07" description="Release 5.14.3">
           <action type="add" dev="wemove" issue="4576">
             Portal: Zugangsbeschränkungen in der Suche und auf der Detailseite in den Infoboxen anzeigen (LUBW)
           </action>
