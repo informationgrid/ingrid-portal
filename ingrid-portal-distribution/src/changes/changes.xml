@@ -6,6 +6,18 @@
     </properties>
 
     <body>
+        <release version="5.14.3-SNAPSHOT" date="2022-xx-xx" description="Release 5.14.3">
+          <action type="add" dev="wemove" issue="4576">
+            Portal: Zugangsbeschränkungen in der Suche und auf der Detailseite in den Infoboxen anzeigen (LUBW)
+          </action>
+          <action type="add" dev="wemove" issue="4583">
+            Portal: Anpassungen der Hilfe-Seite für LUBW Profil
+          </action>
+          <action type="update" dev="wemove" issue="4371">
+            Portal: Inhaltliche Anpassungen für LUBW Profil
+          </action>
+        </release>
+
         <release version="5.14.2" date="2022-11-24" description="Release 5.14.2">
           <action type="update" dev="wemove" issue="4495">
             Update menu entry of uvp-ni
