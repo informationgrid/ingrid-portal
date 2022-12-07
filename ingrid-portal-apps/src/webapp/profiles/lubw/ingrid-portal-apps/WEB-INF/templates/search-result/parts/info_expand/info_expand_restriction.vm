@@ -1,11 +1,4 @@
 ## Zugriffsbeschränkung
-##hello :) <br>
-##1: $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_access.restriction_key" , 1 ) <br>
-##2: $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_access.restriction_value" , 1 ) <br>
-##3: $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ) <br>
-##---<br>
-##$rs.getHitDetail()
-##goodbye (:
 #set($restrictionKey = "")
 #set($restrictionValue = "")
 #if($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_access.restriction_key" , 1 ))
