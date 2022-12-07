@@ -144,6 +144,9 @@ header .button {
 header .button .ic-ic-hamburger:before {
   content: "\e922";
 }
+.shrink header .side-logo {
+  height: 80px;
+}
 header .side-logo {
   right: 150px;
   height: 116px;
