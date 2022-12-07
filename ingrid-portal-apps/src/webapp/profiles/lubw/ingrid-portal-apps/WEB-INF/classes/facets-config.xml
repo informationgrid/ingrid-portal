@@ -148,13 +148,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Download-Dienst WFS -->
             <facet>
-                <name>Download-Dienst WFS</name>
+                <name>Downloaddienst WFS</name>
                 <query>t011_obj_serv_version.version_value:"OGC:WFS"</query>
                 <id>download-wfs</id>
             </facet>
             <!-- Download-Dienste ATOM-Feed -->
             <facet>
-                <name>Download-Dienst ATOM-Feed</name>
+                <name>Downloaddienst ATOM-Feed</name>
                 <query>t011_obj_serv_version.version_value:"ATOM"</query>
                 <id>download-atom</id>
             </facet>
@@ -184,7 +184,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Umwelt-Daten und -Karten Online -->
             <facet>
-                <name>UDO</name>
+                <name>Umwelt-Daten und -Karten Online</name>
                 <query>t017_url_ref.url_link:"*udo.lubw.baden-wuerttemberg.de*"</query>
                 <id>udo-data</id>
             </facet>
@@ -268,7 +268,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Download-Dienste -->
             <facet>
-                <name>Download-Dienst WFS</name>
+                <name>Downloaddienst WFS</name>
                 <query>t011_obj_serv_version.version_value:"OGC:WFS"</query>
                 <id>download-wfs</id>
                 <parentId>type</parentId>
