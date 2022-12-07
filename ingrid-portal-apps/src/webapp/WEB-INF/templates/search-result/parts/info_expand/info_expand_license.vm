@@ -16,6 +16,7 @@
     #if($UTIL_SEARCH.getCodeListDataValue("6500", $licenseKey, "url", $request.getLocale()))
         #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue("6500", $licenseKey, "url", $request.getLocale()))
     #end
+    <div class="sub-section">
     #renderFactTitle($MESSAGES.getString("searchResult.info.license"))
     #if($licenseUrl && !$licenseUrl.isEmpty())
                 <p>
@@ -42,4 +43,5 @@
             #end
         #end
     #end
+    </div>
 #end
