@@ -114,7 +114,7 @@ rem                   set TITLE=Tomcat.Cluster#1.Server#1 [%DATE% %TIME%]
 rem ---------------------------------------------------------------------------
 
 rem INGRID: needed for TomCat 5.5.27+ when it complains about '"' in *.jsp
-set JAVA_OPTS=%JAVA_OPTS% -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING="false" -Duser.language="de" --add-opens=java.xml/com.sun.org.apache.xml.internal.dtm.ref=ALL-UNNAMED
+set JAVA_OPTS=%JAVA_OPTS% -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING="false" -Duser.language="de" --add-opens=java.xml/com.sun.org.apache.xml.internal.dtm.ref=ALL-UNNAMED  --add-opens=java.base/java.lang=ALL-UNNAMED
 setlocal
 
 rem Suppress Terminate batch job on CTRL+C
