@@ -23,11 +23,15 @@
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-  <!-- <dependencyManagement>
+   <dependencyManagement>
 	<dependencies>
-
+      <dependency>
+        <groupId>jakarta.activation</groupId>
+        <artifactId>jakarta.activation-api</artifactId>
+        <version>2.1.0</version>
+      </dependency>
 	</dependencies>
-  </dependencyManagement> -->
+  </dependencyManagement>
 
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
@@ -315,10 +319,11 @@
       <version>2.1.0</version>
     </dependency>
     <dependency>
-      <groupId>com.sun.mail</groupId>
-      <artifactId>jakarta.mail</artifactId>
-      <version>1.6.7</version>
+      <groupId>org.eclipse.angus</groupId>
+      <artifactId>angus-mail</artifactId>
+      <version>1.0.0</version>
     </dependency>
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
