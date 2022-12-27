@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+          <action type="update" dev="wemove" issue="4626">
+            Hide register button on login page for SH profile
+          </action>
           <action type="add" dev="wemove" issue="4576">
             Portal: Zugangsbeschränkungen in der Suche und auf der Detailseite in den Infoboxen anzeigen (LUBW)
           </action>
