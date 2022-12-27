@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.14.4" date="xxxx-xx-xx" description="Release 5.14.4">
+          <action type="update" dev="wemove" issue="4626">
+            Hide register button on login page for SH profile
+          </action>
           <action type="update" dev="wemove" issue="4072">
             UVP: Textanpassung länderspezifische Seiten
           </action>
