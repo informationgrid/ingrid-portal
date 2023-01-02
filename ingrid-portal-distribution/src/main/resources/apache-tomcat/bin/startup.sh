@@ -23,9 +23,7 @@
 export CATALINA_HOME=.
 
 # INGRID:
-# NOTICE: Option -XX:MaxPermSize is deprecated in Java 8 !
-# We use this one if Java 7 is used. In Java 8 we do not need to manage PermSize and this option is ignored.
-export JAVA_OPTS="$INGRID_OPTS -XX:MaxPermSize=256m"
+export JAVA_OPTS="$INGRID_OPTS"
 
 # Better OS/400 detection: see Bugzilla 31132
 os400=false
