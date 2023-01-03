@@ -6,7 +6,7 @@
         </a>
         <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-medium" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
             <img src="/decorations/layout/ingrid/images/template/bw-wappen.png" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
-            <div class="text">Landesanstalt für Umwelt<br>Baden-Württemberg</div>
+            <div class="text hide-for-xsmall-only">Landesanstalt für Umwelt<br>Baden-Württemberg</div>
         </a>
     </div>
 </div>

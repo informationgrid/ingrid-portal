@@ -118,6 +118,8 @@
                     #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_citation.vm")
 ## Lizenz
                     #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_license.vm")
+## Zugriffsbeschränkungen
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_restriction.vm")
 ## Auftragsnummer
                     #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_bwa_number.vm")
 ## Auftragstitel

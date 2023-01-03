@@ -65,7 +65,6 @@
         </page>
     </pages>
     <files>
-        <!-- COPY NUMIS FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>

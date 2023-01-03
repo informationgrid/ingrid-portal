@@ -2,6 +2,7 @@
     <div class="row">
         #parse("/decorations/layout/ingrid/templates/header/body_header_logo.vm")
         #parse("/decorations/layout/ingrid/templates/header/body_header_main_menu.vm")
+        #parse("/decorations/layout/ingrid/templates/header/body_header_main_menu_side_logo.vm")
         <div class="columns">
             <div class="header-menu-open">
                 #if($jetspeed.getLoggedOn())
