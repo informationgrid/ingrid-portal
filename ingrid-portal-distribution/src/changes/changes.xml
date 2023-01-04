@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+          <action type="update" dev="wemove" issue="3976">
+            Anpassung Hilfetext zum Feld "Durch die Ressource abgedeckte Zeitspanne"
+          </action>
           <action type="update" dev="wemove" issue="4634">
             Nutzung OSM inkl. NOMINATIN im UVP-Portal
           </action>
