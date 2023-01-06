@@ -1462,8 +1462,3 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
   padding: 8px 8px 5px;
   color: #FFFFFF;
 }
-
-/* hide register button */
-button[type="submit"][name="Registrieren"] {
-  display: none;
-}
