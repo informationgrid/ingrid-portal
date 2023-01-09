@@ -194,7 +194,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         try {
             reqParam = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
             if (SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, reqParam)) {
-                rankedStartHit = (new Integer(reqParam)).intValue();
+                rankedStartHit = (Integer.valueOf(reqParam)).intValue();
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {

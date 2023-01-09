@@ -25,17 +25,17 @@ package de.ingrid.mdek.quartz.jobs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -68,7 +68,7 @@ public class SNSUpdateJobTest {
     
     @Mock private MdekCallerCatalog callerCatalog;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
@@ -79,7 +79,7 @@ public class SNSUpdateJobTest {
         when(connFacade.getCurrentPlugId()).thenReturn( "test-plug-mock" );
         when(connFacade.getMdekCallerCatalog()).thenReturn( callerCatalog );
         
-        when(context.get( Matchers.any() )).thenReturn(-1);
+        when(context.get( ArgumentMatchers.any() )).thenReturn(-1);
 
     }
     
@@ -123,80 +123,82 @@ public class SNSUpdateJobTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void testExecuteInternalJobExecutionContext() throws JobExecutionException {
+    void testExecuteInternalJobExecutionContext() throws JobExecutionException {
 //        String[] changedTopics = new String[1];
 //        changedTopics[0] = "_00010918";
         
         SNSUpdateJob snsUpdateJob = new SNSUpdateJob();
         JobDataMap jdm = new JobDataMap();
-        jdm.put( "SNS_SERVICE", service);
-        jdm.put( "CONNECTION_FACADE", connFacade);
-        jdm.put( "PLUG_ID", "test-plug-id");
-        jdm.put( "USER_ID", "test-user-id");
-        jdm.put( "LOCALE", new Locale("de"));
+        jdm.put("SNS_SERVICE", service);
+        jdm.put("CONNECTION_FACADE", connFacade);
+        jdm.put("PLUG_ID", "test-plug-id");
+        jdm.put("USER_ID", "test-user-id");
+        jdm.put("LOCALE", new Locale("de"));
         //jdm.put( "URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
-        when(context.getMergedJobDataMap()).thenReturn( jdm );
-        
+        when(context.getMergedJobDataMap()).thenReturn(jdm);
+
         // CHECK RESULTS
-        Mockito.doAnswer( new Answer() {
+        Mockito.doAnswer(new Answer() {
             public Object answer(InvocationOnMock invocation) {
                 Object[] args = invocation.getArguments();
                 List old = (List) args[1];
                 List newTerms = (List) args[2];
-                assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-sns-id" ), is( "https://sns.uba.de/umthes/_00010065" ));
-                assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-name" ), is( "Forschungspolitik old" ));
-                assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-sns-id" ), is( "https://sns.uba.de/umthes/_00010065" ));
-                assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-name" ), is( "Forschungspolitik" ));
-                
+                assertThat((String) ((IngridDocument) old.get(0)).get("term-sns-id"), is("https://sns.uba.de/umthes/_00010065"));
+                assertThat((String) ((IngridDocument) old.get(0)).get("term-name"), is("Forschungspolitik old"));
+                assertThat((String) ((IngridDocument) newTerms.get(0)).get("term-sns-id"), is("https://sns.uba.de/umthes/_00010065"));
+                assertThat((String) ((IngridDocument) newTerms.get(0)).get("term-name"), is("Forschungspolitik"));
+
                 return null;
-            }})
-        .when(callerCatalog).updateSearchTerms( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
-        
-        when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.UMTHES, SearchtermType.GEMET }, "test-user-id" )).thenReturn( getTestSnsTerms()  );
-        when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.FREI },                         "test-user-id" )).thenReturn( getTestFreeTerms() );
-        
+            }
+        })
+                .when(callerCatalog).updateSearchTerms(ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
+
+        when(callerCatalog.getSearchTerms("test-plug-id", new SearchtermType[]{SearchtermType.UMTHES, SearchtermType.GEMET}, "test-user-id")).thenReturn(getTestSnsTerms()  );
+        when(callerCatalog.getSearchTerms("test-plug-id", new SearchtermType[]{SearchtermType.FREI},                         "test-user-id")).thenReturn(getTestFreeTerms());
+
         // START Process
-        snsUpdateJob.executeInternal( context );
-        
+        snsUpdateJob.executeInternal(context);
+
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test
-    public void testExpiredTerms() throws Exception {
+    void testExpiredTerms() throws Exception {
         SNSUpdateJob snsUpdateJob = new SNSUpdateJob();
         JobDataMap jdm = new JobDataMap();
-        jdm.put( "SNS_SERVICE", serviceMock);
-        jdm.put( "CONNECTION_FACADE", connFacade);
-        jdm.put( "PLUG_ID", "test-plug-id");
-        jdm.put( "USER_ID", "test-user-id");
-        jdm.put( "LOCALE", new Locale("de"));
+        jdm.put("SNS_SERVICE", serviceMock);
+        jdm.put("CONNECTION_FACADE", connFacade);
+        jdm.put("PLUG_ID", "test-plug-id");
+        jdm.put("USER_ID", "test-user-id");
+        jdm.put("LOCALE", new Locale("de"));
         //jdm.put( "URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
-        when(context.getMergedJobDataMap()).thenReturn( jdm );
-        
-        when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.UMTHES, SearchtermType.GEMET }, "test-user-id" )).thenReturn( getTestSnsTerms()  );
-        when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.FREI },                         "test-user-id" )).thenReturn( getTestFreeTerms() );
-        
+        when(context.getMergedJobDataMap()).thenReturn(jdm);
+
+        when(callerCatalog.getSearchTerms("test-plug-id", new SearchtermType[]{SearchtermType.UMTHES, SearchtermType.GEMET}, "test-user-id")).thenReturn(getTestSnsTerms()  );
+        when(callerCatalog.getSearchTerms("test-plug-id", new SearchtermType[]{SearchtermType.FREI},                         "test-user-id")).thenReturn(getTestFreeTerms());
+
         SNSTopic expiredTopic = new SNSTopic(SNSTopic.Type.DESCRIPTOR, SNSTopic.Source.UMTHES, "https://sns.uba.de/umthes/_00010065", "Forschungspolitik", null, null);
-        expiredTopic.setExpired( true );
-        when(serviceMock.getPSI( "https://sns.uba.de/umthes/_00010065", new Locale("de"))).thenReturn( expiredTopic  );
-        
-     // CHECK RESULTS
-        Mockito.doAnswer( new Answer() {
+        expiredTopic.setExpired(true);
+        when(serviceMock.getPSI("https://sns.uba.de/umthes/_00010065", new Locale("de"))).thenReturn(expiredTopic  );
+
+        // CHECK RESULTS
+        Mockito.doAnswer(new Answer() {
             public Object answer(InvocationOnMock invocation) {
                 Object[] args = invocation.getArguments();
                 List<IngridDocument> oldTerms = (List) args[1];
                 List<IngridDocument> newTerms = (List) args[2];
-                
+
                 assertThat(oldTerms.size(), is(2));
-                assertThat(oldTerms.get(1), not( nullValue() ));
+                assertThat(oldTerms.get(1), not(nullValue()));
                 assertThat(newTerms.size(), is(2));
                 assertThat(newTerms.get(1), nullValue()); // will be deleted if null and inserted as a free term
                 return null;
-            }})
-        .when(callerCatalog).updateSearchTerms( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
-        
+            }
+        })
+                .when(callerCatalog).updateSearchTerms(ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
+
         // START Process
-        snsUpdateJob.executeInternal( context );
+        snsUpdateJob.executeInternal(context);
     }
 
 }

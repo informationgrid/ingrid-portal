@@ -22,14 +22,15 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -53,14 +54,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicStatusLine;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.util.reflection.FieldSetter;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.quartz.JobExecutionContext;
@@ -72,6 +72,7 @@ import de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException;
 import de.ingrid.mdek.upload.storage.validate.impl.ExternalCommand;
 import de.ingrid.mdek.upload.storage.validate.impl.RemoteServiceVirusScanValidator;
 import de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator;
+import org.springframework.test.util.ReflectionTestUtils;
 
 public class UploadVirusScanJobTest extends BaseJobTest {
 
@@ -169,20 +170,20 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
 
         MockitoAnnotations.initMocks(this);
-        new FieldSetter(localVirusScanValidator, localVirusScanValidator.getClass().getDeclaredField("scanner")).set(scanner);
-        new FieldSetter(remoteVirusScanValidator, remoteVirusScanValidator.getClass().getDeclaredField("serviceClient")).set(serviceClient);
+        ReflectionTestUtils.setField(localVirusScanValidator, "scanner", this.scanner);
+        ReflectionTestUtils.setField(remoteVirusScanValidator, "serviceClient", this.serviceClient);
 
         localVirusScanValidator.initialize(VIRUSSCAN_VALIDATOR_CONFIG_LOCAL);
         remoteVirusScanValidator.initialize(VIRUSSCAN_VALIDATOR_CONFIG_REMOTE);
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         super.tearDown();
 
@@ -200,7 +201,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * @throws Exception
      */
     @Test
-    public void testLocalNoVirusFound() throws Exception {
+    void testLocalNoVirusFound() throws Exception {
         // set up job
         setupJob(localVirusScanValidator);
 
@@ -234,7 +235,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * @throws Exception
      */
     @Test
-    public void testLocalErrorFound() throws Exception {
+    void testLocalErrorFound() throws Exception {
         // set up job
         setupJob(localVirusScanValidator);
 
@@ -273,13 +274,13 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * @throws Exception
      */
     @Test
-    public void testLocalWithException() throws Exception {
+    void testLocalWithException() throws Exception {
         // set up job
         setupJob(localVirusScanValidator);
 
         // set up scan report expectations
         final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
-        when(this.scanner.execute(scanCommand)).thenThrow(new CommandExecutionException("Error executing external command '"+scanCommand+"'."));
+        when(this.scanner.execute(scanCommand)).thenThrow(new CommandExecutionException("Error executing external command '" + scanCommand + "'."));
 
         // run job
         this.job.executeInternal(this.context);
@@ -295,7 +296,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         final MockEmailService.Email report = this.mockEmailService.emails.get(0);
         assertEquals("[IGE] Virus Scan Report ERROR", report.subject);
         assertTrue(report.body.contains("Error scanning directory"));
-        assertTrue(report.body.contains("de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException: Error executing external command '"+scanCommand+"'."));
+        assertTrue(report.body.contains("de.ingrid.mdek.upload.storage.validate.impl.CommandExecutionException: Error executing external command '" + scanCommand + "'."));
     }
 
     /**
@@ -304,7 +305,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * @throws Exception
      */
     @Test
-    public void testLocalWithNullResult() throws Exception {
+    void testLocalWithNullResult() throws Exception {
         // set up job
         setupJob(localVirusScanValidator);
 
@@ -340,7 +341,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * @throws Exception
      */
     @Test
-    public void testLocalVirusFound() throws Exception {
+    void testLocalVirusFound() throws Exception {
         // set up job
         setupJob(localVirusScanValidator);
 
@@ -363,9 +364,9 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         Mockito.verify(this.scanner, times(1)).execute(any());
 
         assertTrue(this.fileExists(file1));
-        assertTrue(!this.fileExists(file2));
+        assertFalse(this.fileExists(file2));
         assertTrue(this.fileExists(file2InQuarantine));
-        assertTrue(!this.fileExists(file3));
+        assertFalse(this.fileExists(file3));
         assertTrue(this.fileExists(file3InQuarantine));
         assertFalse(this.getTestAppender().hasIssues());
 
@@ -376,22 +377,22 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertEquals("[IGE] Virus Scan Report", report.subject);
 
         final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
-        + "Directories to scan: \\target\\ingrid-upload-test\n"
-        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
-        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
-        + "Full Scanning \n"
-        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File2Ä\n"
-        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File3,Ö \n"
-        + "3 files scanned in 5 seconds.\n"
-        + "2 viruses were discovered.\n"
-        + "2 files out of 3 were infected.\n"
-        + "End of Scan.\n"
-        + "Found 2 infected file(s)\n"
-        + "Moving infected file(s)...\n"
-        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
-        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File3,Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File3,Ö\"\n"
-        + "Moved 2 infected file(s)\n"
-        + "Finished UploadVirusScanJob\n";
+                + "Directories to scan: \\target\\ingrid-upload-test\n"
+                + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
+                + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
+                + "Full Scanning \n"
+                + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File2Ä\n"
+                + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File3,Ö \n"
+                + "3 files scanned in 5 seconds.\n"
+                + "2 viruses were discovered.\n"
+                + "2 files out of 3 were infected.\n"
+                + "End of Scan.\n"
+                + "Found 2 infected file(s)\n"
+                + "Moving infected file(s)...\n"
+                + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
+                + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File3,Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File3,Ö\"\n"
+                + "Moved 2 infected file(s)\n"
+                + "Finished UploadVirusScanJob\n";
         assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));
     }
 
@@ -401,7 +402,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * @throws Exception
      */
     @Test
-    public void testRemoteNoVirusFound() throws Exception {
+    void testRemoteNoVirusFound() throws Exception {
         // set up job
         setupJob(remoteVirusScanValidator);
 
@@ -411,7 +412,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), "");
 
         // set up scan response expectations
-        Mockito.doAnswer(new MockedServiceExecution(3, new Path[] {})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
+        Mockito.doAnswer(new MockedServiceExecution(3, new Path[]{})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
 
         // run job
         this.job.executeInternal(this.context);
@@ -432,7 +433,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * @throws Exception
      */
     @Test
-    public void testRemoteWithError() throws Exception {
+    void testRemoteWithError() throws Exception {
         // set up job
         setupJob(remoteVirusScanValidator);
 
@@ -465,7 +466,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * @throws Exception
      */
     @Test
-    public void testRemoteVirusFound() throws Exception {
+    void testRemoteVirusFound() throws Exception {
         // set up job
         setupJob(remoteVirusScanValidator);
 
@@ -475,7 +476,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         final Path file3 = this.createFile(Paths.get("dir 2", "File3,Ö"), VIRUS_CONTENT);
 
         // set up scan response expectations
-        Mockito.doAnswer(new MockedServiceExecution(3, new Path[] {file2, file3})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
+        Mockito.doAnswer(new MockedServiceExecution(3, new Path[]{file2, file3})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
 
         // run job
         this.job.executeInternal(this.context);
@@ -485,9 +486,9 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         final Path file3InQuarantine = Paths.get(QUARANTINE_PATH.toString(), file3.toString());
 
         assertTrue(this.fileExists(file1));
-        assertTrue(!this.fileExists(file2));
+        assertFalse(this.fileExists(file2));
         assertTrue(this.fileExists(file2InQuarantine));
-        assertTrue(!this.fileExists(file3));
+        assertFalse(this.fileExists(file3));
         assertTrue(this.fileExists(file3InQuarantine));
         assertFalse(this.getTestAppender().hasIssues());
 
@@ -498,22 +499,22 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertEquals("[IGE] Virus Scan Report", report.subject);
 
         final String reportBodyExpected = "Executing UploadVirusScanJob...\n"
-        + "Directories to scan: \\target\\ingrid-upload-test\n"
-        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
-        + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
-        + "Full Scanning \n"
-        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File2Ä\n"
-        + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File3,Ö \n"
-        + "3 files scanned in 5 seconds.\n"
-        + "2 viruses were discovered.\n"
-        + "2 files out of 3 were infected.\n"
-        + "End of Scan.\n"
-        + "Found 2 infected file(s)\n"
-        + "Moving infected file(s)...\n"
-        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
-        + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File3,Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File3,Ö\"\n"
-        + "Moved 2 infected file(s)\n"
-        + "Finished UploadVirusScanJob\n";
+                + "Directories to scan: \\target\\ingrid-upload-test\n"
+                + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File2Ä - EICAR-AV-Test\n"
+                + "Infection found: \\target\\ingrid-upload-test\\dir 2\\File3,Ö - EICAR-AV-Test\n"
+                + "Full Scanning \n"
+                + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File2Ä\n"
+                + ">>> Virus 'EICAR-AV-Test' found in file \\target\\ingrid-upload-test\\dir 2\\File3,Ö \n"
+                + "3 files scanned in 5 seconds.\n"
+                + "2 viruses were discovered.\n"
+                + "2 files out of 3 were infected.\n"
+                + "End of Scan.\n"
+                + "Found 2 infected file(s)\n"
+                + "Moving infected file(s)...\n"
+                + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
+                + "Moving file: \"\\target\\ingrid-upload-test\\dir 2\\File3,Ö\" to \"\\target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File3,Ö\"\n"
+                + "Moved 2 infected file(s)\n"
+                + "Finished UploadVirusScanJob\n";
         assertEquals(reportBodyExpected.replaceAll("\\R", " "), report.body.replaceAll("\\R", " ").replaceAll("/", "\\\\"));
     }
 
@@ -523,7 +524,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * @throws Exception
      */
     @Test
-    public void testLocalNoReport() throws Exception {
+    void testLocalNoReport() throws Exception {
         // set up job
         setupJob(localVirusScanValidator);
 

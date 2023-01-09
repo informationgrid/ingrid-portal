@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.15.0-SNAPSHOT</version>
+    <version>5.15.0.3324-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-layout</artifactId>
@@ -25,6 +25,12 @@
       <artifactId>jetspeed-layouts</artifactId>
       <version>${org.apache.portals.jetspeed.version}</version>
       <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>3.0.2</version>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
 

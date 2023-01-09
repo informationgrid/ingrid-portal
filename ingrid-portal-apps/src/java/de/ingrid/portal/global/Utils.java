@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -52,7 +52,7 @@ import java.util.*;
 
 /**
  * Global STATIC data and utility methods.
- * 
+ *
  * @author Martin Maidhof
  */
 public class Utils {
@@ -62,7 +62,7 @@ public class Utils {
 	/**
 	 * Get ActionForm from Session in given scope. Add new one of given Class if
 	 * not there yet !
-	 * 
+	 *
 	 * @param request
 	 * @param afKey
 	 * @param afClass
@@ -80,7 +80,7 @@ public class Utils {
 
 	/**
 	 * Convenient method to get the session preferences object.
-	 * 
+	 *
 	 * @param request
 	 * @param aKey
 	 * @param aClass
@@ -109,7 +109,7 @@ public class Utils {
 	/**
 	 * Convenient method for getting (incl. adding) action forms from
 	 * PortletSession.PORTLET_SCOPE
-	 * 
+	 *
 	 * @param request
 	 * @param afKey
 	 * @param afClass
@@ -121,7 +121,7 @@ public class Utils {
 
 	/**
 	 * Get ActionForm from Session in given scope, returns null if not there yet !
-	 * 
+	 *
 	 * @param request
 	 * @param afKey
 	 * @param scope
@@ -134,7 +134,7 @@ public class Utils {
 	/**
 	 * Add new ActionForm of given Class to Session. Also calls init() on
 	 * ActionForm !
-	 * 
+	 *
 	 * @param request
 	 * @param afKey
 	 * @param afClass
@@ -143,7 +143,7 @@ public class Utils {
 	public static ActionForm addActionForm(PortletRequest request, String afKey, Class afClass, int scope) {
 		ActionForm af = null;
 		try {
-			af = (ActionForm) afClass.newInstance();
+			af = (ActionForm) afClass.getDeclaredConstructor().newInstance();
 			af.init();
 			request.getPortletSession().setAttribute(afKey, af, scope);
 		} catch (Exception ex) {
@@ -158,17 +158,17 @@ public class Utils {
 	/**
 	 * Validate the form of an email address. see
 	 * http://www.javapractices.com/Topic180.cjp
-	 * 
+	 *
 	 * <P>
 	 * Return <code>true</code> only if
 	 * <ul>
 	 * <li> <code>aEmailAddress</code> can successfully construct an
-	 * {@link javax.mail.internet.InternetAddress}
+	 * {@link jakarta.mail.internet.InternetAddress}
 	 * <li> when parsed with a "@" delimiter, <code>aEmailAddress</code>
 	 * contains two tokens which satisfy
 	 * {@link hirondelle.web4j.util.Util#textHasContent}.
 	 * </ul>
-	 * 
+	 *
 	 * <P>
 	 * The second condition arises since local email addresses, simply of the
 	 * form "albert", for example, are valid but almost always undesired.
@@ -253,7 +253,7 @@ public class Utils {
 
 	/**
 	 * Returns position of given value in given array.
-	 * 
+	 *
 	 * @param array
 	 * @param value
 	 *            value to search for, if null is passed -1 is returned
@@ -274,7 +274,7 @@ public class Utils {
 	/**
 	 * Returns the "GET" Parameter representation for the URL (WITHOUT leading
 	 * "?" or "&") for all parameters in request !
-	 * 
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -298,7 +298,7 @@ public class Utils {
 	/**
 	 * Returns the "GET" Parameter representation for the URL (WITHOUT leading
 	 * "?" or "&")
-	 * 
+	 *
 	 * @param values
 	 * @param paramName
 	 * @return
@@ -319,7 +319,7 @@ public class Utils {
 	/**
 	 * Returns the "GET" Parameter representation for the URL (WITHOUT leading
 	 * "?" or "&") NOTICE: if string is null or empty, return value is ""
-	 * 
+	 *
 	 * @param value
 	 * @param paramName
 	 * @return
@@ -345,7 +345,7 @@ public class Utils {
 
 	/**
 	 * Append a new urlParameter to the given url Parameters.
-	 * 
+	 *
 	 * @param currentURLParams
 	 * @param newURLParam
 	 */
@@ -360,7 +360,7 @@ public class Utils {
 
 	/**
 	 * Returns, if the session has been marked as JavaScript- enabled.
-	 * 
+	 *
 	 * @param request
 	 *            The PortletRequest to check.
 	 * @return True for JavaScript enabled, false for not.
@@ -443,7 +443,7 @@ public class Utils {
 
 	/**
 	 * Send email
-	 * 
+	 *
 	 * @param from
 	 * @param subject
 	 * @param to
@@ -456,20 +456,20 @@ public class Utils {
 		boolean debug = log.isDebugEnabled();
 		boolean emailSent = false;
 		Session session;
-		
+
 		Properties props = new Properties();
 		props.put("mail.smtp.host", PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_SERVER, "localhost"));
-		
+
 		String port = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_PORT, "");
 		if(!port.equals("")){
 			props.put("mail.smtp.port", port);
 		}
-		
+
 		String protocol = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_PROTOCOL, "");
 		if(!protocol.equals("")){
 			props.put("mail.transport.protocol", protocol);
 		}
-		
+
 		boolean ssl = PortalConfig.getInstance().getBoolean(PortalConfig.EMAIL_SMTP_SSL, false);
 		if(ssl){
 			props.put("mail.smtp.starttls.enable","true");
@@ -477,12 +477,12 @@ public class Utils {
 		    props.put("mail.smtp.ssl.enable", true);
 		    props.put("mail.smtp.ssl.checkserveridentity", true);
 			props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-		    props.put("mail.smtp.socketFactory.fallback", "false"); 
+		    props.put("mail.smtp.socketFactory.fallback", "false");
 		}
 
 		String user = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_USER, "");
 		String password = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_PW, "");
-		
+
 		if(!user.equals("") && !password.equals("")){
 			props.put("mail.smtp.auth", "true");
 		    Authenticator auth = new MailAuthenticator(user, password);
@@ -492,7 +492,7 @@ public class Utils {
 			// create some properties and get the default Session
 			session = Session.getDefaultInstance(props, null);
 		}
-		
+
 		session.setDebug(debug);
 
 		// create a message
@@ -526,15 +526,15 @@ public class Utils {
 					msg.addHeader(key, (String) headers.get(key));
 				}
 			}
-			
+
 			// Setting the Subject and Content Type
 			msg.setSubject(subject);
-			
-			// create the message part 
+
+			// create the message part
 		    MimeBodyPart messageBodyPart = new MimeBodyPart();
 		    // fill message
 		    messageBodyPart.setText(text);
-			
+
 		    Multipart multipart = new MimeMultipart();
 		    multipart.addBodyPart(messageBodyPart);
 
@@ -594,7 +594,7 @@ public class Utils {
 
 	/**
 	 * Extend an Arraylist with null values until the capacity size is reached.
-	 * 
+	 *
 	 * @param list
 	 * @param size
 	 */
@@ -608,7 +608,7 @@ public class Utils {
 
 	/**
 	 * Returns true if a user is logged on, false, if not.
-	 * 
+	 *
 	 * @param request
 	 *            The PortletRequest.
 	 * @return True if a user is logged on, false, if not.
@@ -621,12 +621,12 @@ public class Utils {
 	/**
 	 * Transforms different syntax for partner key to and from partner <->
 	 * provider.
-	 * 
+	 *
 	 * provider keys are defined as <partner_key>_<provider_key>. The
 	 * <partner_key> is treated different in for providers and partners.
-	 * 
+	 *
 	 * Sample: The partner 'bund' has the provider_key 'bu'.
-	 * 
+	 *
 	 * @param key
 	 *            The partner or provider has the same key
 	 * @param fromPartnerToProvider
@@ -644,7 +644,7 @@ public class Utils {
 		}
 		return key.toLowerCase();
 	}
-	
+
 	/**
 	 * Get all languages as short version (e.g. ["de","en"]
 	 * @return an array of Strings with short language names
@@ -653,80 +653,80 @@ public class Utils {
 		String langShort = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_SHORT);
         return langShort.split(";");
 	}
-	
+
 	/**
 	 * Get all languages in full length in the given language (e.g. ["German","English"]
 	 * @return an array of Strings with complete language names
 	 */
 	public static String[] getLanguagesFullAsArray(String lang) {
-		
+
 		String language = lang.replace("\"", "" );
-		
+
 		String langNames = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_NAMES + language);
-		
+
 		return langNames.split(";");
 	}
 
-	
+
 	/**
 	 * Check if a language is support or return the default language
 	 * @param lang
 	 * @return a supported string
 	 */
-	public static String checkSupportedLanguage(String lang){ 
+	public static String checkSupportedLanguage(String lang){
 		String [] languagesShort = getLanguagesShortAsArray();
 		String supportedLanguage = null;
-		
+
 		for(int i = 0; i < languagesShort.length; i++){
         	if(languagesShort[i].equals(lang)){
         		supportedLanguage = lang;
             	break;
-        	}   	
+        	}
         }
-		
+
 		if (supportedLanguage == null){
     		supportedLanguage = Locale.getDefault().getLanguage();
-        }  
-		
+        }
+
 		supportedLanguage = supportedLanguage.replace("\"", "" );
-		
+
 		if(log.isDebugEnabled()){
 			log.debug("checkSupportedLanguage language: " + supportedLanguage);
 		}
-		
+
 		return supportedLanguage;
 	}
-	
+
 	public static List getPortalVersion(String applicationRootPath){
 		String filePath;
     	ArrayList<Map<String,String>> versionList = new ArrayList<>();
-    		
+
 		// InGrid portal base data
     	filePath = "./META-INF/MANIFEST.MF";
     	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Base"));
-    	
+
     	// InGrid portal apps data
     	filePath = "../ingrid-portal-apps/META-INF/MANIFEST.MF";
     	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Application"));
-    	
+
     	// InGrid portal apps data
     	filePath = "../../../ingrid-portal-apps/target/ingrid-portal-apps/META-INF/MANIFEST.MF";
     	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Application"));
-    	
-    	// InGrid portal mdek data 
+
+    	// InGrid portal mdek data
     	filePath = "../../../ingrid-portal-mdek/target/ingrid-portal-mdek/META-INF/MANIFEST.MF";
     	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Application IGE"));
-    	    	
-    	// InGrid portal mdek data 
+
+    	// InGrid portal mdek data
     	filePath = "../ingrid-portal-mdek/META-INF/MANIFEST.MF";
     	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Application IGE"));
-    	
+
     	return versionList;
 	}
-	
+
 	public static String getServiceTypeParameter(String url, String serviceType){
 		String serviceParam = "";
-		
+
 		if(serviceType.equalsIgnoreCase("view") && serviceType.equalsIgnoreCase("wms")){
 			serviceParam = "&SERVICE=WMS";
 		}else if(serviceType.equalsIgnoreCase("download")){
@@ -734,16 +734,16 @@ public class Utils {
 		}else if(serviceType.equalsIgnoreCase("discovery")){
 			serviceParam = "&SERVICE=CSW";
 		}
-		
+
 		return url + serviceParam;
 	}
 
 }
 
 class MailAuthenticator extends Authenticator {
-	private String user; 
+	private String user;
 	private String password;
-	
+
 	public MailAuthenticator(String user, String password) {
 		this.user = user;
 		this.password = password;

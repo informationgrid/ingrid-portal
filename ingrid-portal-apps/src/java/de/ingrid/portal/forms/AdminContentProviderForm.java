@@ -116,7 +116,7 @@ public class AdminContentProviderForm extends ActionForm {
                             // check database whether other record (other id) has same ident (kuerzel)
                             Long id = null;
                             try {
-                                id = new Long(getInput(PARAM_ID + i));
+                                id = Long.valueOf(getInput(PARAM_ID + i));
                             } catch (Exception ex) {
                                 if(log.isErrorEnabled()) {
                                     log.error("Error on validate.", ex);

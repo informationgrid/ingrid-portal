@@ -79,7 +79,7 @@ public class AdminCMSPortlet extends ContentPortlet {
         Long id = null;
         AdminCMSForm af = (AdminCMSForm) Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
         try {
-            id = new Long(af.getInput(AdminCMSForm.PARAM_ID));
+            id = Long.valueOf(af.getInput(AdminCMSForm.PARAM_ID));
         } catch (NumberFormatException e) {
             log.error("Error on getDBEntities.", e);
         }
@@ -126,7 +126,7 @@ public class AdminCMSPortlet extends ContentPortlet {
         }
 
         Session session = HibernateUtil.currentSession();
-        IngridCMS cmsEntry = (IngridCMS) session.load(dbEntityClass, new Long(af.getInput(AdminCMSForm.PARAM_ID)));
+        IngridCMS cmsEntry = (IngridCMS) session.load(dbEntityClass, Long.valueOf(af.getInput(AdminCMSForm.PARAM_ID)));
 
         cmsEntry.setItemChanged(new Date());
         cmsEntry.setItemChangedBy(request.getUserPrincipal().getName());
@@ -238,7 +238,7 @@ public class AdminCMSPortlet extends ContentPortlet {
         try {
             AdminCMSForm f = (AdminCMSForm) Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
 
-            Object[] newEntity = { dbEntityClass.newInstance() };
+            Object[] newEntity = { dbEntityClass.getDeclaredConstructor().newInstance() };
 
             Context context = getContext(request);
             context.put(CONTEXT_MODE, CONTEXTV_MODE_NEW);

@@ -15,6 +15,9 @@
         <Logger name="org.flywaydb" level="debug" additivity="false">
             <AppenderRef ref="Console" />
         </Logger>
+        <Logger name="org.hibernate" level="error" additivity="false">
+            <AppenderRef ref="LogFile" />
+        </Logger>
         <Logger name="org" level="info" additivity="false">
             <AppenderRef ref="Console" />
         </Logger>

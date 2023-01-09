@@ -31,3 +31,4 @@ ingrid-portal-distribution/src/main/resources/apache-tomcat/work/*
 ingrid-portal-distribution/src/main/resources/apache-tomcat/temp/*
 /.idea/
 *.iml
+/data/

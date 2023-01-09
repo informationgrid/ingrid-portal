@@ -27,7 +27,7 @@ import java.util.Locale;
 
 import org.apache.log4j.Logger;
 
-import com.hp.hpl.jena.shared.DoesNotExistException;
+import org.apache.jena.shared.DoesNotExistException;
 
 import de.ingrid.external.ThesaurusService;
 import de.ingrid.external.om.RelatedTerm;
