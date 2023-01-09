@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-        <version>5.15.0.3324-SNAPSHOT</version>
+        <version>5.15.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-mdek-application</artifactId>
@@ -266,7 +266,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-ige</artifactId>
-      <version>5.15.0.3324-SNAPSHOT</version>
+      <version>5.15.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -288,12 +288,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-services-api</artifactId>
-      <version>5.15.0.3324-SNAPSHOT</version>
+      <version>5.15.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-gemet</artifactId>
-      <version>5.15.0.3324-SNAPSHOT</version>
+      <version>5.15.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -304,7 +304,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
-      <version>5.15.0.3324-SNAPSHOT</version>
+      <version>5.15.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -315,7 +315,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-wfs</artifactId>
-      <version>5.15.0.3324-SNAPSHOT</version>
+      <version>5.15.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>javax.measure</groupId>
@@ -619,7 +619,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-geo</artifactId>
-      <version>5.15.0.3324-SNAPSHOT</version>
+      <version>5.15.0-SNAPSHOT</version>
     </dependency>
     <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
     <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>
