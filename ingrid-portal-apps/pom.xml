@@ -216,7 +216,8 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
-      <version>5.15.0-SNAPSHOT</version>
+      <!-- use older version for compatibility reasons -->
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
