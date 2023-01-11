@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.14.4" date="xxxx-xx-xx" description="Release 5.14.4">
+          <action type="add" dev="wemove" issue="4603">
+            WebMapClient: add option for copyright string replacements in portal and print
+          </action>
           <action type="update" dev="wemove" issue="4634">
             Nutzung OSM inkl. NOMINATIN im UVP-Portal
           </action>
