@@ -2,7 +2,7 @@ FROM alpine AS builder
 
 COPY ingrid-portal*-installer.jar ./files /
 
-RUN unzip ingrid-portal-*-installer.jar -d /tmp \
+RUN unzip -q ingrid-portal-*-installer.jar -d /tmp \
     && export INSTALL_DIR=`ls -d1 /tmp/distribution` \
     && mv $INSTALL_DIR/apache-tomcat/webapps/ingrid-portal-base.war $INSTALL_DIR/apache-tomcat/webapps/ROOT.war \
     && mkdir -p $INSTALL_DIR/apache-tomcat/webapps/ROOT \
