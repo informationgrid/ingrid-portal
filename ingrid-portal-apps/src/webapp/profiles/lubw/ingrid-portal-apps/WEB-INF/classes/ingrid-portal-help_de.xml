@@ -639,7 +639,7 @@
                    Partnern und Informationsanbietern. Die Kataloge sind hierarchisch aufgebaut 
                    und können mit einem Klick auf "+"/"-" auf-/zugeklappt 
                    werden. Die Informationen werden in den Katalogen als 
-                   <b>Objekte</b> bezeichnet. Als zusätzliche Information sind 
+                   <b>Datensätze</b> bezeichnet. Als zusätzliche Information sind
                    im Bereich <b>Adressen</b> die jeweiligen 
                    Ansprechpartner aufgeführt. Durch einen Klick auf ein Objekt
                    oder eine Adresse werden detaillierte Informationen 
@@ -657,25 +657,25 @@
                 <p>Seine Funktionalität umfasst u.a.:</p>
                 <ul>
                     <li>
-                        - layerzentrierte Darstellung von Karten mit direkter Vorschau
+                        layerzentrierte Darstellung von Karten mit direkter Vorschau
                     </li>
                     <li>
-                        - strukturiertes Angebot an Karten + Hinzufügen externer Karten 
+                        strukturiertes Angebot an Karten + Hinzufügen externer Karten
                     </li>
                     <li>
-                        - Suche nach Karten direkt auf eingebundenen Karten oder im Suchraum von InGrid (Kataloge)
+                        Suche nach Karten direkt auf eingebundenen Karten oder im Suchraum von InGrid (Kataloge)
                     </li>
                     <li>
-                        - Zeichnen und Messen auf der Karte
+                        Zeichnen und Messen auf der Karte
                     </li>                    
                     <li>
-                        - Vergleichsfunktionalität zwischen Layern (Slider blendet ein/aus)
+                        Vergleichsfunktionalität zwischen Layern (Slider blendet ein/aus)
                     </li>                    
                     <li>
-                        - Abspeichern und Teilen von Karten u.a. via QR Code 
+                        Abspeichern und Teilen von Karten u.a. via QR Code
                     </li>
                     <li>
-                        - umfassende Druck Funktionalität 
+                        umfassende Druck Funktionalität
                     </li>
                 </ul>                                       
             </content>
@@ -692,9 +692,9 @@
             <content>
             </content>
             <section help-key="maps-3-1">
-                <header>Ändern des Kartenmassstabs</header>
+                <header>Ändern des Kartenmaßstabs</header>
                 <content>
-                    <p>Mit jedem Klick auf das "+" oder "-" wird der angezeigte Massstab vergrössert oder verkleinert.</p>
+                    <p>Mit jedem Klick auf das "+" oder "-" wird der angezeigte Maßstab vergrössert oder verkleinert.</p>
                 </content>
             </section>
             <section help-key="maps-3-2">
@@ -814,7 +814,7 @@
             <section help-key="maps-4-10">
                 <header>Drucken</header>
                 <content>
-                    <p>Die Kartenansicht und die für deren Verständnis nötigen Elemente (Massstab etc.) kann als pdf-Datei ausgegeben werden.
+                    <p>Die Kartenansicht und die für deren Verständnis nötigen Elemente (Maßstab etc.) kann als pdf-Datei ausgegeben werden.
                         Diese Datei kann dann gespeichert oder ausgedruckt werden.</p>
                     <p>Die Funktion "Drucken" lässt ein Dialogfenster erscheinen, wo die Parameter für die Erzeugung der pdf-Datei gewählt werden können.
                         Diese Parameter sind der Kartenmasstab und A4/A3 Orientierung.
@@ -917,7 +917,7 @@
                 <header>WMS Import</header>
                 <content>
                     <p>Es können nur WMS Dienste dargestellt werden, die das Projektionsystem unterstützen und dem WMS OGC Standard entsprechen.</p>
-                    <p>Die WMS Datensätze sind meistens erst ab einem bestimmtem Massstab sichtbar, deswegen muss in den entsprechenden Kartenausschnitt zentriert und ein entsprechender Massstab ausgewählt werden.</p>
+                    <p>Die WMS Datensätze sind meistens erst ab einem bestimmtem Maßstab sichtbar, deswegen muss in den entsprechenden Kartenausschnitt zentriert und ein entsprechender Maßstab ausgewählt werden.</p>
                     <p>Die Geschwindigkeit der Darstellung des WMS Datensatzes, ebenso wie dessen Verfügbarkeit ist von der Infrastruktur des zuständigen Betreibers abhängig.
                         Bitte beachten sie auch Datennutzungsbedingungen der einzelnen WMS Anbieter.</p>
                     <p>Die WMS Datensätze können über die Druckfunktionen als PDF gespeichert werden.</p>
@@ -949,7 +949,7 @@
         <section help-key="search-category-1">
             <header>Durchstöbern Sie das Portal nach Kategorien</header>
             <content>
-                <p>Durch die Auswahl einer Kategorie, werden Ihnen alle vorhandenen Treffer der ausgewählten Kategorie im Portal angezeigt.</p>
+                <p>Durch die Auswahl einer Kategorie werden Ihnen alle vorhandenen Treffer der ausgewählten Kategorie im Portal angezeigt.</p>
             </content>
         </section>
     </chapter>

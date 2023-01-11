@@ -897,7 +897,7 @@ a[class*="js-expander"] span.text {
 }
 .accordion-title {
   font-family: EB-Garamond-Regular, sans-serif;
-  text-transform: capitalize !important;
+  text-transform: initial !important;
 }
 .filter .nav-group:first-of-type .accordion-item .accordion-title {
   border-top: 1px solid #3f3f3f;
