@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.14.4" date="xxxx-xx-xx" description="Release 5.14.4">
+          <action type="update" dev="wemove" issue="4598">
+            Deutschlandkarte verkleinern, ersetzen oder entfernen
+          </action>
           <action type="update" dev="wemove" issue="4604">
             Portal: Anpassungen für LUBW Profil
           </action>
