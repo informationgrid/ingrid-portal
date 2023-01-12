@@ -6,7 +6,13 @@
     </properties>
 
     <body>
-        <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+        <release version="5.15.0-SNAPSHOT" date="2023-xx-xx" description="Release 5.15.0">
+          <action type="update" dev="wemove" issue="4604">
+            Portal: Anpassungen für LUBW Profil
+          </action>
+          <action type="add" dev="wemove" issue="4603">
+            Kartenclient: Option für Copyright Ersetzungen im Portal und im Ausdruck
+          </action>
           <action type="update" dev="wemove" issue="3976">
             Anpassung Hilfetext zum Feld "Durch die Ressource abgedeckte Zeitspanne"
           </action>
