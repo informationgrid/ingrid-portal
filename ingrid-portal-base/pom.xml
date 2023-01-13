@@ -127,6 +127,13 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <skipAssembly>true</skipAssembly>
+        </configuration>
+      </plugin>
+
       <!-- Overlay war with jetspeed stuff -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -286,17 +293,6 @@
           </resources>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>2.9</version>
-        <configuration>
-          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
-          <smtpHost>localhost</smtpHost>
-          <toAddresses />
-        </configuration>
-      </plugin>
-
     </plugins>
     <resources>
       <resource>
