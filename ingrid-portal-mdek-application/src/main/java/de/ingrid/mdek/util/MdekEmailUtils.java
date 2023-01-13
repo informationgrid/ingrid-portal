@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -78,10 +78,10 @@ public class MdekEmailUtils {
 
 	@Autowired
 	private SpringConfiguration springConfig;
-	
-	// Set in the init method
-	private static String systemMailReceiver;
 
+	// Set in the init method
+	private static String systemMailPrefix;
+	private static String systemMailReceiver;
 	private static String mailSender;
 	private static String mailReceiver;
 	private static String mailSmtpHost;
@@ -90,7 +90,7 @@ public class MdekEmailUtils {
 	private static String mailSmtpPort;
 	private static boolean mailSmtpSSL;
 	private static String mailSmtpProtocol;
-	
+
 	private static String mdekDirectLink;
 
 	private static final String MAIL_SUBJECT = "[IGE] Information";
@@ -101,7 +101,7 @@ public class MdekEmailUtils {
 	private static IMdekCallerQuery mdekCallerQuery;
 	private static IMdekCallerObject mdekCallerObject;
 	private static IMdekCallerAddress mdekCallerAddress;
-	
+
 	@Autowired
 	public MdekEmailUtils(ConnectionFacade connFacade) {
 	    MdekEmailUtils.connectionFacade = connFacade;
@@ -117,6 +117,7 @@ public class MdekEmailUtils {
 		// read global config from spring config, also taking *.override.props into account
 		Config globalConfig = springConfig.globalConfig();
 
+		systemMailPrefix = globalConfig.systemMailPrefix;
 		systemMailReceiver = globalConfig.systemMailReceiver;
 
 		mailSender = globalConfig.workflowMailSender;
@@ -232,7 +233,7 @@ public class MdekEmailUtils {
 		mailData.put("movedDataset", movedDatasetMap);
 		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
-		sendEmail(text, mailSender, emailList.toArray(new String[]{}) );		
+		sendEmail(text, mailSender, emailList.toArray(new String[]{}) );
 	}
 
 	public static void sendObjectMovedMail(String objUuid, String oldParentUuid, String newParentUuid) {
@@ -242,7 +243,7 @@ public class MdekEmailUtils {
 		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
 		sendObjectMovedMail(MdekObjectUtils.extractSingleObjectFromResponse(response), oldParentUuid, newParentUuid);
 	}
-	
+
 	private static void sendAddressMovedMail(MdekAddressBean adr, String fromUuid, String toUuid) {
 		List<User> qaUserList = getQAUsersForAddress(adr);
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
@@ -272,7 +273,7 @@ public class MdekEmailUtils {
 			return;
 		}
 		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, MdekSecurityUtils.getCurrentUserUuid());
-		sendAddressMovedMail(MdekAddressUtils.extractSingleAddressFromResponse(response), oldParentUuid, newParentUuid);	
+		sendAddressMovedMail(MdekAddressUtils.extractSingleAddressFromResponse(response), oldParentUuid, newParentUuid);
 	}
 
 	public static void sendObjectMarkedDeletedMail(String objUuid) {
@@ -298,7 +299,7 @@ public class MdekEmailUtils {
 
 	public static void sendAddressMarkedDeletedMail(String adrUuid) {
 		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, MdekSecurityUtils.getCurrentUserUuid());
-		sendAddressMarkedDeletedMail(MdekAddressUtils.extractSingleAddressFromResponse(response));	
+		sendAddressMarkedDeletedMail(MdekAddressUtils.extractSingleAddressFromResponse(response));
 	}
 
 	public static void sendAddressMarkedDeletedMail(MdekAddressBean adr) {
@@ -388,39 +389,39 @@ public class MdekEmailUtils {
 		mailData.put("login", login);
 
 		String text = mergeTemplate(templatePath, mailData, "map");
-		sendEmail("mCLOUD Editor: neues Passwort", text, mailSender, new String[] {email} );
+		sendEmail(systemMailPrefix + "mCLOUD Editor: neues Passwort", text, mailSender, new String[] {email} );
 
 	}
 
 	public static void sendEmail(String content, String from, String[] to) {
-		sendEmail(MAIL_SUBJECT, content, from, to);
+		sendEmail(systemMailPrefix + MAIL_SUBJECT, content, from, to);
 	}
 
 	public static void sendSystemEmail(String subject, String content) {
-		sendEmail(subject, content, mailSender, new String[] {systemMailReceiver});
+		sendEmail(systemMailPrefix + subject, content, mailSender, new String[] {systemMailReceiver});
 	}
 
 	public static void sendEmail(String subject, String content, String from, String[] to) {
 		Properties props = (Properties)System.getProperties().clone();
 		Session session;
-		
+
 	    // Setup mail server
 	    props.put("mail.smtp.host", mailSmtpHost);
 	    if(mailSmtpPort != null && !mailSmtpPort.equals("")){
 			props.put("mail.smtp.port", mailSmtpPort);
 		}
-	    
+
 	    if(mailSmtpProtocol != null && !mailSmtpProtocol.equals("")){
 	    	props.put("mail.transport.protocol", mailSmtpProtocol);
 		}
-	    
+
 		if(mailSmtpSSL){
 			props.put("mail.smtp.starttls.enable","true");
 		    props.put("mail.smtp.socketFactory.port", mailSmtpPort);
 		    props.put("mail.smtp.ssl.enable", true);
 		    props.put("mail.smtp.ssl.checkserveridentity", true);
 		    props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-		    props.put("mail.smtp.socketFactory.fallback", "false"); 
+		    props.put("mail.smtp.socketFactory.fallback", "false");
 		}
 
 		if(mailSmtpUser != null && !mailSmtpUser.equals("") && mailSmtpPass != null && !mailSmtpPass.equals("")){
@@ -432,7 +433,7 @@ public class MdekEmailUtils {
 			// create some properties and get the default Session
 			session = Session.getDefaultInstance(props, null);
 		}
-		
+
 		if (log.isDebugEnabled()) {
 			session.setDebug(true);
 		}
@@ -463,7 +464,7 @@ public class MdekEmailUtils {
 
 		} catch (MessagingException e) {
 			log.error("error sending email.", e);
-		}		
+		}
 	}
 
 	private static Map<String, List<ExpiredDataset>> createMailDatasetMap(List<ExpiredDataset> expiredDatasetList) {
@@ -580,7 +581,7 @@ public class MdekEmailUtils {
 
 		return qaUserList;
 	}
-	
+
 	private static List<User> getQAUsersForAddress(MdekAddressBean data) {
 		return getQAUsersForAddress(data.getUuid());
 	}
@@ -677,7 +678,7 @@ public class MdekEmailUtils {
 			" aNode.addrId = comm.adrId " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL;
 
-		qString += " and (";		
+		qString += " and (";
 		for (String uuid : uuidList) {
 			qString += " aNode.addrUuid = '"+uuid+"' or ";
 		}
@@ -747,7 +748,7 @@ public class MdekEmailUtils {
 
 		return false;
 	}
-	
+
 	private static boolean isCurrentUserQAForAddress(String adrUuid) {
 		String userId = MdekSecurityUtils.getCurrentUserUuid();
 		List<User> qaUsers = getQAUsersForAddress(adrUuid);
@@ -761,7 +762,7 @@ public class MdekEmailUtils {
 	}
 
 	private static List<String> extractNewCommentsFromObject(MdekDataBean data) {
-		return extractNewComments(data.getCommentTable(), data.getAssignTime());		
+		return extractNewComments(data.getCommentTable(), data.getAssignTime());
 	}
 
 	private static List<String> extractNewCommentsFromAddress(MdekAddressBean adr) {
@@ -802,9 +803,9 @@ public class MdekEmailUtils {
 }
 
 class MailAuthenticator extends Authenticator {
-	private String user; 
+	private String user;
 	private String password;
-	
+
 	public MailAuthenticator(String user, String password) {
 		this.user = user;
 		this.password = password;

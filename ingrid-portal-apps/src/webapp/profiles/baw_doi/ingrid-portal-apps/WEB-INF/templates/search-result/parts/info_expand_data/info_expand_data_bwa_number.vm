@@ -1,2 +1,5 @@
 ## Auftragsnummer
-#set($bwa_num = $rs.get("detail").get("bawauftragsnummer"))
+#set($bwa_num = "")
+#if($rs.get("detail"))
+    #set($bwa_num = $rs.get("detail").get("bawauftragsnummer"))
+#end

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -441,6 +441,7 @@ define([
                     name: additionalField.name,
                     style: "width:100%;"
                 });
+                if (additionalField.validator) inputWidget.validator = additionalField.validator;
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
 
@@ -848,16 +849,16 @@ define([
 
                 return uiElementSpan;
             },
-        
+
         addOutlinedSection: function(id, label, help, fields, options) {
             if (!options) options = {};
-            
+
             var outer = document.createElement("span");
             outer.id = "uiElementAdd" + id;
             domClass.add(outer, "outer");
             domClass.add(outer, "inputContainer");
             if (options.isMandatory) domClass.add(outer, "required");
-            
+
             var div = document.createElement("div");
 
             var labelElement = document.createElement("label");
@@ -872,14 +873,14 @@ define([
 
             var outlined = document.createElement("div");
             domClass.add(outlined, "outlined");
-            
+
             array.forEach(fields, function(field) {
                 outlined.appendChild(field);
             });
 
             var fill = construct.create("div", { 'class': 'fill'});
             outlined.appendChild(fill);
-            
+
             div.appendChild(labelWrapper);
             div.appendChild(outlined);
             outer.appendChild(div);

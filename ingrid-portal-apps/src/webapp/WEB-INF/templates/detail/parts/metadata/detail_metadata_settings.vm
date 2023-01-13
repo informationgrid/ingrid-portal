@@ -29,6 +29,8 @@
 #set($hashDetail9 = "metadata_info")
 #set($hasDetail10 = false)
 #set($hashDetail10 = "bibliographical_info")
+#set($hasDetail11 = false)
+#set($hashDetail11 = "detail_time")
 
 #set($showMetadataClassType = true)
 
@@ -42,11 +44,24 @@
     #set($hasAccessConstraints = "N")
 #end
 
+#set($tmpBooleanSymbols = [])
+#set($tmpBooleanSymbol = {})
+#set($tmpBooleanValue = $TOOL.getNameFromCodeList("600", "1"))
+#set($put = $tmpBooleanSymbol.put("value", true))
+#set($put = $tmpBooleanSymbol.put("symbol", "<span class='ic-ic-check' title='$tmpBooleanValue'></span>"))
+#set($add = $tmpBooleanSymbols.add($tmpBooleanSymbol))
+#set($tmpBooleanSymbol = {})
+#set($tmpBooleanValue = $TOOL.getNameFromCodeList("600", "0"))
+#set($put = $tmpBooleanSymbol.put("value", false))
+#set($put = $tmpBooleanSymbol.put("symbol", "<span class='ic-ic-cross' title='$tmpBooleanValue'></span>"))
+#set($add = $tmpBooleanSymbols.add($tmpBooleanSymbol))
+
 ## Beschreibung
 #set($getAlternateTitle = $TOOL.getAlternateTitle())
 #set($getDescription = $TOOL.valueHTMLEscape($TOOL.getDescription()))
 
 ## Zeitbezug
+#set($isTimeInDescription = true)
 ## Durch die Ressource abgedeckte Zeitspanne
 #set($xPathListTimeTimePeriodInstantPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimeInstant/gml:timePosition")
 #set($xPathListTimeTimePeriodBeginPosition = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition")
@@ -167,9 +182,13 @@
     "${xPathUseAccessConstraints}/gmd:MD_RestrictionCode/@codeListValue"
 ])
 
+## Software
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_software.vm")
+
 ## Fachinformationen
 #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
 #set($checkOtherInformation = false)
+#set($hideResolutionTitle = false)
 
 #### Type 1
 #### Fachliche Grundlage
@@ -216,6 +235,11 @@
     $xPathInfo1MDIdentifierCode,
     $xPathInfo1RSIdentifierCode
 ])
+## Messdaten (BAW)
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_measurement.vm")
+
+## Geometrie-Kontext (SH)
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_geometrie_context.vm")
 
 #### Type 2
 #set($xPathInfo2CICitationCitedResponsibleParty = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty")
@@ -405,7 +429,6 @@
 #### Bestellinformationen
 #set($xPathAdditionalInfoOrderingInstructions = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions/gco:CharacterString")
 
-
 #set($xPathListAdditionalInfo = [
     $xPathAdditionalInfoMDClassificationCode,
     $xPathAdditionalInfoSpecificUsage,
@@ -414,8 +437,10 @@
     $xPathAdditionalInfoExportCriteria,
     $xPathAdditionalInfoIdentificationInfoLanguageCode,
     $xPathAdditionalInfoDQDataQualityReport,
-    "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format",
-    "${xPathAdditionalInfoMDDistribution}./gmd:transferOptions",
+    "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format/gmd:name[string-length(text()) > 0] ",
+    "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format/gmd:version[string-length(text()) > 0] ",
+    "${xPathAdditionalInfoMDDistribution}/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine",
+    "${xPathAdditionalInfoMDDistribution}/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:transferSize",
     $xPathAdditionalInfoOrderingInstructions
 ])
 
@@ -545,3 +570,6 @@
 ## BAW BWAStr
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_bwa_str.vm")
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_additional.vm")
+
+## LUBW accessConstraints
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_accessconstraints.vm")

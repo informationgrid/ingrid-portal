@@ -1,3 +1,5 @@
+#parse ('/WEB-INF/templates/sitemap/sitemap_settings.vm')
+
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 <div class="columns">
     <div class="sitemap">
@@ -54,16 +56,18 @@
             #end
             #if($enableAbout)
                 #set ($link = $renderResponse.encodeURL("/portal/main-about.psml"))
-                <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.about.tooltip")">
+                <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.about.tooltip")" $linkAttrAbout>
                     <span class="ic-ic-arrow-right"></span>
                     <span class="text">$MESSAGES.getString("sitemap.area.main.about")</span>
                 </a>
                 <div class="search-result--nested">
-                    #set ($link = $renderResponse.encodeURL("/portal/main-about.psml"))
-                    <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.portrait.tooltip")">
-                        <span class="ic-ic-arrow-right"></span>
-                        <span class="text">$MESSAGES.getString("sitemap.area.main.portrait")</span>
-                    </a>
+                    #if($showSubMenuAbout)
+                        #set ($link = $renderResponse.encodeURL("/portal/main-about.psml"))
+                        <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.portrait.tooltip")" $linkAttrPortrait>
+                            <span class="ic-ic-arrow-right"></span>
+                            <span class="text">$MESSAGES.getString("sitemap.area.main.portrait")</span>
+                        </a>
+                    #end
                     #if($enablePartner)
                         #set ($link = $renderResponse.encodeURL("/portal/main-about-partner.psml"))
                         <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.main.provider.tooltip")">
@@ -86,7 +90,7 @@
                     <span class="ic-ic-arrow-right"></span>
                     <span class="text">$MESSAGES.getString("sitemap.area.main.provider")</span>
                 </a>
-             #end
+            #end
         </div>
         <h4>$MESSAGES.getString("sitemap.area.footer")</h4>
         <div class="link-list">
@@ -97,7 +101,7 @@
             </a>
             #if($enableContact)
             #set ($link = $renderResponse.encodeURL("/portal/service-contact.psml"))
-            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.service.contact.tooltip")">
+            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.service.contact.tooltip")" $linkAttrContact>
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.service.contact")</span>
             </a>
@@ -108,26 +112,26 @@
                 <span class="text">$MESSAGES.getString("sitemap.area.service.sitemap")</span>
             </a>
             #set ($link = $renderResponse.encodeURL("/portal/disclaimer.psml"))
-            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.disclaimer.tooltip")">
+            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.disclaimer.tooltip")" $linkAttrDisclaimer>
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.footer.disclaimer")</span>
             </a>
             #set ($link = $renderResponse.encodeURL("/portal/privacy.psml"))
-            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.privacy.tooltip")">
+            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.privacy.tooltip")" $linkAttrPrivacy>
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.footer.privacy")</span>
             </a>
             #set ($link = $renderResponse.encodeURL("/portal/accessibility.psml"))
-            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.accessibility.tooltip")">
+            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.accessibility.tooltip")" $linkAttrAccessibility>
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.footer.accessibility")</span>
             </a>
             #if($enableRSSPage)
-            #set ($link = $renderResponse.encodeURL("/portal/rsspage.psml"))
-            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.rsspage.tooltip")">
-                <span class="ic-ic-arrow-right"></span>
-                <span class="text">$MESSAGES.getString("sitemap.area.footer.rsspage")</span>
-            </a>
+                #set ($link = $renderResponse.encodeURL("/portal/rsspage.psml"))
+                <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.rsspage.tooltip")">
+                    <span class="ic-ic-arrow-right"></span>
+                    <span class="text">$MESSAGES.getString("sitemap.area.footer.rsspage")</span>
+                </a>
             #end
         </div>
     </div>

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -434,7 +434,7 @@ function getQueryStringParameter(key) {
 
 }
 
-function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
+function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, bboxFillOpacity, inverted) {
   var promises = [];
   ids.forEach(function(id){
     var request =  $.ajax({
@@ -474,50 +474,73 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords) {
         map.spin(false);
       } else {
         if(wkt) {
-          addLayerWKT(map, wkt, coords);
+          addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted);
         } else if (coords) {
-          addLayerBounds(map, coords);
+          addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted);
         }
         map.spin(false);
       }
     });
   } else {
     if(wkt) {
-      addLayerWKT(map, wkt, coords);
+      addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted);
     } else if (coords) {
-      addLayerBounds(map, coords);
+      addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted);
     }
   }
 }
 
-function addLayerWKT(map, wkt, coords) {
+function addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted) {
   var features = L.geoJSON(JSON.parse(wkt));
   if(features) {
       features.addTo(map);
       map.fitBounds(features.getBounds());
   } else {
-      addLayerBounds(map, coords);
+      addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted);
   }
 }
 
-function addLayerBounds(map, coords) {
-  coords.forEach(function(coord) {
+function addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted) {
+  if(inverted) {
+    var geojson = [];
+    coords.forEach(function(coord) {
       var y1Coord = coord[2];
       var x1Coord = coord[1];
       var y2Coord = coord[4];
       var x2Coord = coord[3];
       if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
-          if(x1Coord === x2Coord && y1Coord === y2Coord) {
-              var marker = L.marker([y1Coord, x1Coord]);
-              marker.bindTooltip(coord[0], {direction: 'center'});
-              map.addLayer(marker);
-          } else {
-              var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
-              mapLayerBounds.bindTooltip(coord[0], {direction: 'center'});
-              map.addLayer(mapLayerBounds);
-          }
+        if(x1Coord === x2Coord && y1Coord === y2Coord) {
+        } else {
+          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {});
+          geojson.push(mapLayerBounds.toGeoJSON());
+        }
       }
-  });
+    });
+    L.geoJson(geojson, {
+      invert: true,
+      color: bboxColor,
+      fillOpacity: bboxFillOpacity,
+      weight: 1
+    }).addTo(map);
+  } else {
+    coords.forEach(function(coord) {
+      var y1Coord = coord[2];
+      var x1Coord = coord[1];
+      var y2Coord = coord[4];
+      var x2Coord = coord[3];
+      if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
+        if(x1Coord === x2Coord && y1Coord === y2Coord) {
+          var marker = L.marker([y1Coord, x1Coord]);
+          marker.bindTooltip(coord[0], {direction: 'center'});
+          map.addLayer(marker);
+        } else {
+          var mapLayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: bboxColor, weight: 1});
+          mapLayerBounds.bindTooltip(coord[0], {direction: 'center'});
+          map.addLayer(mapLayerBounds);
+        }
+      }
+    });
+  }
 }
 
 function updateURLParamReload(key, value) {
@@ -557,4 +580,24 @@ function getOS() {
   }
 
   return os;
+}
+
+function elementInViewport(el) {
+    var top = el.offsetTop;
+    var left = el.offsetLeft;
+    var width = el.offsetWidth;
+    var height = el.offsetHeight;
+
+    while(el.offsetParent) {
+      el = el.offsetParent;
+      top += el.offsetTop;
+      left += el.offsetLeft;
+    }
+
+    return (
+        top >= window.pageYOffset &&
+        left >= window.pageXOffset &&
+        (top + height) <= (window.pageYOffset + window.innerHeight) &&
+        (left + width) <= (window.pageXOffset + window.innerWidth)
+    );
 }

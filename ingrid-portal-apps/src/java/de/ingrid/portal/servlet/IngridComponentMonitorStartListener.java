@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -43,7 +43,7 @@ public class IngridComponentMonitorStartListener implements ServletContextListen
     private static final Logger log = LoggerFactory.getLogger(IngridComponentMonitorStartListener.class);
 
     /**
-     * @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)
+     * @see jakarta.servlet.ServletContextListener#contextInitialized(jakarta.servlet.ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0) {
         // start ibus communication
@@ -65,7 +65,7 @@ public class IngridComponentMonitorStartListener implements ServletContextListen
     }
 
     /**
-     * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
+     * @see jakarta.servlet.ServletContextListener#contextDestroyed(jakarta.servlet.ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0) {
         // start monitor scheduler

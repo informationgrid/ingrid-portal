@@ -27,7 +27,7 @@
 <hibernate-mapping package="de.ingrid.mdek.persistence.db.model">
    <class name="UserData" table="user_data">
       <id name="id" type="long" column="id">
-         <generator class="hilo"/>
+         <generator class="increment"/>
       </id>
       <version name="version" type="integer" column="version"/>
       <property name="portalLogin" type="string" column="portal_login"/>

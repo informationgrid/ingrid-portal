@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -79,7 +79,7 @@ public class Wcs201CapabilitiesParser extends GeneralCapabilitiesParser implemen
 
         result.setTitle(xPathUtils.getString(doc, XPATH_EXP_WCS_TITLE));
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_WCS_ABSTRACT));
-        result.setVersions(getNodesContentAsList(doc, XPATH_EXP_WCS_VERSION));
+        result.setVersions(addOGCtoVersions(getNodesContentAsList(doc, XPATH_EXP_WCS_VERSION)));
 
         // Fees
         result.setFees(xPathUtils.getString(doc, XPATH_EXP_WCS_FEES));

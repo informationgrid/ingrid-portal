@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -29,7 +29,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.io.FileNotFoundException;
@@ -45,10 +45,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.dwr.services.CatalogService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -81,7 +81,7 @@ public class GetCapabilitiesServiceTest {
     /**
      * @throws java.lang.Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         //service = new GetCapabilitiesService();
         MockitoAnnotations.initMocks(this);
@@ -143,21 +143,21 @@ public class GetCapabilitiesServiceTest {
         when(connFacade.getMdekCallerQuery()).thenReturn( callerQuery );
         IngridDocument doc = new IngridDocument();
         doc.putBoolean( IJobRepository.JOB_INVOKE_SUCCESS, false );
-        when(callerQuery.queryHQLToMap( Matchers.contains("test-plug-mock"), Matchers.anyString(), Matchers.anyInt(), Matchers.anyString())).thenReturn( doc );
+        when(callerQuery.queryHQLToMap( ArgumentMatchers.contains("test-plug-mock"), ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.anyString())).thenReturn( doc );
     }
 
     /**
-     * Test method for {@link de.ingrid.mdek.dwr.services.GetCapabilitiesService#getCapabilitiesCSW(org.w3c.dom.Document)}.
+     * Test method for {@link de.ingrid.mdek.dwr.services.GetCapabilitiesService#getCapabilitiesData(org.w3c.dom.Document)}.
      * @throws IOException 
      * @throws SAXException 
      * @throws ParserConfigurationException 
      */
     @Test
-    public void testGetCapabilitiesCSW() throws Exception {
+    void testGetCapabilitiesCSW() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_CSW.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("CSW"));
         assertThat(result.getTitle(), is("con terra GmbH test catalogue Server"));
@@ -168,7 +168,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getResourceLocators().get(0).getRelationType(), is(5066));
         assertThat(result.getResourceLocators().get(0).getRelationTypeName(), is("Verweis zu Dienst"));
         assertThat(result.getDataServiceType(), is(1));
-        String[] expected = { "CS-W", "ISO19119", "ISO19115", "con terra", "Catalogue Service", "metadata", "Orthoimagery", "Orto immagini"};
+        String[] expected = {"CS-W", "ISO19119", "ISO19115", "con terra", "Catalogue Service", "metadata", "Orthoimagery", "Orto immagini"};
         assertThat(result.getKeywords(), hasItems(expected));
         assertThat(result.getTimeReferences().get(0).getDate(), is((new SimpleDateFormat("yyyy-MM-dd")).parse("2009-07-02")));
         assertThat(result.getTimeReferences().get(0).getType(), is(1));
@@ -176,15 +176,15 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getTimeReferences().get(1).getType(), is(2));
         assertThat(result.getTimeReferences().get(2).getDate(), is((new SimpleDateFormat("yyyy-MM-dd")).parse("2013-11-26")));
         assertThat(result.getTimeReferences().get(2).getType(), is(3));
-        
+
         assertThat(result.getTimeSpans().get(0).getFrom(), is((new SimpleDateFormat("yyyy-MM-dd")).parse("2009-08-20")));
         assertThat(result.getTimeSpans().get(0).getTo(), is((new SimpleDateFormat("yyyy-MM-dd")).parse("2010-04-29")));
-        
+
         assertThat(result.getConformities().get(0).getLevel(), is(1));
         assertThat(result.getConformities().get(0).getSpecification(), is("COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services"));
         assertThat(result.getConformities().get(1).getLevel(), is(1));
         assertThat(result.getConformities().get(1).getSpecification(), is("REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali"));
-        
+
         assertThat(result.getAddress().getFirstname(), is("Uwe"));
         assertThat(result.getAddress().getLastname(), is("Voges"));
         assertThat(result.getAddress().getStreet(), is("Marting-Luther-King-Weg 24"));
@@ -194,7 +194,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("NRW"));
         assertThat(result.getAddress().getPhone(), is("+49-251-7474-402"));
         assertThat(result.getAddress().getEmail(), is("voges@conterra.de"));
-        
+
         // operations
         assertThat(result.getOperations().size(), is(5));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://www.conterra.de/catalog?"));
@@ -203,8 +203,8 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getOperations().get(2).getName(), is("GetRecords"));
         assertThat(result.getOperations().get(3).getName(), is("GetRecordById"));
         assertThat(result.getOperations().get(4).getName(), is("Harvest"));
-        
-        
+
+
     }
     
     //@Test
@@ -217,13 +217,13 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getUuid(), is("2B83F58E-60C2-11D6-884A-0000F4ABB4D8"));
         
     }
-    
+
     @Test
-    public void testGetCapabilitiesWMS111() throws Exception {
+    void testGetCapabilitiesWMS111() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WMS_111.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WMS"));
         assertThat(result.getDataServiceType(), is(2));
@@ -233,14 +233,14 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAccessConstraints().get(0), is("none"));
         // TODO: ? assertThat(result.getOnlineResource(), is("mailto:voges@conterra.de"));
         //TODO: assertThat(result.getResourceLocator(), is("???"));
-        String[] expected = { "bird", "roadrunner", "ambush", "road", "transportation", "atlas", "river", "canal", "waterway" };
+        String[] expected = {"bird", "roadrunner", "ambush", "road", "transportation", "atlas", "river", "canal", "waterway"};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         assertThat(result.getCoupledResources().get(0).getRef1ObjectIdentifier(), is("123456"));
         assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().size(), is(3));
-        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 0 ).getTitle(), is("bird"));
-        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 1 ).getTitle(), is("roadrunner"));
-        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 2 ).getTitle(), is("ambush"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get(0).getTitle(), is("bird"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get(1).getTitle(), is("roadrunner"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get(2).getTitle(), is("ambush"));
 //        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().size(), is(1));
 //        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLatitude1(), is(41.75));
 //        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLongitude1(), is(-71.63));
@@ -248,16 +248,16 @@ public class GetCapabilitiesServiceTest {
 //        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLongitude2(), is(-70.78));
         assertThat(result.getCoupledResources().get(1).getRef1ObjectIdentifier(), is("78910"));
         assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().size(), is(6));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 0 ).getTitle(), is("road"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 1 ).getTitle(), is("transportation"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 2 ).getTitle(), is("atlas"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 3 ).getTitle(), is("bird"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 4 ).getTitle(), is("roadrunner"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 5 ).getTitle(), is("ambush"));
-        
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(0).getTitle(), is("road"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(1).getTitle(), is("transportation"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(2).getTitle(), is("atlas"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(3).getTitle(), is("bird"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(4).getTitle(), is("roadrunner"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(5).getTitle(), is("ambush"));
+
         assertThat(result.getSpatialReferenceSystems().get(0).getId(), is(-1));
         assertThat(result.getSpatialReferenceSystems().get(0).getName(), is("EPSG:26986"));
-        
+
         assertThat(result.getAddress().getFirstname(), is("Jeff"));
         assertThat(result.getAddress().getLastname(), is("deLaBeaujardiere"));
         assertThat(result.getAddress().getStreet(), is("NASA Goddard Space Flight Center, Code 933"));
@@ -267,20 +267,20 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("MD"));
         assertThat(result.getAddress().getPhone(), is("+1 301 286-1569"));
         assertThat(result.getAddress().getEmail(), is("delabeau@iniki.gsfc.nasa.gov"));
-        
+
         assertThat(result.getOperations().size(), is(3));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://hostname:port/path"));
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
         assertThat(result.getOperations().get(1).getName(), is("GetMap"));
         assertThat(result.getOperations().get(2).getName(), is("GetFeatureInfo"));
     }
-    
+
     @Test
-    public void testGetCapabilitiesWMS130() throws Exception {
+    void testGetCapabilitiesWMS130() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WMS_130.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WMS"));
         assertThat(result.getVersions().get(0), is("OGC:WMS 1.3.0"));
@@ -292,19 +292,19 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getResourceLocators().get(0).getUrl(), is("http://ogc.beta.agiv.be/ogc/wms/vrbgINSP?"));
         assertThat(result.getResourceLocators().get(0).getRelationType(), is(5066));
         assertThat(result.getDataServiceType(), is(2));
-        String[] expected = { "bird", "roadrunner", "ambush", "road", "transportation", "atlas", "river", "canal", "waterway", "Administratieveeenheden", "boundaries" };
+        String[] expected = {"bird", "roadrunner", "ambush", "road", "transportation", "atlas", "river", "canal", "waterway", "Administratieveeenheden", "boundaries"};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         assertThat(result.getCoupledResources().get(0).getRef1ObjectIdentifier(), is("123456"));
         assertThat(result.getCoupledResources().get(0).getTitle(), is("Roads and Rivers"));
         assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().size(), is(3));
-        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 0 ).getTitle(), is("bird"));
-        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 1 ).getTitle(), is("roadrunner"));
-        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 2 ).getTitle(), is("ambush"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get(0).getTitle(), is("bird"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get(1).getTitle(), is("roadrunner"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get(2).getTitle(), is("ambush"));
         assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().size(), is(3));
-        assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains( "EPSG:26986" ), is( true ));
-        assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains("CRS:84"), is( true ));
-        assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains("EPSG 4230: ED50 / geographisch"), is( true ));        
+        assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains("EPSG:26986"), is(true));
+        assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains("CRS:84"), is(true));
+        assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains("EPSG 4230: ED50 / geographisch"), is(true));
         assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().size(), is(1));
         assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLatitude1(), is(-71.63));
         assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLongitude1(), is(41.75));
@@ -314,21 +314,21 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getCoupledResources().get(1).getTitle(), is("Roads at 1:1M scale"));
         assertThat(result.getCoupledResources().get(1).getGeneralDescription(), is("Roads at a scale of 1 to 1 million."));
         assertThat(result.getCoupledResources().get(1).getRef1SpatialSystemTable().size(), is(2));
-        assertThat(result.getCoupledResources().get(1).getRef1SpatialSystemTable().contains("CRS:84"), is( true ));
-        assertThat(result.getCoupledResources().get(1).getRef1SpatialSystemTable().contains("EPSG 4230: ED50 / geographisch"), is( true ));        
+        assertThat(result.getCoupledResources().get(1).getRef1SpatialSystemTable().contains("CRS:84"), is(true));
+        assertThat(result.getCoupledResources().get(1).getRef1SpatialSystemTable().contains("EPSG 4230: ED50 / geographisch"), is(true));
         assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().size(), is(6));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 0 ).getTitle(), is("road"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 1 ).getTitle(), is("transportation"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 2 ).getTitle(), is("atlas"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 3 ).getTitle(), is("bird"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 4 ).getTitle(), is("roadrunner"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 5 ).getTitle(), is("ambush"));
-        
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(0).getTitle(), is("road"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(1).getTitle(), is("transportation"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(2).getTitle(), is("atlas"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(3).getTitle(), is("bird"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(4).getTitle(), is("roadrunner"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get(5).getTitle(), is("ambush"));
+
         assertThat(result.getSpatialReferenceSystems().get(0).getId(), is(-1));
         assertThat(result.getSpatialReferenceSystems().get(0).getName(), is("CRS:84"));
         assertThat(result.getSpatialReferenceSystems().get(1).getId(), is(4230));
         assertThat(result.getSpatialReferenceSystems().get(1).getName(), is("EPSG 4230: ED50 / geographisch"));
-        
+
         assertThat(result.getTimeReferences().get(0).getDate(), is((new SimpleDateFormat("yyyy-MM-dd")).parse("2003-01-01")));
         assertThat(result.getTimeReferences().get(0).getType(), is(1));
         assertThat(result.getTimeReferences().get(1).getDate(), is((new SimpleDateFormat("yyyy-MM-dd")).parse("2003-05-10")));
@@ -336,7 +336,7 @@ public class GetCapabilitiesServiceTest {
 //        
         assertThat(result.getConformities().get(0).getLevel(), is(3));
         assertThat(result.getConformities().get(0).getSpecification(), is("Verordening (EG) nr. 976/2009 van de Commissie van 19 oktober 2009 tot uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad wat betreft de netwerkdiensten"));
-        
+
         assertThat(result.getAddress().getFirstname(), is("Jeff"));
         assertThat(result.getAddress().getLastname(), is("Smith"));
         assertThat(result.getAddress().getStreet(), is("NASA Goddard Space Flight Center"));
@@ -346,20 +346,20 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("MD"));
         assertThat(result.getAddress().getPhone(), is("+1 301 555-1212"));
         assertThat(result.getAddress().getEmail(), is("user@host.com"));
-        
+
         assertThat(result.getOperations().size(), is(3));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://hostname/path?"));
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
         assertThat(result.getOperations().get(1).getName(), is("GetMap"));
         assertThat(result.getOperations().get(2).getName(), is("GetFeatureInfo"));
     }
-    
+
     @Test
-    public void testGetCapabilitiesWMS130Niedersachsen() throws Exception {
+    void testGetCapabilitiesWMS130Niedersachsen() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WMS_130_niedersachsen.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WMS"));
         assertThat(result.getDataServiceType(), is(2));
@@ -367,11 +367,11 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getTitle(), is("Naturschutz"));
         assertThat(result.getFees(), is("none"));
         assertThat(result.getAccessConstraints().get(0), is("none"));
-        
+
         // Keywords
-        String[] expected = { "UNB,Naturrämliche Regionen, Unterregionen, Landesgrenze mit 12-sm Zone,Minutengitter, TK-Quadtranten, Feldblöcke, Biosphärenreservat, Nationalparke, Naturschutzgebiete, Landschaftsschtugebiete, Naturparke, Naturdenkmale, FFH-Gebiete, EU-Vogelschutzgebiete, Flächen zur Bestandserfassung, Landesweite Biotopkartierung, Für die Fauna wertvolle Bereiche, Förderkulissen des Kooperationsprogrammes Naturschutz, Moorschutzprogramme, Fließgewässerschtuzsystem, Gebiete mit gesamtstaatlich repräsentativer Bedeutung" };
+        String[] expected = {"UNB,Naturrämliche Regionen, Unterregionen, Landesgrenze mit 12-sm Zone,Minutengitter, TK-Quadtranten, Feldblöcke, Biosphärenreservat, Nationalparke, Naturschutzgebiete, Landschaftsschtugebiete, Naturparke, Naturdenkmale, FFH-Gebiete, EU-Vogelschutzgebiete, Flächen zur Bestandserfassung, Landesweite Biotopkartierung, Für die Fauna wertvolle Bereiche, Förderkulissen des Kooperationsprogrammes Naturschutz, Moorschutzprogramme, Fließgewässerschtuzsystem, Gebiete mit gesamtstaatlich repräsentativer Bedeutung"};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         assertThat(result.getSpatialReferenceSystems().get(0).getId(), is(-1));//84));
         assertThat(result.getSpatialReferenceSystems().get(0).getName(), is("CRS:84"));
         assertThat(result.getSpatialReferenceSystems().get(1).getId(), is(4326));
@@ -388,7 +388,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getSpatialReferenceSystems().get(9).getName(), is("EPSG:3035"));
         assertThat(result.getSpatialReferenceSystems().get(10).getId(), is(-1));//3044));
         assertThat(result.getSpatialReferenceSystems().get(10).getName(), is("EPSG:3044"));
-        
+
         // check for a bounding box that contains all layers
         // these coordinates did not need a transformation
         assertThat(result.getBoundingBoxes().size(), is(1));
@@ -397,7 +397,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getBoundingBoxes().get(0).getLongitude1(), is(51.2575719691118));
         assertThat(result.getBoundingBoxes().get(0).getLatitude2(), is(11.6580524828798));
         assertThat(result.getBoundingBoxes().get(0).getLongitude2(), is(54.0294452991844));
-        
+
         assertThat(result.getAddress().getFirstname(), is("Dorothea"));
         assertThat(result.getAddress().getLastname(), is("Pielke"));
         assertThat(result.getAddress().getStreet(), is("Archivstraße 2"));
@@ -407,7 +407,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("Niedersachsen"));
         assertThat(result.getAddress().getPhone(), is("none"));
         assertThat(result.getAddress().getEmail(), is("dorothea.pielke@mu.niedersachsen.de"));
-        
+
         assertThat(result.getOperations().size(), is(3));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://www.umweltkarten-niedersachsen.de/arcgis/services/Natur_wms/MapServer/WMSServer?"));
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
@@ -416,27 +416,27 @@ public class GetCapabilitiesServiceTest {
     }
 
     @Test
-    public void testGetCapabilitiesWFS110() throws Exception {
+    void testGetCapabilitiesWFS110() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WFS_110.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WFS"));
         assertThat(result.getDataServiceType(), is(3));
         assertThat(result.getVersions().get(0), is("OGC:WFS 1.1.0"));
-        
+
         assertThat(result.getTitle(), is("WFS_Geotourismus"));
         assertThat(result.getFees(), is(""));
         assertThat(result.getAccessConstraints().size(), is(0));
-        
+
         // Online Resource
         assertThat(result.getOnlineResources().get(0).getUrl(), is("www.geoinfo.hamburg.de"));
-        
+
         // Keywords
-        String[] expected = { };
+        String[] expected = {};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         // check address
         assertThat(result.getAddress().getFirstname(), is("Thomas"));
         assertThat(result.getAddress().getLastname(), is("Eichhorn"));
@@ -447,20 +447,20 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("Hamburg"));
         assertThat(result.getAddress().getPhone(), is("+49 40 42826 5450"));
         assertThat(result.getAddress().getEmail(), is("gvgeoportal@gv.hamburg.de"));
-        
+
         assertThat(result.getOperations().size(), is(3));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://gateway.hamburg.de/OGCFassade/HH_WFS_Geotourismus.aspx?"));
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
         assertThat(result.getOperations().get(1).getName(), is("DescribeFeatureType"));
         assertThat(result.getOperations().get(2).getName(), is("GetFeature"));
     }
-    
+
     @Test
-    public void testGetCapabilitiesWFS20() throws Exception {
+    void testGetCapabilitiesWFS20() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WFS_20.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WFS"));
         assertThat(result.getDataServiceType(), is(3));
@@ -470,14 +470,14 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getTitle(), is("OGC Member WFS"));
         assertThat(result.getFees(), is("NONE"));
         assertThat(result.getAccessConstraints().get(0), is("NONE"));
-        
+
         // Online Resource
         assertThat(result.getOnlineResources().get(0).getUrl(), is("http://www.BlueOx.org/contactUs"));
-        
+
         // Keywords
-        String[] expected = { "FGDC", "NSDI", "Framework Data Layer", "BlueOx" };
+        String[] expected = {"FGDC", "NSDI", "Framework Data Layer", "BlueOx"};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         // check address
         assertThat(result.getAddress().getFirstname(), is("Paul"));
         assertThat(result.getAddress().getLastname(), is("Bunyon"));
@@ -488,7 +488,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("Rural County"));
         assertThat(result.getAddress().getPhone(), is("1.800.BIG.WOOD"));
         assertThat(result.getAddress().getEmail(), is("Paul.Bunyon@BlueOx.org"));
-        
+
         assertThat(result.getOperations().size(), is(3));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://www.BlueOx.org/wfs/wfs.cgi?"));
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
@@ -497,13 +497,13 @@ public class GetCapabilitiesServiceTest {
         //assertThat(result.getOperations().get(3).getName(), is("LockFeature"));
        // assertThat(result.getOperations().get(4).getName(), is("Transaction"));
     }
-    
+
     @Test
-    public void testGetCapabilitiesWFS20All() throws Exception {
+    void testGetCapabilitiesWFS20All() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WFS_20_all.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WFS"));
         assertThat(result.getDataServiceType(), is(3));
@@ -513,23 +513,23 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getTitle(), is("OGC Member WFS"));
         assertThat(result.getFees(), is("NONE"));
         assertThat(result.getAccessConstraints().get(0), is("NONE"));
-        
+
         assertThat(result.getResourceLocators().get(0).getUrl(), is("http://my-download-resource-locator"));
         assertThat(result.getResourceLocators().get(0).getRelationType(), is(5066));
-        
+
         // Online Resource
         assertThat(result.getOnlineResources().get(0).getUrl(), is("http://www.BlueOx.org/contactUs"));
-        
+
         // Keywords
-        String[] expected = { "FGDC", "NSDI", "Framework Data Layer", "BlueOx", "forest", "north", "woods", "arborial", "diversity", "lakes", "boundaries", "water", "hydro", "downloadMe" };
+        String[] expected = {"FGDC", "NSDI", "Framework Data Layer", "BlueOx", "forest", "north", "woods", "arborial", "diversity", "lakes", "boundaries", "water", "hydro", "downloadMe"};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         assertThat(result.getTimeReferences().get(0).getDate(), is((new SimpleDateFormat("yyyy-MM-dd")).parse("2007-11-13")));
         assertThat(result.getTimeReferences().get(0).getType(), is(1));
 
         assertThat(result.getConformities().get(0).getLevel(), is(3));
         assertThat(result.getConformities().get(0).getSpecification(), is("Please enter a title"));
-        
+
         // check address
         assertThat(result.getAddress().getFirstname(), is("Paul"));
         assertThat(result.getAddress().getLastname(), is("Bunyon"));
@@ -540,7 +540,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("Rural County"));
         assertThat(result.getAddress().getPhone(), is("1.800.BIG.WOOD"));
         assertThat(result.getAddress().getEmail(), is("Paul.Bunyon@BlueOx.org"));
-        
+
         // operations
         assertThat(result.getOperations().size(), is(5));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://www.BlueOx.org/wfs/wfs.cgi?"));
@@ -551,31 +551,31 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getOperations().get(4).getName(), is("Transaction"));
 
     }
-    
+
     @Test
-    public void testGetCapabilitiesWCS() throws Exception {
+    void testGetCapabilitiesWCS() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WCS.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WCS"));
         assertThat(result.getDataServiceType(), is(3));
-        assertThat(result.getVersions().get(0), is("1.0.0"));
+        assertThat(result.getVersions().get(0), is("OGC:WCS 1.0.0"));
         assertThat(result.getTitle(), is("deegree WCS"));
         assertThat(result.getDescription(), is("deegree WCS being OGC WCS 1.0.0 reference implementation"));
-        
+
         assertThat(result.getFees(), is("NONE"));
         assertThat(result.getAccessConstraints().get(0), is("NONE"));
         assertThat(result.getAccessConstraints().get(1), is("SOME"));
-        
+
         // Online Resource
         assertThat(result.getOnlineResources().get(0).getUrl(), is("http://www.geodatenzentrum.de"));
-        
+
         // Keywords
-        String[] expected = { "deegree", "DGM", "DGM25" };
+        String[] expected = {"deegree", "DGM", "DGM25"};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         // check address
         assertThat(result.getAddress().getFirstname(), is("Dr. Manfred"));
         assertThat(result.getAddress().getLastname(), is("Endrullis"));
@@ -586,39 +586,39 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("Brandenburg"));
         assertThat(result.getAddress().getPhone(), is("+49 341 5634369"));
         assertThat(result.getAddress().getEmail(), is(nullValue()));
-        
+
         assertThat(result.getOperations().size(), is(3));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://localhost:8080/wpvs/services?"));
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
         assertThat(result.getOperations().get(1).getName(), is("DescribeCoverage"));
         assertThat(result.getOperations().get(2).getName(), is("GetCoverage"));
     }
-    
+
     @Test
-    public void testGetCapabilitiesWCS110() throws Exception {
+    void testGetCapabilitiesWCS110() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WCS_112.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WCS"));
         assertThat(result.getDataServiceType(), is(3));
-        assertThat(result.getVersions().get(0), is("1.0.0"));
-        assertThat(result.getVersions().get(1), is("1.1.2"));
+        assertThat(result.getVersions().get(0), is("OGC:WCS 1.0.0"));
+        assertThat(result.getVersions().get(1), is("OGC:WCS 1.1.2"));
         assertThat(result.getTitle(), is("CubeWerx Demonstation WCS"));
         assertThat(result.getDescription(), is("A demonstration server used to illustrate CubeWerx's compilance with the Web Coverage Service 1.1.0 implementation specification"));
-        
+
         assertThat(result.getFees(), is("NONE"));
         assertThat(result.getAccessConstraints().get(0), is("NONE"));
         //TODO: assertThat(result.getAccessConstraints(), is("SOME"));
         
         // Online Resource
         assertThat(result.getOnlineResources().get(0).getUrl(), is("http://www.cubewerx.com/~pvretano"));
-        
+
         // Keywords
-        String[] expected = { "Web Coverage Service", "06-083", "CubeWerx", "GeoTIFF", "Imagery" };
+        String[] expected = {"Web Coverage Service", "06-083", "CubeWerx", "GeoTIFF", "Imagery"};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         // check address
         assertThat(result.getAddress().getFirstname(), is("Panagiotis (Peter) A."));
         assertThat(result.getAddress().getLastname(), is("Vretanos"));
@@ -629,29 +629,29 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("Quebec"));
         assertThat(result.getAddress().getPhone(), is("123-456-7890"));
         assertThat(result.getAddress().getEmail(), is("pvretano[at]cubewerx[dot]com"));
-        
+
         assertThat(result.getOperations().size(), is(3));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://demo.cubewerx.com/demo/cubeserv/cubeserv.cgi?service=WMS&"));
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
         assertThat(result.getOperations().get(1).getName(), is("DescribeCoverage"));
         assertThat(result.getOperations().get(2).getName(), is("GetCoverage"));
     }
-    
+
     @Test
-    public void testGetCapabilitiesWCS201() throws Exception {
+    void testGetCapabilitiesWCS201() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WCS_201.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WCS"));
         assertThat(result.getDataServiceType(), is(3));
-        assertThat(result.getVersions().get(0), is("2.0.1"));
-        assertThat(result.getVersions().get(1), is("1.1.1"));
-        assertThat(result.getVersions().get(2), is("1.1.0"));
+        assertThat(result.getVersions().get(0), is("OGC:WCS 2.0.1"));
+        assertThat(result.getVersions().get(1), is("OGC:WCS 1.1.1"));
+        assertThat(result.getVersions().get(2), is("OGC:WCS 1.1.0"));
         assertThat(result.getTitle(), is("INSPIRE-WCS Digitales Geländemodell Gitterweite 200 m"));
         assertThat(result.getDescription(), is("INSPIRE Downloaddienst des Digitalen Geländemodell Gitterweite 200 m für dasGebiet der Bundesrepublik Deutschland.Zur einheitlichen Beschreibung des Reliefs des Gebietes der BundesrepublikDeutschland werden im Rahmen des ATKIS®-Projektes durch die deutscheLandesvermessung Digitale Geländemodelle (DGM) unterschiedlicher Qualitätsstufenaufgebaut.Das Digitale Geländemodell DGM200 beschreibt die Geländeformen der Erdoberflächedurch eine in einem regelmäßigen Gitter angeordnete, in Lage und Höhegeoreferenzierte Punktmenge. Die Gitterweite beträgt 200 m.Die Visualisierung des Reliefs erfolgt nach den Stilvorgaben von INSPIRE für dasThema Elevetaion."));
-        
+
         assertThat(result.getFees(), is("Diese Daten können geldleistungsfrei gemäß der Verordnung zur Festlegung der Nutzungsbestimmungen für die Bereitstellung von Geodaten des Bundes (GeoNutzV) vom 19. März 2013 (Bundesgesetzblatt Jahrgang 2013 Teil I Nr. 14) genutzt werden, siehe https://sg.geodatenzentrum.de/web_public/gdz/lizenz/geonutzv.pdf. Der Quellenvermerk ist zu beachten. | Quellenvermerk: © GeoBasis-DE / BKG <Jahr>"));
         assertThat(result.getAccessConstraints().get(0), is("Es gelten keine Zugriffsbeschränkungen."));
         //TODO: assertThat(result.getAccessConstraints(), is("SOME"));
@@ -660,9 +660,9 @@ public class GetCapabilitiesServiceTest {
 //        assertThat(result.getOnlineResources().get(0).getUrl(), is("http://www.cubewerx.com/~pvretano"));
         
         // Keywords
-        String[] expected = { "WCS", "INSPIRE:DownloadService", "INSPIRE", "infoCoverageAccessService", "BKG", "Bundesamt für Kartographie und Geodäsie", "Deutschland", "Germany", "Geobasisdaten", "AdV", "DGM", "DGM200", "Digitales Gelände Modell 200 m", "Digital Terrain Model Grid Width 200 m", "DEM"};
+        String[] expected = {"WCS", "INSPIRE:DownloadService", "INSPIRE", "infoCoverageAccessService", "BKG", "Bundesamt für Kartographie und Geodäsie", "Deutschland", "Germany", "Geobasisdaten", "AdV", "DGM", "DGM200", "Digitales Gelände Modell 200 m", "Digital Terrain Model Grid Width 200 m", "DEM"};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         // check address
 //        assertThat(result.getAddress().getFirstname(), isNull());
 //        assertThat(result.getAddress().getLastname(), isNull());
@@ -673,13 +673,13 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("xxx"));
         assertThat(result.getAddress().getPhone(), is("+49 (0) 123 456 789"));
         assertThat(result.getAddress().getEmail(), is("dlz[at]my-domain.net"));
-        
+
         assertThat(result.getOperations().size(), is(3));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("https://sgx.geodatenzentrum.de/wcs_dgm200_inspire?"));
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
         assertThat(result.getOperations().get(1).getName(), is("DescribeCoverage"));
         assertThat(result.getOperations().get(2).getName(), is("GetCoverage"));
-        
+
         assertThat(result.getSpatialReferenceSystems().size(), is(20));
         assertThat(result.getBoundingBoxes().size(), is(1));
         LocationBean bbox = result.getBoundingBoxes().get(0);
@@ -690,18 +690,18 @@ public class GetCapabilitiesServiceTest {
     }
 
     @Test
-    public void testGetCapabilitiesWCTS() throws Exception {
+    void testGetCapabilitiesWCTS() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WCTS.xml");
-        
+
         CapabilitiesBean result = service.getCapabilitiesData(doc);
-        
+
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WCTS"));
         assertThat(result.getDataServiceType(), is(4));
         assertThat(result.getVersions().get(0), is("0.0.0"));
         assertThat(result.getTitle(), is("Web Coordinate Transformation Service"));
         assertThat(result.getDescription(), is("Network service for transforming coordinates from one CRS to another"));
-        
+
         assertThat(result.getFees(), is("NONE"));
         assertThat(result.getAccessConstraints().get(0), is("NONE"));
         //TODO: assertThat(result.getAccessConstraints(), is("SOME"));
@@ -710,9 +710,9 @@ public class GetCapabilitiesServiceTest {
         //assertThat(result.getOnlineResources().get(0).getUrl(), is("http://www.cubewerx.com/~pvretano"));
         
         // Keywords
-        String[] expected = { "Coordinate Reference System", "transformation", "conversion", "coordinate operation" };
+        String[] expected = {"Coordinate Reference System", "transformation", "conversion", "coordinate operation"};
         assertThat(result.getKeywords(), hasItems(expected));
-        
+
         // check address
         assertThat(result.getAddress().getFirstname(), is("Andreas"));
         assertThat(result.getAddress().getLastname(), is("Poth"));
@@ -723,7 +723,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getAddress().getState(), is("NRW"));
         assertThat(result.getAddress().getPhone(), is("++49 228 732838"));
         assertThat(result.getAddress().getEmail(), is("poth@lat-lon.de"));
-        
+
         assertThat(result.getOperations().size(), is(4));
         assertThat(result.getOperations().get(0).getAddressList().get(0), is("www.lat-lon.de/transform"));
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));

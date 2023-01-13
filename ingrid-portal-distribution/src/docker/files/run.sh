@@ -150,9 +150,9 @@ else
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-webmap-client/frontend/src/* webapps/ingrid-webmap-client/frontend/prd
 
         echo "Copy repeatable SQL file for profile ..."
-        cp $PROFILES_DIR/$PORTAL_PROFILE/profile_mysql.sql webapps/ROOT/WEB-INF/classes/db/migration/mysql/afterMigrate.sql
-        cp $PROFILES_DIR/$PORTAL_PROFILE/profile_postgres.sql webapps/ROOT/WEB-INF/classes/db/migration/postgres/afterMigrate.sql
-        cp $PROFILES_DIR/$PORTAL_PROFILE/profile_oracle.sql webapps/ROOT/WEB-INF/classes/db/migration/oracle/afterMigrate.sql
+        cp $PROFILES_DIR/$PORTAL_PROFILE/profile_mysql.sql webapps/ROOT/WEB-INF/classes/db/migration/mysql/R__profile.sql
+        cp $PROFILES_DIR/$PORTAL_PROFILE/profile_postgres.sql webapps/ROOT/WEB-INF/classes/db/migration/postgres/R__profile.sql
+        cp $PROFILES_DIR/$PORTAL_PROFILE/profile_oracle.sql webapps/ROOT/WEB-INF/classes/db/migration/oracle/R__profile.sql
 
         # specific options for UVP
         if [ "$PORTAL_PROFILE" == "uvp" ]; then
@@ -280,6 +280,11 @@ else
 
     if [ "$UVP_EXTERNAL_PORTAL_NI" ]; then
         sed -i 's/uvp.niedersachsen.de/'${UVP_EXTERNAL_PORTAL_NI}'/' webapps/ingrid-portal-apps/WEB-INF/classes/facets-config.xml
+    fi
+
+    if [ "$IGE_DISABLED" == "true" ]; then
+        rm -rf webapps/ingrid-portal-mdek-application*
+        rm -rf conf/Catalina/localhost/ingrid-portal-mdek-application.xml
     fi
 
     touch ./initialized

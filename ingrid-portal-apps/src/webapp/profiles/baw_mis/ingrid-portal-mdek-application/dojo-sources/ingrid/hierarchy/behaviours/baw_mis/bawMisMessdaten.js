@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -422,6 +422,7 @@ define([
         var endDate = registry.byId("timeRefDate2");
         var endTime = registry.byId("endTime");
         on(startTime, "change", function(value) {
+            if (!value) return;
             var time = value.toTimeString().split(":");
             startDate.value.setHours(+time[0], +time[1], +time[2].split(" ")[0]);
             startDate.set("value", startDate.value)
@@ -430,6 +431,7 @@ define([
             startTime.attr("value", value);
         });
         on(endTime, "change", function(value) {
+            if (!value) return;
             var time = value.toTimeString().split(":");
             endDate.value.setHours(+time[0], +time[1], +time[2].split(" ")[0]);
             endDate.set("value", endDate.value)

@@ -37,8 +37,11 @@
         #end
         #renderTable($tmp [0])
         #set($tmp = "")
+    ## removed as of #3928
     ## Administrative Einheit (Gemeindenummer)
-        #renderTextListTable($MESSAGES.getString("t011_township.township_no") $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
+    ##    #renderTextListTable($MESSAGES.getString("t011_township.township_no") $TOOL.getListOfValuesFromXPath($xPathPresentEXExtent, $xPathPresentMDIdentifierCode))
+    ## Regionalschlüssel
+        #renderLinkListTable($MESSAGES.getString("search.detail.regionKey") $TOOL.getRegionKey())
     ## Höhe
         #renderTable($TOOL.getAreaHeight($xPathPresentEXExtent))
     ## Erläuterung zum Raumbezug
@@ -46,7 +49,7 @@
     ## Begrenzungspolygon als WKT
         #renderTextListTable($MESSAGES.getString("t01_object.polygon_wkt") $wktPolygons true)
     ## Raumbezugssystem
-        #renderLinkListTable($MESSAGES.getString("t011_obj_geo.referencesystem_id") $TOOL.getNodeListValueReferenceSystem($xPathPresentReferenceSystemInfo))
+        #renderLinkListTable($MESSAGES.getString("t011_obj_geo.referencesystem_id") $TOOL.getNodeListValueReferenceSystem($xPathPresentReferenceSystemInfo) "" true "referencesystem_id")
     </div>
 </div>
 #end

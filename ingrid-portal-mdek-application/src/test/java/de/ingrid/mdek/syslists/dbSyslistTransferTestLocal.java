@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -31,9 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -44,7 +43,6 @@ import de.ingrid.codelists.model.CodeListEntry;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 import de.ingrid.utils.xml.XMLSerializer;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring/application-context.xml"})
 public class dbSyslistTransferTestLocal {
 
@@ -53,7 +51,7 @@ public class dbSyslistTransferTestLocal {
 
     private HashMap codeListsFromFile;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
     }
 
@@ -62,7 +60,7 @@ public class dbSyslistTransferTestLocal {
      * and that the DB-one is used as the default (for reading)!
      */
     @Test
-    public void readFromDbAndWriteToFile() {
+    void readFromDbAndWriteToFile() {
         initializeAndWait();
 
         // read codelists from default source (db)

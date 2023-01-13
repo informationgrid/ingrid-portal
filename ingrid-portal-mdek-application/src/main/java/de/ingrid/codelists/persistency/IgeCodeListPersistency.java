@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -269,7 +269,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 doc.put(MdekKeys.LST_NAME, codelist.getName());
                 doc.put(MdekKeys.LST_DESCRIPTION, codelist.getDescription());
                 doc.putBoolean(MdekKeys.LST_MAINTAINABLE, false);
-                if (!codelist.getDefaultEntry().isEmpty())
+                if (codelist.getDefaultEntry() != null && !codelist.getDefaultEntry().isEmpty())
                     doc.putInt(MdekKeys.LST_DEFAULT_ENTRY_ID, Integer.valueOf(codelist.getDefaultEntry()));
                 // language specific default entry
                 IngridDocument[] entriesDoc = new IngridDocument[codelist.getEntries().size()];

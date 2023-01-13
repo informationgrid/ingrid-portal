@@ -7,7 +7,7 @@
     ## Datensatz/Datenserie
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_dataset_series.vm")
     ## Veröffentlichung
-        #renderTextTable($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($TOOL.getValueFromXPath($xPathAdditionalInfoMDClassificationCode)))
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_publish_id.vm")
     ## Eignung/Nutzung
         #renderTextTable($MESSAGES.getString("t01_object.dataset_usage") $TOOL.getValueFromXPath($xPathAdditionalInfoSpecificUsage))
     ## Herstellungszweck
@@ -19,7 +19,7 @@
     ## Sprache des Datensatzes
         #renderTextListTable($MESSAGES.getString("t01_object.data_language") $TOOL.getLanguageValues($TOOL.getListOfValuesFromXPath($xPathAdditionalInfoIdentificationInfoLanguageCode,".")))
     ## Konformität
-        #renderTableSymbols ($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport) 2 $tmpConformityDataSymbols [0])
+        #renderTableSymbols ($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport) [2] $tmpConformityDataSymbols [0])
     ## Datenformat
         #renderTable($TOOL.getAvailability($xPathAdditionalInfoMDDistribution))
     ## Medien

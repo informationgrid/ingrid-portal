@@ -129,6 +129,12 @@
                     #set($postalcode = $TOOL.getValueFromXPath("./addresses/address[$number]/postalcode"))
                     #set($country = $TOOL.getValueFromXPath("./addresses/address[$number]/country"))
                     #set($postbox = $TOOL.getValueFromXPath("./addresses/address[$number]/postbox"))
+                    #if($plugPartner && $showHitPartnerLogo)
+                        #set($partnerTitleKey = "common.result.partner.${plugPartner}")
+                        <div class="teaser-logo-partner">
+                            <img src="/ingrid-portal-apps/images/partner/svg/${plugPartner}.svg" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/>
+                        </div>
+                    #end
                     <h4 class="no-margin">$MESSAGES.getString("search.detail.uvp.address.type")</h4>
                     <p>
                     #set($nodelistParent = $TOOL.getNodeListFromXPath("./addresses/address[$number]/parent"))
@@ -176,6 +182,10 @@
                                 <br>
                             #end
                             #set($postbox = "")
+                        #end
+                        #if($showHitPartnerLogo && $plugPartnerString)
+                            $plugPartnerString
+                            <br>
                         #end
                         #if($country && $country.length() > 0)
                             $country
@@ -480,46 +490,5 @@
         </svg>
     </h3>
 #end
-<script>
-    $( document ).ready(function() {
-        $('a.download').each(function(index) {
-            var a = $(this);
-            var aParent = a.parent(); 
-            if(a){
-                if(a.length > 0){
-                    var href = a[0].href;
-                    var spanParent = aParent.find('span.text');
-                    if(spanParent){
-                        var span = spanParent.find('span.downloadText');
-                        if(href && span){
-                            getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent(href), span);
-                        }
-                    }
-                }
-            }
-        });
-        $('.zip-download').each(function(index) {
-            var docuuid = '$docUuid';
-            var plugid = '$plugId';
-            if(docuuid !== '' && plugid !== '') {
-                var element = $(this);
-                element.append('<span>$MESSAGES.getString("search.detail.download.zip.prepare")</span>');
-                var http = new XMLHttpRequest();
-                http.open('GET', '$restUrlHttpDownloadUVPCreate?docuuid=' + docuuid + '&plugid=' + plugid, true);
-                http.onreadystatechange = function() {
-                    if (this.readyState == this.DONE) {
-                        if (this.status === 200) {
-                            element.find('span').addClass('is-hidden');
-                            if(this.response != "") {
-                                var content = '<a href="$restUrlHttpDownloadUVP?docuuid=$docUuid&plugid=$plugId" title="$MESSAGES.getString("search.detail.download.zip.title")"><span class="ic-ic-download"></span> </a>';
-                                content = content + '<span class="text"><span class="downloadText">' + convertFileSize(this.response, true, true) + '</span></span>'
-                                element.append(content);
-                            }
-                        }
-                    }
-                };
-                http.send();
-            }
-        });
-    });
-</script>
+#parse('/WEB-INF/templates/global/include_reference_list_file_size.vm')
+#parse('/WEB-INF/templates/global/include_reference_zip_download.vm')

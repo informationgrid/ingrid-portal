@@ -4,7 +4,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2023 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -1875,6 +1875,17 @@
 									</div>
                                 </span>
                             </div>
+<%--                            <div class="inputContainer">
+                                <span id="uiElement3898" class="outer">
+                                    <div><span class="label">
+                                        <label for="regionKey" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3898)">
+                                            <fmt:message key="ui.obj.spatial.regionKey" />
+                                        </label>
+                                    </span><span class="input">
+                                        <div id="regionKey"></div>
+                                    </span></div>
+                                </span>
+                            </div>--%>
                             <div class="inputContainer">
                                 <span id="uiElementN009" class="outer">
                                     <div id="spatialRefCoordsLocation" class="infobox">

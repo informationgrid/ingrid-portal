@@ -1376,7 +1376,6 @@ header {
   .helper.icon {
     font-size: 18px;
     line-height: 20px;
-    max-width: 85%;
    
     span:first-child {
         font-size: 16px;
@@ -1925,8 +1924,6 @@ footer {
         }
       }
       td.symbol {
-        text-align: center;
-
         .ic-ic-cross {
             font-size: 18px;
             color: $red;
@@ -1981,7 +1978,39 @@ footer {
       }
     }
   }
-
+  
+  .table.table--lined--list {
+    table {
+      table-layout: fixed;
+      display: block;
+      overflow-x: auto;
+    
+      tr th {
+        font-weight: normal;
+        font-family: "Roboto-Bold";
+        border: 0;
+      }
+    }
+  }
+  .table.table--lined--sub {
+    .table--sub--header {
+      th {
+        color: $blue-prov;
+        border: 1px solid #FFFFFF;
+      }
+    }
+    .table--sub--content {
+      td {
+        border: 1px solid #FFFFFF;
+      }
+      td:first-child {
+        text-align: center;
+      }
+    }
+    .rowspan {
+      border-bottom: 1px solid #FFFFFF;
+    }
+  }
   .table.list {
 
     table {

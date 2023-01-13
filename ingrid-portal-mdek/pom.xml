@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.14.0</version>
+    <version>6.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-mdek</artifactId>
@@ -34,6 +34,12 @@
       <groupId>org.apache.portals.bridges</groupId>
       <artifactId>portals-bridges-common</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>3.0.2</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.bridges</groupId>
@@ -315,15 +321,23 @@
         </exclusion>
         <exclusion>
           <groupId>org.glassfish.jersey.media</groupId>
-          <artifactId>jersey-media-moxy</artifactId>
+          <artifactId>jersey-media-json-jackson</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.glassfish.jersey.ext</groupId>
-          <artifactId>jersey-spring4</artifactId>
+          <artifactId>jersey-spring5</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.glassfish.jersey.ext</groupId>
+          <artifactId>jersey-entity-filtering</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.glassfish.jersey.inject</groupId>
           <artifactId>jersey-hk2</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.glassfish.jersey.core</groupId>
+          <artifactId>jersey-common</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.rauschig</groupId>
@@ -339,33 +353,6 @@
         <exclusion>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>hibernate</groupId>
-      <artifactId>hibernate</artifactId>
-      <version>3.1rc2</version>
-      <exclusions>
-        <exclusion>
-          <groupId>javax.transaction</groupId>
-          <artifactId>jta</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>asm</groupId>
-          <artifactId>asm</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>cglib</groupId>
-          <artifactId>cglib</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.hibernate</groupId>
-          <artifactId>antlr</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ehcache</groupId>
-          <artifactId>ehcache</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -413,7 +400,7 @@
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
-      <version>1.4.19</version>
+      <version>1.4.20</version>
     </dependency>
     <!-- backward compatible -->
     <dependency>
@@ -446,13 +433,9 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>2.9</version>
+        <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
-          <smtpHost>localhost</smtpHost>
-          <toAddresses />
+          <skipAssembly>true</skipAssembly>
         </configuration>
       </plugin>
     </plugins>

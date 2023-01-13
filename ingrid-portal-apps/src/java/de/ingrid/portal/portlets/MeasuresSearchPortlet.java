@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -73,11 +73,24 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             context.put( "leafletBgLayerWMSName", leafletBgLayerWMSName.toString());
         }
         context.put( "measureUrl", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MEASURE_URL));
-        context.put( "measureNetworksExclude", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MEASURE_NETWORKS_EXCLUDE));
-        context.put( "measureNetworksInitial", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MEASURE_NETWORKS_INITIAL));
-
-
-
+        String[] measureNetworksExclude = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MEASURE_NETWORKS_EXCLUDE);
+        String excludeNetworks = "";
+        for (String network : measureNetworksExclude) {
+            if(!excludeNetworks.isEmpty()) {
+                excludeNetworks += ",";
+            }
+            excludeNetworks += network; 
+        }
+        context.put( "measureNetworksExclude", excludeNetworks);
+        String[] measureNetworksInit = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MEASURE_NETWORKS_INITIAL);
+        String initNetworks = "";
+        for (String network : measureNetworksInit) {
+            if(!initNetworks.isEmpty()) {
+                initNetworks += ",";
+            }
+            initNetworks += network; 
+        }
+        context.put( "measureNetworksInitial", initNetworks);
         super.doView(request, response);
     }
 }

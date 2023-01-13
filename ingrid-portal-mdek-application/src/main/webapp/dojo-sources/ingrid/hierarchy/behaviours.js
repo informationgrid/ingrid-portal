@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -86,7 +86,8 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/priorityDataset",
         "ingrid/hierarchy/behaviours/spatialScope",
         "ingrid/hierarchy/behaviours/axisDimensionTable",
-        "ingrid/hierarchy/behaviours/DOI/doi"
+        "ingrid/hierarchy/behaviours/DOI/doi",
+        "ingrid/hierarchy/behaviours/regionalKey"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message,
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
@@ -96,7 +97,7 @@ define(["dojo/_base/declare",
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
             timeRefTable, timeRefDate, timeRefIntervalUnit,
             extraInfoLangData, extraInfoCharSetData,
-            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, priorityDataset, spatialScope, axisDim, doi) {
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, priorityDataset, spatialScope, axisDim, doi, regionalKey) {
 
     return declare(null, {
 
@@ -183,6 +184,11 @@ define(["dojo/_base/declare",
          * Add new fields for DOI and functionality for export.
          */
         doi: doi,
+
+        /**
+         * Add Regionalschlüssel field.
+         */
+        regionalKey: regionalKey,
 
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,

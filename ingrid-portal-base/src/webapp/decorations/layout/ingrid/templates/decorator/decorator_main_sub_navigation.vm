@@ -1,0 +1,1 @@
+<a href="$linkUrl" class="header-menu-entry #if($isSelected)is-active#end" title="$linkTitle"><span class="text">$linkName</span></a>

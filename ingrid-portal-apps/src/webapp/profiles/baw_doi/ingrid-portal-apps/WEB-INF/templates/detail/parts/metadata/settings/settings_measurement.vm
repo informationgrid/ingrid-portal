@@ -1,0 +1,34 @@
+## Messdaten
+## Verfahren
+    #set($xPathMeasurementInfoMethod = "./gmd:identificationInfo/*/measurementInfo/MeasurementMethod/measurementMethod")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMethod))
+## Räumlichkeit
+    #set($xPathMeasurementInfoSpatialOrientation = "./gmd:identificationInfo/*/measurementInfo/spatialOrientation")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoSpatialOrientation))
+## Abfluss Q min
+    #set($xPathMeasurementInfoMinDischarge = "./gmd:identificationInfo/*/measurementInfo/minDischarge")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMinDischarge))
+## Abfluss Q max
+    #set($xPathMeasurementInfoMaxDischarge = "./gmd:identificationInfo/*/measurementInfo/maxDischarge")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMaxDischarge))
+## Frequenz der Messung
+    #set($xPathMeasurementInfoMeasurementFrequency = "./gmd:identificationInfo/*/measurementInfo/measurementFrequency")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMeasurementFrequency))
+## Beschreibung der Datenqualität
+    #set($xPathMeasurementInfoDataQualityDescription = "./gmd:identificationInfo/*/measurementInfo/dataQualityDescription")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoDataQualityDescription))
+## Messtiefe
+    #set($xPathMeasurementInfoMeasurementDepth = "./gmd:identificationInfo/*/measurementInfo/MeasurementDepth")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMeasurementDepth))
+## Gemittelter Wasserstand, auf den sich die Messwerte beziehen
+    #set($xPathMeasurementInfoMeanWaterLevel = "./gmd:identificationInfo/*/measurementInfo/MeanWaterLevel")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMeanWaterLevel))
+## Pegelnullpunkt
+    #set($xPathMeasurementInfoGaugeDatum = "./gmd:identificationInfo/*/measurementInfo/GaugeDatum")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoGaugeDatum))
+## Messgerät
+    #set($xPathMeasurementInfoMeasurementDevice = "./gmd:identificationInfo/*/measurementInfo/MeasurementDevice")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMeasurementDevice))
+## Zielparameter und -Größen
+    #set($xPathMeasurementInfoMeasuredQuantities = "./gmd:identificationInfo/*/measurementInfo/MeasuredQuantities")
+    #set($add = $xPathListInformationType1.add($xPathMeasurementInfoMeasuredQuantities))

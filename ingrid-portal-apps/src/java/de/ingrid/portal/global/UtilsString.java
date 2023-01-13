@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -189,7 +189,7 @@ public class UtilsString {
                 String entity = s1.substring(i + 1, semi);
                 Integer iso;
                 if (entity.charAt(0) == '#') {
-                    iso = new Integer(entity.substring(1));
+                    iso = Integer.valueOf(entity.substring(1));
                 } else {
                     iso = (Integer) e2i.get(entity);
                 }

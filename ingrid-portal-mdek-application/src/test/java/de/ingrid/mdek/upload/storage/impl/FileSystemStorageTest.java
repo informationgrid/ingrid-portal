@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,10 +22,10 @@
  */
 package de.ingrid.mdek.upload.storage.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -46,9 +46,9 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 
 import de.ingrid.mdek.upload.ValidationException;
@@ -66,7 +66,7 @@ public class FileSystemStorageTest {
 
     private static final FileSystemStorage storage = new FileSystemStorage();
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
@@ -80,7 +80,7 @@ public class FileSystemStorageTest {
         Files.createDirectories(TEMP_PATH);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
         FileUtils.deleteDirectory(TEMP_PATH.toFile());
@@ -92,10 +92,10 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testList() throws Exception {
-        for (int i=0; i<10; i++) {
+    void testList() throws Exception {
+        for (int i = 0; i < 10; i++) {
             final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
-            final String file = i+"-test.txt";
+            final String file = i + "-test.txt";
             this.storageWriteTestFile(path, file);
         }
 
@@ -109,7 +109,7 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testRead() throws Exception {
+    void testRead() throws Exception {
         final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
         final String file = "test.txt";
         this.storageWriteTestFile(path, file);
@@ -131,7 +131,7 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testWrite() throws Exception {
+    void testWrite() throws Exception {
         final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
         final String file = "test.txt";
         this.storageWriteTestFile(path, file);
@@ -146,7 +146,7 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testWriteZip() throws Exception {
+    void testWriteZip() throws Exception {
         final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
         final String file = "test.zip";
 
@@ -172,7 +172,7 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testWriteAndExtractZip() throws Exception {
+    void testWriteAndExtractZip() throws Exception {
         final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
         final String file = "test.zip";
 
@@ -203,7 +203,7 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testArchive() throws Exception {
+    void testArchive() throws Exception {
         final String path = Paths.get("test-plug-id", OBJ_UUID).toString();
         final String file = "test.txt";
         this.storageWriteTestFile(path, file);
@@ -220,7 +220,7 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testRestore() throws Exception {
+    void testRestore() throws Exception {
         final String path = Paths.get("test-plug-id", OBJ_UUID).toString();
         final String file = "test.txt";
         this.storageWriteTestFile(path, file);
@@ -238,7 +238,7 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testDelete() throws Exception {
+    void testDelete() throws Exception {
         final String path = Paths.get("test-plug-id", OBJ_UUID).toString();
         final String file = "test.txt";
         this.storageWriteTestFile(path, file);
@@ -255,10 +255,10 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testSanitizeIPlugId() throws Exception {
-        org.junit.Assume.assumeTrue(!isWindows());
+    void testSanitizeIPlugId() throws Exception {
+        org.junit.jupiter.api.Assumptions.assumeTrue(!isWindows());
 
-        final String path = "illegal-plug-id:<5>/"+OBJ_UUID;
+        final String path = "illegal-plug-id:<5>/" + OBJ_UUID;
         final String file = "test.txt";
         this.storageWriteTestFile(path, file);
 
@@ -272,7 +272,7 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testFilenameConflictWithSpecialDirs() throws Exception {
+    void testFilenameConflictWithSpecialDirs() throws Exception {
         final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
 
         try {
@@ -300,7 +300,7 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     @Test
-    public void testFilenameConflictWithOtherDocument() throws Exception {
+    void testFilenameConflictWithOtherDocument() throws Exception {
         final String path1 = Paths.get(PLUG_ID, OBJ_UUID).toString();
         final String path2 = Paths.get(PLUG_ID, OBJ_UUID_2).toString();
         final String file = "test.txt";
@@ -337,7 +337,7 @@ public class FileSystemStorageTest {
     private FileSystemItem storageWriteTestFile(final String path, final String file, final String content) throws Exception {
         try (final InputStream data = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))) {
             final FileSystemItem result = storage.write(path, file, data, (long)content.length(), true, false)[0];
-            assertTrue(content.equals(new String(Files.readAllBytes(result.getRealPath()), StandardCharsets.UTF_8)));
+            assertEquals(content, new String(Files.readAllBytes(result.getRealPath()), StandardCharsets.UTF_8));
             return result;
         }
     }

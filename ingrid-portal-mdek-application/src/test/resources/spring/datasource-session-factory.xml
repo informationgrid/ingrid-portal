@@ -29,26 +29,26 @@
 
 <!-- Session Factory -->
    <bean id="sessionFactory"
-         class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+         class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
       <property name="dataSource">
          <ref bean="dataSource"/>
       </property>
       <property name="hibernateProperties">
          <ref bean="hibernateProperties"/>
       </property>
-      <property name="exposeTransactionAwareSessionFactory" value="false"/>
+<!--      <property name="exposeTransactionAwareSessionFactory" value="false"/>-->
       <property name="mappingResources">
          <list>
             <value>de/ingrid/mdek/persistence/db/model/HelpMessage.hbm.xml</value>
             <value>de/ingrid/mdek/persistence/db/model/UserData.hbm.xml</value>
          </list>
       </property>
-      <property name="entityCacheStrategies">
+      <!--<property name="entityCacheStrategies">
          <props/>
       </property>
       <property name="collectionCacheStrategies">
          <props/>
-      </property>
+      </property>-->
    </bean>
 
 </beans>

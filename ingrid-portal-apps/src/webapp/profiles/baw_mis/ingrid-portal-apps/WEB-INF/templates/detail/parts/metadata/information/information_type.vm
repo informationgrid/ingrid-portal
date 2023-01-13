@@ -1,4 +1,4 @@
-#if($checkOtherInformation)
+#if($type != "6" && $checkOtherInformation)
     <div class="sub-section">
         <a class="anchor" id="${hashDetail5}_technical_information"></a>
         #renderGroupTitle($MESSAGES.getString("technical_information"))
@@ -19,7 +19,137 @@
         #set($headTypes = ["text","text","text", "text"])
         #set($headXpathExpressions = [$xPathBawRole, $xPathBawName, $xPathBawUnit, $xPathBawValue])
         #renderTable($TOOL.getNodeListTable("Parameter und Zustandsgr&ouml;&szlig;en", "$xPathBAWDataQuality", $headTitles, $headXpathExpressions, null, $headTypes))
+    ## Messdaten
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_measurement.vm")
     ## Fachliche Grundlage
         #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
+    </div>
+#elseif($type == "6" && $TOOL.aNodeOfListExist($xPathListInformationType6))
+    <div class="sub-section">
+        <a class="anchor" id="${hashDetail5}_technical_information"></a>
+        #renderGroupTitle($MESSAGES.getString("technical_information"))
+    ## Einsatzzweck
+        #renderTextTable("Einsatzzweck" $TOOL.getValueFromXPath($xPathInfo6Einsatzzweck))
+    ## Nutzerkreis
+        #set($headTitles = ["", "BAW", "WSV", "Extern"])
+        #set($headXpathExpressions = ["", "./baw", "./wsv", "./extern"])
+        #set($columnsSymbol = [1, 2, 3])
+        #set($rowsAdditional = [])
+        #set($rowAdditional = {})
+        #set($put = $rowAdditional.put("title", "Anmerkungen"))
+        #set($put = $rowAdditional.put("xpath", "${xPathInfo6Nutzerkreis}/anmerkungen"))
+        #set($add = $rowsAdditional.add($rowAdditional))
+        #renderTableSymbols($TOOL.getNodeListTable("Nutzerkreis", $xPathInfo6Nutzerkreis, $headTitles, $headXpathExpressions) $columnsSymbol $tmpBooleanSymbols [] $rowsAdditional)
+    ## Produktiver Einsatz
+        #set($headTitles = ["", "WSV-Auftrag", "FuE", "Andere"])
+        #set($headXpathExpressions = ["", "./wsvAuftrag", "./fUndE", "./andere"])
+        #set($columnsSymbol = [1, 2, 3])
+        #set($rowsAdditional = [])
+        #set($rowAdditional = {})
+        #set($put = $rowAdditional.put("title", "Anmerkungen"))
+        #set($put = $rowAdditional.put("xpath", "${xPathInfo6ProduktiverEinsatz}/anmerkungen"))
+        #set($add = $rowsAdditional.add($rowAdditional))
+        #renderTableSymbols($TOOL.getNodeListTable("Produktiver Einsatz", $xPathInfo6ProduktiverEinsatz, $headTitles, $headXpathExpressions) $columnsSymbol $tmpBooleanSymbols [] $rowsAdditional)
+    ## Ergänzungsmodul zu Marktsoftware
+        #renderTextTable("Erg&auml;nzungsmodul zu Marktsoftware" $TOOL.getValueFromXPath("${xPathInfo6ErgaenzungsModul}/ergaenzungsModul"))
+        #renderTextTable("Name der Marktsoftware" $TOOL.getValueFromXPath("${xPathInfo6ErgaenzungsModul}/ergaenzteSoftware"))
+    ## Betriebssystem
+        #set($headTitles = ["", "Windows", "Linux"])
+        #set($headXpathExpressions = ["", "./windows", "./linux"])
+        #set($columnsSymbol = [1,2])
+        #set($rowsAdditional = [])
+        #set($rowAdditional = {})
+        #set($put = $rowAdditional.put("title", "Anmerkungen"))
+        #set($put = $rowAdditional.put("xpath", "${xPathInfo6Betriebssystem}/anmerkungen"))
+        #set($add = $rowsAdditional.add($rowAdditional))
+        #renderTableSymbols($TOOL.getNodeListTable("Betriebssystem", $xPathInfo6Betriebssystem, $headTitles, $headXpathExpressions) $columnsSymbol $tmpBooleanSymbols [] $rowsAdditional)
+    ## Programmiersprache
+        #renderTextListTable("Programmiersprache" $TOOL.getListOfValuesFromXPath($xPathInfo6Programmiersprache, "."))
+    ## Entwicklungsumgebung
+        #renderTextListTable("Entwicklungsumgebung" $TOOL.getListOfValuesFromXPath($xPathInfo6Entwicklungsumgebung, "."))
+    ## Bibliotheken
+        #renderTextListTable("Bibliotheken" $TOOL.getListOfValuesFromXPath($xPathInfo6Bibliotheken, "."))
+    ## Erstellungsvertrag
+        #set($tableHead = [])
+        #set($tableBody = [])
+        #set($tmpXPath = "${xPathInfo6Erstellungsvertrag}/vertragsNummer")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Vertragsnr"))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
+        #end
+        #set($tmpXPath = "${xPathInfo6Erstellungsvertrag}/datum")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Datum"))
+            #set($add = $tableBody.add([$TOOL.convertDateString($TOOL.getValueFromXPath($tmpXPath, "."))]))
+        #end
+        #if($tableHead.size() > 0)
+            #set($tmp = {})
+            #set($put = $tmp.put("head", $tableHead))
+            #set($put = $tmp.put("title", "Erstellungsvertrag"))
+            #set($put = $tmp.put("body", $tableBody))
+            #renderTableAsList("" $tmp)
+        #end
+    ## Supportvertrag
+        #set($tableHead = [])
+        #set($tableBody = [])
+        #set($tmpXPath = "${xPathInfo6Supportvertrag}/vertragsNummer")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Vertragsnr"))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
+        #end
+        #set($tmpXPath = "${xPathInfo6Supportvertrag}/datum")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Datum"))
+            #set($add = $tableBody.add([$TOOL.convertDateString($TOOL.getValueFromXPath($tmpXPath, "."))]))
+        #end
+        #set($tmpXPath = "${xPathInfo6Supportvertrag}/anmerkungen")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Anmerkungen"))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
+        #end
+        #if($tableHead.size() > 0)
+            #set($tmp = {})
+            #set($put = $tmp.put("head", $tableHead))
+            #set($put = $tmp.put("title", "Supportvertrag"))
+            #set($put = $tmp.put("body", $tableBody))
+            #renderTableAsList("" $tmp)
+        #end
+    ## Installationsort
+        #set($tableHead = [])
+        #set($tableBody = [])
+        #set($tmpXPath = "${xPathInfo6Installationsort}/lokal")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Lokal"))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
+        #end
+        #set($tmpXPath = "${xPathInfo6Installationsort}/HLR/hlr")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("HLR"))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
+        #end
+        #set($tmpXPath = "${xPathInfo6Installationsort}/HLR/hlrName")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Name des HLRs"))
+            #set($add = $tableBody.add($TOOL.getListOfValuesFromXPath($tmpXPath, ".")))
+        #end
+        #set($tmpXPath = "${xPathInfo6Installationsort}/Server/server")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Server"))
+            #set($add = $tableBody.add([$TOOL.getValueFromXPath($tmpXPath, ".")]))
+        #end
+        #set($tmpXPath = "${xPathInfo6Installationsort}/Server/servername")
+        #if($TOOL.nodeExist($tmpXPath))
+            #set($add = $tableHead.add("Servername"))
+            #set($add = $tableBody.add($TOOL.getListOfValuesFromXPath($tmpXPath, ".")))
+        #end
+        #if($tableHead.size() > 0)
+            #set($tmp = {})
+            #set($put = $tmp.put("head", $tableHead))
+            #set($put = $tmp.put("title", "Installationsort"))
+            #set($put = $tmp.put("body", $tableBody))
+            #renderTableAsList("" $tmp)
+        #end
+    ## Installation über
+        #renderTextTable("Installation &uuml;ber" $TOOL.getValueFromXPath($xPathInfo6InstallationsMethode))
     </div>
 #end

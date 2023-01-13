@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -354,8 +354,8 @@ footer .footer-top-link:focus {
 
 .switch {
   position: absolute;
-  bottom: 0;
-  top: 0px;
+  bottom: 8px;
+  top: 0;
   margin-top: auto;
   margin-bottom: auto;
   left: 0.44444rem;
@@ -563,6 +563,8 @@ header .menu-tab-row .menu-tab {
   header .logo {
     height: 120px;
   }
+}
+@media print, screen and (min-width: 38em) {
   header .menu-tab-row .menu-tab {
     display: inline-block;
   }
@@ -663,6 +665,11 @@ header .menu-tab-row .menu-tab {
     width: 9.725em;
   }
 }
+@media print, screen and (min-width: 48em) and (max-width: 64em) {
+  .header-menu-open button {
+    margin: 35px -10px 0px 0px;
+  }
+}
 @media print, screen and (min-width: 64em) {
   .switch-popup a.switch-link.uvp img {
     width: 20em;
@@ -704,7 +711,7 @@ header .menu-tab-row .menu-tab {
     background-color: #F6F6F6;
 }
 
-.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child {
+.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child, .search-filtered .table.table--lined--list table th:first-child {
     color: #1D4B7B;
 }
 

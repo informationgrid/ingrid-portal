@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,17 +22,17 @@
  */
 package de.ingrid.mdek.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class FileSystemStorageMigratorTest {
 
@@ -40,14 +40,14 @@ public class FileSystemStorageMigratorTest {
     private static final String ARCHIVE_PATH = "_archive_";
     private static final String TRASH_PATH = "_trash_";
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         // setup directories
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
         Files.createDirectories(DOCS_PATH);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
     }
@@ -58,55 +58,55 @@ public class FileSystemStorageMigratorTest {
      * @throws Exception
      */
     @Test
-    public void testMigrate() throws Exception {
+    void testMigrate() throws Exception {
         Path archivePath = Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH);
         Path trashPath = Paths.get(DOCS_PATH.toString(), TRASH_PATH);
 
-    	// define test files
-    	Path base1 = Paths.get("plug-1", "doc1");
-    	Path archive1 = Paths.get(DOCS_PATH.toString(), base1.toString(), ARCHIVE_PATH);
-    	Path archiveFile11 = Paths.get("archiveFile11");
-    	Path archiveFile12 = Paths.get("archiveFile12");
-    	Path archiveFile13 = Paths.get("subdir", "archiveFile13");
-    	Path trash1 = Paths.get(DOCS_PATH.toString(), base1.toString(), TRASH_PATH);
-    	Path trashFile11 = Paths.get("trashFile11");
-    	Path trashFile12 = Paths.get("trashFile12");
-    	Path trashFile13 = Paths.get("subdir", "trashFile13");
+        // define test files
+        Path base1 = Paths.get("plug-1", "doc1");
+        Path archive1 = Paths.get(DOCS_PATH.toString(), base1.toString(), ARCHIVE_PATH);
+        Path archiveFile11 = Paths.get("archiveFile11");
+        Path archiveFile12 = Paths.get("archiveFile12");
+        Path archiveFile13 = Paths.get("subdir", "archiveFile13");
+        Path trash1 = Paths.get(DOCS_PATH.toString(), base1.toString(), TRASH_PATH);
+        Path trashFile11 = Paths.get("trashFile11");
+        Path trashFile12 = Paths.get("trashFile12");
+        Path trashFile13 = Paths.get("subdir", "trashFile13");
 
-    	Path base2 = Paths.get("plug-2", "doc2");
-    	Path archive2 = Paths.get(DOCS_PATH.toString(), base2.toString(), ARCHIVE_PATH);
-    	Path archiveFile21 = Paths.get("archiveFile21");
-    	Path archiveFile22 = Paths.get("archiveFile22");
-    	Path archiveFile23 = Paths.get("subdir", "archiveFile23");
-    	Path trash2 = Paths.get(DOCS_PATH.toString(), base2.toString(), TRASH_PATH);
-    	Path trashFile21 = Paths.get("trashFile21");
-    	Path trashFile22 = Paths.get("trashFile22");
-    	Path trashFile23 = Paths.get("subdir", "trashFile23");
+        Path base2 = Paths.get("plug-2", "doc2");
+        Path archive2 = Paths.get(DOCS_PATH.toString(), base2.toString(), ARCHIVE_PATH);
+        Path archiveFile21 = Paths.get("archiveFile21");
+        Path archiveFile22 = Paths.get("archiveFile22");
+        Path archiveFile23 = Paths.get("subdir", "archiveFile23");
+        Path trash2 = Paths.get(DOCS_PATH.toString(), base2.toString(), TRASH_PATH);
+        Path trashFile21 = Paths.get("trashFile21");
+        Path trashFile22 = Paths.get("trashFile22");
+        Path trashFile23 = Paths.get("subdir", "trashFile23");
 
-    	// create test files
-    	Files.createDirectories(archive1);
-    	Files.createDirectories(Paths.get(archive1.toString(), archiveFile13.getParent().toString()));
-    	Files.createFile(Paths.get(archive1.toString(), archiveFile11.toString()));
-    	Files.createFile(Paths.get(archive1.toString(), archiveFile12.toString()));
-    	Files.createFile(Paths.get(archive1.toString(), archiveFile13.toString()));
-    	Files.createDirectories(trash1);
-    	Files.createDirectories(Paths.get(trash1.toString(), trashFile13.getParent().toString()));
-    	Files.createFile(Paths.get(trash1.toString(), trashFile11.toString()));
-    	Files.createFile(Paths.get(trash1.toString(), trashFile12.toString()));
-    	Files.createFile(Paths.get(trash1.toString(), trashFile13.toString()));
+        // create test files
+        Files.createDirectories(archive1);
+        Files.createDirectories(Paths.get(archive1.toString(), archiveFile13.getParent().toString()));
+        Files.createFile(Paths.get(archive1.toString(), archiveFile11.toString()));
+        Files.createFile(Paths.get(archive1.toString(), archiveFile12.toString()));
+        Files.createFile(Paths.get(archive1.toString(), archiveFile13.toString()));
+        Files.createDirectories(trash1);
+        Files.createDirectories(Paths.get(trash1.toString(), trashFile13.getParent().toString()));
+        Files.createFile(Paths.get(trash1.toString(), trashFile11.toString()));
+        Files.createFile(Paths.get(trash1.toString(), trashFile12.toString()));
+        Files.createFile(Paths.get(trash1.toString(), trashFile13.toString()));
 
-    	Files.createDirectories(archive2);
-    	Files.createDirectories(Paths.get(archive2.toString(), archiveFile23.getParent().toString()));
-    	Files.createFile(Paths.get(archive2.toString(), archiveFile21.toString()));
-    	Files.createFile(Paths.get(archive2.toString(), archiveFile22.toString()));
-    	Files.createFile(Paths.get(archive2.toString(), archiveFile23.toString()));
-    	Files.createDirectories(trash2);
-    	Files.createDirectories(Paths.get(trash2.toString(), trashFile23.getParent().toString()));
-    	Files.createFile(Paths.get(trash2.toString(), trashFile21.toString()));
-    	Files.createFile(Paths.get(trash2.toString(), trashFile22.toString()));
-    	Files.createFile(Paths.get(trash2.toString(), trashFile23.toString()));
+        Files.createDirectories(archive2);
+        Files.createDirectories(Paths.get(archive2.toString(), archiveFile23.getParent().toString()));
+        Files.createFile(Paths.get(archive2.toString(), archiveFile21.toString()));
+        Files.createFile(Paths.get(archive2.toString(), archiveFile22.toString()));
+        Files.createFile(Paths.get(archive2.toString(), archiveFile23.toString()));
+        Files.createDirectories(trash2);
+        Files.createDirectories(Paths.get(trash2.toString(), trashFile23.getParent().toString()));
+        Files.createFile(Paths.get(trash2.toString(), trashFile21.toString()));
+        Files.createFile(Paths.get(trash2.toString(), trashFile22.toString()));
+        Files.createFile(Paths.get(trash2.toString(), trashFile23.toString()));
 
-    	// migrate
+        // migrate
         new FileSystemStorageMigrator(DOCS_PATH.toString());
 
         // test

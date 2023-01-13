@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -125,7 +125,7 @@ public class AdminRSSForm extends ActionForm {
                         // same ident (kuerzel)
                         Long id = null;
                         try {
-                            id = new Long(getInput(PARAM_ID + i));
+                            id = Long.valueOf(getInput(PARAM_ID + i));
                         } catch (Exception ex) {
                             if(log.isErrorEnabled()) {
                                 log.error("Error on validate.", ex);

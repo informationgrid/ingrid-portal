@@ -14,6 +14,8 @@
         #renderTextListTable($MESSAGES.getString("object_access.terms_of_use") $useLimitations)
     ## Sicherheitsstufung
         #parse("/WEB-INF/templates/detail/parts/metadata/use/use_classification_code.vm")
+    ## Software
+        #parse("/WEB-INF/templates/detail/parts/metadata/use/use_software.vm")
     </div>
 </div>
 #end

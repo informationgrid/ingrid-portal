@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -236,6 +236,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_DETAIL_USE_PARAMETER_PLUGID = "portal.detail.use.parameter.plugid";
 
+    public static final String PORTAL_DETAIL_EXCLUDE_EXTEND_PARTNER = "portal.detail.exclude.extend.partner";
+
     public static final String PORTAL_SEARCH_EMPTY_QUERY = "portal.search.empty.query";
 
     public static final String PORTAL_SEARCH_EXTEND_QUERY = "portal.search.extend.query";
@@ -282,6 +284,9 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS = "portal.mapclient.leaflet.bg.layer.wms";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION = "portal.mapclient.leaflet.bg.layer.attribution";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY = "portal.mapclient.leaflet.bg.layer.opacity";
+    public static final String PORTAL_MAPCLIENT_LEAFLET_BBOX_INVERTED = "portal.mapclient.leaflet.bbox.inverted";
+    public static final String PORTAL_MAPCLIENT_LEAFLET_BBOX_COLOR = "portal.mapclient.leaflet.bbox.color";
+    public static final String PORTAL_MAPCLIENT_LEAFLET_BBOX_FILLOPACITY = "portal.mapclient.leaflet.bbox.fillOpacity";
 
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN = "portal.mapclient.uvp.category.dev.plan";
 
@@ -325,6 +330,9 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN = "portal.detail.uvp.documents.htaccess.login";
     public static final String PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD = "portal.detail.uvp.documents.htaccess.password";
+
+    public static final String PORTAL_DETAIL_DISTANCE_DPI = "portal.detail.distance.dpi";
+    public static final String PORTAL_DETAIL_DISTANCE_METER = "portal.detail.distance.meter";
 
     public static final String PORTAL_MAPS_LINKS_NEW_TAB = "portal.map.links.new.tab";
 

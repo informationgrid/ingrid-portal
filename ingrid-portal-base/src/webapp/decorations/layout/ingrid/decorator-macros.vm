@@ -87,12 +87,7 @@
                 </div>
             </a>
         #elseif($element.url == "/application/main-application.psml")
-            <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
-                <div class="link-menu-tab">
-                    <span class="ic-ic-chemie"></span>
-                    <span class="text">$tabName</span>
-                </div>
-            </a>
+            #parse("/decorations/layout/ingrid/templates/decorator/decorator_menu_application.vm")
         #elseif($element.url == "/search-catalog/search-catalog-hierarchy.psml")
             <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
                 <div class="link-menu-tab">
@@ -165,7 +160,7 @@
                         #if($defaultTitle == "ingrid.page.language")
                             #set($linkTitle = $defaultTitle)
                         #end
-                        <a href="$linkUrl" class="header-menu-entry #if($isSelected)is-active#end" title="$linkTitle"><span class="text">$linkName</span></a>
+                        #parse("/decorations/layout/ingrid/templates/decorator/decorator_main_sub_navigation.vm")
                     #end
                 #else
                     <a href="$linkUrl" class="header-menu-entry #if($isSelected)is-active#end" title="$linkTitle"><span class="text">$linkName</span></a>

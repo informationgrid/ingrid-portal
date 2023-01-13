@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -394,8 +394,10 @@ define([
 
         newFieldsToDirtyCheck.push("supportContractNumber");
         newFieldsToDirtyCheck.push("supportContractDate");
+        newFieldsToDirtyCheck.push("supportContractNotes");
         additionalFields.push(registry.byId("supportContractNumber"));
         additionalFields.push(registry.byId("supportContractDate"));
+        additionalFields.push(registry.byId("supportContractNotes"));
         
     }
     

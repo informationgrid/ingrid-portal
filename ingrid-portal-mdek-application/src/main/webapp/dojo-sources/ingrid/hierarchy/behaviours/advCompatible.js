@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -31,26 +31,32 @@ define([
     "ingrid/utils/Grid"
 ], function(declare, on, domClass, query, topic, registry, UtilGrid) {
     return declare(null, {
-        
+
         title : "Checkbox anzeigen",
         description : "Wenn aktiviert, wird die Checkbox \"AdV kompatibel\" angezeigt.",
         defaultActive : true,
         category: "AdV Kompatibel",
         run : function() {
             // show checkbox AdV compatible
-            domClass.remove("uiElement6005", "hidden");
-
-            // show different help text for conformity table
-            var conformityLabel = query("#extraInfoConformityTableLabel label")[0];
-            on(registry.byId("isAdvCompatible"), "Change", function(isChecked) {
-                if (isChecked) {
-                    conformityLabel.onclick = function() {
-                        require('ingrid/dialog').showContextHelp(arguments[0], 10034);
-                    };
+            topic.subscribe("/onObjectClassChange", function(data) {
+                // Geodatendienst, Geodatensatz und Informationssysteme
+                if (data.objClass === "Class1" || data.objClass === "Class3" || data.objClass === "Class6") {
+                    domClass.remove("uiElement6005", "hidden");
+                    // show different help text for conformity table
+                    var conformityLabel = query("#extraInfoConformityTableLabel label")[0];
+                    on(registry.byId("isAdvCompatible"), "Change", function(isChecked) {
+                        if (isChecked) {
+                            conformityLabel.onclick = function() {
+                                require('ingrid/dialog').showContextHelp(arguments[0], 10034);
+                            };
+                        } else {
+                            conformityLabel.onclick = function() {
+                                require('ingrid/dialog').showContextHelp(arguments[0], 10024);
+                            };
+                        }
+                    });
                 } else {
-                    conformityLabel.onclick = function() {
-                        require('ingrid/dialog').showContextHelp(arguments[0], 10024);
-                    };
+                    domClass.add("uiElement6005", "hidden");
                 }
             });
         }

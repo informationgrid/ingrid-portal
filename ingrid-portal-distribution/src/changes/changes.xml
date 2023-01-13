@@ -6,6 +6,141 @@
     </properties>
 
     <body>
+        <release version="5.15.0-SNAPSHOT" date="2023-xx-xx" description="Release 5.15.0">
+          <action type="update" dev="wemove" issue="4598">
+            Deutschlandkarte verkleinern, ersetzen oder entfernen
+          </action>
+          <action type="update" dev="wemove" issue="4604">
+            Portal: Anpassungen für LUBW Profil
+          </action>
+          <action type="add" dev="wemove" issue="4603">
+            Kartenclient: Option für Copyright Ersetzungen im Portal und im Ausdruck
+          </action>
+          <action type="update" dev="wemove" issue="3976">
+            Anpassung Hilfetext zum Feld "Durch die Ressource abgedeckte Zeitspanne"
+          </action>
+          <action type="update" dev="wemove" issue="4634">
+            Nutzung OSM inkl. NOMINATIN im UVP-Portal
+          </action>
+          <action type="update" dev="wemove" issue="4626">
+            Hide register button on login page for SH profile
+          </action>
+          <action type="add" dev="wemove" issue="4576">
+            Portal: Zugangsbeschränkungen in der Suche und auf der Detailseite in den Infoboxen anzeigen (LUBW)
+          </action>
+          <action type="add" dev="wemove" issue="4583">
+            Portal: Anpassungen der Hilfe-Seite für LUBW Profil
+          </action>
+          <action type="update" dev="wemove" issue="4072">
+            UVP: Textanpassung länderspezifische Seiten
+          </action>
+          <action type="update" dev="wemove" issue="4495">
+            Update menu entry of uvp-ni
+          </action>
+          <action type="update" dev="wemove" issue="4573">
+            MVIS-Client ausschließen von Messnetze
+          </action>
+          <action type="update" dev="wemove" issue="4238">
+            BKG: Portal: Label "Erläuterung zum Zeitbezug" beim Pflegeintervall umbenennen
+          </action>
+          <action type="add" dev="wemove" issue="4306">
+            Barrierefreiheit Karten (Einbetten)
+          </action>
+          <action type="update" dev="wemove" issue="4236">
+            BKG: Portal: Label "Datensatz / Datenserie" ändern
+          </action>
+          <action type="update" dev="wemove" issue="4552">
+            RLP: Deaktivierung von Facetten in der Suche
+          </action>
+          <action type="update" dev="wemove" issue="4502">
+            Portal: Neustart des Docker-Container verursacht Löschung von Einstellung
+          </action>
+          <action type="add" dev="wemove" issue="4536">
+            Portal: Detailansicht für Objektklasse "Informationssystem" anpassen
+          </action>
+          <action type="update" dev="wemove" issue="4498">
+            Ministeriumsname aktualisieren
+          </action>
+          <action type="add" dev="wemove" issue="4378">
+            Portal: Zugriff auf Detailseite mittels OAC (alternativ zu UUID)
+          </action>
+          <action type="update" dev="wemove" issue="4217">
+            Portal: Grafik "Open Data" ändern
+          </action>
+          <action type="add" dev="wemove" issue="4504">
+            Portal: Button "nach oben"
+          </action>
+          <action type="add" dev="wemove" issue="4216">
+            Portal: Detailanzeige - Bodenauflösung - alle (metrischen) Einheiten ermöglichen
+          </action>
+          <action type="add" dev="wemove" issue="4484">
+            Portal: Anzeige der räumlichen Ausdehnung ändern
+          </action>
+          <action type="add" dev="wemove" issue="4366">
+            Portal: Geometriekontext-Attribute im UP sichtbar machen
+          </action>
+          <action type="update" dev="wemove" issue="4214">
+            Portal: Schreibung "Opendata" in "Open Data" ändern
+          </action>
+          <action type="update" dev="wemove" issue="4218">
+            Portal: Veröffentlichungsbreite nicht anzeigen
+          </action>
+          <action type="update" dev="wemove" issue="4465">
+            Portal: Bezeichnung "Objekt-ID" ersetzen
+          </action>
+          <action type="update" dev="wemove" issue="4450">
+            Portal: Label "Ansprechpartner (Metadatum)" ändern
+          </action>
+          <action type="update" dev="wemove" issue="4486">
+            Portal: Detailanzeige - Bodenauflösung - alle (metrischen) Einheiten ermöglichen
+          </action>
+          <action type="add" dev="wemove" issue="4486">
+            Portalanzeige Koordinatensysteme
+          </action>
+          <action type="update" dev="wemove" issue="3631">
+            Layouts anpassen für die Suchergebnisseite und die Detaildarstellung im RLP-Profil
+          </action>
+          <action type="add" dev="wemove" issue="4230">
+            Kartenclient METAVER - Webatlas farbe/grau ersetzen durch basemap.de Web Raster farbe/grau
+          </action>
+          <action type="add" dev="wemove" issue="4378">
+            Portal: Zusätzliche Felder OAC und environmentDescription für LUBW Profil
+          </action>
+          <action type="add" dev="wemove" issue="4447">
+            PORTAL: Entfernen von IGE-Applikation bei Installation über Docker
+          </action>
+          <action type="add" dev="wemove" issue="4376">
+            Direkte Anzeige, wenn nur ein Layer im WMS existiert
+          </action>
+          <action type="update" dev="wemove" issue="4371">
+            Portal: Inhaltliche Anpassungen für LUBW Profil
+          </action>
+          <action type="update" dev="wemove" issue="4167">
+            Portal: Anpassungen in den Detail- und Suchtreffer-Ansichten
+          </action>
+          <action type="add" dev="wemove" issue="4351">
+            Portal: Bibliografische Angaben auch im baw_mis Profil implementieren
+          </action>
+          <action type="add" dev="wemove" issue="1806">
+            UVP: Darstellung des Bundeslandes oder des Landkreises in dem das Vorhaben erfolgt
+          </action>
+          <action type="add" dev="wemove" issue="4374">
+            Erstellung neuer Bereich "APIs"
+          </action>
+          <action type="update" dev="wemove" issue="4337">
+            Log-in niedersächsischer UVP Editor (IGE-NG)
+          </action>
+          <action type="fix" dev="wemove" issue="4345">
+            Fehler in BKG-MIS-Release 5.13.1
+          </action>
+          <action type="add" dev="wemove" issue="3928">
+            Portal/IGE: Feld Regionalschlüssel hinzugefügt.
+          </action>
+          <action type="add" dev="wemove" issue="4663">
+            System E-Mail prefix Einstellung hinzugefügt
+          </action>
+        </release>
+
         <release version="5.14.0" date="2022-10-04" description="Release 5.14.0">
           <action type="fix" dev="wemove" issue="4317">
             Portal - Dokumente - Download als ZIP-Datei - Zip-Datei Leer
@@ -51,6 +186,9 @@
           </action>
           <action type="fix" dev="wemove" issue="4169">
             Messwerte-Client: Umbenennung LÜN gleitender 24-Mittelwert in PM1024
+          </action>
+          <action type="fix" dev="wemove" issue="4364">
+            IGE: GetCapabilities-Assistent für WCS-Dienste - in serviceTypeVersion fehlt Präfix "OGC:WCS"
           </action>
         </release>
 

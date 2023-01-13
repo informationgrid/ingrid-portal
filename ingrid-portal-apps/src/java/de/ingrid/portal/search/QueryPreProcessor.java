@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -163,7 +163,7 @@ public class QueryPreProcessor {
         int startHit = 0;
         String stateStartHit = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
         if (stateStartHit.length() != 0) {
-            startHit = (new Integer(stateStartHit)).intValue();
+            startHit = (Integer.valueOf(stateStartHit)).intValue();
         }
 
         int currentPage = (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
@@ -254,7 +254,7 @@ public class QueryPreProcessor {
             int currentSelectorPage;
             try {
                 currentSelectorPage =
-                    (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
+                    (Integer.valueOf(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
             } catch (Exception ex) {
                 currentSelectorPage = 1;
             }

@@ -5,6 +5,8 @@
     #renderGroupTitle($MESSAGES.getString("technical_information"))
 ## Identifikator
     #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_identificator.vm")
+## Messdaten
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_measurement.vm")
 ## Digitale Repräsentation
     #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_representation_type.vm")
 ## Vektorformat
@@ -13,7 +15,7 @@
     #set($headCodeList = ["528", "515"])
     #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_vector"), $xPathInfo1MD_VectorSpatialRepresentationGeometricObjects, $headTitles, $headXpathExpressions, $headCodeList))
 ## Erstellungsmaßstab
-    #renderTable($TOOL.getReferenceObject($xPathInfo1MDResolution))
+    #renderTableAsList("" $TOOL.getReferenceObject($xPathInfo1MDResolution) $hideResolutionTitle)
 ## Symbolkatalog
     #set($headTitles = [$MESSAGES.getString("t011_obj_geo_symc.symbol_cat"),$MESSAGES.getString("t011_obj_geo_symc.symbol_date"),$MESSAGES.getString("t011_obj_geo_symc.edition")])
     #set($headXpathExpressions = ["./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:title","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:edition"])
@@ -32,4 +34,6 @@
     #renderTextListTable($MESSAGES.getString("t011_obj_geo_supplinfo.feature_type") $TOOL.getListOfValuesFromXPath($xPathInfo1MDFeatureCatalogueDescriptionFeatureTypes, "."))
 ## Herstellungsprozess
     #renderTextTable($MESSAGES.getString("t011_obj_geo.method") $TOOL.getValueFromXPath($xPathInfo1LIProcessStep))
+## Geometrie-Kontext
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_geometrie_context.vm")
 </div>
