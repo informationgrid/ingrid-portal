@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.14.4" date="xxxx-xx-xx" description="Release 5.14.4">
+        <release version="5.14.4" date="2023-01-16" description="Release 5.14.4">
           <action type="update" dev="wemove" issue="4598">
             Deutschlandkarte verkleinern, ersetzen oder entfernen
           </action>
