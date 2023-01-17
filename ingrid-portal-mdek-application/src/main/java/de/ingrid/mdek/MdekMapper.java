@@ -1159,12 +1159,14 @@ public class MdekMapper implements DataMapperInterface {
                 // Found special address ref
                 mappedEntry.put(MdekKeys.RELATION_TYPE_ID, key);
                 mappedEntry.put(MdekKeys.RELATION_TYPE_REF, MDEK_ADDRESS_REF_SPECIAL_ID);
+                mappedEntry.put(MdekKeys.RELATION_TYPE_NAME, key.toString());
             } else {
                 key = sysListMapper.getKeyFromListId(MDEK_ADDRESS_REF_ID, val);
                 if (key != null) {
                     // Found normal address ref
                     mappedEntry.put(MdekKeys.RELATION_TYPE_ID, key);
                     mappedEntry.put(MdekKeys.RELATION_TYPE_REF, MDEK_ADDRESS_REF_ID);
+                    mappedEntry.put(MdekKeys.RELATION_TYPE_NAME, key.toString());
                 } else {
                     // Could not resolve -> free entry
                     mappedEntry.put(MdekKeys.RELATION_TYPE_NAME, val);
