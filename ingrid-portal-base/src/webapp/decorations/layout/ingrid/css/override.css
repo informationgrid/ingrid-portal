@@ -656,8 +656,14 @@ header .menu-tab-row .menu-tab {
   .embed-container {
     top: 120px !important;
   }
+  .header-menu-open .login ~ .button {
+    margin: 33px 0 !important;
+  }
 }
 @media print, screen and (min-width: 78em) {
+  .header-menu-open .login ~ .button {
+    margin: 42px 0 !important;
+  }
   footer .footer .footer-menu-entries, footer .footer .copyright {
     text-align: right;
   }
