@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="6.1.0-SNAPSHOT" date="2023-xx-xx" description="Release 6.1.0">
+        <release version="6.0.1-SNAPSHOT" date="2023-xx-xx" description="Release 6.0.1">
           <action type="add" dev="wemove" issue="4677">
             Aktivierung des API Menübereiches im allgemeinen Profil
           </action>
