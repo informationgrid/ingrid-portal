@@ -44,6 +44,12 @@ UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 -- Hide '/rsspage.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/rsspage.psml';
 
+-- Hide '/application/main-application.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
+
+-- Hide folder "/application" to display
+UPDATE folder SET is_hidden = 1 WHERE path = '/application';
+
 -- Change main menu order
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main_menu_id',(SELECT menu_id FROM folder_menu WHERE name = 'main-menu'));
 UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/main-maps.psml';
