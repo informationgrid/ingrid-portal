@@ -115,12 +115,12 @@
     
     <!--  Suche - Datenkataloge - Hierarchiebaum -->
     <rule>
-        <from>/datenkataloge</from>
+        <from>/themenuebersicht</from>
         <to type="forward">/portal/search-catalog/search-catalog-hierarchy.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
-        <to>/datenkataloge</to>
+        <to>/themenuebersicht</to>
     </outbound-rule>
     
     <!--  Messwerte  -->
