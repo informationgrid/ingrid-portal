@@ -7,9 +7,9 @@ Ihre Zugangsdaten wurden geändert!
 Ihre neuen Login-Daten finden Sie hier:
 #end
 #else
-Willkommen bei LUBW! 
+Willkommen beim LUBW-Metadatenkatalog.
 
-Für Sie wurde ein Zugang angelegt:
+Für Sie wurde ein Zugang angelegt. Die Zugangsdaten lauten:
 #end
 
 Benutzername: $!{map.get("login")}
@@ -17,11 +17,12 @@ Benutzername: $!{map.get("login")}
 Passwort: $!{map.get("password")}
 #end
 
+Sie können sich nun unter https://rips-metadaten.lubw.de/log-in anmelden.
 #if($!{map.get("returnURL")})
-Bitte ändern Sie Ihr Passwort bevor Sie sich anmelden:
-$!{map.get("returnURL")}
-
+Nach der Anmeldung werden Sie aufgefordert, ein neues, eigenes Passwort zu vergeben.
 #end
-Mit freundlichen Grüßen,
 
-Ihr LUBW Team
+Bei Fragen und Problemen wenden Sie sich bitte an rips-metadaten@lubw.bwl.de.
+
+Mit freundlichen Grüßen,
+Ihr RIPS-Metadaten Team
