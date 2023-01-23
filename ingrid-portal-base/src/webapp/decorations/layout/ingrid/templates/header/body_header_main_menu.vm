@@ -1,4 +1,6 @@
-<div class="columns xsmall-16 small-15 medium-15 large-13 xlarge-10 nav-tabs">
+#parse("/decorations/layout/ingrid/templates/header/body_header_main_menu_classes.vm")
+
+<div class="$header_menu_classes">
 #if(!$mainMenu.empty)
     #includeMainNavigation($mainMenu)
 #end

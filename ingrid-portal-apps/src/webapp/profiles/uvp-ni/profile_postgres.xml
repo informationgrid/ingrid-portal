@@ -28,6 +28,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>application/main-application.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -137,6 +141,9 @@
         <!-- Delete user default-page.psml -->
         <execute>
             <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/application';]]>
         </execute>
     </sql>
 </profile>

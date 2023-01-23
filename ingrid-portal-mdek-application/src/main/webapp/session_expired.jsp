@@ -67,6 +67,7 @@
                         <a href="/hintergrundinformationen" class="header-menu-entry " title="Hintergrundinformationen zu InGrid-Portal"><span class="text">Über InGrid</span></a>
                         <a href="/informationsanbieter" class="header-menu-entry " title="Kooperationspartner und Informationsanbieter"><span class="text">Informationsanbieter</span></a>
                         <a href="/datenquellen" class="header-menu-entry " title="Angeschlossene Datenbanken"><span class="text">Datenquellen</span></a>
+                        <a href="/api" class="header-menu-entry " title="API Übersicht"><span class="text">API</span></a>
                     </div>
                     <a href="/hilfe" title="Erläuterungen zur Nutzung von InGrid-Portal - Neues Fenster öffnet sich"><span class="text">Hilfe</span></a>
                     <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an InGrid-Portal"><span class="text">Kontakt</span></a>
@@ -107,6 +108,12 @@
                                 <div class="link-menu-tab">
                                     <span class="ic-ic-datenkataloge"></span>
                                     <span class="text">Kataloge</span>
+                                </div>
+                            </a>
+                            <a class="menu-tab " href="api" title="API Übersicht">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-center"></span>
+                                    <span class="text">API</span>
                                 </div>
                             </a>
                         </div>

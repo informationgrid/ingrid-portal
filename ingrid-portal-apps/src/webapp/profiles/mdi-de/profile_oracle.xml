@@ -28,6 +28,10 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>application/main-application.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -105,6 +109,9 @@
         </execute>
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/application']]>
         </execute>
     </sql>
 </profile>

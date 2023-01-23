@@ -1,0 +1,1 @@
+#set($header_menu_classes = "columns xsmall-16 small-15 medium-9 large-7 xlarge-6 nav-tabs")
