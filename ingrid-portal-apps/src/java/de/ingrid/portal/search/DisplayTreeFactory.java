@@ -559,7 +559,7 @@ public class DisplayTreeFactory {
             }
         }
         if (!freeAddresses.isEmpty()) {
-            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), "searchCatHierarchy.tree.addresses.free", false);
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), messages.getString("searchCatHierarchy.tree.addresses.free"), false);
             childNode.setType(DisplayTreeNode.GENERIC);
             childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);
