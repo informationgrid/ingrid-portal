@@ -164,7 +164,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>Art der Dienste</name>
         <id>service_type</id>
-        <isOpen>true</isOpen>
         <facets>
         <!-- Darstellungsdienste -->
             <facet>
