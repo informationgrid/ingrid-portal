@@ -2,7 +2,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.14.0.4346-SNAPSHOT</version>
+    <version>6.1.0.4346-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal</artifactId>
@@ -134,6 +134,12 @@
       <version>1.5.6</version>
     </dependency>
     <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>3.0.2</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.5.6</version>
@@ -159,6 +165,9 @@
       <!-- Activate maven-assembly-plugin from release pom to build installer -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <skipAssembly>false</skipAssembly>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -228,26 +237,6 @@
             <configuration>
               <skip>false</skip>
             </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-changes-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>changes-report</id>
-                <phase>deploy</phase>
-                <goals>
-                  <goal>changes-report</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>changes-announcement-mail</id>
-                <phase>deploy</phase>
-                <goals>
-                  <goal>announcement-mail</goal>
-                </goals>
-              </execution>
-            </executions>
           </plugin>
         </plugins>
       </build>

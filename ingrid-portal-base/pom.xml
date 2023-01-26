@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.14.0.4346-SNAPSHOT</version>
+    <version>6.1.0.4346-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-base</artifactId>
@@ -23,10 +23,21 @@
   <dependencies>
     <!-- InGrid -->
     <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+    </dependency>
+    <dependency>
       <groupId>de.ingrid.portal</groupId>
       <artifactId>ingrid-portal-layout</artifactId>
       <version>${project.version}</version>
       <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>3.0.2</version>
       <scope>runtime</scope>
     </dependency>
 
@@ -113,6 +124,13 @@
             <exclude>**/*.svg</exclude>
             <exclude>**/vendor/**/*</exclude>
           </excludes>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <skipAssembly>true</skipAssembly>
         </configuration>
       </plugin>
 
@@ -253,7 +271,7 @@
       <plugin>
         <groupId>nl.geodienstencentrum.maven</groupId>
         <artifactId>sass-maven-plugin</artifactId>
-        <version>2.17</version>
+        <version>3.7.2</version>
         <executions>
           <execution>
             <phase>prepare-package</phase>
@@ -275,17 +293,6 @@
           </resources>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>2.9</version>
-        <configuration>
-          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
-          <smtpHost>localhost</smtpHost>
-          <toAddresses />
-        </configuration>
-      </plugin>
-
     </plugins>
     <resources>
       <resource>
