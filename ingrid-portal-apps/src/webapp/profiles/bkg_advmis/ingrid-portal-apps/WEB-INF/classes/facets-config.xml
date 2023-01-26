@@ -160,6 +160,32 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
+    <!-- Art der Dienste -->
+    <facet>
+        <name>Art der Dienste</name>
+        <id>service_type</id>
+        <isOpen>true</isOpen>
+        <facets>
+        <!-- Darstellungsdienste -->
+            <facet>
+                <name>Darstellungsdienste</name>
+                <query>t01_object.obj_class:3 (t011_obj_serv.type:view OR t011_obj_serv.type:wms OR t011_obj_serv.type:wmts OR t011_obj_serv.type:map)</query>
+                <id>service_type_view</id>
+            </facet>
+        <!-- Downloaddienste -->
+            <facet>
+                <name>Downloaddienste</name>
+                <query>t01_object.obj_class:3 (t011_obj_serv.type:download OR t011_obj_serv.type:feature OR t011_obj_serv.type:wcs OR t011_obj_serv.type:wfs OR t011_obj_serv.type:atom OR t011_obj_serv.type:ogcapifeature OR t011_obj_serv.type:"api feature")</query>
+                <id>service_type_download</id>
+            </facet>
+        <!-- Darstellungsdienste -->
+            <facet>
+                <name>Sonstige Dienste</name>
+                <query>t01_object.obj_class:3 (t01_object.obj_class:3 -t011_obj_serv.type:view -t011_obj_serv.type:wms -t011_obj_serv.type:wmts -t011_obj_serv.type:map -t011_obj_serv.type:download -t011_obj_serv.type:feature -t011_obj_serv.type:wcs -t011_obj_serv.type:wfs -t011_obj_serv.type:atom -t011_obj_serv.type:ogcapifeature -t011_obj_serv.type:"api feature")</query>
+                <id>service_type_others</id>
+            </facet>
+        </facets>
+    </facet>
     <facet>
         <name>Produktgruppe</name>
         <id>productgroup</id>
