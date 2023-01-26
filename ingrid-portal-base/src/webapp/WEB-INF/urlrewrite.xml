@@ -282,5 +282,15 @@
         <from>/portal/help.psml</from>
         <to>/hilfe</to>
     </outbound-rule>
-    
+
+    <!-- Api -->
+    <rule>
+        <from>/api</from>
+        <to type="forward">/portal/application/main-application.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/application/main-application.psml</from>
+        <to>/api</to>
+    </outbound-rule>
+
 </urlrewrite>

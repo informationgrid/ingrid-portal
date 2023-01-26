@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -138,7 +138,7 @@ public class FacetsConfig {
                 
                 if (!facetNode.getAttributes( "show-on-more-than" ).isEmpty()) {
                     Node subNode = (Node) facetNode.getAttributes( "show-on-more-than" ).get( 0 );
-                    ingridFacet.setShowOnMoreThan( new Integer(subNode.getValue().toString()) );
+                    ingridFacet.setShowOnMoreThan( Integer.valueOf(subNode.getValue().toString()) );
                 }
                 
                 if (!facetNode.getChildren( "query" ).isEmpty()) {

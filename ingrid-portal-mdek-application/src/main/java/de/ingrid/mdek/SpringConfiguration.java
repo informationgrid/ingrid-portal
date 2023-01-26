@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Management iPlug
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,10 +22,13 @@
  */
 package de.ingrid.mdek;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -50,6 +53,8 @@ import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
 import de.ingrid.mdek.upload.storage.validate.Validator;
 import de.ingrid.mdek.userrepo.DbUserRepoManager;
 import de.ingrid.mdek.userrepo.UserRepoManager;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 @Configuration
 public class SpringConfiguration {
@@ -147,5 +152,14 @@ public class SpringConfiguration {
 
 			return instance;
 		}
+	}
+
+	public static final String DATETIME_FORMAT = "dd-MM-yyyy HH:mm";
+
+	@Bean
+	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder().serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT)))
+				.serializationInclusion(JsonInclude.Include.NON_NULL);
+		return new MappingJackson2HttpMessageConverter(builder.build());
 	}
 }

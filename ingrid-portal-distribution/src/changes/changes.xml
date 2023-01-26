@@ -6,7 +6,25 @@
     </properties>
 
     <body>
-        <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+        <release version="6.1.0-SNAPSHOT" date="2023-xx-xx" description="Release 6.1.0">
+          <action type="add" dev="wemove" issue="4677">
+            Aktivierung des API Menübereiches im allgemeinen Profil
+          </action>
+        </release>
+
+        <release version="6.0.0" date="2023-01-13" description="Release 6.0.0">
+          <action type="update" dev="wemove" issue="4598">
+            Deutschlandkarte verkleinern, ersetzen oder entfernen
+          </action>
+          <action type="update" dev="wemove" issue="4604">
+            Portal: Anpassungen für LUBW Profil
+          </action>
+          <action type="add" dev="wemove" issue="4603">
+            Kartenclient: Option für Copyright Ersetzungen im Portal und im Ausdruck
+          </action>
+          <action type="update" dev="wemove" issue="3976">
+            Anpassung Hilfetext zum Feld "Durch die Ressource abgedeckte Zeitspanne"
+          </action>
           <action type="update" dev="wemove" issue="4634">
             Nutzung OSM inkl. NOMINATIN im UVP-Portal
           </action>
@@ -123,6 +141,9 @@
           </action>
           <action type="add" dev="wemove" issue="3928">
             Portal/IGE: Feld Regionalschlüssel hinzugefügt.
+          </action>
+          <action type="add" dev="wemove" issue="4663">
+            System E-Mail prefix Einstellung hinzugefügt
           </action>
         </release>
 

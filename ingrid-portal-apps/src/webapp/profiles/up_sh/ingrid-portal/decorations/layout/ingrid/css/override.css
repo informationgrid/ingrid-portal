@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -1462,9 +1462,4 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
   background: #003064;
   padding: 8px 8px 5px;
   color: #FFFFFF;
-}
-
-/* hide register button */
-button[type="submit"][name="Registrieren"] {
-  display: none;
 }

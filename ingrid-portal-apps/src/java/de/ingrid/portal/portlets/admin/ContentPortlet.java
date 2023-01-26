@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -262,7 +262,7 @@ public abstract class ContentPortlet extends GenericVelocityPortlet {
      */
     protected boolean doViewNew(RenderRequest request) {
         try {
-            Object[] newEntity = { dbEntityClass.newInstance() };
+            Object[] newEntity = { dbEntityClass.getDeclaredConstructor().newInstance() };
 
             Context context = getContext(request);
             context.put(CONTEXT_MODE, CONTEXTV_MODE_NEW);
@@ -663,7 +663,7 @@ public abstract class ContentPortlet extends GenericVelocityPortlet {
             longIds = (Long[]) Array.newInstance(Long.class, strIds.length);
             for (int i = 0; i < strIds.length; i++) {
                 try {
-                    longIds[i] = new Long(strIds[i]);
+                    longIds[i] = Long.valueOf(strIds[i]);
                 } catch (Exception ex) {
                     log.error("Error on convertIds." , ex);
                 }

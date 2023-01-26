@@ -47,6 +47,10 @@
             <AppenderRef ref="RootLogFile" />
             <AppenderRef ref="Console" />
         </Logger>
+        <Logger name="org.hibernate" level="error" additivity="false">
+            <AppenderRef ref="RootLogFile" />
+            <AppenderRef ref="LogFile" />
+        </Logger>
         <Root level="warn">
             <AppenderRef ref="RootLogFile" />
             <AppenderRef ref="Console" />

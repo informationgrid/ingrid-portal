@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,17 +25,16 @@ package de.ingrid.mdek.quartz.jobs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -68,7 +67,7 @@ public class SNSUpdateJobGazetteerTest {
     
     @Mock private MdekCallerCatalog callerCatalog;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
@@ -79,7 +78,7 @@ public class SNSUpdateJobGazetteerTest {
         when(connFacade.getCurrentPlugId()).thenReturn( "test-plug-mock" );
         when(connFacade.getMdekCallerCatalog()).thenReturn( callerCatalog );
         
-        when(context.get( Matchers.any() )).thenReturn(-1);
+        when(context.get( ArgumentMatchers.any() )).thenReturn(-1);
 
     }
     
@@ -193,7 +192,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         when(callerCatalog.getSpatialReferences( "test-plug-id", new SpatialReferenceType[] { SpatialReferenceType.GEO_THESAURUS }, "test-user-id" )).thenReturn( getTestSpatialReferenceMariental(null)  );
         
@@ -246,7 +245,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -300,7 +299,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -363,7 +362,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -432,7 +431,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -493,7 +492,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -549,7 +548,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );
@@ -602,7 +601,7 @@ public class SNSUpdateJobGazetteerTest {
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
                 return doc;
             }})
-        .when(callerCatalog).updateSpatialReferences( Matchers.anyString(), Matchers.anyList(), Matchers.anyList(), Matchers.anyString());
+        .when(callerCatalog).updateSpatialReferences( ArgumentMatchers.anyString(), ArgumentMatchers.anyList(), ArgumentMatchers.anyList(), ArgumentMatchers.anyString());
         
         // START Process
         snsUpdateJob.executeInternal( context );

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -70,6 +70,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
     //scroll top value
     private String scrollTop = "0";
 
+    IngridResourceBundle messages = null;
+
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
@@ -101,8 +103,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()), request.getLocale());
+        this.messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+            request.getLocale()), request.getLocale());
 
         PortletPreferences prefs = request.getPreferences();
         String helpKey = prefs.getValue( "helpKey", "");
@@ -210,7 +212,10 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
         scrollTop = request.getParameter("scrollTop");
-        
+
+        this.messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+            request.getLocale()), request.getLocale());
+
         if(scrollTop == null){
             scrollTop = "0";
         }
@@ -264,7 +269,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                 node.setLoading(true);
 
                 // handles all stuff
-                DisplayTreeFactory.openECSNode(rootNode, node);
+                DisplayTreeFactory.openECSNode(rootNode, node, this.messages);
 
                 node.setLoading(false);
             }

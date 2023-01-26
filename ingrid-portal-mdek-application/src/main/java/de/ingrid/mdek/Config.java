@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-base-webapp
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -117,6 +117,12 @@ public class Config {
     @PropertyValue("system.mail.receiver")
     @DefaultValue("")
     public String systemMailReceiver;
+
+
+    @PropertyValue("system.mail.prefix")
+    @DefaultValue("")
+    public String systemMailPrefix;
+
 
     @PropertyValue("workflow.mail.sender")
     @DefaultValue("")

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Mdek
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -66,6 +66,7 @@ import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.utils.IngridDocument;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 
 /**
@@ -273,7 +274,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
     	} catch (HibernateException e) {
     		// Hibernate Exception. Rollback the role change and the transaction
-    		if (s.getTransaction() != null && s.getTransaction().wasCommitted()) {
+    		if (s.getTransaction() != null && s.getTransaction().getStatus() == TransactionStatus.COMMITTED) {
     			s.getTransaction().rollback();
     		}
 
