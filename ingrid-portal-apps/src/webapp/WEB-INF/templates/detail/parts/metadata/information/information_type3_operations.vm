@@ -1,0 +1,4 @@
+## Operationen
+    #set($headTitles = [$MESSAGES.getString("t011_obj_serv_operation.name"),$MESSAGES.getString("t011_obj_serv_operation.descr"),$MESSAGES.getString("t011_obj_serv_operation.invocation_name")])
+    #set($headXpathExpressions = ["./srv:operationName","./srv:operationDescription","./srv:invocationName"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_serv_operation"), $xPathInfo3SVOperationMetadata, $headTitles, $headXpathExpressions))
