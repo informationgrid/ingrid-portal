@@ -550,6 +550,9 @@
     #end
 #end
 
+## Distribution Contacts
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_contac_distributor.vm")
+
 ## Zusatzfelder
 #set($xPathAdditionalFields = "./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']")
 #set($xPathAdditionalFieldsData = "./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField")

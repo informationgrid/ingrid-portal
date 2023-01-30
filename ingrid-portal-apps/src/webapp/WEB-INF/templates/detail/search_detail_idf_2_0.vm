@@ -414,7 +414,11 @@
                     
                     #set($addressRole = "")
                     #if($TOOL.nodeExist($xPath, $node))
-                        #set($addressRole = $TOOL.getValueFromXPath($xPath, "505", $node))
+                        #if($distributionContactCodelistValue && $node.getLocalName() == "distributorContact")
+                            #set($addressRole = $TOOL.getValueFromCodeList("505", $distributionContactCodelistValue))
+                        #else
+                            #set($addressRole = $TOOL.getValueFromXPath($xPath, "505", $node))
+                        #end
                     #end
                     
                     #if(!$isFactSheet)
