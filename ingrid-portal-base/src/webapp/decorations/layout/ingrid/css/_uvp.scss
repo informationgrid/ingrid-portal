@@ -3566,3 +3566,7 @@ a:empty:focus-visible {
   margin-top:-5px;
   border-right-color:rgba(0,0,0,.8);
 }
+
+span.text-break {
+  overflow-wrap: break-word;
+}
