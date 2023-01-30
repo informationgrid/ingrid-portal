@@ -1113,6 +1113,7 @@
                     #set($listCount = 0)
                     #set($listLimit = 5)
                     #set($listExpand = false)
+                    #set($isMoreId = false)
                     #set($paramMore = $request.getParameter("more"))
                     #if($paramMore && $paramMore.indexOf($expandableId) > -1)
                         #set($isMoreId = true)
@@ -1178,6 +1179,7 @@
                             #set($listCount = 0)
                             #set($listLimit = $limit)
                             #set($listExpand = false)
+                            #set($isMoreId = false)
                             #set($paramMore = $request.getParameter("more"))
                             #if($paramMore && $paramMore.indexOf($expandableId) > -1)
                                 #set($isMoreId = true)
@@ -1185,7 +1187,7 @@
                             #foreach($entry in $sorter.sort($textList,"body"))
                                 #if($listCount >= $listLimit && $listExpand == false)
                                     #set($listExpand = true)
-                                    <button type="button" id="$expandableId" class="js-expander js-open-expand-text button outline $expandableId #if($isMoreId)is-hidden #end" title="$MESSAGES.getString('searchResult.info.links.more')">
+                                    <button type="button" id="$expandableId" class="js-expander js-open-expand-text button outline $expandableId #if($isMoreId)is-hidden #end" style="margin:0 !important;"title="$MESSAGES.getString('searchResult.info.links.more')">
                                         $MESSAGES.getString('search.detail.info.more')
                                     </button>
                                     <span class="js-expander-content $expandableId #if(!$isMoreId)is-hidden#end">
