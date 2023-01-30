@@ -37,14 +37,14 @@
         ## Kategorien
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_keywords_category.vm")
         ## Verschlagwortung
-        #renderTableList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire"))
-        #renderTableList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "priority"))
-        #renderTableList($MESSAGES.getString("spatial_scope") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "spatial_scope"))
-        #renderTableList($MESSAGES.getString("gemet_concepts") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "gemet"))
-        #renderTableList($MESSAGES.getString("adv_group") $advGroup)
+        #renderTableList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire") true "search_terms_inspire" 10)
+        #renderTableList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "priority") true "search_terms_priority" 10)
+        #renderTableList($MESSAGES.getString("spatial_scope") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "spatial_scope") true "search_terms_spatial" 10)
+        #renderTableList($MESSAGES.getString("gemet_concepts") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "gemet") true "search_terms_gemet" 10)
+        #renderTableList($MESSAGES.getString("adv_group") $advGroup true "search_terms_adv" 10)
         ## ISO-Themenkategorien
-        #renderTableList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath($xPathKeywordsTopicCategory, "./gmd:MD_TopicCategoryCode", "527"))
+        #renderTableList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath($xPathKeywordsTopicCategory, "./gmd:MD_TopicCategoryCode", "527") true "search_terms_iso" 10)
         ## Suchbegriffe
-        #renderTableList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "search") true "search_terms_id" 10)
+        #renderTableList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "search") true "search_terms" 10)
     </div>
 #end
