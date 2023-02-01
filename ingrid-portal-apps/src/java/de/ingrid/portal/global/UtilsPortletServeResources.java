@@ -93,7 +93,9 @@ public class UtilsPortletServeResources {
                 extension = "wms";
             } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
                 extension = "wfs";
-            } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
+            } else if(paramURL.toLowerCase().indexOf("service=wcs") > -1) {
+                extension = "wcs";
+            } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1 || paramURL.toLowerCase().indexOf("wmtscapabilities.xml") > -1) {
                 extension = "wmts";
             }
             if(extension.isEmpty()) {
@@ -104,6 +106,13 @@ public class UtilsPortletServeResources {
                             String contentType = (String) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_TYPE);
                             if(contentType != null) {
                                 extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                                if(contentType.contains("/xml") || contentType.contains("+xml")){
+                                    String content = UtilsHttpConnection.urlConnection (paramURL, login, password);
+                                    String capExtension = UtilsSearch.getServiceParamByContent(content);
+                                    if(capExtension != null){
+                                        extension = capExtension;
+                                    }
+                                }
                             }
                         }
                     } catch (Exception e) {

@@ -162,7 +162,11 @@
                                 #set($tmpXPath = "$tmpXParentPath/gmd:role/gmd:CI_RoleCode/@codeListValue")
                                 #if($TOOL.nodeExist($tmpXPath, $tmpContactNode))
                                     #set($tmpHash = "${hashDetail8}_contact-${tmpIndex}")
-                                    #set($tmpTitle = $TOOL.getValueFromXPath($tmpXPath, "505", $tmpContactNode))
+                                    #if($distributionContactCodelistValue && $tmpContactNode.getLocalName() == "distributorContact")
+                                        #set($tmpTitle = $TOOL.getValueFromCodeList("505", $distributionContactCodelistValue))
+                                    #else
+                                        #set($tmpTitle = $TOOL.getValueFromXPath($tmpXPath, "505", $tmpContactNode))
+                                    #end
                                     #renderSubNavigation($tmpTitle $tmpHash)
                                     #set($tmpIndex = $tmpIndex + 1)
                                 #end

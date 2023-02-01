@@ -64,12 +64,18 @@ var expander = (function () {
 
     function updateQueryStringParameter(uri, key, value) {
       var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-      var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-      if (uri.match(re)) {
-        return uri.replace(re, '$1' + key + "=" + value + '$2');
+      var splitUrl = uri.split('#');
+      var url = splitUrl[0];
+      var hash = "";
+      if(splitUrl.length > 1) {
+        hash = "#" + splitUrl[1];
+      }
+      var separator = url.indexOf('?') !== -1 ? "&" : "?";
+      if (url.match(re)) {
+        return url.replace(re, '$1' + key + "=" + value + '$2') + hash;
       }
       else {
-        return uri + separator + key + "=" + value;
+        return url + separator + key + "=" + value + hash;
       }
     }
 

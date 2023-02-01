@@ -2042,7 +2042,13 @@ footer {
       font-size: 14px;
       font-family: $button-font-family;
       white-space: nowrap;
-      margin-right: 6px; 
+      margin-right: 6px;
+
+      ~ .button {
+        margin: 0;
+        padding: 6px 14px;
+        font-size: 12px;
+      }
     }
   }
 
@@ -3559,4 +3565,8 @@ a:empty:focus-visible {
   bottom:50%;
   margin-top:-5px;
   border-right-color:rgba(0,0,0,.8);
+}
+
+span.text-break {
+  overflow-wrap: break-word;
 }

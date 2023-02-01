@@ -2,10 +2,15 @@
     #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 
     ## Set service types
+    #set($serviceTypeShortcut = "")
     #set($serviceTypes = [])
     #set($serviceType = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
-    #if($serviceType && !$serviceType.isEmpty())
-        #set($add = $serviceTypes.add($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" )))
+    #set($serviceTypeVersion = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv_version.version_value" ))
+    #if($serviceTypeVersion && !$serviceTypeVersion.isEmpty())
+        #set($serviceTypeShortcut = $UTIL_SEARCH.getHitShortcut($serviceTypeVersion, $serviceType))
+    #end
+    #if(!$serviceTypeShortcut.isEmpty())
+        #set($add = $serviceTypes.add($serviceTypeShortcut))
     #end
 
     ## Set hit info expand data

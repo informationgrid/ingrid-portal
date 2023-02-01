@@ -86,7 +86,7 @@
                                     #set($nodeHasValue = true)
                                 #end
                             #end
-                            #if($nodeHasValue || $node.isOpen())
+                            #if($nodeHasValue || ($nodeHasValue && $node.isOpen()))
                                 #renderFacetContent($node)
                             #end
                         #end

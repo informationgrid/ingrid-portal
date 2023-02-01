@@ -24,6 +24,8 @@ package de.ingrid.portal.search;
 
 import java.io.IOException;
 import java.io.NotSerializableException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +70,7 @@ import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.PlugDescription;
+import de.ingrid.utils.capabilities.CapabilitiesUtils;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.FuzzyFieldQuery;
@@ -78,6 +81,7 @@ import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.query.WildCardFieldQuery;
 import de.ingrid.utils.query.WildCardTermQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
+import de.ingrid.utils.tool.StringUtil;
 import de.ingrid.utils.tool.UrlTool;
 import de.ingrid.utils.udk.UtilsCSWDate;
 import de.ingrid.utils.udk.UtilsDate;
@@ -1704,5 +1708,137 @@ public class UtilsSearch {
         }
 
         q.addClause(cq);
+    }
+    
+    public static String getHitShortcut(String serviceTypeVersion, String serviceType) {
+        if(serviceTypeVersion != null) {
+            String service = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
+            if(service != null && !service.isEmpty()) {
+                return service;
+            }
+        }
+        if(serviceType != null) {
+            IngridSysCodeList codelist = new IngridSysCodeList(new Locale("DE"));
+            String codelistValue = codelist.getNameByCodeListValue("5100", serviceType);
+            if(codelistValue.isEmpty()) {
+                return serviceType;
+            }
+        }
+        if(serviceTypeVersion != null) {
+            if(StringUtil.containsLetters(serviceTypeVersion)) {
+                return serviceTypeVersion;
+            }
+        }
+        return "";
+    }
+
+    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
+        return addCapabilitiesInformation(url, serviceTypeVersion, serviceType, null);
+    }
+    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType, String additionalURLContent){
+        StringBuilder urlValue = new StringBuilder(url);
+        String service = "";
+        // add missing parameters
+        if (url.indexOf("?") != -1) {
+            if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                // if url or parameters already contains a ? or & at the end then do not add another one!
+                if (!(url.lastIndexOf("?") == url.length() - 1 || url.length() > 0)
+                        && !(url.lastIndexOf("&") == url.length() - 1)) {
+                    urlValue.append("&");
+                }
+                urlValue.append("REQUEST=GetCapabilities");
+            }
+            if (serviceTypeVersion != null && !serviceTypeVersion.isEmpty()) {
+                Pattern pattern = Pattern.compile("(?<=(\\:| ))(.*?)(?=\\ )");
+                Matcher matcher = pattern.matcher(serviceTypeVersion);
+                if (matcher.find()) {
+                    String match = matcher.group(0);
+                    if(match != null && !match.isEmpty()) {
+                        service = match.trim();
+                        if(service.equalsIgnoreCase("WMS") || service.equalsIgnoreCase("WMTS")) {
+                            if (url.toLowerCase().indexOf("service=") == -1) {
+                                urlValue.append("&SERVICE=" + service);
+                            }
+                        } else {
+                            service = "";
+                        }
+                    }
+                }
+            }
+            if (serviceType != null && !serviceType.isEmpty()) {
+                IngridSysCodeList codelist = new IngridSysCodeList(new Locale("DE"));
+                String codelistValue = codelist.getNameByCodeListValue("5100", serviceType);
+                if(codelistValue.isEmpty()) {
+                    service = serviceType.trim();
+                    if(service.equalsIgnoreCase("WMS") || service.equalsIgnoreCase("WMTS")) {
+                        if (url.toLowerCase().indexOf("service=") == -1) {
+                            urlValue.append("&SERVICE=" + service);
+                        }
+                    } else {
+                        service = "";
+                    }
+                }
+            }
+        } else {
+            service = "WMTS";
+        }
+        if(!service.isEmpty()) {
+            String cap = service + "||" + urlValue.toString().trim();
+            if(additionalURLContent != null) {
+                cap += "||" + additionalURLContent;
+            }
+            try {
+                return URLEncoder.encode(cap , "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+               log.error("Error URLEncode url: " + cap);
+            }
+        }
+        return null;
+    }
+
+    public static String getMapCapabilitiesWithoutServiceInfo(String url) {
+        return getMapCapabilitiesWithoutServiceInfo(url, null);
+    }
+
+    public static String getMapCapabilitiesWithoutServiceInfo(String url, String additionalURLContent) {
+        StringBuilder urlValue = new StringBuilder(url);
+        String service = "";
+        if(url.toLowerCase().indexOf("service=wms") > -1) {
+            service = "WMS";
+        } else if(url.toLowerCase().indexOf("service=wmts") > -1 || url.toLowerCase().indexOf("wmtscapabilities.xml") > -1) {
+            service = "WMTS";
+        }
+        if(!service.isEmpty()) {
+            String cap = service + "||" + urlValue.toString().trim();
+            if(additionalURLContent != null) {
+                cap += "||" + additionalURLContent;
+            }
+            try {
+                return URLEncoder.encode(cap , "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+               log.error("Error URLEncode url: " + cap);
+            }
+        }
+        return null;
+    }
+    public static String getServiceParamByContent(String content) {
+        String contentLowerCase = content.toLowerCase();
+        if (contentLowerCase.contains("<csw:capabilities")) {
+            return "CSW";
+        } else if(contentLowerCase.contains("wmt_ms_capabilities")
+            || contentLowerCase.contains("wms_capabilities")) {
+            return "WMS";
+        } else if(contentLowerCase.contains("wcs_capabilities")
+            || contentLowerCase.contains("wcs:capabilities")
+            || (contentLowerCase.contains("<capabilities") && contentLowerCase.contains("www.opengis.net/wcs/"))) {
+            return "WCS";
+        } else if(contentLowerCase.contains("<capabilities") && contentLowerCase.contains("www.opengis.net/wmts/")) {
+            return "WMTS";
+        } else if(contentLowerCase.contains("wfs_capabilities")) {
+            return "WFS";
+        } else if(contentLowerCase.contains("<feed") && contentLowerCase.contains("/atom")) {
+            return "ATOM";
+        }
+        return null;
     }
 }

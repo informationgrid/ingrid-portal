@@ -28,9 +28,7 @@
 ## Erläuterung zum Fachbezug (*)
     #renderTextTable($MESSAGES.getString("t011_obj_serv.description") $TOOL.getValueFromXPath($xPathInfo3SupplementalInformationAbstract))
 ## Operationen
-    #set($headTitles = [$MESSAGES.getString("t011_obj_serv_operation.name"),$MESSAGES.getString("t011_obj_serv_operation.descr"),$MESSAGES.getString("t011_obj_serv_operation.invocation_name")])
-    #set($headXpathExpressions = ["./srv:operationName","./srv:operationDescription","./srv:invocationName"])
-    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_serv_operation"), $$xPathInfo3SVOperationMetadata, $headTitles, $headXpathExpressions))
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type3_operations.vm")
 ## Operation -> Zugriffsadresse
     #renderTextLabelLeftLinkTable($TOOL.getConnectionPoints($xPathInfo3SVOperationMetadataConnectPoint))
 </div>

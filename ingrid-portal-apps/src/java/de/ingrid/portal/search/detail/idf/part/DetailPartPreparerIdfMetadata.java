@@ -43,6 +43,7 @@ import org.w3c.dom.NodeList;
 import de.ingrid.geo.utils.transformation.GmlToWktTransformUtil;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.UtilsVelocity;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.capabilities.CapabilitiesUtils;
 import de.ingrid.utils.capabilities.CapabilitiesUtils.ServiceType;
 
@@ -183,52 +184,81 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     public Map<String, Object> getMapImage(){
-        return getMapImage(null, false);
+        return getMapImage(null);
     }
 
-    public Map<String, Object> getMapImage(String partner, boolean isNewLayout){
+    public Map<String, Object> getMapImage(String partner){
         HashMap<String, Object> map = new HashMap<>();
         // showMap/Preview-Link
-        if ( getUdkObjectClassType().equals("1") && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
-            // first try to get any valid WMS url from the crossReference section
-            String xpathCrossReference = "./idf:crossReference/idf:serviceType[text() = 'view']/../idf:serviceOperation[text() = 'GetCapabilities']/../idf:serviceUrl";
-            NodeList crossReferenceNodeList = xPathUtils.getNodeList(rootNode, xpathCrossReference);
-            if(crossReferenceNodeList.getLength() > 0) {
-                for (int i=0; i< crossReferenceNodeList.getLength(); i++) {
-                    Node crossReferenceNode = crossReferenceNodeList.item(i);
-                    String getCapUrl = crossReferenceNode.getTextContent();
-                    if ( !getCapUrl.isEmpty() ) {
-                        // since this link will be going to the webmap-client, the service must be WMS!
-                        getCapUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( getCapUrl, ServiceType.WMS );
-                        getCapUrl = UtilsVelocity.urlencode( getCapUrl + "||");
-
-                        String layerIdentifier = getLayerIdentifier(null);
-                        if(!layerIdentifier.equals("NOT_FOUND")) {
-                            getCapUrl += UtilsVelocity.urlencode(layerIdentifier);
-                        }
-
-                        if(!getCapUrl.isEmpty()) {
-                            map = addBigMapLink(crossReferenceNode.getParentNode(), getCapUrl, false, partner, isNewLayout);
-                            if(!hasAccessConstraints(crossReferenceNode.getParentNode())) {
-                                break;
+        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
+            if (getUdkObjectClassType().equals("1")) {
+                // first try to get any valid WMS url from the crossReference section
+                String xpathCrossReference = "./idf:crossReference";
+                NodeList crossReferenceNodeList = xPathUtils.getNodeList(rootNode, xpathCrossReference);
+                if(crossReferenceNodeList.getLength() > 0) {
+                    for (int i=0; i< crossReferenceNodeList.getLength(); i++) {
+                        Node crossReferenceNode = crossReferenceNodeList.item(i);
+                        String serviceUrl =  xPathUtils.getString(crossReferenceNode, "./idf:serviceUrl");
+                        String serviceType =  xPathUtils.getString(crossReferenceNode, "./idf:serviceType");
+                        String serviceVersion =  xPathUtils.getString(crossReferenceNode, "./idf:serviceVersion");
+                        if(serviceUrl != null && !serviceUrl.isEmpty()) {
+                            String getCapUrl = "";
+                            String layerIdentifier = getLayerIdentifier(null);
+                            if(!layerIdentifier.equals("NOT_FOUND")) {
+                                getCapUrl = UtilsSearch.addCapabilitiesInformation(serviceUrl, serviceVersion, serviceType, layerIdentifier);
+                            } else {
+                                getCapUrl = UtilsSearch.addCapabilitiesInformation(serviceUrl, serviceVersion, serviceType);
+                            }
+                            if(!getCapUrl.isEmpty()) {
+                                map = addBigMapLink(crossReferenceNode, getCapUrl, false, partner);
+                                if(!hasAccessConstraints(crossReferenceNode)) {
+                                    break;
+                                }
                             }
                         }
                     }
+                } else {
+                    // search for it in onlineResources
+                    String xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
+                    boolean mapLinkAdded = false;
+                    if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
+                        NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+                        for (int i=0; i<nodeList.getLength();i++){
+                            if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL")){
+                                Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL");
+                                String urlValue = xPathUtils.getString(node, ".").trim();
+                                // do not display empty URLs
+                                if (urlValue == null || urlValue.length() == 0) {
+                                    continue;
+                                }
+                                String serviceType = xPathUtils.getString(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/gmd:CI_OnLineFunctionCode");
+                                if ((serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms") || serviceType.trim().equalsIgnoreCase("wmts"))) &&
+                                    ((urlValue.toLowerCase().contains("request=getcapabilities") && urlValue.toLowerCase().contains("service=wms")) || 
+                                    (urlValue.toLowerCase().contains("request=getcapabilities") && urlValue.toLowerCase().contains("service=wmts")) ||
+                                    (urlValue.toLowerCase().contains("wmtscapabilities.xml")))
+                                ) {
+                                    urlValue = UtilsSearch.getMapCapabilitiesWithoutServiceInfo(urlValue, getLayerIdentifier(null));
+                                    // also add an identifier to select the correct layer in the map client 
+                                    map = addBigMapLink(node, urlValue, true);
+                                    // ADD FIRST ONE FOUND !!!
+                                    mapLinkAdded = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!mapLinkAdded) {
+                        // check if preview image is available
+                        xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
+                        map = getPreviewImage(xpathExpression);
+                    }
                 }
-            } else {
-                // search for it in onlineResources
-                String xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
-                map = getCapabilityUrls(xpathExpression);
+            // otherwise try within distribution info or SV_OperationMetadata
+            } else if ( getUdkObjectClassType().equals("3")) {
+                String capabilitiesUrl = getCapabilityUrl();
+                // get it directly from the operation
+                map = addBigMapLink(rootNode, capabilitiesUrl, true, partner);
             }
-
-        // otherwise try within distribution info or SV_OperationMetadata
-        } else if ( getUdkObjectClassType().equals("3")  && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
-            String capabilitiesUrl = getCapabilityUrl();
-            if(capabilitiesUrl != null){
-                capabilitiesUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilitiesUrl, ServiceType.WMS ) + "||";
-            }
-            // get it directly from the operation
-            map = addBigMapLink(rootNode, capabilitiesUrl, true, partner, isNewLayout);
         } else {
             // show preview image (with map link information if provided)
             map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
@@ -273,6 +303,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String description = "";
                 String serviceUrl = null;
                 String objServiceType = null;
+                String objServiceVersion = null;
                 String[] graphicOverview = null;
                 String tmp = null;
                 String[] tmpList = null;
@@ -319,6 +350,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     objServiceType = tmp.trim();
                 }
 
+                xpathExpression = "./idf:serviceVersion";
+                tmp = xPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    objServiceVersion = tmp.trim();
+                }
+
                 xpathExpression = "./idf:serviceUrl";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
@@ -336,7 +373,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 link.put("isExtern", false);
                 link.put("title", title);
                 link.put("objectClass", type);
-                link.put("serviceType", objServiceType);
+                link.put("serviceType", UtilsSearch.getHitShortcut(objServiceVersion, objServiceType));
                 link.put("graphicOverview", graphicOverview);
                 if (description.length() > 0) {
                     link.put("description", description);
@@ -366,17 +403,17 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             // get link from operation (unique one)
                             if ((serviceType != null && serviceType.trim().equals("view")) || (objServiceType != null && objServiceType.trim().equals("view")) && !hasAccessConstraints(node)) {
                                 if(serviceUrl != null){
-                                    capabilityUrl= new StringBuilder(serviceUrl);
+                                    serviceUrl = UtilsSearch.addCapabilitiesInformation(serviceUrl, objServiceVersion, objServiceType, getLayerIdentifier(node));
+                                    capabilityUrl = new StringBuilder(serviceUrl);
                                 }
                             } else {
-                                String tmpUrl = getCapabilityUrl();
+                                String tmpUrl = getCapabilityUrl(getLayerIdentifier(node));
                                 if(tmpUrl != null) {
                                     capabilityUrl =  new StringBuilder(tmpUrl);
                                 }
                             }
                             if ( capabilityUrl != null && capabilityUrl.length() != 0) {
-                                capabilityUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl.toString(), ServiceType.WMS ));
-                                link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl.toString() + "||" + getLayerIdentifier(node)));
+                                link.put("mapLink", capabilityUrl.toString());
                             }
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
@@ -1098,6 +1135,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     public Map getConnectionPoints(String xpathExpression) {
+        // xpathExpression = './gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint'
+
         String serviceType = getValueFromXPath("./gmd:identificationInfo/*/srv:serviceType");
         if(serviceType != null){
             serviceType = serviceType.trim();
@@ -1109,7 +1148,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             for (int i=0; i<nodeList.getLength();i++){
                 if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
                     Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
-                    StringBuilder urlValue = new StringBuilder(xPathUtils.getString(node, ".").trim());
+                    String url = xPathUtils.getString(node, ".").trim();
+                    StringBuilder urlValue = new StringBuilder(url);
                     // do not display empty URLs
                     if (urlValue.length() == 0) {
                         continue;
@@ -1123,8 +1163,51 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
                     if (operationName.equals("GetCapabilities")) {
                         // add missing parameters
-                        urlValue.append(CapabilitiesUtils.getMissingCapabilitiesParameter( urlValue.toString(), serviceType ));
-
+                        if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                            if (url.indexOf("?") != -1) {
+                                // if url or parameters already contains a ? or & at the end then do not add another one!
+                                if (!(url.lastIndexOf("?") == url.length() - 1 || url.length() > 0)
+                                        && !(url.lastIndexOf("&") == url.length() - 1)) {
+                                    urlValue.append("&");
+                                }
+                                urlValue.append("REQUEST=GetCapabilities");
+                            }
+                        }
+                        if (url.toLowerCase().indexOf("service=") == -1) {
+                            if (url.indexOf("?") != -1) {
+                                NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
+                                for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
+                                    Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
+                                    String serviceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
+                                    if (!serviceTypeVersion.isEmpty()) {
+                                        Pattern pattern = Pattern.compile("(?<=(\\:| ))(.*?)(?=\\ )");
+                                        Matcher matcher = pattern.matcher(serviceTypeVersion);
+                                        if (matcher.find()) {
+                                            String match = matcher.group(0);
+                                            if(match != null && !match.isEmpty()) {
+                                                urlValue.append("&SERVICE=" + match);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (urlValue.toString().toLowerCase().indexOf("service=") == -1) {
+                            if (url.indexOf("?") != -1) {
+                                NodeList nodeListParameters = xPathUtils.getNodeList(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/gco:CharacterString");
+                                for (int j=0; j<nodeListParameters.getLength();j++){
+                                    Node nodeParameter = nodeListParameters.item(j);
+                                    String parameter = xPathUtils.getString(nodeParameter, ".").trim();
+                                    if (!parameter.isEmpty()) {
+                                        if (parameter.toLowerCase().indexOf("service=") > -1) {
+                                            urlValue.append("&" + parameter);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         element.put("type", "textLabelLeft");
                         element.put("line", true);
 
@@ -1533,39 +1616,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
      * Private functiions
      *
      */
-    private HashMap<String,Object> getCapabilityUrls(String xpathExpression) {
-        boolean mapLinkAdded = false;
-        HashMap<String, Object> map = new HashMap<>();
-        if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
-            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
-            for (int i=0; i<nodeList.getLength();i++){
-                if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL")){
-                    Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL");
-                    String urlValue = xPathUtils.getString(node, ".").trim();
-                    // do not display empty URLs
-                    if (urlValue == null || urlValue.length() == 0) {
-                        continue;
-                    }
-                    String serviceType = xPathUtils.getString(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/gmd:CI_OnLineFunctionCode");
-                    if (urlValue.toLowerCase().contains("request=getcapabilities") && urlValue.toLowerCase().contains("service=wms") &&
-                            (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))) {
-                        // also add an identifier to select the correct layer in the map client
-                        map = addBigMapLink(node, urlValue + "||" + getLayerIdentifier(null), true);
-                        // ADD FIRST ONE FOUND !!!
-                        mapLinkAdded = true;
-                        break;
-                    }
-                }
-            }
-        }
-        if (!mapLinkAdded) {
-            // check if preview image is available
-            xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
-            map = getPreviewImage(xpathExpression);
-        }
-        return map;
-    }
-
     private HashMap<String,Object> getPreviewImage(String xpathExpression) {
         ArrayList<HashMap<String, String>> urls = getPreviewImageUrl(xpathExpression);
         HashMap<String,Object> elementCapabilities = new HashMap<>();
@@ -1622,10 +1672,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref) {
-        return addBigMapLink(node, urlValue, urlEncodeHref, null, false);
+        return addBigMapLink(node, urlValue, urlEncodeHref, null);
     }
 
-    private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref, String partner, boolean isNewLayout) {
+    private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref, String partner) {
         HashMap<String, Object> elementCapabilities = new HashMap<>();
         ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 
@@ -1639,20 +1689,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
             if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
                 // do not render "show in map" link if the map has access constraints (no href added).
-                if(!isNewLayout) {
-                    elementMapLink.put("title", messages.getString("preview"));
-                }
+                elementMapLink.put("title", messages.getString("preview"));
             } else {
                 String href = urlValue;
                 if(urlEncodeHref){
                     href = UtilsVelocity.urlencode(urlValue);
                 }
-                if(!isNewLayout) {
-                    elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
-                    elementMapLink.put("href", href);
-                } else {
-                   elementCapabilities.put("href", href);
-                }
+                elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                elementMapLink.put("href", href);
             }
 
             if(elementCapabilities.get("href") != null || elementMapLink.get("href") != null) {
@@ -1673,20 +1717,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
                 if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
                     // do not render "show in map" link if the map has access constraints (no href added).
-                    if(!isNewLayout) {
-                        elementMapLink.put("title", messages.getString("preview"));
-                    }
+                    elementMapLink.put("title", messages.getString("preview"));
                 } else {
                     String href = urlValue;
                     if(urlEncodeHref){
                         href = UtilsVelocity.urlencode(urlValue);
                     }
-                    if(!isNewLayout) {
-                        elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
-                        elementMapLink.put("href", href);
-                    } else {
-                       elementCapabilities.put("href", href);
-                    }
+                    elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                    elementMapLink.put("href", href);
                 }
                 elementMapLink.put("src", imageUrl.get("name"));
                 if(elementMapLink.get("href") == null) {
@@ -1726,19 +1764,26 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     private String getCapabilityUrl() {
+        return getCapabilityUrl(null);
+    }
+
+    private String getCapabilityUrl(String additionalURLContent) {
         String url = null;
         String serviceType = null;
+        String serviceVersion = null;
         String xpathExpression = "";
 
         xpathExpression = "./gmd:identificationInfo/*/srv:serviceType";
         if(xPathUtils.nodeExists(this.rootNode, xpathExpression)){
             serviceType = xPathUtils.getString(this.rootNode, xpathExpression);
         }
-        if (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms"))) {
-            Node capNode = xPathUtils.getNode( this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:connectPoint//gmd:URL");
-            if(capNode != null && capNode.getTextContent() != null){
-                url = capNode.getTextContent().trim();
-            }
+        xpathExpression = "./gmd:identificationInfo/*/srv:serviceTypeVersion";
+        if(xPathUtils.nodeExists(this.rootNode, xpathExpression)){
+            serviceVersion = xPathUtils.getString(this.rootNode, xpathExpression);
+        }
+        Node capNode = xPathUtils.getNode( this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:connectPoint//gmd:URL");
+        if(capNode != null && capNode.getTextContent() != null){
+            url = UtilsSearch.addCapabilitiesInformation(capNode.getTextContent().trim(), serviceVersion, serviceType, additionalURLContent);
         }
         return url;
     }

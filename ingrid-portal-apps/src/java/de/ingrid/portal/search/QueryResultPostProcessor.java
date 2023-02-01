@@ -210,7 +210,8 @@ public class QueryResultPostProcessor {
 
                 if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                     for (String url : tmpArray) {
-                        url = addCapabilitiesInformation(url) + URLEncoder.encode("||", "UTF-8");
+                        url = UtilsSearch.addCapabilitiesInformation(url, UtilsSearch.getDetailValue(detail,
+                                "t011_obj_serv_version.version_value"), UtilsSearch.getDetailValue(detail, "t011_obj_serv.type")) + URLEncoder.encode("||", "UTF-8");
                         // add layer information to link
                         if (firstResourceId != null) url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
                         // only take the first map url, which should be the only one! 

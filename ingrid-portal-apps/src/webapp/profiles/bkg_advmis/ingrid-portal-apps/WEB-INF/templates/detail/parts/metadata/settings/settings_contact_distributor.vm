@@ -1,0 +1,9 @@
+## Distribution Contacts
+#set($xPathDistributionContact = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact")
+#set($add = $xPathListContact.add($xPathDistributionContact))
+#set($distributionContactCodelistValue = "distributor")
+#set($xPathDistributionContactNodes = $TOOL.getNodeListFromXPath("${xPathDistributionContact}"))
+#foreach($tmpXPathNodeNumber in [1..$xPathDistributionContactNodes.getLength()])
+    #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathDistributionContact}[$tmpXPathNodeNumber]"))
+    #set($add = $xPathUsePointOfContactSortNodes.add($tmpAddresses))
+#end

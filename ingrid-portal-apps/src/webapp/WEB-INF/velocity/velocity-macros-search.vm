@@ -540,10 +540,11 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         <div class="info--right #if($isTeaser)teaser-info#end #if($isMobile)show-for-xsmall-only#else hide-for-xsmall-only #end">
         #foreach($type in $types)
             <span>
-                #if($MESSAGES.getString("common.service.type.$type") == "common.service.type.$type")
+                #set($key = $type.toLowerCase().replace(" ", "_"))
+                #if($MESSAGES.getString("common.service.type.$key") == "common.service.type.$key")
                     $type
                 #else
-                    $MESSAGES.getString("common.service.type.$type")
+                    $MESSAGES.getString("common.service.type.$key")
                 #end
             </span>
         #end
