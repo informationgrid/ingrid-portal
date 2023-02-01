@@ -240,6 +240,7 @@ public class UtilsFacete {
         }else{
             context.put("isSelection", isAnyFacetConfigSelect(config, (Boolean) getAttributeFromSession(request, "isSelection")));
         }
+        context.put("enableFacetDateSelection", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_FACETE_DISPLAY_DATE_SELECTION, false));
         context.put( "subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
         context.put( "facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));

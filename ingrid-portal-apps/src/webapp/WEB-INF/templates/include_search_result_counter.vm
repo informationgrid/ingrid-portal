@@ -21,25 +21,16 @@
 </div>
 #end
 #macro(renderSelectRanking $nodes)
-    #foreach($facet in $nodes)
-        #if($facet.getId() == "modtime" && ($facet.isDependencySelect() || $facet.isSelect()))
-            <span class="result-text no-margin">
-                <b>$MESSAGES.getString('searchResult.hit.sort')</b>
-            </span>
-            <div class="sort">
-                <div class="form-element" style="display:inline;">
-                    #set ($action = $renderResponse.createActionURL())
-                    <form action="$action" method="get" name="sortForm" id="sortForm" style="display:inline;">
-                        <select class="select2" id="ranking" name="ranking" aria-hidden="true" onchange="this.form.submit();">
-                            <option value="score" #if($ranking == "score")selected#end>$MESSAGES.getString('searchResult.hit.sort.score')</option>
-                            <option value="date"  #if($ranking == "date")selected#end>$MESSAGES.getString('searchResult.hit.sort.time')</option>
-                        </select>
-                    </form>
-                </div>
-            </div>
-        #end
-        #if($facet.getFacets())
-             #renderSelectRanking($facet.getFacets())
+    #if($enableFacetDateSelection)
+        #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_selection.vm")
+    #else
+        #foreach($facet in $nodes)
+            #if($facet.getId() == "modtime" && ($facet.isDependencySelect() || $facet.isSelect()))
+                #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_selection.vm")
+            #end
+            #if($facet.getFacets())
+                #renderSelectRanking($facet.getFacets())
+            #end
         #end
     #end
 #end
