@@ -1780,7 +1780,7 @@ public class UtilsSearch {
                 } else {
                     if(url.toLowerCase().indexOf("=wms") > -1) {
                         service = "WMS";
-                    } else if(service.toLowerCase().indexOf("=wmts") > -1) {
+                    } else if(url.toLowerCase().indexOf("=wmts") > -1) {
                         service = "WMTS";
                     }
                 }
