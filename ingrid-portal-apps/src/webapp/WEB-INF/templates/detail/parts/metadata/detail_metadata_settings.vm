@@ -121,11 +121,11 @@
 
 ## Verweise und Downloads
 #### Downloads
-#set($xPathRefDownloads = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']]")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_downloads.vm")
 #### Links/Querweise
-#set($xPathRefLinks = "./idf:crossReference[not(@uuid=preceding::idf:crossReference/@uuid)]")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_references.vm")
 #### Weitere Verweise
-#set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_others.vm")
 ## Untergeordnete Objekte
 #set($xPathRefSubordinated = "./idf:subordinatedReference")
 ## Übergeordnetet Objekte

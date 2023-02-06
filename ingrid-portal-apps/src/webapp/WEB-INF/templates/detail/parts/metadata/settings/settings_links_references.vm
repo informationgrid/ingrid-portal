@@ -1,0 +1,2 @@
+#### Links/Querweise
+#set($xPathRefLinks = "./idf:crossReference[not(@uuid=preceding::idf:crossReference/@uuid)]")
