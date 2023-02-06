@@ -1,4 +1,19 @@
 
+## 6.0.1 (06.02.2023)
+
+### Features
+
+* Aktivierung des API Menübereiches im allgemeinen Profil (#4677)
+* IGE: Korrektur Regionalschlüssel erfassen - Minimallösung (#4597)
+
+### Bugfixes
+
+* Portal: XSS Schwachstelle im InGrid Portal  (#4723)
+* Email versenden führt zu einem Fehler  (#4704)
+* Fehlerhafte Mailadresse / Änderung beim Nutzer anlegen  (#4688)
+* Fehler "Freie Adressen" unter METAVER / Kataloge  (#4674)
+* Text-, Design- und Layout-Korrekturen am Portal  (#4604)
+    
 ## 6.0.0 (13.01.2023)
 
 ### Features
