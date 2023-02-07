@@ -6,7 +6,7 @@
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function() {
-    var u="//webstatistik.bwl.de/";
+    var u="//webstatistik.landbw.de/";
     _paq.push(['setTrackerUrl', u+'matomo.php']);
     var siteId = domain == 'rips-metadaten.lubw.de' ? '763' : '766';
     _paq.push(['setSiteId', siteId]);
