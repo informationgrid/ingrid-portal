@@ -258,6 +258,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String capabilitiesUrl = getCapabilityUrl();
                 // get it directly from the operation
                 map = addBigMapLink(rootNode, capabilitiesUrl, true, partner);
+            } else {
+                // show preview image (with map link information if provided)
+                map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
             }
         } else {
             // show preview image (with map link information if provided)
