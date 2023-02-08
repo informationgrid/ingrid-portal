@@ -24,6 +24,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>mdek/mdek_portal_admin.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>application/main-application.psml</name>
             <hidden>true</hidden>
         </page>
@@ -103,10 +107,6 @@
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
         </file>
-        <file>
-            <action>copy-dir</action>
-            <src>ingrid-portal-mdek-application/</src>
-        </file>
     </files>
     <sql>
         <!-- Change 'ingrid-portal-apps::SearchSimpleResult' decorator -->
@@ -116,6 +116,10 @@
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link';]]>
+        </execute>
+        <!-- Set folder "/mdek" to hidden -->
+        <execute>
+            <![CDATA[UPDATE folder SET IS_HIDDEN='1' WHERE PATH='/mdek';]]>
         </execute>
         <!-- Delete user default-page.psml -->
         <execute>
