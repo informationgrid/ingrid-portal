@@ -60,7 +60,7 @@
         <label for="password_new">$MESSAGES.getString('account.edit.label.password_new')*:</label>
     </div>
     <div class="form-element">
-        <p>Ihr Passwort muss mindestens 11 Zeichen umfassen und unterhalb des Passwortfeldes als "Stark" bewertet werden. Diese Bewertung wird durch die Verwendung von Sonderzeichen, Zahlen, Klein-/Großschreibung und die Passwortlänge beeinflusst.</p>
+        <p>$MESSAGES.getString('account.edit.password.update.notice')</p>
         <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') #addErrorFormMessagePlaceholder('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();" />
         <b><small class="media__obj--right" id="password-strength-text"></small></b>
         <meter max="4" id="password-strength-meter" value="0">
