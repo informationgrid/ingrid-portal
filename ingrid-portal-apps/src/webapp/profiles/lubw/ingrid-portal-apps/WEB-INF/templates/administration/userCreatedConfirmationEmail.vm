@@ -20,6 +20,8 @@ Passwort: $!{map.get("password")}
 Sie können sich nun unter https://rips-metadaten.lubw.de/log-in anmelden.
 #if($!{map.get("returnURL")})
 Nach der Anmeldung werden Sie aufgefordert, ein neues, eigenes Passwort zu vergeben.
+Ihr Passwort muss mindestens 11 Zeichen umfassen und unterhalb des Passwortfeldes als "Stark" bewertet werden.
+Diese Bewertung wird durch die Verwendung von Sonderzeichen, Zahlen, Klein-/Großschreibung und die Passwortlänge beeinflusst.
 #end
 
 Bei Fragen und Problemen wenden Sie sich bitte an rips-metadaten@lubw.bwl.de.
