@@ -35,7 +35,7 @@
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
     <mdek.version>5.14.4</mdek.version>
-    <webmap-client.version>5.14.4</webmap-client.version>
+    <webmap-client.version>5.14.4.1</webmap-client.version>
     <ingrid-codelist-service.version>5.14.3</ingrid-codelist-service.version>
     <ingrid-utils.version>5.14.0</ingrid-utils.version>
     <log4j.version>2.17.1</log4j.version>
