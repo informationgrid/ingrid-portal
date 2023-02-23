@@ -1898,18 +1898,6 @@
                 <name>cmsKey</name>
                 <value>portal.cms.portlet.3</value>
             </preference>
-            <preference>
-                <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>search-filtered row content-small</value>
-            </preference>
        </portlet-preferences>
     </portlet>
 </portlet-app>
