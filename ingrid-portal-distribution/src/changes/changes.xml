@@ -6,6 +6,15 @@
     </properties>
 
     <body>
+        <release version="5.14.4.1" date="2023-02-23" description="Release 5.14.4.1">
+          <action type="add" dev="wemove" issue="4376">
+            Direkte Anzeige, wenn nur ein Layer im WMS existiert
+          </action>
+          <action type="fix" dev="wemove" issue="4796">
+            MAPCLIENT: "Problem melden" in der Karte -> E-Mail-Adresse wird nicht weitergegeben
+          </action>
+        </release>
+
         <release version="5.14.4" date="2023-01-16" description="Release 5.14.4">
           <action type="update" dev="wemove" issue="4598">
             Deutschlandkarte verkleinern, ersetzen oder entfernen
