@@ -202,14 +202,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         String serviceType =  xPathUtils.getString(crossReferenceNode, "./idf:serviceType");
                         String serviceVersion =  xPathUtils.getString(crossReferenceNode, "./idf:serviceVersion");
                         if(serviceUrl != null && !serviceUrl.isEmpty()) {
-                            String getCapUrl = "";
+                            String getCapUrl = null;
                             String layerIdentifier = getLayerIdentifier(null);
                             if(!layerIdentifier.equals("NOT_FOUND")) {
                                 getCapUrl = UtilsSearch.addCapabilitiesInformation(serviceUrl, serviceVersion, serviceType, layerIdentifier);
                             } else {
                                 getCapUrl = UtilsSearch.addCapabilitiesInformation(serviceUrl, serviceVersion, serviceType);
                             }
-                            if(!getCapUrl.isEmpty()) {
+                            if(getCapUrl != null && !getCapUrl.isEmpty()) {
                                 map = addBigMapLink(crossReferenceNode, getCapUrl, false, partner);
                                 if(!hasAccessConstraints(crossReferenceNode)) {
                                     break;
