@@ -407,7 +407,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             if ((serviceType != null && serviceType.trim().equals("view")) || (objServiceType != null && objServiceType.trim().equals("view")) && !hasAccessConstraints(node)) {
                                 if(serviceUrl != null){
                                     serviceUrl = UtilsSearch.addCapabilitiesInformation(serviceUrl, objServiceVersion, objServiceType, getLayerIdentifier(node));
-                                    capabilityUrl = new StringBuilder(serviceUrl);
+                                    if(serviceUrl != null) {
+                                        capabilityUrl = new StringBuilder(serviceUrl);
+                                    }
                                 }
                             } else {
                                 String tmpUrl = getCapabilityUrl(getLayerIdentifier(node));
