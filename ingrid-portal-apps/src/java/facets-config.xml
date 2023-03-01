@@ -385,6 +385,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.provider</name>
         <id>provider</id>
     </facet>
+    <!-- Zeitbezug -->
+    <!-- Kann erweitert werden -->
+    <facet>
+        <name>searchResult.facete.title.timeref</name>
+        <id>timeref</id>
+        <!-- <dependency>metadata</dependency> -->
+    </facet>
     <!-- Raumbezug -->
     <!-- Standard - Kann nicht erweitert werden -->
     <facet>

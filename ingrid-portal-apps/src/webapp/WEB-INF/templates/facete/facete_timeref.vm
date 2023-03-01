@@ -1,0 +1,34 @@
+#set ($action = $renderResponse.createActionURL())
+<ul class="accordion filter-group" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
+    <li class="accordion-item #if($doAddTimeref && $doAddTimeref.size() > 0)is-active#end" data-accordion-item>
+        <a href="" class="accordion-title" aria-controls="facet_timeref-accordion" role="tab" id="facet_timeref-label" #if($doAddTimeref && $doAddTimeref.size() > 0)aria-expanded="true" aria-selected="true"#end>
+            <span class="text">$MESSAGES.getString("$node.getName()")</span>
+        </a>
+        <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="facet_timeref-label" id="facet_timeref-accordion" #if(!$doAddTimeref || $doAddTimeref.size() == 0)aria-hidden="true"#end>
+            #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
+            <form action="$action" method="post">
+                <p>
+                    <input class="datepicker picker__input" type="date" id="from" name="from" placeholder="$MESSAGES.getString("searchResult.facete.title.timeref.from")"
+                    #if($doAddTimerefInput.from)
+                        value="$doAddTimerefInput.from"
+                    #end
+                    >
+                </p>
+                <p>
+                    <input class="datepicker picker__input" type="date" id="to" name="to" placeholder="$MESSAGES.getString("searchResult.facete.title.timeref.to")"
+                    #if($doAddTimerefInput.to)
+                        value="$doAddTimerefInput.to"
+                    #end
+                    >
+                </p>
+                #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddTimeref" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "button filter_submit" "width:100%;")
+            </form>
+            #if($doAddTimeref)
+                #if($doAddTimeref.size() > 1)
+                    $action.setParameter("doRemoveTimeref",  "all")
+                    #renderCheckLink($action $MESSAGES.getString("searchResult.facete.title.timeref.delete"))
+                #end
+            #end
+        </div>
+    </li>
+</ul>

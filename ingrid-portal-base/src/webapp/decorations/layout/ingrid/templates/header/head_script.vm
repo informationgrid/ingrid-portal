@@ -28,3 +28,6 @@
 <!-- swiper -->
 <script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"></script>
 
+<!-- pickadate -->
+<script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
+<script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>

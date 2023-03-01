@@ -55,6 +55,7 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtAdrPlaceReferenceForm;
 import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.forms.SearchExtResTopicAttributesForm;
+import de.ingrid.portal.forms.SearchExtTimeReferenceForm;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridFacet;
@@ -67,6 +68,7 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.query.RangeQuery;
 import de.ingrid.utils.query.WildCardFieldQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -206,6 +208,7 @@ public class UtilsFacete {
         addToQueryAttribute(request, query);
         addToQueryAreaAddress(request, query);
         addToQueryWildcard(request, query);
+        addToQueryTimeref(request, query);
         return query;
     }
     /**
@@ -224,6 +227,7 @@ public class UtilsFacete {
         setParamsToContextAttribute(request, context);
         setParamsToContextAreaAddress(request, context);
         setParamsToContextWildcard(request, context);
+        setParamsToContextTimeref(request, context);
 
         ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         sortingFacet(config);
@@ -425,6 +429,7 @@ public class UtilsFacete {
         setFaceteParamsToSessionAttribute(request);
         setFaceteParamsToSessionAreaAddress(request);
         setFaceteParamsToSessionWildcard(request);
+        setFaceteParamsToSessionTimeref(request);
 
         // Create facet params URL
         setFacetUrlParamsToUrl(request, facetUrl);
@@ -1395,6 +1400,96 @@ public class UtilsFacete {
                 query.addField(new FieldQuery(true, false, "zip", (String) doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_ZIP)));
             if(doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_CITY) != null)
                 query.addField(new FieldQuery(true, false, "city", (String) doAddAreaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_CITY)));
+        }
+    }
+
+    /***************************** Timeref ****************************************/
+
+    private static void setFaceteParamsToSessionTimeref(ActionRequest request) {
+        String doAddTimeref = request.getParameter("doAddTimeref");
+        String doRemoveTimeref = request.getParameter("doRemoveTimeref");
+        HashMap<String, String> timeref = null;
+
+        if(doAddTimeref != null){
+            SearchExtTimeReferenceForm f = (SearchExtTimeReferenceForm) Utils.getActionForm(request, SearchExtTimeReferenceForm.SESSION_KEY, SearchExtTimeReferenceForm.class);
+            f.clearErrors();
+
+            f.populate(request);
+            if (!f.validate()) {
+                return;
+            }
+
+            timeref = new HashMap<>();
+            if (f.hasInput(SearchExtTimeReferenceForm.FIELD_FROM)) {
+                timeref.put(SearchExtTimeReferenceForm.FIELD_FROM, f.getInput(SearchExtTimeReferenceForm.FIELD_FROM));
+            }
+            if (f.hasInput(SearchExtTimeReferenceForm.FIELD_TO)) {
+                timeref.put(SearchExtTimeReferenceForm.FIELD_TO, f.getInput(SearchExtTimeReferenceForm.FIELD_TO));
+            }
+            f.clear();
+        }
+
+        if(doRemoveTimeref != null){
+            if(doRemoveTimeref.equals("all")){
+                removeAttributeFromSession(request, "doAddTimeref");
+                removeAttributeFromSession(request, "doAddTimerefInput");
+            }else {
+                timeref = (HashMap<String, String>) getAttributeFromSession(request, "doAddTimeref");
+
+                if (doRemoveTimeref.equals(SearchExtTimeReferenceForm.FIELD_FROM)) {
+                    timeref.remove(SearchExtTimeReferenceForm.FIELD_FROM);
+                }
+                if (doRemoveTimeref.equals(SearchExtTimeReferenceForm.FIELD_TO)) {
+                    timeref.remove(SearchExtTimeReferenceForm.FIELD_TO);
+                }
+            }
+        }
+
+        if(timeref != null){
+            setAttributeToSession(request, "doAddTimeref", timeref, true);
+            setAttributeToSession(request, "doAddTimerefInput", timeref, false);
+        }
+    }
+
+    private static void setParamsToContextTimeref (RenderRequest request, Context context){
+        HashMap<String, String> timeref = (HashMap<String, String>) getAttributeFromSession(request, "doAddTimeref");
+        if(timeref != null && !timeref .isEmpty()){
+            setFacetSelectionState(context, request, "isTimerefSelect", true);
+            context.put("doAddTimeref", getAttributeFromSession(request, "doAddTimeref"));
+        }else{
+            setFacetSelectionState(context, request, "isTimerefSelect", false);
+        }
+        context.put("doAddTimerefInput", getAttributeFromSession(request, "doAddTimerefInput"));
+    }
+
+    public static void addToQueryTimeref(PortletRequest request, IngridQuery query) throws ParseException {
+        HashMap<String, String> doAddTimeref = (HashMap<String, String>) getAttributeFromSession(request, "doAddTimeref");
+
+        if (doAddTimeref != null && !doAddTimeref.isEmpty() && query != null){
+            String from = null;
+            String to = null;
+            
+            if(doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_FROM) != null)
+                from = (String) doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_FROM).replace("-", "") + "0*";
+            if(doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_TO) != null)
+                to = (String) doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_TO).replace("-", "") + "9*";
+            
+            if(from != null && to != null) {
+                RangeQuery rqFrom = new RangeQuery(true, false, "t01_object.time_from", from, to, false);
+                query.addRangeQuery(rqFrom);
+                RangeQuery rqTo = new RangeQuery(false, false, "t01_object.time_to", from, to, false);
+                query.addRangeQuery(rqTo);
+            }else if(from != null) {
+                RangeQuery rqFrom = new RangeQuery(true, false, "t01_object.time_from", from, "9*", false);
+                query.addRangeQuery(rqFrom);
+                RangeQuery rqTo = new RangeQuery(false, false, "t01_object.time_to", from, "9*", false);
+                query.addRangeQuery(rqTo);
+            }else if(to != null) {
+                RangeQuery rqFrom = new RangeQuery(true, false, "t01_object.time_from", "0*", to, false);
+                query.addRangeQuery(rqFrom);
+                RangeQuery rqTo = new RangeQuery(true, false, "t01_object.time_to", "0*", to, false);
+                query.addRangeQuery(rqTo);
+            }
         }
     }
 

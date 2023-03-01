@@ -2677,7 +2677,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
       display: none;
 
       ~ .button {
-        margin: 18px 0 0 0;
+        margin: 18px 0 0 0 !important;
       }
     }
 
