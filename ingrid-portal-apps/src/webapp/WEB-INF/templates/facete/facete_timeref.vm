@@ -21,14 +21,12 @@
                     #end
                     >
                 </p>
+                #if($doAddTimeref)
+                    $action.setParameter("doRemoveTimeref",  "all")
+                    #renderCrossLink($action $MESSAGES.getString("searchResult.facete.title.timeref.delete"))
+                #end
                 #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddTimeref" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "button filter_submit" "width:100%;")
             </form>
-            #if($doAddTimeref)
-                #if($doAddTimeref.size() > 1)
-                    $action.setParameter("doRemoveTimeref",  "all")
-                    #renderCheckLink($action $MESSAGES.getString("searchResult.facete.title.timeref.delete"))
-                #end
-            #end
         </div>
     </li>
 </ul>
