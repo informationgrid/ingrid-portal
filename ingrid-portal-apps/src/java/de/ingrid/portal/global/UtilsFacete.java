@@ -1475,22 +1475,31 @@ public class UtilsFacete {
                 from = (String) doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_FROM).replace("-", "") + "0*";
             if(doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_TO) != null)
                 to = (String) doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_TO).replace("-", "") + "9*";
-            
+            ClauseQuery cq = null;
             if(from != null && to != null) {
-                RangeQuery rqFrom = new RangeQuery(true, false, "t01_object.time_from", from, to, false);
-                query.addRangeQuery(rqFrom);
-                RangeQuery rqTo = new RangeQuery(false, false, "t01_object.time_to", from, to, false);
-                query.addRangeQuery(rqTo);
+                cq = new ClauseQuery(true, false);
+                IngridQuery q = QueryStringParser.parse("t01_object.time_from:[" + from + " TO " + to + "] OR t01_object.time_to:[" + from + "TO " + to +"]");
+                RangeQuery[] rq = q.getRangeQueries();
+                for (RangeQuery rangeQuery : rq) {
+                    cq.addRangeQuery(rangeQuery);
+                }
             }else if(from != null) {
-                RangeQuery rqFrom = new RangeQuery(true, false, "t01_object.time_from", from, "9*", false);
-                query.addRangeQuery(rqFrom);
-                RangeQuery rqTo = new RangeQuery(false, false, "t01_object.time_to", from, "9*", false);
-                query.addRangeQuery(rqTo);
+                cq = new ClauseQuery(true, false);
+                IngridQuery q = QueryStringParser.parse("t01_object.time_from:[" + from + " TO 9*] OR t01_object.time_to:[" + from + " TO 9*]");
+                RangeQuery[] rq = q.getRangeQueries();
+                for (RangeQuery rangeQuery : rq) {
+                    cq.addRangeQuery(rangeQuery);
+                }
             }else if(to != null) {
-                RangeQuery rqFrom = new RangeQuery(true, false, "t01_object.time_from", "0*", to, false);
-                query.addRangeQuery(rqFrom);
-                RangeQuery rqTo = new RangeQuery(true, false, "t01_object.time_to", "0*", to, false);
-                query.addRangeQuery(rqTo);
+                cq = new ClauseQuery(true, false);
+                IngridQuery q = QueryStringParser.parse("t01_object.time_from:[0* TO " + to + "] OR t01_object.time_to:[0* TO " + to + "]");
+                RangeQuery[] rq = q.getRangeQueries();
+                for (RangeQuery rangeQuery : rq) {
+                    cq.addRangeQuery(rangeQuery);
+                }
+            }
+            if(cq != null) {
+                query.addClause(cq);
             }
         }
     }
