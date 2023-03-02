@@ -123,6 +123,8 @@ public class UtilsFacete {
     private static final String PARAMS_ATTRIBUTE_TERM_FROM = "term_from";
     private static final String PARAMS_ATTRIBUTE_TERM_TO = "term_to";
     private static final String PARAMS_WILDCARD = "wildcard";
+    private static final String PARAMS_TIMEREF_FROM = "from";
+    private static final String PARAMS_TIMEREF_TO = "to";
 
     public static final String FACET_CONFIG = "config";
 
@@ -1710,6 +1712,23 @@ public class UtilsFacete {
         String paramsFacet = request.getParameter("f");
 
         if(paramsFacet != null){
+            // Timref
+            String paramsTimerefFrom = getFacetParam(paramsFacet, PARAMS_TIMEREF_FROM);
+            String paramsTimrefTo = getFacetParam(paramsFacet, PARAMS_TIMEREF_TO);
+            HashMap<String, String> timeref = null;
+
+            if(paramsTimerefFrom != null || paramsTimrefTo != null){
+                timeref = new HashMap<>();
+                if(paramsTimerefFrom != null){
+                    timeref.put(SearchExtTimeReferenceForm.FIELD_FROM, paramsTimerefFrom);
+                }
+                if(paramsTimrefTo != null){
+                    timeref.put(SearchExtTimeReferenceForm.FIELD_TO, paramsTimrefTo);
+                }
+                setAttributeToSession(request, "doAddTimeref", timeref);
+                setAttributeToSession(request, "doAddTimerefInput", timeref);
+            }
+
             // Geothesaurus
             ArrayList<String> paramsGeothesaurus = getFacetParamsList(paramsFacet, PARAMS_GEOTHESAURUS);
             if(paramsGeothesaurus != null && !paramsGeothesaurus.isEmpty()){
@@ -1764,6 +1783,7 @@ public class UtilsFacete {
                     areaAddress.put(SearchExtAdrPlaceReferenceForm.FIELD_CITY, paramsAreaAddressCity);
                 }
                 setAttributeToSession(request, "doAddAreaAddress", areaAddress);
+                setAttributeToSession(request, "doAddAreaAddressInput", timeref);
             }
 
             // Attribute
@@ -2030,6 +2050,17 @@ public class UtilsFacete {
      */
     @SuppressWarnings("rawtypes")
     private static void setFacetUrlParamsToUrl(ActionRequest request, StringBuilder facetUrl) {
+
+        // Timeref
+        if(getAttributeFromSession(request, "doAddTimeref") != null){
+            HashMap<String, String> timeref = (HashMap<String, String>) getAttributeFromSession(request, "doAddTimeref");
+            if (timeref.get(SearchExtTimeReferenceForm.FIELD_FROM) != null) {
+                appendURLParameterFacet(facetUrl, toURLParamFacet(PARAMS_TIMEREF_FROM, timeref.get(SearchExtTimeReferenceForm.FIELD_FROM)));
+            }
+            if (timeref.get(SearchExtTimeReferenceForm.FIELD_TO) != null) {
+                appendURLParameterFacet(facetUrl, toURLParamFacet(PARAMS_TIMEREF_TO, timeref.get(SearchExtTimeReferenceForm.FIELD_TO)));
+            }
+        }
 
         // Geothesaurus
         if(getAttributeFromSession(request, SELECTED_GEOTHESAURUS) != null){
