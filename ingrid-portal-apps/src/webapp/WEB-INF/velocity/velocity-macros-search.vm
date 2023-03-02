@@ -303,14 +303,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     #set ($action = $renderResponse.createActionURL())
                     $action.setParameter("doRemoveTimeref",  "all")
                     #set($facetLabel = "")
-                    #if($doAddTimeref.from)
-                        #set($facetLabel = "$facetLabel $doAddTimeref.from")
-                    #end
-                    #if($doAddTimeref.to)
-                        #if(!$facetLabel.isEmpty())
-                            #set($facetLabel = "$facetLabel -")
-                        #end
-                        #set($facetLabel = "$facetLabel $doAddTimeref.to")
+                    #if($doAddTimeref.from && $doAddTimeref.to)
+                        #set($facetLabel = "$doAddTimeref.from - $doAddTimeref.to")
+                    #elseif($doAddTimeref.from)
+                        #set($facetLabel = "> $doAddTimeref.from")
+                    #elseif($doAddTimeref.to)
+                        #set($facetLabel = "< $doAddTimeref.to")
                     #end
                     #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $facetLabel")
                 #end
