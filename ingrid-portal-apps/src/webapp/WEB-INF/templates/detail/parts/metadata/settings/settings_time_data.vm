@@ -1,0 +1,9 @@
+#set($xPathListTime = [
+    $xPathListTimeTimePeriodInstantPosition,
+    $xPathListTimeTimePeriodBeginPosition,
+    $xPathListTimeTimePeriodEndPosition,
+    $xPathListTimeMDProgressCode,
+    $xPathListTimeMDMaintenanceFrequencyCode,
+    $xPathListTimeUserDefinedMaintenanceFrequency,
+    $xPathListTimeMaintenanceNote
+])

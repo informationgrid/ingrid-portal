@@ -81,15 +81,8 @@
 ## Zeitliche Genauigkeit
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_time_measurement.vm")
 
-#set($xPathListTime = [
-    $xPathListTimeTimePeriodInstantPosition,
-    $xPathListTimeTimePeriodBeginPosition,
-    $xPathListTimeTimePeriodEndPosition,
-    $xPathListTimeMDProgressCode,
-    $xPathListTimeMDMaintenanceFrequencyCode,
-    $xPathListTimeUserDefinedMaintenanceFrequency,
-    $xPathListTimeMaintenanceNote
-])
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_time_data.vm")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_time_resource.vm")
 
 ## Darstellung
 #### Geothesaurus-Raumbezug
