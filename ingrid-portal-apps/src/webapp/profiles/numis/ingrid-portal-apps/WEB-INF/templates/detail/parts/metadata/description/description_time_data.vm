@@ -1,0 +1,41 @@
+## Zeitbezug
+    #if($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))
+        <div class="sub-section">
+            <a class="anchor" #if($isTimeInDescription) id="${hashDetail1}_time_reference"#else id="${hashDetail11}_time_reference"#end></a>
+            #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
+                #set($tmpTitle = "time_reference_content")
+            #else
+                #set($tmpTitle = "time_reference")
+            #end
+            #renderGroupTitle($MESSAGES.getString("$tmpTitle"))
+        ## Durch die Ressource abgedeckte Zeitspanne
+            #set($atTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodInstantPosition))
+            #set($beginTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodBeginPosition))
+            #set($endTime = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodEndPosition))
+            #set($fromType = $TOOL.getDateValueWithoutTimeFromXPath($xPathListTimeTimePeriodEndIndeterminatePosition))
+
+            #set($toIndeterminate = "")
+            #if($tool.hasContent($fromType) && $fromType == 'now')
+                #set($toIndeterminate = $MESSAGES.getString('search.detail.time.untilNow'))
+            #else
+                #set($toIndeterminate = $MESSAGES.getString('search.detail.time.untilUnknown'))
+            #end
+
+            #if($tool.hasContent($beginTime) || $tool.hasContent($endTime) || $tool.hasContent($atTime))
+                #if($tool.hasContent($atTime))
+                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $atTime")
+                #elseif($beginTime == $endTime)
+                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $beginTime")
+                #elseif($beginTime && !$endTime)
+                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since') $beginTime$toIndeterminate")
+                #elseif(!$beginTime && $endTime)
+                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.until') $endTime")
+                #elseif($beginTime != $endTime)
+                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
+                #end
+            #end
+        ## Zeitliche Genauigkeit
+            #parse("/WEB-INF/templates/detail/parts/metadata/description/description_time_measurement.vm")
+        </div>
+    #end
+
