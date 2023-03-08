@@ -16,6 +16,9 @@
           <action type="fix" dev="wemove" issue="4796">
             MAPCLIENT: "Problem melden" in der Karte -> E-Mail-Adresse wird nicht weitergegeben
           </action>
+          <action type="Update" dev="wemove">
+            GeoPortal.WSV: Anpassung Anwendungsseite
+          </action>
           <action type="add" dev="wemove" issue="4488">
             Kontakt "Vertrieb" als "Anbieter" im Portal konfigurieren - entsprechende Facette einrichten
           </action>
