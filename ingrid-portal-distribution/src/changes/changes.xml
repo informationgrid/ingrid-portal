@@ -6,6 +6,27 @@
     </properties>
 
     <body>
+        <release version="5.14.5-SNAPSHOT" date="2023-xx-xx" description="Release 5.14.5">
+          <action type="fix" dev="wemove" issue="4911">
+            MAPCLIENT: Legenden-URL werden nicht mehr durch den Job aktualisiert
+          </action>
+          <action type="add" dev="wemove" issue="4376">
+            Direkte Anzeige, wenn nur ein Layer im WMS existiert
+          </action>
+          <action type="fix" dev="wemove" issue="4796">
+            MAPCLIENT: "Problem melden" in der Karte -> E-Mail-Adresse wird nicht weitergegeben
+          </action>
+          <action type="add" dev="wemove" issue="4488">
+            Kontakt "Vertrieb" als "Anbieter" im Portal konfigurieren - entsprechende Facette einrichten
+          </action>
+          <action type="add" dev="wemove" issue="4575">
+            Facette für Filterung nach Themenbereichen / Kategorien (nur Benennung geändert)
+          </action>
+          <action type="add" dev="wemove" issue="4581">
+            Portal - Sortierung nach Relevanz/Aktualität
+          </action>
+        </release>
+
         <release version="5.14.4" date="2023-01-16" description="Release 5.14.4">
           <action type="update" dev="wemove" issue="4598">
             Deutschlandkarte verkleinern, ersetzen oder entfernen
