@@ -4,14 +4,14 @@
         <a href="" class="accordion-title" aria-controls="facet_timeref-accordion" role="tab" id="facet_timeref-label" #if($doAddTimeref && $doAddTimeref.size() > 0)aria-expanded="true" aria-selected="true"#end>
             <span class="text">$MESSAGES.getString("$node.getName()")</span>
         </a>
-        <div class="accordion-content map" data-tab-content role="tabpanel" aria-labelledby="facet_timeref-label" id="facet_timeref-accordion" #if(!$doAddTimeref || $doAddTimeref.size() == 0)aria-hidden="true"#end>
+        <div class="accordion-content timeref" data-tab-content role="tabpanel" aria-labelledby="facet_timeref-label" id="facet_timeref-accordion" #if(!$doAddTimeref || $doAddTimeref.size() == 0)aria-hidden="true"#end>
             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
             <form action="$action" method="post">
                 <div class="boxes">
                     <div class="boxed">
                         <div class="row collapse">
                             <div class="xsmall-6 small-6 medium-6 large-6 xlarge-6 columns">
-                                <label class="map-filter-xs" for="from">$MESSAGES.getString("searchResult.facete.title.timeref.from"):</label>
+                                <label for="from">$MESSAGES.getString("searchResult.facete.title.timeref.from"):</label>
                             </div>
                             <div class="xsmall-18 small-18 medium-18 large-18 xlarge-18 columns">
                                 <input class="datepicker picker__input" type="date" id="from" name="from" placeholder="$MESSAGES.getString("searchResult.facete.title.timeref.from")"
@@ -21,7 +21,7 @@
                                 >
                             </div>
                             <div class="xsmall-6 small-6 medium-6 large-6 xlarge-6 columns">
-                                <label class="map-filter-xs" for="to">$MESSAGES.getString("searchResult.facete.title.timeref.to"):</label>
+                                <label for="to">$MESSAGES.getString("searchResult.facete.title.timeref.to"):</label>
                             </div>
                             <div class="xsmall-18 small-18 medium-18 large-18 xlarge-18 columns">
                                 <input class="datepicker picker__input" type="date" id="to" name="to" placeholder="$MESSAGES.getString("searchResult.facete.title.timeref.to")"

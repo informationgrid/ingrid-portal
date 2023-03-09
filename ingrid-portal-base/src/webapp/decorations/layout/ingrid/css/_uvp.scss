@@ -2341,6 +2341,13 @@ footer {
         margin: 0;
       }
     }
+    .accordion-content.timeref {
+      margin: 16px 16px;
+      
+      label {
+        padding-top: 12px;
+      }
+    }
   }
 }
 
