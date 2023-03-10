@@ -18,6 +18,9 @@
                                 #if($doAddTimerefInput.from)
                                     value="$doAddTimerefInput.from"
                                 #end
+                                #if($doAddTimerefInput.to)
+                                    max="$doAddTimerefInput.to"
+                                #end
                                 >
                             </div>
                             <div class="xsmall-6 small-6 medium-6 large-6 xlarge-6 columns">
@@ -27,6 +30,9 @@
                                 <input class="datepicker picker__input" type="date" id="to" name="to" placeholder="$MESSAGES.getString("searchResult.facete.title.timeref.to")"
                                 #if($doAddTimerefInput.to)
                                     value="$doAddTimerefInput.to"
+                                #end
+                                #if($doAddTimerefInput.from)
+                                    min="$doAddTimerefInput.from"
                                 #end
                                 >
                         </div>
@@ -42,3 +48,15 @@
         </div>
     </li>
 </ul>
+
+<script>
+    var from = $('#from');
+    var to = $('#to');
+
+    from.change(function(){
+        to.attr('min', this.value);
+    });
+    to.change(function(){
+        from.attr('max', this.value);
+    });
+</script>
