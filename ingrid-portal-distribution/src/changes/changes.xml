@@ -6,7 +6,19 @@
     </properties>
 
     <body>
+<!--        <release version="5.14.6-SNPASHOT" date="2023-xx-xx" description="Release 5.14.6">-->
+<!--          <action type="add" dev="wemove" issue="4488">-->
+<!--            Kontakt "Vertrieb" als "Anbieter" im Portal konfigurieren - entsprechende Facette einrichten-->
+<!--          </action>-->
+<!--        </release>-->
+
         <release version="5.14.5-SNAPSHOT" date="2023-xx-xx" description="Release 5.14.5">
+          <action type="add" dev="wemove" issue="4688">
+            LUBW: Add hint to password reset-mail and password field
+          </action>
+          <action type="add" dev="wemove" issue="4706">
+            LUBW: Add matomo script
+          </action>
           <action type="fix" dev="wemove" issue="4911">
             MAPCLIENT: Legenden-URL werden nicht mehr durch den Job aktualisiert
           </action>
@@ -18,9 +30,6 @@
           </action>
           <action type="Update" dev="wemove">
             GeoPortal.WSV: Anpassung Anwendungsseite
-          </action>
-          <action type="add" dev="wemove" issue="4488">
-            Kontakt "Vertrieb" als "Anbieter" im Portal konfigurieren - entsprechende Facette einrichten
           </action>
           <action type="add" dev="wemove" issue="4575">
             Facette für Filterung nach Themenbereichen / Kategorien (nur Benennung geändert)
