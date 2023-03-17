@@ -58,7 +58,7 @@
     <div class="row">
         #parse ('/WEB-INF/templates/include_search_result_counter.vm')
     </div>
-    #if($restUrlHttpSearchDownload)
+    #if($rankedResultList.length() > 0 && $restUrlHttpSearchDownload)
         #parse("/WEB-INF/templates/include_search_result_download.vm")
     #end
 </div>
