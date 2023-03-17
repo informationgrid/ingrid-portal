@@ -217,7 +217,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             }
                         }
                     }
-                } else {
+                }
+                if(map.isEmpty()) {
                     // search for it in onlineResources
                     String xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
                     boolean mapLinkAdded = false;
@@ -1739,10 +1740,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 list.add(elementMapLink);
             }
         }
-
-        elementCapabilities.put("type", "multiLineImage");
-        elementCapabilities.put("elements", list);
-        elementCapabilities.put("width", "full");
+        if(!list.isEmpty()) {
+            elementCapabilities.put("type", "multiLineImage");
+            elementCapabilities.put("elements", list);
+            elementCapabilities.put("width", "full");
+        }
         return elementCapabilities;
     }
 
