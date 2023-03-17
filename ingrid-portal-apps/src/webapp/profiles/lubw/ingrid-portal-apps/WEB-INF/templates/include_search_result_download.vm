@@ -104,7 +104,7 @@
                 urlRefUrls.forEach(function(value){
                     if(urlRefIds > tmpCount) {
                         var urlRefId = urlRefIds[tmpCount];
-                        if(urlRefId === "9900") {
+                        if(urlRefId === "9990") {
                             if(tmpValue !== ''){
                                 tmpValue += ', ';
                             }
