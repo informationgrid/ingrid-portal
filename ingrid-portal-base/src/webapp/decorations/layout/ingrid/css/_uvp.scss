@@ -3577,3 +3577,54 @@ a:empty:focus-visible {
 span.text-break {
   overflow-wrap: break-word;
 }
+
+.download_button {
+  color: $green-jelly;
+  border: 2px solid #c6cfe2;
+  border-radius: 8px;
+  -webkit-transition: box-shadow .5s;
+  transition: box-shadow .5s;
+  background: #fff;
+  padding: 6px 10px 6px;
+  margin: 6px 0px;
+
+  [class*="ic-"] {
+    font-size: 18px;
+  }
+}
+
+.download_button:disabled {
+  color: #c6cfe2;
+  cursor: default;
+  
+  [class*="ic-"] {
+    display: inline-block;
+    width: 18px;
+    height: 16px;
+  }
+
+  [class*="ic-"]:before {
+    content: " ";
+  }
+  
+  [class*="ic-"]:after {
+    content: " ";
+    display: inline-block;
+    width: 18px;
+    height: 16px;
+    border-radius: 50%;
+    border: 6px solid #c6cfe2;
+    border-color: #c6cfe2 transparent #fff transparent;
+    animation: load-ring 1.2s linear infinite;
+  }
+
+  @keyframes load-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+}

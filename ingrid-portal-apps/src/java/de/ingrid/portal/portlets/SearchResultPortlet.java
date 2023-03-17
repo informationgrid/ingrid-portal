@@ -25,6 +25,7 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +47,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.EscapeTool;
+import org.codehaus.jettison.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +69,7 @@ import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.portal.search.net.ThreadedQueryController;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
 
 /**
  * This portlet handles the "Result Display" fragment of the result page
@@ -102,6 +105,26 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
             if (resourceID.equals( "httpURLImage" )) {
                 UtilsPortletServeResources.getHttpUrlImage(paramURL, response, resourceID);
+            }
+        } else {
+            if (resourceID.equals( "httpURLSearchDownload" )) {
+                try {
+                    // String[] requestFields = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
+                    String paramRequestFields = request.getParameter("requestedFields");
+                    String paramCodelistParam = request.getParameter("codelists");
+                    HashMap<String, String> codelists = new HashMap<String, String>();
+                    if(paramCodelistParam != null) {
+                        for (String codelist : paramCodelistParam.split(",")) {
+                            String key = codelist.split(":")[0];
+                            String value = codelist.split(":")[1];
+                            codelists.put(key, value);
+                        }
+                    }
+                    UtilsPortletServeResources.getHttpURLSearchDownload(request, response, paramRequestFields.split(","), codelists);
+                } catch (ParseException | JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -493,6 +516,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("rankedResultList", rankedHits);
         context.put("rankedSearchFinished", rankedSearchFinished);
         context.put( "UTIL_SEARCH", UtilsSearch.class );
+        
+        restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLSearchDownload" );
+        request.setAttribute( "restUrlHttpSearchDownload", restUrl.toString() );
         //context.put("providerMap", getProviderMap());
 
         super.doView(request, response);

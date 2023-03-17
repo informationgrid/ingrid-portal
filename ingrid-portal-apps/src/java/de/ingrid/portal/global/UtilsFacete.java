@@ -2058,7 +2058,7 @@ public class UtilsFacete {
      * @param config
      */
     @SuppressWarnings("rawtypes")
-    private static void setFacetUrlParamsToUrl(ActionRequest request, StringBuilder facetUrl) {
+    public static void setFacetUrlParamsToUrl(PortletRequest request, StringBuilder facetUrl) {
 
         // Timeref
         if(getAttributeFromSession(request, "doAddTimeref") != null){

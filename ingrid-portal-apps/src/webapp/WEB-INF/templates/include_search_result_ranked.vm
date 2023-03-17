@@ -58,6 +58,9 @@
     <div class="row">
         #parse ('/WEB-INF/templates/include_search_result_counter.vm')
     </div>
+    #if($restUrlHttpSearchDownload)
+        #parse("/WEB-INF/templates/include_search_result_download.vm")
+    #end
 </div>
 #if($enableFacetSelection || $isSelection || $ranking == "date")
     <div class="filters-active">

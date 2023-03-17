@@ -1588,6 +1588,18 @@ header .menu-tab-row .menu-tab {
   font-size: 40px;
 }
 
+.download_button {
+  color: #3f3f3f;
+  border: 2px solid #3f3f3f;
+  box-shadow: unset;
+  border-radius: 0;
+  background-color: #f4f2e9;
+}
+
+.download_button [class*="ic-"] {
+  margin-right: 0 !important;
+}
+
 /* detail */
 .search-filtered .table {
   margin-bottom: 4px;
