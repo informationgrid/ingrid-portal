@@ -120,7 +120,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                             codelists.put(key, value);
                         }
                     }
-                    UtilsPortletServeResources.getHttpURLSearchDownload(request, response, paramRequestFields.split(","), codelists);
+                    UtilsPortletServeResources.getHttpURLSearchDownload(request, response, paramRequestFields.split(";"), codelists);
                 } catch (ParseException | JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -165,6 +165,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 
+        context.put("exportCSV", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_EXPORT_CSV, false));
+        context.put("exportCSVRequestedFields", PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_EXPORT_CSV_REQUESTED_FIELDS));
+        
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLDataType" );
         request.setAttribute( "restUrlHttpGetDataType", restUrl.toString() );

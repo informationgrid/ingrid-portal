@@ -116,6 +116,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_EXPORT_CSV = "portal.search.export.csv";
 
+    public static final String PORTAL_SEARCH_EXPORT_CSV_REQUESTED_FIELDS = "portal.search.export.csv.requestedfields";
+
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL = "portal.search.restrict.partner.level";
 
     public static final String PORTAL_HIERARCHY_CATALOGNAME_HIDDEN = "portal.hierarchy.catalogname.hidden";

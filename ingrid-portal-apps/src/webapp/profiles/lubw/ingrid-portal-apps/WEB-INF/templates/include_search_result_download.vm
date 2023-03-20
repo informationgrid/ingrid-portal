@@ -1,4 +1,4 @@
-#if($restUrlHttpSearchDownload)
+#if($exportCSV && $restUrlHttpSearchDownload)
 <div class="row">
     <div class="row">
         <div id="spinner"></div>
@@ -39,7 +39,7 @@
       tmpDate += '-';
     }
     tmpDate += min;
-    var sec = date.getSeconds()();
+    var sec = date.getSeconds();
     if(sec < 10) {
       tmpDate += '-0';
     } else {
@@ -61,20 +61,8 @@
 
   function downloadCSV(){
     disabledButton();
-    var csvHeader = [
-        'Typ',
-        'Themenbereich',
-        'Unterbereich',
-        'Themenname (Titel des MD)',
-        'Darstellungsdienst (GetCapabilities)',
-        'Downloaddienst (GetCapabilities)',
-        'Metadatenaufruf',
-        'OAC (Objektartencode)',
-        'Metadatenidentifikator',
-        'Zugang geschützt',
-        'Suchaufruf URL'
-    ];
-    var requestedFields = 't01_object.obj_id,t01_object.obj_class,title,oac,t011_obj_serv.has_access_constraint,object_node.tree_path.name,capabilities_url,t017_url_ref.special_ref,t017_url_ref.url_link';
+    const csvHeader = [$MESSAGES.getString('searchResult.export.csv.header')];
+    const requestedFields = '$exportCSVRequestedFields';
     var dateFormat = getFileDate(new Date());
     var urlDomain = window.location.origin;
     var urlSearch = window.location.search;
@@ -86,8 +74,6 @@
       .done(function(json, textStatus, jqxhr) {
         if(json.length > 0) {
             var delimiter = '\t';
-            var fields = Object.keys(json[0]);
-            var replacer = function(key, value) { return value === null ? '' : value }; 
             var csv = json.map(function(row){
               var tmpRow = '';
 
