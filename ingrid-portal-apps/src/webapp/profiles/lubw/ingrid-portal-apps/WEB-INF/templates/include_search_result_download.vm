@@ -102,7 +102,7 @@
               if(urlRefIds && urlRefUrls){
                 var tmpCount = 0;
                 urlRefUrls.forEach(function(value){
-                    if(urlRefIds > tmpCount) {
+                    if(urlRefIds.length > tmpCount) {
                         var urlRefId = urlRefIds[tmpCount];
                         if(urlRefId === "9990") {
                             if(tmpValue !== ''){
@@ -111,7 +111,7 @@
                             tmpValue += value;
                         }
                     }
-                    tmpCount ++;
+                    tmpCount++;
                 });
               }
               tmpRow += tmpValue + delimiter;
