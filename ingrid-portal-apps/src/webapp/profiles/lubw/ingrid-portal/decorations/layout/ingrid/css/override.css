@@ -1033,8 +1033,7 @@ table .dark a {
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered,
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-  min-height: 56px;
-  line-height: unset;
+  line-height: 36px;
   padding: 0.8rem 1.3rem;
   font-family: Gudea-Regular, sans-serif;
 }
@@ -1055,7 +1054,6 @@ ul.select2-results__options {
   background-color: #f4f2e9;
 }
 .select2-container--default .select2-selection--single::after {
-  top: 18px;
   color: #3f3f3f;
 }
 
@@ -1590,6 +1588,7 @@ header .menu-tab-row .menu-tab {
 
 .download_button {
   color: #296e4b;
+  background: transparent;
 }
 
 .download_button [class*="ic-"] {
