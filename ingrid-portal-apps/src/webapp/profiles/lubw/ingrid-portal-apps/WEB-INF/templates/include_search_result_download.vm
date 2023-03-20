@@ -2,7 +2,7 @@
 <div class="row">
     <div class="row">
         <div id="spinner"></div>
-        <button id="search_download" class="download_button" onClick="javascript:downloadCSV()" title="Ergebnisliste als CSV">
+        <button id="search_download" class="download_button" onClick="javascript:downloadCSV()" title="$MESSAGES.getString('searchResult.export.csv.button.tilte')">
             <span class="ic-ic-download"></span>
         </button>
     </div>
