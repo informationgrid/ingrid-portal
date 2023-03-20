@@ -1033,8 +1033,6 @@ table .dark a {
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered,
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-  line-height: 36px;
-  padding: 0.8rem 1.3rem;
   font-family: Gudea-Regular, sans-serif;
 }
 .select2-container--default .select2-results__option[aria-disabled=true] {
