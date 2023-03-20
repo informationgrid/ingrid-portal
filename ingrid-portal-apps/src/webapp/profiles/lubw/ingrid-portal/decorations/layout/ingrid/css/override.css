@@ -1589,11 +1589,7 @@ header .menu-tab-row .menu-tab {
 }
 
 .download_button {
-  color: #3f3f3f;
-  border: 2px solid #3f3f3f;
-  box-shadow: unset;
-  border-radius: 0;
-  background-color: #f4f2e9;
+  color: #296e4b;
 }
 
 .download_button [class*="ic-"] {

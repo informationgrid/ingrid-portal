@@ -219,7 +219,7 @@
 .select2-dropdown { background-color: transparent; }
 .select2-container--default .select2-selection--single, 
 .select2-container--default .select2-selection--multiple{
-  height:48px;
+  height:36px;
   border: 1px solid $blue-light;
   border-radius: 50px;
   box-shadow: 0px 2px 5px 0px $blue-light;
@@ -227,9 +227,9 @@
 .select2-container--default .select2-selection--single .select2-selection__rendered, 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
   font-family: 'Roboto-Regular';
-  font-size: 16px;
+  font-size: 14px;
   color: $blue-prov;
-  line-height: 48px;
+  line-height: 36px;
   padding-left: 16px;
   padding-right: 40px;
 }
@@ -238,7 +238,7 @@
 }
 .select2-container--default .select2-selection--single::after {
   position: absolute;
-  top: 13px;
+  top: 8px;
   right: 18px;
   content: '\e922';
   font-family: 'icomoon';

@@ -62,12 +62,18 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
     #end
+    #if(($rankedResultList && $rankedResultList.length() > 0) && $exportCSV)
+        #parse("/WEB-INF/templates/include_search_result_download.vm")
+    #end
 #end
 
 #macro (renderRankedPageNavigation $pageSelector $isBottom)
 <div class="paging caption">
     #if($isBottom)
         #renderRankedResultCounter($pageSelector)
+        #if(($rankedResultList && $rankedResultList.length() > 0) && $exportCSV)
+            #parse("/WEB-INF/templates/include_search_result_download.vm")
+        #end
     #end
     <br>
     ## Default

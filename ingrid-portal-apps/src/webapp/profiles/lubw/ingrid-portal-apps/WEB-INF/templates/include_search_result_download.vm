@@ -1,12 +1,7 @@
 #if($exportCSV && $restUrlHttpSearchDownload)
-<div class="row">
-    <div class="row">
-        <div id="spinner"></div>
-        <button id="search_download" class="download_button" onClick="javascript:downloadCSV()" title="$MESSAGES.getString('searchResult.export.csv.button.tilte')">
-            <span class="ic-ic-download"></span>
-        </button>
-    </div>
-</div>
+<button class="download_button search_download" onClick="javascript:downloadCSV()" title="$MESSAGES.getString('searchResult.export.csv.button.tilte')">
+    <span class="ic-ic-download"></span>
+</button>
 <script>
   function getFileDate(date) {
     var tmpDate = '';
@@ -50,12 +45,12 @@
   }
 
   function disabledButton() {
-    var button = $('#search_download');
+    var button = $('.search_download');
     button.attr('disabled','disabled');
   }
 
   function enabledButton() {
-    var button = $('#search_download');
+    var button = $('.search_download');
     button.removeAttr('disabled');
   }
 

@@ -2903,6 +2903,7 @@ h3 span, h4 span, h5 span {
 
       div:last-child {
         margin-right: 0;
+        margin-top: 6px;
       }
     }
   }
@@ -2931,7 +2932,7 @@ h3 span, h4 span, h5 span {
   margin-top: 12px;
 
   a.icon {
-    padding: 8px;
+    padding: 6px;
     margin-right: 0;
     border: 1px solid $blue-light;
 
@@ -3580,8 +3581,6 @@ span.text-break {
 
 .download_button {
   color: $green-jelly;
-  border: 2px solid #c6cfe2;
-  border-radius: 8px;
   -webkit-transition: box-shadow .5s;
   transition: box-shadow .5s;
   background: #fff;
@@ -3606,7 +3605,7 @@ span.text-break {
   [class*="ic-"]:before {
     content: " ";
   }
-  
+
   [class*="ic-"]:after {
     content: " ";
     display: inline-block;
@@ -3626,5 +3625,9 @@ span.text-break {
       transform: rotate(360deg);
     }
   }
-
+}
+.paging, .results-index {
+  h3 {
+    display: inline-block;
+  }
 }
