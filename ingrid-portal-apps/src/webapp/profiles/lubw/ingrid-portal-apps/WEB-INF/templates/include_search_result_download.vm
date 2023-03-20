@@ -11,10 +11,41 @@
   function getFileDate(date) {
     var tmpDate = '';
     tmpDate += date.getFullYear();
-    tmpDate += '-' + date.getMonth() + 1;
-    tmpDate += '-' + date.getDate();
-    tmpDate += '-' + date.getHours();
-    tmpDate += date.getMinutes();
+    var month = date.getMonth() + 1;
+    if(month < 10) {
+      tmpDate += '-0';
+    } else {
+      tmpDate += '-';
+    }
+    tmpDate += month;
+    var day = date.getDate();
+    if(day < 10) {
+      tmpDate += '-0';
+    } else {
+      tmpDate += '-';
+    }
+    tmpDate += day;
+    var hours = date.getHours();
+    if(hours < 10) {
+      tmpDate += '-0';
+    } else {
+      tmpDate += '-';
+    }
+    tmpDate += hours;
+    var min = date.getMinutes();
+    if(min < 10) {
+      tmpDate += '-0';
+    } else {
+      tmpDate += '-';
+    }
+    tmpDate += min;
+    var sec = date.getSeconds()();
+    if(sec < 10) {
+      tmpDate += '-0';
+    } else {
+      tmpDate += '-';
+    }
+    tmpDate += sec;
     return tmpDate;
   }
 
