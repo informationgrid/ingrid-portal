@@ -47,6 +47,16 @@ define([
                     crsSyslist.push([ "EPSG 7837: DHHN2016 Höhe", "7837", "N", null ]);
                     crsSyslist.push([ "EPSG 5783: DHHN92 Höhe", "5783", "N", null ]);
                     crsSyslist.push([ "EPSG 7699: DHHN12 Höhe", "7699", "N", null ]);
+
+                    var crs4936 = [ "EPSG 4936: ETRS89 / geographisch 2D", "7837", "N", null ];
+                    var index = crsSyslist.findIndex(function(item) {
+                        return item[1] == 4937;
+                    });
+                    if (index < 0) {
+                        crsSyslist.push(crs4936);
+                    } else {
+                        crsSyslist.splice(index, 0, crs4936);
+                    }
                 }
             });
         }
