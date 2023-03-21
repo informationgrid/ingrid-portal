@@ -243,55 +243,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
-    <!-- Aktualität (Metadaten)-->
-    <!-- Kann erweitert werden -->
-    <facet>
-        <name>searchResult.facete.title.time</name>
-        <id>modtime</id>
-        <dependency>metadata</dependency>
-        <facets>
-            <!-- letzter Monat -->
-            <facet>
-                <name>searchResult.facete.time.1</name>
-                <id>modtime1</id>
-                <from>P1MT</from>
-                <to>PT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
-            </facet>
-            <!-- letzte 3 Monate -->
-            <facet>
-                <name>searchResult.facete.time.2</name>
-                <id>modtime2</id>
-                <from>P3MT</from>
-                <to>P1M1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
-            </facet>
-            <!-- letztes Jahr -->
-            <facet>
-                <name>searchResult.facete.time.3</name>
-                <id>modtime3</id>
-                <from>P1YT</from>
-                <to>P3M1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
-            </facet>
-            <!-- letzte 5 Jahre -->
-            <facet>
-                <name>searchResult.facete.time.4</name>
-                <id>modtime4</id>
-                <from>P5YT</from>
-                <to>P1Y1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
-            </facet>
-            <!-- Älter als 5 Jahre -->
-            <facet>
-                <name>searchResult.facete.time.5</name>
-                <id>modtime5</id>
-                <from></from>
-                <to>P5Y1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
-            </facet>
-        </facets>
-    </facet>
     <!-- Zeitbezug -->
     <!-- Kann erweitert werden -->
     <facet>
