@@ -44,6 +44,9 @@ UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 -- Hide '/rsspage.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/rsspage.psml';
 
+-- Hide '/main-about-partner.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/main-about-partner.psml';
+
 -- Hide '/application/main-application.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
 
