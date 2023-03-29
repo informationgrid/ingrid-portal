@@ -18,6 +18,21 @@
   </scm>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>1.3.3</version>
+      </dependency>
+      <!-- https://avd.aquasec.com/nvd/cve-2015-7501 -->
+      <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2.2</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
