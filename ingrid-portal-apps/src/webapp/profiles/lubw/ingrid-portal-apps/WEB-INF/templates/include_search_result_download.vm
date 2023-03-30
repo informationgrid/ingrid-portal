@@ -1,7 +1,7 @@
 #if($exportCSV && $restUrlHttpSearchDownload)
 <button class="download_button search_download" onClick="javascript:downloadCSV()" title="$MESSAGES.getString('searchResult.export.csv.button.title.tooltip')">
     <span class="ic-ic-download"></span>
-    <span>$MESSAGES.getString('searchResult.export.csv.button.title.tooltip')</span>
+    <span>$MESSAGES.getString('searchResult.export.csv.button.title')</span>
 </button>
 <script>
   function getFileDate(date) {
