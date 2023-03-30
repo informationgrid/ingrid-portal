@@ -1,6 +1,7 @@
 #if($exportCSV && $restUrlHttpSearchDownload)
-<button class="download_button search_download" onClick="javascript:downloadCSV()" title="$MESSAGES.getString('searchResult.export.csv.button.tilte')">
+<button class="download_button search_download" onClick="javascript:downloadCSV()" title="$MESSAGES.getString('searchResult.export.csv.button.title.tooltip')">
     <span class="ic-ic-download"></span>
+    <span>$MESSAGES.getString('searchResult.export.csv.button.title.tooltip')</span>
 </button>
 <script>
   function getFileDate(date) {
@@ -188,7 +189,7 @@
                 // Browsers that support HTML5 download attribute
                 var url = URL.createObjectURL( blob );
                 link.setAttribute( "href", url );
-                link.setAttribute( "download", "lubw-" + dateFormat + ".csv" );
+                link.setAttribute( "download", "Export_RIPS-Metadaten_" + dateFormat + ".csv" );
                 link.style.visibility = 'hidden';
                 document.body.appendChild( link );
                 link.click();
