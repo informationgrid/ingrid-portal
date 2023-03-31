@@ -37,7 +37,7 @@
     <mdek.version>6.1.0-SNAPSHOT</mdek.version>
     <webmap-client.version>6.1.0-SNAPSHOT</webmap-client.version>
     <ingrid-codelist-service.version>6.0.0</ingrid-codelist-service.version>
-    <ingrid-utils.version>6.0.0</ingrid-utils.version>
+    <ingrid-utils.version>6.1.0-SNAPSHOT</ingrid-utils.version>
     <log4j.version>2.19.0</log4j.version>
   </properties>
 
