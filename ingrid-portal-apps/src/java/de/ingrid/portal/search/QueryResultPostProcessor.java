@@ -202,6 +202,10 @@ public class QueryResultPostProcessor {
             }
 
             // Capabilities Url
+            String capUrlWithClient = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_CAPABILITIES_URL_WITH_CLIENT);
+            if(!capUrlWithClient.isEmpty()) {
+                hit.put(Settings.RESULT_KEY_WMS_URL_WITH_CLIENT, capUrlWithClient);
+            }
             tmpArray = getStringArrayFromKey( detail, Settings.RESULT_KEY_CAPABILITIES_URL );
             if (!doNotShowMaps && tmpArray != null && tmpArray.length > 0) {
                 // check for protected access setting
