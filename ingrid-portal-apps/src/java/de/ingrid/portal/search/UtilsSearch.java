@@ -1737,7 +1737,7 @@ public class UtilsSearch {
     }
     public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType, String additionalURLContent){
         StringBuilder urlValue = new StringBuilder(url);
-        String service = "";
+        String service = null;
         // add missing parameters
         if (url.indexOf("?") != -1) {
             if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
@@ -1748,41 +1748,32 @@ public class UtilsSearch {
                 }
                 urlValue.append("REQUEST=GetCapabilities");
             }
-            if (serviceTypeVersion != null && !serviceTypeVersion.isEmpty()) {
-                Pattern pattern = Pattern.compile("(?<=(\\:| ))(.*?)(?=\\ )");
-                Matcher matcher = pattern.matcher(serviceTypeVersion);
-                if (matcher.find()) {
-                    String match = matcher.group(0);
-                    if(match != null && !match.isEmpty()) {
-                        service = match.trim();
-                        if(service.equalsIgnoreCase("WMS") || service.equalsIgnoreCase("WMTS")) {
-                            if (url.toLowerCase().indexOf("service=") == -1) {
-                                urlValue.append("&SERVICE=" + service);
-                            }
-                        } else {
-                            service = "";
+            if (url.toLowerCase().indexOf("service=") == -1) {
+                if (serviceTypeVersion != null && !serviceTypeVersion.isEmpty()) {
+                    String tmpService = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
+                    if (tmpService != null) {
+                        if(tmpService.equalsIgnoreCase("WMS") || tmpService.equalsIgnoreCase("WMTS")) {
+                            service = tmpService;
                         }
                     }
                 }
             }
-            if (serviceType != null && !serviceType.isEmpty()) {
-                IngridSysCodeList codelist = new IngridSysCodeList(new Locale("DE"));
-                String codelistValue = codelist.getNameByCodeListValue("5100", serviceType);
-                if(codelistValue.isEmpty()) {
-                    service = serviceType.trim();
-                    if(service.equalsIgnoreCase("WMS") || service.equalsIgnoreCase("WMTS")) {
-                        if (url.toLowerCase().indexOf("service=") == -1) {
-                            urlValue.append("&SERVICE=" + service);
-                        }
-                    } else {
-                        service = "";
+            if(service == null) {
+                if (serviceType != null && !serviceType.isEmpty()) {
+                    IngridSysCodeList codelist = new IngridSysCodeList(new Locale("DE"));
+                    String codelistValue = codelist.getNameByCodeListValue("5100", serviceType.trim());
+                    if(codelistValue.isEmpty()) {
+                        service = serviceType.trim();
                     }
                 }
             }
         } else {
             service = "WMTS";
         }
-        if(!service.isEmpty()) {
+        if(service != null) {
+            if(service.equalsIgnoreCase("WMS") || service.equalsIgnoreCase("WMTS")) {
+                urlValue.append("&SERVICE=" + service);
+            }
             String cap = service + "||" + urlValue.toString().trim();
             if(additionalURLContent != null) {
                 cap += "||" + additionalURLContent;

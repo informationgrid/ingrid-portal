@@ -1186,14 +1186,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
                                     String serviceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
                                     if (!serviceTypeVersion.isEmpty()) {
-                                        Pattern pattern = Pattern.compile("(?<=(\\:| ))(.*?)(?=\\ )");
-                                        Matcher matcher = pattern.matcher(serviceTypeVersion);
-                                        if (matcher.find()) {
-                                            String match = matcher.group(0);
-                                            if(match != null && !match.isEmpty()) {
-                                                urlValue.append("&SERVICE=" + match);
-                                                break;
-                                            }
+                                        String tmpService = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
+                                        if (tmpService != null) {
+                                            urlValue.append("&SERVICE=" + tmpService);
                                         }
                                     }
                                 }
