@@ -4,23 +4,11 @@
     <chapter>
         <header>Über den LUBW-Metadatenkatalog</header>
         <section help-key="about-1">
-            <header>Porträt</header>
+            <header>Metadatenportal des Räumlichen Informations- und Planungssystems</header>
             <content>
-                <p>Dieser Bereich dient der Darstellung des Portals oder des Portal-Betreibers.</p>
-            </content>
-        </section>
-        <section help-key="about-2">
-            <header>Informationsanbieter</header>
-            <content>
-                <p>Hier werden alle im System eingepflegten Partner und die Ihnen zugeordneten Informationsanbieter angezeigt.</p>
-                <p>Als Administrator können diese im Bereich <b>Partner</b> und <b>Anbieter</b> gepflegt werden.</p>
-            </content>
-        </section>
-        <section help-key="about-3">
-            <header>Datenquellen</header>
-            <content>
-                <p>Hier werden alle angeschlossenen iPlugs angezeigt.</p>
-                <p>Der angezeigte Name wird im iPlug gepflegt und sollte Rückschlüsse auf Art und Inhalt der Daten geben.</p>
+                <p>Das Metadatenportal des Räumlichen Informations- und Planungssystems (RIPS) ermöglicht die gezielte Suche nach Geodaten und Web-Diensten des Umweltinformationssystems Baden-Württemberg (UIS) und bietet einen zentralen Zugriff auf alle relevanten Metadaten.</p>
+                <p>Als aktuelle konzeptionelle Grundlage für den Metadatenkatalog dient das Metadatenprofil GDI-BW (in der jeweils gültigen Version). Mit der Umsetzung der Vorgaben aus dem Profil werden die technischen Rahmenbedingungen geschaffen, um die Vorgaben aus der INSPIRE-Richtlinie, der GDI-DE und der GDI-BW Standards einhalten zu können. Die Metadaten sind somit auch konform zu den ISO-Standards 19115 bzw. 19119.</p>
+                <p>Die Metadaten werden einer ständigen Qualitätskontrolle unterzogen. Dennoch können aufgrund der Vielzahl von Datensätzen und Angaben Informationen veralten oder Unklarheiten entstehen. Für Fragen oder Rückmeldungen wenden Sie sich bitte an die E-Mail-Adresse RIPS-Metadaten@lubw.bwl.de oder nutzen Sie unser <a href="https://rips-metadaten.lubw.de/kontakt">Kontaktformular</a>.</p>
             </content>
         </section>
     </chapter>
