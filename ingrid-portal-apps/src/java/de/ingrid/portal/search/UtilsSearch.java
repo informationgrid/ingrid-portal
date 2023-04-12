@@ -35,8 +35,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -1732,10 +1730,10 @@ public class UtilsSearch {
         return "";
     }
 
-    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
-        return addCapabilitiesInformation(url, serviceTypeVersion, serviceType, null);
+    public static String addMapclientCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
+        return addMapclientCapabilitiesInformation(url, serviceTypeVersion, serviceType, null);
     }
-    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType, String additionalURLContent){
+    public static String addMapclientCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType, String additionalURLContent){
         StringBuilder urlValue = new StringBuilder(url);
         String service = null;
 

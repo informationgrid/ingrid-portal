@@ -214,7 +214,7 @@ public class QueryResultPostProcessor {
 
                 if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                     for (String url : tmpArray) {
-                        String tmpUrl = UtilsSearch.addCapabilitiesInformation(url, UtilsSearch.getDetailValue(detail,
+                        String tmpUrl = UtilsSearch.addMapclientCapabilitiesInformation(url, UtilsSearch.getDetailValue(detail,
                                 "t011_obj_serv_version.version_value"), UtilsSearch.getDetailValue(detail, "t011_obj_serv.type"));
                         if(tmpUrl != null) {
                             tmpUrl += URLEncoder.encode("||", "UTF-8");
