@@ -96,23 +96,21 @@ layouts:
           absoluteX: 20
           absoluteY: 765
           width: 550
-          height: 420
+          height: 520
 
 #---------------------------------------
 # Copyright
 #---------------------------------------
         - !columns
-          absoluteY: 340
+          absoluteY: 235
           absoluteX: 20
           width: 550
           config:
             borderWidth: 0.5
           items:
               - !text
-                fontSize: 46
+                fontSize: 42
                 text: |
-                  
-                  
                   
                   
                   
@@ -122,9 +120,9 @@ layouts:
                 backgroundColor: white
 
         - !columns
-          absoluteY: 335
+          absoluteY: 225
           absoluteX: 25
-          width: 300
+          width: 375
           items:
             - !text
               fontSize: 8
@@ -132,9 +130,6 @@ layouts:
               text: |
                 Attribution (Quellen)
                 ${dataOwner}
-                
-                Koordinatensystem:
-                EPSG:25832
                 
                 Haftungsausschluss:
                 Die Administratoren und die Autoren der Seiten übernehmen keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen die Administratoren und die Autoren, welche sich auf Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden sind grundsätzlich ausgeschlossen, sofern seitens der Administratoren oder Autoren kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt.
@@ -144,7 +139,16 @@ layouts:
                 
                 Nutzungshinweise:
                 Das Geoportal.EBA erlaubt die freie Zusammenstellung von Karten aus einzelnen Kartenebenen. Die Nutzungshinweise sind in den Informationen zur jeweiligen Kartenebene beschrieben. Diese sind zu beachten.
-                
+
+        - !columns
+          absoluteY: 225
+          absoluteX: 435
+          width: 124
+          items:
+            - !text
+              fontSize: 8
+              align: left
+              text: |
                 Herausgeber:
                 Eisenbahn-Bundesamt
                 Heinemannstraße 6
@@ -154,13 +158,16 @@ layouts:
                 Homepage: www.eba.bund.de
                 E-Mail: poststelle@eba.bund.de
                 Präsident: Gerald Hörster
+                
+                Koordinatensystem:
+                EPSG:25832
 
 #-------------------------------------
 # Scalesbar
 #-------------------------------------
         - !columns
           absoluteY: 120
-          absoluteX: 445
+          absoluteX: 435
           width: 124
           nbColumns: 1
           config:
@@ -185,7 +192,7 @@ layouts:
               text: |
                 Gedruckt am ${now dd.MM.yyyy HH:mm}
             - !image
-              align: center
+              align: left
               maxWidth: 50
               maxHeight: 50
               url: "${qrcodeurl}"
@@ -194,8 +201,8 @@ layouts:
 # North arrow
 #---------------------------------------
         - !columns
-          absoluteY: 120
-          absoluteX: 415
+          absoluteY: 70
+          absoluteX: 515
           width: 30
           items:
             - !image
@@ -527,22 +534,21 @@ layouts:
           absoluteX: 20
           absoluteY: 1105
           width: 802
-          height: 800
+          height: 850
 
 #---------------------------------------
 # Copyright
 #---------------------------------------
         - !columns
-          absoluteY: 300
+          absoluteY: 240
           absoluteX: 20
           width: 802
           config:
             borderWidth: 0.5
           items:
               - !text
-                fontSize: 46
+                fontSize: 44
                 text: |
-                  
                   
                   
                   
@@ -552,9 +558,9 @@ layouts:
                 backgroundColor: white
 
         - !columns
-          absoluteY: 295
+          absoluteY: 235
           absoluteX: 25
-          width: 520
+          width: 620
           items:
             - !text
               fontSize: 8
@@ -562,9 +568,6 @@ layouts:
               text: |
                 Attribution (Quellen)
                 ${dataOwner}
-                
-                Koordinatensystem:
-                EPSG:25832
                 
                 Haftungsausschluss:
                 Die Administratoren und die Autoren der Seiten übernehmen keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen die Administratoren und die Autoren, welche sich auf Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden sind grundsätzlich ausgeschlossen, sofern seitens der Administratoren oder Autoren kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt.
@@ -574,7 +577,16 @@ layouts:
                 
                 Nutzungshinweise:
                 Das Geoportal.EBA erlaubt die freie Zusammenstellung von Karten aus einzelnen Kartenebenen. Die Nutzungshinweise sind in den Informationen zur jeweiligen Kartenebene beschrieben. Diese sind zu beachten.
-                
+
+        - !columns
+          absoluteY: 235
+          absoluteX: 680
+          width: 124
+          items:
+            - !text
+              fontSize: 8
+              align: left
+              text: |
                 Herausgeber:
                 Eisenbahn-Bundesamt
                 Heinemannstraße 6
@@ -584,13 +596,16 @@ layouts:
                 Homepage: www.eba.bund.de
                 E-Mail: poststelle@eba.bund.de
                 Präsident: Gerald Hörster
+                
+                Koordinatensystem:
+                EPSG:25832
 
 #-------------------------------------
 # Scalesbar
 #-------------------------------------
         - !columns
           absoluteY: 120
-          absoluteX: 690
+          absoluteX: 680
           width: 124
           nbColumns: 1
           config:
@@ -615,7 +630,7 @@ layouts:
               text: |
                 Gedruckt am ${now dd.MM.yyyy HH:mm}
             - !image
-              align: center
+              align: left
               maxWidth: 50
               maxHeight: 50
               url: "${qrcodeurl}"
@@ -624,8 +639,8 @@ layouts:
 # North arrow
 #---------------------------------------
         - !columns
-          absoluteY: 120
-          absoluteX: 650
+          absoluteY: 70
+          absoluteX: 755
           width: 30
           items:
             - !image
