@@ -53,15 +53,15 @@
                 #if($entry.title)
                     #if(!$entry.get("href"))
                         <p class="caption">$entry.title</p>
-                    #elseif($entry.get("mapUrl"))
+                    #elseif($entry.get("extMapUrl"))
                         <p class="caption">
-                            <a class="button small" href="$entry.get("mapUrl")" title="$entry.title">
+                            <a #if($mapLinksNewTab)target="_blank"#end class="button small" href="$entry.get("extMapUrl")" title="$entry.title">
                                 $entry.title
                             </a>
                         </p>
                     #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1 )
                         <p class="caption">
-                            <a class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
+                            <a #if($mapLinksNewTab)target="_blank"#end class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=${entry.get("href")}" title="$entry.title">
                                 $entry.title
                             </a>
                         </p>
@@ -173,12 +173,12 @@
                     <small class="description">${myDescription}</small>
                 </div>
             #end
-            #if($tool.hasContent($entry.mapUrl))
-                <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$entry.mapUrl" title="$MESSAGES.getString('common.result.showMap.tooltip')">
+            #if($tool.hasContent($entry.extMapUrl))
+                <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$entry.extMapUrl" title="$MESSAGES.getString('common.result.showMap.tooltip')">
                     $MESSAGES.getString('common.result.showMap')
                 </a>
             #elseif($tool.hasContent($entry.mapLink))
-                <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
+                <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
                     $MESSAGES.getString('common.result.showMap')
                 </a>
             #end
@@ -316,15 +316,15 @@
         </div>
         #end
     #end
-    #if($entry.mapUrl)
+    #if($entry.extMapUrl)
     <p class="caption">
-        <a #if($mapLinksNewTab)target="_blank"#end class="button small" href="$entry.mapUrl" title="$MESSAGES.getString("common.result.showMap.tooltip.short")">
+        <a #if($mapLinksNewTab)target="_blank"#end class="button small" href="$entry.extMapUrl" title="$MESSAGES.getString("common.result.showMap.tooltip.short")">
             $MESSAGES.getString("common.result.showMap.tooltip.short")
         </a>
     </p>
     #elseif($entry.href)
     <p class="caption">
-        <a #if($mapLinksNewTab)target="_blank"#end class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$MESSAGES.getString("common.result.showMap.tooltip.short")">
+        <a #if($mapLinksNewTab)target="_blank"#end class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=${entry.get("href")}" title="$MESSAGES.getString("common.result.showMap.tooltip.short")">
             $MESSAGES.getString("common.result.showMap.tooltip.short")
         </a>
     </p>
@@ -1355,12 +1355,12 @@
                             </div>
                         #end
                         #if($tool.hasContent($entry.link))
-                            #if($entry.link.mapUrl)
-                            <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$entry.link.mapUrl" title="$MESSAGES.getString('common.result.showMap')">
+                            #if($entry.link.extMapUrl)
+                            <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$entry.link.extMapUrl" title="$MESSAGES.getString('common.result.showMap')">
                                 $MESSAGES.getString('common.result.showMap')
                             </a>
                             #elseif($entry.link.href)
-                            <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
+                            <a #if($mapLinksNewTab)target="_blank"#end class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
                                 $MESSAGES.getString('common.result.showMap')
                             </a>
                             #end
