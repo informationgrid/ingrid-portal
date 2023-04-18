@@ -192,28 +192,37 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         // showMap/Preview-Link
         if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
             if (getUdkObjectClassType().equals("1")) {
-                // first try to get any valid WMS url from the crossReference section
-                String xpathCrossReference = "./idf:crossReference";
-                NodeList crossReferenceNodeList = xPathUtils.getNodeList(rootNode, xpathCrossReference);
-                if(crossReferenceNodeList.getLength() > 0) {
-                    for (int i=0; i< crossReferenceNodeList.getLength(); i++) {
-                        Node crossReferenceNode = crossReferenceNodeList.item(i);
-                        String serviceUrl =  xPathUtils.getString(crossReferenceNode, "./idf:serviceUrl");
-                        String extMapUrl =  xPathUtils.getString(crossReferenceNode, "./idf:mapUrl");
-                        String serviceType =  xPathUtils.getString(crossReferenceNode, "./idf:serviceType");
-                        String serviceVersion =  xPathUtils.getString(crossReferenceNode, "./idf:serviceVersion");
-                        if(serviceUrl != null && !serviceUrl.isEmpty()) {
-                            String getCapUrl = null;
-                            String layerIdentifier = getLayerIdentifier(null);
-                            if(!layerIdentifier.equals("NOT_FOUND")) {
-                                getCapUrl = UtilsSearch.addMapclientCapabilitiesInformation(serviceUrl, serviceVersion, serviceType, layerIdentifier);
-                            } else {
-                                getCapUrl = UtilsSearch.addMapclientCapabilitiesInformation(serviceUrl, serviceVersion, serviceType);
-                            }
-                            if(getCapUrl != null && !getCapUrl.isEmpty()) {
-                                map = addBigMapLink(crossReferenceNode, getCapUrl, false, partner, extMapUrl);
-                                if(!hasAccessConstraints(crossReferenceNode)) {
-                                    break;
+                String xpathMapUrl = "./idf:mapUrl";
+                if(xPathUtils.nodeExists(rootNode, xpathMapUrl)) {
+                    String mapUrlNodeText = xPathUtils.getNode(rootNode, xpathMapUrl).getTextContent();
+                    if(mapUrlNodeText != null && !mapUrlNodeText.isEmpty()) {
+                        map = addBigMapLink(rootNode, "", false, partner, mapUrlNodeText);
+                    }
+                }
+                if(map.isEmpty()) {
+                    // first try to get any valid WMS url from the crossReference section
+                    String xpathCrossReference = "./idf:crossReference";
+                    NodeList crossReferenceNodeList = xPathUtils.getNodeList(rootNode, xpathCrossReference);
+                    if(crossReferenceNodeList.getLength() > 0) {
+                        for (int i=0; i< crossReferenceNodeList.getLength(); i++) {
+                            Node crossReferenceNode = crossReferenceNodeList.item(i);
+                            String serviceUrl =  xPathUtils.getString(crossReferenceNode, "./idf:serviceUrl");
+                            String extMapUrl =  xPathUtils.getString(crossReferenceNode, "./idf:mapUrl");
+                            String serviceType =  xPathUtils.getString(crossReferenceNode, "./idf:serviceType");
+                            String serviceVersion =  xPathUtils.getString(crossReferenceNode, "./idf:serviceVersion");
+                            if(serviceUrl != null && !serviceUrl.isEmpty()) {
+                                String getCapUrl = null;
+                                String layerIdentifier = getLayerIdentifier(null);
+                                if(!layerIdentifier.equals("NOT_FOUND")) {
+                                    getCapUrl = UtilsSearch.addMapclientCapabilitiesInformation(serviceUrl, serviceVersion, serviceType, layerIdentifier);
+                                } else {
+                                    getCapUrl = UtilsSearch.addMapclientCapabilitiesInformation(serviceUrl, serviceVersion, serviceType);
+                                }
+                                if(getCapUrl != null && !getCapUrl.isEmpty()) {
+                                    map = addBigMapLink(crossReferenceNode, getCapUrl, false, partner, extMapUrl);
+                                    if(!hasAccessConstraints(crossReferenceNode)) {
+                                        break;
+                                    }
                                 }
                             }
                         }
