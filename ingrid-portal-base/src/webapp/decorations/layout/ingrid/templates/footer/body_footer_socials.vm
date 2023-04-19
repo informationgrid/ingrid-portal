@@ -12,7 +12,7 @@
     <a href="https://www.linkedin.com/shareArticle?mini=true&url=$shareUrlEncode" class="button round social" target="_blank" title="LinkedIn">
         <span class="ic-ic-linkedin"></span><span class="text"></span>
     </a>
-    <a href="whatsapp://send?text=$shareUrl" class="button round social" target="_blank" title="WhatsApp">
+    <a href="whatsapp://send?text=$shareUrlEncode" class="button round social" target="_blank" title="WhatsApp">
         <span class="ic-ic-whatsapp"></span><span class="text"></span>
     </a>
     <a href="https://www.xing.com/social_plugins/share?url=$shareUrlEncode" class="button round social" target="_blank" title="XING">

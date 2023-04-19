@@ -52,6 +52,8 @@
 #set($referingObjRefClass = $rs.getHitDetail().get("refering.object_reference.obj_class" ))
 #set($referingObjRefType = [])
 #set($referingObjRefType = $rs.getHitDetail().get("refering.object_reference.type" ))
+#set($referingObjRefVersion = [])
+#set($referingObjRefVersion = $rs.getHitDetail().get("refering.object_reference.version" ))
 
 #set($countObjRef = 0)
 #foreach($objUuid in $referingObjRefUUID)
@@ -63,7 +65,7 @@
         #else
             #set($add = $link.put("title", "$objUuid"))
         #end
-        #set($add = $link.put("serviceType", $referingObjRefType.get($countObjRef)))
+        #set($add = $link.put("serviceType", $UTIL_SEARCH.getHitShortcut($referingObjRefVersion.get($countObjRef), $referingObjRefType.get($countObjRef))))
         #set($add = $linksUrlRefOthers.add($link))
     #else
         #if(!$referenceAllUUID.contains($objUuid))
@@ -71,7 +73,9 @@
                 #set($add = $referenceAllUUID.add($objUuid))
                 #set($add = $referenceAllName.add($referingObjRefName.get($countObjRef)))
                 #set($add = $referenceAllClass.add($referingObjRefClass.get($countObjRef)))
-                #set($add = $referenceAllType.add($referingObjRefType.get($countObjRef)))
+                #if($referingObjRefVersion.size() > $countObjRef && $referingObjRefType.size() > $countObjRef)
+                    #set($add = $referenceAllType.add($UTIL_SEARCH.getHitShortcut($referingObjRefVersion.get($countObjRef), $referingObjRefType.get($countObjRef))))
+                #end
             #end
         #end
     #end
@@ -86,6 +90,8 @@
 #set($objRefClass = $rs.getHitDetail().get("object_reference.obj_class" ))
 #set($objRefType = [])
 #set($objRefType = $rs.getHitDetail().get("object_reference.type" ))
+#set($objRefVersion = [])
+#set($objRefVersion = $rs.getHitDetail().get("object_reference.version" ))
 
 #set($countObjRef = 0)
 #foreach($objUuid in $objRefUUID)
@@ -97,7 +103,7 @@
         #else
             #set($add = $link.put("title", "$objUuid"))
         #end
-        #set($add = $link.put("serviceType", $objRefType.get($countObjRef)))
+        #set($add = $link.put("serviceType", $UTIL_SEARCH.getHitShortcut($objRefType.get($countObjRef), $objRefVersion.get($countObjRef))))
         #set($add = $linksUrlRefOthers.add($link))
     #else
         #if(!$referenceAllUUID.contains($objUuid))
@@ -105,7 +111,9 @@
                 #set($add = $referenceAllUUID.add($objUuid))
                 #set($add = $referenceAllName.add($objRefName.get($countObjRef)))
                 #set($add = $referenceAllClass.add($objRefClass.get($countObjRef)))
-                #set($add = $referenceAllType.add($objRefType.get($countObjRef)))
+                #if($objRefVersion.size() > $countObjRef && $objRefType.size() > $countObjRef)
+                    #set($add = $referenceAllType.add($UTIL_SEARCH.getHitShortcut($objRefType.get($countObjRef), $objRefVersion.get($countObjRef))))
+                #end
             #end
         #end
     #end
@@ -130,7 +138,9 @@
             #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$referenceAllUUID.get($refCount)#if($detailUseParamPlugid)&plugid=$rs.plugid#end"))
             #set($add = $link.put("type", "$referenceAllClass.get($refCount)"))
             #set($add = $link.put("title", "$referenceAllName.get($refCount)"))
-            #set($add = $link.put("serviceType", "$referenceAllType.get($refCount)"))
+            #if($referenceAllType.size() > $refCount)
+                #set($add = $link.put("serviceType", "$referenceAllType.get($refCount)"))
+            #end
 
             ## Add service type to list 
             #if($link.serviceType != "" && $serviceTypes.indexOf($link.serviceType) == -1)

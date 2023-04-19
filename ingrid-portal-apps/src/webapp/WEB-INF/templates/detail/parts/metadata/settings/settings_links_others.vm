@@ -1,0 +1,2 @@
+#### Weitere Verweise
+#set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]")

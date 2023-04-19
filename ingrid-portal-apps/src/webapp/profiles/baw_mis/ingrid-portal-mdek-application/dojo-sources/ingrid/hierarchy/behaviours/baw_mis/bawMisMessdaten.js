@@ -61,11 +61,13 @@ define([
                 if (value === "Messdaten") {
                     handleHierarchyLevelNameIsMeasurementData();
                     hideFields(nonMeasurementFields);
+                    domClass.add("uiElementAdddqAccTimeMeas", "show");
                 } else {
                     handleHierarchyLevelNameIsNotMeasurementData();
                     if (levelNameForSimulation.indexOf(value) !== -1) {
                         showFields(nonMeasurementFields);
                     }
+                    domClass.remove("uiElementAdddqAccTimeMeas", "show");
                 }
             });
         },
@@ -288,7 +290,7 @@ define([
                 id: "drainMax",
                 name: message.get("ui.obj.baw.measuring.drainMax.title"),
                 help: message.get("ui.obj.baw.measuring.drainMax.help"),
-                style: "width: 50%",
+                style: "width: 50%"
             }), "refClass1");
         newFieldsToDirtyCheck.push("drainMax");
         additionalFields.push(registry.byId("drainMax"));

@@ -36,7 +36,7 @@
 
 #set($advGroup = $TOOL.getAlternateTitleListFromCodelist("8010"))
 #set($searchTerm = $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "search"))
-#set($mapImage = $TOOL.getMapImage(${plugPartner}, true))
+#set($mapImage = $TOOL.getMapImage(${plugPartner}))
 
 #if($TOOL.hasAccessConstraints())
     #set($hasAccessConstraints = "Y")
@@ -81,15 +81,8 @@
 ## Zeitliche Genauigkeit
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_time_measurement.vm")
 
-#set($xPathListTime = [
-    $xPathListTimeTimePeriodInstantPosition,
-    $xPathListTimeTimePeriodBeginPosition,
-    $xPathListTimeTimePeriodEndPosition,
-    $xPathListTimeMDProgressCode,
-    $xPathListTimeMDMaintenanceFrequencyCode,
-    $xPathListTimeUserDefinedMaintenanceFrequency,
-    $xPathListTimeMaintenanceNote
-])
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_time_data.vm")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_time_resource.vm")
 
 ## Darstellung
 #### Geothesaurus-Raumbezug
@@ -121,11 +114,11 @@
 
 ## Verweise und Downloads
 #### Downloads
-#set($xPathRefDownloads = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']]")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_downloads.vm")
 #### Links/Querweise
-#set($xPathRefLinks = "./idf:crossReference[not(@uuid=preceding::idf:crossReference/@uuid)]")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_references.vm")
 #### Weitere Verweise
-#set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_others.vm")
 ## Untergeordnete Objekte
 #set($xPathRefSubordinated = "./idf:subordinatedReference")
 ## Übergeordnetet Objekte
@@ -549,6 +542,9 @@
         #set($add = $xPathUsePointOfContactSortNodes.add($tmpAddresses))
     #end
 #end
+
+## Distribution Contacts
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_contact_distributor.vm")
 
 ## Zusatzfelder
 #set($xPathAdditionalFields = "./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']")

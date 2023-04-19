@@ -1,0 +1,919 @@
+# allowed DPIs
+dpis: [150]
+
+#
+# the list of allowed hosts
+#
+hosts:
+  # allow all
+  - !acceptAll {}
+
+#
+# allowed scales
+#
+scales:
+  - 500
+  - 1000
+  - 2000
+  - 2500
+  - 5000
+  - 10000
+  - 15000
+  - 20000
+  - 25000
+  - 50000
+  - 100000
+  - 200000
+  - 500000
+  - 1000000
+  - 2000000
+  - 4000000
+
+globalParallelFetches: 32
+perHostParallelFetches: 32
+connectionTimeout: 30000
+socketTimeout: 60000
+
+ignoreCapabilities: true
+maxPrintTimeBeforeWarningInSeconds: 120
+printTimeoutMinutes: 5
+
+#---------------------------------------
+# A4 portrait:
+#---------------------------------------
+layouts:
+  1 A4 Hochformat:
+    mainPage:
+      pageSize: A4
+      rotation: true
+
+      items:
+
+#---------------------------------------
+# Title / Description
+#---------------------------------------
+        - !columns
+          condition: title
+          absoluteX: 150
+          absoluteY: 815
+          width: 300
+          nbColumns: 1
+          config:
+            cells:
+              - padding: 5
+              - backgroundColor: white
+          items:
+            - !text
+              fontSize: 16
+              align: center
+              text: |
+                ${title}
+            - !text
+              condition: comment
+              fontSize: 10
+              align: center
+              text: |
+                ${comment}
+
+#---------------------------------------
+# Logo
+#---------------------------------------
+        - !columns
+          absoluteX: 10
+          absoluteY: 840
+          width: 123
+          items:
+              - !image
+                   align: left
+                   maxWidth: 123
+                   maxHeight: 90
+                   url: "${logo}"
+
+#---------------------------------------
+# Map
+#---------------------------------------
+        - !map
+          absoluteX: 20
+          absoluteY: 765
+          width: 550
+          height: 520
+
+#---------------------------------------
+# Copyright
+#---------------------------------------
+        - !columns
+          absoluteY: 235
+          absoluteX: 20
+          width: 550
+          config:
+            borderWidth: 0.5
+          items:
+              - !text
+                fontSize: 42
+                text: |
+                  
+                  
+                  
+                  
+                  
+                  
+                backgroundColor: white
+
+        - !columns
+          absoluteY: 225
+          absoluteX: 25
+          width: 375
+          items:
+            - !text
+              fontSize: 8
+              align: left
+              text: |
+                Attribution (Quellen)
+                ${dataOwner}
+                
+                Haftungsausschluss:
+                Die Administratoren und die Autoren der Seiten übernehmen keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen die Administratoren und die Autoren, welche sich auf Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden sind grundsätzlich ausgeschlossen, sofern seitens der Administratoren oder Autoren kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt.
+                
+                Alle Angebote sind freibleibend und unverbindlich. Die Administratoren und die Autoren behalten es sich ausdrücklich vor, Teile der Seiten oder das gesamte Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise oder endgültig einzustellen.
+                
+                
+                Nutzungshinweise:
+                Das Geoportal.EBA erlaubt die freie Zusammenstellung von Karten aus einzelnen Kartenebenen. Die Nutzungshinweise sind in den Informationen zur jeweiligen Kartenebene beschrieben. Diese sind zu beachten.
+
+        - !columns
+          absoluteY: 225
+          absoluteX: 435
+          width: 124
+          items:
+            - !text
+              fontSize: 8
+              align: left
+              text: |
+                Herausgeber:
+                Eisenbahn-Bundesamt
+                Heinemannstraße 6
+                D-53175 Bonn
+                Telefon: +49 228 9826-0
+                Telefax: +49 228 9826–199
+                Homepage: www.eba.bund.de
+                E-Mail: poststelle@eba.bund.de
+                Präsident: Gerald Hörster
+                
+                Koordinatensystem:
+                EPSG:25832
+
+#-------------------------------------
+# Scalesbar
+#-------------------------------------
+        - !columns
+          absoluteY: 120
+          absoluteX: 435
+          width: 124
+          nbColumns: 1
+          config:
+            cells:
+              - paddingBottom: 4
+          items:
+            - !scalebar
+              type: line
+              units: m
+              color: black
+              align: center
+              fontSize: 8
+              maxSize: 128
+            - !text
+              fontSize: 8
+              align: center
+              text: |
+                1:${format %,d scale}
+            - !text
+              fontSize: 8
+              align: center
+              text: |
+                Gedruckt am ${now dd.MM.yyyy HH:mm}
+            - !image
+              align: left
+              maxWidth: 50
+              maxHeight: 50
+              url: "${qrcodeurl}"
+
+#---------------------------------------
+# North arrow
+#---------------------------------------
+        - !columns
+          absoluteY: 70
+          absoluteX: 515
+          width: 30
+          items:
+            - !image
+              rotation: '${rotation}'
+              maxWidth: 30
+              maxHeight: 30
+              url: "${northArrow}"
+
+    lastPage:
+      landscape: false
+      items:
+
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 820
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##---------------------------------------
+## Legend
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 800
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !legends
+              horizontalAlignment: left
+              maxWidth: 0
+              maxHeight: 420
+              iconMaxWidth: 250
+              iconMaxHeight: 420
+              defaultScale: 0.75
+              classIndentation: 3
+              layerSpace: 5
+              classSpace: 5
+              layerFontSize: 9
+              columnMargin: 5
+              backgroundColor: white
+              inline: false
+
+#---------------------------------------
+# A4 landscape:
+#---------------------------------------
+  2 A4 Querformat:
+    mainPage:
+      rotation: true
+      pageSize: A4
+      landscape: true
+      items:
+
+#---------------------------------------
+# Map
+#---------------------------------------
+        - !map
+          absoluteX: 20
+          absoluteY: 575
+          width: 540
+          height: 550
+
+#---------------------------------------
+# Logo
+#---------------------------------------
+        - !columns
+          absoluteX: 545
+          absoluteY: 575
+          width: 123
+          items:
+              - !image
+                   align: left
+                   maxWidth: 123
+                   maxHeight: 55
+                   url: "${logo}"
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          condition: title
+          absoluteX: 570
+          absoluteY: 525
+          width: 250
+          nbColumns: 1
+          config:
+            cells:
+              - padding: 5
+              - backgroundColor: white
+          items:
+            - !text
+              fontSize: 16
+              align: center
+              text: |
+                ${title}
+            - !text
+              condition: comment
+              fontSize: 10
+              align: center
+              text: |
+                ${comment}
+
+#---------------------------------------
+# Copyright
+#---------------------------------------
+        - !columns
+          absoluteX: 570
+          absoluteY: 465
+          width: 250
+          config:
+            borderWidth: 0.5
+          items:
+              - !text
+                fontSize: 44
+                text: |
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                backgroundColor: white
+
+        - !columns
+          absoluteX: 575
+          absoluteY: 460
+          width: 240
+          items:
+            - !text
+              fontSize: 8
+              align: left
+              text: |
+                Attribution (Quellen)
+                ${dataOwner}
+                
+                Koordinatensystem:
+                EPSG:25832
+                
+                Haftungsausschluss:
+                Die Administratoren und die Autoren der Seiten übernehmen keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen die Administratoren und die Autoren, welche sich auf Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden sind grundsätzlich ausgeschlossen, sofern seitens der Administratoren oder Autoren kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt.
+                
+                Alle Angebote sind freibleibend und unverbindlich. Die Administratoren und die Autoren behalten es sich ausdrücklich vor, Teile der Seiten oder das gesamte Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise oder endgültig einzustellen.
+                
+                
+                Nutzungshinweise:
+                Das Geoportal.EBA erlaubt die freie Zusammenstellung von Karten aus einzelnen Kartenebenen. Die Nutzungshinweise sind in den Informationen zur jeweiligen Kartenebene beschrieben. Diese sind zu beachten.
+                
+                Herausgeber:
+                Eisenbahn-Bundesamt
+                Heinemannstraße 6
+                D-53175 Bonn
+                Telefon: +49 228 9826-0
+                Telefax: +49 228 9826–199
+                Homepage: www.eba.bund.de
+                E-Mail: poststelle@eba.bund.de
+                Präsident: Gerald Hörster
+
+#-------------------------------------
+# Scalesbar
+#-------------------------------------
+        - !columns
+          absoluteX: 625
+          absoluteY: 75
+          width: 124
+          nbColumns: 1
+          config:
+            cells:
+              - paddingBottom: 4
+          items:
+            - !scalebar
+              type: line
+              units: m
+              color: black
+              align: center
+              fontSize: 8
+              maxSize: 128
+            - !text
+              fontSize: 8
+              align: center
+              text: |
+                1:${format %,d scale}
+            - !text
+              fontSize: 8
+              align: center
+              text: |
+                Gedruckt am ${now dd.MM.yyyy HH:mm}
+
+#---------------------------------------
+# North arrow
+#---------------------------------------
+        - !columns
+          absoluteX: 585
+          absoluteY: 75
+          width: 30
+          items:
+            - !image
+              rotation: '${rotation}'
+              align: right
+              maxWidth: 30
+              maxHeight: 30
+              url: "${northArrow}"
+
+#---------------------------------------
+# QRCode
+#---------------------------------------
+        - !columns
+          absoluteY: 80
+          absoluteX: 765
+          width: 50
+          items:
+            - !image
+              align: right
+              maxWidth: 50
+              maxHeight: 50
+              url: "${qrcodeurl}"
+
+    lastPage:
+      landscape: true
+      items:
+
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 575
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##--------------------------------------
+## Legend
+##--------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 555
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !legends
+              horizontalAlignment: left
+              maxHeight: 420
+              maxWidth: 0
+              iconMaxWidth: 200
+              iconMaxHeight: 420
+              defaultScale: 0.75
+              classIndentation: 3
+              layerSpace: 5
+              classSpace: 5
+              layerFontSize: 9
+              inline: false
+              columnMargin: 5
+              backgroundColor: white
+
+#---------------------------------------
+# A3 portrait:
+#---------------------------------------
+  3 A3 Hochformat:
+    mainPage:
+      pageSize: A3
+      rotation: true
+
+      items:
+
+
+#---------------------------------------
+# Title / Description
+#---------------------------------------
+        - !columns
+          condition: title
+          absoluteX: 0
+          absoluteY: 1170
+          width: 842
+          nbColumns: 1
+          config:
+            cells:
+              - paddingLeft: 175
+              - paddingRight: 175
+              - paddingBottom: 10
+          items:
+            - !text
+              fontSize: 16
+              align: center
+              text: |
+                ${title}
+            - !text
+              condition: comment
+              fontSize: 10
+              align: center
+              text: |
+                ${comment}
+
+#---------------------------------------
+# Logo
+#---------------------------------------
+        - !columns
+          absoluteX: 10
+          absoluteY: 1195
+          width: 123
+          items:
+              - !image
+                   align: left
+                   maxWidth: 123
+                   maxHeight: 90
+                   url: "${logo}"
+
+#---------------------------------------
+# Map
+#---------------------------------------
+        - !map
+          absoluteX: 20
+          absoluteY: 1105
+          width: 802
+          height: 850
+
+#---------------------------------------
+# Copyright
+#---------------------------------------
+        - !columns
+          absoluteY: 240
+          absoluteX: 20
+          width: 802
+          config:
+            borderWidth: 0.5
+          items:
+              - !text
+                fontSize: 44
+                text: |
+                  
+                  
+                  
+                  
+                  
+                  
+                backgroundColor: white
+
+        - !columns
+          absoluteY: 235
+          absoluteX: 25
+          width: 620
+          items:
+            - !text
+              fontSize: 8
+              align: left
+              text: |
+                Attribution (Quellen)
+                ${dataOwner}
+                
+                Haftungsausschluss:
+                Die Administratoren und die Autoren der Seiten übernehmen keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen die Administratoren und die Autoren, welche sich auf Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden sind grundsätzlich ausgeschlossen, sofern seitens der Administratoren oder Autoren kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt.
+                
+                Alle Angebote sind freibleibend und unverbindlich. Die Administratoren und die Autoren behalten es sich ausdrücklich vor, Teile der Seiten oder das gesamte Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise oder endgültig einzustellen.
+                
+                
+                Nutzungshinweise:
+                Das Geoportal.EBA erlaubt die freie Zusammenstellung von Karten aus einzelnen Kartenebenen. Die Nutzungshinweise sind in den Informationen zur jeweiligen Kartenebene beschrieben. Diese sind zu beachten.
+
+        - !columns
+          absoluteY: 235
+          absoluteX: 680
+          width: 124
+          items:
+            - !text
+              fontSize: 8
+              align: left
+              text: |
+                Herausgeber:
+                Eisenbahn-Bundesamt
+                Heinemannstraße 6
+                D-53175 Bonn
+                Telefon: +49 228 9826-0
+                Telefax: +49 228 9826–199
+                Homepage: www.eba.bund.de
+                E-Mail: poststelle@eba.bund.de
+                Präsident: Gerald Hörster
+                
+                Koordinatensystem:
+                EPSG:25832
+
+#-------------------------------------
+# Scalesbar
+#-------------------------------------
+        - !columns
+          absoluteY: 120
+          absoluteX: 680
+          width: 124
+          nbColumns: 1
+          config:
+            cells:
+              - paddingBottom: 4
+          items:
+            - !scalebar
+              type: line
+              units: m
+              color: black
+              align: center
+              fontSize: 8
+              maxSize: 128
+            - !text
+              fontSize: 8
+              align: center
+              text: |
+                1:${format %,d scale}
+            - !text
+              fontSize: 8
+              align: center
+              text: |
+                Gedruckt am ${now dd.MM.yyyy HH:mm}
+            - !image
+              align: left
+              maxWidth: 50
+              maxHeight: 50
+              url: "${qrcodeurl}"
+
+#---------------------------------------
+# North arrow
+#---------------------------------------
+        - !columns
+          absoluteY: 70
+          absoluteX: 755
+          width: 30
+          items:
+            - !image
+              rotation: '${rotation}'
+              maxWidth: 30
+              maxHeight: 30
+              url: "${northArrow}"
+
+    lastPage:
+      landscape: false
+      items:
+
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 820
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##---------------------------------------
+## Legend
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 800
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !legends
+              horizontalAlignment: left
+              maxHeight: 420
+              maxWidth: 0
+              iconMaxWidth: 250
+              iconMaxHeight: 420
+              defaultScale: 0.75
+              classIndentation: 3
+              layerSpace: 5
+              classSpace: 5
+              layerFontSize: 9
+              columnMargin: 5
+              backgroundColor: white
+              inline: false
+
+#---------------------------------------
+# A3 landscape:
+#---------------------------------------
+  4 A3 Querformat:
+    mainPage:
+      rotation: true
+      pageSize: A3
+      landscape: true
+      items:
+
+#---------------------------------------
+# Map
+#---------------------------------------
+        - !map
+          absoluteX: 20
+          absoluteY: 822
+          width: 800
+          height: 802
+
+#---------------------------------------
+# Logo
+#---------------------------------------
+        - !columns
+          absoluteX: 810
+          absoluteY: 822
+          width: 123
+          items:
+              - !image
+                   align: left
+                   maxWidth: 123
+                   maxHeight: 55
+                   url: "${logo}"
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          condition: title
+          absoluteX: 830
+          absoluteY: 770
+          width: 345
+          nbColumns: 1
+          config:
+            cells:
+              - paddingBottom: 5
+              - backgroundColor: white
+          items:
+            - !text
+              fontSize: 16
+              align: center
+              text: |
+                ${title}
+            - !text
+              condition: comment
+              fontSize: 10
+              align: center
+              text: |
+                ${comment}
+
+#---------------------------------------
+# Copyright
+#---------------------------------------
+        - !columns
+          absoluteX: 830
+          absoluteY: 710
+          width: 345
+          config:
+            borderWidth: 0.5
+          items:
+              - !text
+                fontSize: 46
+                text: |
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                backgroundColor: white
+
+        - !columns
+          absoluteX: 835
+          absoluteY: 705
+          width: 335
+          items:
+            - !text
+              fontSize: 8
+              align: left
+              text: |
+                Attribution (Quellen)
+                ${dataOwner}
+                
+                Koordinatensystem:
+                EPSG:25832
+                
+                Haftungsausschluss:
+                Die Administratoren und die Autoren der Seiten übernehmen keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen die Administratoren und die Autoren, welche sich auf Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden sind grundsätzlich ausgeschlossen, sofern seitens der Administratoren oder Autoren kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt.
+                
+                Alle Angebote sind freibleibend und unverbindlich. Die Administratoren und die Autoren behalten es sich ausdrücklich vor, Teile der Seiten oder das gesamte Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise oder endgültig einzustellen.
+                
+                
+                Nutzungshinweise:
+                Das Geoportal.EBA erlaubt die freie Zusammenstellung von Karten aus einzelnen Kartenebenen. Die Nutzungshinweise sind in den Informationen zur jeweiligen Kartenebene beschrieben. Diese sind zu beachten.
+                
+                Herausgeber:
+                Eisenbahn-Bundesamt
+                Heinemannstraße 6
+                D-53175 Bonn
+                Telefon: +49 228 9826-0
+                Telefax: +49 228 9826–199
+                Homepage: www.eba.bund.de
+                E-Mail: poststelle@eba.bund.de
+                Präsident: Gerald Hörster
+
+#-------------------------------------
+# Scalesbar
+#-------------------------------------
+        - !columns
+          absoluteX: 940
+          absoluteY: 65
+          width: 124
+          nbColumns: 1
+          config:
+            cells:
+              - paddingBottom: 4
+          items:
+            - !scalebar
+              type: line
+              units: m
+              color: black
+              align: center
+              fontSize: 8
+              maxSize: 128
+            - !text
+              fontSize: 8
+              align: center
+              text: |
+                1:${format %,d scale}
+            - !text
+              fontSize: 8
+              align: center
+              text: |
+                Gedruckt am ${now dd.MM.yyyy HH:mm}
+
+#---------------------------------------
+# North arrow
+#---------------------------------------
+        - !columns
+          absoluteX: 840
+          absoluteY: 65
+          width: 30
+          items:
+            - !image
+              rotation: '${rotation}'
+              align: right
+              maxWidth: 30
+              maxHeight: 30
+              url: "${northArrow}"
+
+#---------------------------------------
+# QRCode
+#---------------------------------------
+        - !columns
+          absoluteY: 75
+          absoluteX: 1120
+          width: 50
+          items:
+            - !image
+              align: right
+              maxWidth: 50
+              maxHeight: 50
+              url: "${qrcodeurl}"
+
+    lastPage:
+      landscape: true
+      items:
+
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 575
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##--------------------------------------
+## Legend
+##--------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 555
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !legends
+              horizontalAlignment: left
+              maxHeight: 420
+              maxWidth: 0
+              iconMaxWidth: 200
+              iconMaxHeight: 420
+              defaultScale: 0.75
+              classIndentation: 3
+              layerSpace: 5
+              classSpace: 5
+              layerFontSize: 6
+              columnMargin: 5
+              backgroundColor: white
+              inline: false

@@ -44,6 +44,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.validator.UrlValidator;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -93,7 +94,9 @@ public class UtilsPortletServeResources {
                 extension = "wms";
             } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
                 extension = "wfs";
-            } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
+            } else if(paramURL.toLowerCase().indexOf("service=wcs") > -1) {
+                extension = "wcs";
+            } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1 || paramURL.toLowerCase().indexOf("wmtscapabilities.xml") > -1) {
                 extension = "wmts";
             }
             if(extension.isEmpty()) {
@@ -104,6 +107,13 @@ public class UtilsPortletServeResources {
                             String contentType = (String) requestHeader.get(UtilsHttpConnection.HEADER_CONTENT_TYPE);
                             if(contentType != null) {
                                 extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                                if(contentType.contains("/xml") || contentType.contains("+xml")){
+                                    String content = UtilsHttpConnection.urlConnection (paramURL, login, password);
+                                    String capExtension = UtilsSearch.getServiceParamByContent(content);
+                                    if(capExtension != null){
+                                        extension = capExtension;
+                                    }
+                                }
                             }
                         }
                     } catch (Exception e) {
@@ -152,6 +162,106 @@ public class UtilsPortletServeResources {
                 response.getWriter().write(paramURL);
             }
         }
+    }
+
+    public static void getHttpURLSearchDownload(ResourceRequest request, ResourceResponse response, String[] requestFields, HashMap<String, String> codelists) throws ParseException, IOException, JSONException {
+        JSONArray jsonData = new JSONArray();
+        IngridQuery query = null;
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        if(queryString.isEmpty()) {
+            String initalQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_SEARCH_EMPTY_QUERY, "" ).trim();
+            query = QueryStringParser.parse( initalQuery );
+        } else {
+            query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+        }
+        ArrayList config = (ArrayList<IngridFacet>) UtilsFacete.getAttributeFromSession(request, UtilsFacete.FACET_CONFIG);
+        if(config != null) {
+            query = UtilsFacete.getQueryFacets(request, config, query);
+        }
+        if(query != null){
+            // Change query to clause query (with phrase search)
+            StringBuilder facetUrl = new StringBuilder("&f=");
+            UtilsFacete.setFacetUrlParamsToUrl(request, facetUrl);
+            int pageSize = 10;
+            int startPage = 0;
+            int maxHits = 10;
+            boolean hasHits = true;
+            while(hasHits) {
+                IBusQueryResultIterator it = new IBusQueryResultIterator( query, requestFields,
+                        IBUSInterfaceImpl.getInstance().getIBus(), pageSize, startPage, maxHits );
+                if(it != null){
+                    if(it.hasNext()) {
+                        while(it.hasNext()){
+                            IngridHit hit = it.next();
+                            IngridHitDetail detail = hit.getHitDetail();
+                            JSONObject obj = new JSONObject();
+                            for (String requestField : requestFields) {
+                                String codelist = "";
+                                IngridSysCodeList sysCodeList = new IngridSysCodeList(request.getLocale());
+                                if(codelists.containsKey(requestField)) {
+                                    codelist = codelists.get(requestField);
+                                }
+                                if(detail.get(requestField) instanceof String[]) {
+                                    String[] tmpArray = (String[]) detail.getArray(requestField);
+                                    ArrayList<Object> arr = new ArrayList<>(); 
+                                    for (String value : tmpArray) {
+                                        if(value != null && !codelist.isEmpty()) {
+                                            if(value instanceof String)
+                                                arr.add(StringEscapeUtils.escapeCsv(sysCodeList.getName(codelist, value.toString())));
+                                            else
+                                                arr.add(sysCodeList.getName(codelist, value.toString()));
+                                        } else {
+                                            if(value instanceof String)
+                                                arr.add(StringEscapeUtils.escapeCsv(value.toString()));
+                                            else
+                                                arr.add(value);
+                                        }
+                                    }
+                                    obj.put(requestField, arr);
+                                } else if(detail.get(requestField) instanceof ArrayList) {
+                                    ArrayList<Object> tmpArray = (ArrayList<Object>) detail.getArrayList(requestField);
+                                    ArrayList<Object> arr = new ArrayList<>(); 
+                                    for (Object value : tmpArray) {
+                                        if(value != null && !codelist.isEmpty()) {
+                                            if(value instanceof String)
+                                                arr.add(StringEscapeUtils.escapeCsv(sysCodeList.getName(codelist, value.toString())));
+                                            else
+                                                arr.add(sysCodeList.getName(codelist, value.toString()));
+                                        } else {
+                                            if(value instanceof String)
+                                                arr.add(StringEscapeUtils.escapeCsv(value.toString()));
+                                            else
+                                                arr.add(value);
+                                        }
+                                    }
+                                    obj.put(requestField, arr);
+                                } else {
+                                    if(detail.get(requestField) != null && !codelist.isEmpty()) {
+                                        obj.put(requestField, sysCodeList.getName(codelist, detail.get(requestField).toString()));
+                                    } else {
+                                        if(detail.get(requestField) instanceof String)
+                                            obj.put(requestField, StringEscapeUtils.escapeCsv(detail.get(requestField) + ""));
+                                        else
+                                            obj.put(requestField, detail.get(requestField));
+                                    }
+                                }
+                            }
+                            
+                            obj.put("portal.page", startPage);
+                            obj.put("portal.query", queryString);
+                            obj.put("portal.facet", facetUrl.toString());
+                            jsonData.put(obj);
+                        }
+                    } else {
+                        hasHits = false;
+                    }
+                }
+                startPage += 1;
+            }
+        }
+        response.setContentType( "application/json" );
+        response.getWriter().write( jsonData.toString() );
+
     }
 
     public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, List<IngridFacet> config) throws ParseException, IOException {

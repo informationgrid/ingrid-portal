@@ -1,6 +1,6 @@
 <script>
     // Add wms layer
-    L.tileLayer.wms("http://atlas.wsv.bund.de/bwastr/wms?", {
+    L.tileLayer.wms("https://via.bund.de/wsv/bwastr/wms?", {
        layers: 'Gewaessernetz,Kilometermarken',
         format: 'image/png'
     }).addTo(map);

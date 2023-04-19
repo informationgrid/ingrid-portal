@@ -64,8 +64,9 @@
         <div class="row content-small">
             <div class="columns">
             #set($spatialValueSplit = $spatialValue.split(":"))
-            #if($spatialValueSplit.size() == 2)
-                #set($spatial = $spatialValueSplit.get(1))
+            #if($spatialValueSplit.size() > 0)
+                #set($lastEntry = $spatialValueSplit.size() - 1)
+                #set($spatial = $spatialValueSplit.get($lastEntry))
                 #set($spatialEntries = $spatial.split(","))
                 #if($spatialEntries.size() == 4)
                     #set($west = "$spatialEntries.get(0).trim()")

@@ -513,5 +513,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro(removeLocalisation $locString)
-    $stringTool.split($locString, "#locale-").get(0)
+    #if($locString)
+        $stringTool.split($locString, "#locale-").get(0)
+    #end
 #end

@@ -115,12 +115,12 @@
     
     <!--  Suche - Datenkataloge - Hierarchiebaum -->
     <rule>
-        <from>/datenkataloge</from>
+        <from>/themenuebersicht</from>
         <to type="forward">/portal/search-catalog/search-catalog-hierarchy.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
-        <to>/datenkataloge</to>
+        <to>/themenuebersicht</to>
     </outbound-rule>
     
     <!--  Messwerte  -->
@@ -162,17 +162,27 @@
         <from>/portal/main-about.psml</from>
         <to>/hintergrundinformationen</to>
     </outbound-rule>
-    
+
+    <rule>
+        <from>/portal/main-about.psml</from>
+        <to type="forward">/portal/error404.html</to>
+    </rule>
+
     <!-- Informationsanbieter   -->
     <rule>
         <from>/informationsanbieter</from>
-        <to type="forward">/portal/main-about-partner.psml</to>
+        <to type="forward">/portal/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about-partner.psml</from>
         <to>/informationsanbieter</to>
     </outbound-rule>
-    
+
+    <rule>
+        <from>/portal/main-about-partner.psml</from>
+        <to type="forward">/portal/error404.html</to>
+    </rule>
+
     <!-- Datenquellen  -->
     <rule>
         <from>/datenquellen</from>

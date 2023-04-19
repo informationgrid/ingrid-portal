@@ -25,12 +25,12 @@
     #if ($node.expandable)
         <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
             <li class="accordion-item #if($node.isOpen())is-active#end">
-        #if($nodeUrl != '')
+        #if($nodeUrl != '' || $node.level > 3)
             <div class="accordion-item-sub">
                 <span class="icon">
                     <a id="$linkId" href="#$linkId" onclick="updateLeaf('$linkId', true, event)" #if($node.isOpen()) class="ic-ic-minus" #else class="ic-ic-plus"#end></a>
                     #if($node.udk_class != "1000")
-                        <a href="$nodeUrl">
+                        <a href="$nodeUrl" title="$nodeTitle">
                             $nodeTitle
                          </a>
                     #else
@@ -39,7 +39,7 @@
                 </span>
             </div>
         #else
-            <a class="accordion-title" id="$linkId" href="$action" onclick="updateLeaf('$linkId', true, event)" aria-controls="${node.id}-accordion" role="tab">
+            <a class="accordion-title" id="$linkId" href="$action" onclick="updateLeaf('$linkId', true, event)" aria-controls="${node.id}-accordion" role="tab" title="$nodeTitle">
                 $nodeTitle
             </a>
         #end
@@ -54,7 +54,7 @@
     #else
         #if($nodeUrl != '')
             <div class="accordion-item-sub">
-                <a href="$nodeUrl" class="icon">
+                <a href="$nodeUrl" class="icon" title="$nodeTitle">
                     #if ($node.plugType == 'dsc_ecs')
                         #set($udkObjClassName = $Codelists.getCodeListValue('8000', $node.udk_class, $request.getLocale().getLanguage()))
                         #renderUDKIcon(${node.udk_class} $nodeTitle $udkObjClassName)

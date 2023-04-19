@@ -1,0 +1,22 @@
+## Zeitbezug der Ressource
+    #if($TOOL.aNodeOfListExist($xPathListTimeResource) || ($getTimeDates && $getTimeDates.getLength() > 0))
+        <div class="sub-section">
+            <a class="anchor" #if($isTimeInDescription) id="${hashDetail1}_time_reference_record"#else id="${hashDetail11}_time_reference_record"#end></a>
+            #renderGroupTitle($MESSAGES.getString("time_reference_record"))
+    ## Erstellung
+            #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($getTimeDates, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
+            #if(!$title.isEmpty())
+                #renderTextTable($title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($getTimeDates, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
+            #end
+    ## Publikation
+            #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($getTimeDates, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
+            #if(!$title.isEmpty())
+                #renderTextTable($title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($getTimeDates, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
+            #end
+    ## letzte Änderung
+            #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($getTimeDates, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
+            #if(!$title.isEmpty())
+                #renderTextTable($title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($getTimeDates, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
+            #end
+        </div>
+    #end

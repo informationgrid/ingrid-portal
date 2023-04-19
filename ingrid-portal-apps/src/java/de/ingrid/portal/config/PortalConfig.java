@@ -114,6 +114,10 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_DEFAULT_DATASOURCE = "portal.search.default.datasource";
 
+    public static final String PORTAL_SEARCH_EXPORT_CSV = "portal.search.export.csv";
+
+    public static final String PORTAL_SEARCH_EXPORT_CSV_REQUESTED_FIELDS = "portal.search.export.csv.requestedfields";
+
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL = "portal.search.restrict.partner.level";
 
     public static final String PORTAL_HIERARCHY_CATALOGNAME_HIDDEN = "portal.hierarchy.catalogname.hidden";
@@ -198,6 +202,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_SEARCH_FACETE_SUB_COUNT = "portal.search.facete.sub.count";
 
     public static final String PORTAL_SEARCH_FACETE_MAP_CENTER = "portal.search.facete.map.center";
+
+    public static final String PORTAL_SEARCH_FACETE_DISPLAY_DATE_SELECTION = "portal.search.facete.display.date.selection";
 
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
 

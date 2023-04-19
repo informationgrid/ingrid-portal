@@ -65,6 +65,7 @@
                         <a href="/hintergrundinformationen" class="header-menu-entry " title="Hintergrundinformationen zu NUMIS"><span class="text">Über NUMIS</span></a>
                         <a href="/informationsanbieter" class="header-menu-entry " title="Kooperationspartner und Informationsanbieter"><span class="text">Anbieter</span></a>
                         <a href="/datenquellen" class="header-menu-entry " title="Angeschlossene Datenbanken"><span class="text">Datenquellen</span></a>
+                        <a href="/api" class="header-menu-entry " title="API Übersicht"><span class="text">API</span></a>
                     </div>
                     <a href="/hilfe" title="Erläuterungen zur Nutzung von NUMIS - Neues Fenster öffnet sich"><span class="text">Hilfe</span></a>
                     <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an NUMIS"><span class="text">Kontakt</span></a>
@@ -113,7 +114,7 @@
                             </a>
                             <a class="menu-tab " href="api" title="API Übersicht">
                                 <div class="link-menu-tab">
-                                    <span class="ic-ic-datenkataloge"></span>
+                                    <span class="ic-ic-center"></span>
                                     <span class="text">API</span>
                                 </div>
                             </a>
@@ -140,15 +141,15 @@
                 <div class="row content-small">
                     <div class="columns">
                         <div class="form">
-                           <p>
-                               <fmt:message key="ui.entry.session.expired.text" />
-                           </p>
-                           <div class="link-list">
+                            <p>
+                                <fmt:message key="ui.entry.session.expired.text" />
+                            </p>
+                            <div class="link-list">
                                 <a class="icon" href="/log-in">
                                     <span class="ic-ic-arrow"></span>
                                     <span class="text">Login</span>
-                                </a> 
-                           </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

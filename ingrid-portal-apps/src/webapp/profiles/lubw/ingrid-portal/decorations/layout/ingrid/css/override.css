@@ -1033,9 +1033,6 @@ table .dark a {
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered,
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-  min-height: 56px;
-  line-height: unset;
-  padding: 0.8rem 1.3rem;
   font-family: Gudea-Regular, sans-serif;
 }
 .select2-container--default .select2-results__option[aria-disabled=true] {
@@ -1055,7 +1052,6 @@ ul.select2-results__options {
   background-color: #f4f2e9;
 }
 .select2-container--default .select2-selection--single::after {
-  top: 18px;
   color: #3f3f3f;
 }
 
@@ -1586,6 +1582,15 @@ header .menu-tab-row .menu-tab {
 /* search */
 .teaser-data .arrow {
   font-size: 40px;
+}
+
+.download_button {
+  color: #296e4b;
+  background: transparent;
+}
+
+.download_button [class*="ic-"] {
+  margin-right: 0 !important;
 }
 
 /* detail */

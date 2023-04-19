@@ -104,7 +104,7 @@ require([
         console.debug(url + " -> " + capUrl);
         
         var setOperationValues = function(capBean) {
-            var data = prepareData(capBean);
+            var data = prepareData(capBean, capUrl);
             domClass.remove( dom.byId("assistantCheckAllContainer"), "hide" );
             domClass.add( dom.byId("btnWizardCancel"), "hide" );
             domClass.add( dom.byId("btnWizardSearch"), "hide" );
@@ -121,7 +121,7 @@ require([
             });
     }
 
-    function prepareData(bean) {
+    function prepareData(bean, capUrl) {
         console.log("Bean: ", bean);
         
         bean.indexedDocument = { description: bean.description };
@@ -131,6 +131,16 @@ require([
         bean.events = [];
         bean.CRS = [];
         bean.CRSunknown = [];
+        
+        // override getCapabilities URL with original one
+        array.some(bean.operations, function (op) {
+            if (op.methodCall === "GetCapabilities") {
+                op.addressList = array.map(op.addressList, function () {
+                    return capUrl;
+                });
+                return true;
+            }
+        })
         
         // Bounding boxes
         array.forEach(bean.boundingBoxes, function(box) {

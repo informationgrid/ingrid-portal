@@ -62,12 +62,18 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
     #end
+    #if(($rankedResultList && $rankedResultList.length() > 0) && $exportCSV)
+        #parse("/WEB-INF/templates/include_search_result_download.vm")
+    #end
 #end
 
 #macro (renderRankedPageNavigation $pageSelector $isBottom)
 <div class="paging caption">
     #if($isBottom)
         #renderRankedResultCounter($pageSelector)
+        #if(($rankedResultList && $rankedResultList.length() > 0) && $exportCSV)
+            #parse("/WEB-INF/templates/include_search_result_download.vm")
+        #end
     #end
     <br>
     ## Default
@@ -298,7 +304,21 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #macro(renderSearchResultFacetSelection $entries $resourceMsgs $parentFacetTyp)
     #foreach($entry in $entries)
         #if(!$entry.getQuery())
-            #if($entry.getId() == 'area')
+            #if($entry.getId() == 'timeref')
+                #if($doAddTimeref)
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("doRemoveTimeref",  "all")
+                    #set($facetLabel = "")
+                    #if($doAddTimeref.from && $doAddTimeref.to)
+                        #set($facetLabel = "$doAddTimeref.from - $doAddTimeref.to")
+                    #elseif($doAddTimeref.from)
+                        #set($facetLabel = "> $doAddTimeref.from")
+                    #elseif($doAddTimeref.to)
+                        #set($facetLabel = "< $doAddTimeref.to")
+                    #end
+                    #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $facetLabel")
+                #end
+            #elseif($entry.getId() == 'area')
                 #foreach ($geothesaurus in $geothesaurusSelectTopics)
                     #set ($action = $renderResponse.createActionURL())
                     $action.setParameter("doRemoveGeothesaurus",  $geothesaurus.topicId)
@@ -539,13 +559,16 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #if($types && $types.size() > 0)
         <div class="info--right #if($isTeaser)teaser-info#end #if($isMobile)show-for-xsmall-only#else hide-for-xsmall-only #end">
         #foreach($type in $types)
+            #if($type && !$type.isEmpty())
             <span>
-                #if($MESSAGES.getString("common.service.type.$type") == "common.service.type.$type")
+                #set($key = $type.toLowerCase().replace(" ", "_"))
+                #if($MESSAGES.getString("common.service.type.$key") == "common.service.type.$key")
                     $type
                 #else
-                    $MESSAGES.getString("common.service.type.$type")
+                    $MESSAGES.getString("common.service.type.$key")
                 #end
             </span>
+            #end
         #end
         </div>
     #elseif($isTeaser)

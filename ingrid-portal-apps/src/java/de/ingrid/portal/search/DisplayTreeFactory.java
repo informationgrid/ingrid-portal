@@ -362,7 +362,7 @@ public class DisplayTreeFactory {
         catalogNode.addChild(node);
     }
 
-    public static void openECSNode(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen) {
+    public static void openECSNode(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen, IngridResourceBundle messages) {
 
         String plugType = (String) nodeToOpen.get(NODE_PLUG_TYPE);
         String plugId = (String) nodeToOpen.get(NODE_PLUG_ID);
@@ -447,7 +447,9 @@ public class DisplayTreeFactory {
             }
         }
         if (!freeAddresses.isEmpty()) {
-            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), "searchCatHierarchy.tree.addresses.free", false);
+            Collections.sort(freeAddresses, new DisplayTreeFactory.ECSDocumentNodeComparator());
+
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), messages.getString("searchCatHierarchy.tree.addresses.free"), false);
             childNode.setType(DisplayTreeNode.GENERIC);
             childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);
@@ -559,7 +561,9 @@ public class DisplayTreeFactory {
             }
         }
         if (!freeAddresses.isEmpty()) {
-            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), "searchCatHierarchy.tree.addresses.free", false);
+            Collections.sort(freeAddresses, new DisplayTreeFactory.ECSDocumentNodeComparator());
+
+            DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + "searchCatHierarchy.tree.addresses.free"), messages.getString("searchCatHierarchy.tree.addresses.free"), false);
             childNode.setType(DisplayTreeNode.GENERIC);
             childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);

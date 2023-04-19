@@ -1,4 +1,4 @@
-<div class="login show-for-large">
+<div class="login show-for-xlarge">
     <span class="ic-ic-user"></span>
     <a href="$jetspeed.getAbsoluteUrl('/service-myportal.psml')" title="$salutation">$salutation</a>
 </div>

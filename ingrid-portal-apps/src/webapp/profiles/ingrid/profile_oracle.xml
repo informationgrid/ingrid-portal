@@ -88,7 +88,7 @@
         </page>
         <page>
             <name>application/main-application.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>default-page.psml</name>
@@ -240,7 +240,7 @@
             <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/cms']]>
         </execute>
         <execute>
-            <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/application']]>
+            <![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/application']]>
         </execute>
         <execute>
             <![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/mdek']]>

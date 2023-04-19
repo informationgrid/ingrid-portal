@@ -17,13 +17,13 @@
                         </li>
                     #end
                 ## Beschreibung
-                    #if($getAlternateTitle || $getDescription || ($isTimeInDescription && ($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeDates && $getTimeDates.getLength() > 0) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))))
+                    #if($getAlternateTitle || $getDescription || ($isTimeInDescription && ($TOOL.aNodeOfListExist($xPathListTime) || $TOOL.aNodeOfListExist($xPathListTimeResource) || ($getTimeDates && $getTimeDates.getLength() > 0) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))))
                         #set($hasDetail1 = true)
                         <li class="accordion-item" data-accordion-item>
                             <a href="#${hashDetail1}" class="accordion-title js-anchor-target" aria-controls="${hashDetail1}-accordion" role="tab" id="${hashDetail1}-accordion-label">
                                 <span class="text">$MESSAGES.getString("detail_description")</span>
                             </a>
-                            <div class="accordion-content #if(!$isTimeInDescription || (!$TOOL.aNodeOfListExist($xPathListTime) && (!$getTimeDates || $getTimeDates.getLength() == 0) && (!$getTimeMeasurementValue && !$getTimeMeasurementUnit)))is-hidden#end" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail1}-accordion-label" id="${hashDetail1}-accordion">
+                            <div class="accordion-content #if(!$isTimeInDescription || (!$TOOL.aNodeOfListExist($xPathListTime) && !$TOOL.aNodeOfListExist($xPathListTimeResource) && (!$getTimeDates || $getTimeDates.getLength() == 0) && (!$getTimeMeasurementValue && !$getTimeMeasurementUnit)))is-hidden#end" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail1}-accordion-label" id="${hashDetail1}-accordion">
                                 <div class="boxes">
                                     #if($isTimeInDescription)
                                         #if($TOOL.aNodeOfListExist($xPathListTime) || ($getTimeMeasurementValue && $getTimeMeasurementUnit))
@@ -36,7 +36,7 @@
                                             #set($tmpTitle = $MESSAGES.getString($tmpTitle))
                                             #renderSubNavigation($tmpTitle $tmpHash)
                                         #end
-                                        #if($getTimeDates && $getTimeDates.getLength() > 0)
+                                        #if($TOOL.aNodeOfListExist($xPathListTimeResource) || ($getTimeDates && $getTimeDates.getLength() > 0))
                                             #set($tmpHash = "${hashDetail1}_time_reference_record")
                                             #set($tmpTitle = $MESSAGES.getString("time_reference_record"))
                                             #renderSubNavigation($tmpTitle $tmpHash)
@@ -162,7 +162,11 @@
                                 #set($tmpXPath = "$tmpXParentPath/gmd:role/gmd:CI_RoleCode/@codeListValue")
                                 #if($TOOL.nodeExist($tmpXPath, $tmpContactNode))
                                     #set($tmpHash = "${hashDetail8}_contact-${tmpIndex}")
-                                    #set($tmpTitle = $TOOL.getValueFromXPath($tmpXPath, "505", $tmpContactNode))
+                                    #if($distributionContactCodelistValue && $tmpContactNode.getLocalName() == "distributorContact")
+                                        #set($tmpTitle = $TOOL.getValueFromCodeList("505", $distributionContactCodelistValue))
+                                    #else
+                                        #set($tmpTitle = $TOOL.getValueFromXPath($tmpXPath, "505", $tmpContactNode))
+                                    #end
                                     #renderSubNavigation($tmpTitle $tmpHash)
                                     #set($tmpIndex = $tmpIndex + 1)
                                 #end

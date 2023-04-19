@@ -55,6 +55,7 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtAdrPlaceReferenceForm;
 import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.forms.SearchExtResTopicAttributesForm;
+import de.ingrid.portal.forms.SearchExtTimeReferenceForm;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridFacet;
@@ -67,6 +68,7 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.query.RangeQuery;
 import de.ingrid.utils.query.WildCardFieldQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -121,6 +123,8 @@ public class UtilsFacete {
     private static final String PARAMS_ATTRIBUTE_TERM_FROM = "term_from";
     private static final String PARAMS_ATTRIBUTE_TERM_TO = "term_to";
     private static final String PARAMS_WILDCARD = "wildcard";
+    private static final String PARAMS_TIMEREF_FROM = "from";
+    private static final String PARAMS_TIMEREF_TO = "to";
 
     public static final String FACET_CONFIG = "config";
 
@@ -206,6 +210,7 @@ public class UtilsFacete {
         addToQueryAttribute(request, query);
         addToQueryAreaAddress(request, query);
         addToQueryWildcard(request, query);
+        addToQueryTimeref(request, query);
         return query;
     }
     /**
@@ -224,6 +229,7 @@ public class UtilsFacete {
         setParamsToContextAttribute(request, context);
         setParamsToContextAreaAddress(request, context);
         setParamsToContextWildcard(request, context);
+        setParamsToContextTimeref(request, context);
 
         ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         sortingFacet(config);
@@ -240,6 +246,7 @@ public class UtilsFacete {
         }else{
             context.put("isSelection", isAnyFacetConfigSelect(config, (Boolean) getAttributeFromSession(request, "isSelection")));
         }
+        context.put("enableFacetDateSelection", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_FACETE_DISPLAY_DATE_SELECTION, false));
         context.put( "subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
         context.put( "facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
@@ -424,6 +431,7 @@ public class UtilsFacete {
         setFaceteParamsToSessionAttribute(request);
         setFaceteParamsToSessionAreaAddress(request);
         setFaceteParamsToSessionWildcard(request);
+        setFaceteParamsToSessionTimeref(request);
 
         // Create facet params URL
         setFacetUrlParamsToUrl(request, facetUrl);
@@ -1397,6 +1405,105 @@ public class UtilsFacete {
         }
     }
 
+    /***************************** Timeref ****************************************/
+
+    private static void setFaceteParamsToSessionTimeref(ActionRequest request) {
+        String doAddTimeref = request.getParameter("doAddTimeref");
+        String doRemoveTimeref = request.getParameter("doRemoveTimeref");
+        HashMap<String, String> timeref = null;
+
+        if(doAddTimeref != null){
+            SearchExtTimeReferenceForm f = (SearchExtTimeReferenceForm) Utils.getActionForm(request, SearchExtTimeReferenceForm.SESSION_KEY, SearchExtTimeReferenceForm.class);
+            f.clearErrors();
+
+            f.populate(request);
+            if (!f.validate()) {
+                return;
+            }
+
+            timeref = new HashMap<>();
+            if (f.hasInput(SearchExtTimeReferenceForm.FIELD_FROM)) {
+                timeref.put(SearchExtTimeReferenceForm.FIELD_FROM, f.getInput(SearchExtTimeReferenceForm.FIELD_FROM));
+            }
+            if (f.hasInput(SearchExtTimeReferenceForm.FIELD_TO)) {
+                timeref.put(SearchExtTimeReferenceForm.FIELD_TO, f.getInput(SearchExtTimeReferenceForm.FIELD_TO));
+            }
+            f.clear();
+        }
+
+        if(doRemoveTimeref != null){
+            if(doRemoveTimeref.equals("all")){
+                removeAttributeFromSession(request, "doAddTimeref");
+                removeAttributeFromSession(request, "doAddTimerefInput");
+            }else {
+                timeref = (HashMap<String, String>) getAttributeFromSession(request, "doAddTimeref");
+
+                if (doRemoveTimeref.equals(SearchExtTimeReferenceForm.FIELD_FROM)) {
+                    timeref.remove(SearchExtTimeReferenceForm.FIELD_FROM);
+                }
+                if (doRemoveTimeref.equals(SearchExtTimeReferenceForm.FIELD_TO)) {
+                    timeref.remove(SearchExtTimeReferenceForm.FIELD_TO);
+                }
+            }
+        }
+
+        if(timeref != null){
+            setAttributeToSession(request, "doAddTimeref", timeref, true);
+            setAttributeToSession(request, "doAddTimerefInput", timeref, false);
+        }
+    }
+
+    private static void setParamsToContextTimeref (RenderRequest request, Context context){
+        HashMap<String, String> timeref = (HashMap<String, String>) getAttributeFromSession(request, "doAddTimeref");
+        if(timeref != null && !timeref .isEmpty()){
+            setFacetSelectionState(context, request, "isTimerefSelect", true);
+            context.put("doAddTimeref", getAttributeFromSession(request, "doAddTimeref"));
+        }else{
+            setFacetSelectionState(context, request, "isTimerefSelect", false);
+        }
+        context.put("doAddTimerefInput", getAttributeFromSession(request, "doAddTimerefInput"));
+    }
+
+    public static void addToQueryTimeref(PortletRequest request, IngridQuery query) throws ParseException {
+        HashMap<String, String> doAddTimeref = (HashMap<String, String>) getAttributeFromSession(request, "doAddTimeref");
+
+        if (doAddTimeref != null && !doAddTimeref.isEmpty() && query != null){
+            String from = null;
+            String to = null;
+            
+            if(doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_FROM) != null)
+                from = (String) doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_FROM).replace("-", "") + "0*";
+            if(doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_TO) != null)
+                to = (String) doAddTimeref.get(SearchExtTimeReferenceForm.FIELD_TO).replace("-", "") + "9*";
+            ClauseQuery cq = null;
+            if(from != null && to != null) {
+                cq = new ClauseQuery(true, false);
+                IngridQuery q = QueryStringParser.parse("t01_object.time_from:[" + from + " TO " + to + "] OR t01_object.time_to:[" + from + "TO " + to +"]");
+                RangeQuery[] rq = q.getRangeQueries();
+                for (RangeQuery rangeQuery : rq) {
+                    cq.addRangeQuery(rangeQuery);
+                }
+            }else if(from != null) {
+                cq = new ClauseQuery(true, false);
+                IngridQuery q = QueryStringParser.parse("t01_object.time_from:[" + from + " TO 9*] OR t01_object.time_to:[" + from + " TO 9*]");
+                RangeQuery[] rq = q.getRangeQueries();
+                for (RangeQuery rangeQuery : rq) {
+                    cq.addRangeQuery(rangeQuery);
+                }
+            }else if(to != null) {
+                cq = new ClauseQuery(true, false);
+                IngridQuery q = QueryStringParser.parse("t01_object.time_from:[0* TO " + to + "] OR t01_object.time_to:[0* TO " + to + "]");
+                RangeQuery[] rq = q.getRangeQueries();
+                for (RangeQuery rangeQuery : rq) {
+                    cq.addRangeQuery(rangeQuery);
+                }
+            }
+            if(cq != null) {
+                query.addClause(cq);
+            }
+        }
+    }
+
 
     /***************************** Funktionen ****************************************/
 
@@ -1614,6 +1721,23 @@ public class UtilsFacete {
         String paramsFacet = request.getParameter("f");
 
         if(paramsFacet != null){
+            // Timref
+            String paramsTimerefFrom = getFacetParam(paramsFacet, PARAMS_TIMEREF_FROM);
+            String paramsTimrefTo = getFacetParam(paramsFacet, PARAMS_TIMEREF_TO);
+            HashMap<String, String> timeref = null;
+
+            if(paramsTimerefFrom != null || paramsTimrefTo != null){
+                timeref = new HashMap<>();
+                if(paramsTimerefFrom != null){
+                    timeref.put(SearchExtTimeReferenceForm.FIELD_FROM, paramsTimerefFrom);
+                }
+                if(paramsTimrefTo != null){
+                    timeref.put(SearchExtTimeReferenceForm.FIELD_TO, paramsTimrefTo);
+                }
+                setAttributeToSession(request, "doAddTimeref", timeref);
+                setAttributeToSession(request, "doAddTimerefInput", timeref);
+            }
+
             // Geothesaurus
             ArrayList<String> paramsGeothesaurus = getFacetParamsList(paramsFacet, PARAMS_GEOTHESAURUS);
             if(paramsGeothesaurus != null && !paramsGeothesaurus.isEmpty()){
@@ -1668,6 +1792,7 @@ public class UtilsFacete {
                     areaAddress.put(SearchExtAdrPlaceReferenceForm.FIELD_CITY, paramsAreaAddressCity);
                 }
                 setAttributeToSession(request, "doAddAreaAddress", areaAddress);
+                setAttributeToSession(request, "doAddAreaAddressInput", timeref);
             }
 
             // Attribute
@@ -1933,7 +2058,18 @@ public class UtilsFacete {
      * @param config
      */
     @SuppressWarnings("rawtypes")
-    private static void setFacetUrlParamsToUrl(ActionRequest request, StringBuilder facetUrl) {
+    public static void setFacetUrlParamsToUrl(PortletRequest request, StringBuilder facetUrl) {
+
+        // Timeref
+        if(getAttributeFromSession(request, "doAddTimeref") != null){
+            HashMap<String, String> timeref = (HashMap<String, String>) getAttributeFromSession(request, "doAddTimeref");
+            if (timeref.get(SearchExtTimeReferenceForm.FIELD_FROM) != null) {
+                appendURLParameterFacet(facetUrl, toURLParamFacet(PARAMS_TIMEREF_FROM, timeref.get(SearchExtTimeReferenceForm.FIELD_FROM)));
+            }
+            if (timeref.get(SearchExtTimeReferenceForm.FIELD_TO) != null) {
+                appendURLParameterFacet(facetUrl, toURLParamFacet(PARAMS_TIMEREF_TO, timeref.get(SearchExtTimeReferenceForm.FIELD_TO)));
+            }
+        }
 
         // Geothesaurus
         if(getAttributeFromSession(request, SELECTED_GEOTHESAURUS) != null){

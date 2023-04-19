@@ -1,0 +1,5 @@
+#set($xPathListTime = [
+    $xPathListTimeTimePeriodInstantPosition,
+    $xPathListTimeTimePeriodBeginPosition,
+    $xPathListTimeTimePeriodEndPosition
+])

@@ -63,6 +63,7 @@ define([
                 domClass.add("uiElementAddproductiveUse", "hide");
 
 
+                var isGeodataset = data.objClass === "Class1";
                 var isLiterature = data.objClass === "Class2";
                 var isProject = data.objClass === "Class4";
                 var isSoftware = data.objClass === "Class6";
@@ -112,6 +113,30 @@ define([
 
                     // Rubrik: Verfügbarkeit
                     domClass.remove("availability", "hide");
+
+                    // Version (Fachbezug)
+                    domClass.remove("uiElement3630", "optional");
+                }
+                
+                if (isGeodataset) {
+                    // INSPIRE-relevant
+                    domClass.remove("uiElement6000", "hide");
+                    domClass.add("uiElement6000", "optional");
+
+                    // Open Data checkbox
+                    /*
+                     * opendata.js runs after this script and removes the 'hide'
+                     * class. So add the 'hidden' class instead!
+                     */
+                    domClass.remove("uiElement6010", "hidden");
+                    domClass.remove("uiElement6010", "show");
+                    domClass.add("uiElement6010", "optional");
+                    
+                } else {
+                    // Inspire relevant
+                    domClass.add("uiElement6000", "hide");
+                    // OpenData
+                    domClass.add("uiElement6010", "hidden");
                 }
             });
 
@@ -151,16 +176,8 @@ define([
             // ----------------------------------------
             // Allgemeines
             // ----------------------------------------
-            // Inspire relevant
-            domClass.add("uiElement6000", "hidden");
             // AdV kompatibel checkbox
             domClass.add("uiElement6005", "hide");
-            // Open Data checkbox
-            /*
-             * opendata.js runs after this script and removes the 'hide'
-             * class. So add the 'hidden' class instead!
-             */
-            domClass.add("uiElement6010", "hidden");
 
             // Kategorien (opendata)
             domClass.add("uiElement6020", "required");
@@ -194,7 +211,7 @@ define([
             // Symbolkatalog
             domClass.add("uiElement3555", "hide");
             // Schlüsselkatalog
-            domClass.add("uiElement3535", "hide");
+            domClass.add("uiElement3535", "hidden");
             // Sachdaten/Attributinformation
             domClass.add("uiElement5070", "hide");
             // Darstellender Dienst

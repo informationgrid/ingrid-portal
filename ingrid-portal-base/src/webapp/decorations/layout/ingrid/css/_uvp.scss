@@ -2042,7 +2042,13 @@ footer {
       font-size: 14px;
       font-family: $button-font-family;
       white-space: nowrap;
-      margin-right: 6px; 
+      margin-right: 6px;
+
+      ~ .button {
+        margin: 0;
+        padding: 6px 14px;
+        font-size: 12px;
+      }
     }
   }
 
@@ -2333,6 +2339,13 @@ footer {
         padding-top: 24px;
         border-top: 1px solid $blue-light;
         margin: 0;
+      }
+    }
+    .accordion-content.timeref {
+      margin: 16px 16px;
+      
+      label {
+        padding-top: 12px;
       }
     }
   }
@@ -2671,7 +2684,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
       display: none;
 
       ~ .button {
-        margin: 18px 0 0 0;
+        margin: 18px 0 0 0 !important;
       }
     }
 
@@ -2890,6 +2903,7 @@ h3 span, h4 span, h5 span {
 
       div:last-child {
         margin-right: 0;
+        margin-top: 6px;
       }
     }
   }
@@ -2918,7 +2932,7 @@ h3 span, h4 span, h5 span {
   margin-top: 12px;
 
   a.icon {
-    padding: 8px;
+    padding: 6px;
     margin-right: 0;
     border: 1px solid $blue-light;
 
@@ -3185,9 +3199,16 @@ header {
 
 .catalog {
   a.icon {
-    display: block;
+    display: flex;
     padding: 10px 0;
     margin: 0 24px 0 14px;
+    
+    span.text {
+      margin-top: -2px;
+    }
+    [class^="ic-"] {
+      height: 24px !important;
+    }
   }
 
   span.icon {
@@ -3199,15 +3220,24 @@ header {
     [class^="ic-"] {
       font-size: 12px;
       background: $neutral-white;
-      margin-right: 8px;
+      margin-right: 12px;
+      margin-top: 2px;
       border-radius: 32px;
       padding: 6px;
       border: 1px solid $blue-light;
     }
   }
 
+  div > span.icon {
+    display: flex;
+    white-space: unset;
+  }
+
   .icon [class^="ic-"] {
     margin-left: 4px;
+    margin-right: 12px;
+    margin-top: 4px;
+    height: 26px;
   }
   
   .accordion {
@@ -3559,4 +3589,61 @@ a:empty:focus-visible {
   bottom:50%;
   margin-top:-5px;
   border-right-color:rgba(0,0,0,.8);
+}
+
+span.text-break {
+  overflow-wrap: break-word;
+}
+
+.download_button {
+  color: $green-jelly;
+  -webkit-transition: box-shadow .5s;
+  transition: box-shadow .5s;
+  background: #fff;
+  padding: 6px 10px 6px;
+  margin: 6px 0px;
+
+  [class*="ic-"] {
+    font-size: 18px;
+  }
+}
+
+.download_button:disabled {
+  color: #c6cfe2;
+  cursor: default;
+  
+  [class*="ic-"] {
+    display: inline-block;
+    width: 18px;
+    height: 16px;
+  }
+
+  [class*="ic-"]:before {
+    content: " ";
+  }
+
+  [class*="ic-"]:after {
+    content: " ";
+    display: inline-block;
+    width: 18px;
+    height: 16px;
+    border-radius: 50%;
+    border: 6px solid #c6cfe2;
+    border-color: #c6cfe2 transparent #fff transparent;
+    animation: load-ring 1.2s linear infinite;
+  }
+
+  @keyframes load-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+.paging, .results-index {
+  h3 {
+    display: inline-block;
+  }
 }

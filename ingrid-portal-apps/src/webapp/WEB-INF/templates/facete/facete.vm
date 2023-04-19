@@ -39,7 +39,7 @@
             #if(!$node.getQuery())
                 #if($node.getDependency())
                     #if($node.isDependencySelect())
-                        #if($node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                        #if($node.getId() == 'timeref' || $node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                             #renderFacetContent($node)
                         #else
                             #if($node.getFacets())
@@ -58,7 +58,7 @@
                 #else
                     #if($node.getHidden())
                         #if($node.isHiddenSelect() == false)
-                            #if($node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                            #if($node.getId() == 'timeref' || $node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                                 #renderFacetContent($node)
                             #else
                                 #if($node.getFacets())
@@ -75,7 +75,7 @@
                             #end
                         #end
                     #else
-                        #if($node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                        #if($node.getId() == 'timeref' || $node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                             #renderFacetContent($node)
                         #elseif($node.getWildcard())
                             #parse ('/WEB-INF/templates/facete/facete_wildcard.vm')
@@ -86,7 +86,7 @@
                                     #set($nodeHasValue = true)
                                 #end
                             #end
-                            #if($nodeHasValue || $node.isOpen())
+                            #if($nodeHasValue || ($nodeHasValue && $node.isOpen()))
                                 #renderFacetContent($node)
                             #end
                         #end
@@ -130,7 +130,11 @@
 
 #macro(renderFacetContent $facet)
     #if($facet && !$facet.isCategoryOnly())
-        #if($facet.getId() == 'area' || $facet.getId() == 'area.map' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
+        #if($facet.getId() == 'timeref' || $facet.getId() == 'area' || $facet.getId() == 'area.map' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
+            #if($facet.getId() == 'timeref')
+                #parse ('/WEB-INF/templates/facete/facete_timeref.vm')
+            #end
+            
             ## RAUMBEZUG ##
             #if($facet.getId() == 'area')
                 #parse ('/WEB-INF/templates/facete/facete_area.vm')

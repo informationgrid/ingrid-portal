@@ -243,25 +243,25 @@ input[type=text]:focus, input[type=email]:focus, input[type=search]:focus, selec
 /* fonts */
 @font-face {
   font-family: 'AvenirNextLTPro-Regular';
-  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.woff');
-  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.eot');
-  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.eot?#iefix') format("embedded-opentype"),
-  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.woff') format("woff"),
-  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.ttf')  format('truetype');
+  src: url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.woff');
+  src: url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.eot');
+  src: url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.eot?#iefix') format("embedded-opentype"),
+  url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.woff') format("woff"),
+  url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Regular.ttf')  format('truetype');
 }
 @font-face {
   font-family: 'AvenirNextLTPro-Light';
-  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.woff');
-  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.eot');
-  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.eot?#iefix') format("embedded-opentype"),
-  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.woff') format("woff"),
-  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.ttf')  format('truetype');
+  src: url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.woff');
+  src: url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.eot');
+  src: url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.eot?#iefix') format("embedded-opentype"),
+  url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.woff') format("woff"),
+  url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Light.ttf')  format('truetype');
 }
 @font-face {
   font-family: 'AvenirNextLTPro-Demi';
-  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.woff');
-  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.eot');
-  src: url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.eot?#iefix') format("embedded-opentype"),
-  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.woff') format("woff"),
-  url('../../../ingrid-portal/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.ttf')  format('truetype');
+  src: url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.woff');
+  src: url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.eot');
+  src: url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.eot?#iefix') format("embedded-opentype"),
+  url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.woff') format("woff"),
+  url('/decorations/layout/ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.ttf')  format('truetype');
 }

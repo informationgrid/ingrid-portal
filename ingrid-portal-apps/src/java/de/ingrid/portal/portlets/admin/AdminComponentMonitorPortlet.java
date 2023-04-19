@@ -37,6 +37,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -44,7 +45,6 @@ import org.quartz.JobDataMap;
 import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminComponentMonitorForm;
