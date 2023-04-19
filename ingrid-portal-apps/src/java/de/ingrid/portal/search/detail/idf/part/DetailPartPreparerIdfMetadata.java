@@ -258,7 +258,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             } else if ( getUdkObjectClassType().equals("3")) {
                 String capabilitiesUrl = getCapabilityUrl();
                 // get it directly from the operation
-                map = addBigMapLink(rootNode, capabilitiesUrl, true, partner);
+                map = addBigMapLink(rootNode, capabilitiesUrl, false, partner);
             } else {
                 // show preview image (with map link information if provided)
                 map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
@@ -1147,6 +1147,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if(serviceType != null){
             serviceType = serviceType.trim();
         }
+        String serviceTypeVersion = null;
         HashMap element = new HashMap();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
@@ -1184,11 +1185,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
                                 for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
                                     Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
-                                    String serviceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
-                                    if (!serviceTypeVersion.isEmpty()) {
-                                        String tmpService = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
-                                        if (tmpService != null) {
-                                            urlValue.append("&SERVICE=" + tmpService);
+                                    String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
+                                    if (!tmpServiceTypeVersion.isEmpty()) {
+                                        String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
+                                        if (tmpValue != null) {
+                                            urlValue.append("&SERVICE=" + tmpValue);
+                                            serviceTypeVersion = tmpServiceTypeVersion;
+                                            break;
                                         }
                                     }
                                 }
@@ -1229,7 +1232,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 elementMapLink.put("hasLinkIcon", true);
                                 elementMapLink.put("isExtern", false);
                                 elementMapLink.put("title", messages.getString("common.result.showMap"));
-                                elementMapLink.put("href", UtilsVelocity.urlencode(urlValue.toString() + "||" ));
+                                elementMapLink.put("href", UtilsSearch.addCapabilitiesInformation(urlValue.toString(), serviceTypeVersion, serviceType)); 
                                 element.put("link", elementMapLink);
                                 element.put("linkLeft", true);
                             }
