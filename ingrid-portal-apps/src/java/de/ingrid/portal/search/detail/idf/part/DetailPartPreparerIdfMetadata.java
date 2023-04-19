@@ -199,7 +199,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     for (int i=0; i< crossReferenceNodeList.getLength(); i++) {
                         Node crossReferenceNode = crossReferenceNodeList.item(i);
                         String serviceUrl =  xPathUtils.getString(crossReferenceNode, "./idf:serviceUrl");
-                        String mapUrl =  xPathUtils.getString(crossReferenceNode, "./idf:mapUrl");
                         String serviceType =  xPathUtils.getString(crossReferenceNode, "./idf:serviceType");
                         String serviceVersion =  xPathUtils.getString(crossReferenceNode, "./idf:serviceVersion");
                         if(serviceUrl != null && !serviceUrl.isEmpty()) {
@@ -211,7 +210,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 getCapUrl = UtilsSearch.addCapabilitiesInformation(serviceUrl, serviceVersion, serviceType);
                             }
                             if(getCapUrl != null && !getCapUrl.isEmpty()) {
-                                map = addBigMapLink(crossReferenceNode, getCapUrl, false, partner, mapUrl);
+                                map = addBigMapLink(crossReferenceNode, getCapUrl, false, partner);
                                 if(!hasAccessConstraints(crossReferenceNode)) {
                                     break;
                                 }
@@ -258,9 +257,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             // otherwise try within distribution info or SV_OperationMetadata
             } else if ( getUdkObjectClassType().equals("3")) {
                 String capabilitiesUrl = getCapabilityUrl();
-                String mapUrl =  xPathUtils.getString(rootNode, "./idf:mapUrl");
                 // get it directly from the operation
-                map = addBigMapLink(rootNode, capabilitiesUrl, true, partner, mapUrl);
+                map = addBigMapLink(rootNode, capabilitiesUrl, true, partner);
             } else {
                 // show preview image (with map link information if provided)
                 map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
@@ -308,7 +306,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String entryId = "";
                 String description = "";
                 String serviceUrl = null;
-                String mapUrl = null;
                 String objServiceType = null;
                 String objServiceVersion = null;
                 String[] graphicOverview = null;
@@ -369,12 +366,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     serviceUrl = tmp.trim();
                 }
 
-                xpathExpression = "./idf:mapUrl";
-                tmp = xPathUtils.getString(node, xpathExpression);
-                if(tmp != null){
-                    mapUrl = tmp.trim();
-                }
-
                 xpathExpression = "./idf:graphicOverview";
                 tmpList = xPathUtils.getStringArray(node, xpathExpression);
                 if(tmpList != null){
@@ -388,7 +379,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 link.put("objectClass", type);
                 link.put("serviceType", UtilsSearch.getHitShortcut(objServiceVersion, objServiceType));
                 link.put("graphicOverview", graphicOverview);
-                link.put("mapUrl", mapUrl);
                 if (description.length() > 0) {
                     link.put("description", description);
                 }
@@ -1228,7 +1218,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         elementCapabilitiesLink.put("isExtern", true);
                         elementCapabilitiesLink.put("title", messages.getString("search.detail.showGetCapabilityUrl.title"));
                         elementCapabilitiesLink.put("href", urlValue);
-                        element.put("body", elementCapabilitiesLink);
+                          element.put("body", elementCapabilitiesLink);
 
                         if (!hasAccessConstraints()) {
                             element.put("title", messages.getString("search.detail.showGetCapabilityUrl"));
@@ -1240,9 +1230,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 elementMapLink.put("isExtern", false);
                                 elementMapLink.put("title", messages.getString("common.result.showMap"));
                                 elementMapLink.put("href", UtilsVelocity.urlencode(urlValue.toString() + "||" ));
-                                if (xPathUtils.nodeExists(rootNode, "./idf:mapUrl")) {
-                                    elementMapLink.put("mapUrl", xPathUtils.getString(rootNode, "./idf:mapUrl"));
-                                }
                                 element.put("link", elementMapLink);
                                 element.put("linkLeft", true);
                             }
@@ -1686,10 +1673,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref) {
-        return addBigMapLink(node, urlValue, urlEncodeHref, null, null);
+        return addBigMapLink(node, urlValue, urlEncodeHref, null);
     }
 
-    private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref, String partner, String mapUrl) {
+    private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref, String partner) {
         HashMap<String, Object> elementCapabilities = new HashMap<>();
         ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 
@@ -1722,9 +1709,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 elementMapLink.put("src", "/ingrid-portal-apps/images/maps/" + mapImage);
                 list.add(elementMapLink);
             }
-            if(mapUrl != null) {
-                elementMapLink.put("mapUrl", mapUrl);
-            }
         } else {
             for (HashMap<String, String> imageUrl : imageUrls) {
                 HashMap<String, Object> elementMapLink = new HashMap<>();
@@ -1748,9 +1732,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     elementMapLink.put("href", imageUrl.get("name"));
                 }
                 elementMapLink.put("description", imageUrl.get("description"));
-                if(mapUrl != null) {
-                    elementMapLink.put("mapUrl", mapUrl);
-                }
                 list.add(elementMapLink);
             }
         }
