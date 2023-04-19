@@ -199,7 +199,6 @@ public class Settings {
     public static final String RESULT_KEY_DOC_UUID = "docuuid";
 
     public static final String RESULT_KEY_WMS_URL = "wms_url";
-    public static final String RESULT_KEY_WMS_URL_WITH_CLIENT = "wms_url_with_client";
     public static final String RESULT_KEY_WMS_COORD = "wms_coord";
     public static final String RESULT_KEY_WMS_COORD_CHECK = "wms_check";
     public static final String RESULT_KEY_WMS_TMP_COORD_X = "coord_x";
@@ -226,7 +225,6 @@ public class Settings {
     public static final String RESULT_KEY_DUMMY_HIT = "dummyHit";
     
     public static final String RESULT_KEY_CAPABILITIES_URL = "capabilities_url";
-    public static final String RESULT_KEY_CAPABILITIES_URL_WITH_CLIENT = "capabilities_url_with_client";
     public static final String RESULT_KEY_SERVICE_UUID     = "refering_service_uuid";
     public static final String RESULT_KEY_COUPLED_RESOURCE = "coupled_resource";
     

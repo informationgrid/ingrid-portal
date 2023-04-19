@@ -1,11 +1,5 @@
 ## do not show wms urls when they already have been displayed (above)
-#if($rs.wms_url_with_client)
-    <p class="caption">
-        <a #if($mapLinksNewTab)target="_blank"#end class="button small" href="$rs.wms_url_with_client" title="$MESSAGES.getString('common.result.showMap.tooltip')">
-            $MESSAGES.getString('common.result.showMap')
-        </a>
-    </p>
-#elseif($rs.wms_url)
+#if($rs.wms_url)
     <p class="caption">
         <a #if($mapLinksNewTab)target="_blank"#end class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')">
             $MESSAGES.getString('common.result.showMap')
