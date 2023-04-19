@@ -35,6 +35,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -1730,21 +1732,12 @@ public class UtilsSearch {
         return "";
     }
 
-    public static String addMapclientCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
-        return addMapclientCapabilitiesInformation(url, serviceTypeVersion, serviceType, null);
+    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
+        return addCapabilitiesInformation(url, serviceTypeVersion, serviceType, null);
     }
-    public static String addMapclientCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType, String additionalURLContent){
+    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType, String additionalURLContent){
         StringBuilder urlValue = new StringBuilder(url);
         String service = null;
-
-        if (serviceTypeVersion != null && !serviceTypeVersion.isEmpty()) {
-            String tmpService = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
-            if (tmpService != null) {
-                if(tmpService.equalsIgnoreCase("WMS") || tmpService.equalsIgnoreCase("WMTS")) {
-                    service = tmpService;
-                }
-            }
-        }
         // add missing parameters
         if (url.indexOf("?") != -1) {
             if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
@@ -1754,6 +1747,16 @@ public class UtilsSearch {
                     urlValue.append("&");
                 }
                 urlValue.append("REQUEST=GetCapabilities");
+            }
+            if (url.toLowerCase().indexOf("service=") == -1) {
+                if (serviceTypeVersion != null && !serviceTypeVersion.isEmpty()) {
+                    String tmpService = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
+                    if (tmpService != null) {
+                        if(tmpService.equalsIgnoreCase("WMS") || tmpService.equalsIgnoreCase("WMTS")) {
+                            service = tmpService;
+                        }
+                    }
+                }
             }
             if(service == null) {
                 if (serviceType != null && !serviceType.isEmpty()) {
@@ -1772,17 +1775,6 @@ public class UtilsSearch {
                 urlValue.append("&SERVICE=" + service);
             }
             String cap = service + "||" + urlValue.toString().trim();
-            if(additionalURLContent != null) {
-                cap += "||" + additionalURLContent;
-            }
-            try {
-                return URLEncoder.encode(cap , "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-               log.error("Error URLEncode url: " + cap);
-            }
-        }
-        if(service == null && !urlValue.toString().isEmpty()) {
-            String cap = "WMS||" + urlValue.toString().trim();
             if(additionalURLContent != null) {
                 cap += "||" + additionalURLContent;
             }
