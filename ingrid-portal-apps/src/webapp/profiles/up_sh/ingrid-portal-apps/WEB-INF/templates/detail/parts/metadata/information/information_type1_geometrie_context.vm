@@ -20,21 +20,33 @@
         #set($tmpNode = $TOOL.getNodeFromXPath($tmpXPath))
         
         ## Sub Info
-        #set($xPathInfo1MD_GeometryContext_features = "./igctx:geometricFeature/igctx:NominalFeature/igctx:featureAttributes/igctx:FeatureAttributes/igctx:attribute/igctx:RegularFeatureAttribute")
+        #set($xPathInfo1MD_GeometryContext_features = "./igctx:geometricFeature/*/igctx:featureAttributes/igctx:FeatureAttributes/igctx:attribute/*")
         #set($subNodelist = $TOOL.getNodeListFromXPath("${xPathInfo1MD_GeometryContext_features}", $tmpNode))
         #set($subSize = $subNodelist.getLength())
         #set($rowSpan = $subSize + 2)
         ## Name
-            <td class="rowspan" rowspan="$rowSpan">
-                $TOOL.getValueFromXPath("./igctx:geometryType/gco:CharacterString", "", $tmpNode)
+            <td #if($subSize > 0)class="rowspan" rowspan="$rowSpan"#end>
+                #set($tmpValue = $TOOL.getValueFromXPath("./igctx:geometryType/gco:CharacterString", "", $tmpNode))
+                #if($tmpValue)
+                    $tmpValue
+                #end
+                #set($tmpValue = "")
             </td>
         ## Geometrie-Typ
-            <td class="rowspan" rowspan="$rowSpan">
-                $TOOL.getValueFromXPath("./igctx:geometricFeature/igctx:NominalFeature/igctx:featureName/gco:CharacterString", "", $tmpNode)
+            <td #if($subSize > 0)class="rowspan" rowspan="$rowSpan"#end>
+                #set($tmpValue = $TOOL.getValueFromXPath("./igctx:geometricFeature/*/igctx:featureName/gco:CharacterString", "", $tmpNode))
+                #if($tmpValue)
+                    $tmpValue
+                #end
+                #set($tmpValue = "")
             </td>
         ## Beschreibung
-            <td colspan="4">
-                $TOOL.getValueFromXPath("./igctx:geometricFeature/igctx:NominalFeature/igctx:featureDescription/gco:CharacterString", "", $tmpNode)
+            <td #if($subSize > 0)colspan="4"#end>
+                #set($tmpValue = $TOOL.getValueFromXPath("./igctx:geometricFeature/*/igctx:featureDescription/gco:CharacterString", "", $tmpNode))
+                #if($tmpValue)
+                    $tmpValue
+                #end
+                #set($tmpValue = "")
             </td>
             #if($subSize > 0)
         </tr>
@@ -47,9 +59,21 @@
                     #set($tmpSubXPath = "(${tmpXPath}/${xPathInfo1MD_GeometryContext_features})[$tmpSubNum]")
                     #set($tmpSubNode = $TOOL.getNodeFromXPath($tmpSubXPath))
                     ## Code
-                    <td>$TOOL.getValueFromXPath("./igctx:attributeCode/gco:CharacterString", "", $tmpSubNode)</td>
+                    <td>
+                        #set($tmpValue = $TOOL.getValueFromXPath("./igctx:attributeCode|igctx:attributeContent/gco:CharacterString", "", $tmpSubNode))
+                        #if($tmpValue)
+                            $tmpValue
+                        #end
+                        #set($tmpValue = "")
+                    </td>
                     ## Beschreibung
-                    <td colspan="3">$TOOL.getValueFromXPath("./igctx:attributeDescription/gco:CharacterString", "", $tmpSubNode)</td>
+                    <td colspan="3">
+                        #set($tmpValue = $TOOL.getValueFromXPath("./igctx:attributeDescription/gco:CharacterString", "", $tmpSubNode))
+                        #if($tmpValue)
+                            $tmpValue
+                        #end
+                        #set($tmpValue = "")
+                    </td>
                 </tr>
                 #end
             #else
