@@ -127,20 +127,22 @@ public class DetailPartPreparer {
 
     public String getValueFromXPath(String xpathExpression, String codeListId, Node root) {
         String value = null;
-        Node node = xPathUtils.getNode(root, xpathExpression);
-        if(node != null && node.getTextContent().length() > 0){
-            value = node.getTextContent().trim();
-            if(value != null && codeListId != null){
-                String tmpValue = getValueFromCodeList(codeListId, value);
-                if(tmpValue.length() > 0){
-                    value = tmpValue;
+        if(xPathUtils.nodeExists(root, xpathExpression)) {
+            Node node = xPathUtils.getNode(root, xpathExpression);
+            if(node != null && node.getTextContent().length() > 0){
+                value = node.getTextContent().trim();
+                if(value != null && codeListId != null){
+                    String tmpValue = getValueFromCodeList(codeListId, value);
+                    if(tmpValue.length() > 0){
+                        value = tmpValue;
+                    }
                 }
-            }
-            if(value != null){
-                if(value.equals("false")){
-                    value = messages.getString("general.no");
-                }else if(value.equals("true")){
-                    value = messages.getString("general.yes");
+                if(value != null){
+                    if(value.equals("false")){
+                        value = messages.getString("general.no");
+                    }else if(value.equals("true")){
+                        value = messages.getString("general.yes");
+                    }
                 }
             }
         }
