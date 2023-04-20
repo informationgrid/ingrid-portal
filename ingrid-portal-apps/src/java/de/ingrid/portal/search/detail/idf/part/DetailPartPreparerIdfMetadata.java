@@ -190,7 +190,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     public Map<String, Object> getMapImage(String partner){
         HashMap<String, Object> map = new HashMap<>();
         // showMap/Preview-Link
-        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
+        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || xPathUtils.nodeExists(rootNode, "./idf:mapUrl")) {
             if (getUdkObjectClassType().equals("1")) {
                 String xpathMapUrl = "./idf:mapUrl";
                 if(xPathUtils.nodeExists(rootNode, xpathMapUrl)) {
@@ -1244,7 +1244,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
                         if (!hasAccessConstraints()) {
                             element.put("title", messages.getString("search.detail.showGetCapabilityUrl"));
-                            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)
+                            if((PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || xPathUtils.nodeExists(rootNode, "./idf:mapUrl"))
                                     && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
                                 HashMap elementMapLink = new HashMap();
                                 elementMapLink.put("type", "linkLine");
@@ -1713,7 +1713,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             elementMapLink.put("isMapLink", true);
             elementMapLink.put("isExtern", false);
 
-            if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
+            if (hasAccessConstraints(node) || (!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && extMapUrl == null) || urlValue == null ) {
                 // do not render "show in map" link if the map has access constraints (no href added).
                 elementMapLink.put("title", messages.getString("preview"));
             } else {
@@ -1744,7 +1744,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 elementMapLink.put("isMapLink", true);
                 elementMapLink.put("isExtern", false);
 
-                if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
+                if (hasAccessConstraints(node) || (!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && extMapUrl == null) || urlValue == null) {
                     // do not render "show in map" link if the map has access constraints (no href added).
                     elementMapLink.put("title", messages.getString("preview"));
                 } else {
