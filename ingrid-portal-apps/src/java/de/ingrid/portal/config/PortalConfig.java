@@ -308,7 +308,7 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_FORM_LENGTH_CHECK_LOGIN = "portal.form.length.check.login";
 
-    public static final String PORTAL_FORM_STRENGTH_CHECK_PW = "portal.form.strength.check.passsword";
+    public static final String PORTAL_FORM_STRENGTH_CHECK_PW = "portal.form.strength.check.password";
 
     public static final String PORTAL_DETAIL_UPLOAD_PATH_INDEX= "portal.detail.upload.path.index";
 
