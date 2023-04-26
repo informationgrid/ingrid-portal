@@ -303,6 +303,10 @@ a.icon:hover {
   border: unset;
   background-color: #296e4b;
 }
+.list-item .button.pill.outline {
+  font-size: 14px;
+}
+
 .button.outline:hover, .button.outline:focus {
   background-color: #1b4932;
 }
