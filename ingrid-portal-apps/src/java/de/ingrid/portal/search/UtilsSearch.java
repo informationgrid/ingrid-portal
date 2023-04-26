@@ -1768,8 +1768,12 @@ public class UtilsSearch {
             service = "WMTS";
         }
         if(service != null) {
-            if(service.equalsIgnoreCase("WMS") || service.equalsIgnoreCase("WMTS")) {
-                urlValue.append("&SERVICE=" + service);
+            if (url.indexOf("?") != -1) {
+                if (url.toLowerCase().indexOf("service=") == -1) {
+                    if(service.equalsIgnoreCase("WMS") || service.equalsIgnoreCase("WMTS")) {
+                        urlValue.append("&SERVICE=" + service);
+                    }
+                }
             }
             String cap = service + "||" + urlValue.toString().trim();
             if(additionalURLContent != null) {
