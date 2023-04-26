@@ -203,6 +203,14 @@
                     Ausdruck ‚(1+1):2’ gesucht)</p>
             </content>
         </section>
+        <section help-key="search-expert-8a">
+            <header>Suche nach OAC (Objektartencode)</header>
+            <content>
+                <p>In InGrid-Portal kann eine Objektart über den OAC (Objektartencode) gesucht werden.
+                    Dazu kann in der Suche „oac:“ und ohne Leerzeichen die jeweilige Zahl eingegeben werden.</p>
+                <p>Beispiel: Die Sucheingabe „oac:12“ findet das Thema Naturschutzgebiet (NSG).</p>
+            </content>
+        </section>
         <section help-key="search-expert-9a">
             <header>Suche nach speziellen Dokumenttypen</header>
             <content>
