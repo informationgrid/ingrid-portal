@@ -1784,9 +1784,14 @@ public class UtilsSearch {
             } catch (UnsupportedEncodingException e) {
                log.error("Error URLEncode url: " + cap);
             }
-        }
-        if(service == null && !urlValue.toString().isEmpty()) {
-            String cap = "WMS||" + urlValue.toString().trim();
+        } else if(service == null && !urlValue.toString().isEmpty()) {
+            String defaultService = "WMS";
+            if (url.indexOf("?") != -1) {
+                if (url.toLowerCase().indexOf("service=") == -1) {
+                    urlValue.append("&SERVICE=" + defaultService);
+                }
+            }
+            String cap = defaultService + "||" + urlValue.toString().trim();
             if(additionalURLContent != null) {
                 cap += "||" + additionalURLContent;
             }
