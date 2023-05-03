@@ -1786,7 +1786,8 @@ public class UtilsSearch {
             } catch (UnsupportedEncodingException e) {
                log.error("Error URLEncode url: " + cap);
             }
-        } else if(service == null && !urlValue.toString().isEmpty()) {
+        } else if((service == null && !urlValue.toString().isEmpty()) 
+                && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view")))) {
             String defaultService = "WMS";
             if (url.indexOf("?") != -1) {
                 if (url.toLowerCase().indexOf("service=") == -1) {
