@@ -210,8 +210,36 @@ public class QueryResultPostProcessor {
 
                 if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                     for (String url : tmpArray) {
-                        String tmpUrl = UtilsSearch.addCapabilitiesInformation(url, UtilsSearch.getDetailValue(detail,
-                                "t011_obj_serv_version.version_value"), UtilsSearch.getDetailValue(detail, "t011_obj_serv.type"));
+                        String serviceTypeVersion = UtilsSearch.getDetailValue(detail, "t011_obj_serv_version.version_value");
+                        String serviceType = UtilsSearch.getDetailValue(detail, "t011_obj_serv.type");
+                        
+                        if(serviceTypeVersion.isEmpty() && serviceType.isEmpty()) {
+                            Object objectRefTyps = detail.get("refering.object_reference.type");
+                            Object objectRefVersion = detail.get("refering.object_reference.version");
+                            String[] tmpObjectRefTyps = {};
+                            String[] tmpObjectRefVersion = {};
+                            if (objectRefTyps instanceof ArrayList) {
+                                tmpObjectRefTyps = ((ArrayList<String>) objectRefTyps).toArray(new String[0]);;
+                            } else if(objectRefTyps instanceof String[]) {
+                                tmpObjectRefTyps = (String[])objectRefTyps;
+                            }
+                            if (objectRefVersion instanceof ArrayList ) {
+                                tmpObjectRefVersion = ((ArrayList<String>) objectRefVersion).toArray(new String[0]);
+                            } else if(objectRefVersion instanceof String[]) {
+                                tmpObjectRefVersion = (String[])objectRefVersion;
+                            }
+                            if(tmpObjectRefTyps.length == tmpObjectRefVersion.length) {
+                                for (int i = 0; i < tmpObjectRefTyps.length; i++) {
+                                    String objectRefTyp = tmpObjectRefTyps[i];
+                                    if(objectRefTyp.equalsIgnoreCase("view") || objectRefTyp.equalsIgnoreCase("wms") || objectRefTyp.equalsIgnoreCase("wmts")) {
+                                        serviceType = objectRefTyp;
+                                        serviceTypeVersion = tmpObjectRefVersion[i];
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        String tmpUrl = UtilsSearch.addCapabilitiesInformation(url, serviceTypeVersion, serviceType);
                         if(tmpUrl != null) {
                             tmpUrl += URLEncoder.encode("||", "UTF-8");
                             // add layer information to link
