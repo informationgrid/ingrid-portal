@@ -33,7 +33,7 @@
         </page>
         <page>
             <name>application/main-application.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>default-page.psml</name>
@@ -127,14 +127,14 @@
             <![CDATA[UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-measures.psml']]>
         </execute>
         <execute>
+            <![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/application']]>
+        </execute>
+        <execute>
             <![CDATA[DROP TABLE tmp_table]]>
         </execute>
         <!-- Delete user default-page.psml -->
         <execute>
             <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml']]>
-        </execute>
-        <execute>
-            <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/application']]>
         </execute>
     </sql>
 </profile>
