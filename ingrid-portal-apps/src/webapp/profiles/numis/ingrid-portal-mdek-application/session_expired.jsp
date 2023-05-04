@@ -112,7 +112,7 @@
                                     <span class="text">Kataloge</span>
                                 </div>
                             </a>
-                            <a class="menu-tab " href="api" title="API Übersicht">
+                            <a class="menu-tab " href="/api" title="API Übersicht">
                                 <div class="link-menu-tab">
                                     <span class="ic-ic-center"></span>
                                     <span class="text">API</span>
