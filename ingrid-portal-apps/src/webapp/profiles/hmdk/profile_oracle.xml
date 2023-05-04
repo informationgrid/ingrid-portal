@@ -130,6 +130,9 @@
             <![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/application']]>
         </execute>
         <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-teaser' WHERE name = 'ingrid-portal-apps::CMSPortlet3']]>
+        </execute>
+        <execute>
             <![CDATA[DROP TABLE tmp_table]]>
         </execute>
         <!-- Delete user default-page.psml -->
