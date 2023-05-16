@@ -1,0 +1,2 @@
+#set($imgAlt = $entry.title)
+#set($imgTitle = $entry.title)
