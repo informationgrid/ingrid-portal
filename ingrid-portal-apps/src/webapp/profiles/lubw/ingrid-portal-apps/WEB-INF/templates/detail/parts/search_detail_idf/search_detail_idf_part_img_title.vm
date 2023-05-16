@@ -1,0 +1,2 @@
+#set($imgAlt = $MESSAGES.getString('common.result.showMap.image.tooltip.short'))
+#set($imgTitle = $MESSAGES.getString('common.result.showMap.image.tooltip.short'))
