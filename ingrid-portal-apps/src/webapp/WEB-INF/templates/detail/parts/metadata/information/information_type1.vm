@@ -31,7 +31,7 @@
 ## Schlüsselkatalog
     #set($headTitles = [$MESSAGES.getString("t011_obj_geo_keyc.subject_cat"),$MESSAGES.getString("t011_obj_geo_keyc.key_date"),$MESSAGES.getString("t011_obj_geo_keyc.edition")])
     #set($headXpathExpressions = ["./gmd:title","./gmd:date/gmd:CI_Date/gmd:date","./gmd:edition"])
-    #renderTextTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_keyc"), $xPathInfo1MDFeatureCatalogueDescriptionFeatureCatalogueCitation, $headTitles, $headXpathExpressions))
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_keyc"), $xPathInfo1MDFeatureCatalogueDescriptionFeatureCatalogueCitation, $headTitles, $headXpathExpressions))
 ## Sachdaten/Attributinformation
     #renderTextListTable($MESSAGES.getString("t011_obj_geo_supplinfo.feature_type") $TOOL.getListOfValuesFromXPath($xPathInfo1MDFeatureCatalogueDescriptionFeatureTypes, "."))
 ## Geometrie-Kontext
