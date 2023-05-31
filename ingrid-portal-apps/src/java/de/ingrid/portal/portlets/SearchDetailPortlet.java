@@ -233,6 +233,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put( "leafletBboxInverted", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_INVERTED));
         context.put( "leafletBboxColor", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_COLOR));
         context.put( "leafletBboxFillOpacity", PortalConfig.getInstance().getFloat(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_FILLOPACITY));
+        context.put( "leafletBboxWeight", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_WEIGHT));
 
         context.put("showHitPartnerLogo", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_PARTNER_LOGO, false));
 
