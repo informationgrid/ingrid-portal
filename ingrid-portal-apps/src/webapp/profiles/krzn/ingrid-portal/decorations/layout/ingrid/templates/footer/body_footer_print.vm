@@ -1,0 +1,6 @@
+<div class="button-print">
+    <button id="print" class="button round social share" title="Seite drucken" onclick="window.print()">
+        <span class="ic-ic-print"></span>
+        <span class="text"></span>
+    </button>
+</div>
