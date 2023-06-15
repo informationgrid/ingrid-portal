@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
-    <name>bkg</name>
-    <description>Portal-Profile für BKG-MIS</description>
+    <name>krzn</name>
+    <description>Portal-Profile für KRZN</description>
     <pages>
         <page>
             <name>main-measures.psml</name>
@@ -93,7 +93,7 @@
         </page>
     </pages>
     <files>
-        <!-- COPY BKG FILES -->
+        <!-- COPY KRZN FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal/</src>
