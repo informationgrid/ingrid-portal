@@ -154,28 +154,28 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                     <id>procedure_12_time</id>
                     <from>P1YT</from>
                     <to>PT</to>
-                    <query>t01_object.obj_class:12 approval_date:[{FROM}0* TO {TO}9*]</query>
+                    <query>t01_object.obj_class:12 (t01_object.mod_time:[{FROM}0* TO {TO}9*] OR approval_date:[{FROM}0* TO {TO}9*])</query>
                 </toggle>
                 <toggle>
                     <parentId>procedure_13</parentId>
                     <id>procedure_13_time</id>
                     <from>P1YT</from>
                     <to>PT</to>
-                    <query>t01_object.obj_class:13 approval_date:[{FROM}0* TO {TO}9*]</query>
+                    <query>t01_object.obj_class:13 (t01_object.mod_time:[{FROM}0* TO {TO}9*] OR approval_date:[{FROM}0* TO {TO}9*])</query>
                 </toggle>
                 <toggle>
                     <parentId>procedure_14</parentId>
                     <id>procedure_14_time</id>
                     <from>P1YT</from>
                     <to>PT</to>
-                    <query>t01_object.obj_class:14 approval_date:[{FROM}0* TO {TO}9*]</query>
+                    <query>t01_object.obj_class:14 (t01_object.mod_time:[{FROM}0* TO {TO}9*] OR approval_date:[{FROM}0* TO {TO}9*])</query>
                 </toggle>
                 <toggle>
                     <parentId>procedure_11</parentId>
                     <id>procedure_11_time</id>
                     <from>P1YT</from>
                     <to>PT</to>
-                    <query>t01_object.obj_class:11 approval_date:[{FROM}0* TO {TO}9*]</query>
+                    <query>t01_object.obj_class:11 (t01_object.mod_time:[{FROM}0* TO {TO}9*] OR approval_date:[{FROM}0* TO {TO}9*])</query>
                 </toggle>
             </toggleGroup>
         </toggleGroups>
