@@ -192,6 +192,13 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 					} else {
 					    url = objEntity.getString("urlRef.urlLink");
 					}
+
+                    int protocolIndex = url.indexOf("://");
+                    if (protocolIndex <= 3 || protocolIndex >= 10) {
+                        log.debug("URL does not contain protocol and probably is an upload. Skipping url: " + url);
+                        continue;
+                    }
+                    
 					ref.setUrlReferenceDescription(objEntity.getString("urlRef.content"));
 					URLState urlState = urlStateMap.get(url);
 					if (urlState == null) {
