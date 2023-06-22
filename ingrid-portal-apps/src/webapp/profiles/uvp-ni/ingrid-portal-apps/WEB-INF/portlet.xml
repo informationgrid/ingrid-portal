@@ -1014,6 +1014,50 @@
         </portlet-preferences>
     </portlet>
 
+    <portlet id="IngridInform2Portlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>IngridInform2Portlet</portlet-name>
+        <display-name>Generisches Informationsportlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>helpKey</name>
+                <value>ingrid-inform-2</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.ingridInform.title.2</value>
+            </preference>
+            <preference>
+                <name>cmsKey</name>
+                <value>ingrid.teaser.inform.2</value>
+            </preference>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>4</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
     <portlet id="IngridWelcomePortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -1427,7 +1471,6 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
-
 
     <!-- *********************** -->
     <!-- Search (general)        -->
