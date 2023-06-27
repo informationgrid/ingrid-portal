@@ -152,52 +152,17 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <facet>
                 <name>Luftbilder</name>
-                <query>bawhierarchylevelname:Luftbilder</query>
+                <query>data_category:Luftbilder</query>
                 <id>luftbilder</id>
             </facet>
             <facet>
                 <name>Messdaten</name>
-                <query>bawhierarchylevelname:Messdaten</query>
+                <query>data_category:Messdaten</query>
                 <id>messdaten</id>
             </facet>
             <facet>
-                <name>Postprocessing</name>
-                <query>bawhierarchylevelname:Postprocessing</query>
-                <id>postprocessing</id>
-            </facet>
-            <facet>
-                <name>Preprocessing</name>
-                <query>bawhierarchylevelname:Preprocessing</query>
-                <id>preprocessing</id>
-            </facet>
-            <facet>
-                <name>Variante</name>
-                <query>bawhierarchylevelname:Variante</query>
-                <id>variante</id>
-            </facet>
-            <facet>
-                <name>Szenario</name>
-                <query>bawhierarchylevelname:Szenario</query>
-                <id>szenario</id>
-            </facet>
-            <facet>
-                <name>Simulationsmodell</name>
-                <query>bawhierarchylevelname:Simulationsmodell</query>
-                <id>simulationsmodell</id>
-            </facet>
-            <facet>
-                <name>Simulationslauf</name>
-                <query>bawhierarchylevelname:Simulationslauf</query>
-                <id>simulationslauf</id>
-            </facet>
-            <facet>
-                <name>Simulationsdatei</name>
-                <query>bawhierarchylevelname:Simulationsdatei</query>
-                <id>simulationsdatei</id>
-            </facet>
-            <facet>
                 <name>Visualisierung</name>
-                <query>bawhierarchylevelname:Visualisierung</query>
+                <query>data_category:Visualisierung</query>
                 <id>visualisierung</id>
             </facet>
             <facet>
@@ -212,8 +177,49 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <facet>
                 <name>Sonstiges</name>
-                <query>bawhierarchylevelname:Sonstiges</query>
+                <query>data_category:Sonstiges</query>
                 <id>sonstiges</id>
+            </facet>
+        </facets>
+    </facet>
+    <facet>
+        <name>Simulationsdaten</name>
+        <id>simulationsdaten</id>
+        <facets>
+            <facet>
+                <name>Preprocessing</name>
+                <query>simulation_data_type:Preprocessing</query>
+                <id>preprocessing</id>
+            </facet>
+            <facet>
+                <name>Variante</name>
+                <query>simulation_data_type:Variante</query>
+                <id>variante</id>
+            </facet>
+            <facet>
+                <name>Szenario</name>
+                <query>simulation_data_type:Szenario</query>
+                <id>szenario</id>
+            </facet>
+            <facet>
+                <name>Simulationsmodell</name>
+                <query>simulation_data_type:Simulationsmodell</query>
+                <id>simulationsmodell</id>
+            </facet>
+            <facet>
+                <name>Simulationslauf</name>
+                <query>simulation_data_type:Simulationslauf</query>
+                <id>simulationslauf</id>
+            </facet>
+            <facet>
+                <name>Simulationsdatei</name>
+                <query>simulation_data_type:Simulationsdatei</query>
+                <id>simulationsdatei</id>
+            </facet>
+            <facet>
+                <name>Postprocessing</name>
+                <query>simulation_data_type:Postprocessing</query>
+                <id>postprocessing</id>
             </facet>
         </facets>
     </facet>
