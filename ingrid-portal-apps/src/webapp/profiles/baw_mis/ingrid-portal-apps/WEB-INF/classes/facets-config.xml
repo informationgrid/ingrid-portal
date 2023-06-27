@@ -156,6 +156,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>luftbilder</id>
             </facet>
             <facet>
+                <name>Simulationsdaten</name>
+                <query>data_category:Simulationsdaten</query>
+                <id>messdaten</id>
+            </facet>
+            <facet>
                 <name>Messdaten</name>
                 <query>data_category:Messdaten</query>
                 <id>messdaten</id>
