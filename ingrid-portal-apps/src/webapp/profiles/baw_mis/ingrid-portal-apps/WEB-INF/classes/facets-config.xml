@@ -256,8 +256,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Verfahren</name>
-        <id>simprocess</id>
-        <field>simprocess</field>
+        <id>verfahren</id>
+        <field>method</field>
         <listLength>6</listLength>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
