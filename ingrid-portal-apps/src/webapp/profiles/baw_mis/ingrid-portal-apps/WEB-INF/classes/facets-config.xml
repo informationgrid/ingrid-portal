@@ -195,7 +195,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>Simulationsdaten</name>
                 <query>data_category:Simulationsdaten</query>
-                <id>messdaten</id>
+                <id>cat_simulationsdaten</id>
             </facet>
             <facet>
                 <name>Messdaten</name>
