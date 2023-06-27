@@ -142,6 +142,43 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     -->
     <facet>
+        <name>Abteilung</name>
+        <id>baw_abteilung</id>
+        <facets>
+            <facet>
+                <name>Bautechnik</name>
+                <query>baw_abteilung_short:b</query>
+                <id>bautechnik</id>
+            </facet>
+            <facet>
+                <name>Geotechnik</name>
+                <query>baw_abteilung_short:g</query>
+                <id>geotechnik</id>
+            </facet>
+            <facet>
+                <name>Wasserbau im Binnenbereich</name>
+                <query>baw_abteilung_short:w</query>
+                <id>binnenbereich</id>
+            </facet>
+            <facet>
+                <name>Wasserbau im Küstenbereich</name>
+                <query>baw_abteilung_short:k</query>
+                <id>kuestenbereich</id>
+            </facet>
+            <facet>
+                <name>Zentraler Service</name>
+                <query>baw_abteilung_short:z</query>
+                <id>zentral</id>
+            </facet>
+        </facets>
+    </facet>
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>Wasserstraße</name>
+        <id>wasserstrasse</id>
+        <field>bwstr-bwastr_name</field>
+        <listLength>6</listLength>
+    </facet>
+    <facet>
         <name>Datenkategorie</name>
         <id>baw_datenkategorie</id>
         <facets>
@@ -227,43 +264,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>postprocessing</id>
             </facet>
         </facets>
-    </facet>
-    <facet>
-        <name>Abteilung</name>
-        <id>baw_abteilung</id>
-        <facets>
-            <facet>
-                <name>Bautechnik</name>
-                <query>baw_abteilung_short:b</query>
-                <id>bautechnik</id>
-            </facet>
-            <facet>
-                <name>Geotechnik</name>
-                <query>baw_abteilung_short:g</query>
-                <id>geotechnik</id>
-            </facet>
-            <facet>
-                <name>Wasserbau im Binnenbereich</name>
-                <query>baw_abteilung_short:w</query>
-                <id>binnenbereich</id>
-            </facet>
-            <facet>
-                <name>Wasserbau im Küstenbereich</name>
-                <query>baw_abteilung_short:k</query>
-                <id>kuestenbereich</id>
-            </facet>
-            <facet>
-                <name>Zentraler Service</name>
-                <query>baw_abteilung_short:z</query>
-                <id>zentral</id>
-            </facet>
-        </facets>
-    </facet>
-    <facet sort="SORT_BY_VALUE_DESC">
-        <name>Wasserstraße</name>
-        <id>wasserstrasse</id>
-        <field>bwstr-bwastr_name</field>
-        <listLength>6</listLength>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Verfahren</name>
