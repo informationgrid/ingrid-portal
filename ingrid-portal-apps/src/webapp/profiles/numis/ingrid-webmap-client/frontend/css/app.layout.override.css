@@ -73,6 +73,9 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
   font-weight: bold;
   background-color: #F6F6F6;
 }
+[ga-catalogtree] .ga-catalogitem-node > .ga-layer-ordering {
+  background-color: #F6F6F6;
+}
 [ga-catalogtree] a.ga-catalogitem-entry label {
   font-weight: bold;
 }
