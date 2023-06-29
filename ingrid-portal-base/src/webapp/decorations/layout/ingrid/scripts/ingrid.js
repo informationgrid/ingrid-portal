@@ -421,7 +421,7 @@ function updateQueryStringParameter(key, value) {
   else {
     uri = uri + separator + key + "=" + value;
   }
-  window.history.pushState(null,null, uri);
+  window.history.replaceState(null,null, uri);
 }
 
 function getQueryStringParameter(key) {
