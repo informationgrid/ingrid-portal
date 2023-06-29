@@ -48,9 +48,10 @@ ENV TOYBOX_SRC=https\\:\\/\\/d16ahjtmf9d1au\\.cloudfront\\.net\\/inject\\.bundle
 ENV JAVA_OPTS='-Dfile.encoding=UTF8'
 ENV MAPCLIENT_DISABLED=false
 ENV IGE_DISABLED=false
+ENV USER_CHOWN=1000:1000
 
 # user, group ingrid (1000:1000) is created in base image
-COPY --chown=1000:1000 --from=builder /tmp/distribution/ /opt/ingrid/ingrid-portal/
+COPY --chown=${USER_CHOWN} --from=builder /tmp/distribution/ /opt/ingrid/ingrid-portal/
 
 USER ingrid
 
