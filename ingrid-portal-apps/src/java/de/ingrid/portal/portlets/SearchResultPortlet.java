@@ -62,6 +62,7 @@ import de.ingrid.portal.global.UniversalSorter;
 import de.ingrid.portal.global.UtilsFacete;
 import de.ingrid.portal.global.UtilsPortletServeResources;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.om.IngridFacet;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
 import de.ingrid.portal.search.SearchState;
@@ -126,6 +127,17 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     e.printStackTrace();
                 }
             }
+        }
+        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) UtilsFacete.getAttributeFromSession(request, UtilsFacete.FACET_CONFIG);
+        try {
+            if(resourceID.equals( "facetValue" )){
+                String facetId = request.getParameter("facetId");
+                if(facetId != null) {
+                    UtilsPortletServeResources.getHttpFacetValue(request, response, config, facetId);
+                }
+            }
+        } catch (Exception e) {
+            log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
     }
 
@@ -525,6 +537,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         restUrl.setResourceID( "httpURLSearchDownload" );
         request.setAttribute( "restUrlHttpSearchDownload", restUrl.toString() );
         //context.put("providerMap", getProviderMap());
+
+        restUrl.setResourceID( "facetValue" );
+        request.setAttribute( "restUrlFacetValue", restUrl.toString() );
 
         super.doView(request, response);
     }
