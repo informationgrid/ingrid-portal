@@ -151,21 +151,21 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Open Data -->
            <facet>
                 <name>Open Data</name>
-                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
+                <query>(t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
                 <display>true</display>
             </facet>
         <!-- Adv -->
             <facet>
                 <name>AdV</name>
-                <query>datatype:metadata (t04_search.searchterm:AdVMIS OR t04_search.searchterm:AdV)</query>
+                <query>(t04_search.searchterm:AdVMIS OR t04_search.searchterm:AdV)</query>
                 <id>adv</id>
                 <display>true</display>
             </facet>
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
-                <query>capabilities_url:http* datatype:metadata</query>
+                <query>capabilities_url:http*</query>
                 <id>map</id>
                 <display>true</display>
             </facet>
@@ -371,7 +371,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Open Data -->
            <facet>
                 <name>Open Data</name>
-                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
+                <query>(t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
                 <parentId>type</parentId>
                 <icon>ic-opendata</icon>
@@ -379,7 +379,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
-                <query>capabilities_url:http* datatype:metadata</query>
+                <query>capabilities_url:http*</query>
                 <id>map</id>
                 <parentId>type</parentId>
                 <icon>ic-map</icon>
