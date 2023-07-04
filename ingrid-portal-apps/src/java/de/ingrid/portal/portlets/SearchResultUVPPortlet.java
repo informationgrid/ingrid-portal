@@ -112,6 +112,12 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                 }
             }
 
+            if(resourceID.equals( "facetValue" )){
+                String facetId = request.getParameter("facetId");
+                if(facetId != null) {
+                    UtilsPortletServeResources.getHttpFacetValue(request, response, config, facetId);
+                }
+            }
         } catch (Exception e) {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
