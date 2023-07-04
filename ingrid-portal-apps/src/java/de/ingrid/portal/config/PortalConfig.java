@@ -353,6 +353,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_MAPCLIENT_UVP_GEOCODER_SERVICE_URL = "portal.mapclient.uvp.geocoder.service.url";
 
+    public static final String PORTAL_IS_UVP = "portal.is.uvp";
+
     // private stuff
     private static PortalConfig instance = null;
 

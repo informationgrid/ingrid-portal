@@ -1594,8 +1594,10 @@ public class UtilsSearch {
         for(ClauseQuery tmp : q.getClauses()){
             clauseQuery.addClause(tmp);
         }
-        for(FieldQuery tmp : q.getDataTypes()){
-            clauseQuery.addField(tmp);
+        if (q.get(IngridQuery.DATA_TYPE) != null) {
+            for(FieldQuery tmp : q.getDataTypes()){
+                clauseQuery.addField(tmp);
+            }
         }
         for(FieldQuery tmp : q.getFields()){
             clauseQuery.addField(tmp);
@@ -1615,13 +1617,13 @@ public class UtilsSearch {
         for(RangeQuery tmp : q.getRangeQueries()){
             clauseQuery.addRangeQuery(tmp);
         }
-        if(q.get("partner") != null){
-            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get("partner")){
+        if(q.get(IngridQuery.PARTNER) != null){
+            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get(IngridQuery.PARTNER)){
                 clauseQuery.addField(tmp);
             }
         }
-        if(q.get("provider") != null){
-            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get("provider")){
+        if(q.get(IngridQuery.PROVIDER) != null){
+            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get(IngridQuery.PROVIDER)){
                 clauseQuery.addField(tmp);
             }
         }

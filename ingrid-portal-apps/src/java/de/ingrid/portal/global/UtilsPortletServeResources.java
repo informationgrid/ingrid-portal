@@ -923,8 +923,10 @@ public class UtilsPortletServeResources {
     
                 String addToQuery = queryString;
                 if(addToQuery != null && addToQuery.length() > 0){
-                    if(stateRanking.equals("date")){
-                        addToQuery += " -procedure:dev_plan ranking:date";
+                    if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_IS_UVP, false)) {
+                        if(stateRanking.equals("date")){
+                            addToQuery += " -procedure:dev_plan ranking:date";
+                        }
                     }
                     IngridQuery addQuery = QueryStringParser.parse(addToQuery);
                     ClauseQuery cp = UtilsSearch.createClauseQuery(addQuery, true, false);
