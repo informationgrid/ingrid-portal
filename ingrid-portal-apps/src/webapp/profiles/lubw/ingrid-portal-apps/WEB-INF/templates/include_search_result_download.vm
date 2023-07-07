@@ -113,7 +113,7 @@
                     if(tmpValue !== ''){
                         tmpValue += ', ';
                     }
-                    tmpValue += '$MESSAGES.getString("searchResult.facete.title.types") = ' + value;
+                    tmpValue += '$MESSAGES.getString("searchResult.facete.title.types.single") = ' + value;
                 });
               }
               tmpRow += tmpValue + delimiter;
