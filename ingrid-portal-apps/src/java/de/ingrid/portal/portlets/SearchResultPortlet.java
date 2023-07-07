@@ -97,6 +97,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         String resourceID = request.getResourceID();
         String paramURL = request.getParameter( "url" );
 
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()), request.getLocale());
+
         String login = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
         String password = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD);
 
@@ -121,7 +124,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                             codelists.put(key, value);
                         }
                     }
-                    UtilsPortletServeResources.getHttpURLSearchDownload(request, response, paramRequestFields.split(";"), codelists);
+                    UtilsPortletServeResources.getHttpURLSearchDownload(request, response, paramRequestFields.split(";"), codelists, messages);
                 } catch (ParseException | JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

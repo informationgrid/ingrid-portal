@@ -164,7 +164,7 @@ public class UtilsPortletServeResources {
         }
     }
 
-    public static void getHttpURLSearchDownload(ResourceRequest request, ResourceResponse response, String[] requestFields, HashMap<String, String> codelists) throws ParseException, IOException, JSONException {
+    public static void getHttpURLSearchDownload(ResourceRequest request, ResourceResponse response, String[] requestFields, HashMap<String, String> codelists, IngridResourceBundle messages) throws ParseException, IOException, JSONException {
         JSONArray jsonData = new JSONArray();
         IngridQuery query = null;
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
@@ -249,7 +249,31 @@ public class UtilsPortletServeResources {
                             
                             obj.put("portal.page", startPage);
                             obj.put("portal.query", queryString);
-                            obj.put("portal.facet", facetUrl.toString());
+                            String facetURLParams = facetUrl.toString();
+                            obj.put("portal.facet", facetURLParams);
+                            if(!facetURLParams.equals("&f=")) {
+                                String tmpFacetURLParams = facetURLParams.replace("&f=", "");
+                                String[] tmpFacets = tmpFacetURLParams.split(";");
+                                for (String tmpFacet : tmpFacets) {
+                                    if(!tmpFacet.isEmpty()) {
+                                        String[] tmpValue = tmpFacet.split(":");
+                                        String tmpObjKey = "portal.facet." + tmpValue[0];
+                                        ArrayList<String> list = null;
+                                        if(obj.has(tmpObjKey)) {
+                                            list = (ArrayList<String>) obj.get(tmpObjKey);
+                                        } else {
+                                            list = new ArrayList<String>();
+                                        }
+                                        IngridFacet facet = UtilsFacete.getFacetById(config, tmpValue[1]);
+                                        if(facet != null) {
+                                            list.add(messages.getString(facet.getName()));
+                                        } else {
+                                            list.add(tmpValue[1]);
+                                        }
+                                        obj.put(tmpObjKey, list);
+                                    }
+                                }
+                            }
                             jsonData.put(obj);
                         }
                     } else {
