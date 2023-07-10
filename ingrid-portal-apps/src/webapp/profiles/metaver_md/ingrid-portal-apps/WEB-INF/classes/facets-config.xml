@@ -169,6 +169,14 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>map</id>
                 <display>true</display>
             </facet>
+        <!-- Metadaten -->
+            <facet>
+                <name>searchResult.facete.title.metaclass</name>
+                <query>datatype:metadata</query>
+                <id>metadata</id>
+                <display>true</display>
+                <selectGroup>metadata_group</selectGroup>
+            </facet>
         <!-- Webseiten -->
             <facet>
                 <name>searchResult.facete.datatype.www</name>
@@ -181,7 +189,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
 <!-- Metadaten -->
     <facet>
         <name>searchResult.facete.title.metaclass</name>
-        <id>metadata</id>
+        <id>metadata_group</id>
         <queryType>OR</queryType>
         <facets>
         <!-- Geo-Information / Karte -->

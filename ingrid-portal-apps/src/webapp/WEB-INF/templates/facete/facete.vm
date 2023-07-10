@@ -170,7 +170,7 @@
                     #end
                 #end
                 <ul class="accordion filter-group" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
-                    <li class="accordion-item #if($facet.isSelect() || $facet.isOpen())is-active#end" data-accordion-item>
+                    <li class="accordion-item #if($facet.isSelect() || $facet.isOpen() || $selectedGroup.indexOf($facet.getId()) > -1 )is-active#end" data-accordion-item>
                         <a href="#" class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label">
                             <span class="text">
                             #if($facet.getCodelistId())

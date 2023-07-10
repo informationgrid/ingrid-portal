@@ -362,6 +362,13 @@ public class FacetsConfig {
                     }
                 }
 
+                if (!facetNode.getChildren( "selectGroup" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "selectGroup" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setSelectGroup( node.getValue().toString() );
+                    }
+                }
+
                 if (!facetNode.getChildren( "toggle" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "toggle" ).get( 0 );
                     if (node != null) {

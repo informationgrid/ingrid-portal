@@ -246,12 +246,15 @@ public class UtilsFacete {
         }else{
             context.put("isSelection", isAnyFacetConfigSelect(config, (Boolean) getAttributeFromSession(request, "isSelection")));
         }
+        ArrayList<String> list = new ArrayList<String>();
+        getSelectedGroup(config, list);
+        context.put("selectedGroup", list);
         context.put("enableFacetDateSelection", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_FACETE_DISPLAY_DATE_SELECTION, false));
-        context.put( "subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
-        context.put( "facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
-        context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
-        context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
-        context.put( "leafletBgLayerOpacity", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY));
+        context.put("subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
+        context.put("facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
+        context.put("leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
+        context.put("leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        context.put("leafletBgLayerOpacity", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_OPACITY));
 
         String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
         String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
@@ -2799,6 +2802,19 @@ public class UtilsFacete {
             isSelect = sessionSelect;
         }
         return isSelect;
+    }
+
+    private static void getSelectedGroup(List<IngridFacet> config, ArrayList<String> list) {
+        if(config != null) {
+            for(IngridFacet facet : config){
+                if(facet.isSelect() && facet.getSelectGroup() != null){
+                    list.add(facet.getSelectGroup());
+                }
+                if(facet.getFacets() != null){
+                    getSelectedGroup(facet.getFacets(), list);
+                }
+            }
+        }
     }
 
     private static boolean isFacetConfigSelect(List<IngridFacet> config) {

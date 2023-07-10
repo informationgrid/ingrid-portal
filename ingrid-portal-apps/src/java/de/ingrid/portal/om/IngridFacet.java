@@ -49,6 +49,7 @@ public class IngridFacet {
     private String wildcard;
     private String info;
     private String infoResultSelect;
+    private String selectGroup;
     private int showOnMoreThan;
     private int colNum;
     private int listLength;
@@ -250,6 +251,12 @@ public class IngridFacet {
     }
     public void setInfoResultSelect(String infoResultSelect) {
         this.infoResultSelect = infoResultSelect;
+    }
+    public String getSelectGroup() {
+        return selectGroup;
+    }
+    public void setSelectGroup(String selectGroup) {
+        this.selectGroup = selectGroup;
     }
     public String getField() {
         return field;
