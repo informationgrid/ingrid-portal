@@ -20,19 +20,19 @@
         #if($timeTypeTitle)
             <b>$timeTypeTitle</b>:
         #end
-        #if($timeType == "seit" && !$t1.isEmpty())
+        #if($timeType.indexOf("seit") > -1 && !$t1.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.since') $t1$MESSAGES.getString('searchResult.hit.time.untilUnknown')</span>
-        #elseif($timeType == "seitX" && !$t1.isEmpty())
+        #elseif($timeType.indexOf("seitX") > -1 && !$t1.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.since') $t1$MESSAGES.getString('searchResult.hit.time.untilNow')</span>
-        #elseif ($timeType == "von" && !$t1.isEmpty() && !$t2.isEmpty())
+        #elseif ($timeType.indexOf("von") > -1 && !$t1.isEmpty() && !$t2.isEmpty())
             #if ($t1 == $t2)
                 <span>$MESSAGES.getString('searchResult.hit.time.from') $t1</span>
             #else
                 <span>$MESSAGES.getString('searchResult.hit.time.from') $t1 $MESSAGES.getString('searchResult.hit.time.to') $t2</span>
             #end
-        #elseif ($timeType == "am" && !$t0.isEmpty())
+        #elseif ($timeType.indexOf("am") > -1 && !$t0.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.at') $t0</span>
-        #elseif ($timeType == "bis" && !$t2.isEmpty())
+        #elseif ($timeType.indexOf("bis") > -1 && !$t2.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.until') $t2</span>
         #end
     </div>
