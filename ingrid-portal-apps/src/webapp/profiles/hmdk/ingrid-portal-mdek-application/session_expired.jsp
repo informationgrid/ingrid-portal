@@ -57,10 +57,10 @@
                     <div class="highlighted">
                         <a href="/freitextsuche" class="header-menu-entry " title="Freitextsuche nach Umweltinformationen"><span class="text">Suche</span></a>
                         <a href="/datenkataloge" class="header-menu-entry " title="Datenkataloge"><span class="text">Kataloge</span></a>
-                        <a href="/kartendienste" class="header-menu-entry " title="Interaktive thematische Karten"><span class="text">Karte</span></a>
                         <a href="/hintergrundinformationen" class="header-menu-entry " title="Hintergrundinformationen zum HMDK"><span class="text">Über HMDK</span></a>
                         <a href="/informationsanbieter" class="header-menu-entry " title="Kooperationspartner und Informationsanbieter"><span class="text">Informationsanbieter</span></a>
                         <a href="/datenquellen" class="header-menu-entry " title="Angeschlossene Datenbanken"><span class="text">Datenquellen</span></a>
+                        <a href="/api" class="header-menu-entry " title="API Übersicht"><span class="text">API</span></a>
                     </div>
                     <a href="/hilfe" title="Erläuterungen zur Nutzung vom HMDK - Neues Fenster öffnet sich"><span class="text">Hilfe</span></a>
                     <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an den HMDK"><span class="text">Kontakt</span></a>
@@ -91,10 +91,10 @@
                                     <span class="text">Kataloge</span>
                                 </div>
                             </a>
-                            <a class="menu-tab " href="/kartendienste" title="Interaktive thematische Karten">
+                            <a class="menu-tab " href="/api" title="API Übersicht">
                                 <div class="link-menu-tab">
-                                    <span class="ic-ic-karten"></span>
-                                    <span class="text">Karte</span>
+                                    <span class="ic-ic-center"></span>
+                                    <span class="text">API</span>
                                 </div>
                             </a>
                         </div>

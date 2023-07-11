@@ -69,6 +69,15 @@
       })
       .done(function(json, textStatus, jqxhr) {
         if(json.length > 0) {
+            json.sort(function (a, b) {
+                var tmpA = a['object_node.tree_path.name'];
+                var tmpB = b['object_node.tree_path.name'];
+                if(tmpA.length > 1 && tmpB.length > 1) {
+                  return tmpA[0].localeCompare(tmpB[0]) || tmpA[1].localeCompare(tmpB[1]) || a['title'].localeCompare(b['title']);
+                }
+                return tmpA[0].localeCompare(tmpB[0]) || a['title'].localeCompare(b['title']);
+            });
+        
             var delimiter = '\t';
             var csv = json.map(function(row){
               var tmpRow = '';
@@ -97,6 +106,17 @@
                 tmpRow += row['title'];
               }
               tmpRow += delimiter;
+
+              var tmpValue = '';
+              if(row['portal.facet.type']){
+                row['portal.facet.type'].forEach(function(value){
+                    if(tmpValue !== ''){
+                        tmpValue += ', ';
+                    }
+                    tmpValue += '$MESSAGES.getString("searchResult.facete.title.types.single") = ' + value;
+                });
+              }
+              tmpRow += tmpValue + delimiter;
 
               var tmpValue = '';
               if(row['capabilities_url']){

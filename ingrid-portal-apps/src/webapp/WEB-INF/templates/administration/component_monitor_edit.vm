@@ -76,7 +76,7 @@
                         <div class="input-check">
                             <div class="control-group">
                                 <label class="control control--checkbox" for="component_active">
-                                    <input id="component_active" name="active" type="checkbox" #getChecked('active' '1')>
+                                    <input id="component_active" name="active" type="checkbox" value="1" #getChecked('active' '1')>
                                     <span class="control__indicator"></span>
                                     #displayFieldLabel('active' $MESSAGES.getString('component.forms.text.active'))
                                 </label>

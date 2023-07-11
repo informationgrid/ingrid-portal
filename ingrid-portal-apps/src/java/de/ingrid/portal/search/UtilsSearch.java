@@ -35,8 +35,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -1596,8 +1594,10 @@ public class UtilsSearch {
         for(ClauseQuery tmp : q.getClauses()){
             clauseQuery.addClause(tmp);
         }
-        for(FieldQuery tmp : q.getDataTypes()){
-            clauseQuery.addField(tmp);
+        if (q.get(IngridQuery.DATA_TYPE) != null) {
+            for(FieldQuery tmp : q.getDataTypes()){
+                clauseQuery.addField(tmp);
+            }
         }
         for(FieldQuery tmp : q.getFields()){
             clauseQuery.addField(tmp);
@@ -1617,13 +1617,13 @@ public class UtilsSearch {
         for(RangeQuery tmp : q.getRangeQueries()){
             clauseQuery.addRangeQuery(tmp);
         }
-        if(q.get("partner") != null){
-            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get("partner")){
+        if(q.get(IngridQuery.PARTNER) != null){
+            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get(IngridQuery.PARTNER)){
                 clauseQuery.addField(tmp);
             }
         }
-        if(q.get("provider") != null){
-            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get("provider")){
+        if(q.get(IngridQuery.PROVIDER) != null){
+            for(FieldQuery tmp : (ArrayList<FieldQuery>)q.get(IngridQuery.PROVIDER)){
                 clauseQuery.addField(tmp);
             }
         }
@@ -1732,10 +1732,10 @@ public class UtilsSearch {
         return "";
     }
 
-    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
-        return addCapabilitiesInformation(url, serviceTypeVersion, serviceType, null);
+    public static String addMapclientCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
+        return addMapclientCapabilitiesInformation(url, serviceTypeVersion, serviceType, null);
     }
-    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType, String additionalURLContent){
+    public static String addMapclientCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType, String additionalURLContent){
         StringBuilder urlValue = new StringBuilder(url);
         String service = null;
 
@@ -1770,8 +1770,12 @@ public class UtilsSearch {
             service = "WMTS";
         }
         if(service != null) {
-            if(service.equalsIgnoreCase("WMS") || service.equalsIgnoreCase("WMTS")) {
-                urlValue.append("&SERVICE=" + service);
+            if (url.indexOf("?") != -1) {
+                if (url.toLowerCase().indexOf("service=") == -1) {
+                    if(service.equalsIgnoreCase("WMS") || service.equalsIgnoreCase("WMTS")) {
+                        urlValue.append("&SERVICE=" + service);
+                    }
+                }
             }
             String cap = service + "||" + urlValue.toString().trim();
             if(additionalURLContent != null) {
@@ -1782,9 +1786,15 @@ public class UtilsSearch {
             } catch (UnsupportedEncodingException e) {
                log.error("Error URLEncode url: " + cap);
             }
-        }
-        if(service == null && !urlValue.toString().isEmpty()) {
-            String cap = "WMS||" + urlValue.toString().trim();
+        } else if((service == null && !urlValue.toString().isEmpty()) 
+                && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view")))) {
+            String defaultService = "WMS";
+            if (url.indexOf("?") != -1) {
+                if (url.toLowerCase().indexOf("service=") == -1) {
+                    urlValue.append("&SERVICE=" + defaultService);
+                }
+            }
+            String cap = defaultService + "||" + urlValue.toString().trim();
             if(additionalURLContent != null) {
                 cap += "||" + additionalURLContent;
             }

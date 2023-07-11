@@ -201,6 +201,9 @@
 ## Ortslage
 #parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_bwastr_name.vm")
 
+## WKT
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_wkt.vm")
+
 ## Auftragsnummer
 #parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_bwa_number.vm")
 

@@ -111,14 +111,13 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                     UtilsPortletServeResources.getHttpMarkerUVPLegendCounter(request, response, queryString, config);
                 }
             }
-            
+
             if(resourceID.equals( "facetValue" )){
                 String facetId = request.getParameter("facetId");
                 if(facetId != null) {
                     UtilsPortletServeResources.getHttpFacetValue(request, response, config, facetId);
                 }
             }
-
         } catch (Exception e) {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
@@ -170,9 +169,6 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
             restUrl.setResourceID( "legendCounter" );
             request.setAttribute( "restUrlLegendCounter", restUrl.toString() );
         }
-
-        restUrl.setResourceID( "facetValue" );
-        request.setAttribute( "restUrlFacetValue", restUrl.toString() );
 
         super.doView(request, response);
     }

@@ -62,6 +62,7 @@ import de.ingrid.portal.global.UniversalSorter;
 import de.ingrid.portal.global.UtilsFacete;
 import de.ingrid.portal.global.UtilsPortletServeResources;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.om.IngridFacet;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
 import de.ingrid.portal.search.SearchState;
@@ -96,6 +97,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         String resourceID = request.getResourceID();
         String paramURL = request.getParameter( "url" );
 
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()), request.getLocale());
+
         String login = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
         String password = PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_PASSWORD);
 
@@ -120,12 +124,23 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                             codelists.put(key, value);
                         }
                     }
-                    UtilsPortletServeResources.getHttpURLSearchDownload(request, response, paramRequestFields.split(";"), codelists);
+                    UtilsPortletServeResources.getHttpURLSearchDownload(request, response, paramRequestFields.split(";"), codelists, messages);
                 } catch (ParseException | JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
+        }
+        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) UtilsFacete.getAttributeFromSession(request, UtilsFacete.FACET_CONFIG);
+        try {
+            if(resourceID.equals( "facetValue" )){
+                String facetId = request.getParameter("facetId");
+                if(facetId != null) {
+                    UtilsPortletServeResources.getHttpFacetValue(request, response, config, facetId);
+                }
+            }
+        } catch (Exception e) {
+            log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
     }
 
@@ -198,6 +213,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put( "leafletBboxInverted", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_INVERTED));
         context.put( "leafletBboxColor", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_COLOR));
         context.put( "leafletBboxFillOpacity", PortalConfig.getInstance().getFloat(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_FILLOPACITY));
+        context.put( "leafletBboxWeight", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_WEIGHT));
 
         context.put("detailUseParamPlugid", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID));
 
@@ -524,6 +540,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         restUrl.setResourceID( "httpURLSearchDownload" );
         request.setAttribute( "restUrlHttpSearchDownload", restUrl.toString() );
         //context.put("providerMap", getProviderMap());
+
+        restUrl.setResourceID( "facetValue" );
+        request.setAttribute( "restUrlFacetValue", restUrl.toString() );
 
         super.doView(request, response);
     }

@@ -293,6 +293,7 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_LEAFLET_BBOX_INVERTED = "portal.mapclient.leaflet.bbox.inverted";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BBOX_COLOR = "portal.mapclient.leaflet.bbox.color";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BBOX_FILLOPACITY = "portal.mapclient.leaflet.bbox.fillOpacity";
+    public static final String PORTAL_MAPCLIENT_LEAFLET_BBOX_WEIGHT = "portal.mapclient.leaflet.bbox.weight";
 
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN = "portal.mapclient.uvp.category.dev.plan";
 
@@ -308,7 +309,7 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_FORM_LENGTH_CHECK_LOGIN = "portal.form.length.check.login";
 
-    public static final String PORTAL_FORM_STRENGTH_CHECK_PW = "portal.form.strength.check.passsword";
+    public static final String PORTAL_FORM_STRENGTH_CHECK_PW = "portal.form.strength.check.password";
 
     public static final String PORTAL_DETAIL_UPLOAD_PATH_INDEX= "portal.detail.upload.path.index";
 
@@ -351,6 +352,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MEASURE_NETWORKS_INITIAL = "portal.measure.networks.initial";
 
     public static final String PORTAL_MAPCLIENT_UVP_GEOCODER_SERVICE_URL = "portal.mapclient.uvp.geocoder.service.url";
+
+    public static final String PORTAL_IS_UVP = "portal.is.uvp";
 
     // private stuff
     private static PortalConfig instance = null;

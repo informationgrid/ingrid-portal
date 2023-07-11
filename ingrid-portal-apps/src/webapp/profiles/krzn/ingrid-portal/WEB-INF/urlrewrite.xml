@@ -153,6 +153,7 @@
         <to>/kartendienste</to>
     </outbound-rule>
     
+    
     <!-- Über InGrid-Portal  -->
     <rule>
         <from>/hintergrundinformationen</from>
@@ -182,7 +183,7 @@
         <from>/portal/main-about-data-source.psml</from>
         <to>/datenquellen</to>
     </outbound-rule>
-    
+
     <!-- Mein Portal  -->
     <rule>
         <from>/log-in</from>
@@ -202,6 +203,15 @@
         <from>/portal/privacy.psml</from>
         <to>/datenschutzbestimmung</to>
     </outbound-rule>
+
+    <rule>
+        <from>/datenschutzbestimmung</from>
+        <to type="permanent-redirect">https://www.krzn.de/datenschutzerklaerung</to>
+    </rule>
+    <rule>
+        <from>/portal/privacy.psml</from>
+        <to type="permanent-redirect">https://www.krzn.de/datenschutzerklaerung</to>
+    </rule>
     
     <!-- Weitere Meldungen  -->
     <rule>
@@ -243,6 +253,15 @@
         <to>/impressum</to>
     </outbound-rule>
 
+    <rule>
+        <from>/impressum</from>
+        <to type="permanent-redirect">https://www.krzn.de/impressum</to>
+    </rule>
+    <rule>
+        <from>/portal/disclaimer.psml</from>
+        <to type="permanent-redirect">https://www.krzn.de/impressum</to>
+    </rule>
+
     <!-- Barrierefreiheit  -->
     <rule>
         <from>/barrierefreiheit</from>
@@ -253,15 +272,14 @@
         <to>/barrierefreiheit</to>
     </outbound-rule>
 
-    <!-- RSS Page  -->
     <rule>
-        <from>^/rss</from>
-        <to type="forward">/portal/rsspage.psml</to>
+        <from>/barrierefreiheit</from>
+        <to type="permanent-redirect">https://www.krzn.de/erklaerung-zur-barrierefreiheit</to>
     </rule>
-    <outbound-rule>
-        <from>/portal/rsspage.psml</from>
-        <to>/rss</to>
-    </outbound-rule>
+    <rule>
+        <from>/portal/accessibility.psml</from>
+        <to type="permanent-redirect">https://www.krzn.de/erklaerung-zur-barrierefreiheit</to>
+    </rule>
 
     <!-- SearchDetail -->
     <rule>
@@ -282,15 +300,5 @@
         <from>/portal/help.psml</from>
         <to>/hilfe</to>
     </outbound-rule>
-
-    <!-- Api -->
-    <rule>
-        <from>/api</from>
-        <to type="forward">/portal/application/main-application.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/application/main-application.psml</from>
-        <to>/api</to>
-    </outbound-rule>
-
+    
 </urlrewrite>

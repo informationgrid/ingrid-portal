@@ -1,0 +1,8 @@
+    <div class="paging caption show-for-large is-hidden">
+        <a href="#" class="filter-up disabled" title="$MESSAGES.getString('searchResult.facete.filter.up')">
+            <span class="ic-ic-angle-up"></span>
+        </a>
+        <a href="#" class="filter-down disabled" title="$MESSAGES.getString('searchResult.facete.filter.down')">
+            <span class="ic-ic-angle-down"></span>
+        </a>
+    </div>

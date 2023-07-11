@@ -5,6 +5,7 @@
     <div class="footer-buttons-bar show-for-medium hide-for-print">
         #parse("/decorations/layout/ingrid/templates/footer/body_footer_socials.vm")
         #parse("/decorations/layout/ingrid/templates/footer/body_footer_login.vm")
+        #parse("/decorations/layout/ingrid/templates/footer/body_footer_print.vm")
         #parse("/decorations/layout/ingrid/templates/footer/body_footer_up.vm")
     </div>
     <div class="footer">

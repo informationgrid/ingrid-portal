@@ -30,8 +30,11 @@
             </div>
         </div>
     </div>
+#parse ('/WEB-INF/templates/facete/facete_scroll.vm')
 </div>
 #parse ('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
+#parse ('/WEB-INF/templates/facete/facete_or.vm')
+#parse ('/WEB-INF/templates/facete/facete_scroll_script.vm')
 
 #macro(renderFacetCategory $nodes)
     #foreach($node in $nodes)
@@ -170,7 +173,7 @@
                     #end
                 #end
                 <ul class="accordion filter-group" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
-                    <li class="accordion-item #if($facet.isSelect() || $facet.isOpen())is-active#end" data-accordion-item>
+                    <li class="accordion-item #if($facet.isSelect() || $facet.isOpen() || $selectedGroup.indexOf($facet.getId()) > -1 )is-active#end" data-accordion-item>
                         <a href="#" class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label">
                             <span class="text">
                             #if($facet.getCodelistId())
@@ -565,28 +568,4 @@
             #renderCrossLink($action $MESSAGES.getString("searchResult.facete.wildcard.name.delete"))
         #end
     </form>
-#end
-
-#if($restUrlFacetValue)
-<script>
-    $('.control--checkbox').each(function(index) {
-        var element = $(this);
-        var input = element.find('input');
-        var spanNr = element.find('.nr-results');
-        if(input.length > 0 && spanNr.length > 0) {
-            var id = input.attr('id');
-            var spanNrValue= spanNr.text().trim();
-            if(id && spanNrValue === "(0)") {
-                jQuery.get("$restUrlFacetValue?facetId=" + id.replace('facet-', '') )
-                .done(function(data, textStatus, jqxhr) {
-                    if(data) {
-                        spanNr.text('(' + data + ')');
-                    }
-                })
-                .error(function () {
-                });
-            }
-        }
-    })
-</script>
 #end

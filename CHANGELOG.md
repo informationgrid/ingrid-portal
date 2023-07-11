@@ -1,4 +1,35 @@
 
+## 6.2.0 (11.07.2023)
+
+### Features
+
+* Portal: Facettenanpassungen für Messverfahren und Similationsdaten (#5265)
+* Neue Verlinkung im Menü auf TEST (#5262)
+* Umstellung für Ansicht "nur aktuelle" (#5190)
+* PORTAL: Umsetzung Layout inkl. Profilerstellung (#5146)
+* PORTAL: Zweiter editierbarer "Textbaustein" oder feste Ergänzung eines Textes (#5142)
+* Reduzierung Memory Verbrauch (Anpassung der Garbage Collection Settings in JAVA) (#5117)
+* Aktivierung des API Menübereichs im HMDK-Profil (#5056)
+* ARS-Tool in die Hilfe als Link einfügen (#5045)
+* Facettierung verbessern, Mehrfachauswahl ermöglichen (#5043)
+* Alle Layer eines Ordners mit Checkbox aktivieren (#5023)
+* Weiterentwicklung Portfolio (#4997)
+* Portal: Anzeige der räumlichen Ausdehnung ändern (#4985)
+* HMDK Profil: Linkanpassung bei "Kartenansicht öffnen" (#4680)
+* Portal: Reihung der Angaben ändern (#4533)
+* NUMIS-/UVP-Portal: Erkennung von Brute-Force-Attacken im Anmeldeprozess (#1343)
+
+### Bugfixes
+
+* Feststellungen im Update AdV-MIS auf 6.1.1, Portal: fehlende Ausgabe "Zeitbezug der Daten"  (#5320)
+* Mouseover beim Vorschaubild umbenennen  (#5090)
+* Suchergebnisseite fügt KartenClientparameter hinzu. History wird verfälscht  (#5062)
+* PORTAL: Kartenansicht bei WFS-Diensten entfernen  (#5051)
+* Dienste-URLs werden nicht korrekt in die Kartenansicht importiert  (#5042)
+* URL Überprüfung schlägt bei Vorschaugrafiken fehl  (#4807)
+* Die Passwortstärke lässt sich nicht (wie dokumentiert) verstellen  (#4690)
+* Portal Detaildarstellung, Umbenennung "Zeitbezug der Metadaten"  (#4355)
+    
 ## 6.1.0 (19.04.2023)
 
 ### Features

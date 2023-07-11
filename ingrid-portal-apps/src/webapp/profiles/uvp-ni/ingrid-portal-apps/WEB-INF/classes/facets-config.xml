@@ -646,6 +646,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>Bauleitplanung</name>
                 <query>procedure:dev_plan</query>
+                <parentId>procedure</parentId>
                 <id>procedure_dev_plan</id>
                 <icon>ic-B</icon>
                 <display>true</display>

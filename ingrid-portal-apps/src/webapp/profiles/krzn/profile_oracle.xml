@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>krzn</name>
+    <description>Portal-Profile für KRZN</description>
+    <pages>
+        <page>
+            <name>main-measures.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-about-data-source.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-about-partner.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-maps.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>service-sitemap.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>help.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>accessibility.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>search-catalog/search-catalog-hierarchy.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>search-catalog/search-catalog-hierarchy.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>application/main-application.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>main-search.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimpleResult</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::SearchResult</name>
+                </portlet>
+            </portlets>
+        </page>
+    </pages>
+    <files>
+        <!-- COPY KRZN FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek-application/</src>
+        </file>
+    </files>
+    <sql>
+        <!-- Change 'ingrid-portal-apps::SearchSimpleResult' decorator -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-clear' WHERE name='ingrid-portal-apps::SearchSimpleResult']]>
+        </execute>
+        <!-- Disable language switcher -->
+        <execute>
+            <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link']]>
+        </execute>
+        <!-- Delete user default-page.psml -->
+        <execute>
+            <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml']]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/application']]>
+        </execute>
+    </sql>
+</profile>

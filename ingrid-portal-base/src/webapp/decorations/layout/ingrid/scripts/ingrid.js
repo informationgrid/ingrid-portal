@@ -421,7 +421,7 @@ function updateQueryStringParameter(key, value) {
   else {
     uri = uri + separator + key + "=" + value;
   }
-  window.history.pushState(null,null, uri);
+  window.history.replaceState(null,null, uri);
 }
 
 function getQueryStringParameter(key) {
@@ -474,9 +474,9 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, bboxFil
         map.spin(false);
       } else {
         if(wkt) {
-          addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted);
+          addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted);
         } else if (coords) {
-          addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted);
+          addLayerBounds(map, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted);
         }
         map.spin(false);
       }
@@ -485,22 +485,22 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, bboxFil
     if(wkt) {
       addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted);
     } else if (coords) {
-      addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted);
+      addLayerBounds(map, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted);
     }
   }
 }
 
-function addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted) {
+function addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted) {
   var features = L.geoJSON(JSON.parse(wkt));
   if(features) {
       features.addTo(map);
       map.fitBounds(features.getBounds());
   } else {
-      addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted);
+      addLayerBounds(map, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted);
   }
 }
 
-function addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted) {
+function addLayerBounds(map, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted) {
   if(inverted) {
     var geojson = [];
     coords.forEach(function(coord) {
@@ -520,7 +520,7 @@ function addLayerBounds(map, coords, bboxColor, bboxFillOpacity, inverted) {
       invert: true,
       color: bboxColor,
       fillOpacity: bboxFillOpacity,
-      weight: 1
+      weight: bboxWeight || 1
     }).addTo(map);
   } else {
     coords.forEach(function(coord) {

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DOKUMENTATION
+
+Diese Datei dient zur Konfiguration der Facettierung. Hier können weitere Facetten definiert werden oder auch entfernt werden. 
+Standardmäßig sind hier die Facettierungseinstellungen von InGrid-Portal definiert.
+
+Für die Facette (<facet>) sind folgende Tags Pflicht:
+- <name>
+- <id>
+
+Eine Facette (<facet>), welches zur Auswahlt dient, müssen dazu einen Tag <query> bzw. <from>, <to> enthalten. 
+
+Struktur:
+*********
+<facets>
+    <facet> ***************************************** Neuer Facettierungsbaum (zum Ein-/Ausklappen)
+        <name></name> ******************************* Facettierungsbaum-Name (lokalisiert per Portal-Resource-Key oder nicht lokalisiert als reiner Text)
+        <id></id> *********************************** Facettierungsbaum-ID (dieser muss eindeutig sein und darf bei weiteren Facetten nicht existieren)
+        <isOpen></isOpen>**************************** Facettierungsbaum wird bei true aufgeklappt dargestellt (default: false)
+        
+        <facets> ************************************ Facettierungsbaum-Kinder (zur Auswahl)
+            <facet> ********************************* Neuer Facettierungs-Kind (kann die Eigenschaft "sort" enthalten, siehe unten)
+                <name></name> *********************** Neuer Facettierungs-Kind-Name
+                <id></id> *************************** Neuer Facettierungs-Kind-ID 
+                <query></query> ********************* Neuer Facettierungs-Kind-Abfrage
+                 
+                <facets> **************************** Facettierungsbaum-Enkeln (zur Auswahl und kann die Eigenschaft "queryType" enthalten, siehe unten)
+                    <facet> ************************* Facettierungsbaum-Enkel
+                        <name></name> *************** Facettierungsbaum-Enkel-Name
+                        <query></query> ************* Facettierungsbaum-Enkel-Abfrage
+                        <id></id> ******************* Facettierungsbaum-Enkel-ID
+                    </facet>
+                    ...
+                </facets>
+            </facet>
+            ...
+        </facets>
+    </facet>
+    ...
+</facets>
+
+Weitere Facetten-Tags/Eigenschaften:
+****************
+<dependency>"ID"</dependency>:
+ - Diese Facetten-Tag dient dazu eine Abhängigkeit zu beschreiben, d.h. wird die existierende definierte Facetten-ID ausgewählt, so wird diese Facette sichtbar. (siehe Facette "Akualität") 
+  
+<hidden>"ID"</hidden>:
+ - Dieser Facetten-Tag dient dazu eine Facette verschwinden zu lassen, sobald die existierende definierte Facetten-ID ausgewählt wird. (siehe Facette "Raumbezug")  
+
+<facet sort="">:
+Für die Sortierung der Unterfacetten eine Facette existieren vier Möglichkeiten:
+ - Absteigend nach Facettenwert - "SORT_BY_VALUE_DESC"
+ - Aufsteigend nach Facettenwert - "SORT_BY_VALUE_ASC"
+ - Alphabetisch nach Facettenname - "SORT_BY_NAME"
+ - keine Sortierung
+
+<codelist-id>"ID"</codelist-id> und <codelist-entry-id>"ID"</codelist-entry-id>:
+- Diese Facetten-Tags definieren den Titel der Facette im Portal. Hierbei wird er Titel aus der Codelist mit der ID ("<codelist-id>") und dem Codelisten-Eintrag mit der ID ("<codelist-entry-id>") zu entnehmen.
+
+<field>"INDEX-FELD"</field>:
+- Dieser Facetten-Tag erzeugt eine oder mehrere Facetten über das Indexfeld. 
+
+<codelist>"ID"</codelist> und <codelist-field>"KEY"</codelist-field>:
+- Hiermit wird eine Facette aus der Codelist mit der ID und dem Feld aus den Codelist-Einträgen erzeugt. 
+
+Spezielle Facetten:
+*************************
+Themen:
+Bei Betätigung der Themen-Facette (<id>topic</id>) wird diese mit Unterthemen erweitert, welches als ODER-Abfrage (Mehrauswahl) ausgewählt werden können.
+Die Unterthemen werden aus der Datenbank des Portals gelesen und sind hier in der Konfiguration nicht definiert.
+ 
+Aktualität:
+Die Facette Aktualität enthält keine <query>-Tag, wie üblich, sondern hier wird die Query aus den Tags <from> sowie <to> erstellt, deren Inhalt eine Zeit-Periode beschreibt.
+Die Notation (entspricht dem Format ISO 8601) für die Zeit-Periode ist folgendermaßen: (vom aktuellen Datum aus)
+
+ - P -> Bezeichnet, das nachfolgende Zeichen die Dauer einer Periode repräsentieren
+ - Y -> Positive Zahl, Anzahl von Jahren
+ - M -> Positive Zahl, Anzahl von Monaten
+ - D -> Positive Zahl, Anzahl von Tage
+ - T -> Bezeichnet, das nachfolgende Zeichen die Dauer einer Periode repräsentieren
+ - H -> Positive Zahl, Anzahl von Stunden
+ - M -> Positive Zahl, Anzahl von Minuten
+ - S -> Positive Zahl, Anzahl von Sekunden
+Beispiel: Eine Dauer von 5 Tagen, 4 Stunden und 30,7 Minuten hat folgenden Notation: P5DT4H30.7M
+ 
+Anbieter: (Analog zu Themen)
+Die Facette Anbieter (<id>provider</id>) wird aus der Portal-Datenbank generiert. Dabei werden die Partner als UND-Abfrage (Einfachauswahl), man kann nur einen Partner auswählen, 
+und deren Anbieter als ODER-Abfrage (Mehrauswahl), man kann mehrere Anbieter gleichzeitig auswählen, durchgeführt.
+
+Raumbezug:
+Die Facette Raumbezug (<id>area</id>) ist eine spezielle Facette. Hier werden keine Facetten gesendet, sondern nur Abfragen ausgeführt.
+- Raumbezug-Abfrage aus der Karte
+- Raumbezug-Abfrage aus dem Geothesaurus
+
+Raumbezug Adressen:
+Die Facette Raumbezug Addressen (<id>area.address</id>) ist eine spezielle Facette. Hier werden keine Facetten gesendet, sondern nur Abfragen ausgeführt.
+- Adressen-Raumbezugsabfrage anhand der Eingabe von Straße, Postleitzahl und/oder Ort.
+
+Attribute:
+Die Facette Attribute (<id>Attribute</id>) ist eine spezielle Facette. Hier werden keine Facetten gesendet, sondern nur Abfragen ausgeführt.
+- Forschungsprojekte-Attributenabfrage anhand der Eingabe von Projektname, Institution, Projektleiter, Beteiligte, Projektträger und/oder Laufzeit.
+
+
+Facetten-Klassen (Nicht-indexbasierte iPlugs)
+****************
+Wird eine Facette (<facet>) erstellt, deren Query (<query>) ein Nicht-indexbasiertes iPlug (z.B. Opensearch-iPlug) abfragt, so muss diese Facette zunächst im iPlug definiert werden.
+Um eine Definition in solch einen iPlug durchzuführen, fügt man der Datei "springapp-servlet.xml" (unter "<IPLUG_INSTALLATION>/webapp/WEB-INF") folgenden Eintrag hinzu:
+
+...
+<bean id="plugDescriptionFacetCounter"
+       class="de.ingrid.search.utils.facet.counter.DscPlugdescriptionFacetCounter">
+       <property name="plugDescriptionWrapper">
+           <ref bean="plugDescriptionWrapper" />
+       </property>
+       <property name="facetClassDefinitions">
+           <list>
+                   ...
+                   <value>test3:test23</value>         // Siehe Beispiel: "Test UND-Abfrage"
+                   ...
+           </list>
+    </property>
+</bean>
+....
+
+Unter "property" (property>) mit dem Namen "facetClassDefinitions" erweitert man die Liste (<list>) mit dem Wert (<value>):
+<value>"FACET-PARENT-ID":"FACET-ID"</value>
+
+Dadurch wird von dem iPlug eine Facetten-Klasse mit der Notation "FACET-PARENT-ID":"FACET-ID" zurückgeliefert. 
+
+
+Beispiele:
+**********
+Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dialog)
+ -->
+ 
+<facets>
+    <!-- Ergebnistypen -->
+    <facet>
+        <name>searchResult.facete.title.types</name>
+        <id>type</id>
+        <isOpen>true</isOpen>
+        <facets>
+        <!-- Anwendung -->
+            <facet>
+                <name>searchResult.facete.metaclass.application</name>
+                <query>t01_object.obj_class:6</query>
+                <id>application</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>6</codelist-entry-id>
+            </facet>
+        <!-- Geo-Information / Karte -->
+            <facet>
+                <name>searchResult.facete.metaclass.map</name>
+                <query>t01_object.obj_class:1</query>
+                <id>map</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>1</codelist-entry-id>
+            </facet>
+        <!-- Geodatendienst -->
+            <facet>
+                <name>searchResult.facete.metaclass.geoservice</name>
+                <query>t01_object.obj_class:3</query>
+                <id>geoservice</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>3</codelist-entry-id>
+            </facet>
+        <!-- INSPIRE-relevant -->
+            <facet>
+                <name>INSPIRE</name>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
+                <id>inspire</id>
+            </facet>
+        <!-- Open Data -->
+           <facet>
+                <name>Open Data</name>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
+                <id>opendata</id>
+            </facet>
+        </facets>
+    </facet>
+    <!-- Aktualität (Metadaten)-->
+    <!-- Kann erweitert werden -->
+    <facet>
+        <name>searchResult.facete.title.time</name>
+        <id>modtime</id>
+        <dependency>metadata</dependency>
+        <facets>
+            <!-- letzter Monat -->
+            <facet>
+                <name>searchResult.facete.time.1</name>
+                <id>modtime1</id>
+                <from>P1MT</from>
+                <to>PT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+            </facet>
+            <!-- letzte 3 Monate -->
+            <facet>
+                <name>searchResult.facete.time.2</name>
+                <id>modtime2</id>
+                <from>P3MT</from>
+                <to>P1M1DT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+            </facet>
+            <!-- letztes Jahr -->
+            <facet>
+                <name>searchResult.facete.time.3</name>
+                <id>modtime3</id>
+                <from>P1YT</from>
+                <to>P3M1DT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+            </facet>
+            <!-- letzte 5 Jahre -->
+            <facet>
+                <name>searchResult.facete.time.4</name>
+                <id>modtime4</id>
+                <from>P5YT</from>
+                <to>P1Y1DT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+            </facet>
+            <!-- Älter als 5 Jahre -->
+            <facet>
+                <name>searchResult.facete.time.5</name>
+                <id>modtime5</id>
+                <from></from>
+                <to>P5Y1DT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+            </facet>
+        </facets>
+    </facet>
+    <!-- Anbieter -->
+    <!-- Standard - Kann nicht erweitert werden -->
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>searchResult.facete.title.provider</name>
+        <id>provider</id>
+    </facet>
+    <!-- Zeitbezug -->
+    <!-- Kann erweitert werden -->
+    <facet>
+        <name>searchResult.facete.title.timeref</name>
+        <id>timeref</id>
+        <dependency>metadata</dependency>
+    </facet>
+    <!-- Raumbezug -->
+    <!-- Standard - Kann nicht erweitert werden -->
+    <facet>
+        <name>searchResult.facete.title.area</name>
+        <id>area</id>
+        <hidden>address</hidden>
+    </facet>
+    <facet>
+        <name>searchResult.facete.title.area</name>
+        <id>area.map</id>
+        <hidden>address</hidden>
+    </facet>
+    <!-- Raumbezug Adressen-->
+    <!-- Standard - Kann nicht erweitert werden -->
+    <facet>
+        <name>searchResult.facete.title.area.address</name>
+        <dependency>address</dependency>
+        <id>area.address</id>
+    </facet>
+    <!-- Attribute (Forschungsprojekte)-->
+    <!-- Standard - Kann nicht erweitert werden -->
+    <facet>
+        <name>searchResult.facete.title.attribute</name>
+        <dependency>research</dependency>
+        <id>attribute</id>
+    </facet>
+    <!-- Kategorie -->
+    <facet>
+        <name>Kategorie</name>
+        <id>category</id>
+        <categoryOnly>true</categoryOnly>
+        <facets>
+        <!-- Anwendung -->
+            <facet>
+                <name>searchResult.facete.metaclass.application</name>
+                <query>t01_object.obj_class:6</query>
+                <id>application</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>6</codelist-entry-id>
+                <parentId>type</parentId>
+                <icon>ic-chemie</icon>
+            </facet>
+        <!-- Geo-Information / Karte -->
+            <facet>
+                <name>searchResult.facete.metaclass.map</name>
+                <query>t01_object.obj_class:1</query>
+                <id>map</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>1</codelist-entry-id>
+                <parentId>type</parentId>
+                <icon>ic-map</icon>
+            </facet>
+        <!-- Geodatendienst -->
+            <facet>
+                <name>searchResult.facete.metaclass.geoservice</name>
+                <query>t01_object.obj_class:3</query>
+                <id>geoservice</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>3</codelist-entry-id>
+                <parentId>type</parentId>
+                <icon>ic-ic-dienste</icon>
+            </facet>
+        <!-- INSPIRE-relevant -->
+            <facet>
+                <name>INSPIRE</name>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
+                <id>inspire</id>
+                <parentId>type</parentId>
+                <icon>ic-inspire</icon>
+            </facet>
+        <!-- Open Data -->
+           <facet>
+                <name>Open Data</name>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
+                <id>opendata</id>
+                <parentId>type</parentId>
+                <icon>ic-opendata</icon>
+            </facet>
+        </facets>
+    </facet>
+</facets>

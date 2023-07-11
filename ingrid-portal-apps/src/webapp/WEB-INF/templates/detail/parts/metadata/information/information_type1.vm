@@ -16,6 +16,12 @@
     #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_vector"), $xPathInfo1MD_VectorSpatialRepresentationGeometricObjects, $headTitles, $headXpathExpressions, $headCodeList))
 ## Erstellungsmaßstab
     #renderTableAsList("" $TOOL.getReferenceObject($xPathInfo1MDResolution) $hideResolutionTitle)
+## Fachliche Grundlage
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
+## Datengrundlage
+    #renderTextListTable($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getListOfValuesFromXPath($xPathInfo1LISourceDescription, "."))
+## Herstellungsprozess
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.method") $TOOL.getValueFromXPath($xPathInfo1LIProcessStep))
 ## Symbolkatalog
     #set($headTitles = [$MESSAGES.getString("t011_obj_geo_symc.symbol_cat"),$MESSAGES.getString("t011_obj_geo_symc.symbol_date"),$MESSAGES.getString("t011_obj_geo_symc.edition")])
     #set($headXpathExpressions = ["./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:title","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:edition"])
@@ -25,15 +31,9 @@
 ## Schlüsselkatalog
     #set($headTitles = [$MESSAGES.getString("t011_obj_geo_keyc.subject_cat"),$MESSAGES.getString("t011_obj_geo_keyc.key_date"),$MESSAGES.getString("t011_obj_geo_keyc.edition")])
     #set($headXpathExpressions = ["./gmd:title","./gmd:date/gmd:CI_Date/gmd:date","./gmd:edition"])
-    #renderTextTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_keyc"), $xPathInfo1MDFeatureCatalogueDescriptionFeatureCatalogueCitation, $headTitles, $headXpathExpressions))
-## Fachliche Grundlage
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
-## Datengrundlage
-    #renderTextListTable($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getListOfValuesFromXPath($xPathInfo1LISourceDescription, "."))
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_keyc"), $xPathInfo1MDFeatureCatalogueDescriptionFeatureCatalogueCitation, $headTitles, $headXpathExpressions))
 ## Sachdaten/Attributinformation
     #renderTextListTable($MESSAGES.getString("t011_obj_geo_supplinfo.feature_type") $TOOL.getListOfValuesFromXPath($xPathInfo1MDFeatureCatalogueDescriptionFeatureTypes, "."))
-## Herstellungsprozess
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.method") $TOOL.getValueFromXPath($xPathInfo1LIProcessStep))
 ## Geometrie-Kontext
     #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_geometrie_context.vm")
 </div>

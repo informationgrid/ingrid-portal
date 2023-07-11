@@ -171,6 +171,7 @@
     #end
     #parse("/decorations/layout/ingrid/templates/decorator/decorator_service_navigation_footer.vm")
     #parse("/decorations/layout/ingrid/templates/header/body_header_login_link.vm")
+    #parse("/decorations/layout/ingrid/templates/header/body_header_links_service_additional.vm")
     </div>
     <div class="menu-sub-links">
     #if($jetspeed.getLoggedOn())
