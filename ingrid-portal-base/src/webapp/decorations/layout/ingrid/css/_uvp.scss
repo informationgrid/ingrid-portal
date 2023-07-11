@@ -2377,10 +2377,27 @@ footer {
   }
 }
 
-.filter .teaser-data.search {
-  padding: 8px;
-  border: 2px solid #FFFFFF;
-  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+.filter {
+  .paging.caption {
+    padding: 12px 6px;
+  
+    .filter-up, .filter-down {
+      font-size: 32px;
+    }
+    .filter-up:hover, .filter-down:hover {
+      text-decoration: none;
+    }
+    .filter-up.disabled, .filter-down.disabled {
+      pointer-events: none;
+      cursor: default;
+      color: #3a566d;
+    }
+    .teaser-data.search {
+      padding: 8px;
+      border: 2px solid #FFFFFF;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
+  }
 }
 
 .filter .nav-group .accordion-item .accordion-title {

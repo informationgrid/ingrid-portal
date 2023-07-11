@@ -30,8 +30,66 @@
             </div>
         </div>
     </div>
+    <div class="paging caption show-for-large">
+        <a href="#" class="filter-up disabled" title="$MESSAGES.getString('searchResult.facete.filter.up')">
+            <span class="ic-ic-angle-up"></span>
+        </a>
+        <a href="#" class="filter-down disabled" title="$MESSAGES.getString('searchResult.facete.filter.down')">
+            <span class="ic-ic-angle-down"></span>
+        </a>
+    </div>
 </div>
 #parse ('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
+
+#parse ('/WEB-INF/templates/facete/facete_or.vm')
+
+<script>
+
+$('.filter-down').click(function(event){
+    event.preventDefault();
+    var elems = $(".filter .filter-wrapper");
+    if(elems.length > 0) {
+      var elem = elems[0];
+      elem.scrollBy(0,200);
+    }
+});
+
+$('.filter-up').click(function(event){
+    event.preventDefault();
+    var elems = $(".filter .filter-wrapper");
+    if(elems.length > 0) {
+      var elem = elems[0];
+      elem.scrollBy(0,-200);
+    }
+});
+
+function checkFilter() {
+  var elems = $(".filter .filter-wrapper");
+  if(elems.length > 0) {
+    var elem = elems[0];
+    if(elem.scrollTop === elem.scrollHeight - elem.clientHeight) {
+      $(".filter-up").removeClass('disabled');
+      $(".filter-down").addClass('disabled');
+    }else if(elem.scrollTop === 0) {
+      $(".filter-up").addClass('disabled');
+      $(".filter-down").removeClass('disabled');
+    }else {
+      $(".filter-up").removeClass('disabled');
+      $(".filter-down").removeClass('disabled');
+    }
+  }
+}
+
+$( ".filter .filter-wrapper" ).on( "scroll", function() {
+  checkFilter();
+});
+
+$( ".filter .filter-wrapper" ).ready(function() {
+  checkFilter();
+});
+
+new ResizeObserver(checkFilter).observe(document.querySelector(".filter-wrapper > .boxes"));
+</script>
 
 #macro(renderFacetCategory $nodes)
     #foreach($node in $nodes)
@@ -566,5 +624,3 @@
         #end
     </form>
 #end
-
-#parse ('/WEB-INF/templates/facete/facete_or.vm')
