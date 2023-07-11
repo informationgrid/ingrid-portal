@@ -22,15 +22,19 @@ function checkFilter() {
   if(elems.length > 0) {
     var elem = elems[0];
     if(elem.scrollTop === elem.scrollHeight - elem.clientHeight && elem.scrollTop === 0) {
+      $(".filter .paging").addClass('is-hidden');
       $(".filter-up").addClass('disabled');
       $(".filter-down").addClass('disabled');
     }else if(elem.scrollTop === elem.scrollHeight - elem.clientHeight) {
+      $(".filter .paging").removeClass('is-hidden');
       $(".filter-up").removeClass('disabled');
       $(".filter-down").addClass('disabled');
     }else if(elem.scrollTop === 0) {
+      $(".filter .paging").removeClass('is-hidden');
       $(".filter-up").addClass('disabled');
       $(".filter-down").removeClass('disabled');
     }else {
+      $(".filter .paging").removeClass('is-hidden');
       $(".filter-up").removeClass('disabled');
       $(".filter-down").removeClass('disabled');
     }
