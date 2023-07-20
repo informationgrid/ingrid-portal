@@ -1,0 +1,5 @@
+<div class="logo">
+    <a href="https://www.krzn.de" target="_blank" title="$MESSAGES.getString('ingrid.page.logo.alt.footer')">
+        <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.footer')"/>
+    </a>
+</div>

@@ -9,11 +9,9 @@
       </div>
       <div class="columns xsmall-10 small-10 medium-20 large-20 xlarge-18">
         <div class="desktop__title">
-          <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="Startseite vom Geodatenkatalog Niederrhein aufrufen ">
-            <span>
-              <strong>G</strong>eodatenkatalog <strong>N</strong>iederrhein
-            </span>
-          </a>
+          <span>
+            <strong>G</strong>eodatenkatalog <strong>N</strong>iederrhein
+          </span>
         </div>
       </div>
     </div>
