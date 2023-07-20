@@ -20,6 +20,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>service-contact.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>service-sitemap.psml</name>
             <hidden>true</hidden>
         </page>

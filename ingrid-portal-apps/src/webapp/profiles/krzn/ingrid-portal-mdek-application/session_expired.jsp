@@ -79,17 +79,15 @@
                             <div class="columns xsmall-4 small-4 medium-4 large-4 xlarge-4">
                                 <div class="logo" role="banner">
                                     <a href="/startseite" title="Startseite vom Geodatenkatalog Niederrhein">
-                                        <img src="/decorations/layout/ingrid/images/template/logo.png" alt="KRZN - Indexieren, Recherchieren, Visualisieren, Teilen">
+                                        <img src="/decorations/layout/ingrid/images/template/logo.png" alt="Geodatenkatalog Niederrhein - Indexieren, Recherchieren, Visualisieren, Teilen">
                                     </a>
                                 </div>
                             </div>
                             <div class="columns xsmall-10 small-10 medium-20 large-20 xlarge-18">
                                 <div class="desktop__title">
-                                    <a href="/startseite" title="Startseite vom Geodatenkatalog Niederrhein aufrufen ">
-                                        <span>
-                                            <strong>G</strong>eodatenkatalog <strong>N</strong>iederrhein
-                                        </span>
-                                    </a>
+                                    <span>
+                                        <strong>G</strong>eodatenkatalog <strong>N</strong>iederrhein
+                                    </span>
                                 </div>
                             </div>
                         </div>

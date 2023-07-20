@@ -127,12 +127,6 @@ body {
   font-family: 'icomoon-krzn';
 }
 
-.ic-ic-dienste:before {
-  content: "\e995";
-  color: #6FC528;
-  font-family: 'icomoon-krzn';
-}
-
 .ic-ic-double-arrow-left:before {
   content: "\ea1f";
   color: #6FC528;
@@ -279,7 +273,7 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  font-family: 'Urbanist';
+  font-family: 'Urbanist-bold';
   color: #1F427C;
   font-style: unset;
   font-weight: unset;
@@ -333,7 +327,6 @@ blockquote .author,
 .helper.icon span.text,
 .helper.icon.info span.text,
 .helper.place,
-.detail .section h2, .detail .section h3,
 .detail .search-filtered .teaser-data .columns,
 .detail .banner-noimage .helper.icon .text-normal,
 .document-list .image a.icon,
@@ -390,12 +383,13 @@ h3 span, h4 span, h5 span {
 .accordion-title,
 .menu-main-links .button.logout, .menu-sub-links .button.logout,
 .menu-main-links a,
-.menu-main-links a.header-menu-entry,
-.search-filtered .table:not(.table--lined) table tr th {
+.menu-main-links a.header-menu-entry {
   font-family: 'Urbanist-medium';
 }
+.detail .section h2, .detail .section h3,
 .search-filtered .table table th:first-child,
-.nested-group .accordion-title {
+.nested-group .accordion-title,
+.search-filtered .table:not(.table--lined) table tr th {
   font-family: 'Urbanist-bold';
 }
 .banner.home h1.green {
@@ -447,6 +441,10 @@ ul li::before {
 }
 .teaser-data .icon [class^="ic-"]:before, .teaser-data .icon [class*=" ic-"]:before {
   color: #1F427C;
+}
+
+.teaser-data .js-expander-content .icon [class^="ic-"]:before, .teaser-data .js-expander-content .icon [class*=" ic-"]:before {
+  color: #6FC528;
 }
 
 .banner.home .home-wrapper .indent span {
@@ -715,6 +713,7 @@ header {
   font-family: 'Urbanist-bold';
   font-size: 44px;
   color: #6FC528;
+  text-transform: uppercase !important;
 }
 .banner.home h1.green span {
   display: none;
@@ -730,6 +729,13 @@ header {
   background-color: #1F427C;
 }
 
+.detail .banner-noimage .page-wrapper .icon [class^="ic-"]:before {
+  color: #FFFFFF;
+}
+
+.detail .teaser-data .icon [class^="ic-"]:before, .teaser-data .icon [class*=" ic-"]:before {
+  color: #6FC528;
+}
 .detail .banner-noimage h2 {
   color: #FFF;
   font-family: 'Urbanist-medium';
@@ -1357,6 +1363,9 @@ header .desktop__title strong {
     font-size: 36px;
     top: 32px;
   }
+  .shrink header .desktop__title {
+    top: 8px;
+  }
 }
 
 @media print, screen and (min-width: 64em) {
@@ -1491,4 +1500,28 @@ a.icon:focus {
 li.accordion-item.is-active > .accordion-title::after {
     content: '\ea41';
     font-family: 'icomoon-krzn';
+}
+
+.filter-up [class^="ic-"]:before {
+  content: '\ea41';
+  font-family: 'icomoon-krzn';
+  color: #6FC528;
+}
+
+.filter-up:hover [class^="ic-"]:before {
+  color: #1F427C;
+}
+
+.filter-down [class^="ic-"]:before {
+  content: '\ea43';
+  font-family: 'icomoon-krzn';
+  color: #6FC528;
+}
+
+.filter-down:hover [class^="ic-"]:before {
+  color: #1F427C;
+}
+
+.filter-up.disabled [class^="ic-"]:before, .filter-down.disabled [class^="ic-"]:before{
+  color: #F7F7F7;
 }
