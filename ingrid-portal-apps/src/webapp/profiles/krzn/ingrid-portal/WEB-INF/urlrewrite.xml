@@ -233,15 +233,12 @@
         <to>/datenschutzbestimmung</to>
     </outbound-rule>
 
-    <rule>
-        <from>/datenschutzbestimmung</from>
-        <to type="permanent-redirect">https://www.krzn.de/datenschutzerklaerung</to>
-    </rule>
-    <rule>
-        <from>/portal/privacy.psml</from>
-        <to type="permanent-redirect">https://www.krzn.de/datenschutzerklaerung</to>
-    </rule>
-    
+    <outbound-rule>
+       <name>Strip URL Session ID's</name>
+       <from>^(.*/datenschutzbestimmung)(?:\;jsessionid=[^\?#]*)?(\?[^#]*)?(#.*)?$</from>
+       <to type="permanent-redirect">https://www.krzn.de/datenschutzerklaerung</to>
+    </outbound-rule>
+
     <!-- Weitere Meldungen  -->
     <rule>
         <from>/neuigkeiten</from>
@@ -297,15 +294,12 @@
         <to>/impressum</to>
     </outbound-rule>
 
-    <rule>
-        <from>/impressum</from>
-        <to type="permanent-redirect">https://www.krzn.de/impressum</to>
-    </rule>
-    <rule>
-        <from>/portal/disclaimer.psml</from>
-        <to type="permanent-redirect">https://www.krzn.de/impressum</to>
-    </rule>
-
+    <outbound-rule>
+       <name>Strip URL Session ID's</name>
+       <from>^(.*/impressum)(?:\;jsessionid=[^\?#]*)?(\?[^#]*)?(#.*)?$</from>
+       <to type="permanent-redirect">https://www.krzn.de/impressum</to>
+    </outbound-rule>
+    
     <!-- Barrierefreiheit  -->
     <rule>
         <from>/barrierefreiheit</from>
@@ -315,16 +309,13 @@
         <from>/portal/accessibility.psml</from>
         <to>/barrierefreiheit</to>
     </outbound-rule>
-
-    <rule>
-        <from>/barrierefreiheit</from>
-        <to type="permanent-redirect">https://www.krzn.de/erklaerung-zur-barrierefreiheit</to>
-    </rule>
-    <rule>
-        <from>/portal/accessibility.psml</from>
-        <to type="permanent-redirect">https://www.krzn.de/erklaerung-zur-barrierefreiheit</to>
-    </rule>
-
+    
+    <outbound-rule>
+       <name>Strip URL Session ID's</name>
+       <from>^(.*/barrierefreiheit)(?:\;jsessionid=[^\?#]*)?(\?[^#]*)?(#.*)?$</from>
+       <to type="permanent-redirect">https://www.krzn.de/erklaerung-zur-barrierefreiheit</to>
+    </outbound-rule>
+    
     <!-- SearchDetail -->
     <rule>
         <from>/trefferanzeige</from>
