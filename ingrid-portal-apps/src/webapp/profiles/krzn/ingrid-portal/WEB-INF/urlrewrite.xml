@@ -116,43 +116,62 @@
     <!--  Suche - Datenkataloge - Hierarchiebaum -->
     <rule>
         <from>/datenkataloge</from>
-        <to type="forward">/portal/search-catalog/search-catalog-hierarchy.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
         <to>/datenkataloge</to>
     </outbound-rule>
     
+    <rule>
+        <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
+        <to type="permanent-redirect">/datenkataloge</to>
+    </rule>
+    
     <!--  Messwerte  -->
     <rule>
         <from>/messwertsuche</from>
-        <to type="passthrough">/portal/main-measures.psml</to>
+        <to type="passthrough">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-measures.psml</from>
         <to>/messwertsuche</to>
     </outbound-rule>
     
+    <rule>
+        <from>/portal/main-measures.psml</from>
+        <to type="permanent-redirect">/messwertsuche</to>
+    </rule>
+    
     <!--  Umweltthemen  -->
     <rule>
         <from>/themensuche</from>
-        <to type="forward">/portal/main-environment.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-environment.psml</from>
         <to>/themensuche</to>
     </outbound-rule>
     
+    <rule>
+        <from>/portal/main-environment.psml</from>
+        <to type="permanent-redirect">/themensuche</to>
+    </rule>
+    
     <!--  Karten   -->
     <rule>
         <from>/kartendienste</from>
-        <to type="forward">/portal/main-maps.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-maps.psml</from>
         <to>/kartendienste</to>
     </outbound-rule>
     
+    <rule>
+        <from>/portal/main-maps.psml</from>
+        <to type="permanent-redirect">/kartendienste</to>
+    </rule>
     
     <!-- Über InGrid-Portal  -->
     <rule>
@@ -167,23 +186,33 @@
     <!-- Informationsanbieter   -->
     <rule>
         <from>/informationsanbieter</from>
-        <to type="forward">/portal/main-about-partner.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about-partner.psml</from>
         <to>/informationsanbieter</to>
     </outbound-rule>
     
+    <rule>
+        <from>/portal/main-about-partner.psml</from>
+        <to type="permanent-redirect">/informationsanbieter</to>
+    </rule>
+    
     <!-- Datenquellen  -->
     <rule>
         <from>/datenquellen</from>
-        <to type="forward">/portal/main-about-data-source.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about-data-source.psml</from>
         <to>/datenquellen</to>
     </outbound-rule>
-
+    
+    <rule>
+        <from>/portal/main-about-data-source.psml</from>
+        <to type="permanent-redirect">/datenquellen</to>
+    </rule>
+    
     <!-- Mein Portal  -->
     <rule>
         <from>/log-in</from>
@@ -216,32 +245,47 @@
     <!-- Weitere Meldungen  -->
     <rule>
         <from>/neuigkeiten</from>
-        <to type="forward">/portal/rss-news.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/rss-news.psml</from>
         <to>/neuigkeiten</to>
     </outbound-rule>
     
+    <rule>
+        <from>/portal/rss-news.psml</from>
+        <to type="permanent-redirect">/neuigkeiten</to>
+    </rule>
+    
     <!--  Inhaltsübersicht  -->
     <rule>
         <from>/inhaltsverzeichnis</from>
-        <to type="forward">/portal/service-sitemap.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-sitemap.psml</from>
         <to>/inhaltsverzeichnis</to>
     </outbound-rule>
     
+    <rule>
+        <from>/portal/service-sitemap.psml</from>
+        <to type="permanent-redirect">/inhaltsverzeichnis</to>
+    </rule>
+    
     <!-- Kontakt   -->
     <rule>
         <from>/kontakt</from>
-        <to type="forward">/portal/service-contact.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-contact.psml</from>
         <to>/kontakt</to>
     </outbound-rule>
+    
+    <rule>
+        <from>/portal/service-contact.psml</from>
+        <to type="permanent-redirect">/kontakt</to>
+    </rule>
     
     <!-- Impressum   -->
     <rule>
@@ -294,11 +338,15 @@
     <!-- Help -->
     <rule>
         <from>/hilfe</from>
-        <to type="forward">/portal/help.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/help.psml</from>
         <to>/hilfe</to>
     </outbound-rule>
+    <rule>
+        <from>/portal/help.psml</from>
+        <to type="permanent-redirect">/hilfe</to>
+    </rule>
     
 </urlrewrite>
