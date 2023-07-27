@@ -734,7 +734,7 @@ div.accordion-item.is-active > .more{
   .is-invalid-input:focus { border-color: $blue-light; }
   .is-invalid-label { color: $red; }
   .input-check, .input-radio {
-    background-color: $white;
+    background-color: inherit;
     border-radius: 7px;
     border: 1px solid transparent;
     padding-left: 8px;
