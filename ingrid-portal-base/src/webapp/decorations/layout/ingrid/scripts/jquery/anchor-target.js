@@ -47,11 +47,11 @@
         return this.each(function () {
 
             var locationHash = window.location.hash.substr(1);
-            var key = $(this).context.dataset.key;
+            var key = $(this)[0].dataset.key;
             if(key) {
               locationHash = $.urlParam(key);
             }
-            var elemHash = $(this).context.hash.substr(1);
+            var elemHash = $(this)[0].hash.substr(1);
 
             if(locationHash) {
               deactivate($(this));
@@ -73,11 +73,11 @@ $('.js-anchor-target').on('click', function (event) {
     var children = parent.children();
     for (var i = 0; i < children.length; i++) {
       var child = $(children[i]);
-      var hash = child.context.hash;
+      var hash = child[0].hash;
       if(hash) {
-        $('a[name=' + child.context.hash.replace('#', '') + ']').removeClass('is-active');
+        $('a[name=' + child[0].hash.replace('#', '') + ']').removeClass('is-active');
         window.location.hash = hash;
-        $('a[name=' + $(this).context.hash.replace('#', '') + ']').addClass('is-active');
+        $('a[name=' + $(this)[0].hash.replace('#', '') + ']').addClass('is-active');
       }
     }
   }
@@ -90,5 +90,5 @@ $('.js-anchor-target-entry').on('click', function (event) {
     topMenu.find('.js-anchor-target-entry').removeClass("is-active");
   }
   $(this).addClass('is-active');
-  $('a[name=' + $(this).context.hash.replace('#', '') + ']').addClass('is-active');
+  $('a[name=' + $(this)[0].hash.replace('#', '') + ']').addClass('is-active');
 });

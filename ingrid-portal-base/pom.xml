@@ -122,13 +122,11 @@
         <configuration>
           <excludes>
             <exclude>**/scripts/leaflet*/**/*</exclude>
-            <exclude>**/scripts/markercluster/**/*</exclude>
             <exclude>**/scripts/pickadate/**/*</exclude>
             <exclude>**/css/datepicker/**/*</exclude>
             <exclude>**/css/streamline-24px/**/*</exclude>
             <exclude>**/css/streamline-24px-filled-in/**/*</exclude>
             <exclude>**/fastclick.min.js</exclude>
-            <exclude>**/jquery-2.1.4.min.js</exclude>
             <exclude>**/modernizr.custom.min.js</exclude>
             <exclude>**/fastclick.min.js</exclude>
             <exclude>**/*.properties</exclude>
@@ -137,7 +135,7 @@
             <exclude>**/*.xml</exclude>
             <exclude>**/*.xsl</exclude>
             <exclude>**/*.svg</exclude>
-            <exclude>**/vendor/**/*</exclude>
+            <exclude>**/jquery/**/*</exclude>
           </excludes>
         </configuration>
       </plugin>
