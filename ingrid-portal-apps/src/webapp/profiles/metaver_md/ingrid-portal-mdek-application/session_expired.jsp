@@ -40,11 +40,11 @@
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/main.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery/jquery.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/vendor/jquery.nicescroll.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/vendor/foundation.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/vendor/select2.full.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery/nicescroll/jquery.nicescroll.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery/foundation/foundation.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery/select2/select2.full.js"></script>
         <script src="/decorations/layout/ingrid/scripts/main.js"></script>
     </head>
     <body>
