@@ -156,7 +156,7 @@ public class AdminUserForm extends ActionForm {
             setInput(FIELD_TAB, "1");
             allOk = false;
         } else {
-            if (!Utils.isValidLogin(getInput(FIELD_FIRSTNAME))) {
+            if (Utils.isInvalidInput(getInput(FIELD_FIRSTNAME))) {
                 setError(FIELD_FIRSTNAME, "account.edit.error.input.sign");
                 allOk = false;
             }
@@ -166,7 +166,7 @@ public class AdminUserForm extends ActionForm {
             setInput(FIELD_TAB, "1");
             allOk = false;
         } else {
-            if (!Utils.isValidLogin(getInput(FIELD_LASTNAME))) {
+            if (Utils.isInvalidInput(getInput(FIELD_LASTNAME))) {
                 setError(FIELD_LASTNAME, "account.edit.error.input.sign");
                 allOk = false;
             }
@@ -276,19 +276,19 @@ public class AdminUserForm extends ActionForm {
 
         if (hasInput(FIELD_STREET)) {
             if (Utils.isInvalidInput(getInput(FIELD_STREET))) {
-                setError(FIELD_STREET, "account.create.error.password.sign");
+                setError(FIELD_STREET, "account.create.error.input.sign");
                 allOk = false;;
             }
         }
         if (hasInput(FIELD_POSTALCODE)) {
             if (Utils.isInvalidInput(getInput(FIELD_POSTALCODE))) {
-                setError(FIELD_POSTALCODE, "account.create.error.password.sign");
+                setError(FIELD_POSTALCODE, "account.create.error.input.sign");
                 allOk = false;;
             }
         }
         if (hasInput(FIELD_CITY)) {
             if (Utils.isInvalidInput(getInput(FIELD_CITY))) {
-                setError(FIELD_CITY, "account.create.error.password.sign");
+                setError(FIELD_CITY, "account.create.error.input.sign");
                 allOk = false;;
             }
         }

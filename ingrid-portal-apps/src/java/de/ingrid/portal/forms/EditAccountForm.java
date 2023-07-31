@@ -121,7 +121,7 @@ public class EditAccountForm extends ActionForm {
             setError(FIELD_FIRSTNAME, "account.edit.error.noFirstName");
             allOk = false;
         } else {
-            if (!Utils.isValidLogin(getInput(FIELD_FIRSTNAME))) {
+            if (Utils.isInvalidInput(getInput(FIELD_FIRSTNAME))) {
                 setError(FIELD_FIRSTNAME, "account.edit.error.input.sign");
                 allOk = false;
             }
@@ -130,7 +130,7 @@ public class EditAccountForm extends ActionForm {
             setError(FIELD_LASTNAME, "account.edit.error.noLastName");
             allOk = false;
         } else {
-            if (!Utils.isValidLogin(getInput(FIELD_LASTNAME))) {
+            if (Utils.isInvalidInput(getInput(FIELD_LASTNAME))) {
                 setError(FIELD_LASTNAME, "account.edit.error.input.sign");
                 allOk = false;
             }
@@ -179,19 +179,19 @@ public class EditAccountForm extends ActionForm {
 
         if (hasInput(FIELD_STREET)) {
             if (Utils.isInvalidInput(getInput(FIELD_STREET))) {
-                setError(FIELD_STREET, "account.edit.error.password.sign");
+                setError(FIELD_STREET, "account.edit.error.input.sign");
                 allOk = false;;
             }
         }
         if (hasInput(FIELD_POSTALCODE)) {
             if (Utils.isInvalidInput(getInput(FIELD_POSTALCODE))) {
-                setError(FIELD_POSTALCODE, "account.edit.error.password.sign");
+                setError(FIELD_POSTALCODE, "account.edit.error.input.sign");
                 allOk = false;;
             }
         }
         if (hasInput(FIELD_CITY)) {
             if (Utils.isInvalidInput(getInput(FIELD_CITY))) {
-                setError(FIELD_CITY, "account.edit.error.password.sign");
+                setError(FIELD_CITY, "account.edit.error.input.sign");
                 allOk = false;;
             }
         }
