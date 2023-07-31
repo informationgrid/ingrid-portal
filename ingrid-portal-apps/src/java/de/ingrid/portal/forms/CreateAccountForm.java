@@ -109,11 +109,21 @@ public class CreateAccountForm extends ActionForm {
         if (!hasInput(FIELD_FIRSTNAME)) {
             setError(FIELD_FIRSTNAME, "account.edit.error.noFirstName");
             allOk = false;
-        } 
+        } else {
+            if (!Utils.isValidLogin(getInput(FIELD_FIRSTNAME))) {
+                setError(FIELD_FIRSTNAME, "account.create.error.input.sign");
+                allOk = false;
+            }
+        }
         if (!hasInput(FIELD_LASTNAME)) {
             setError(FIELD_LASTNAME, "account.edit.error.noLastName");
             allOk = false;
-        } 
+        } else {
+            if (!Utils.isValidLogin(getInput(FIELD_LASTNAME))) {
+                setError(FIELD_LASTNAME, "account.create.error.input.sign");
+                allOk = false;
+            }
+        }
         if (!hasInput(FIELD_LOGIN)) {
             setError(FIELD_LOGIN, "account.create.error.noLogin");
             allOk = false;
@@ -157,7 +167,25 @@ public class CreateAccountForm extends ActionForm {
             allOk = false;
         }
 
-        return allOk;    
+        if (hasInput(FIELD_STREET)) {
+            if (Utils.isInvalidInput(getInput(FIELD_STREET))) {
+                setError(FIELD_STREET, "account.create.error.password.sign");
+                allOk = false;;
+            }
+        }
+        if (hasInput(FIELD_POSTALCODE)) {
+            if (Utils.isInvalidInput(getInput(FIELD_POSTALCODE))) {
+                setError(FIELD_POSTALCODE, "account.create.error.password.sign");
+                allOk = false;;
+            }
+        }
+        if (hasInput(FIELD_CITY)) {
+            if (Utils.isInvalidInput(getInput(FIELD_CITY))) {
+                setError(FIELD_CITY, "account.create.error.password.sign");
+                allOk = false;;
+            }
+        }
+        return allOk;
     }
 
 }
