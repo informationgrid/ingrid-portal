@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import de.ingrid.codelists.CodeListService;
@@ -582,7 +583,11 @@ public class DisplayTreeFactory {
         it = childNodes.iterator();
         while (it.hasNext()) {
             DisplayTreeNode childNode = (DisplayTreeNode) it.next();
-            values.put(new JSONObject(childNode));
+            try {
+                values.put(new JSONObject(childNode));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             childNode.setParent(nodeToOpen);
             nodeToOpen.addChild(childNode);
         }
