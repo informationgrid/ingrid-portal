@@ -348,10 +348,19 @@ public class DetailPartPreparer {
                 String source = null;
                 try {
                     IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
-                    url = (String) json.get("url");
-                    name = (String) json.get("name");
-                    source = (String) json.get("quelle");
-                    isJSON = true;
+                    if(json != null) {
+                        if(json.containsKey("url") && json.containsKey("name") && json.containsKey("quelle")) {
+                            url = (String) json.get("url");
+                            name = (String) json.get("name");
+                            source = (String) json.get("quelle");
+                            isJSON = true;
+                        } else {
+                            log.error("Other JSON-Format! We skip this one: " + constraintSource);
+                            continue;
+                        }
+                    } else {
+                        isJSON = false;
+                    }
                 } catch (ParseException e) {
                     isJSON = false;
                     if (constraintSource.startsWith( "{" )) {
@@ -375,9 +384,13 @@ public class DetailPartPreparer {
                                     String tmpJsonSource = null;
                                     try {
                                         IngridDocument json = JsonUtil.parseJsonToIngridDocument(tmpOtherConstraints);
-                                        tmpJsonSource = json.getString("quelle");
-                                        if(tmpSource.indexOf(tmpJsonSource) > -1) {
-                                            isSourceOfJson = true;
+                                        if(json != null && json.containsKey("quelle")) {
+                                            tmpJsonSource = json.getString("quelle");
+                                            if(tmpSource.indexOf(tmpJsonSource) > -1) {
+                                                isSourceOfJson = true;
+                                            }
+                                        } else {
+                                            isSourceOfJson = false;
                                         }
                                     } catch (ParseException e) {
                                         isSourceOfJson = false;
