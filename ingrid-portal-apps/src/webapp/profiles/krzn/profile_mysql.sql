@@ -38,6 +38,9 @@ UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
 -- Hide folder "/application" to display
 UPDATE folder SET is_hidden = 1 WHERE path = '/application';
 
+-- Hide '/administration/admin-statistics.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-statistics.psml';
+
 -- Change '/default-page.psml'
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('default_page_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/default-page.psml')));
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'default_page_fragment_id');
