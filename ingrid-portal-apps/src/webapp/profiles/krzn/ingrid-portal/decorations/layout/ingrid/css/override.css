@@ -325,52 +325,83 @@ b {
 sub,
 blockquote .author,
 .footnote .footnote-num,
-.helper,
-.helper.icon span.text,
-.helper.icon.info span.text,
-.helper.place,
-.detail .search-filtered .teaser-data .columns,
-.detail .banner-noimage .helper.icon .text-normal,
 .document-list .image a.icon,
-.boxed-table thead, .boxed-table tfoot, .boxed-table tbody tr td:last-child,
 ol li:before,
-.menu-tab-row .menu-tab,
-.input-search,
-.input-search .input-search-field,
 .tabs .tabs-title > a,
 .form-element label,
 .row.alert p .alert-text,
-.menu-sub-links a,
-.teaser .teaser-link,
-.teaser .teaser-link .teaser-number,
-.teaser-data.search .helper.date,
-.teaser-data.search .js-expander-content a.icon .text,
-.teaser-data.search .js-expander-content .button,
 .teaser-data-projects .text-center h2,
 .about .about-wrapper h2,
-footer .footer-buttons-bar .login-buttons .login-form h1, footer .footer-buttons-bar .login-buttons .login-form h2, footer .footer-buttons-bar .login-buttons .login-form h3, footer .footer-buttons-bar .login-buttons .login-form h4,
-footer .footer .footer-menu-entries .entry,
-footer .footer .footer-menu-entries a,
-.search-filtered .table table a:not(.button),
-.search-filtered .table.list table tr td:first-child,
-.search-filtered .table.list .list_entry,
-.search-filtered .document-list .list-item div.helper,
-.search-filtered .teaser-data.is-active h2.header, .search-filtered .teaser-data.is-active .arrow,
-.search-filtered .border-line-info span,
 .leaflet-container a.leaflet-popup-close-button,
-h2 .anchor:target,
 a[class*="js-expander"] span.text,
 .nav-content h2,
 .sitemap .link-list .search-result--nested a,
 .category .text-center h2,
 .catalog span.icon,
 .form-element .control,
-h2 .anchor span,
 .switch-label,
-.intro,
-.search-filtered .accordion.accordion-filter-group .accordion-title.accordion-title-filter-group,
+.intro {
+  font-family: 'Urbanist';
+}
+
+.menu-sub-links a,
+.menu-tab-row .menu-tab {
+  font-family: 'Urbanist';
+}
+
+h2 .anchor:target,
+h2 .anchor span {
+  font-family: 'Urbanist';
+}
+
+.boxed-table thead, .boxed-table tfoot,
+.boxed-table tbody tr td:last-child {
+  font-family: 'Urbanist';
+}
+
 .sg-headline,
 h6.sg-headline {
+  font-family: 'Urbanist';
+}
+
+.detail .search-filtered .teaser-data .columns,
+.detail .banner-noimage .helper.icon .text-normal {
+  font-family: 'Urbanist';
+}
+
+.helper,
+.helper.icon span.text,
+.helper.icon.info span.text,
+.helper.place {
+  font-family: 'Urbanist';
+}
+
+.input-search,
+.input-search .input-search-field {
+  font-family: 'Urbanist';
+}
+
+.search-filtered .table table a:not(.button),
+.search-filtered .table.list table tr td:first-child,
+.search-filtered .table.list .list_entry,
+.search-filtered .document-list .list-item div.helper,
+.search-filtered .teaser-data.is-active h2.header, .search-filtered .teaser-data.is-active .arrow,
+.search-filtered .border-line-info span,
+.search-filtered .accordion.accordion-filter-group .accordion-title.accordion-title-filter-group {
+  font-family: 'Urbanist';
+}
+
+footer .footer-buttons-bar .login-buttons .login-form h1, footer .footer-buttons-bar .login-buttons .login-form h2, footer .footer-buttons-bar .login-buttons .login-form h3, footer .footer-buttons-bar .login-buttons .login-form h4,
+footer .footer .footer-menu-entries .entry,
+footer .footer .footer-menu-entries a {
+  font-family: 'Urbanist';
+}
+
+.teaser .teaser-link,
+.teaser .teaser-link .teaser-number,
+.teaser-data.search .helper.date,
+.teaser-data.search .js-expander-content a.icon .text,
+.teaser-data.search .js-expander-content .button {
   font-family: 'Urbanist';
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered,
