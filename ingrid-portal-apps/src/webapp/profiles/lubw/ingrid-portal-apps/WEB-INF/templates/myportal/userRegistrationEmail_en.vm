@@ -1,6 +1,6 @@
 Hello $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
 
-Welcome to LUBW-Portal! 
+Welcome to RIPS-Metadata!
 Thank you for registering.
 
 Please confirm your registration by following the link below.
