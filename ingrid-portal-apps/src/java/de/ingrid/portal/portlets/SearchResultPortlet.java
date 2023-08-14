@@ -23,6 +23,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -194,6 +195,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         // Geotools
         context.put("geoGmlToWkt", GmlToWktTransformUtil.class);
         context.put("geoWktToGeoJson", WktToGeoJsonTransformUtil.class);
+        // URL decoder
+        context.put("URLDecoder", URLDecoder.class);
 
         String[] mapPosition = PortalConfig.getInstance().getStringArray( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_POSITION);
         if(mapPosition != null && mapPosition.length == 3) {

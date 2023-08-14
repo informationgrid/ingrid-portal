@@ -455,7 +455,9 @@
                     #if($facet.getCodelistId())
                        $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
                     #else
-                        $MESSAGES.getString("$facet.getName()")
+                        #set ($name = $facet.getName())
+                        #parse ('/WEB-INF/templates/facete/facete_field_name.vm')
+                        $MESSAGES.getString("$name")
                     #end
                     </span>
                 </label>
