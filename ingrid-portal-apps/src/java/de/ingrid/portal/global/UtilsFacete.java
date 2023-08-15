@@ -334,7 +334,10 @@ public class UtilsFacete {
                         resetFacetConfigValues(config, null);
                         IngridFacet tmpFacetKey = getFacetById(config, key);
                         if(tmpFacetKey != null){
-                            String[] valueIds = value.split(",");
+                            List<String> valueIds = new ArrayList<>(Arrays.asList(value.split(",")));
+                            if (valueIds.size() > 1) {
+                                valueIds.add(value);
+                            }
                             for (String valueId : valueIds) {
                                 IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), valueId);
                                 if(tmpFacetValue != null){
