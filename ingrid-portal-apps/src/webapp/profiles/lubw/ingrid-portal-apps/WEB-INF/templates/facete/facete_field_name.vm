@@ -1,3 +1,0 @@
-#if($facet.getQuery().toString().startsWith("distributor:"))
-    #set($name = $URLDecoder.decode($name))
-#end
