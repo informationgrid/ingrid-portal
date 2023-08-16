@@ -190,13 +190,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
-<!--    <facet sort="SORT_BY_VALUE_DESC">-->
-<!--        <name>searchResult.facete.title.provider</name>-->
-<!--        <id>distributor</id>-->
-<!--        <field>distributor</field>-->
-<!--        <listLength>6</listLength>-->
-<!--        <isOpen>true</isOpen>-->
-<!--    </facet>-->
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>searchResult.facete.title.provider</name>
+        <id>distributor</id>
+        <field>distributor</field>
+        <listLength>6</listLength>
+        <isOpen>true</isOpen>
+    </facet>
     <!-- Kategorie -->
     <facet>
         <name>Kategorie</name>
