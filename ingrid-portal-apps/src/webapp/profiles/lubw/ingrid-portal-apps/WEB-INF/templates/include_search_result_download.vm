@@ -116,6 +116,12 @@
                     tmpValue += '$MESSAGES.getString("searchResult.facete.title.types.single") = ' + value;
                 });
               }
+              if(row['portal.facet.distributor']){
+                  if(tmpValue !== ''){
+                      tmpValue += ', ';
+                  }
+                  tmpValue += '$MESSAGES.getString("searchResult.facete.title.provider") = ' + row['distributor'];
+              }
               tmpRow += tmpValue + delimiter;
 
               var tmpValue = '';
