@@ -387,7 +387,7 @@
             } 
         }
     })
-    .error(function () {
+    .fail(function () {
     });
 
     var mapPosition = '$mapPosition';
@@ -666,7 +666,7 @@
             popup.setContent( createPopUp(title, procedure, categories, steps, uuid, iplug) );
             popup.update();
         })
-        .error(function () {
+        .fail(function () {
           map.spin(false);
         });
     };
@@ -734,7 +734,7 @@
             popup.setContent( popUpHtml );
             popup.update();
         })
-        .error(function () {
+        .fail(function () {
           map.spin(false);
         });
     };
@@ -832,7 +832,7 @@
                 map.spin(false);
             }
         })
-        .error(function () {
+        .fail(function () {
             map.spin(false);
         });
     }

@@ -16,7 +16,7 @@
                                 spanNr.text('(' + data + ')');
                             }
                         })
-                        .error(function () {
+                        .fail(function () {
                         });
                     }
                 }
