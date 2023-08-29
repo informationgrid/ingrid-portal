@@ -225,7 +225,7 @@
         }
         enabledButton();
       })
-      .error(function () {
+      .fail(function () {
         enabledButton();
       });
   }
