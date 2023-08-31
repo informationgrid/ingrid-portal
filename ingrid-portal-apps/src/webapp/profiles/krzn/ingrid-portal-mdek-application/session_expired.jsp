@@ -78,7 +78,7 @@
                             <div class="columns xsmall-4 small-4 medium-4 large-4 xlarge-4">
                                 <div class="logo" role="banner">
                                     <a href="/startseite" title="Startseite vom Geodatenkatalog Niederrhein">
-                                        <img src="/decorations/layout/ingrid/images/template/logo.png" alt="Geodatenkatalog Niederrhein - Indexieren, Recherchieren, Visualisieren, Teilen">
+                                        <img src="/decorations/layout/ingrid/images/template/logo.png" alt="Geodatenkatalog Niederrhein">
                                     </a>
                                 </div>
                             </div>
@@ -144,8 +144,8 @@
                     <div class="row">
                         <div class="xsmall-24 small-24 medium-24 large-24 xlarge-10 columns">
                             <div class="logo">
-                                <a href="/startseite" title="Startseite vom Geodatenkatalog Niederrhein">
-                                    <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="KRZN - Indexieren, Recherchieren, Visualisieren, Teilen">
+                                <a href="/startseite" title="Startseite zu KRZN">
+                                    <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="KRZN">
                                 </a>
                         </div>
                         <div class="copyright">
