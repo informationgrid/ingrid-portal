@@ -1183,16 +1183,17 @@ public class UtilsFacete {
             ArrayList<String> selectedIds = (ArrayList<String>) selectedGeothesaurus.get(GEOTHESAURUS_SELECTED_TOPICS_IDS);
             if(allGeoThesaurusTopics != null &&  selectedIds != null){
                 for(int i = 0; i < selectedIds.size(); i++){
+                    String selectedId = selectedIds.get(i);
                     for(int j = 0; j < allGeoThesaurusTopics.size(); j++){
                         Topic topic = (Topic) allGeoThesaurusTopics.get(j);
                         String topicId = (String) topic.get("topicID");
                         if(topic.getTopicNativeKey() != null){
                             topicId = topic.getTopicNativeKey();
                         }
-                        if(topicId != null && topicId.indexOf((String)selectedIds.get(i)) > -1){
+                        if(topicId != null && topicId.equals(selectedId)){
                             HashMap<String, String> map = new HashMap<>();
                             map.put("topicTitle", topic.get("topicName").toString());
-                            map.put("topicId", (String)selectedIds.get(i));
+                            map.put("topicId", selectedId);
                             geothesaurusSelectTopics.add(map);
                             break;
                         }
