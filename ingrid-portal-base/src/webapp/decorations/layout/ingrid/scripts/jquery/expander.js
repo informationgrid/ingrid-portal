@@ -169,24 +169,36 @@ $(function(){
           var expanderBox = $(this);
           var openButton = expanderBox.find('~ .js-open-expand-text');
           var closeButton = expanderBox.find('~ .js-close-expand-text');
-          
-          openButton.addClass('is-hidden');
+          var isActive = false;
+
+          if(expanderBox.hasClass("is-active")){
+            isActive = true;
+          }
+
           closeButton.addClass('is-hidden');
+          openButton.addClass('is-hidden');
           expanderBox.addClass('js-non-expand-text');
-      
+          expanderBox.removeClass('is-expand');
+
           var wrapHeight = expanderBox.find('.js-expand-text-content').height();
           var descHeight = expanderBox.height();
-    
+
           if (wrapHeight <= descHeight) {
-              expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
+            expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
           } else {
-              expanderBox.find('~ .js-open-expand-text').removeClass('is-hidden');
-              expanderBox.removeClass('js-non-expand-text');
+            expanderBox.removeClass('js-non-expand-text');
+            if(isActive){
+              expanderBox.addClass('is-expand');
+              closeButton.removeClass('is-hidden');
+            } else {
+              openButton.removeClass('is-hidden');
+            }
           }
       
           openButton.click(function() {
               $(this).addClass('is-hidden');
               expanderBox.addClass('is-active');
+              expanderBox.addClass('is-expand');
               expanderBox.find('~ .js-close-expand-text').removeClass('is-hidden');
               expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
           });
@@ -194,6 +206,7 @@ $(function(){
           closeButton.click(function() {
               $(this).addClass('is-hidden');
               expanderBox.removeClass('is-active');
+              expanderBox.removeClass('is-expand');
               expanderBox.find('~ .js-open-expand-text').removeClass('is-hidden');
               expanderBox.find('.js-expand-text-fade').removeClass('is-hidden');
           });
