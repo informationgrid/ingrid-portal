@@ -164,35 +164,46 @@ $('.js-toggle-all-expander-expand').on('click', function (event) {
 
 $(function(){
 
-    $('.js-expand-box').each(function(index) {
-      var expanderBox = $(this);
-      expanderBox.removeClass('js-non-expand-text');
-  
-      var wrapHeight = expanderBox.find('.js-expand-text-content').height();
-      var descHeight = expanderBox.height();
-
-      if (wrapHeight <= descHeight) {
-          expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
-      } else {
-          expanderBox.find('~ .js-open-expand-text').removeClass('is-hidden');
-      }
-  
-      expanderBox.find('~ .js-open-expand-text').click(function() {
-          $(this).addClass('is-hidden');
-          expanderBox.addClass('is-active');
-          expanderBox.find('~ .js-close-expand-text').removeClass('is-hidden');
-          expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
-      });
-  
-      expanderBox.find('~ .js-close-expand-text').click(function() {
-          $(this).addClass('is-hidden');
-          expanderBox.removeClass('is-active');
-          expanderBox.find('~ .js-open-expand-text').removeClass('is-hidden');
-          expanderBox.find('.js-expand-text-fade').removeClass('is-hidden');
-      });
+    var checkExpandBox = function(){
+      $('.js-expand-box').each(function(index) {
+          var expanderBox = $(this);
+          var openButton = expanderBox.find('~ .js-open-expand-text');
+          var closeButton = expanderBox.find('~ .js-close-expand-text');
+          
+          openButton.addClass('is-hidden');
+          closeButton.addClass('is-hidden');
+          expanderBox.addClass('js-non-expand-text');
       
+          var wrapHeight = expanderBox.find('.js-expand-text-content').height();
+          var descHeight = expanderBox.height();
+    
+          if (wrapHeight <= descHeight) {
+              expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
+          } else {
+              expanderBox.find('~ .js-open-expand-text').removeClass('is-hidden');
+              expanderBox.removeClass('js-non-expand-text');
+          }
+      
+          openButton.click(function() {
+              $(this).addClass('is-hidden');
+              expanderBox.addClass('is-active');
+              expanderBox.find('~ .js-close-expand-text').removeClass('is-hidden');
+              expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
+          });
+      
+          closeButton.click(function() {
+              $(this).addClass('is-hidden');
+              expanderBox.removeClass('is-active');
+              expanderBox.find('~ .js-open-expand-text').removeClass('is-hidden');
+              expanderBox.find('.js-expand-text-fade').removeClass('is-hidden');
+          });
+          
+        });
+    };
+    checkExpandBox();
+    $(window).resize(function(){
+        checkExpandBox();
     });
-
     var isAllOpen = true;
     var jsExpanders = $('.data .teaser-data .js-expander');
     if(jsExpanders.length > 0) {

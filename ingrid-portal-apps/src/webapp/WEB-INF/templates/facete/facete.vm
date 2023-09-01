@@ -389,7 +389,13 @@
     #set ($action = $renderResponse.createActionURL())
         <span class="ic-ic-cross"></span>
         <span class="nr-results">($treeFacet.getFacetValue())</span>
-        <span class="text">$MESSAGES.getString("$treeFacet.getName()")</span>
+        <span class="text">
+            #if($treeFacet.getCodelistId())
+                $Codelists.getCodeListValue($treeFacet.getCodelistId(), $treeFacet.getCodelistEntryId(), $languageCode)
+            #else
+                $MESSAGES.getString("$treeFacet.getName()")
+            #end
+        </span>
     </a>
     <div class="boxes">
     #set($isSelectedTree = false)
