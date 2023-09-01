@@ -1,0 +1,3 @@
+<div class="columns">
+    $MESSAGES.getString("user.restriction.public.about")
+</div>
