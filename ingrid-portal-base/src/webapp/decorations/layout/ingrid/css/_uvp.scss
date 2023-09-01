@@ -2808,6 +2808,10 @@ meter[value="5"]::-moz-meter-bar { background: green; }
   pointer-events: none;
 }
 
+.js-expand-text.js-non-expand-text .js-expand-text-content:before {
+  background: none;
+}
+
 .image div.description:before {
   background: linear-gradient(rgba(255, 255, 255, 0) 100px, $white);
   pointer-events: none;
