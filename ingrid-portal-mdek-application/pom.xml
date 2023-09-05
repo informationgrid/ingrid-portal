@@ -34,6 +34,7 @@
       src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*
     </sonar.exclusions>
     <spring.version>5.3.24</spring.version>
+    <ingrid-utils-geo.version>6.3.0-SNAPSHOT</ingrid-utils-geo.version>
   </properties>
 
   <!-- ==================== Build Configuration ==================== -->
@@ -620,7 +621,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-geo</artifactId>
-      <version>6.0.0</version>
+      <version>${ingrid-utils-geo.version}</version>
     </dependency>
     <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
     <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>
