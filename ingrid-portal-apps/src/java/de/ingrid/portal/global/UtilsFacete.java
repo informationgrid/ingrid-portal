@@ -2642,17 +2642,33 @@ public class UtilsFacete {
         }
         if(plugsRoot != null) {
             if(plugsRoot.getChildren() != null) {
-                DisplayTreeNode partnerNode = (DisplayTreeNode) plugsRoot.getChildren().get(0);
-                if(partnerNode != null) {
-                    if(partnerNode.getChildren() != null) {
-                        DisplayTreeNode iPlugNode = (DisplayTreeNode) partnerNode.getChildren().get(0);
-                        if(iPlugNode != null) {
-                            if(iPlugNode.getChildren() != null) {
-                                DisplayTreeNode objectNode = (DisplayTreeNode) iPlugNode.getChildren().get(0);
-                                if(objectNode != null) {
-                                    if(objectNode.getChildren() != null) {
-                                        addHierarchyNodesToFacets(ingridFacet, objectNode.getChildren(), config);
+                String partnerRestriction = PortalConfig.getInstance().getString(
+                        PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+                if(partnerRestriction.isEmpty()) {
+                    DisplayTreeNode partnerNode = (DisplayTreeNode) plugsRoot.getChildren().get(0);
+                    if(partnerNode != null) {
+                        if(partnerNode.getChildren() != null) {
+                            DisplayTreeNode iPlugNode = (DisplayTreeNode) partnerNode.getChildren().get(0);
+                            if(iPlugNode != null) {
+                                if(iPlugNode.getChildren() != null) {
+                                    DisplayTreeNode objectNode = (DisplayTreeNode) iPlugNode.getChildren().get(0);
+                                    if(objectNode != null) {
+                                        if(objectNode.getChildren() != null) {
+                                            addHierarchyNodesToFacets(ingridFacet, objectNode.getChildren(), config);
+                                        }
                                     }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    DisplayTreeNode iPlugNode = (DisplayTreeNode) plugsRoot.getChildren().get(0);
+                    if(iPlugNode != null) {
+                        if(iPlugNode.getChildren() != null) {
+                            DisplayTreeNode objectNode = (DisplayTreeNode) iPlugNode.getChildren().get(0);
+                            if(objectNode != null) {
+                                if(objectNode.getChildren() != null) {
+                                    addHierarchyNodesToFacets(ingridFacet, objectNode.getChildren(), config);
                                 }
                             }
                         }
