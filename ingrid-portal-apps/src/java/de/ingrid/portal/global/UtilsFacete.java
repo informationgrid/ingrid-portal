@@ -56,15 +56,23 @@ import de.ingrid.portal.forms.SearchExtAdrPlaceReferenceForm;
 import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.forms.SearchExtResTopicAttributesForm;
 import de.ingrid.portal.forms.SearchExtTimeReferenceForm;
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridFacet;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
+import de.ingrid.portal.search.DisplayTreeFactory;
+import de.ingrid.portal.search.DisplayTreeNode;
+import de.ingrid.portal.search.IPlugVersionInspector;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.portal.search.catalog.CatalogTreeDataProvider;
+import de.ingrid.portal.search.catalog.CatalogTreeDataProviderFactory;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
@@ -125,6 +133,17 @@ public class UtilsFacete {
     private static final String PARAMS_WILDCARD = "wildcard";
     private static final String PARAMS_TIMEREF_FROM = "from";
     private static final String PARAMS_TIMEREF_TO = "to";
+
+    // keys for accessing node data
+    private static final String NODE_LEVEL = "level"; 
+    private static final String NODE_PLUG_TYPE = "plugType"; 
+    private static final String NODE_PLUG_ID = "plugId"; 
+    private static final String NODE_DOC_ID = "docId"; 
+    private static final String NODE_ORIG_DOC_ID = "origDocId";
+    private static final String NODE_UDK_DOC_ID = "udk_docId";
+    private static final String NODE_UDK_CLASS = "udk_class"; 
+    private static final String NODE_UDK_CLASS_VALUE = "udk_class_value"; 
+    private static final String NODE_EXPANDABLE = "expandable"; 
 
     public static final String FACET_CONFIG = "config";
 
@@ -2445,6 +2464,8 @@ public class UtilsFacete {
                         }
                         facet.setFacets(list);
                     }
+                } else if(facet.isHierarchyTree()) {
+                    getFacetFromHierarchyTree(config, facet);
                 }
                 if(facet.getFacets()!= null){
                     addDefaultIngridFacets(request, facet.getFacets());
@@ -2594,6 +2615,180 @@ public class UtilsFacete {
                 faceteEntry.put("id", "topic");
                 faceteEntry.put("field", "topic");
                 facetQueries.add(faceteEntry);
+            }
+        }
+    }
+
+    private static void getFacetFromHierarchyTree(List<IngridFacet> config, IngridFacet ingridFacet) {
+        String facetHierarchyTreeType = ingridFacet.getHierarchyTreeTypes();
+        int facetHierarchyTreeLevel = ingridFacet.getHierarchyTreeLevel();
+        
+        PlugDescription[] allPlugs = IBUSInterfaceImpl.getInstance().getAllActiveIPlugs();
+        // filter types
+        String[] plugTypes = facetHierarchyTreeType.split(",");
+        PlugDescription[] plugs = IPlugHelper.filterIPlugsByType(allPlugs, plugTypes);
+
+        // filter corrupt ones
+        plugs = IPlugHelper.filterCorruptECSIPlugs(plugs);
+
+        // sort
+        plugs = IPlugHelper.sortPlugs(plugs, new IPlugHelperDscEcs.PlugComparatorECS());
+
+        DisplayTreeNode plugsRoot = DisplayTreeFactory.getTreeFromECSIPlugs(plugs);
+
+        int openNodesInitial = facetHierarchyTreeLevel;
+        if (openNodesInitial > 0) {
+            getSubFacetsUntilHierarchyLevel(plugsRoot, plugsRoot, openNodesInitial);
+        }
+        if(plugsRoot != null) {
+            if(plugsRoot.getChildren() != null) {
+                DisplayTreeNode partnerNode = (DisplayTreeNode) plugsRoot.getChildren().get(0);
+                if(partnerNode != null) {
+                    if(partnerNode.getChildren() != null) {
+                        DisplayTreeNode iPlugNode = (DisplayTreeNode) partnerNode.getChildren().get(0);
+                        if(iPlugNode != null) {
+                            if(iPlugNode.getChildren() != null) {
+                                DisplayTreeNode objectNode = (DisplayTreeNode) iPlugNode.getChildren().get(0);
+                                if(objectNode != null) {
+                                    if(objectNode.getChildren() != null) {
+                                        addHierarchyNodesToFacets(ingridFacet, objectNode.getChildren(), config);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static void addHierarchyNodesToFacets(IngridFacet ingridFacet, List<DisplayTreeNode> nodes, List<IngridFacet> config) {
+        addHierarchyNodesToFacets(ingridFacet, nodes, config, null);
+    }
+
+    private static void addHierarchyNodesToFacets(IngridFacet ingridFacet, List<DisplayTreeNode> nodes, List<IngridFacet> config, String nodeId) {
+        List<IngridFacet> newFacets = new ArrayList<IngridFacet>();
+        for (DisplayTreeNode node : nodes) {
+            String docId = node.get("docId").toString();
+            String id = ingridFacet.getId() + "_" + docId;
+            String name = node.getName();
+            IngridFacet tmpFacet = new IngridFacet();
+            tmpFacet.setId(id);
+            tmpFacet.setQuery("object_node.tree_path.uuid:" + docId + " isFolder:false");
+            tmpFacet.setName(name);
+            tmpFacet.setParent(ingridFacet);
+            tmpFacet.setHierarchyTreeLeaf(true);
+            if(ingridFacet.getListLength() > 0) {
+                tmpFacet.setListLength(ingridFacet.getListLength());
+            }
+            if(ingridFacet.getSort() != null) {
+                tmpFacet.setSort(ingridFacet.getSort());
+            }
+            newFacets.add(tmpFacet);
+            addHierarchyNodesToFacets(tmpFacet, node.getChildren(), config, id) ;
+        }
+        ingridFacet.setFacets(newFacets);
+    }
+
+    private static void getSubFacetsUntilHierarchyLevel(DisplayTreeNode node, DisplayTreeNode rootNode, int openNodesInitial) {
+        ArrayList list = (ArrayList) node.getChildren();
+        String rootNodeLevel = openNodesInitial + "";
+
+        if (rootNodeLevel != null) {
+            for (int i = 0; i < list.size(); i++) {
+                if (node.get("level").toString().equals(rootNodeLevel)) {
+                    break;
+                }
+                DisplayTreeNode subNode = (DisplayTreeNode) list.get(i);
+                if ((Boolean) subNode.get("expandable")) {
+                    String plugType = (String) subNode.get("plugType");
+                    if(plugType == null || (plugType != null && plugType.equals( "dsc_ecs" ))){
+                        openNode(rootNode, subNode.getId());
+                        getSubFacetsUntilHierarchyLevel(subNode, rootNode, openNodesInitial);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void openNode(DisplayTreeNode rootNode, String nodeId) {
+        DisplayTreeNode node = rootNode.getChild(nodeId);
+        if (node != null) {
+            node.setOpen(true);
+
+            // only load if not loaded yet !
+            if (!node.isLoading() && node.getChildren().isEmpty()) {
+                node.setLoading(true);
+
+                // handles all stuff
+                String plugType = (String) node.get(NODE_PLUG_TYPE);
+                String plugId = (String) node.get(NODE_PLUG_ID);
+
+                if (plugType == null || plugId == null) {
+                    // no iplug node, is parent folder
+                    return;
+                }
+
+                // get ALL children (IngridHits)
+                String udkDocId = (String) node.get(NODE_UDK_DOC_ID);
+                String keyUdkDocId = "";
+                String keyUdkClass = "";
+                List hits;
+                
+                PlugDescription pd = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
+                CatalogTreeDataProvider ctdp = CatalogTreeDataProviderFactory.getDetailDataPreparer(IPlugVersionInspector.getIPlugVersion(pd));
+                
+                if (udkDocId == null) {
+                    hits = ctdp.getTopEntities(plugId, plugType);
+                } else {
+                    hits = ctdp.getSubEntities(udkDocId, plugId, plugType, null);
+                }
+
+                // keys for extracting data
+                if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+                    keyUdkDocId = Settings.HIT_KEY_OBJ_ID;
+                    keyUdkClass = Settings.HIT_KEY_UDK_CLASS;
+
+                }
+
+                // set up according children nodes in tree
+                int parentLevel = ((Integer) node.get(NODE_LEVEL)).intValue();
+                int childrenLevel = parentLevel + 1;
+                ArrayList<DisplayTreeNode> childNodes = new ArrayList(hits.size());
+                Iterator it = hits.iterator();
+                while (it.hasNext()) {
+                    IngridHit hit = (IngridHit) it.next();
+                    IngridHitDetail detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
+                    udkDocId = UtilsSearch.getDetailValue(detail, keyUdkDocId);
+                    String udkClass = UtilsSearch.getDetailValue(detail, keyUdkClass);
+                    String origDocId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ORG_OBJ_ID);
+
+                    String nodeName = detail.getTitle();
+
+                    // check whether child node has children as well -> request only 1 child !
+                    boolean hasChildren = ctdp.hasChildren(udkDocId, plugId, plugType);
+                    
+                    DisplayTreeNode childNode = new DisplayTreeNode(Utils.getMD5Hash(plugId + udkDocId), nodeName, false);
+                    childNode.setType(DisplayTreeNode.GENERIC);
+                    childNode.put(NODE_LEVEL, childrenLevel);
+                    childNode.put(NODE_PLUG_TYPE, plugType);
+                    childNode.put(NODE_PLUG_ID, plugId);
+                    childNode.put(NODE_DOC_ID, hit.getId());
+                    childNode.put(NODE_UDK_DOC_ID, udkDocId);
+                    childNode.put(NODE_ORIG_DOC_ID, origDocId);
+                    childNode.put(NODE_UDK_CLASS, udkClass);
+                    childNode.put(NODE_EXPANDABLE, hasChildren);
+
+                    childNodes.add(childNode);
+                }
+                // and add them to the parent
+                it = childNodes.iterator();
+                while (it.hasNext()) {
+                    DisplayTreeNode childNode = (DisplayTreeNode) it.next();
+                    childNode.setParent(node);
+                    node.addChild(childNode);
+                }
+                node.setLoading(false);
             }
         }
     }

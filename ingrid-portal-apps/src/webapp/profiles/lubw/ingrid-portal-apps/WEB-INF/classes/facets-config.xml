@@ -194,8 +194,14 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.provider</name>
         <id>distributor</id>
         <field>distributor</field>
-        <listLength>6</listLength>
-        <isOpen>true</isOpen>
+    </facet>
+    <facet sort="SORT_BY_NAME">
+        <name>Katalog</name>
+        <id>metadata_tree</id>
+        <hierarchyTree>true</hierarchyTree>
+        <hierarchyTreeTypes>dsc_ecs</hierarchyTreeTypes>
+        <hierarchyTreeLevel>4</hierarchyTreeLevel>
+        <listLength>5</listLength>
     </facet>
     <!-- Kategorie -->
     <facet>
