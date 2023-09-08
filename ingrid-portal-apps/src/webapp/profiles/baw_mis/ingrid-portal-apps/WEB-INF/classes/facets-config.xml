@@ -299,7 +299,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <listLength>6</listLength>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
-        <name>Datenformate</name>
+        <name>searchResult.facete.title.datenformat</name>
         <id>datenformate</id>
         <field>t017_url_ref.datatype</field>
         <listLength>6</listLength>
@@ -319,13 +319,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Kategorie -->
     <facet>
-        <name>Wasserstraße</name>
+        <name>searchResult.facete.title.waterway</name>
         <id>category_wasserstrasse</id>
         <categoryOnly>true</categoryOnly>
         <facets>
             <!-- Donau -->
             <facet>
-                <name>Donau</name>
+                <name>searchResult.facete.bwastr.donau.title</name>
                 <query>bwstr-bwastr_name.phrase:"donau"</query>
                 <id>Donau</id>
                 <parentId>wasserstrasse</parentId>
@@ -359,7 +359,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Main-Donau-Kanal -->
             <facet>
-                <name>Main-Donau-Kanal</name>
+                <name>searchResult.facete.bwastr.mdk.title</name>
                 <query>bwstr-bwastr_name.phrase:"main-donau-kanal"</query>
                 <id>Main-Donau-Kanal</id>
                 <parentId>wasserstrasse</parentId>
@@ -367,7 +367,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Mittellandkanal -->
             <facet>
-                <name>Mittellandkanal</name>
+                <name>searchResult.facete.bwastr.mlk.title</name>
                 <query>bwstr-bwastr_name.phrase:"mittellandkanal"</query>
                 <id>Mittellandkanal</id>
                 <parentId>wasserstrasse</parentId>
@@ -375,7 +375,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Mosel -->
             <facet>
-                <name>Mosel</name>
+                <name>searchResult.facete.bwastr.mosel.title</name>
                 <query>bwstr-bwastr_name.phrase:"mosel"</query>
                 <id>Mosel</id>
                 <parentId>wasserstrasse</parentId>
@@ -391,7 +391,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Nord-Ostsee-Kanal  -->
             <facet>
-                <name>Nord-Ostsee-Kanal</name>
+                <name>searchResult.facete.bwastr.nok.title</name>
                 <query>bwstr-bwastr_name.phrase:"nord-ostsee-kanal"</query>
                 <id>Nord-Ostsee-Kanal</id>
                 <parentId>wasserstrasse</parentId>
@@ -399,7 +399,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Nordsee -->
             <facet>
-                <name>Nordsee</name>
+                <name>searchResult.facete.bwastr.nordsee.title</name>
                 <query>bwstr-bwastr_name.phrase:"nordsee"</query>
                 <id>Nordsee</id>
                 <parentId>wasserstrasse</parentId>
@@ -415,7 +415,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Ostsee -->
             <facet>
-                <name>Ostsee</name>
+                <name>searchResult.facete.bwastr.ostsee.title</name>
                 <query>bwstr-bwastr_name.phrase:"ostsee"</query>
                 <id>Ostsee</id>
                 <parentId>wasserstrasse</parentId>
@@ -423,7 +423,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
             <!-- Rhein -->
             <facet>
-                <name>Rhein</name>
+                <name>searchResult.facete.bwastr.rhein.title</name>
                 <query>bwstr-bwastr_name.phrase:"rhein"</query>
                 <id>Rhein</id>
                 <parentId>wasserstrasse</parentId>
