@@ -2688,20 +2688,23 @@ public class UtilsFacete {
             String docId = node.get("docId").toString();
             String id = ingridFacet.getId() + "_" + docId;
             String name = node.getName();
-            IngridFacet tmpFacet = new IngridFacet();
-            tmpFacet.setId(id);
-            tmpFacet.setQuery("object_node.tree_path.uuid:" + docId + " isFolder:false");
-            tmpFacet.setName(name);
-            tmpFacet.setParent(ingridFacet);
-            tmpFacet.setHierarchyTreeLeaf(true);
-            if(ingridFacet.getListLength() > 0) {
-                tmpFacet.setListLength(ingridFacet.getListLength());
+            boolean nodeIsExpandable = (boolean) node.get("expandable");
+            if(nodeIsExpandable) {
+                IngridFacet tmpFacet = new IngridFacet();
+                tmpFacet.setId(id);
+                tmpFacet.setQuery("object_node.tree_path.uuid:" + docId + " isFolder:false");
+                tmpFacet.setName(name);
+                tmpFacet.setParent(ingridFacet);
+                tmpFacet.setHierarchyTreeLeaf(true);
+                if(ingridFacet.getListLength() > 0) {
+                    tmpFacet.setListLength(ingridFacet.getListLength());
+                }
+                if(ingridFacet.getSort() != null) {
+                    tmpFacet.setSort(ingridFacet.getSort());
+                }
+                newFacets.add(tmpFacet);
+                addHierarchyNodesToFacets(tmpFacet, node.getChildren(), config, id) ;
             }
-            if(ingridFacet.getSort() != null) {
-                tmpFacet.setSort(ingridFacet.getSort());
-            }
-            newFacets.add(tmpFacet);
-            addHierarchyNodesToFacets(tmpFacet, node.getChildren(), config, id) ;
         }
         ingridFacet.setFacets(newFacets);
     }
