@@ -444,7 +444,7 @@
                     #if($facet.getMobileName())
                       #set ($hasMobileName = true)
                     #end
-                    <input id="facet-$facet.getId()" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'">
+                    <input id="facet-$facet.getId()" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'" autocomplete="off">
                     <span class="control__indicator"></span>
                     <span class="nr-results">
                     #if($number)
