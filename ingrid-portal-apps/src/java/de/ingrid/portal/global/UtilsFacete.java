@@ -388,7 +388,7 @@ public class UtilsFacete {
                                     for(IngridFacet tmpSubFacet : tmpFacetKey.getFacets()){
                                         IngridFacet toggle = tmpSubFacet.getToggle();
                                         if(toggle != null) {
-                                            if(Arrays.asList(valueIds).indexOf(toggle.getId()) > -1){
+                                            if(valueIds.indexOf(toggle.getId()) > -1){
                                                 isToggleGroup = true;
                                                 break;
                                             }
