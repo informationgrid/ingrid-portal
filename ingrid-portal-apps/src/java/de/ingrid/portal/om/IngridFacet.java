@@ -65,6 +65,7 @@ public class IngridFacet {
     private boolean categoryOnly = false;
     private IngridFacet toggle;
     private ArrayList<ArrayList<String>> toggleGroups;
+    private ArrayList<String> options;
     
     /* Only for partner restriction */
     private boolean isParentHidden = false;
@@ -321,5 +322,11 @@ public class IngridFacet {
     }
     public void setHierarchyTreeLevel(int hierarchyTreeLevel) {
         this.hierarchyTreeLevel = hierarchyTreeLevel;
+    }
+    public ArrayList<String> getOptions() {
+        return options;
+    }
+    public void setOptions(ArrayList<String> options) {
+        this.options = options;
     }
 }

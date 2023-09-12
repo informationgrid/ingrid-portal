@@ -783,7 +783,17 @@ public class UtilsFacete {
                 coordOptions = new ArrayList<>();
                 webmapclientCoords = new HashMap<>();
 
-                coordOptions.add("inside");
+                ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
+                IngridFacet facet = getFacetById(config, "area.map");
+                if(facet != null && facet.getOptions() != null) {
+                    ArrayList<String> options = facet.getOptions();
+                    for (String option : options) {
+                        coordOptions.add(option);
+                    }
+                }
+                if(coordOptions.isEmpty()){
+                    coordOptions.add("inside");
+                }
 
                 if(request.getParameter("x1") != null){
                     webmapclientCoords.put("x1", request.getParameter("x1"));

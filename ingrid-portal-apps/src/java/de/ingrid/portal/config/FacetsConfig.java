@@ -368,6 +368,16 @@ public class FacetsConfig {
                         ingridFacet.setSelectGroup( node.getValue().toString() );
                     }
                 }
+                if (!facetNode.getChildren( "options" ).isEmpty()) {
+                    List<ConfigurationNode> options = facetNode.getChildren( "options" );
+                    ArrayList<String> list = new ArrayList<>();
+                    for (ConfigurationNode option : options) {
+                        list.add(option.getValue().toString());
+                    }
+                    if(!list.isEmpty()) {
+                        ingridFacet.setOptions(list);
+                    }
+                }
                 if (!facetNode.getChildren( "hierarchyTree" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "hierarchyTree" ).get( 0 );
                     if (node != null) {

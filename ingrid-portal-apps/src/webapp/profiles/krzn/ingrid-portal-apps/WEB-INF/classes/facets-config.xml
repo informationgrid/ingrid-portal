@@ -245,6 +245,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.area</name>
         <id>area.map</id>
         <hidden>address</hidden>
+        <options>inside,intersect,include</options>
     </facet>
     <!-- Raumbezug Adressen-->
     <!-- Standard - Kann nicht erweitert werden -->
