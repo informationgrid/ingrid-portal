@@ -195,8 +195,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>distributor</id>
         <field>distributor</field>
     </facet>
-    <facet sort="SORT_BY_NAME">
-        <name>Katalog</name>
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>Fachthemen</name>
         <id>metadata_tree</id>
         <hierarchyTree>true</hierarchyTree>
         <hierarchyTreeTypes>dsc_ecs</hierarchyTreeTypes>
