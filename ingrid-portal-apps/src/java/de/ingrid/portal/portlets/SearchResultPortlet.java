@@ -115,6 +115,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 try {
                     // String[] requestFields = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_UVP_DOCUMENTS_HTACCESS_LOGIN);
                     String paramRequestFields = request.getParameter("requestedFields");
+                    if(paramRequestFields == null) {
+                        paramRequestFields = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_EXPORT_CSV_REQUESTED_FIELDS);
+                    }
                     String paramCodelistParam = request.getParameter("codelists");
                     HashMap<String, String> codelists = new HashMap<String, String>();
                     if(paramCodelistParam != null) {

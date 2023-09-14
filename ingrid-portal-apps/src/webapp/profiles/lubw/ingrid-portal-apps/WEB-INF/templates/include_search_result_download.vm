@@ -82,17 +82,20 @@
             var csv = json.map(function(row){
               var tmpRow = '';
 
+              ## Typ
               if(row['t01_object.obj_class']){
                 tmpRow += row['t01_object.obj_class'];
               }
               tmpRow += delimiter;
 
+              ## Themenbereich
               if(row['object_node.tree_path.name']){
                 var tmpValue = row['object_node.tree_path.name'];
                 if(tmpValue.length > 0){
                     tmpRow += tmpValue[0];
                 }
                 tmpRow += delimiter;
+                ## Unterbereich
                 if(tmpValue.length > 1){
                     tmpRow += tmpValue[1];
                 }
@@ -102,12 +105,15 @@
                 tmpRow += delimiter;
               }
 
+              ## Themenname
               if(row['title']){
                 tmpRow += row['title'];
               }
               tmpRow += delimiter;
 
+              ## Filterkriterium
               var tmpValue = '';
+              ## Ergebnistyp
               if(row['portal.facet.type']){
                 row['portal.facet.type'].forEach(function(value){
                     if(tmpValue !== ''){
@@ -116,14 +122,41 @@
                     tmpValue += '$MESSAGES.getString("searchResult.facete.title.types.single") = ' + value;
                 });
               }
+              ## Vertrieb der Geodaten
               if(row['portal.facet.distributor']){
-                  if(tmpValue !== ''){
-                      tmpValue += ', ';
-                  }
-                  tmpValue += '$MESSAGES.getString("searchResult.facete.title.provider") = ' + row['distributor'];
+                row['portal.facet.distributor'].forEach(function(value){
+                    if(tmpValue !== ''){
+                        tmpValue += ', ';
+                    }
+                    tmpValue += '$MESSAGES.getString("searchResult.facete.title.provider") = ' + value;
+                });
+              }
+              ## Fachthemen
+              if(row['portal.facet.metadata_tree']){
+                row['portal.facet.metadata_tree'].forEach(function(value){
+                    if(tmpValue !== ''){
+                        tmpValue += ', ';
+                    }
+                    tmpValue += '$MESSAGES.getString("searchResult.facete.title.metadata_tree") = ' + value;
+
+                    ## Unterthemen
+                    if(row['object_node.tree_path.uuid']){
+                        row['object_node.tree_path.uuid'].forEach(function(uuid){
+                            if(row['portal.facet.metadata_tree_' + uuid]){
+                                row['portal.facet.metadata_tree_' + uuid].forEach(function(subvalue){
+                                    if(tmpValue !== ''){
+                                        tmpValue += ', ';
+                                    }
+                                    tmpValue += value + ' = ' + subvalue;
+                                });
+                            }
+                        });
+                    }
+                });
               }
               tmpRow += tmpValue + delimiter;
 
+              ## Darstellungsdienst
               var tmpValue = '';
               if(row['capabilities_url']){
                 row['capabilities_url'].forEach(function(value){
@@ -135,6 +168,7 @@
               }
               tmpRow += tmpValue + delimiter;
 
+              ## Downloaddienst
               var tmpValue = '';
               var urlRefIds = row['t017_url_ref.special_ref'];
               var urlRefUrls = row['t017_url_ref.url_link'];
@@ -155,21 +189,25 @@
               }
               tmpRow += tmpValue + delimiter;
 
+              ## Metadatenaufruf
               if(row['t01_object.obj_id']){
                 tmpRow += urlDomain + '/trefferanzeige?docuuid=' + row['t01_object.obj_id'];
               }
               tmpRow += delimiter;
 
+              ## OAC
               if(row['oac']){
                 tmpRow += row['oac'];
               }
               tmpRow += delimiter;
 
+              ## Metadatenidentifikator
               if(row['t01_object.obj_id']){
                 tmpRow += row['t01_object.obj_id'];
               }
               tmpRow += delimiter;
 
+              ## Zugang geschützt
               if(row['t011_obj_serv.has_access_constraint']){
                 row['t011_obj_serv.has_access_constraint'].forEach(function(value){
                     if(value === 'Y'){
@@ -183,6 +221,7 @@
               }
               tmpRow += delimiter;
 
+              ## Aufruf Suchergebnis
               var url = urlDomain + '/freitextsuche?rstart=';
               if(row['portal.page']){
                 url += row['portal.page'];
@@ -207,12 +246,11 @@
                 csv = csv.join('\r\n');
             }
             var blob = new Blob( ['\ufeff' + csv], {type: 'text/csv;charset=utf-8;'} );
-            if (navigator.msSaveBlob) { // IE 10+
+            if (navigator.msSaveBlob) {
               navigator.msSaveBlob( blob, filename );
             } else {
               var link = document.createElement( "a" );
-              if (link.download !== undefined) { // feature detection
-                // Browsers that support HTML5 download attribute
+              if (link.download !== undefined) {
                 var url = URL.createObjectURL( blob );
                 link.setAttribute( "href", url );
                 link.setAttribute( "download", "Export_RIPS-Metadaten_" + dateFormat + ".csv" );
