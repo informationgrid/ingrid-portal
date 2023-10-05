@@ -36,27 +36,28 @@ define([
     "ingrid/hierarchy/dirty",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
-    "ingrid/utils/Grid",
-    "ingrid/utils/UI"
-], function (array, declare, lang, aspect, on, construct, query, domClass, topic, registry, message, creator, dirty, Editors, Formatters, UtilGrid, UtilUI) {
+    "ingrid/hierarchy/behaviours/utils"
+], function (array, declare, lang, aspect, on, construct, query, domClass, topic, registry, message, creator, dirty, Editors, Formatters, utils) {
     return declare(null, {
 
         title: "InVeKoS-Daten",
         description: "Unterstützung von Feldern für das 'Integrierte Verwaltungs- und Kontrollsystem'",
         category: "Felder",
         defaultActive: false,
+        events: [],
         run: function () {
             var self = this;
 
             this.register();
 
             topic.subscribe("/onObjectClassChange", function (msg) {
+                domClass.add("uiElementAddinvekosType", "hide");
+                domClass.add("uiElementAddinvekosKeywords", "hide");
+                
                 if (msg.objClass === "Class1") {
-                    domClass.remove("invekosType", "hide");
-                    domClass.remove("invekosType", "hide");
+                    self.addChangeDetection();
                 } else {
-                    domClass.add("invekosType", "hide");
-                    domClass.add("invekosType", "hide");
+                    utils.removeEvents(self.events);
                 }
             });
         },
@@ -64,10 +65,14 @@ define([
         register: function () {
 
             this.addFields();
-            this.addChangeDetection();
             this.addValidations();
 
         },
+        
+        unregister: function () {
+            
+        },
+        
         addFields: function () {
             var newFieldsToDirtyCheck = [];
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
@@ -198,18 +203,22 @@ define([
         },
         
         addChangeDetection: function () {
-            domClass.add("uiElementAddinvekosType", "hide");
-            domClass.add("uiElementAddinvekosKeywords", "hide");
+            if (registry.byId("isInspireRelevant").checked) {
+                domClass.remove("uiElementAddinvekosType", "hide");
+                domClass.remove("uiElementAddinvekosKeywords", "hide");
+            }
             
-            on(registry.byId("isInspireRelevant"), "Change", function (isChecked) {
-                if (isChecked) {
-                    domClass.remove("uiElementAddinvekosType", "hide");
-                    domClass.remove("uiElementAddinvekosKeywords", "hide");
-                } else {
-                    domClass.add("uiElementAddinvekosType", "hide");
-                    domClass.add("uiElementAddinvekosKeywords", "hide");
-                }
-            });
+            this.events.push(
+                on(registry.byId("isInspireRelevant"), "Change", function (isChecked) {
+                    if (isChecked) {
+                        domClass.remove("uiElementAddinvekosType", "hide");
+                        domClass.remove("uiElementAddinvekosKeywords", "hide");
+                    } else {
+                        domClass.add("uiElementAddinvekosType", "hide");
+                        domClass.add("uiElementAddinvekosKeywords", "hide");
+                    }
+                })
+            );
         }
     })();
 });
