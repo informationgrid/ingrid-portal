@@ -144,7 +144,7 @@ define([
                 if (!this.hasInspireKeywords(["304"])) notPublishableIDs.push( ["thesaurusInspire", message.get("validation.error.invekos.missing.inspireLandUse")] );
             }
             if (invekosType === "lpis" || invekosType === "gsaa") {
-                if (!this.hasThesaurusTerms(["Gemeinsame Agrarpolitik"])) notPublishableIDs.push( ["thesaurusTerms", message.get("validation.error.invekos.missing.commonAgriculturalPolicy")] );
+                if (!this.hasThesaurusTerms(["Common Agricultural Policy"])) notPublishableIDs.push( ["thesaurusTerms", message.get("validation.error.invekos.missing.commonAgriculturalPolicy")] );
                 // topic category "farming"
                 if (!this.hasThesaurusTopics(["1"])) notPublishableIDs.push( ["thesaurusTopics", message.get("validation.error.invekos.missing.farming")] );
                 // date of type "revision"

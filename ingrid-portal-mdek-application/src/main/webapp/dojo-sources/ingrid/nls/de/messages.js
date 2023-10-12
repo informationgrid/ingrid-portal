@@ -468,7 +468,7 @@ define({
     "validation.error.invekos.missing.lpis": "Die Schlagwörter 'InVeKoS' und 'LPIS' sind verpflichtend",
     "validation.error.invekos.missing.inspireLandCover": "Die Schlagwort 'Bodenbedeckung' ist verpflichtend",
     "validation.error.invekos.missing.inspireLandUse": "Die Schlagwort 'Bodennutzung' ist verpflichtend",
-    "validation.error.invekos.missing.commonAgriculturalPolicy": "Die Schlagwort 'Gemeinsame Agrarpolitik' ist verpflichtend",
+    "validation.error.invekos.missing.commonAgriculturalPolicy": "Die Schlagwort 'Common Agricultural Policy' ist verpflichtend",
     "validation.error.invekos.missing.farming": "Die Schlagwort 'Landwirtschaft' ist verpflichtend",
     "validation.error.invekos.missing.revision": "Es muss mindestens ein Datum vom Typ 'Letzte Änderung' vorhanden sein",
 
