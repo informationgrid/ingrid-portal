@@ -141,7 +141,7 @@
         <!-- Global scripts -->
         <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/jquery/jquery.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+
         <script src="/decorations/layout/ingrid/scripts/all.js"></script>
         
     </body>
