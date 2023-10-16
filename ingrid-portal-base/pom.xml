@@ -126,9 +126,7 @@
             <exclude>**/css/datepicker/**/*</exclude>
             <exclude>**/css/streamline-24px/**/*</exclude>
             <exclude>**/css/streamline-24px-filled-in/**/*</exclude>
-            <exclude>**/fastclick.min.js</exclude>
             <exclude>**/modernizr.custom.min.js</exclude>
-            <exclude>**/fastclick.min.js</exclude>
             <exclude>**/*.properties</exclude>
             <exclude>**/*.json</exclude>
             <exclude>**/*.sql</exclude>

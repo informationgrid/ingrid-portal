@@ -46,7 +46,7 @@
         <!-- Global scripts -->
         <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/jquery/jquery.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+
         <script src="/decorations/layout/ingrid/scripts/jquery/nicescroll/jquery.nicescroll.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/jquery/foundation/foundation.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/jquery/select2/select2.full.js"></script>

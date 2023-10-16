@@ -46,7 +46,7 @@
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/main.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
         <script src="/decorations/layout/ingrid/scripts/jquery/jquery.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+
         <script src="/decorations/layout/ingrid/scripts/jquery/nicescroll/jquery.nicescroll.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/jquery/foundation/foundation.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/jquery/select2/select2.full.js"></script>
