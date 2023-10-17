@@ -20,7 +20,7 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <measurement.client.version>2.0.5</measurement.client.version>
-    <ingrid-utils-geo.version>6.3.0-SNAPSHOT</ingrid-utils-geo.version>
+    <ingrid-utils-geo.version>6.3.0</ingrid-utils-geo.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
