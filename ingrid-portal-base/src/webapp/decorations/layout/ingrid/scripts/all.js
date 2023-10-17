@@ -68,12 +68,6 @@
 
 })();
 
-/* Init FastClick
- */
-$(function () {
-    FastClick.attach(document.body);
-});
-
 /* Message Box
  *
  * Closes and deletes the messagebox.

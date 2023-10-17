@@ -23,9 +23,11 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -64,6 +66,14 @@ public class CMSPortlet extends GenericVelocityPortlet {
 
     public static final String CMS_DEFAULT_KEY = "default.key";
 
+    private String defaultViewTemplate;
+
+    @Override
+    public void init(PortletConfig config) throws PortletException {
+        defaultViewTemplate = config.getInitParameter(PARAM_VIEW_PAGE);
+        super.init(config);
+    }
+
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
@@ -100,6 +110,17 @@ public class CMSPortlet extends GenericVelocityPortlet {
         if(myKey.equals("portal.teaser.shortcut")){
             myView= prefs.getValue("infoTemplate", SHORTCUT_TEMPLATE);
             setDefaultViewPage(myView);
+        }
+
+        boolean showUserOnly = Boolean.parseBoolean(prefs.getValue("showUserOnly", "false"));
+        String showPublicTemplate = prefs.getValue("showPublicTemplate", null);
+        if(showUserOnly && showPublicTemplate != null) {
+            String username = request.getRemoteUser();
+            if(username == null) {
+                setDefaultViewPage(showPublicTemplate);
+            } else {
+                setDefaultViewPage(defaultViewTemplate);
+            }
         }
 
         ResourceURL restUrl = response.createResourceURL();

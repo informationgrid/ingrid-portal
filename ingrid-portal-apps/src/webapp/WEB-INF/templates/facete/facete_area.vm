@@ -63,7 +63,7 @@
                             <div class="input-radio">
                                 <div class="control-group">
                                     <label class="control control--checkbox" for="$topicId_$count">
-                                        <input id="$topicId_$count" type="checkbox" value="$topicId" name="chk$count"
+                                        <input id="$topicId_$count" type="checkbox" value="$topicId" name="chk$count" autocomplete="off"
                                         #foreach($selectTopic in $geothesaurusSelectTopics)
                                             #if($selectTopic.topicId == $topicId)
                                                 checked
@@ -100,7 +100,7 @@
                             <div class="input-radio">
                                 <div class="control-group">
                                     <label class="control control--checkbox" for="$topicId_$count">
-                                        <input id="$topicId_$count" type="checkbox" value="$topicId" name="chk$count"
+                                        <input id="$topicId_$count" type="checkbox" value="$topicId" name="chk$count" autocomplete="off"
                                         #foreach($selectTopic in $geothesaurusSelectTopics)
                                             #if($selectTopic.topicId == $topicId)
                                                 checked

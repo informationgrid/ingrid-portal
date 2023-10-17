@@ -46,11 +46,11 @@
         <script src="/decorations/layout/ingrid/scripts/ingrid.js"></script>
         <!-- Global scripts -->
         <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/vendor/jquery.nicescroll.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/vendor/foundation.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/vendor/select2.full.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery/jquery.min.js"></script>
+
+        <script src="/decorations/layout/ingrid/scripts/jquery/nicescroll/jquery.nicescroll.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery/foundation/foundation.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery/select2/select2.full.js"></script>
         <script src="/decorations/layout/ingrid/scripts/main.js"></script>
         <meta class="foundation-mq">
     </head>
@@ -65,7 +65,6 @@
                         <a href="/freitextsuche" class="header-menu-entry " title="Freitextsuche nach Informationen"><span class="text">Suche</span></a>
                         <a href="/hintergrundinformationen" class="header-menu-entry " title="Hintergrundinformationen zu KRZN"><span class="text">Über KRZN</span></a>
                     </div>
-                    <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an KRZN" target="_blank"><span class="text">Kontakt</span></a>
                     <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" target="_blank"><span class="text">Impressum</span></a>
                     <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" target="_blank"><span class="text">Datenschutz</span></a>
                     <a href="/barrierefreiheit" title="Barrierefreiheit" target="_blank"><span class="text">Barrierefreiheit</span></a>
@@ -79,17 +78,15 @@
                             <div class="columns xsmall-4 small-4 medium-4 large-4 xlarge-4">
                                 <div class="logo" role="banner">
                                     <a href="/startseite" title="Startseite vom Geodatenkatalog Niederrhein">
-                                        <img src="/decorations/layout/ingrid/images/template/logo.png" alt="KRZN - Indexieren, Recherchieren, Visualisieren, Teilen">
+                                        <img src="/decorations/layout/ingrid/images/template/logo.png" alt="Geodatenkatalog Niederrhein">
                                     </a>
                                 </div>
                             </div>
                             <div class="columns xsmall-10 small-10 medium-20 large-20 xlarge-18">
                                 <div class="desktop__title">
-                                    <a href="/startseite" title="Startseite vom Geodatenkatalog Niederrhein aufrufen ">
-                                        <span>
-                                            <strong>G</strong>eodatenkatalog <strong>N</strong>iederrhein
-                                        </span>
-                                    </a>
+                                    <span>
+                                        <strong>G</strong>eodatenkatalog <strong>N</strong>iederrhein
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -147,8 +144,8 @@
                     <div class="row">
                         <div class="xsmall-24 small-24 medium-24 large-24 xlarge-10 columns">
                             <div class="logo">
-                                <a href="/startseite" title="Startseite vom Geodatenkatalog Niederrhein">
-                                    <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="KRZN - Indexieren, Recherchieren, Visualisieren, Teilen">
+                                <a href="/startseite" title="Startseite zu KRZN">
+                                    <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="KRZN">
                                 </a>
                         </div>
                         <div class="copyright">
@@ -158,7 +155,6 @@
                     </div>
                     <div class="xsmall-24 small-24 medium-24 large-24 xlarge-14 columns">
                         <div class="footer-menu-entries" role="navigation" aria-label="Navigation Footer">
-                            <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an KRZN" class="icon" target="_blank"><span class="text">Kontakt</span></a>
                             <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" class="icon" target="_blank"><span class="text">Impressum</span></a>
                             <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" class="icon" target="_blank"><span class="text">Datenschutz</span></a>
                             <a href="/barrierefreiheit" title="Barrierefreiheit" class="icon" target="_blank"><span class="text">Barrierefreiheit</span></a>

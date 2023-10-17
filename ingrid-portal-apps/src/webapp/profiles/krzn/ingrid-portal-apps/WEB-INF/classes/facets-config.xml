@@ -164,12 +164,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>3</codelist-entry-id>
             </facet>
-        <!-- INSPIRE-relevant -->
-            <facet>
-                <name>INSPIRE</name>
-                <query>t04_search.searchterm:inspireidentifiziert</query>
-                <id>inspire</id>
-            </facet>
         <!-- Open Data -->
            <facet>
                 <name>Open Data</name>
@@ -251,6 +245,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.area</name>
         <id>area.map</id>
         <hidden>address</hidden>
+        <options>inside,intersect,include</options>
     </facet>
     <!-- Raumbezug Adressen-->
     <!-- Standard - Kann nicht erweitert werden -->
@@ -300,18 +295,10 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>3</codelist-entry-id>
                 <parentId>type</parentId>
-                <icon>ic-ic-dienste</icon>
-            </facet>
-        <!-- INSPIRE-relevant -->
-            <facet>
-                <name>INSPIRE</name>
-                <query>t04_search.searchterm:inspireidentifiziert</query>
-                <id>inspire</id>
-                <parentId>type</parentId>
-                <icon>ic-inspire</icon>
+                <icon>ic-dienste</icon>
             </facet>
         <!-- Open Data -->
-           <facet>
+            <facet>
                 <name>Open Data</name>
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>

@@ -45,7 +45,7 @@
                         #if($node.getId() == 'timeref' || $node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                             #renderFacetContent($node)
                         #else
-                            #if($node.getFacets())
+                            #if($node.getFacets() && !$node.getFacets().isEmpty())
                                 #set($nodeHasValueDependency = false)
                                 #foreach($facet in $node.getFacets())
                                     #if($facet.getFacetValue())
@@ -64,7 +64,7 @@
                             #if($node.getId() == 'timeref' || $node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                                 #renderFacetContent($node)
                             #else
-                                #if($node.getFacets())
+                                #if($node.getFacets() && !$node.getFacets().isEmpty())
                                     #set($nodeHasValueHidden = false)
                                     #foreach($facet in $node.getFacets())
                                         #if($facet.getFacetValue())
@@ -82,7 +82,7 @@
                             #renderFacetContent($node)
                         #elseif($node.getWildcard())
                             #parse ('/WEB-INF/templates/facete/facete_wildcard.vm')
-                        #elseif($node.getFacets())
+                        #elseif($node.getFacets() && !$node.getFacets().isEmpty())
                             #set($nodeHasValue = false)
                             #foreach($facet in $node.getFacets())
                                 #if($facet.getFacetValue() || $facet.isDisplay())
@@ -102,7 +102,7 @@
 
 #macro(renderFacetCategoryEntry $facet $parentId)
     #if(($facet.getFacetValue() || $facet.isDisplay()) && !$facet.isCategoryOnly())
-        #if($facet.getFacets())
+        #if($facet.getFacets() && !$facet.getFacets().isEmpty())
             ## Check for sub facets
             #if($facet.isSelect())
                 ## Create Tree with single selection
@@ -111,7 +111,7 @@
                     $action.setParameter("$parentId", "$facet.getId()")
                     #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
                 #else
-                    #renderTree ($facet $parentId)
+                    #renderTree($facet $parentId)
                 #end
             #else
                 ## Set single facets
@@ -156,6 +156,8 @@
             #if($facet.getId() == 'area.address')
                 #parse ('/WEB-INF/templates/facete/facete_area_address.vm')
             #end
+        #elseif($facet.isHierarchyTree())
+            #parse ('/WEB-INF/templates/facete/facete_hierarchy.vm')
         #else
             #set($count = 0)
             #if($facet.getShowOnMoreThan() != 0)
@@ -389,7 +391,13 @@
     #set ($action = $renderResponse.createActionURL())
         <span class="ic-ic-cross"></span>
         <span class="nr-results">($treeFacet.getFacetValue())</span>
-        <span class="text">$MESSAGES.getString("$treeFacet.getName()")</span>
+        <span class="text">
+            #if($treeFacet.getCodelistId())
+                $Codelists.getCodeListValue($treeFacet.getCodelistId(), $treeFacet.getCodelistEntryId(), $languageCode)
+            #else
+                $MESSAGES.getString("$treeFacet.getName()")
+            #end
+        </span>
     </a>
     <div class="boxes">
     #set($isSelectedTree = false)
@@ -436,7 +444,7 @@
                     #if($facet.getMobileName())
                       #set ($hasMobileName = true)
                     #end
-                    <input id="facet-$facet.getId()" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'">
+                    <input id="facet-$facet.getId()" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'" autocomplete="off">
                     <span class="control__indicator"></span>
                     <span class="nr-results">
                     #if($number)

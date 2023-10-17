@@ -2,12 +2,12 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Über den LUBW-Metadatenkatalog</header>
+        <header>Über die RIPS-Metadaten</header>
         <section help-key="about-1">
-            <header>Metadatenportal des Räumlichen Informations- und Planungssystems</header>
+            <header>Metadaten des Räumlichen Informations- und Planungssystems</header>
             <content>
-                <p>Das Metadatenportal des Räumlichen Informations- und Planungssystems (RIPS) ermöglicht die gezielte Suche nach Geodaten und Web-Diensten des Umweltinformationssystems Baden-Württemberg (UIS) und bietet einen zentralen Zugriff auf alle relevanten Metadaten.</p>
-                <p>Als aktuelle konzeptionelle Grundlage für den Metadatenkatalog dient das Metadatenprofil GDI-BW (in der jeweils gültigen Version). Mit der Umsetzung der Vorgaben aus dem Profil werden die technischen Rahmenbedingungen geschaffen, um die Vorgaben aus der INSPIRE-Richtlinie, der GDI-DE und der GDI-BW Standards einhalten zu können. Die Metadaten sind somit auch konform zu den ISO-Standards 19115 bzw. 19119.</p>
+                <p>Die Metadaten des Räumlichen Informations- und Planungssystems (RIPS) ermöglichen die gezielte Suche nach Geodaten und Web-Diensten des Umweltinformationssystems Baden-Württemberg (UIS) und bietet einen zentralen Zugriff auf alle relevanten Metadaten.</p>
+                <p>Als aktuelle konzeptionelle Grundlage für die RIPS-Metadaten dient das Metadatenprofil GDI-BW (in der jeweils gültigen Version). Mit der Umsetzung der Vorgaben aus dem Profil werden die technischen Rahmenbedingungen geschaffen, um die Vorgaben aus der INSPIRE-Richtlinie, der GDI-DE und der GDI-BW Standards einhalten zu können. Die Metadaten sind somit auch konform zu den ISO-Standards 19115 bzw. 19119.</p>
                 <p>Die Metadaten werden einer ständigen Qualitätskontrolle unterzogen. Dennoch können aufgrund der Vielzahl von Datensätzen und Angaben Informationen veralten oder Unklarheiten entstehen. Für Fragen oder Rückmeldungen wenden Sie sich bitte an die E-Mail-Adresse RIPS-Metadaten@lubw.bwl.de oder nutzen Sie unser <a href="https://rips-metadaten.lubw.de/kontakt">Kontaktformular</a>.</p>
             </content>
         </section>
@@ -20,7 +20,7 @@
                 <p>Suchen ist ganz einfach. Geben Sie in das Suchfeld einen oder 
                    mehrere Begriffe ein und klicken Sie anschließend auf die 
                    Schaltfläche <b>Suche</b>.</p>
-                <p>InGrid-Portal durchsucht alle
+                <p>RIPS-Metadaten durchsucht alle
                    eingebundenen Informationen: Webseiten, Kataloge und
                    Datenbanken, die für Ihre Suche von Interesse sind. Die 
                    Ergebnisse Ihrer Suchanfrage werden in einer 
@@ -50,7 +50,7 @@
         <section help-key="search-4">
             <header>Auf Karte festlegen</header>
             <content>
-                <p>Die räumliche Einschränkung der InGrid-Portal-Suche ist auch über die Auswahl eines Kartenausschnitts 
+                <p>Die räumliche Einschränkung der RIPS-Metadaten-Suche ist auch über die Auswahl eines Kartenausschnitts
                    möglich.</p>
                 <p>Wählen Sie ein Gebiet aus, indem Sie mit Shift + gedrückter 
                    linker Maustaste ein Rechteck auf der Karte aufziehen.
@@ -203,10 +203,18 @@
                     Ausdruck ‚(1+1):2’ gesucht)</p>
             </content>
         </section>
+        <section help-key="search-expert-8a">
+            <header>Suche nach OAC (Objektartencode)</header>
+            <content>
+                <p>In den RIPS-Metadaten kann eine Objektart über den OAC (Objektartencode) gesucht werden.
+                    Dazu kann in der Suche „oac:“ und ohne Leerzeichen die jeweilige Zahl eingegeben werden.</p>
+                <p>Beispiel: Die Sucheingabe „oac:12“ findet das Thema Naturschutzgebiet (NSG).</p>
+            </content>
+        </section>
         <section help-key="search-expert-9a">
             <header>Suche nach speziellen Dokumenttypen</header>
             <content>
-                <p> In InGrid-Portal kann nach verschiedenen Dokumenttypen gesucht werden. 
+                <p> In den RIPS-Metadaten kann nach verschiedenen Dokumenttypen gesucht werden.
                     Dazu wird die Syntax ‚fileformat:Wert’ verwandt.</p>
                 <p>Beispiel: ‚fileformat:pdf’ (Es wird nur nach
                     PDF-Dokumenten gesucht.)</p>
@@ -247,8 +255,8 @@
         <br></br>
             <header>Suche nach speziellen Datentypen</header>
             <content>
-                <p>Der InGrid-Portal-Volltextindex gliedert sich in verschiedene
-                    Felder. Alle in InGrid-Portal verwendeten Felder lassen sich
+                <p>Der RIPS-Metadaten-Volltextindex gliedert sich in verschiedene
+                    Felder. Alle in den RIPS-Metadaten verwendeten Felder lassen sich
                     gezielt einzeln durchsuchen. Dazu wird die Syntax
                     ‚Feldname:Wert’ verwandt.</p>
                 <p>Die Feldnamen beziehen sich direkt auf die im Suchindex abgelegten Felder und sind somit
@@ -289,7 +297,7 @@
          
                     <tr>
                     <td>address</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Adressen' gesucht, z.B. können Metadaten separate Adressen beinhalten (InGrid Katalog).</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Adressen' gesucht, z.B. können Metadaten separate Adressen beinhalten (RIPS-Metadaten).</td>
                     </tr>
                    
                     <tr>
@@ -419,7 +427,7 @@
                 Verwaltungseinheit eingeschränkt.)</p>
                 <p>Beispiel: ‚x1:7.52 y1:50.18 x2:10.17 y2:52.73’ (Die Suche wird auf ein 
                 ausgewähltes Rechteck eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in InGrid-Portal zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in den RIPS-Metadaten zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -460,7 +468,7 @@
                 werden. </p>
                 <p>Beispiel: ‚t1:2006-01-01 t2:2008-12-31’ (Die Suche wird auf ein 
                 ausgewähltes Zeitintervall eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in InGrid-Portal zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in den RIPS-Metadaten zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -512,7 +520,7 @@
                    Datenquelle sowie bei Webseiten die entsprechende URL. Wenn 
                    bei einigem Katalogeintrag eine digitale Karte hinterlegt 
                    ist, können Sie sich über die Schaltfläche <b>Karte</b> die 
-                   Karte direkt im <a href="?hkey=maps-1">InGrid-Portal-Kartenviewer
+                   Karte direkt im <a href="?hkey=maps-1">RIPS-Metadaten-Kartenviewer
                    </a> ansehen. Die Schaltfläche <b>XML</b> liefert die ISO
                    Darstellung des Treffers, soweit dieser CSW konform abgegeben werden kann.
                 </p>
@@ -545,9 +553,9 @@
                    Datenkatalogen </p>
                 <p>Karten: Suchergebnisse aus der Klasse 
                    <b>Geoinformation/Karte</b> der angeschlossenen 
-                   Datenkataloge und den im InGrid-Portal-Kartenviewer 
+                   Datenkataloge und den im RIPS-Metadaten-Kartenviewer
                    verzeichneten Karten. Alle Karten können Sie sich im 
-                   <a href="?hkey=maps-1">InGrid-Portal-Kartenviewer</a> ansehen.</p>
+                   <a href="?hkey=maps-1">RIPS-Metadaten-Kartenviewer</a> ansehen.</p>
                 <p>Rechtsvorschriften: Suchergebnisse aus Informationsangeboten zu 
                    rechtsrelevanten Themen</p>                   
                 <p>Forschungsprojekte: Suchergebnisse aus Informationsangeboten zu 
@@ -602,7 +610,7 @@
         <section help-key="search-results-3">
             <header>Ähnliche Begriffe</header>
             <content>
-                <p>InGrid-Portal bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                <p>RIPS-Metadaten bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
                     eingegebene Suchausdruck analysiert und in Form von Alternativ-Begriffen zur
                     Verfügung gestellt.</p>
@@ -640,7 +648,7 @@
         <section help-key="maps-1">
             <header>Übersicht</header>
              <content>
-                <p>Mit dem InGrid-Portal-Kartenviewer können Sie sich eine Vielzahl 
+                <p>Mit dem RIPS-Metadaten Kartenviewer können Sie sich eine Vielzahl
                    Karten ansehen und auf diesen operieren.</p>
                 <p>Seine Funktionalität umfasst u.a.:</p>
                 <ul>
@@ -651,7 +659,7 @@
                         strukturiertes Angebot an Karten + Hinzufügen externer Karten
                     </li>
                     <li>
-                        Suche nach Karten direkt auf eingebundenen Karten oder im Suchraum von InGrid (Kataloge)
+                        Suche nach Karten direkt auf eingebundenen Karten oder im Suchraum von RIPS-Metadaten (Kataloge)
                     </li>
                     <li>
                         Zeichnen und Messen auf der Karte

@@ -66,6 +66,9 @@ a.icon:hover {
 .button:focus {
   background-color: #1D4B7B;
 }
+.button.disabled, .button.disabled:hover, .button.disabled:focus, .button[disabled], .button[disabled]:hover, .button[disabled]:focus {
+  background-color: #006ec5;
+}
 .button.round {
   color: #006ec5;
 }
@@ -313,6 +316,10 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr {
 }
 table .dark a {
   text-decoration: none;
+}
+table .dark a:hover {
+  color: #1D4B7B;
+  text-decoration: underline;
 }
 .tabs .tabs-title > a {
   color: #006ec5;

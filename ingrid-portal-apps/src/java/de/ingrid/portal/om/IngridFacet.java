@@ -50,6 +50,10 @@ public class IngridFacet {
     private String info;
     private String infoResultSelect;
     private String selectGroup;
+    private boolean hierarchyTree;
+    private boolean hierarchyTreeLeaf;
+    private String hierarchyTreeTypes;
+    private int hierarchyTreeLevel;
     private int showOnMoreThan;
     private int colNum;
     private int listLength;
@@ -61,6 +65,7 @@ public class IngridFacet {
     private boolean categoryOnly = false;
     private IngridFacet toggle;
     private ArrayList<ArrayList<String>> toggleGroups;
+    private ArrayList<String> options;
     
     /* Only for partner restriction */
     private boolean isParentHidden = false;
@@ -293,5 +298,35 @@ public class IngridFacet {
     }
     public void setToggleGroups(ArrayList<ArrayList<String>> toggleGroups) {
         this.toggleGroups = toggleGroups;
+    }
+    public boolean isHierarchyTree() {
+        return hierarchyTree;
+    }
+    public void setHierarchyTree(boolean hierarchyTree) {
+        this.hierarchyTree = hierarchyTree;
+    }
+    public boolean isHierarchyTreeLeaf() {
+        return hierarchyTreeLeaf;
+    }
+    public void setHierarchyTreeLeaf(boolean hierarchyTreeLeaf) {
+        this.hierarchyTreeLeaf = hierarchyTreeLeaf;
+    }
+    public String getHierarchyTreeTypes() {
+        return hierarchyTreeTypes;
+    }
+    public void setHierarchyTreeTypes(String hierarchyTreeTypes) {
+        this.hierarchyTreeTypes = hierarchyTreeTypes;
+    }
+    public int getHierarchyTreeLevel() {
+        return hierarchyTreeLevel;
+    }
+    public void setHierarchyTreeLevel(int hierarchyTreeLevel) {
+        this.hierarchyTreeLevel = hierarchyTreeLevel;
+    }
+    public ArrayList<String> getOptions() {
+        return options;
+    }
+    public void setOptions(ArrayList<String> options) {
+        this.options = options;
     }
 }

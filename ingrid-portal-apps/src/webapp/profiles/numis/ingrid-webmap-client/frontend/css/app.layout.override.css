@@ -68,7 +68,7 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 [ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected, [ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected:hover, [ga-catalogtree] .ga-catalogitem-template .ga-catalogitem-selected button {
   color: #0089C6;
 }
-#pulldown-content .accordion-toggle, #pulldown-content .panel-body-wide a {
+#pulldown-content .accordion-toggle, #pulldown-content .panel-body-wide .ga-catalogitem-entry:not(.ga-catalogitem-leaf) {
   color: #1D4B7B;
   font-weight: bold;
   background-color: #F6F6F6;

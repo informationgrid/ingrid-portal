@@ -17,17 +17,29 @@ UPDATE page SET is_hidden = 1 WHERE path = '/help.psml';
 -- Hide '/accessibility.psml'
 UPDATE page SET is_hidden = 0 WHERE path = '/accessibility.psml';
 
+-- Hide '/service-contact.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/service-contact.psml';
+
 -- Hide '/service-sitemap.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/service-sitemap.psml';
 
 -- Hide '/search-catalog/search-catalog-hierarchy.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
 
+-- Hide '/main-about-data-source.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/main-about-data-source.psml';
+
+-- Hide '/main-about-partner.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/main-about-partner.psml';
+
 -- Hide '/application/main-application.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
 
 -- Hide folder "/application" to display
 UPDATE folder SET is_hidden = 1 WHERE path = '/application';
+
+-- Hide '/administration/admin-statistics.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/administration/admin-statistics.psml';
 
 -- Change '/default-page.psml'
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('default_page_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/default-page.psml')));

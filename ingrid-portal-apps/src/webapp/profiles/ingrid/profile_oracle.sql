@@ -32,6 +32,9 @@ UPDATE page SET is_hidden = 0 WHERE path = '/administration/admin-content-rss.ps
 -- Show '/administration/admin-homepage.psml'
 UPDATE page SET is_hidden = 0 WHERE path = '/administration/admin-homepage.psml';
 
+-- Show '/administration/admin-statistics.psml'
+UPDATE page SET is_hidden = 0 WHERE path = '/administration/admin-statistics.psml';
+
 -- Show '/mdek/mdek_portal_admin.psml'
 UPDATE page SET is_hidden = 0 WHERE path = '/mdek/mdek_portal_admin.psml';
 
@@ -62,7 +65,7 @@ UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-1.psml';
 -- Hide '/cms/cms-2.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-2.psml';
 
--- Hide '/application/main-application.psml'
+-- Show '/application/main-application.psml'
 UPDATE page SET is_hidden = 0 WHERE path = '/application/main-application.psml';
 
 -- Change '/default-page.psml'

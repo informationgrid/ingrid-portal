@@ -23,12 +23,14 @@
     </div>
     <div class="form-element">
         <input type="text" id="firstname" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') #addErrorFormMessagePlaceholder('user_firstname') />
+        #addErrorFormMessagePlaceholderWithInputCheck('user_firstname')
     </div>
     <div class="form-element">
         <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*:</label>
     </div>
     <div class="form-element">
         <input type="text" id="lastname" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') #addErrorFormMessagePlaceholder('user_lastname') />
+        #addErrorFormMessagePlaceholderWithInputCheck('user_lastname')
     </div>
     <div class="form-element">
         <label for="email">$MESSAGES.getString('account.edit.label.email')*:</label>
@@ -120,22 +122,25 @@
     <hr />
     <h4>$MESSAGES.getString('account.edit.address.information')</h4>
     <div class="form-element">
-        <label for="street">#displayFieldLabel('street' $MESSAGES.getString('account.edit.label.street')):</label>
+        <label for="street">$MESSAGES.getString('account.edit.label.street'):</label>
     </div>
     <div class="form-element">
         <input type="text" id="street" name="street" value="#getFieldValue('street')" />
+        #addErrorFormMessagePlaceholderWithInputCheck('street')
     </div>
     <div class="form-element">
-        <label for="postalcode">#displayFieldLabel('postalcode' $MESSAGES.getString('account.edit.label.postalcode')):</label>
+        <label for="postalcode">$MESSAGES.getString('account.edit.label.postalcode'):</label>
     </div>
     <div class="form-element">
         <input type="text" id="postalcode" name="postalcode" value="#getFieldValue('postalcode')" />
+        #addErrorFormMessagePlaceholderWithInputCheck('postalcode')
     </div>
     <div class="form-element">
-        <label for="city">#displayFieldLabel('city' $MESSAGES.getString('account.edit.label.city')):</label>
+        <label for="city">$MESSAGES.getString('account.edit.label.city'):</label>
     </div>
     <div class="form-element">
         <input type="text" id="city" name="city" value="#getFieldValue('city')" />
+        #addErrorFormMessagePlaceholderWithInputCheck('city')
     </div>
 #end
 <hr />

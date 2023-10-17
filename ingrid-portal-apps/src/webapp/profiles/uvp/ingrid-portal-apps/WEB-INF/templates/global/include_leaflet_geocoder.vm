@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.control-geocoder/Control.Geocoder.css">
-<script src="/decorations/layout/ingrid/scripts/leaflet.control-geocoder/Control.Geocoder.min.js"></script>
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.control-geocoder/Control.Geocoder.css">
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.control-geocoder/Control.Geocoder.min.js"></script>
 
 <script>
 

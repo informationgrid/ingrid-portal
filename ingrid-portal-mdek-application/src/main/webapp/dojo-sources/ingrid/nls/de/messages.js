@@ -459,6 +459,18 @@ define({
     "doi.error.noPublicationDate": "Es wird das Datum der Veröffentlichung benötigt",
     "doi.error.noDOIId": "Keine DOI ID angegeben",
     "doi.error.noDOIType": "Kein DOI Typ angegeben",
+    
+    "invekos.type": "InVeKoS",
+    "invekos.type.helpMessage": "",
+    "ui.obj.invekos.keywords.title": "InVeKoS-Schlagworte",
+    "ui.obj.invekos.keywords.help": "",
+    "validation.error.invekos.missing.gsaa": "Die Schlagwörter 'InVeKoS' und 'GSAA' sind verpflichtend",
+    "validation.error.invekos.missing.lpis": "Die Schlagwörter 'InVeKoS' und 'LPIS' sind verpflichtend",
+    "validation.error.invekos.missing.inspireLandCover": "Das Schlagwort 'Bodenbedeckung' ist verpflichtend",
+    "validation.error.invekos.missing.inspireLandUse": "Das Schlagwort 'Bodennutzung' ist verpflichtend",
+    "validation.error.invekos.missing.commonAgriculturalPolicy": "Das Schlagwort 'Common Agricultural Policy' ist verpflichtend",
+    "validation.error.invekos.missing.farming": "Das Schlagwort 'Landwirtschaft' ist verpflichtend",
+    "validation.error.invekos.missing.revision": "Es muss mindestens ein Datum vom Typ 'Letzte Änderung' vorhanden sein",
 
     "links.fillRequiredFieldsHint": "Vor dem Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
     "links.noLinkToSelfHint": "Ein Objekt kann nicht mit sich selbst verkn&uuml;pft werden!",

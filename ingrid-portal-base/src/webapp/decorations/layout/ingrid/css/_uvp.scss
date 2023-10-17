@@ -734,7 +734,7 @@ div.accordion-item.is-active > .more{
   .is-invalid-input:focus { border-color: $blue-light; }
   .is-invalid-label { color: $red; }
   .input-check, .input-radio {
-    background-color: $white;
+    background-color: inherit;
     border-radius: 7px;
     border: 1px solid transparent;
     padding-left: 8px;
@@ -2755,7 +2755,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
   position: relative;
 }
 
-.js-expand-text.is-active {
+.js-expand-text.is-expand {
   max-height: none;
 
   .js-expand-text-content:before {
@@ -2806,6 +2806,10 @@ meter[value="5"]::-moz-meter-bar { background: green; }
 .js-expand-text .js-expand-text-content:before {
   background: linear-gradient(rgba(255, 255, 255, 0) 115px, $white);
   pointer-events: none;
+}
+
+.js-expand-text.js-non-expand-text .js-expand-text-content:before {
+  background: none;
 }
 
 .image div.description:before {
@@ -3663,4 +3667,8 @@ span.text-break {
   h3 {
     display: inline-block;
   }
+}
+
+.timeline {
+  clear: both;
 }

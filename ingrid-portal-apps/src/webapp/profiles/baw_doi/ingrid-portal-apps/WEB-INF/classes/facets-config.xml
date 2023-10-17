@@ -235,6 +235,21 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
             </facet>
+            <facet>
+                <name>searchResult.facete.datatype.simulation.data</name>
+                <query>data_category:Simulationsdaten</query>
+                <id>cat_simulationsdaten</id>
+            </facet>
+            <facet>
+                <name>searchResult.facete.datatype.measurement.data</name>
+                <query>data_category:Messdaten</query>
+                <id>messdaten</id>
+            </facet>
+            <facet>
+                <name>searchResult.facete.datatype.aerial.photos</name>
+                <query>data_category:Luftbilder</query>
+                <id>luftbilder</id>
+            </facet>
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
@@ -242,6 +257,12 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>map</id>
             </facet>
         </facets>
+    </facet>
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>searchResult.facete.title.datenformat</name>
+        <id>datenformate</id>
+        <field>t017_url_ref.datatype</field>
+        <listLength>6</listLength>
     </facet>
     <!-- Zeitbezug -->
     <!-- Kann erweitert werden -->
@@ -278,7 +299,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Kategorie -->
     <facet>
-        <name>Kategorie</name>
+        <name>searchResult.facete.title.category</name>
         <id>category</id>
         <categoryOnly>true</categoryOnly>
         <facets>
@@ -331,6 +352,129 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>map</id>
                 <parentId>type</parentId>
                 <icon>ic-map</icon>
+            </facet>
+        </facets>
+    </facet>
+    <!-- Wasserstraße -->
+    <facet>
+        <name>searchResult.facete.title.waterway</name>
+        <id>category_wasserstrasse</id>
+        <categoryOnly>true</categoryOnly>
+        <facets>
+            <!-- Donau -->
+            <facet>
+                <name>searchResult.facete.waterway.donau.title</name>
+                <query>bwstr-bwastr_name.phrase:"donau"</query>
+                <id>Donau</id>
+                <parentId>wasserstrasse</parentId>
+                <!-- <icon>/decorations/layout/ingrid/images/template/icon_donau_mdk.svg</icon> -->
+                <shortcut>Do</shortcut>
+            </facet>
+            <!-- Eider -->
+            <facet>
+                <name>Eider</name>
+                <query>bwstr-bwastr_name.phrase:"eider"</query>
+                <id>Eider</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Ei</shortcut>
+            </facet>
+            <!-- Elbe -->
+            <facet>
+                <name>Elbe</name>
+                <query>bwstr-bwastr_name.phrase:"elbe"</query>
+                <id>Elbe</id>
+                <parentId>wasserstrasse</parentId>
+                <!-- <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon> -->
+                <shortcut>El</shortcut>
+            </facet>
+            <!-- Ems -->
+            <facet>
+                <name>Ems</name>
+                <query>bwstr-bwastr_name.phrase:"ems"</query>
+                <id>Ems</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Em</shortcut>
+            </facet>
+            <!-- Main-Donau-Kanal -->
+            <facet>
+                <name>searchResult.facete.waterway.mdk.title</name>
+                <query>bwstr-bwastr_name.phrase:"main-donau-kanal"</query>
+                <id>Main-Donau-Kanal</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>MDK</shortcut>
+            </facet>
+            <!-- Mittellandkanal -->
+            <facet>
+                <name>searchResult.facete.waterway.mlk.title</name>
+                <query>bwstr-bwastr_name.phrase:"mittellandkanal"</query>
+                <id>Mittellandkanal</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>MLK</shortcut>
+            </facet>
+            <!-- Mosel -->
+            <facet>
+                <name>searchResult.facete.waterway.mosel.title</name>
+                <query>bwstr-bwastr_name.phrase:"mosel"</query>
+                <id>Mosel</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Mo</shortcut>
+            </facet>
+            <!-- Neckar -->
+            <facet>
+                <name>Neckar</name>
+                <query>bwstr-bwastr_name.phrase:"neckar"</query>
+                <id>Neckar</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Ne</shortcut>
+            </facet>
+            <!-- Nord-Ostsee-Kanal  -->
+            <facet>
+                <name>searchResult.facete.waterway.nok.title</name>
+                <query>bwstr-bwastr_name.phrase:"nord-ostsee-kanal"</query>
+                <id>Nord-Ostsee-Kanal</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>NOK</shortcut>
+            </facet>
+            <!-- Nordsee -->
+            <facet>
+                <name>searchResult.facete.waterway.nordsee.title</name>
+                <query>bwstr-bwastr_name.phrase:"nordsee"</query>
+                <id>Nordsee</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>NSee</shortcut>
+            </facet>
+            <!-- Oder -->
+            <facet>
+                <name>Oder</name>
+                <query>bwstr-bwastr_name.phrase:"oder"</query>
+                <id>Oder</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>Od</shortcut>
+            </facet>
+            <!-- Ostsee -->
+            <facet>
+                <name>searchResult.facete.waterway.ostsee.title</name>
+                <query>bwstr-bwastr_name.phrase:"ostsee"</query>
+                <id>Ostsee</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>OSee</shortcut>
+            </facet>
+            <!-- Rhein -->
+            <facet>
+                <name>searchResult.facete.waterway.rhein.title</name>
+                <query>bwstr-bwastr_name.phrase:"rhein"</query>
+                <id>Rhein</id>
+                <parentId>wasserstrasse</parentId>
+                <!-- <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon> -->
+                <shortcut>Rh</shortcut>
+            </facet>
+            <!-- Weser -->
+            <facet>
+                <name>Weser</name>
+                <query>bwstr-bwastr_name.phrase:"weser"</query>
+                <id>Weser</id>
+                <parentId>wasserstrasse</parentId>
+                <shortcut>We</shortcut>
             </facet>
         </facets>
     </facet>

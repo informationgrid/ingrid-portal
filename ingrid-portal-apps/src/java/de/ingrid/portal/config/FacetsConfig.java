@@ -368,6 +368,36 @@ public class FacetsConfig {
                         ingridFacet.setSelectGroup( node.getValue().toString() );
                     }
                 }
+                if (!facetNode.getChildren( "options" ).isEmpty()) {
+                    List<ConfigurationNode> options = facetNode.getChildren( "options" );
+                    ArrayList<String> list = new ArrayList<>();
+                    for (ConfigurationNode option : options) {
+                        list.add(option.getValue().toString());
+                    }
+                    if(!list.isEmpty()) {
+                        ingridFacet.setOptions(list);
+                    }
+                }
+                if (!facetNode.getChildren( "hierarchyTree" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "hierarchyTree" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setHierarchyTree( Boolean.parseBoolean(node.getValue().toString()) );
+                    }
+                }
+
+                if (!facetNode.getChildren( "hierarchyTreeTypes" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "hierarchyTreeTypes" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setHierarchyTreeTypes( node.getValue().toString() );
+                    }
+                }
+
+                if (!facetNode.getChildren( "hierarchyTreeLevel" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "hierarchyTreeLevel" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setHierarchyTreeLevel( Integer.parseInt(node.getValue().toString()) );
+                    }
+                }
 
                 if (!facetNode.getChildren( "toggle" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "toggle" ).get( 0 );

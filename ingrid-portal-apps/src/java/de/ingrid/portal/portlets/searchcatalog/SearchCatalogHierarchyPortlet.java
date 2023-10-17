@@ -38,6 +38,7 @@ import javax.portlet.ResourceURL;
 
 import org.apache.velocity.context.Context;
 import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import de.ingrid.codelists.CodeListService;
@@ -297,7 +298,11 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                     DisplayTreeNode childNode = (DisplayTreeNode) it.next();
                     childNode.remove("parent");
                     childNode.remove("children");
-                    values.put(new JSONObject(childNode));
+                    try {
+                        values.put(new JSONObject(childNode));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 return values.toString();
             }

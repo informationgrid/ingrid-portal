@@ -30,6 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -268,7 +269,7 @@ public class UtilsPortletServeResources {
                                         if(facet != null) {
                                             list.add(messages.getString(facet.getName()));
                                         } else {
-                                            list.add(tmpValue[1]);
+                                            list.add(URLDecoder.decode(tmpValue[1], "UTF-8"));
                                         }
                                         obj.put(tmpObjKey, list);
                                     }

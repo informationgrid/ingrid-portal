@@ -1,15 +1,15 @@
-<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.css"/>
-<script src="/decorations/layout/ingrid/scripts/vendor/leaflet.js"></script>
-<script src="/decorations/layout/ingrid/scripts/vendor/leaflet.markercluster.js"></script>
-<script src="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
-<script src="/decorations/layout/ingrid/scripts/leaflet.spin/spin.min.js"></script>
-<script src="/decorations/layout/ingrid/scripts/leaflet.spin/leaflet.spin.min.js"></script>
-<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.gesture-handling/leaflet-gesture-handling.min.css"/>
-<script src="/decorations/layout/ingrid/scripts/leaflet.gesture-handling/leaflet-gesture-handling.min.js"></script>
-<script src="/decorations/layout/ingrid/scripts/leaflet.wicket/wicket.js"></script>
-<script src="/decorations/layout/ingrid/scripts/leaflet.wicket/wicket-leaflet.js"></script>
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.awesome-markers/leaflet.awesome-markers.css"/>
+<script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.markercluster/leaflet.markercluster.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.spin/spin.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.spin/leaflet.spin.min.js"></script>
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.gesture-handling/leaflet-gesture-handling.min.css"/>
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.gesture-handling/leaflet-gesture-handling.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.wicket/wicket.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.wicket/wicket-leaflet.js"></script>
 #if($leafletBboxInverted)
-<script src="/decorations/layout/ingrid/scripts/leaflet.snogylop/snogylop.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.snogylop/snogylop.js"></script>
 #end
 <script>
     function getOSMLayer(attribution) {
@@ -51,6 +51,7 @@
             crs: epsg,
             layers: baselayers
         });
+        map.attributionControl.setPrefix('<a href="https://leafletjs.com" title="Leaflet">Leaflet</a>');
         if (bounds) {
             map.fitBounds(bounds);
         } else if (latlng) {
