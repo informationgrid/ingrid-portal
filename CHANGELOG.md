@@ -1,4 +1,37 @@
 
+## 6.3.0 (17.10.2023)
+
+### Features
+
+* Aktualisierung der Postgres-Bibliothek (#5553)
+* Umsetzung der Angabe von InVeKoS-Daten im IGE-Classic (#5549)
+* Portfolio erweitern: Facette "Fachthemen" ebenfalls in der Spalte "Filterkriterium"  (#5506)
+* Änderung Hintergrundinformationen (#5428) rückgängig machen (#5492)
+* Tooltip für "nur aktuelle" anpassen (#5462)
+* Verschlankung Kartenkomponente (#5440)
+* Anpassung des Kartenausschnitts unter "Auf Karte festlegen" (#5429)
+* http://krzn-demo.informationgrid.eu/hintergrundinformationen --> anpassen (#5428)
+* 404-Text anpassen (#5426)
+*  PORTAL: Weitere Textanpassungen RIPS-Metadaten (#5397)
+* Räumliche Suchen sollen überlappend agieren, und nicht "ganz enthaltend" (#5368)
+* PORTAL: Textanpassungen RIPS-Metadaten (#5361)
+* Statistiken - Menüeintrag/Link deaktiveren (ausblenden) (#5352)
+* Sanitizing von Formularfeldern (#5324)
+
+### Bugfixes
+
+* Portal: fastclick.js wird wegen Ad Blocker nicht geladen  (#5582)
+* Vorschaubilder funktionieren nicht  (#5431)
+* Beschreibung des Datensatzes   (#5430)
+* Adressen erscheinen noch in Suchergebnissen  (#5425)
+* Font Style der Anzahl vor Ergebnisse  (#5424)
+* Hoverfunktion bei Kategoriekarte Geodatendienst funktioniert nicht richtig  (#5423)
+* „Überschrift“ Geodatenkatalog Niederrhein  (#5422)
+* Seitentitel im Tab  (#5420)
+* Mehrfachauswahl Filterkriterium wird angezeigt  (#5399)
+* Fehlermeldung zu VelocityViewServlet   (#5387)
+*  Veraltete JavaScript Bibliotheken austauschen  (#5338)
+    
 ## 6.2.0 (11.07.2023)
 
 ### Features
