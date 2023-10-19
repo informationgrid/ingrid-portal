@@ -43,9 +43,7 @@
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print">
 
-        <script src="/decorations/layout/ingrid/scripts/ingrid.js"></script>
         <!-- Global scripts -->
-        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/jquery/jquery.min.js"></script>
 
         <script src="/decorations/layout/ingrid/scripts/jquery/nicescroll/jquery.nicescroll.min.js"></script>
@@ -65,6 +63,7 @@
                         <a href="/freitextsuche" class="header-menu-entry " title="Freitextsuche nach Informationen"><span class="text">Suche</span></a>
                         <a href="/hintergrundinformationen" class="header-menu-entry " title="Hintergrundinformationen zu KRZN"><span class="text">Über KRZN</span></a>
                     </div>
+                    <a href="/hilfe" title="Erläuterungen zur Nutzung von Geodatenkatalog Niederrhein - Neues Fenster öffnet sich"><span class="text">Hilfe</span></a>
                     <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" target="_blank"><span class="text">Impressum</span></a>
                     <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" target="_blank"><span class="text">Datenschutz</span></a>
                     <a href="/barrierefreiheit" title="Barrierefreiheit" target="_blank"><span class="text">Barrierefreiheit</span></a>
@@ -155,6 +154,7 @@
                     </div>
                     <div class="xsmall-24 small-24 medium-24 large-24 xlarge-14 columns">
                         <div class="footer-menu-entries" role="navigation" aria-label="Navigation Footer">
+                            <a href="/hilfe" title="Erläuterungen zur Nutzung von Geodatenkatalog Niederrhein - Neues Fenster öffnet sich" class="icon"><span class="text">Hilfe</span></a>
                             <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" class="icon" target="_blank"><span class="text">Impressum</span></a>
                             <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" class="icon" target="_blank"><span class="text">Datenschutz</span></a>
                             <a href="/barrierefreiheit" title="Barrierefreiheit" class="icon" target="_blank"><span class="text">Barrierefreiheit</span></a>

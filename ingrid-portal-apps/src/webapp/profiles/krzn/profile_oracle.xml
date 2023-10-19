@@ -29,7 +29,7 @@
         </page>
         <page>
             <name>help.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>accessibility.psml</name>
