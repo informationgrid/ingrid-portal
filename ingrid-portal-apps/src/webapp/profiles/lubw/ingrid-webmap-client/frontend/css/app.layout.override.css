@@ -112,3 +112,8 @@ select:focus {
 #footer {
   background-color: #296e4b;
 }
+
+[ga-background-selector] .ga-bg-layer, [ga-background-selector] .ga-bg-layer-bt, [ga-background-selector] .ga-bg-layer-bt-close {
+  background: url('/ingrid-webmap-client/frontend/prd/img/bg-default.png');
+  background-size: unset;
+}
