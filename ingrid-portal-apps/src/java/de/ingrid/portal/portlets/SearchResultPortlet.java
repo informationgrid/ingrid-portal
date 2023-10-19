@@ -220,6 +220,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         context.put("detailUseParamPlugid", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID));
 
+        context.put("cutSumHTMLNewLine", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_CUTTED_SUMMARY_HTML_NEW_LINE, false));
+
         // add request language, used to localize the map client
         context.put("languageCode",request.getLocale().getLanguage());
         

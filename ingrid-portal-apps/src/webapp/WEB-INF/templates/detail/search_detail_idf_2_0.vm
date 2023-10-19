@@ -167,8 +167,12 @@
                 #end
             #end
             #if($tool.hasContent($entry.description))
-                #set($myDescription = $stringTool.replaceAll($entry.description, '\n', ""))
                 <div class="description">
+                    #if($cutSumHTMLNewLine)
+                        #set($myDescription = $stringTool.replaceAll($entry.description, "\n", "<br>"))
+                    #else
+                        #set($myDescription = $stringTool.replaceAll($entry.description, "\n", " "))
+                    #end
                     <small class="description">${myDescription}</small>
                 </div>
             #end
@@ -198,7 +202,11 @@
                   <span class="text">$entry.title</span>
                 </a>
                 #if($tool.hasContent($entry.description))
-                    #set($myDescription = $stringTool.replaceAll($entry.description, '\n', ""))
+                    #if($cutSumHTMLNewLine)
+                        #set($myDescription = $stringTool.replaceAll($entry.description, "\n", "<br>"))
+                    #else
+                        #set($myDescription = $stringTool.replaceAll($entry.description, "\n", " "))
+                    #end
                     <small class="description">${myDescription}</small>
                 #end
             </div>
