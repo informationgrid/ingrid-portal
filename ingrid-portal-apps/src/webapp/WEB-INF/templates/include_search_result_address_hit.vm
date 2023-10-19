@@ -54,7 +54,12 @@
         #end
         #if($!rs.abstract != "")
         <p class="data-text">
-            #removeLocalisation($rs.abstract)
+            #if($cutSumHTMLNewLine)
+                #set($myDescription = $stringTool.replaceAll($rs.abstract, "\n", "<br>"))
+            #else
+                #set($myDescription = $stringTool.replaceAll($rs.abstract, "\n", " "))
+            #end
+            #removeLocalisation($myDescription)
         </p>
         #end
         #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")

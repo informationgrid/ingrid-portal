@@ -127,7 +127,12 @@
                 #end
                 #if($!rs.abstract != "")
                 <p class="data-text">
-                    #removeLocalisation($rs.abstract)
+                    #if($cutSumHTMLNewLine)
+                        #set($myDescription = $stringTool.replaceAll($rs.abstract, "\n", "<br>"))
+                    #else
+                        #set($myDescription = $stringTool.replaceAll($rs.abstract, "\n", " "))
+                    #end
+                    #removeLocalisation($myDescription)
                 </p>
                 #end
                 #renderServiceTypeList($serviceTypes true true)

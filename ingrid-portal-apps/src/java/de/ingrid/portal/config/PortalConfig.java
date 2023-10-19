@@ -219,6 +219,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_HIT_SUMMARY_ABSTRACT_FIELD = "portal.search.hit.summary.abstract.field";
 
+    public static final String PORTAL_SEARCH_HIT_CUTTED_SUMMARY_HTML_NEW_LINE = "portal.search.hit.cutted.summary.html.new.line";
+
     public static final String PORTAL_ADMIN_NUMBER_ROW_PROVIDER = "portal.admin.number.row.provider";
 
     public static final String PORTAL_ADMIN_NUMBER_ROW_PARTNER = "portal.admin.number.row.partner";
