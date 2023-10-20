@@ -238,6 +238,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("showHitPartnerLogo", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_PARTNER_LOGO, false));
 
         context.put("cutSumHTMLNewLine", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_CUTTED_SUMMARY_HTML_NEW_LINE, false));
+        context.put("unlinkAddress", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_DETAIL_VIEW_UNLINK_ADDRESS, false));
 
         boolean detailUseParamPlugid = PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID);
         context.put("detailUseParamPlugid", detailUseParamPlugid);
