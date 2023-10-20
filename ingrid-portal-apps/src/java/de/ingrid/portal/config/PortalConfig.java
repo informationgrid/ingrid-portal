@@ -239,6 +239,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_DETAIL_VIEW_LIMIT_REFERENCES = "portal.detail.view.limit.references";
 
+    public static final String PORTAL_DETAIL_VIEW_UNLINK_ADDRESS = "portal.detail.view.unlink.address";
+
     public static final String PORTAL_DETAIL_REFERENCE_SYSTEM_LINK = "portal.detail.reference.system.link";
     public static final String PORTAL_DETAIL_REFERENCE_SYSTEM_LINK_REPLACE = "portal.detail.reference.system.link.replace";
 
