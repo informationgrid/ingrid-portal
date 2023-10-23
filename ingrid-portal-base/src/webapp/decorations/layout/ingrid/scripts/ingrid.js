@@ -434,7 +434,7 @@ function getQueryStringParameter(key) {
 
 }
 
-function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, bboxFillOpacity, inverted) {
+function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted) {
   var promises = [];
   ids.forEach(function(id){
     var request =  $.ajax({
@@ -483,7 +483,7 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, bboxFil
     });
   } else {
     if(wkt) {
-      addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, inverted);
+      addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted);
     } else if (coords) {
       addLayerBounds(map, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted);
     }
