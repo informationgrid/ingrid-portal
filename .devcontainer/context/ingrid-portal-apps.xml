@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<Context path="/ingrid-portal-apps" docBase="/workspaces/java-postgres-2/ingrid-portal-apps/target/ingrid-portal-apps" crossContext="true">
+<Context path="/ingrid-portal-apps" docBase="/workspaces/java-postgres-2/ingrid-portal-apps/target/ingrid-portal-apps" crossContext="true" reloadable="true">
 
   <Resource name="jdbc/jetspeed" auth="Container"
           factory="org.apache.commons.dbcp.BasicDataSourceFactory"
