@@ -598,6 +598,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         List<String> listSearch = new ArrayList<>();
         List<String> listGemet = new ArrayList<>();
         List<String> listInspire = new ArrayList<>();
+        List<String> listInspireInvekos = new ArrayList<>();
         List<String> listPriorityDataset = new ArrayList<>();
         List<String> listSpatialScope = new ArrayList<>();
 
@@ -683,6 +684,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 } else if (thesaurusName.contains("Further legal basis")) {
                                     // do not used in detail view.
 
+                                } else if (thesaurusName.contains("IACS Data")) {
+                                    listInspireInvekos.add(value);
                                 } else if (thesaurusName.isEmpty() && type.isEmpty()) {
                                     listSearch.add(value);
                                 } else{
@@ -713,6 +716,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             case "spatial_scope":
                 sortList(listSpatialScope);
                 return listSpatialScope;
+            case "inspire_invekos":
+                sortList(listInspireInvekos);
+                return listInspireInvekos;
             default:
                 sortList(listSearch);
                 return listSearch;
