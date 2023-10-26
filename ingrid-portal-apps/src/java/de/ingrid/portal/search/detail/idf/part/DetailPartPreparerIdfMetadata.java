@@ -684,7 +684,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 } else if (thesaurusName.contains("Further legal basis")) {
                                     // do not used in detail view.
 
-                                } else if (thesaurusName.contains("IACS Data")) {
+                                } else if (thesaurusName.equalsIgnoreCase("IACS Data")) {
                                     listInspireInvekos.add(value);
                                 } else if (thesaurusName.isEmpty() && type.isEmpty()) {
                                     listSearch.add(value);
