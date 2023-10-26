@@ -283,102 +283,15 @@
         <to>/hilfe</to>
     </outbound-rule>
 
-    <!-- bw -->
+    <!-- Api -->
     <rule>
-        <from>/bw$</from>
-        <to type="forward">/html/bw/index.html</to>
+        <from>/api</from>
+        <to type="forward">/portal/application/main-application.psml</to>
     </rule>
-
-    <!-- by -->
-    <rule>
-        <from>/by$</from>
-        <to type="forward">/html/by/index.html</to>
-    </rule>
-    
-    <!-- be -->
-    <rule>
-        <from>/be$</from>
-        <to type="forward">/html/be/index.html</to>
-    </rule>
-    
-    <!-- bb -->
-    <rule>
-        <from>/bb$</from>
-        <to type="forward">/html/bb/index.html</to>
-    </rule>
-    
-    <!-- hb -->
-    <rule>
-        <from>/hb$</from>
-        <to type="forward">/html/hb/index.html</to>
-    </rule>
-    
-    <!-- hh -->
-    <rule>
-        <from>/hh$</from>
-        <to type="forward">/html/hh/index.html</to>
-    </rule>
-    
-    <!-- he -->
-    <rule>
-        <from>/he$</from>
-        <to type="forward">/html/he/index.html</to>
-    </rule>
-    
-    <!-- mv -->
-    <rule>
-        <from>/mv$</from>
-        <to type="forward">/html/mv/index.html</to>
-    </rule>
-    
-    <!-- ni -->
-    <rule>
-        <from>/ni$</from>
-        <to type="forward">/html/ni/index.html</to>
-    </rule>
-    
-    <!-- nw -->
-    <rule>
-        <from>/nw$</from>
-        <to type="forward">/html/nw/index.html</to>
-    </rule>
-    
-    <!-- rp -->
-    <rule>
-        <from>/rp$</from>
-        <to type="forward">/html/rp/index.html</to>
-    </rule>
-    
-    <!-- sl -->
-    <rule>
-        <from>/sl$</from>
-        <to type="forward">/html/sl/index.html</to>
-    </rule>
-    
-    <!-- sn -->
-    <rule>
-        <from>/sn$</from>
-        <to type="forward">/html/sn/index.html</to>
-    </rule>
-    
-    <!-- st -->
-    <rule>
-        <from>/st$</from>
-        <to type="forward">/html/st/index.html</to>
-    </rule>
-    
-    <!-- sh -->
-    <rule>
-        <from>/sh$</from>
-        <to type="forward">/html/sh/index.html</to>
-    </rule>
-    
-    <!-- th -->
-    <rule>
-        <from>/th$</from>
-        <to type="forward">/html/th/index.html</to>
-    </rule>
-    
+    <outbound-rule>
+        <from>/portal/application/main-application.psml</from>
+        <to>/api</to>
+    </outbound-rule>
 
     <!-- IGE-NG -->
     <rule>
