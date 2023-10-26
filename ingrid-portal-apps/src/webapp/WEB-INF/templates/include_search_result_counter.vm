@@ -15,6 +15,7 @@
             <span class="ic-ic-view-expanded"></span>
         </a>
     </div>
+    #parse("/WEB-INF/templates/search-result/parts/mapview/mapview_toggle.vm")
     #if($enableFacete)
         #renderSelectRanking($facetConfig)
     #end

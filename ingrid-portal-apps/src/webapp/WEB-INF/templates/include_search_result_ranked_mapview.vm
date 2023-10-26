@@ -1,0 +1,145 @@
+<div style="height:75vh">
+    <div id="map-searchview" class="map-searchview" style="height:100%">
+    </div>
+</div>
+
+<script>
+    var map_searchview = new L.Map('map-searchview');
+    map_searchview.attributionControl.setPrefix('<a href="https://leafletjs.com" title="Leaflet">Leaflet</a>');
+    var lat = $facetMapCenter.get(0);
+    var lng = $facetMapCenter.get(1);
+    var zoom = $facetMapCenter.get(2);
+    var layer;
+</script>
+#if($leafletBgLayerWMSUrl && $leafletBgLayerWMSName)
+    <script>
+    var layerUrl = '$leafletBgLayerWMSUrl';
+    var layerName = '$leafletBgLayerWMSName';
+    layer = getWMSLayer(layerUrl, layerName); 
+    </script>
+#else
+   <script>
+    var osm = getOSMLayer('');
+    osm.options.minZoom = 5;
+    osm.options.maxZoom = 20;
+    layer = osm; 
+   </script>
+#end
+<script>
+    map_searchview.on('moveend', function() {
+        showSearchResults();
+    });
+
+    map_searchview.setView(new L.LatLng(lat, lng),zoom);
+    map_searchview.addLayer(layer);
+    resizeMap(map_searchview);
+    window.onresize = function(event) {
+        resizeMap(map_searchview);
+    };
+    
+
+    function showSearchResults() {
+        const x1 = Math.round(map_searchview.getBounds().getWest() * 10000)/10000;
+        const x2 = Math.round(map_searchview.getBounds().getEast() * 10000)/10000;
+        const y1 = Math.round(map_searchview.getBounds().getSouth() * 10000)/10000;
+        const y2 = Math.round(map_searchview.getBounds().getNorth() * 10000)/10000;
+        var url = '$restUrlHttpSearchMap' + '?';
+        url += 'x1=' + x1 + '&';
+        url += 'y1=' + y1 + '&';
+        url += 'x2=' + x2 + '&';
+        url += 'y2=' + y2 + '&';
+        url += 'options=inside,intersect,include';
+            
+        jQuery.get(url).done(function(datas) {
+            if(datas) {
+                var mapMarkers10 = L.markerClusterGroup({
+                id: 'mapMarkers10',
+                iconCreateFunction: function (cluster) {
+                    var childCount = cluster.getChildCount();
+                    var c = ' marker-cluster-';
+                    if (childCount < 10) {
+                        c += 'small';
+                    } else if (childCount < 100) {
+                        c += 'medium';
+                    } else {
+                        c += 'large';
+                    }
+                    return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-10' + c, iconSize: new L.Point(40, 40) });
+                }
+                });
+                map_searchview.addLayer(mapMarkers10)
+
+                var promises = [];
+                var bwaStrsDone = [];
+                datas.forEach(function(data){
+                    const title = data['title'];
+                    const x1 = data['x1'];
+                    const y1 = data['y1'];
+                    const x2 = data['x2'];
+                    const y2 = data['y2'];
+                    const wkt = data['wkt_geo_text'];
+                    const bwaStrId = data['bwstr-bwastr-id'];
+                    const bwaStrVon = data['bwstr-strecken_km_von'];
+                    const bwaStrBis = data['bwstr-strecken_km_bis'];
+                    var bwaStrs;
+                    if(bwaStrId) {
+                        bwaStrs = [[bwaStrId, bwaStrVon, bwaStrBis]];
+                    }
+                    var coords;
+                    if(x1) {
+                        coords = [[title, x1, y1, x2, y2]];
+                    }
+                    if(bwaStrs) {
+                      bwaStrs.forEach(function(bwaStr){
+                        var request =  jQuery.ajax({
+                          url: '$restUrlBWaStr' + '?id=' + bwaStr[0] + '&von=' + bwaStr[1] + '&bis=' + bwaStr[2],
+                          dataType: 'json',
+                          success: function (data) {
+                            return data;
+                          }
+                        });
+                        var id = bwaStrId + bwaStrVon + bwaStrBis;
+                        if(bwaStrsDone.indexOf(id) == -1) {
+                            bwaStrsDone.push(id);
+                            promises.push(request);
+                        }
+                      });
+                    } else if(wkt) {
+                        var features = L.geoJSON(JSON.parse(wkt));
+                        if(features) {
+                            mapMarkers10.addLayer(features);
+                        }
+                        
+                    } else if(coords) {
+                        coords.forEach(function(coord) {
+                          var y1Coord = coord[2];
+                          var x1Coord = coord[1];
+                          var y2Coord = coord[4];
+                          var x2Coord = coord[3];
+                          if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
+                            if(x1Coord === x2Coord && y1Coord === y2Coord) {
+                              var marker = L.marker([y1Coord, x1Coord]);
+                              marker.bindTooltip(coord[0], {direction: 'center'});
+                              mapMarkers10.addLayer(marker);
+                            } else {
+                              var bounds = L.latLngBounds(L.latLng(y1Coord, x1Coord), L.latLng(y2Coord, x2Coord));
+                              var center = bounds.getCenter();
+                              var icon = L.icon({
+                                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_small_blue.png',
+                                    iconSize: [6, 6], 
+                                    iconAnchor: [3, 3]
+                                });
+                              var marker = L.marker(center, { title: title, icon: icon });
+                              mapMarkers10.addLayer(marker);
+                            }
+                          }
+                        });
+                    }
+                });
+            }
+            
+        });
+    }
+</script>
+
+

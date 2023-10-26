@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,6 +42,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -65,6 +67,7 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.ClauseQuery;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -289,6 +292,84 @@ public class UtilsPortletServeResources {
 
     }
 
+    public static void getHttpURLSearchMap(ResourceRequest request, ResourceResponse response, String[] requestFields, IngridResourceBundle messages) throws ParseException, JSONException, IOException {
+        JSONArray jsonData = new JSONArray();
+        IngridQuery query = null;
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        if(queryString.isEmpty()) {
+            String initalQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_SEARCH_EMPTY_QUERY, "" ).trim();
+            query = QueryStringParser.parse( initalQuery );
+        } else {
+            query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+        }
+        ArrayList config = (ArrayList<IngridFacet>) UtilsFacete.getAttributeFromSession(request, UtilsFacete.FACET_CONFIG);
+        if(config != null) {
+            query = UtilsFacete.getQueryFacets(request, config, query);
+        }
+        
+        String options = request.getParameter("options");
+        String x1 = request.getParameter("x1");
+        String y1 = request.getParameter("y1");
+        String x2 = request.getParameter("x2");
+        String y2 = request.getParameter("y2");
+
+        if(options != null) {
+            String[] coordOptions = options.split(",");
+            ClauseQuery cq = new ClauseQuery(true, false);
+            for(int i=0; i<coordOptions.length;i++){
+                ClauseQuery coordQuery = new ClauseQuery(false, false);
+                coordQuery.addField(new FieldQuery(true, false, "x1", x1));
+                coordQuery.addField(new FieldQuery(true, false, "y1", y1));
+                coordQuery.addField(new FieldQuery(true, false, "x2", x2));
+                coordQuery.addField(new FieldQuery(true, false, "y2", y2));
+                coordQuery.addField(new FieldQuery(true, false, "coord", coordOptions[i]));
+                cq.addClause(coordQuery);
+            }
+            query.addClause(cq);
+            }
+        
+        if(query != null){
+            // Change query to clause query (with phrase search)
+            StringBuilder facetUrl = new StringBuilder("&f=");
+            UtilsFacete.setFacetUrlParamsToUrl(request, facetUrl);
+            int pageSize = 10;
+            int startPage = 0;
+            int maxHits = 10;
+            boolean hasHits = true;
+            while(hasHits) {
+                IBusQueryResultIterator it = new IBusQueryResultIterator( query, requestFields,
+                        IBUSInterfaceImpl.getInstance().getIBus(), pageSize, startPage, maxHits );
+                if(it != null){
+                    if(it.hasNext()) {
+                        while(it.hasNext()){
+                            IngridHit hit = it.next();
+                            IngridHitDetail detail = hit.getHitDetail();
+                            JSONObject obj = new JSONObject();
+                            for (String requestField : requestFields) {
+                                if(detail.get(requestField) instanceof String[]) {
+                                    String[] tmpArray = (String[]) detail.getArray(requestField);
+                                    obj.put(requestField, tmpArray[0]);
+                                } else if(detail.get(requestField) instanceof ArrayList) {
+                                    ArrayList<Object> tmpArray = (ArrayList<Object>) detail.getArrayList(requestField);
+                                    obj.put(requestField, tmpArray.get(0));
+                                } else {
+                                    obj.put(requestField, detail.get(requestField));
+                                }
+                            }
+                            jsonData.put(obj);
+                        }
+                    } else {
+                        hasHits = false;
+                    }
+                }
+                startPage += 1;
+            }
+        }
+        response.setContentType( "application/json" );
+        response.getWriter().write( jsonData.toString() );
+
+    }
+    
     public static void getHttpMarkerUVP(ResourceResponse response, String[] requestedFields, ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList, List<IngridFacet> config) throws ParseException, IOException {
         String portalQueryString = UtilsSearch.updateQueryString("", request);
         IngridQuery query = QueryStringParser.parse( portalQueryString );
@@ -767,18 +848,29 @@ public class UtilsPortletServeResources {
         response.getWriter().write( "]" );
     }
 
-    public static void getHttpMarkerBawDmqsBwaStr (ResourceResponse response, String id, String von, String bis, String epsg) throws IOException, NumberFormatException, JSONException, ParseException {
+    public static void getHttpMarkerBawDmqsBwaStr (ResourceRequest request, ResourceResponse response, String id, String von, String bis, String epsg) throws IOException, NumberFormatException, JSONException, ParseException {
+        HashMap<String, JSONObject> bwaStrCache = (HashMap<String, JSONObject>) request.getPortletSession().getAttribute("bwaStrCache", PortletSession.APPLICATION_SCOPE);
+        if(bwaStrCache == null) {
+            bwaStrCache = new HashMap<>();
+        }
         if((von == null || von.isEmpty()) && (bis == null || bis.isEmpty())) {
-            URL url = new URL(PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_INFO) + id);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            InputStream in = con.getInputStream();
-            String encoding = con.getContentEncoding();
-            encoding = encoding == null ? "UTF-8" : encoding;
-
-            String tmpJson = IOUtils.toString( in, encoding );
-            JSONObject questJson = new JSONObject( tmpJson );
-            if(questJson.has("result")) {
-                JSONArray questJsonArray = questJson.getJSONArray( "result" );
+            String cacheId = id;
+            JSONObject jsonObj;
+            if(bwaStrCache.get(cacheId) == null) {
+                URL url = new URL(PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_INFO) + id);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                InputStream in = con.getInputStream();
+                String encoding = con.getContentEncoding();
+                encoding = encoding == null ? "UTF-8" : encoding;
+    
+                String tmpJson = IOUtils.toString( in, encoding );
+                jsonObj = new JSONObject( tmpJson );
+                bwaStrCache.put(cacheId, jsonObj);
+            } else {
+                jsonObj = bwaStrCache.get(cacheId);
+            }
+            if(jsonObj.has("result")) {
+                JSONArray questJsonArray = jsonObj.getJSONArray( "result" );
                 for (int j = 0; j < questJsonArray.length(); j++) {
                     JSONObject questJsonEntry = questJsonArray.getJSONObject( j );
                     if(questJsonEntry.has("km_von") && questJsonEntry.has("km_bis")) {
@@ -788,45 +880,51 @@ public class UtilsPortletServeResources {
                     }
                 }
             }
-            
         }
         String responseString = "{}";
         if((von != null && !von.isEmpty()) && (bis != null && !bis.isEmpty())) {
-            URL url = new URL(PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_GEOK));
-            String content = "{" +
-                "\"limit\":200," +
-                "\"queries\":[" +
-                "{" +
-                "\"qid\":1," +
-                "\"bwastrid\":\"" + id + "\"," +
-                "\"stationierung\":{" + 
-                "\"km_von\":" + von +
-                "," +
-                "\"km_bis\":" + bis +
-                "}," +
-                "\"spatialReference\":{" +
-                "\"wkid\": " + epsg +
-                "}" +
-                "}" +
-                "]" +
-            "}";
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setDoInput(true);
-            con.setDoOutput(true);
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("Content-Length", String.valueOf(content.length()));
-            
-            OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
-            writer.write(content);
-            writer.flush();
-            
-            InputStream in = con.getInputStream();
-            String encoding = con.getContentEncoding();
-            encoding = encoding == null ? "UTF-8" : encoding;
-            
-            String json = IOUtils.toString(in, encoding);
-            JSONObject jsonObj = new JSONObject(json);
+            String cacheId = id + von + bis;
+            JSONObject jsonObj;
+            if(bwaStrCache.get(cacheId) == null) {
+                URL url = new URL(PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_GEOK));
+                String content = "{" +
+                    "\"limit\":200," +
+                    "\"queries\":[" +
+                    "{" +
+                    "\"qid\":1," +
+                    "\"bwastrid\":\"" + id + "\"," +
+                    "\"stationierung\":{" + 
+                    "\"km_von\":" + von +
+                    "," +
+                    "\"km_bis\":" + bis +
+                    "}," +
+                    "\"spatialReference\":{" +
+                    "\"wkid\": " + epsg +
+                    "}" +
+                    "}" +
+                    "]" +
+                "}";
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("POST");
+                con.setDoInput(true);
+                con.setDoOutput(true);
+                con.setRequestProperty("Content-Type", "application/json");
+                con.setRequestProperty("Content-Length", String.valueOf(content.length()));
+                
+                OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
+                writer.write(content);
+                writer.flush();
+                
+                InputStream in = con.getInputStream();
+                String encoding = con.getContentEncoding();
+                encoding = encoding == null ? "UTF-8" : encoding;
+                
+                String json = IOUtils.toString(in, encoding);
+                jsonObj = new JSONObject(json);
+                bwaStrCache.put(cacheId, jsonObj);
+            } else {
+                jsonObj = bwaStrCache.get(cacheId);
+            }
             if(jsonObj.has("result")) {
                 JSONArray questJsonArray = jsonObj.getJSONArray( "result" );
                 if(questJsonArray != null && questJsonArray.length() > 0) {
@@ -834,6 +932,7 @@ public class UtilsPortletServeResources {
                 }
             }
         }
+        request.getPortletSession().setAttribute("bwaStrCache", bwaStrCache, PortletSession.APPLICATION_SCOPE);
         response.setContentType( "application/json" );
         response.getWriter().write( responseString );
     }

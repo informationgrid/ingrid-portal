@@ -57,6 +57,7 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UniversalSorter;
 import de.ingrid.portal.global.UtilsFacete;
@@ -89,7 +90,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
     private static final String TEMPLATE_RESULT_ADDRESS = "/WEB-INF/templates/search_result_address.vm";
 
     private static final String TEMPLATE_RESULT_FILTERED_ONECOLUMN = "/WEB-INF/templates/search_result_iplug.vm";
-    
+
+    public static final String[] REQUESTED_FIELDS_SEARCH_MAP = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_REQUESTED_FIELDS_SEARCH_MAP);
+  
     private HttpClient client;
 
     @Override
@@ -129,6 +132,13 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     }
                     UtilsPortletServeResources.getHttpURLSearchDownload(request, response, paramRequestFields.split(";"), codelists, messages);
                 } catch (ParseException | JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            } else if (resourceID.equals( "httpURLSearchMap" )) {
+                try {
+                    UtilsPortletServeResources.getHttpURLSearchMap(request, response, REQUESTED_FIELDS_SEARCH_MAP, messages);
+                } catch (ParseException | JSONException | IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
@@ -548,6 +558,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         restUrl.setResourceID( "facetValue" );
         request.setAttribute( "restUrlFacetValue", restUrl.toString() );
+
+        restUrl.setResourceID( "httpURLSearchMap" );
+        request.setAttribute( "restUrlHttpSearchMap", restUrl.toString() );
 
         super.doView(request, response);
     }

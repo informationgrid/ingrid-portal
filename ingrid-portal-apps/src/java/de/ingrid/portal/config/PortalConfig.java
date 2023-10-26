@@ -221,6 +221,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_HIT_CUTTED_SUMMARY_HTML_NEW_LINE = "portal.search.hit.cutted.summary.html.new.line";
 
+    public static final String PORTAL_REQUESTED_FIELDS_SEARCH_MAP = "portal.requested.fields.search.map";
+
     public static final String PORTAL_ADMIN_NUMBER_ROW_PROVIDER = "portal.admin.number.row.provider";
 
     public static final String PORTAL_ADMIN_NUMBER_ROW_PARTNER = "portal.admin.number.row.partner";

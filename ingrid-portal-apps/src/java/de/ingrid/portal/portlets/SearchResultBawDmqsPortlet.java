@@ -73,7 +73,7 @@ public class SearchResultBawDmqsPortlet extends SearchResultPortlet {
                 String bis = request.getParameter( "bis" );
                 String epsg = PortalConfig.getInstance().getString(PortalConfig.PORTAL_BWASTR_LOCATOR_EPSG);
                 if(id != null && von != null && bis != null && epsg != null) {
-                    UtilsPortletServeResources.getHttpMarkerBawDmqsBwaStr(response, id, von, bis, epsg);
+                    UtilsPortletServeResources.getHttpMarkerBawDmqsBwaStr(request, response, id, von, bis, epsg);
                 }
             }
 

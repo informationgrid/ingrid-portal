@@ -1,0 +1,8 @@
+<div class="js-expander-toggle-all">
+    <a class="icon js-toggle-all-expander-collapse is-active" href="#" title="$MESSAGES.getString('searchResult.hit.view.maps')">
+        <span class="ic-ic-karten"></span>
+    </a>
+    <a class="icon js-toggle-all-expander-expand" href="#" title="$MESSAGES.getString('searchResult.hit.view.list')">
+        <span class="ic-ic-view-colapsed"></span>
+    </a>
+</div>
