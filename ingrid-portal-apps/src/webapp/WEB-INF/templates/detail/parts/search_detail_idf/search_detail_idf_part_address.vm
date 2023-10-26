@@ -25,6 +25,7 @@
                             <a class="link-line" href="?docuuid=$uuid&type=address#if($detailUseParamPlugid)&plugid=$TOOL.getiPlugId()#end" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
                             #else
                                 $tmpTitle
+                                <br>
                             #end
                         #end
                     #elseif($t == "3")
@@ -35,6 +36,7 @@
                             <a class="link-line" href="?docuuid=$uuid&type=address#if($detailUseParamPlugid)&plugid=$TOOL.getiPlugId()#end" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
                             #else
                                 $tmpTitle
+                                <br>
                             #end
                             #if($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
                                 $TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode))
@@ -45,6 +47,7 @@
                             <a class="link-line" href="?docuuid=$uuid&type=address#if($detailUseParamPlugid)&plugid=$TOOL.getiPlugId()#end" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
                             #else
                                 $tmpTitle
+                                <br>
                             #end
                         #end
                     #elseif($t == "0" || $t == "1")
@@ -56,6 +59,7 @@
                             <a class="link-line" href="?docuuid=$uuid&type=address#if($detailUseParamPlugid)&plugid=$TOOL.getiPlugId()#end" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
                             #else
                                 $tmpTitle
+                                <br>
                             #end
                         #end
                     #end
