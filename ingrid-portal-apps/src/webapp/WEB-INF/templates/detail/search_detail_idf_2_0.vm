@@ -1144,7 +1144,7 @@
                     #foreach($entry in $entryList)
                         #if($listCount >= $listLimit && $listExpand == false)
                             #set($listExpand = true)
-                            <button type="button" id="$expandableId" class="js-expander js-open-expand-text button outline $expandableId #if($isMoreId)is-hidden #end" title="$MESSAGES.getString('searchResult.info.links.more')">
+                            <button type="button" id="$expandableId" class="js-expander js-open-expand-text button outline $expandableId #if($isMoreId)is-hidden #end" title="$MESSAGES.getString('search.detail.info.more')">
                                 $MESSAGES.getString('search.detail.info.more')
                             </button>
                             <div class="js-expander-content $expandableId #if(!$isMoreId)is-hidden#end">
@@ -1155,7 +1155,7 @@
                     #if($listExpand)
                         #set($listExpand = false)
                         </div>
-                        <button type="button" class="js-open-expand-text button outline js-expander-close $expandableId #if(!$isMoreId)is-hidden #end" title="$MESSAGES.getString('searchResult.info.links.less')">
+                        <button type="button" class="js-open-expand-text button outline js-expander-close $expandableId #if(!$isMoreId)is-hidden #end" title="$MESSAGES.getString('search.detail.info.less')">
                             $MESSAGES.getString('search.detail.info.less')
                         </button>
                     #end
@@ -1210,7 +1210,7 @@
                             #foreach($entry in $sorter.sort($textList,"body"))
                                 #if($listCount >= $listLimit && $listExpand == false)
                                     #set($listExpand = true)
-                                    <button type="button" id="$expandableId" class="js-expander js-open-expand-text button outline $expandableId #if($isMoreId)is-hidden #end" title="$MESSAGES.getString('searchResult.info.links.more')">
+                                    <button type="button" id="$expandableId" class="js-expander js-open-expand-text button outline $expandableId #if($isMoreId)is-hidden #end" title="$MESSAGES.getString('search.detail.info.more')">
                                         $MESSAGES.getString('search.detail.info.more')
                                     </button>
                                     <span class="js-expander-content $expandableId #if(!$isMoreId)is-hidden#end">
@@ -1221,7 +1221,7 @@
                             #if($listExpand)
                                 #set($listExpand = false)
                                 </span>
-                                <button type="button" style="display:block" class="js-open-expand-text button outline js-expander-close $expandableId #if(!$isMoreId)is-hidden #end" title="$MESSAGES.getString('searchResult.info.links.less')">
+                                <button type="button" style="display:block" class="js-open-expand-text button outline js-expander-close $expandableId #if(!$isMoreId)is-hidden #end" title="$MESSAGES.getString('search.detail.info.less')">
                                     $MESSAGES.getString('search.detail.info.less')
                                 </button>
                             #end
