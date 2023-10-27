@@ -650,33 +650,43 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             if (!isHidden && !thesaurusName.contains("Service")) {
                                 // "UMTHES Thesaurus"
                                 if (thesaurusName.contains("UMTHES")) {
-                                    listSearch.add(value);
+                                    if(listSearch.indexOf(value) == -1) {
+                                        listSearch.add(value);
+                                    }
                                 // "GEMET - Concepts, version 2.1"
                                 } else if (thesaurusName.contains("Concepts")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listGemet.add(tmpValue);
+                                    if(listGemet.indexOf(tmpValue) == -1) {
+                                        listGemet.add(tmpValue);
+                                    }
                                     // "GEMET - INSPIRE themes, version 1.0"
                                 } else if (thesaurusName.contains("priority")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listPriorityDataset.add(tmpValue);
+                                    if(listPriorityDataset.indexOf(tmpValue) == -1) {
+                                        listPriorityDataset.add(tmpValue);
+                                    }
                                 } else if (thesaurusName.contains("Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listSpatialScope.add(tmpValue);
+                                    if(listSpatialScope.indexOf(tmpValue) == -1) {
+                                        listSpatialScope.add(tmpValue);
+                                    }
                                 } else if (thesaurusName.contains("INSPIRE")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listInspire.add(tmpValue);
+                                    if(listInspire.indexOf(tmpValue) == -1) {
+                                        listInspire.add(tmpValue);
+                                    }
                                     // "German Environmental Classification - Category, version 1.0"
                                 } else if (thesaurusName.contains("German Environmental Classification")) {
                                     // do not used in detail view.
@@ -685,16 +695,22 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     // do not used in detail view.
 
                                 } else if (thesaurusName.equalsIgnoreCase("IACS Data")) {
-                                    listInspireInvekos.add(value);
+                                    if(listInspireInvekos.indexOf(value) == -1) {
+                                        listInspireInvekos.add(value);
+                                    }
                                 } else if (thesaurusName.isEmpty() && type.isEmpty()) {
-                                    listSearch.add(value);
+                                    if(listSearch.indexOf(value) == -1) {
+                                        listSearch.add(value);
+                                    }
                                 } else{
                                     // try to match keyword to  Opendata Category
                                     String tmpValue = sysCodeList.getNameByData("6400", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listSearch.add(tmpValue);
+                                    if(listSearch.indexOf(tmpValue) == -1) {
+                                        listSearch.add(tmpValue);
+                                    }
                                 }
                             }
                         }
