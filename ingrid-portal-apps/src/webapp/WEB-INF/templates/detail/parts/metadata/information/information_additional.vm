@@ -42,10 +42,11 @@
         #renderTableList($MESSAGES.getString("spatial_scope") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "spatial_scope") true "search_terms_spatial" 10)
         #renderTableList($MESSAGES.getString("gemet_concepts") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "gemet") true "search_terms_gemet" 10)
         #renderTableList($MESSAGES.getString("adv_group") $advGroup true "search_terms_adv" 10)
-        #renderTableList($MESSAGES.getString("inspire_invekos") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire_invekos") true "search_terms_inspire_invekos" 10)
+        ## INSPIRE-InVeKoS
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_search_terms_invekos.vm")
         ## ISO-Themenkategorien
         #renderTableList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath($xPathKeywordsTopicCategory, "./gmd:MD_TopicCategoryCode", "527") true "search_terms_iso" 10)
         ## Suchbegriffe
-        #renderTableList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "search") true "search_terms" 10)
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_search_terms.vm")
     </div>
 #end
