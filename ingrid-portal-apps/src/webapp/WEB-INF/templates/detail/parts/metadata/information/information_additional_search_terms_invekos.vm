@@ -1,0 +1,2 @@
+## INSPIRE-InVeKoS
+    #renderTableList($MESSAGES.getString("inspire_invekos") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire_invekos") true "search_terms_inspire_invekos" 10)
