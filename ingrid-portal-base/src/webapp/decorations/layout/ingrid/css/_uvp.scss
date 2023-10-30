@@ -1891,6 +1891,9 @@ footer {
           vertical-align: top;
           text-align: left;
         }
+        td:first-child {
+          overflow-wrap: break-word;
+        }
       }
 
       a:not(.button) {
