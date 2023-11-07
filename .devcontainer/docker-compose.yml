@@ -109,9 +109,9 @@ services:
     # ports:
       # - "7003:7003"
       # - "8088:8080"
-    volumes:
+    # volumes:
     #  - ./logs/iplug-ige:/opt/ingrid/ingrid-iplug-ige/logs
-     - ./config/config.override.properties:/opt/ingrid/ingrid-iplug-ige/conf/config.override.properties
+    #  - ./config/config.override.properties:/opt/ingrid/ingrid-iplug-ige/conf/config.override.properties:cached
     network_mode: service:db
 
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
