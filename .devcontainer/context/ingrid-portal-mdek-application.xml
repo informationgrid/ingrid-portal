@@ -22,6 +22,6 @@ We do this to share session id between contexts
 /ingrid-portal-mdek and /ingrid-portal-mdek-application for setting
 session specific attribute "ige.force.userName" !
 -->
-<Context path="/ingrid-portal-mdek-application" docBase="/workspaces/java-postgres-2/ingrid-portal-mdek-application/target/ingrid-portal-mdek-application" crossContext="true">
+<Context path="/ingrid-portal-mdek-application" docBase="/workspaces/ingrid-portal/ingrid-portal-mdek-application/target/ingrid-portal-mdek-application" crossContext="true">
 	
 </Context>

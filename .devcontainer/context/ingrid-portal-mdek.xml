@@ -22,7 +22,7 @@ We do this to share session id between contexts
 /ingrid-portal-mdek and /ingrid-portal-mdek-application for setting
 session specific attribute "ige.force.userName" !
 -->
-<Context path="/ingrid-portal-mdek" docBase="/workspaces/java-postgres-2/ingrid-portal-mdek/target/ingrid-portal-mdek" crossContext="true">
+<Context path="/ingrid-portal-mdek" docBase="/workspaces/ingrid-portal/ingrid-portal-mdek/target/ingrid-portal-mdek" crossContext="true">
 
   <Resource name="jdbc/mdek" auth="Container"
           factory="org.apache.commons.dbcp.BasicDataSourceFactory"
