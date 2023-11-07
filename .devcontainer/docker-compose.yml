@@ -98,6 +98,21 @@ services:
     network_mode: service:db
     command: ["sh", "wait-for-elasticsearch.sh", "127.0.0.1:9200", "/bin/sh start.sh start"]
 
+  ige:
+    image: docker-registry.wemove.com/ingrid-iplug-ige
+    depends_on:
+      - elastic
+      - db
+    environment:
+      # - INGRID_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:7003,server=y,suspend=n
+      - ELASTIC_HOSTS=elastic:9300
+    # ports:
+      # - "7003:7003"
+      # - "8088:8080"
+    volumes:
+    #  - ./logs/iplug-ige:/opt/ingrid/ingrid-iplug-ige/logs
+     - ./config/config.override.properties:/opt/ingrid/ingrid-iplug-ige/conf/config.override.properties
+    network_mode: service:db
 
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
