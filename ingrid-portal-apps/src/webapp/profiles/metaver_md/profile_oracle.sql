@@ -48,6 +48,12 @@ UPDATE page SET is_hidden = 1 WHERE path = '/main-measures.psml';
 -- Hide '/language.link'
 UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 
+-- Hide 'mdek/mdek_portal_admin.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/mdek/mdek_portal_admin.psml';
+
+-- Set folder "/mdek" to hidden
+UPDATE folder SET is_hidden = 1 WHERE path = '/mdek';
+
 -- Hide '/rsspage.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/rsspage.psml';
 
