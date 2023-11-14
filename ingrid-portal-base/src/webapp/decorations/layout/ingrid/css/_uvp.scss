@@ -3672,3 +3672,18 @@ span.text-break {
 .timeline {
   clear: both;
 }
+.map_switcher {
+  margin-top: 12px;
+
+  a {
+    border-radius: 24.04px 24.04px;
+    padding: 7px;
+    border: 1px solid #c6cfe2;
+    margin: 0;
+
+    span {
+      font-size: 19px;
+      margin: 6px 4px !important;
+    }
+  }
+}

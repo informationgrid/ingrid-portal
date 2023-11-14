@@ -8,6 +8,7 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.gesture-handling/leaflet-gesture-handling.min.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.wicket/wicket.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.wicket/wicket-leaflet.js"></script>
+#parse ('/WEB-INF/templates/global/include_leaflet_header_additional.vm')
 #if($leafletBboxInverted)
 <script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.snogylop/snogylop.js"></script>
 #end

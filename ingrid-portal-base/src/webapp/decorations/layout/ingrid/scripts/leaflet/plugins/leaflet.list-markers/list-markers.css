@@ -1,0 +1,135 @@
+.leaflet-container .list-markers {
+    position:relative;
+    float:left;
+    color:#1978cf;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    z-index:1000;    
+    margin-left:10px;
+    margin-top:10px;
+
+    min-width:26px;
+    min-height:26px;
+}
+
+.leaflet-control.list-markers .list-markers-toggle {
+    display: none;
+}
+.leaflet-control.list-markers.list-markers-collapsed .list-markers-toggle {
+    display: block;
+}
+.list-markers-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 300px;
+}
+.list-markers-li {
+    padding: 0;
+    margin: 0;
+    clear: both;
+}
+.list-markers-li:first-child {
+    border: none;
+}
+.list-markers-li img {
+    float: right;
+    width: 12px;
+    height: 20px;
+    margin-right: 4px;
+    margin: 0 8px 0 0;
+}
+.list-markers-li b {
+    float: right;
+}
+.list-markers-li span {
+    float: left;
+}
+.list-markers-li a {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    box-shadow: 0 1px 7px rgba(0,0,0,0.65) !important;
+    display: block;
+    float: left;
+    line-height: 20px;
+    width: 250px;
+    overflow: hidden;
+    margin: 1px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+}
+.list-markers-li a:hover {
+    color: #0078A8;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+.list-markers-li a span {
+    width: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.leaflet-control.list-markers .list-markers-ul {
+    display: block;
+}
+.leaflet-control.list-markers.list-markers-collapsed .list-markers-ul {
+    display: none;
+}
+
+.list-markers .list-markers-toggle {
+    display:block;
+    float:left;
+    width:26px;
+    height:26px;
+    background: url('../images/list-icon.png') no-repeat 2px 2px;
+    border-radius:4px;
+}
+.list-markers .list-markers-toggle:hover,
+.list-markers .list-markers-toggle.active:hover {
+    background: url('../images/list-icon.png') no-repeat 2px -24px #fff;
+}
+.list-markers .list-markers-toggle.active {
+    background: url('../images/list-icon.png') no-repeat 2px -50px #fff;
+}
+
+ul li.list-markers-li::before {
+    content: none;
+}
+
+a.list-markers-clear {
+    left: 0;
+    top: -30px;
+    position: absolute;
+    padding: 5px 8px;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    box-shadow: 0 1px 7px rgba(0,0,0,0.65) !important;
+    border-radius: 5px;
+    display: block;
+}
+
+a.list-markers-clear.hidden {
+    display: none;
+}
+
+.list-markers-item-content {
+    position:relative;
+    float:left;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    z-index:1000;    
+    margin-top:10px;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    box-shadow: 0 1px 7px rgba(0,0,0,0.65) !important;
+    border-radius: 5px;
+    width: 250px;
+    height: 300px;
+    padding: 8px 12px;
+}
+
+.list-markers-item-content p {
+    font-size: 14px;
+    line-height: 20px;
+}

@@ -54,4 +54,4 @@
     </tr>
 #end
 
-#parse ('/WEB-INF/templates/include_search_result_ranked_mapview.vm')
+#parse ('/WEB-INF/templates/include_search_result_ranked_views.vm')

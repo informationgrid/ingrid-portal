@@ -27,16 +27,162 @@
 #end
 <script>
     map_searchview.on('moveend', function() {
-        showSearchResults();
+        //showSearchResults();
     });
 
-    map_searchview.setView(new L.LatLng(lat, lng),zoom);
+    if('$mapParamN' && '$mapParamE' && '$mapParamZoom') {
+        mapLat = parseFloat('$mapParamN') || mapLat;
+        mapLng = parseFloat('$mapParamE') || mapLng;
+        mapZoom = parseFloat('$mapParamZoom') || mapZoom;
+        map_searchview.setView(new L.LatLng(mapLat, mapLng), mapZoom);
+    } else {
+        map_searchview.setView(new L.LatLng(lat, lng),zoom);
+    }
     map_searchview.addLayer(layer);
     resizeMap(map_searchview);
+    addLeafletHomeControl(map_searchview, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', map_searchview.getBounds(), '', '23px');
+    addLeafletListViewControl(map_searchview, 'List view', 'topleft', 'ic-ic-view-colapsed', $("#map_view"), $("#list_view") );
     window.onresize = function(event) {
         resizeMap(map_searchview);
     };
+
+    ## Cluster markers
+    var mapMarkers = L.markerClusterGroup({
+        id: 'mapMarkers',
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: false,
+        spiderfyOnMaxZoom: false
+    });
     
+    ## List markers
+    var markersLayer = new L.LayerGroup();
+    var mapListMarkers = new L.Control.ListMarkers({
+        layer: mapMarkers,
+        itemIcon: null
+    });
+    
+    ## List markers action
+    var markersLayerAction = new L.LayerGroup();
+    map_searchview.addLayer(markersLayerAction);
+    var hoverMarker;
+    var selectedMarker;
+    mapListMarkers.on('item-mouseover', function(e) {
+        hoverMarker = L.marker(e.layer.getLatLng(), { 
+            title: e.layer.options.title,
+            features: e.layer.options.features,
+            icon: L.icon({
+                iconUrl: '/decorations/layout/ingrid/scripts/leaflet/images/marker-select.png',
+                iconSize:    [25, 41],
+                iconAnchor:  [12, 41],
+                popupAnchor: [1, -34],
+                tooltipAnchor: [16, -28],
+                shadowSize:  [41, 41]
+            }),
+            zIndexOffset: 1000
+        });
+        markersLayerAction.addLayer(hoverMarker);
+        if(hoverMarker.options.features) {
+            markersLayerAction.addLayer(hoverMarker.options.features);
+        }
+    }).on('item-mouseout', function(e) {
+        if(hoverMarker) {
+            markersLayerAction.removeLayer(hoverMarker);
+            if(hoverMarker.options.features) {
+                markersLayerAction.removeLayer(hoverMarker.options.features);
+            }
+        }
+    }).on('item-updatelist', function(e) {
+        if(hoverMarker) {
+            markersLayerAction.removeLayer(hoverMarker);
+            if(hoverMarker.options.features) {
+                markersLayerAction.removeLayer(hoverMarker.options.features);
+            }
+        }
+    }).on('item-click', function(e) {
+        if(hoverMarker) {
+            map_searchview.removeLayer(hoverMarker);
+            if(hoverMarker.options.features) {
+                map_searchview.addLayer(hoverMarker.options.features);
+            }
+        }
+        if(selectedMarker) {
+            map_searchview.removeLayer(selectedMarker);
+        }
+        selectedMarker = L.marker(e.layer.getLatLng(), { 
+            title: e.layer.options.title,
+            icon: L.icon({
+                iconUrl: '/decorations/layout/ingrid/scripts/leaflet/images/marker-select.png',
+                iconSize:    [25, 41],
+                iconAnchor:  [12, 41],
+                popupAnchor: [1, -34],
+                tooltipAnchor: [16, -28],
+                shadowSize:  [41, 41]
+            }),
+            zIndexOffset: 1000
+        });
+        if(e.layer.options.features && e.layer.options.features.getLayers()) {
+            var featLayer = e.layer.options.features.getLayers()[0];
+            if(featLayer) {
+                selectedMarker.options.features = L.geoJSON(featLayer.feature, {});
+            }
+        }
+        selectedMarker.bindPopup(e.layer.getPopup().getContent(), popupOptions);
+        map_searchview.addLayer(selectedMarker);
+        if(selectedMarker.options.features) {
+            map_searchview.addLayer(selectedMarker.options.features);
+        }
+        if(selectedMarker.options.features) {
+            map_searchview.fitBounds(selectedMarker.options.features.getBounds(), { padding: [150, 150] });
+        } else {
+            map_searchview.panTo( selectedMarker.getLatLng() );
+        }
+        selectedMarker.openPopup();
+        
+        selectedMarker.getPopup().on('remove', function() {
+            map_searchview.removeLayer(selectedMarker);
+            if(selectedMarker.options.features) {
+                map_searchview.removeLayer(selectedMarker.options.features);
+            }
+        });
+    });
+
+    map_searchview.addControl( mapListMarkers );
+
+    $('.list-markers-ul').niceScroll({
+        cursorcolor:"#5e788d",
+        cursorwidth:"8px",
+        cursorborderradius: "6px",
+    });
+
+    mapMarkers.on('clusterclick', function (a) {
+        markersLayer.clearLayers();
+        var clusterMarker = a.layer.getAllChildMarkers();
+        clusterMarker.forEach(function(marker) {
+            markersLayer.addLayer(marker);
+        });
+        mapListMarkers._updateList();
+    });
+
+    map_searchview.addLayer(mapMarkers);
+
+    map_searchview.on('moveend', function(e){
+        var mapLatLng = this.getCenter();
+        if(mapLatLng) {
+            mapLat = this.getCenter().lat.toFixed(2);
+            mapLng = this.getCenter().lng.toFixed(2);
+            updateQueryStringParameter('N', mapLat);
+            updateQueryStringParameter('E', mapLng);
+        }
+        if(this.getZoom()) {
+            mapZoom = this.getZoom();
+            updateQueryStringParameter('zoom', mapZoom);
+        }
+    });
+    var popupOptions = {
+        maxWidth: 200
+    };
+
+    showSearchResults();
 
     function showSearchResults() {
         const x1 = Math.round(map_searchview.getBounds().getWest() * 10000)/10000;
@@ -44,35 +190,23 @@
         const y1 = Math.round(map_searchview.getBounds().getSouth() * 10000)/10000;
         const y2 = Math.round(map_searchview.getBounds().getNorth() * 10000)/10000;
         var url = '$restUrlHttpSearchMap' + '?';
+        /*
         url += 'x1=' + x1 + '&';
         url += 'y1=' + y1 + '&';
         url += 'x2=' + x2 + '&';
         url += 'y2=' + y2 + '&';
         url += 'options=inside,intersect,include';
-            
-        jQuery.get(url).done(function(datas) {
-            if(datas) {
-                var mapMarkers10 = L.markerClusterGroup({
-                id: 'mapMarkers10',
-                iconCreateFunction: function (cluster) {
-                    var childCount = cluster.getChildCount();
-                    var c = ' marker-cluster-';
-                    if (childCount < 10) {
-                        c += 'small';
-                    } else if (childCount < 100) {
-                        c += 'medium';
-                    } else {
-                        c += 'large';
-                    }
-                    return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-10' + c, iconSize: new L.Point(40, 40) });
-                }
-                });
-                map_searchview.addLayer(mapMarkers10)
+        */
 
-                var promises = [];
-                var bwaStrsDone = [];
+        jQuery.ajax({
+            url: url
+        }).done(function( datas ) {
+            if(datas) {
                 datas.forEach(function(data){
                     const title = data['title'];
+                    const objUuid = data['t01_object.obj_id'];
+                    const objClass = data['t01_object.obj_class'];
+                    const summary = data['summary'];
                     const x1 = data['x1'];
                     const y1 = data['y1'];
                     const x2 = data['x2'];
@@ -81,6 +215,18 @@
                     const bwaStrId = data['bwstr-bwastr-id'];
                     const bwaStrVon = data['bwstr-strecken_km_von'];
                     const bwaStrBis = data['bwstr-strecken_km_bis'];
+                    
+                    var popupContent = '<h5>' + title + '</h5>';
+                    popupContent += '<p class="list-marker-popup-content">'
+                    if(summary.length > 200) {
+                        popupContent += summary.slice(0, 200);
+                        popupContent += '...';
+                    } else {
+                        popupContent += summary;
+                    }
+                    popupContent += '</p>';
+                    popupContent += '<a target="_blank" href="$renderResponse.encodeURL("/portal/search-detail.psml")?docuuid=' + objUuid + '" title="Detaildarstellung zu \"' + title + '\"">Mehr Details ...</p>'; 
+                    
                     var bwaStrs;
                     if(bwaStrId) {
                         bwaStrs = [[bwaStrId, bwaStrVon, bwaStrBis]];
@@ -89,27 +235,146 @@
                     if(x1) {
                         coords = [[title, x1, y1, x2, y2]];
                     }
-                    if(bwaStrs) {
+                    if(wkt) {
+                        var wktJson = JSON.parse(wkt);
+                        var features;
+                        if(wktJson && wktJson.type){
+                            if(wktJson.type === 'Point') {
+                                var tmpFeatures = L.geoJSON(wktJson, {
+                                    onEachFeature: function(feature, layer) {
+                                        var features = L.marker(layer.getLatLng(), {
+                                            title: title,
+                                            itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
+                                        });
+                                        features.on('click', markerClick);
+                                        features.bindPopup(popupContent, popupOptions);
+                                        if(features) {
+                                            mapMarkers.addLayer(features);
+                                        }
+                                   }
+                                });
+                            } else if(wktJson.type === 'MultiPoint') {
+                                var tmpFeatures = L.geoJSON(wktJson, {
+                                    onEachFeature: function(features, layers) {
+                                        layers.getLayers().forEach(function(layer) {
+                                            var features = L.marker(layer.getLatLng(), {
+                                                title: title,
+                                                itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
+                                            });
+                                            features.on('click', markerClick);
+                                            features.bindPopup(popupContent, popupOptions);
+                                            if(features) {
+                                                mapMarkers.addLayer(features);
+                                            }
+                                        });
+                                   }
+                                });
+                            } else if(wktJson.type === 'LineString') {
+                                var tmpFeatures = L.geoJSON(wktJson, {});
+                                if(wktJson.coordinates) {
+                                    var coordIndex = Math.floor(wktJson.coordinates.length / 2);
+                                    var coord = wktJson.coordinates[coordIndex];
+                                    features = L.marker(new L.LatLng(coord[1], coord[0]), {
+                                        title: title,
+                                        features: tmpFeatures,
+                                        itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/line.png',
+                                        itemIconWidth: '20px',
+                                        itemIconHeight: '20px'
+                                    });
+                                    features.on('click', markerClick);
+                                    features.bindPopup(popupContent, popupOptions);
+                                    features.on('popupopen', showFeatures);
+                                    features.on('popupclose', hideFeatures);
+                                }
+                            } else if(wktJson.type === 'MultiLineString') {
+                                var tmpFeatures = L.geoJSON(wktJson, {});
+                                if(wktJson.coordinates) {
+                                    var coordArrIndex = Math.floor(wktJson.coordinates.length / 2);
+                                    var coordArr = wktJson.coordinates[coordArrIndex];
+                                    var coordIndex = Math.floor(coordArr.length / 2);
+                                    var coord = coordArr[coordIndex];
+
+                                    features = L.marker(new L.LatLng(coord[1], coord[0]), {
+                                        title: title,
+                                        features: tmpFeatures,
+                                        itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/line.png',
+                                        itemIconWidth: '20px',
+                                        itemIconHeight: '20px'
+                                    });
+                                    features.on('click', markerClick);
+                                    features.bindPopup(popupContent, popupOptions);
+                                    features.on('popupopen', showFeatures);
+                                    features.on('popupclose', hideFeatures);
+                                }
+                            } else if(wktJson.type === 'Polygon') {
+                                var tmpFeatures = L.geoJSON(wktJson, {});
+                                features = L.marker(tmpFeatures.getBounds().getCenter(), {
+                                    title: title,
+                                    features: tmpFeatures,
+                                    itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
+                                    itemIconWidth: '20px',
+                                    itemIconHeight: '20px'
+                                });
+                                features.on('click', markerClick);
+                                features.bindPopup(popupContent, popupOptions);
+                                features.on('popupopen', showFeatures);
+                                features.on('popupclose', hideFeatures);
+                            } else if(wktJson.type === 'MultiPolygon') {
+                                var tmpFeatures = L.geoJSON(wktJson, {});
+                                features = L.marker(tmpFeatures.getBounds().getCenter(), {
+                                    title: title,
+                                    features: tmpFeatures,
+                                    itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
+                                    itemIconWidth: '20px',
+                                    itemIconHeight: '20px'
+                                });
+                                features.on('click', markerClick);
+                                features.bindPopup(popupContent, popupOptions);
+                                features.on('popupopen', showFeatures);
+                                features.on('popupclose', hideFeatures);
+                            }
+                        }
+                        if(features) {
+                            mapMarkers.addLayer(features);
+                        }
+                    } else if(bwaStrs) {
                       bwaStrs.forEach(function(bwaStr){
-                        var request =  jQuery.ajax({
+                        jQuery.ajax({
                           url: '$restUrlBWaStr' + '?id=' + bwaStr[0] + '&von=' + bwaStr[1] + '&bis=' + bwaStr[2],
                           dataType: 'json',
                           success: function (data) {
                             return data;
                           }
+                        }).done(function (data){
+                            var geometry = data.geometry;
+                            if (geometry) {
+                              var geojsonObject = {
+                                'type': geometry.type,
+                                'coordinates': geometry.coordinates
+                              };
+                              var tmpFeatures = L.geoJSON(geojsonObject, {});
+                              if(geojsonObject.coordinates) {
+                                  var coordArrIndex = Math.floor(geojsonObject.coordinates.length / 2);
+                                  var coordArr = geojsonObject.coordinates[coordArrIndex];
+                                  var coordIndex = Math.floor(coordArr.length / 2);
+                                  var coord = coordArr[coordIndex];
+    
+                                  var features = L.marker(new L.LatLng(coord[1], coord[0]), {
+                                      title: title,
+                                      features: tmpFeatures,
+                                      itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/bwastr.png'
+                                  });
+                                  features.on('click', markerClick);
+                                  features.bindPopup(popupContent, popupOptions);
+                                  features.on('popupopen', showFeatures);
+                                  features.on('popupclose', hideFeatures);
+                                  if(features) {
+                                     mapMarkers.addLayer(features);
+                                  }
+                                }
+                            }
                         });
-                        var id = bwaStrId + bwaStrVon + bwaStrBis;
-                        if(bwaStrsDone.indexOf(id) == -1) {
-                            bwaStrsDone.push(id);
-                            promises.push(request);
-                        }
                       });
-                    } else if(wkt) {
-                        var features = L.geoJSON(JSON.parse(wkt));
-                        if(features) {
-                            mapMarkers10.addLayer(features);
-                        }
-                        
                     } else if(coords) {
                         coords.forEach(function(coord) {
                           var y1Coord = coord[2];
@@ -118,28 +383,50 @@
                           var x2Coord = coord[3];
                           if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
                             if(x1Coord === x2Coord && y1Coord === y2Coord) {
-                              var marker = L.marker([y1Coord, x1Coord]);
-                              marker.bindTooltip(coord[0], {direction: 'center'});
-                              mapMarkers10.addLayer(marker);
+                              var features = L.marker([y1Coord, x1Coord], {
+                                title: title,
+                                itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
+                              });
+                              mapMarkers.addLayer(features);
                             } else {
                               var bounds = L.latLngBounds(L.latLng(y1Coord, x1Coord), L.latLng(y2Coord, x2Coord));
                               var center = bounds.getCenter();
-                              var icon = L.icon({
-                                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_small_blue.png',
-                                    iconSize: [6, 6], 
-                                    iconAnchor: [3, 3]
-                                });
-                              var marker = L.marker(center, { title: title, icon: icon });
-                              mapMarkers10.addLayer(marker);
+                              var features = L.marker(center, {
+                                title: title,
+                                itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
+                              });
+                              features.bindPopup(popupContent, popupOptions);
+                              mapMarkers.addLayer(features);
                             }
                           }
                         });
                     }
                 });
             }
-            
         });
     }
+    
+    function showFeatures(m) {
+        if(m.target.options.features){
+            if(map_searchview){
+                map_searchview.addLayer(m.target.options.features);
+            }
+        }
+    }
+    
+    function hideFeatures(m) {
+        if(m.target.options.features){
+            if(map_searchview){
+                map_searchview.removeLayer(m.target.options.features);
+            }
+        }
+    }
+
+    function markerClick(e) {
+        var popup = e.target.getPopup();
+        map.spin(true);
+        map.spin(false);
+    };
 </script>
 
 

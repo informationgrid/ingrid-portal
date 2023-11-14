@@ -1,0 +1,6 @@
+<div id="list_view">
+    #parse ('/WEB-INF/templates/include_search_result_ranked_listview.vm')
+</div>
+<div id="map_view" class="is-hidden"> 
+    #parse ('/WEB-INF/templates/include_search_result_ranked_mapview.vm')
+</div>

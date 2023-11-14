@@ -57,7 +57,6 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UniversalSorter;
 import de.ingrid.portal.global.UtilsFacete;

@@ -1,0 +1,27 @@
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.list-markers/list-markers.js"></script>
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.list-markers/list-markers.css"/>
+
+
+<script>
+    function addLeafletListViewControl(map, title, position, icon, thisView, switchView) {
+        var ListViewControl = L.Control.extend({
+            options: {
+                position: position ? position : 'topleft'
+            },
+            onAdd: function (map) {
+                var container = L.DomUtil.create('div', 'leaflet-control-listview leaflet-bar');
+                var link = L.DomUtil.create('a', icon, container);
+                link.href = '#';
+                link.id = 'list_switcher'
+                link.title = title;
+                L.DomEvent.addListener(link, 'click', this._listviewClick, this);
+                return container;
+            },
+            _listviewClick: function (e) {
+                thisView.addClass("is-hidden");
+                switchView.removeClass("is-hidden");
+            }
+        });
+        map.addControl(new ListViewControl({}));
+    }
+</script>
