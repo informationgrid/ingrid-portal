@@ -1,7 +1,9 @@
 version: '3.8'
 
 volumes:
-  postgres-data:
+  ingrid-database:
+  ingrid-esdata:
+  ingrid-maven:
 
 services:
   app:
@@ -9,15 +11,11 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    environment:
+    # environment:
       # NOTE: POSTGRES_DB/USER/PASSWORD should match values in db container
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_USER: postgres
-        POSTGRES_DB: postgres
-        POSTGRES_HOSTNAME: postgresdb
-
     volumes:
-      - ../..:/workspaces:cached
+      - ..:/workspaces/ingrid-portal:cached
+      - ingrid-maven:/home/vscode/.m2
       
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
@@ -28,28 +26,19 @@ services:
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-  # db:
-  #   container_name: postgresdb
-  #   image: postgres:latest
-  #   restart: unless-stopped
-  #   volumes:
-  #     - postgres-data:/var/lib/postgresql/data
-  #   environment:
-  #     # NOTE: POSTGRES_DB/USER/PASSWORD should match values in app container
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_DB: postgres
-
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
   
   db:
     image: mysql:5.7
+    platform: linux/amd64
     command: docker-entrypoint.sh mysqld --character-set-server=utf8 --lower-case-table-names=1 --collation-server=utf8_unicode_ci --sql_mode="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"
     restart: unless-stopped
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - MYSQL_ROOT_HOST=%%
+    volumes:
+      - ingrid-database:/var/lib/mysql
     #ports:
     #  - "3306:3306"
 
@@ -66,11 +55,11 @@ services:
       - http.cors.allow-origin=*
       - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
       - xpack.security.enabled=false
-      - xpack.monitoring.enabled=false
+      # - xpack.monitoring.enabled=false
       - xpack.ml.enabled=false
     restart: unless-stopped
-    # volumes:
-    #  - esdata1:/usr/share/elasticsearch/data
+    volumes:
+      - ingrid-esdata:/usr/share/elasticsearch/data
     #ports:
     #  - "9200:9200"
     #  - "9300:9300"
@@ -89,9 +78,10 @@ services:
       - ELASTIC_HOSTS=127.0.0.1:9300
       - JAVA_OPTS=-Xmx384m
       - SERVER_PORT=10000
-    #volumes:
+    volumes:
     #  - ./logs/ibus:/opt/ingrid/ingrid-ibus/logs
-    #  - ./ibus/log4j2.xml:/opt/ingrid/ingrid-ibus/conf/log4j2.xml
+      - ./config/activatedIplugs.properties:/opt/ingrid/ingrid-ibus/conf/activatedIplugs.properties
+      - ./config/application-default.properties:/opt/ingrid/ingrid-ibus/conf/application-default.properties
     #ports:
     #  - "7002:7002"
     #  - "9900:9900"
@@ -109,9 +99,10 @@ services:
     # ports:
       # - "7003:7003"
       # - "8088:8080"
-    # volumes:
+    volumes:
     #  - ./logs/iplug-ige:/opt/ingrid/ingrid-iplug-ige/logs
-    #  - ./config/config.override.properties:/opt/ingrid/ingrid-iplug-ige/conf/config.override.properties:cached
+      - ./config/config.override.properties:/opt/ingrid/ingrid-iplug-ige/conf/config.override.properties:cached
+    command: ["bash", "./wait-for-it.sh", "localhost:3306", "-t", "120", "--", "./run.sh"]
     network_mode: service:db
 
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
