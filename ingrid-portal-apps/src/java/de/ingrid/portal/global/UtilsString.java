@@ -39,7 +39,7 @@ public class UtilsString {
 
     private static final Logger log = LoggerFactory.getLogger(UtilsString.class);
 
-    private static final String regexUrlFinder = "([^'\"]|^)((((ftp|https?):\\/\\/)|(w{3}\\.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)";
+    private static final String regexUrlFinder = "([^'\">]|^)((((ftp|https?):\\/\\/)|(w{3}\\.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)";
 
     // see http://hotwired.lycos.com/webmonkey/reference/special_characters/
     static Object[][] entities = {
@@ -543,17 +543,24 @@ public class UtilsString {
     }
     
     public static String convertUrlInText(String text) {
-        Pattern pattern = Pattern.compile(regexUrlFinder);
+        Pattern pattern = Pattern.compile("([^'\">])((((ftp|https?):\\/\\/)|(w{3}\\.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)");
         Matcher m = pattern.matcher(text);
+        ArrayList<String> findUrl = new ArrayList<String>();
         while (m.find()) {
             String s = null;
             boolean isValidUrl = false;
             for (int i = 0; i < m.groupCount(); i++) {
-                String tmpString = m.group(i);
+                s = m.group(i);
+                String validateString = s;
                 UrlValidator validator = new UrlValidator();
-                if(validator.isValid(tmpString)) {
-                    s = tmpString;
-                    isValidUrl = true;
+                if(validateString.startsWith("www.")) {
+                    validateString = "https://" + validateString;
+                }
+                if(validator.isValid(validateString)) {
+                    if(findUrl.indexOf(s) == -1) {
+                        findUrl.add(s);
+                        isValidUrl = true;
+                    }
                     break;
                 }
             }
@@ -562,7 +569,11 @@ public class UtilsString {
                     while(s.endsWith(".")) {
                         s = s.substring(0, s.length() - 1);
                     }
-                    text = text.replaceAll(s, "<a class=\"intext\" href=\"" + s + "\" target=\"_blank\" title=\"" + s + "\">" + s + "</a>" );
+                    String validateUrl = s;
+                    if(validateUrl.startsWith("www.")) {
+                        validateUrl = "https://" + validateUrl;
+                    }
+                    text = text.replace(s, "<a class=\"intext\" href=\"" + validateUrl + "\" target=\"_blank\" title=\"" + s + "\">" + s + "</a>" );
                 }
             }
         }
@@ -586,7 +597,7 @@ public class UtilsString {
     
     public static ArrayList<String> getUrlInText(String text) {
         ArrayList<String> list = new ArrayList<String>();
-        Pattern pattern = Pattern.compile(regexUrlFinder);
+        Pattern pattern = Pattern.compile("([^'\">]|^)((((ftp|https?):\\/\\/)|(w{3}\\.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)");
         Matcher m = pattern.matcher(text);
         while (m.find()) {
             String s = null;
