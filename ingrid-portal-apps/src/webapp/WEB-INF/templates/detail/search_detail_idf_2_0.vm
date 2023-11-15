@@ -84,11 +84,11 @@
                     #end
                 #end
                 #if($tool.hasContent($entry.attachedToField))
-                    <small>$entry.attachedToField</small>
+                    <small>$stringTool.convertUrlInText($entry.attachedToField)</small>
                 #end
                 #if($tool.hasContent($entry.description))
                     #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
-                    <small>${myDescription}</small>
+                    <small>$stringTool.convertUrlInText(${myDescription})</small>
                 #end
             </div>
         #elseif($entry.addressClass)
@@ -173,7 +173,7 @@
                     #else
                         #set($myDescription = $stringTool.replaceAll($entry.description, "\n", " "))
                     #end
-                    <small class="description">${myDescription}</small>
+                    <small class="description">$stringTool.convertUrlInText(${myDescription})</small>
                 </div>
             #end
             #if($tool.hasContent($entry.extMapUrl))
@@ -1005,7 +1005,11 @@
     #renderTextListSpaceList ($title $textList $space true)
 #end
 
-#macro (renderTextListSpaceList $title $textList $space $asList)
+#macro (renderTextListSpaceList $title $textList $space $asList )
+    #renderTextListSpaceListConvertUrl($title $textList $space true false)
+#end
+
+#macro (renderTextListSpaceListConvertUrl $title $textList $space $asList $convertUrl)
     #if($tool.hasContent($textList))
         #if($tool.hasContent($title))
             <h4>$title</h4>
@@ -1014,13 +1018,21 @@
         #if($asList)
             <div class="text-list">
             #foreach($text in $sorter.sort($textList,"body"))
-                <p class="list-item">$text.replaceAll("<svg.*svg>", "")</p>
+                #set($tmpText = $text.replaceAll("<svg.*svg>", ""))
+                #if($convertUrl)
+                    #set($tmpText = $stringTool.convertUrlInText($tmpText))
+                #end
+                <p class="list-item">$tmpText</p>
             #end
             </div>
         #else
             <div class="text-list">
             #foreach($text in $sorter.sort($textList,"body"))
-                <p class="list-item">$text.replaceAll("<svg.*svg>", "")</p>
+                #set($tmpText = $text.replaceAll("<svg.*svg>", ""))
+                #if($convertUrl)
+                    #set($tmpText = $stringTool.convertUrlInText($tmpText))
+                #end
+                <p class="list-item">$tmpText</p>
             #end
             </div>
         #end
@@ -1032,6 +1044,10 @@
 #end
 
 #macro (renderTextTable $title $entry $cssClass $defaultEntry)
+    #renderTextTableConvertUrl($title $entry $cssClass $defaultEntry false)
+#end
+
+#macro (renderTextTableConvertUrl $title $entry $cssClass $defaultEntry $convertUrl)
     #if($tool.hasContent($entry))
     <div class="table table--lined">
         <table>
@@ -1040,7 +1056,11 @@
                 <th>$title</th>
             #end
                 <td>
-                    <p #if($tool.hasContent($cssClass))class="$cssClass"#end>$entry</p>
+                    #set($tmpText = $entry)
+                    #if($convertUrl)
+                        #set($tmpText = $stringTool.convertUrlInText($tmpText))
+                    #end
+                    <p #if($tool.hasContent($cssClass))class="$cssClass"#end>$tmpText</p>
                 </td>
             </tr>
         </table>
@@ -1053,7 +1073,11 @@
                 <th>$title</th>
             #end
                 <td>
-                    <p #if($tool.hasContent($cssClass))class="$cssClass"#end>$defaultEntry</p>
+                    #set($tmpText = $defaultEntry)
+                    #if($convertUrl)
+                        #set($tmpText = $stringTool.convertUrlInText($tmpText))
+                    #end
+                    <p #if($tool.hasContent($cssClass))class="$cssClass"#end>$tmpText</p>
                 </td>
             </tr>
         </table>
@@ -1063,6 +1087,10 @@
 #end
 
 #macro (renderTextListTable $title $entryList $expandable $defaultEntry)
+    #renderTextListTableConvertUrl($title $entryList $expandable $defaultEntry false)
+#end
+
+#macro (renderTextListTableConvertUrl $title $entryList $expandable $defaultEntry $convertUrl)
     #if($tool.hasContent($entryList))
     <div class="table table--lined">
         <table>
@@ -1077,7 +1105,11 @@
                     #end
                             <div class="text-list">
                             #foreach($entry in $entryList)
-                                <p class="list-item">$entry</p>
+                                #set($tmpText = $entry)
+                                #if($convertUrl)
+                                    #set($tmpText = $stringTool.convertUrlInText($tmpText))
+                                #end
+                                <p class="list-item">$tmpText</p>
                             #end
                             </div>
                             
@@ -1098,7 +1130,11 @@
         </table>
     </div>
     #elseif($defaultEntry)
-        #renderTextTable($title $space)
+        #if($convertUrl)
+            #renderTextTableConvertUrl($title $space)
+        #else
+            #renderTextTable($title $space)
+        #end
     #end
 #end
 

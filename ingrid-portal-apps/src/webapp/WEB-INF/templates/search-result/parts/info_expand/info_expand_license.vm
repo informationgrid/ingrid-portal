@@ -38,7 +38,7 @@
                     </a>
                 </p>
             #else
-                 <p>$licenseValue</p>
+                 <p>$stringTool.convertUrlInText($licenseValue)</p>
             #end
         #end
     #end

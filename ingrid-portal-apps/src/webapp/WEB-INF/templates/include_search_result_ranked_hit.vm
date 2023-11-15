@@ -126,13 +126,13 @@
                     )
                 #end
                 #if($!rs.abstract != "")
-                <p class="data-text">
+                <p class="data-text" #if($isCutSummary)style="-webkit-line-clamp: #if($cutSummaryLines)$cutSummaryLines #else 2 #end;"#end>
                     #if($cutSumHTMLNewLine)
                         #set($myDescription = $stringTool.replaceAll($rs.abstract, "\n", "<br>"))
                     #else
                         #set($myDescription = $stringTool.replaceAll($rs.abstract, "\n", " "))
                     #end
-                    #removeLocalisation($myDescription)
+                    #removeLocalisation($stringTool.convertUrlInText($myDescription))
                 </p>
                 #end
                 #renderServiceTypeList($serviceTypes true true)

@@ -17,7 +17,7 @@
 ## Erstellungsmaßstab
     #renderTableAsList("" $TOOL.getReferenceObject($xPathInfo1MDResolution) $hideResolutionTitle)
 ## Fachliche Grundlage
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
+    #renderTextTableConvertUrl($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement) false false true)
 ## Datengrundlage
     #renderTextListTable($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getListOfValuesFromXPath($xPathInfo1LISourceDescription, "."))
 ## Herstellungsprozess
