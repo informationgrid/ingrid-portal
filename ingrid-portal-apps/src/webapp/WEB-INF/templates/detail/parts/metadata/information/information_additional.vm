@@ -9,11 +9,11 @@
     ## Veröffentlichung
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_publish_id.vm")
     ## Eignung/Nutzung
-        #renderTextTable($MESSAGES.getString("t01_object.dataset_usage") $TOOL.getValueFromXPath($xPathAdditionalInfoSpecificUsage))
+        #renderTextTableConvertUrl($MESSAGES.getString("t01_object.dataset_usage") $TOOL.getValueFromXPath($xPathAdditionalInfoSpecificUsage) false false true)
     ## Herstellungszweck
-        #renderTextTable($MESSAGES.getString("t01_object.info_note") $TOOL.getValueFromXPath($xPathAdditionalInfoPurpose))
+        #renderTextTableConvertUrl($MESSAGES.getString("t01_object.info_note") $TOOL.getValueFromXPath($xPathAdditionalInfoPurpose) false false true)
     ## Rechtliche Grundlagen
-        #renderTextListTable($MESSAGES.getString("t015_legist.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoFurtherLegalBasis, "."))
+        #renderTextListTableConvertUrl($MESSAGES.getString("t015_legist.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoFurtherLegalBasis, ".") false false true)
     ## XML-Export-Kriterium
         #renderTextListTable($MESSAGES.getString("t014_info_impart.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoExportCriteria, "."))
     ## Sprache des Datensatzes
@@ -25,7 +25,7 @@
     ## Medien
         #renderTable($TOOL.getMediumOptions($xPathAdditionalInfoMDDistribution))
     ## Bestellinformationen
-        #renderTextTable($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath($xPathAdditionalInfoOrderingInstructions))
+        #renderTextTableConvertUrl($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath($xPathAdditionalInfoOrderingInstructions) false false true)
     </div>
 #end
 

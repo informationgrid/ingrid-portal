@@ -1,5 +1,5 @@
 ## Lizenz
 #if($useConstraints && $useConstraints.size() > 0)
     #set($tmp2 = [$useConstraints.get(0)])
-    #renderTextList($MESSAGES.getString("object_access.license") $tmp2)
+    #renderTextListSpaceListConvertUrl($MESSAGES.getString("object_access.license") $tmp2 "" true true)
 #end

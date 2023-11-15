@@ -57,8 +57,8 @@
 #set($add = $tmpBooleanSymbols.add($tmpBooleanSymbol))
 
 ## Beschreibung
-#set($getAlternateTitle = $TOOL.getAlternateTitle())
-#set($getDescription = $TOOL.valueHTMLEscape($TOOL.getDescription()))
+#set($getAlternateTitle = $stringTool.convertUrlInText($TOOL.getAlternateTitle()))
+#set($getDescription = $TOOL.valueHTMLEscape($stringTool.convertUrlInText($TOOL.getDescription())))
 
 ## Zeitbezug
 #set($isTimeInDescription = true)

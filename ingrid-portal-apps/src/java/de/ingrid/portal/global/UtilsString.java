@@ -27,12 +27,19 @@ import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.validator.UrlValidator;
 
 public class UtilsString {
 
     private static final Logger log = LoggerFactory.getLogger(UtilsString.class);
+
+    private static final String regexUrlFinder = "([^'\"]|^)((((ftp|https?):\\/\\/)|(w{3}\\.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)";
 
     // see http://hotwired.lycos.com/webmonkey/reference/special_characters/
     static Object[][] entities = {
@@ -533,5 +540,66 @@ public class UtilsString {
 
     public static int parseInt(String string) {
         return Integer.parseInt(string);
+    }
+    
+    public static String convertUrlInText(String text) {
+        Pattern pattern = Pattern.compile(regexUrlFinder);
+        Matcher m = pattern.matcher(text);
+        while (m.find()) {
+            String s = null;
+            boolean isValidUrl = false;
+            for (int i = 0; i < m.groupCount(); i++) {
+                String tmpString = m.group(i);
+                UrlValidator validator = new UrlValidator();
+                if(validator.isValid(tmpString)) {
+                    s = tmpString;
+                    isValidUrl = true;
+                    break;
+                }
+            }
+            if(isValidUrl) {
+                if(s != null) {
+                    while(s.endsWith(".")) {
+                        s = s.substring(0, s.length() - 1);
+                    }
+                    text = text.replaceAll(s, "<a class=\"intext\" href=\"" + s + "\" target=\"_blank\" title=\"" + s + "\">" + s + "</a>" );
+                }
+            }
+        }
+        return text;
+    }
+    
+    public static Boolean hasUrlInText(String text) {
+        Pattern pattern = Pattern.compile(regexUrlFinder);
+        Matcher m = pattern.matcher(text);
+        while (m.find()) {
+            for (int i = 0; i < m.groupCount(); i++) {
+                String tmpString = m.group(i);
+                UrlValidator validator = new UrlValidator();
+                if(validator.isValid(tmpString)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public static ArrayList<String> getUrlInText(String text) {
+        ArrayList<String> list = new ArrayList<String>();
+        Pattern pattern = Pattern.compile(regexUrlFinder);
+        Matcher m = pattern.matcher(text);
+        while (m.find()) {
+            String s = null;
+            for (int i = 0; i < m.groupCount(); i++) {
+                String tmpString = m.group(i);
+                UrlValidator validator = new UrlValidator();
+                if(validator.isValid(tmpString)) {
+                    s = tmpString;
+                    list.add(s);
+                    break;
+                }
+            }
+        }
+        return list;
     }
 }
