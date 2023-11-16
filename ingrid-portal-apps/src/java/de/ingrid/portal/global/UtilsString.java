@@ -543,38 +543,49 @@ public class UtilsString {
     }
     
     public static String convertUrlInText(String text) {
-        Pattern pattern = Pattern.compile("([^'\">])((((ftp|https?):\\/\\/)|(w{3}\\.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)");
+        Pattern pattern = Pattern.compile(regexUrlFinder);
         Matcher m = pattern.matcher(text);
         ArrayList<String> findUrl = new ArrayList<String>();
+        int last = 0;
+        StringBuilder sb = new StringBuilder();
         while (m.find()) {
             String s = null;
-            boolean isValidUrl = false;
             for (int i = 0; i < m.groupCount(); i++) {
                 s = m.group(i);
+                int startIndex = m.start();
+                int endIndex = m.end();
                 String validateString = s;
                 UrlValidator validator = new UrlValidator();
-                if(validateString.startsWith("www.")) {
-                    validateString = "https://" + validateString;
-                }
-                if(validator.isValid(validateString)) {
-                    if(findUrl.indexOf(s) == -1) {
-                        findUrl.add(s);
-                        isValidUrl = true;
+                if(validateString != null) {
+                    if(validateString.startsWith("www.")) {
+                        validateString = "https://" + validateString;
                     }
-                    break;
+                    if(validator.isValid(validateString)) {
+                        while(s.endsWith(".")) {
+                            s = s.substring(0, s.length() - 1);
+                        }
+                        findUrl.add(s);
+                        sb.append(text.substring(last, startIndex));
+                        if(text.charAt(startIndex) == ' ') {
+                            sb.append(" ");
+                        }
+                        sb.append("##" + s + "##");
+                        last = endIndex;
+                        break;
+                    }
                 }
             }
-            if(isValidUrl) {
-                if(s != null) {
-                    while(s.endsWith(".")) {
-                        s = s.substring(0, s.length() - 1);
-                    }
-                    String validateUrl = s;
-                    if(validateUrl.startsWith("www.")) {
-                        validateUrl = "https://" + validateUrl;
-                    }
-                    text = text.replace(s, "<a class=\"intext\" href=\"" + validateUrl + "\" target=\"_blank\" title=\"" + s + "\">" + s + "</a>" );
+        }
+        sb.append(text.substring(last));
+        text = sb.toString();
+
+        if(!findUrl.isEmpty()) {
+            for (String url : findUrl) {
+                String validateUrl = url;
+                if(validateUrl.startsWith("www.")) {
+                    validateUrl = "https://" + validateUrl;
                 }
+                text = text.replaceAll("##" + url + "##", "<a class=\"intext\" href=\"" + validateUrl + "\" target=\"_blank\" title=\"" + url + "\">" + url + "</a>" );
             }
         }
         return text;
