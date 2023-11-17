@@ -34,7 +34,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.validator.UrlValidator;
+import org.apache.commons.validator.routines.UrlValidator;
 
 public class UtilsString {
 
@@ -562,42 +562,30 @@ public class UtilsString {
                         validateString = "https://" + validateString;
                     }
                     if(validator.isValid(validateString)) {
-                        if(s.indexOf("?") == -1 ||
-                            (s.indexOf("?") > -1 && StringUtils.countMatches(validateString, "(") == StringUtils.countMatches(validateString, ")"))
-                        ){
-                            String[] invalideEnds = {"\n", "\t", "\r"};
-                            boolean hasInvalidEnd = false;
-                            for (String invalideEnd : invalideEnds) {
-                                if(validateString.endsWith(invalideEnd)) {
-                                    hasInvalidEnd = true;
-                                    break;
-                                }
+                        if(StringUtils.countMatches(validateString, "(") == StringUtils.countMatches(validateString, ")")){
+                            StringBuilder sbAddTo = new StringBuilder();
+                            while(s.endsWith(".") || s.endsWith(",") || s.endsWith("!")) {
+                                if(s.endsWith("."))
+                                    sbAddTo.append(".");
+                                if(s.endsWith(","))
+                                    sbAddTo.append(",");
+                                if(s.endsWith("!"))
+                                    sbAddTo.append("!");
+                                s = s.substring(0, s.length() - 1);
                             }
-                            if(!hasInvalidEnd) {
-                                StringBuilder sbAddTo = new StringBuilder();
-                                while(s.endsWith(".") || s.endsWith(",") || s.endsWith("!")) {
-                                    if(s.endsWith("."))
-                                        sbAddTo.append(".");
-                                    if(s.endsWith(","))
-                                        sbAddTo.append(",");
-                                    if(s.endsWith("!"))
-                                        sbAddTo.append("!");
-                                    s = s.substring(0, s.length() - 1);
-                                }
-                                String tmpText = text.substring(last, startIndex);
-                                if(!tmpText.trim().endsWith("=\"") &&
-                                    !tmpText.trim().endsWith("='") &&
-                                    !tmpText.trim().endsWith(">")) {
-                                    sb.append(tmpText);
-                                    sb.append("##" + s + "##" + sbAddTo.toString());
-                                    findUrl.add(s);
-                                } else {
-                                    sb.append(tmpText);
-                                    sb.append(s);
-                                }
-                                last = endIndex;
-                                break;
+                            String tmpText = text.substring(last, startIndex);
+                            if(!tmpText.trim().endsWith("=\"") &&
+                                !tmpText.trim().endsWith("='") &&
+                                !tmpText.trim().endsWith(">")) {
+                                sb.append(tmpText);
+                                sb.append("##" + s + "##" + sbAddTo.toString());
+                                findUrl.add(s);
+                            } else {
+                                sb.append(tmpText);
+                                sb.append(s);
                             }
+                            last = endIndex;
+                            break;
                         }
                     }
                 }
@@ -616,39 +604,5 @@ public class UtilsString {
             }
         }
         return text;
-    }
-    
-    public static Boolean hasUrlInText(String text) {
-        Pattern pattern = Pattern.compile(regexUrlFinder);
-        Matcher m = pattern.matcher(text);
-        while (m.find()) {
-            for (int i = 0; i < m.groupCount(); i++) {
-                String tmpString = m.group(i);
-                UrlValidator validator = new UrlValidator();
-                if(validator.isValid(tmpString)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
-    public static ArrayList<String> getUrlInText(String text) {
-        ArrayList<String> list = new ArrayList<String>();
-        Pattern pattern = Pattern.compile("([^'\">]|^)((((ftp|https?):\\/\\/)|(w{3}\\.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)");
-        Matcher m = pattern.matcher(text);
-        while (m.find()) {
-            String s = null;
-            for (int i = 0; i < m.groupCount(); i++) {
-                String tmpString = m.group(i);
-                UrlValidator validator = new UrlValidator();
-                if(validator.isValid(tmpString)) {
-                    s = tmpString;
-                    list.add(s);
-                    break;
-                }
-            }
-        }
-        return list;
     }
 }
