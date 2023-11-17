@@ -565,8 +565,23 @@ public class UtilsString {
                         if(s.indexOf("?") == -1 ||
                             (s.indexOf("?") > -1 && StringUtils.countMatches(validateString, "(") == StringUtils.countMatches(validateString, ")"))
                         ){
-                            if(!validateString.endsWith("\n") && !validateString.endsWith("\t") && !validateString.endsWith("\r")) {
-                                while(s.endsWith(".")) {
+                            String[] invalideEnds = {"\n", "\t", "\r"};
+                            boolean hasInvalidEnd = false;
+                            for (String invalideEnd : invalideEnds) {
+                                if(validateString.endsWith(invalideEnd)) {
+                                    hasInvalidEnd = true;
+                                    break;
+                                }
+                            }
+                            if(!hasInvalidEnd) {
+                                StringBuilder sbAddTo = new StringBuilder();
+                                while(s.endsWith(".") || s.endsWith(",") || s.endsWith("!")) {
+                                    if(s.endsWith("."))
+                                        sbAddTo.append(".");
+                                    if(s.endsWith(","))
+                                        sbAddTo.append(",");
+                                    if(s.endsWith("!"))
+                                        sbAddTo.append("!");
                                     s = s.substring(0, s.length() - 1);
                                 }
                                 String tmpText = text.substring(last, startIndex);
@@ -574,7 +589,7 @@ public class UtilsString {
                                     !tmpText.trim().endsWith("='") &&
                                     !tmpText.trim().endsWith(">")) {
                                     sb.append(tmpText);
-                                    sb.append("##" + s + "##");
+                                    sb.append("##" + s + "##" + sbAddTo.toString());
                                     findUrl.add(s);
                                 } else {
                                     sb.append(tmpText);
