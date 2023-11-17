@@ -2828,12 +2828,11 @@ meter[value="5"]::-moz-meter-bar { background: green; }
   position: relative;
 }
 
-.image div.description small.description, .no-image div.description small.description {
+.image div.description small.description, .no-image div.description small.description, div.download small.description {
   display: block;
   overflow: hidden;
 }
 .image div.description small.description {
-  max-height: 145px;
   text-overflow: ellipsis;
   display: -webkit-box !important;
   -webkit-box-orient: vertical;
@@ -2841,7 +2840,13 @@ meter[value="5"]::-moz-meter-bar { background: green; }
 }
 
 .no-image div.description small.description {
-  max-height: 70px;
+  text-overflow: ellipsis;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+div.download small.description {
   text-overflow: ellipsis;
   display: -webkit-box !important;
   -webkit-box-orient: vertical;
