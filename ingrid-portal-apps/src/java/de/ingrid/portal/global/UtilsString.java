@@ -33,13 +33,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 
 public class UtilsString {
 
     private static final Logger log = LoggerFactory.getLogger(UtilsString.class);
 
-    private static final String regexUrlFinder = "([^'\">]|^)((((ftp|https?):\\/\\/)|(w{3}\\.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)";
+    private static final String regexUrlFinder = "((((ftp|https?):\\/\\/)|(w{3}.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)[^ ,.]";
 
     // see http://hotwired.lycos.com/webmonkey/reference/special_characters/
     static Object[][] entities = {
@@ -552,8 +553,8 @@ public class UtilsString {
             String s = null;
             for (int i = 0; i < m.groupCount(); i++) {
                 s = m.group(i);
-                int startIndex = m.start();
-                int endIndex = m.end();
+                int startIndex = m.start(i);
+                int endIndex = m.end(i);
                 String validateString = s;
                 UrlValidator validator = new UrlValidator();
                 if(validateString != null) {
@@ -561,17 +562,28 @@ public class UtilsString {
                         validateString = "https://" + validateString;
                     }
                     if(validator.isValid(validateString)) {
-                        while(s.endsWith(".")) {
-                            s = s.substring(0, s.length() - 1);
+                        if(s.indexOf("?") == -1 ||
+                            (s.indexOf("?") > -1 && StringUtils.countMatches(validateString, "(") == StringUtils.countMatches(validateString, ")"))
+                        ){
+                            if(!validateString.endsWith("\n") && !validateString.endsWith("\t") && !validateString.endsWith("\r")) {
+                                while(s.endsWith(".")) {
+                                    s = s.substring(0, s.length() - 1);
+                                }
+                                String tmpText = text.substring(last, startIndex);
+                                if(!tmpText.trim().endsWith("=\"") &&
+                                    !tmpText.trim().endsWith("='") &&
+                                    !tmpText.trim().endsWith(">")) {
+                                    sb.append(tmpText);
+                                    sb.append("##" + s + "##");
+                                    findUrl.add(s);
+                                } else {
+                                    sb.append(tmpText);
+                                    sb.append(s);
+                                }
+                                last = endIndex;
+                                break;
+                            }
                         }
-                        findUrl.add(s);
-                        sb.append(text.substring(last, startIndex));
-                        if(text.charAt(startIndex) == ' ') {
-                            sb.append(" ");
-                        }
-                        sb.append("##" + s + "##");
-                        last = endIndex;
-                        break;
                     }
                 }
             }
@@ -585,7 +597,7 @@ public class UtilsString {
                 if(validateUrl.startsWith("www.")) {
                     validateUrl = "https://" + validateUrl;
                 }
-                text = text.replaceAll("##" + url + "##", "<a class=\"intext\" href=\"" + validateUrl + "\" target=\"_blank\" title=\"" + url + "\">" + url + "</a>" );
+                text = text.replace("##" + url + "##", "<a class=\"intext\" href=\"" + validateUrl + "\" target=\"_blank\" title=\"" + url + "\">" + url + "</a>" );
             }
         }
         return text;
