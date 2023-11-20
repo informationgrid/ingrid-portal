@@ -202,7 +202,6 @@ body {
   font-family: 'icomoon-krzn';
 }
 .ic-ic-fax::before {
-  content: "\e942";
   color: #6FC528;
 }
 .ic-ic-plus:before {
