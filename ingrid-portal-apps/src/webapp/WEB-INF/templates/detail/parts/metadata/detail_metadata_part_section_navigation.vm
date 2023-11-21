@@ -98,6 +98,11 @@
                             </a>
                             <div class="accordion-content" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail3}-accordion-label" id="${hashDetail3}-accordion">
                                 <div class="boxes">
+                                    #if($getAccessUrl && $getAccessUrl.size() > 0)
+                                        #set($tmpHash = "${hashDetail3}_access_url")
+                                        #set($tmpTitle = $MESSAGES.getString("access_url"))
+                                        #renderSubNavigation($tmpTitle $tmpHash)
+                                    #end
                                     #if($getDownloads && $getDownloads.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_downloads")
                                         #set($tmpTitle = $MESSAGES.getString("downloads"))

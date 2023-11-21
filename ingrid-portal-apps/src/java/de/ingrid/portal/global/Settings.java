@@ -237,7 +237,7 @@ public class Settings {
     // NOTICE: Define here only special stuff, WHEN YOU CAN'T USE RESULT_KEY_... from above
     // ===========================================
 
-    public static final String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
+    public static final String HIT_KEY_WMS_URL = "t011_obj_serv_op_connpoint.connect_point";
     
     // needed to determine the display of the "show in map" link 
     public static final String HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT = "t011_obj_serv.has_access_constraint";
