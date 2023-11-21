@@ -1,4 +1,4 @@
-#if(($referenceAllUUID && $referenceAllUUID.size() > 0) || $urlReferenceLink.size() > 0 || $coords.size() > 0)
+#if(($referenceAllUUID && $referenceAllUUID.size() > 0) || $urlReferenceLink.size() > 0 || $coords.size() > 0 || $accessUrl)
     <a id="${moreId}" class="js-expander #if($isMoreId)is-hidden#end" title="$MESSAGES.getString('searchResult.info.more')" href="#" #if($coords.size() > 0)onclick="resizeMap(map${moreId})"#end>
         <span class="icon  ic-ic-plus"></span>
         <span class="text">$MESSAGES.getString('searchResult.info.more')</span>
@@ -10,6 +10,22 @@
     <div class="js-expander-content ${moreId} #if(!$isMoreId)is-hidden#end" >
         <div class="row">
             <div class="xsmall-24 small-24 medium-14 large-14 xlarge-14 columns">
+## URL des Zugangs 
+                #if($accessUrl && $accessName)
+                    <div class="sub-section">
+                        #renderFactTitle("$MESSAGES.getString('searchResult.info.access_url')")
+                        <div class="document-list">
+                            <div class="list-item">
+                                <div>
+                                    <a href="$accessUrl" class="icon external-link" title="$accessUrl" target="_blank" rel="noopener noreferrer">
+                                        <span class="ic-ic-external"></span>
+                                        <span class="text">$accessName</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                #end
                 #if($referenceAllUUID || $urlReferenceLink)
                     #if($linksUrlRefDownload.size() > 0 || $linksRef.size() > 0)
                         #set($countRefs = $linksUrlRefDownload.size() + $linksRef.size())

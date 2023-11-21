@@ -1293,6 +1293,91 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return element;
     }
 
+    public List<HashMap<String, Object>> getConnectionPointList(String xpathExpression) {
+        ArrayList<HashMap<String, Object>> linkList = new ArrayList<>();
+        String serviceType = getValueFromXPath("./gmd:identificationInfo/*/srv:serviceType");
+        if(serviceType != null){
+            serviceType = serviceType.trim();
+        }
+        String serviceTypeVersion = null;
+        if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+
+            for (int i=0; i<nodeList.getLength();i++){
+                if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
+                    Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
+                    String url = xPathUtils.getString(node, ".").trim();
+                    StringBuilder urlValue = new StringBuilder(url);
+                    // do not display empty URLs
+                    if (urlValue.length() == 0) {
+                        continue;
+                    }
+
+                    // do not display empty operations
+                    String operationName = xPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim();
+                    if (operationName == null || operationName.length() == 0) {
+                        continue;
+                    }
+
+                    if (operationName.equals("GetCapabilities")) {
+                        // add missing parameters
+                        if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                            if (url.indexOf("?") != -1) {
+                                // if url or parameters already contains a ? or & at the end then do not add another one!
+                                if (!(url.lastIndexOf("?") == url.length() - 1 || url.length() > 0)
+                                        && !(url.lastIndexOf("&") == url.length() - 1)) {
+                                    urlValue.append("&");
+                                }
+                                urlValue.append("REQUEST=GetCapabilities");
+                            }
+                        }
+                        if (url.toLowerCase().indexOf("service=") == -1) {
+                            if (url.indexOf("?") != -1) {
+                                NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
+                                for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
+                                    Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
+                                    String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
+                                    if (!tmpServiceTypeVersion.isEmpty()) {
+                                        String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
+                                        if (tmpValue != null) {
+                                            urlValue.append("&SERVICE=" + tmpValue);
+                                            serviceTypeVersion = tmpServiceTypeVersion;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (urlValue.toString().toLowerCase().indexOf("service=") == -1) {
+                            if (url.indexOf("?") != -1) {
+                                NodeList nodeListParameters = xPathUtils.getNodeList(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/gco:CharacterString");
+                                for (int j=0; j<nodeListParameters.getLength();j++){
+                                    Node nodeParameter = nodeListParameters.item(j);
+                                    String parameter = xPathUtils.getString(nodeParameter, ".").trim();
+                                    if (!parameter.isEmpty()) {
+                                        if (parameter.toLowerCase().indexOf("service=") > -1) {
+                                            urlValue.append("&" + parameter);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        HashMap elementCapabilitiesLink = new HashMap();
+                        elementCapabilitiesLink.put("type", "linkLine");
+                        elementCapabilitiesLink.put("hasLinkIcon", true);
+                        elementCapabilitiesLink.put("isExtern", true);
+                        elementCapabilitiesLink.put("title", urlValue);
+                        elementCapabilitiesLink.put("href", urlValue);
+                        linkList.add(elementCapabilitiesLink);
+                        break;
+                    }
+                }
+            }
+        }
+        return linkList;
+    }
     public Map<String, Object> getAreaGeothesaurus(String xpathExpression){
         HashMap element = new HashMap();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {

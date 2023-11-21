@@ -34,6 +34,17 @@
                 #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
             #end
         #end
+    ## URL des Zugangs
+        #if($getAccessUrl && $getAccessUrl.size() > 0)
+        <div class="sub-section sub-section-unlined">
+            #set($tmpTitle = $MESSAGES.getString("access_url"))
+            #set($tmpCount = $getAccessUrl.size())
+            #if($tmpCount)
+                ##set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            #renderLinkListImageLimit($tmpTitle $getAccessUrl false false 2 "")
+        </div>
+        #end
     ## Downloads
         #if($getDownloads && $getDownloads.size() > 0)
         <div class="sub-section sub-section-unlined">

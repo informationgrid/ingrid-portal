@@ -113,6 +113,8 @@
 ])
 
 ## Verweise und Downloads
+#### URL des Zugangs
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_access_url.vm")
 #### Downloads
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_downloads.vm")
 #### Links/Querweise
@@ -127,6 +129,7 @@
 #set($xPathAdditionalInfoParentIdentifier = "./gmd:parentIdentifier")
 
 #set($xPathListReferences = [
+    $xPathRefAccessUrl,
     $xPathRefDownloads,
     $xPathRefLinks,
     $xPathRefOthers,
@@ -135,6 +138,7 @@
     $xPathAdditionalInfoParentIdentifier
 ])
 
+#set($getAccessUrl = $TOOL.getConnectionPointList($xPathRefAccessUrl))
 #set($getDownloads = $TOOL.getExternLinks($xPathRefDownloads, true))
 #set($getLinks = $TOOL.getReference($xPathRefLinks, true))
 #set($getOtherLinks = $TOOL.getExternLinks($xPathRefOthers))

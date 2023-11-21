@@ -1726,6 +1726,60 @@ public class UtilsSearch {
         return "";
     }
 
+    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
+        StringBuilder urlValue = new StringBuilder(url);
+        String service = null;
+
+        if (serviceTypeVersion != null && !serviceTypeVersion.isEmpty()) {
+            String tmpService = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
+            if (tmpService != null) {
+                service = tmpService;
+            }
+        }
+        // add missing parameters
+        if (url.indexOf("?") != -1) {
+            if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                // if url or parameters already contains a ? or & at the end then do not add another one!
+                if (!(url.lastIndexOf("?") == url.length() - 1 || url.length() > 0)
+                        && !(url.lastIndexOf("&") == url.length() - 1)) {
+                    urlValue.append("&");
+                }
+                urlValue.append("REQUEST=GetCapabilities");
+            }
+            if(service == null) {
+                if (serviceType != null && !serviceType.isEmpty()) {
+                    IngridSysCodeList codelist = new IngridSysCodeList(new Locale("DE"));
+                    String codelistValue = codelist.getNameByCodeListValue("5100", serviceType.trim());
+                    if(codelistValue.isEmpty()) {
+                        service = serviceType.trim();
+                    }
+                }
+            }
+        } else {
+            service = "WMTS";
+        }
+        if(service != null) {
+            if (url.indexOf("?") != -1) {
+                if (url.toLowerCase().indexOf("service=") == -1) {
+                    urlValue.append("&SERVICE=" + service);
+                }
+            }
+            String cap = urlValue.toString().trim();
+            return cap;
+        } else if((service == null && !urlValue.toString().isEmpty()) 
+                && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view")))) {
+            String defaultService = "WMS";
+            if (url.indexOf("?") != -1) {
+                if (url.toLowerCase().indexOf("service=") == -1) {
+                    urlValue.append("&SERVICE=" + defaultService);
+                }
+            }
+            String cap = urlValue.toString().trim();
+            return cap;
+        }
+        return url;
+    }
+
     public static String addMapclientCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
         return addMapclientCapabilitiesInformation(url, serviceTypeVersion, serviceType, null);
     }
