@@ -129,7 +129,6 @@
 #set($xPathAdditionalInfoParentIdentifier = "./gmd:parentIdentifier")
 
 #set($xPathListReferences = [
-    $xPathRefAccessUrl,
     $xPathRefDownloads,
     $xPathRefLinks,
     $xPathRefOthers,
@@ -138,7 +137,16 @@
     $xPathAdditionalInfoParentIdentifier
 ])
 
-#set($getAccessUrl = $TOOL.getConnectionPointList($xPathRefAccessUrl))
+## URL des Zugangs
+#set($getAccessUrl = [])
+#if($type == 3)
+    #set($getAccessUrl = $TOOL.getConnectionPointList($xPathRefAccessUrl))
+#elseif($type == 1)
+    #set($getAccessUrl = [])
+#elseif($type == 6)
+    #set($getAccessUrl = $TOOL.getExternLinks($xPathRefAccessUrl))
+#end
+
 #set($getDownloads = $TOOL.getExternLinks($xPathRefDownloads, true))
 #set($getLinks = $TOOL.getReference($xPathRefLinks, true))
 #set($getOtherLinks = $TOOL.getExternLinks($xPathRefOthers))
