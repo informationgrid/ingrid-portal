@@ -121,17 +121,17 @@
 #end
 
 ## URL des Zugangs 
-#set($accessUrl = false)
-#set($accessName = false)
+#set($accessUrl = [])
+#set($accessName = [])
 #if($rs.udk_class == 3)
-    #set($accessUrl = $rs.capabilities_url)
-    #set($accessName = $rs.capabilities_url)
+    #set($add = $accessUrl.add($rs.capabilities_url))
+    #set($add = $accessName.add($rs.capabilities_url))
 #elseif($rs.udk_class == 6)
     #if($rs.getHitDetail().get("t011_obj_serv_url.url"))
-        #set($accessUrl = $rs.getHitDetail().get("t011_obj_serv_url.url").get(0))
+        #set($accessUrl = $rs.getHitDetail().get("t011_obj_serv_url.url"))
     #end
     #if($rs.getHitDetail().get("t011_obj_serv_url.name"))
-        #set($accessName = $rs.getHitDetail().get("t011_obj_serv_url.name").get(0))
+        #set($accessName = $rs.getHitDetail().get("t011_obj_serv_url.name"))
     #end
 #end
 
