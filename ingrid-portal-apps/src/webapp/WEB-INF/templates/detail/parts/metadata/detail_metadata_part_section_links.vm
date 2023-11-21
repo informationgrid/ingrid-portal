@@ -11,7 +11,7 @@
             #set($tmpTitle = $MESSAGES.getString("access_url"))
             #set($tmpCount = $getAccessUrl.size())
             #if($tmpCount)
-                ##set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
             <a class="anchor" id="${hashDetail3}_access_url"></a>
             #renderLinkListImageLimit($tmpTitle $getAccessUrl false false $getAccessUrl.size() "access_url_more" "h4")

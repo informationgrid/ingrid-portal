@@ -139,10 +139,10 @@
 
 ## URL des Zugangs
 #set($getAccessUrl = [])
-#if($type == 3)
-    #set($getAccessUrl = $TOOL.getConnectionPointList($xPathRefAccessUrl))
-#elseif($type == 1)
+#if($type == 1)
     #set($getAccessUrl = [])
+#elseif($type == 3)
+    #set($getAccessUrl = $TOOL.getConnectionPointList($xPathRefAccessUrl))
 #elseif($type == 6)
     #set($getAccessUrl = $TOOL.getExternLinks($xPathRefAccessUrl))
 #end
