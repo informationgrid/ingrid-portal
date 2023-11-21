@@ -1,10 +1,10 @@
 #### URL des Zugangs
-#if($type == 3)
-    #set($xPathRefAccessUrl = "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint")
-##elseif($type == 1)
+#set($xPathRefAccessUrl = "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint")
+
+#if($type == 1)
     ##set($xPathRefAccessUrl = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/*/gmd:URL[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'getcapabilities')]]")
+#elseif($type == 3)
+    #set($xPathRefAccessUrl = "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint")
 #elseif($type == 6)
     #set($xPathRefAccessUrl = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='5066']]")
-#else
-    #set($xPathRefAccessUrl = "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint")
 #end
