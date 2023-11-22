@@ -208,6 +208,8 @@
 #set($xPathInfo1MD_VectorSpatialRepresentationGeometricObjectsCount = "./gmd:geometricObjects/gmd:MD_GeometricObjects/gmd:geometricObjectCount")
 #### Erstellungsmaßstab
 #set($xPathInfo1MDResolution = "./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution")
+#### Systemumgebung
+#set($xPathInfo1EnvironmentDescription = "./gmd:identificationInfo/*/gmd:environmentDescription/gco:CharacterString")
 #### Symbolkatalog
 #set($xPathInfo1PortrayalCatalogueInfo = "./gmd:portrayalCatalogueInfo")
 #### Schlüsselkatalog: im Datensatz vorhanden
@@ -231,6 +233,7 @@
     $xPathInfo1MDSpatialRepresentationTypeCode,
     $xPathInfo1MD_VectorSpatialRepresentationGeometricObjects,
     $xPathInfo1MDResolution,
+    $xPathInfo1EnvironmentDescription,
     $xPathInfo1PortrayalCatalogueInfo,
     $xPathInfo1MDFeatureCatalogueDescriptionIncludedWithDataset,
     $xPathInfo1MDFeatureCatalogueDescriptionFeatureCatalogueCitation,
