@@ -223,9 +223,9 @@
 
       <!-- Use jetspeed.properties from jetspeed resources. Taken from jetspeed jetexpress demo. -->
       <plugin>
-        <groupId>org.apache.portals.jetspeed-2</groupId>
+        <groupId>nl.praegus</groupId>
         <artifactId>jetspeed-unpack-maven-plugin</artifactId>
-        <version>${org.apache.portals.jetspeed.version}</version>
+        <version>2.3.2</version>
         <executions>
           <execution>
             <id>unpack-jetspeed-properties</id>
