@@ -275,8 +275,17 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
             }
         } else {
-            // show preview image (with map link information if provided)
-            map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
+            String xpathMapUrl = "./idf:mapUrl";
+            if(xPathUtils.nodeExists(rootNode, xpathMapUrl)) {
+                String mapUrlNodeText = xPathUtils.getNode(rootNode, xpathMapUrl).getTextContent();
+                if(mapUrlNodeText != null && !mapUrlNodeText.isEmpty()) {
+                    map = addBigMapLink(rootNode, "", false, partner, mapUrlNodeText);
+                }
+            }
+            if(map.isEmpty()) {
+                // show preview image (with map link information if provided)
+                map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
+            }
         }
 
         return map;
@@ -1816,9 +1825,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         ArrayList<HashMap<String, String>> imageUrls = getPreviewImageUrl(null);
         if (imageUrls.isEmpty()) {
             HashMap<String, Object> elementMapLink = new HashMap<>();
-            elementMapLink.put("type", "linkLine");
-            elementMapLink.put("isMapLink", true);
-            elementMapLink.put("isExtern", false);
 
             if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
                 // do not render "show in map" link if the map has access constraints (no href added).
@@ -1839,17 +1845,21 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
                 mapImage += ".png";
                 elementMapLink.put("src", "/ingrid-portal-apps/images/maps/" + mapImage);
-                list.add(elementMapLink);
+                
             }
             if(extMapUrl != null) {
+                elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
                 elementMapLink.put("extMapUrl", extMapUrl);
+            }
+            if(!elementMapLink.isEmpty()) {
+                elementMapLink.put("type", "linkLine");
+                elementMapLink.put("isMapLink", true);
+                elementMapLink.put("isExtern", false);
+                list.add(elementMapLink);
             }
         } else {
             for (HashMap<String, String> imageUrl : imageUrls) {
                 HashMap<String, Object> elementMapLink = new HashMap<>();
-                elementMapLink.put("type", "linkLine");
-                elementMapLink.put("isMapLink", true);
-                elementMapLink.put("isExtern", false);
 
                 if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
                     // do not render "show in map" link if the map has access constraints (no href added).
@@ -1868,9 +1878,15 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
                 elementMapLink.put("description", imageUrl.get("description"));
                 if(extMapUrl != null) {
+                    elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
                     elementMapLink.put("extMapUrl", extMapUrl);
                 }
-                list.add(elementMapLink);
+                if(!elementMapLink.isEmpty()) {
+                    elementMapLink.put("type", "linkLine");
+                    elementMapLink.put("isMapLink", true);
+                    elementMapLink.put("isExtern", false);
+                    list.add(elementMapLink);
+                }
             }
         }
         if(!list.isEmpty()) {
