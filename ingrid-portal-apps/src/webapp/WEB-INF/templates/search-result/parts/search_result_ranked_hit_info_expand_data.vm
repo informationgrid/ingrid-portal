@@ -124,8 +124,10 @@
 #set($accessUrl = [])
 #set($accessName = [])
 #if($rs.udk_class == 3)
-    #set($add = $accessUrl.add($rs.capabilities_url))
-    #set($add = $accessName.add($rs.capabilities_url))
+    #if($rs.capabilities_url)
+        #set($add = $accessUrl.add($rs.capabilities_url))
+        #set($add = $accessName.add($rs.capabilities_url))
+    #end
 #elseif($rs.udk_class == 6)
     #if($rs.getHitDetail().get("t011_obj_serv_url.url"))
         #set($accessUrl = $rs.getHitDetail().get("t011_obj_serv_url.url"))
@@ -134,7 +136,6 @@
         #set($accessName = $rs.getHitDetail().get("t011_obj_serv_url.name"))
     #end
 #end
-
 
 ## URLRefering details
 #set($urlReferenceLink = [])
