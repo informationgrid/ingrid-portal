@@ -1837,8 +1837,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
                 elementMapLink.put("href", href);
             }
-
-            if(elementCapabilities.get("href") != null || elementMapLink.get("href") != null) {
+            if(extMapUrl != null) {
+                elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                elementMapLink.put("extMapUrl", extMapUrl);
+            }
+            if(elementCapabilities.get("href") != null || elementMapLink.get("href") != null || elementCapabilities.get("extMapUrl") != null) {
                 String mapImage = "image_map";
                 if(partner != null) {
                     mapImage += "_" + partner;
@@ -1846,10 +1849,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 mapImage += ".png";
                 elementMapLink.put("src", "/ingrid-portal-apps/images/maps/" + mapImage);
                 
-            }
-            if(extMapUrl != null) {
-                elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
-                elementMapLink.put("extMapUrl", extMapUrl);
             }
             if(!elementMapLink.isEmpty()) {
                 elementMapLink.put("type", "linkLine");
