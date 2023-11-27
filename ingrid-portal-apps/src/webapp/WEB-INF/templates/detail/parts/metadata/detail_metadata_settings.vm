@@ -137,22 +137,6 @@
     $xPathAdditionalInfoParentIdentifier
 ])
 
-## URL des Zugangs
-#set($getAccessUrl = [])
-#if($type == 1)
-    #set($getAccessUrl = [])
-#elseif($type == 3)
-    #set($getAccessUrl = $TOOL.getConnectionPointList($xPathRefAccessUrl))
-    #if($getAccessUrl.isEmpty())
-        #set($getAccessUrl = $TOOL.getExternLinks($xPathRefAccessUrlAltTransOp))
-    #end
-    #if($getAccessUrl.isEmpty())
-        #set($getAccessUrl = $TOOL.getConnectionPointList($xPathRefAccessUrlAltOp))
-    #end
-#elseif($type == 6)
-    #set($getAccessUrl = $TOOL.getExternLinks($xPathRefAccessUrl))
-#end
-
 #set($getDownloads = $TOOL.getExternLinks($xPathRefDownloads, true))
 #set($getLinks = $TOOL.getReference($xPathRefLinks, true))
 #set($getOtherLinks = $TOOL.getExternLinks($xPathRefOthers))

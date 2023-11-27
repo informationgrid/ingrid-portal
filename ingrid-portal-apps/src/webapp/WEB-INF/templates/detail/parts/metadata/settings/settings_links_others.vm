@@ -1,10 +1,11 @@
 #### Weitere Verweise
-#set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]")
-
+#set($setExcludeFirstElement = "")
+#if($hasUseAltTransOp)
+#set($setExcludeFirstElement = "[position()>1]")
+#end
+#set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]$setExcludeFirstElement")
 #if($type == 1)
-    ##set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']) and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/*/gmd:URL[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'getcapabilities')])]")
-#elseif($type == 3)
-    #set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]")
+    ##set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']) and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/*/gmd:URL[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'getcapabilities')])]$setExcludeFirstElement")
 #elseif($type == 6)
-    #set($xPathRefOthers =  "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']) and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='5066'])]")
+    #set($xPathRefOthers =  "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']) and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='5066'])]$setExcludeFirstElement")
 #end
