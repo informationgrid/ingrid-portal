@@ -327,7 +327,7 @@ public class DetailPartPreparer {
                 // <<< End of temporary solution <<<
 
                 if (constraints == null || constraints.trim().isEmpty()) {
-                    if (!result.contains(restrictionCode )) {
+                    if (restrictionCode != null && !result.contains(restrictionCode )) {
                         result.add(restrictionCode);
                     }
                     continue;

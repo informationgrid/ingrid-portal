@@ -1219,85 +1219,85 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
 
                     if (operationName.equals("GetCapabilities")) {
-                        // add missing parameters
-                        if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
-                            if (url.indexOf("?") != -1) {
-                                // if url or parameters already contains a ? or & at the end then do not add another one!
-                                if (!(url.lastIndexOf("?") == url.length() - 1 || url.length() > 0)
-                                        && !(url.lastIndexOf("&") == url.length() - 1)) {
-                                    urlValue.append("&");
-                                }
-                                urlValue.append("REQUEST=GetCapabilities");
+                    // add missing parameters
+                    if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                        if (url.indexOf("?") != -1) {
+                            // if url or parameters already contains a ? or & at the end then do not add another one!
+                            if (!(url.lastIndexOf("?") == url.length() - 1 || url.length() > 0)
+                                    && !(url.lastIndexOf("&") == url.length() - 1)) {
+                                urlValue.append("&");
                             }
+                            urlValue.append("REQUEST=GetCapabilities");
                         }
-                        if (url.toLowerCase().indexOf("service=") == -1) {
-                            if (url.indexOf("?") != -1) {
-                                NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
-                                for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
-                                    Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
-                                    String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
-                                    if (!tmpServiceTypeVersion.isEmpty()) {
-                                        String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
-                                        if (tmpValue != null) {
-                                            urlValue.append("&SERVICE=" + tmpValue);
-                                            serviceTypeVersion = tmpServiceTypeVersion;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (urlValue.toString().toLowerCase().indexOf("service=") == -1) {
-                            if (url.indexOf("?") != -1) {
-                                NodeList nodeListParameters = xPathUtils.getNodeList(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/gco:CharacterString");
-                                for (int j=0; j<nodeListParameters.getLength();j++){
-                                    Node nodeParameter = nodeListParameters.item(j);
-                                    String parameter = xPathUtils.getString(nodeParameter, ".").trim();
-                                    if (!parameter.isEmpty()) {
-                                        if (parameter.toLowerCase().indexOf("service=") > -1) {
-                                            urlValue.append("&" + parameter);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        element.put("type", "textLabelLeft");
-                        element.put("line", true);
-
-                        HashMap elementCapabilitiesLink = new HashMap();
-                        elementCapabilitiesLink.put("type", "linkLine");
-                        elementCapabilitiesLink.put("hasLinkIcon", true);
-                        elementCapabilitiesLink.put("isExtern", true);
-                        elementCapabilitiesLink.put("title", messages.getString("search.detail.showGetCapabilityUrl.title"));
-                        elementCapabilitiesLink.put("href", urlValue);
-                        element.put("body", elementCapabilitiesLink);
-
-                        if (!hasAccessConstraints()) {
-                            element.put("title", messages.getString("search.detail.showGetCapabilityUrl"));
-                            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)
-                                    && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
-                                HashMap elementMapLink = new HashMap();
-                                elementMapLink.put("type", "linkLine");
-                                elementMapLink.put("hasLinkIcon", true);
-                                elementMapLink.put("isExtern", false);
-                                elementMapLink.put("title", messages.getString("common.result.showMap"));
-                                elementMapLink.put("href", UtilsSearch.addMapclientCapabilitiesInformation(urlValue.toString(), serviceTypeVersion, serviceType)); 
-                                if (xPathUtils.nodeExists(rootNode, "./idf:mapUrl")) {
-                                    elementMapLink.put("extMapUrl", xPathUtils.getString(rootNode, "./idf:mapUrl"));
-                                }
-                                element.put("link", elementMapLink);
-                                element.put("linkLeft", true);
-                            }
-                        } else {
-                            // do not display "show in map" link if the map has access constraints
-                            element.put("title", messages.getString("search.detail.showGetCapabilityUrlRestricted"));
-                        }
-                        // ADD FIRST ONE FOUND !!!
-                        break;
                     }
+                    if (url.toLowerCase().indexOf("service=") == -1) {
+                        if (url.indexOf("?") != -1) {
+                            NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
+                            for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
+                                Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
+                                String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
+                                if (!tmpServiceTypeVersion.isEmpty()) {
+                                    String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
+                                    if (tmpValue != null) {
+                                        urlValue.append("&SERVICE=" + tmpValue);
+                                        serviceTypeVersion = tmpServiceTypeVersion;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (urlValue.toString().toLowerCase().indexOf("service=") == -1) {
+                        if (url.indexOf("?") != -1) {
+                            NodeList nodeListParameters = xPathUtils.getNodeList(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/gco:CharacterString");
+                            for (int j=0; j<nodeListParameters.getLength();j++){
+                                Node nodeParameter = nodeListParameters.item(j);
+                                String parameter = xPathUtils.getString(nodeParameter, ".").trim();
+                                if (!parameter.isEmpty()) {
+                                    if (parameter.toLowerCase().indexOf("service=") > -1) {
+                                        urlValue.append("&" + parameter);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    element.put("type", "textLabelLeft");
+                    element.put("line", true);
+
+                    HashMap elementCapabilitiesLink = new HashMap();
+                    elementCapabilitiesLink.put("type", "linkLine");
+                    elementCapabilitiesLink.put("hasLinkIcon", true);
+                    elementCapabilitiesLink.put("isExtern", true);
+                    elementCapabilitiesLink.put("title", messages.getString("search.detail.showGetCapabilityUrl.title"));
+                    elementCapabilitiesLink.put("href", urlValue);
+                    element.put("body", elementCapabilitiesLink);
+
+                    if (!hasAccessConstraints()) {
+                        element.put("title", messages.getString("search.detail.showGetCapabilityUrl"));
+                        if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)
+                                && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
+                            HashMap elementMapLink = new HashMap();
+                            elementMapLink.put("type", "linkLine");
+                            elementMapLink.put("hasLinkIcon", true);
+                            elementMapLink.put("isExtern", false);
+                            elementMapLink.put("title", messages.getString("common.result.showMap"));
+                            elementMapLink.put("href", UtilsSearch.addMapclientCapabilitiesInformation(urlValue.toString(), serviceTypeVersion, serviceType)); 
+                            if (xPathUtils.nodeExists(rootNode, "./idf:mapUrl")) {
+                                elementMapLink.put("extMapUrl", xPathUtils.getString(rootNode, "./idf:mapUrl"));
+                            }
+                            element.put("link", elementMapLink);
+                            element.put("linkLeft", true);
+                        }
+                    } else {
+                        // do not display "show in map" link if the map has access constraints
+                        element.put("title", messages.getString("search.detail.showGetCapabilityUrlRestricted"));
+                    }
+                    // ADD FIRST ONE FOUND !!!
+                    break;
                 }
             }
+        }
         }
         return element;
     }
@@ -1328,8 +1328,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         continue;
                     }
 
-                    if (operationName.equals("GetCapabilities")) {
-                        // add missing parameters
+                    // add missing parameters
+                    if(serviceType != null && (
+                            serviceType.trim().equalsIgnoreCase("view") || 
+                            serviceType.trim().equalsIgnoreCase("wms") || 
+                            serviceType.trim().equalsIgnoreCase("wmts") || 
+                            operationName.toLowerCase().trim().indexOf("getcap") > -1
+                        )
+                    ){
                         if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
                             if (url.indexOf("?") != -1) {
                                 // if url or parameters already contains a ? or & at the end then do not add another one!
@@ -1372,16 +1378,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 }
                             }
                         }
-
-                        HashMap elementCapabilitiesLink = new HashMap();
-                        elementCapabilitiesLink.put("type", "linkLine");
-                        elementCapabilitiesLink.put("hasLinkIcon", true);
-                        elementCapabilitiesLink.put("isExtern", true);
-                        elementCapabilitiesLink.put("title", urlValue);
-                        elementCapabilitiesLink.put("href", urlValue);
-                        linkList.add(elementCapabilitiesLink);
-                        break;
                     }
+
+                    HashMap elementCapabilitiesLink = new HashMap();
+                    elementCapabilitiesLink.put("type", "linkLine");
+                    elementCapabilitiesLink.put("hasLinkIcon", true);
+                    elementCapabilitiesLink.put("isExtern", true);
+                    elementCapabilitiesLink.put("title", urlValue);
+                    elementCapabilitiesLink.put("href", urlValue);
+                    linkList.add(elementCapabilitiesLink);
+                    break;
                 }
             }
         }
