@@ -1736,6 +1736,9 @@ public class UtilsSearch {
                 service = tmpService;
             }
         }
+        if(service != null && service.trim().contains(" ")) {
+            return url;
+        }
         // add missing parameters
         if (url.indexOf("?") != -1) {
             if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
