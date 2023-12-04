@@ -1327,7 +1327,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if (operationName == null || operationName.length() == 0) {
                         continue;
                     }
-
+                    String description = "";
+                    if(xPathUtils.nodeExists(nodeList.item(i), "./../srv:operationDescription")){
+                        description = xPathUtils.getString(nodeList.item(i), "./../srv:operationDescription").trim();
+                    }
+                    
                     // add missing parameters
                     if(serviceType != null && (
                             serviceType.trim().equalsIgnoreCase("view") || 
@@ -1390,6 +1394,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     elementCapabilitiesLink.put("isExtern", true);
                     elementCapabilitiesLink.put("title", urlValue);
                     elementCapabilitiesLink.put("href", urlValue);
+                    if (!description.isEmpty()) {
+                        elementCapabilitiesLink.put("description", description);
+                    }
                     linkList.add(elementCapabilitiesLink);
                 }
             }
