@@ -58,6 +58,7 @@ public class DetailPartPreparer {
     protected RenderResponse          response;
     protected String                  iPlugId;
     protected String                  uuid;
+    protected String                  docid;
     protected Context                 context;
     protected IngridResourceBundle    messages;
 
@@ -96,6 +97,7 @@ public class DetailPartPreparer {
         this.messages = (IngridResourceBundle) context.get("MESSAGES");
         this.sysCodeList = context.get("codeList") != null ? (IngridSysCodeList) context.get("codeList") : new IngridSysCodeList(request.getLocale());
         this.uuid = this.request.getParameter("docuuid");
+        this.uuid = this.request.getParameter("docid");
 
         xPathUtils = new XPathUtils(new IDFNamespaceContext());
     }
