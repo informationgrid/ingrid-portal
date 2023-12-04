@@ -1,11 +1,10 @@
 #### Weitere Verweise
-#set($setExcludeFirstElement = "")
-#if($hasUseAltTransOp)
-#set($setExcludeFirstElement = "[position()>1]")
-#end
-#set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]$setExcludeFirstElement")
+#set($setExcludeElement = "")
+#set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']) and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/*/@codeListValue='download') $setExcludeElement]")
+
 #if($type == 1)
-    ##set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']) and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/*/gmd:URL[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'getcapabilities')])]$setExcludeFirstElement")
+    ##set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']) and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/*/@codeListValue='download') and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/*/gmd:URL[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'getcap')])]")
 #elseif($type == 6)
-    #set($xPathRefOthers =  "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']) and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='5066'])]$setExcludeFirstElement")
+    #set($setExcludeElement = "[position()>1]")
+    #set($xPathRefOthers =  "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']) and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/*/@codeListValue='download') and not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='5066'])]$setExcludeElement")
 #end
