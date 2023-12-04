@@ -1391,7 +1391,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     elementCapabilitiesLink.put("title", urlValue);
                     elementCapabilitiesLink.put("href", urlValue);
                     linkList.add(elementCapabilitiesLink);
-                    break;
                 }
             }
         }
@@ -1691,8 +1690,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     public String addLinkToGetXML() {
         String htmlLink = null;
         String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
+        String id = this.uuid;
+        if(id == null) {
+            id = this.docid;
+        }
         if (!cswUrl.isEmpty()) {
-            htmlLink = "<a target=\"_blank\" class=\"external-link\" href=\""+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+this.uuid+"&iplug="+this.iPlugId+"&elementSetName=full\">"+messages.getString("xml_link")+"</a>";
+            htmlLink = "<a target=\"_blank\" class=\"external-link\" href=\""+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+this.iPlugId+"&elementSetName=full\">"+messages.getString("xml_link")+"</a>";
         }
         return htmlLink;
     }
@@ -1701,12 +1704,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         HashMap elementLink = null;
         String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
         if (!cswUrl.isEmpty()) {
+            String id = this.uuid;
+            if(id == null) {
+                id = this.docid;
+            }
             elementLink = new HashMap();
             elementLink.put("type", "linkLine");
             elementLink.put("hasLinkIcon", true);
             elementLink.put("isDownload", true);
             elementLink.put("title", messages.getString("xml_link"));
-            elementLink.put("href", cswUrl + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + this.uuid);
+            elementLink.put("href", cswUrl + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + id);
         }
         return elementLink;
     }
