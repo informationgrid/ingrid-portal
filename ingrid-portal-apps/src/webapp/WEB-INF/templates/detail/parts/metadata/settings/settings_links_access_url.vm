@@ -5,7 +5,7 @@
 #if($type == 1)
     ##set($xPathRefAccessUrl = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/*/gmd:URL[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'getcap')]]")
 #elseif($type == 6)
-    #set($xPathRefAccessUrl = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/*/gmd:URL][1]")
+    #set($xPathRefAccessUrl = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='5066']]")
 #end
 
 ## URL des Zugangs
