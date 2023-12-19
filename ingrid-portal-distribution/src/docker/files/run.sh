@@ -275,6 +275,9 @@ else
         sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ROOT/error*.html
         sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ingrid-portal-mdek-application/error*.html
         sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ingrid-portal-mdek-application/session_expired.jsp
+        if [ "$PORTAL_PROFILE" == "uvp" ]; then
+            sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ROOT/html/*/index.html
+        fi
 
     fi
 
