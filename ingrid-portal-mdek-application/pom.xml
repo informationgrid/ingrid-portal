@@ -116,6 +116,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
+          <licenseResolver>${project.baseUri}/../license</licenseResolver>
           <excludes>
             <exclude>**/*.properties</exclude>
             <exclude>**/*.json</exclude>
