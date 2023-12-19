@@ -11,7 +11,8 @@ L.Control.ListMarkers = L.Control.extend({
         itemIcon: L.Icon.Default.imagePath+'/marker-icon.png',
         itemArrow: '&#10148;',
         maxZoom: 9,
-        position: 'bottomleft'
+        position: 'topleft',
+        container: null
     },
 
     initialize: function(options) {
@@ -25,7 +26,7 @@ L.Control.ListMarkers = L.Control.extend({
 
         this._map = map;
     
-        var container = this._container = L.DomUtil.create('div', 'list-markers');
+        var container = this._container = L.DomUtil.get(this.options.container);
         this._list = L.DomUtil.create('ul', 'list-markers-ul', container);
 
         this._initToggle();
@@ -36,7 +37,19 @@ L.Control.ListMarkers = L.Control.extend({
 
         return container;
     },
-    
+    addTo: function (map) {
+        this.onRemove(map);
+        this._map = map;
+
+        this._container = this.onAdd(map);
+
+        // when adding to the map container, we should stop event propagation
+        L.DomEvent.disableScrollPropagation(this._container);
+        L.DomEvent.disableClickPropagation(this._container);
+        L.DomEvent.on(this._container, 'contextmenu', L.DomEvent.stopPropagation);
+
+        return this;
+    },
     onRemove: function(map) {
         map.off('moveend', this._updateList, this);
         this._container = null;
@@ -79,7 +92,8 @@ L.Control.ListMarkers = L.Control.extend({
 
         if( layer.options.hasOwnProperty(this.options.label) )
         {
-            a.innerHTML = '<span>'+layer.options[this.options.label]+'</span> <b>'+this.options.itemArrow+'</b>' + icon;
+            a.innerHTML = '<span>' + layer.options[this.options.label]+ '</span>' +
+                ' <b>' + this.options.itemArrow+'</b>' + icon;
             a.setAttribute('title', layer.options[this.options.label]);
         
         }
@@ -103,47 +117,151 @@ L.Control.ListMarkers = L.Control.extend({
     _updateList: function() {
     
         var that = this,
-            n = 0;
+            n = 0,
+            listId = [];
 
         this._list.innerHTML = '';
-        this._layer.eachLayer(function(layer) {
-            if(layer instanceof L.Marker)
-                if( that._map.getBounds().contains(layer.getLatLng())) {
-                    that._list.appendChild( that._createItem(layer) );
-                } else if (layer.options.features) {
-                    var features = layer.options.features.getLayers();
+        this._layer.eachLayer(function(marker) {
+            if(marker instanceof L.Marker) {
+                if( marker.options.initLatLng && that._map.getBounds().contains(marker.options.initLatLng)) {
+                    if (listId.indexOf(marker.options.id) == -1){
+                        that._list.appendChild( that._createItem(marker) );
+                        listId.push(marker.options.id);
+                    }
+                    marker.setLatLng(marker.options.initLatLng);
+                } else if( that._map.getBounds().contains(marker.getLatLng())) {
+                    if (listId.indexOf(marker.options.id) == -1){
+                        that._list.appendChild( that._createItem(marker) );
+                        listId.push(marker.options.id);
+                    }
+                } else if (marker.options.features) {
+                    var features = marker.options.features.getLayers();
+                    if (!marker.options.initLngLat) {
+                        marker.options.initLngLat = marker.getLatLng();
+                    }
                     features.forEach(function(feature){
-                        if(that._map.getBounds().intersects(feature.getBounds())) {
-                            var latLngs = feature.getLatLngs();
-                            latLngs.every(function(latLng){
-                                if(latLng.lat && latLng.lng){
-                                    if( that._map.getBounds().contains(latLng)) {
-                                        that._list.appendChild( that._createItem(layer) );
-                                        return false;
-                                    }
-                                    return true;
-                                } else {
-                                    var contains = false;
-                                    latLng.every(function(childLatLng) {
-                                        if(childLatLng.lat && childLatLng.lng){
-                                            if( that._map.getBounds().contains(childLatLng)) {
-                                                that._list.appendChild( that._createItem(layer) );
-                                                contains = true;
-                                                return false;
-                                            }
-                                        }
-                                        return true;
-                                    });
-                                    return !contains;
+                        var mapBounds = that._map.getBounds();
+                        if(mapBounds.intersects(feature.getBounds())) {
+                            var mapBbox = [
+                                mapBounds.getSouthWest().lng, mapBounds.getSouthWest().lat,
+                                mapBounds.getNorthEast().lng, mapBounds.getNorthEast().lat
+                            ];
+                            var mapTurfBbox = turf.bboxPolygon(mapBbox);
+                            if(turf.booleanIntersects(mapTurfBbox,feature.feature)) {
+                                if (listId.indexOf(marker.options.id) == -1){
+                                    that._list.appendChild( that._createItem(marker) );
+                                    listId.push(marker.options.id);
                                 }
-                            });
+                                if(feature.feature.geometry.type === 'LineString') {
+                                    that.lineStringIntersectMarker(that._map, marker, [feature.feature.geometry.coordinates], mapTurfBbox)
+                                } else if(feature.feature.geometry.type === 'MultiLineString') {
+                                    that.lineStringIntersectMarker(that._map, marker, feature.feature.geometry.coordinates, mapTurfBbox)
+                                } else {
+                                    if(feature.feature.geometry.geometries) {
+                                        that.collectionIntersectMarker(that._map, marker, feature.feature.geometry, mapTurfBbox);
+                                    } else {
+                                        that.polygonIntersectMarker(that._map, marker, feature.feature.geometry, mapTurfBbox);
+                                    }
+                                }
+                            }
                         }
                     })
                 }
+            }
         });
         that.fire('item-updatelist', {layer: layer });
     },
-
+    collectionIntersectMarker: function (map, marker, geometry, mapBbox) {
+        var geoms = geometry.geometries;
+        var hasFind = false;
+        for (i = 0; i < geoms.length; i++) {
+            var geom = geoms[i];
+            if(geom.type === 'Point') {
+                hasFind = this.pointIntersectMarker(map, marker, [geom.coordinates], mapBbox)
+            } else if(geom.type === 'MultiPoint') {
+                hasFind = this.pointIntersectMarker(map, marker, geom.coordinates, mapBbox)
+            } else if(geom.type === 'LineString') {
+                hasFind = this.lineStringIntersectMarker(map, marker, [geom.coordinates], mapBbox)
+            } else if(geom.type === 'MultiLineString') {
+                hasFind = this.lineStringIntersectMarker(map, marker, geom.coordinates, mapBbox)
+            } else {
+                hasFind = this.polygonIntersectMarker(map, marker, geom, mapBbox);
+            }
+            if(hasFind){
+                break;
+            }
+        }
+    },
+    pointIntersectMarker: function (map, marker, coordinates, mapBbox) {
+        for (i = 0; i < coordinates.length; i++) {
+            var coordinate = coordinates[i];
+            var point = turf.point(coordinate);
+            if(turf.booleanIntersects(mapBbox,point)) {
+                if(!marker.options.initLatLng) {
+                    marker.options.initLatLng = marker.getLatLng();
+                }
+                marker.setLatLng([coordinate[0], coordinate[1]]);
+                return true; 
+            }
+        }
+        return false;
+    },
+    polygonIntersectMarker: function (map, marker, geometry, mapBbox) {
+        var intersect = turf.intersect(mapBbox, geometry);
+        if(intersect){
+            var pointOnFeature = turf.pointOnFeature(intersect);
+            if(pointOnFeature) {
+                var geom = pointOnFeature.geometry;
+                if(!marker.options.initLatLng) {
+                    marker.options.initLatLng = marker.getLatLng();
+                }
+                marker.setLatLng([geom.coordinates[1], geom.coordinates[0]]);
+                return true; 
+            }
+        }
+        return false;
+    },
+    lineStringIntersectMarker: function (map, marker, coordinates, mapBbox) {
+        for (i = 0; i < coordinates.length; i++) {
+            var coordinate = coordinates[i];
+            var split = turf.lineSplit(turf.lineString(coordinate), mapBbox);
+            var oddPair;
+            if(turf.booleanPointInPolygon(turf.point(coordinate[0]), mapBbox)){
+                oddPair = 0;
+            } else {
+                oddPair = 1;
+            }
+            var longestSplit;
+            var longestDist = 0; 
+            for (ii = 0; ii < split.features.length; ii++) {
+                var splitedPart = split.features[ii];
+                if((ii + oddPair)%2 === 0) {
+                    var dist = turf.length(splitedPart, {units: 'meters'});
+                    if(longestDist < dist) {
+                        longestSplit = splitedPart;
+                        longestDist = dist;
+                    }
+                }
+            }
+            if(longestSplit) {
+                var splitedPart = longestSplit;
+                var turfUnitsOption = {
+                    units: 'meters'
+                };
+                var linestringLengh = turf.length(splitedPart.geometry, turfUnitsOption);
+                var centerPoint = turf.along(splitedPart.geometry, linestringLengh / 2, turfUnitsOption);
+                if(centerPoint.geometry.coordinates){
+                    var centerPointCoords = centerPoint.geometry.coordinates;
+                    if(!marker.options.initLatLng) {
+                        marker.options.initLatLng = marker.getLatLng();
+                    }
+                    marker.setLatLng([centerPointCoords[1], centerPointCoords[0]]);
+                    return true; 
+                }
+            }
+        }
+        return false;
+    },
     _initToggle: function () {
 
         var container = this._container;

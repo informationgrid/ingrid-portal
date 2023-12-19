@@ -1,3 +1,25 @@
+<a id="maps" name="maps"></a>
+
+<div id="sidebar" class="leaflet-sidebar collapsed">
+    <!-- nav tabs -->
+    <div class="leaflet-sidebar-tabs">
+        <!-- top aligned tabs -->
+        <ul role="tablist">
+            <li><a href="#hits" role="tab"><i class="ic-ic-hamburger active"></i></a></li>
+        </ul>
+    </div>
+
+    <!-- panel content -->
+    <div class="leaflet-sidebar-content">
+        <div class="leaflet-sidebar-pane" id="hits">
+            <h1 class="leaflet-sidebar-header">
+                Ergebnisliste
+                <span class="leaflet-sidebar-close"><i class="ic-ic-arrow-left"></i></span>
+            </h1>
+            <div id="list-markers"></div>
+        </div>
+    </div>
+</div>
 <div style="height:75vh">
     <div id="map-searchview" class="map-searchview" style="height:100%">
     </div>
@@ -5,7 +27,6 @@
 
 <script>
     var map_searchview = new L.Map('map-searchview');
-    map_searchview.attributionControl.setPrefix('<a href="https://leafletjs.com" title="Leaflet">Leaflet</a>');
     var lat = $facetMapCenter.get(0);
     var lng = $facetMapCenter.get(1);
     var zoom = $facetMapCenter.get(2);
@@ -26,6 +47,9 @@
    </script>
 #end
 <script>
+    var sidebar = L.control.sidebar({ container: 'sidebar' })
+        .addTo(map_searchview)
+        .open('hits');
     map_searchview.on('moveend', function() {
         //showSearchResults();
     });
@@ -40,8 +64,11 @@
     }
     map_searchview.addLayer(layer);
     resizeMap(map_searchview);
-    addLeafletHomeControl(map_searchview, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', map_searchview.getBounds(), '', '23px');
-    addLeafletListViewControl(map_searchview, 'List view', 'topleft', 'ic-ic-view-colapsed', $("#map_view"), $("#list_view") );
+    addLeafletHomeControl(map_searchview, 'Zoom auf initialen Kartenausschnitt', 'topright', 'ic-ic-center', map_searchview.getBounds(), '', '23px');
+    map_searchview.zoomControl.setPosition('topright');
+    addLeafletListViewControl(map_searchview, 'List view', 'topright', 'ic-ic-view-colapsed', $("#map_view"), $("#list_view"), $("#searchResult") );
+    map_searchview.attributionControl.setPrefix('<a href="https://leafletjs.com" title="Leaflet">Leaflet</a>');
+
     window.onresize = function(event) {
         resizeMap(map_searchview);
     };
@@ -49,16 +76,15 @@
     ## Cluster markers
     var mapMarkers = L.markerClusterGroup({
         id: 'mapMarkers',
-        showCoverageOnHover: false,
-        zoomToBoundsOnClick: false,
-        spiderfyOnMaxZoom: false
+        showCoverageOnHover: false
     });
     
     ## List markers
     var markersLayer = new L.LayerGroup();
     var mapListMarkers = new L.Control.ListMarkers({
         layer: mapMarkers,
-        itemIcon: null
+        itemIcon: null,
+        container: 'list-markers'
     });
     
     ## List markers action
@@ -126,7 +152,6 @@
                 selectedMarker.options.features = L.geoJSON(featLayer.feature, {});
             }
         }
-        selectedMarker.bindPopup(e.layer.getPopup().getContent(), popupOptions);
         map_searchview.addLayer(selectedMarker);
         if(selectedMarker.options.features) {
             map_searchview.addLayer(selectedMarker.options.features);
@@ -136,14 +161,6 @@
         } else {
             map_searchview.panTo( selectedMarker.getLatLng() );
         }
-        selectedMarker.openPopup();
-        
-        selectedMarker.getPopup().on('remove', function() {
-            map_searchview.removeLayer(selectedMarker);
-            if(selectedMarker.options.features) {
-                map_searchview.removeLayer(selectedMarker.options.features);
-            }
-        });
     });
 
     map_searchview.addControl( mapListMarkers );
@@ -216,17 +233,6 @@
                     const bwaStrVon = data['bwstr-strecken_km_von'];
                     const bwaStrBis = data['bwstr-strecken_km_bis'];
                     
-                    var popupContent = '<h5>' + title + '</h5>';
-                    popupContent += '<p class="list-marker-popup-content">'
-                    if(summary.length > 200) {
-                        popupContent += summary.slice(0, 200);
-                        popupContent += '...';
-                    } else {
-                        popupContent += summary;
-                    }
-                    popupContent += '</p>';
-                    popupContent += '<a target="_blank" href="$renderResponse.encodeURL("/portal/search-detail.psml")?docuuid=' + objUuid + '" title="Detaildarstellung zu \"' + title + '\"">Mehr Details ...</p>'; 
-                    
                     var bwaStrs;
                     if(bwaStrId) {
                         bwaStrs = [[bwaStrId, bwaStrVon, bwaStrBis]];
@@ -244,10 +250,11 @@
                                     onEachFeature: function(feature, layer) {
                                         var features = L.marker(layer.getLatLng(), {
                                             title: title,
+                                            id: objUuid,
+                                            class: objClass,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                         });
                                         features.on('click', markerClick);
-                                        features.bindPopup(popupContent, popupOptions);
                                         if(features) {
                                             mapMarkers.addLayer(features);
                                         }
@@ -256,35 +263,41 @@
                             } else if(wktJson.type === 'MultiPoint') {
                                 var tmpFeatures = L.geoJSON(wktJson, {
                                     onEachFeature: function(features, layers) {
-                                        layers.getLayers().forEach(function(layer) {
-                                            var features = L.marker(layer.getLatLng(), {
+                                        var thatFeature = this;
+                                        for (i = 0; i < layers.getLayers().length; i++) {
+                                            var layer = layers.getLayers()[0];
+                                            var tmp = L.marker(layer.getLatLng(), {
                                                 title: title,
+                                                id: objUuid,
+                                                class: objClass,
+                                                features: L.geoJSON(features),
                                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                             });
-                                            features.on('click', markerClick);
-                                            features.bindPopup(popupContent, popupOptions);
-                                            if(features) {
-                                                mapMarkers.addLayer(features);
+                                            tmp.on('click', markerClick);
+                                            if(tmp) {
+                                                mapMarkers.addLayer(tmp);
                                             }
-                                        });
+                                        }
                                    }
                                 });
                             } else if(wktJson.type === 'LineString') {
                                 var tmpFeatures = L.geoJSON(wktJson, {});
                                 if(wktJson.coordinates) {
-                                    var coordIndex = Math.floor(wktJson.coordinates.length / 2);
-                                    var coord = wktJson.coordinates[coordIndex];
-                                    features = L.marker(new L.LatLng(coord[1], coord[0]), {
+                                    var options = {
+                                        units: 'meters'
+                                    };
+                                    var length = turf.length(wktJson, options);
+                                    var along = turf.along(wktJson, length/2, options);
+                                    features = L.marker(new L.LatLng(along.geometry.coordinates[1], along.geometry.coordinates[0]), {
                                         title: title,
+                                        id: objUuid,
+                                        class: objClass,
                                         features: tmpFeatures,
                                         itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/line.png',
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
                                     features.on('click', markerClick);
-                                    features.bindPopup(popupContent, popupOptions);
-                                    features.on('popupopen', showFeatures);
-                                    features.on('popupclose', hideFeatures);
                                 }
                             } else if(wktJson.type === 'MultiLineString') {
                                 var tmpFeatures = L.geoJSON(wktJson, {});
@@ -296,42 +309,64 @@
 
                                     features = L.marker(new L.LatLng(coord[1], coord[0]), {
                                         title: title,
+                                        id: objUuid,
+                                        class: objClass,
                                         features: tmpFeatures,
                                         itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/line.png',
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
                                     features.on('click', markerClick);
-                                    features.bindPopup(popupContent, popupOptions);
-                                    features.on('popupopen', showFeatures);
-                                    features.on('popupclose', hideFeatures);
                                 }
-                            } else if(wktJson.type === 'Polygon') {
+                            /*} else if(wktJson.type === 'Polygon') {
                                 var tmpFeatures = L.geoJSON(wktJson, {});
-                                features = L.marker(tmpFeatures.getBounds().getCenter(), {
-                                    title: title,
-                                    features: tmpFeatures,
-                                    itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
-                                    itemIconWidth: '20px',
-                                    itemIconHeight: '20px'
-                                });
-                                features.on('click', markerClick);
-                                features.bindPopup(popupContent, popupOptions);
-                                features.on('popupopen', showFeatures);
-                                features.on('popupclose', hideFeatures);
+                                var center = turf.pointOnFeature(wktJson);
+                                if(center.geometry) {
+                                    var coord = center.geometry.coordinates;
+                                    features = L.marker(new L.LatLng(coord[1], coord[0]), {
+                                        title: title,
+                                        id: objUuid,
+                                        class: objClass,
+                                        features: tmpFeatures,
+                                        itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
+                                        itemIconWidth: '20px',
+                                        itemIconHeight: '20px'
+                                    });
+                                    features.on('click', markerClick);
+                                }
                             } else if(wktJson.type === 'MultiPolygon') {
                                 var tmpFeatures = L.geoJSON(wktJson, {});
-                                features = L.marker(tmpFeatures.getBounds().getCenter(), {
-                                    title: title,
-                                    features: tmpFeatures,
-                                    itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
-                                    itemIconWidth: '20px',
-                                    itemIconHeight: '20px'
-                                });
-                                features.on('click', markerClick);
-                                features.bindPopup(popupContent, popupOptions);
-                                features.on('popupopen', showFeatures);
-                                features.on('popupclose', hideFeatures);
+                                var center = turf.pointOnFeature(wktJson);
+                                if(center.geometry) {
+                                    var coord = center.geometry.coordinates;
+                                    features = L.marker(new L.LatLng(coord[1], coord[0]), {
+                                        title: title,
+                                        id: objUuid,
+                                        class: objClass,
+                                        features: tmpFeatures,
+                                        itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
+                                        itemIconWidth: '20px',
+                                        itemIconHeight: '20px'
+                                    });
+                                    features.on('click', markerClick);
+                                }
+                            */
+                            } else {
+                                var tmpFeatures = L.geoJSON(wktJson, {});
+                                var center = turf.pointOnFeature(wktJson);
+                                if(center.geometry) {
+                                    var coord = center.geometry.coordinates;
+                                    features = L.marker(new L.LatLng(coord[1], coord[0]), {
+                                        title: title,
+                                        id: objUuid,
+                                        class: objClass,
+                                        features: tmpFeatures,
+                                        itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
+                                        itemIconWidth: '20px',
+                                        itemIconHeight: '20px'
+                                    });
+                                    features.on('click', markerClick);
+                                }
                             }
                         }
                         if(features) {
@@ -361,17 +396,44 @@
     
                                   var features = L.marker(new L.LatLng(coord[1], coord[0]), {
                                       title: title,
+                                      id: objUuid,
+                                      class: objClass,
                                       features: tmpFeatures,
                                       itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/bwastr.png'
                                   });
                                   features.on('click', markerClick);
-                                  features.bindPopup(popupContent, popupOptions);
-                                  features.on('popupopen', showFeatures);
-                                  features.on('popupclose', hideFeatures);
                                   if(features) {
                                      mapMarkers.addLayer(features);
                                   }
                                 }
+                            } else {
+                                if(coords) {
+                                    coords.forEach(function(coord) {
+                                      var y1Coord = coord[2];
+                                      var x1Coord = coord[1];
+                                      var y2Coord = coord[4];
+                                      var x2Coord = coord[3];
+                                      if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
+                                        if(x1Coord === x2Coord && y1Coord === y2Coord) {
+                                          var features = L.marker([y1Coord, x1Coord], {
+                                            title: title,
+                                            itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
+                                          });
+                                          mapMarkers.addLayer(features);
+                                        } else {
+                                          var bounds = L.latLngBounds(L.latLng(y1Coord, x1Coord), L.latLng(y2Coord, x2Coord));
+                                          var center = bounds.getCenter();
+                                          var features = L.marker(center, {
+                                            title: title,
+                                            id: objUuid,
+                                            class: objClass,
+                                            itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
+                                          });
+                                          mapMarkers.addLayer(features);
+                                        }
+                                      }
+                                    });
+                                  }
                             }
                         });
                       });
@@ -393,9 +455,10 @@
                               var center = bounds.getCenter();
                               var features = L.marker(center, {
                                 title: title,
+                                id: objUuid,
+                                class: objClass,
                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                               });
-                              features.bindPopup(popupContent, popupOptions);
                               mapMarkers.addLayer(features);
                             }
                           }

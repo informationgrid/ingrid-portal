@@ -1,9 +1,9 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.list-markers/list-markers.js"></script>
 <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.list-markers/list-markers.css"/>
-
+<script src="/decorations/layout/ingrid/scripts/turfjs/6.5.0/turf.min.js"></script>
 
 <script>
-    function addLeafletListViewControl(map, title, position, icon, thisView, switchView) {
+    function addLeafletListViewControl(map, title, position, icon, thisView, switchToView, mainDiv) {
         var ListViewControl = L.Control.extend({
             options: {
                 position: position ? position : 'topleft'
@@ -19,7 +19,10 @@
             },
             _listviewClick: function (e) {
                 thisView.addClass("is-hidden");
-                switchView.removeClass("is-hidden");
+                switchToView.removeClass("is-hidden");
+                if(mainDiv) {
+                    mainDiv.removeClass("row-full");
+                }
             }
         });
         map.addControl(new ListViewControl({}));

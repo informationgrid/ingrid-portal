@@ -1,1 +1,14 @@
-## USED IN BAW_DOI
+<div class="map_switcher">
+    <a id="map_switcher" class="icon" href="#maps" title="$MESSAGES.getString('searchResult.hit.view.maps')">
+        <span class="ic-ic-karten"></span>
+    </a>
+</div>
+
+<script>
+    $( "#map_switcher" ).on("click", function(e) {
+        $("#list_view").addClass("is-hidden");
+        $("#map_view").removeClass("is-hidden");
+        $("#searchResult").addClass("row-full");
+        resizeMap(map_searchview);
+    });
+</script>
