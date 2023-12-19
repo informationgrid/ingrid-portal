@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>6.4.0-SNAPSHOT</version>
+    <version>7.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-apps</artifactId>
@@ -20,7 +20,7 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <measurement.client.version>2.0.6-SNAPSHOT</measurement.client.version>
-    <ingrid-utils-geo.version>6.4.0-SNAPSHOT</ingrid-utils-geo.version>
+    <ingrid-utils-geo.version>7.0.0-SNAPSHOT</ingrid-utils-geo.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -202,7 +202,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-client</artifactId>
-      <version>6.0.0</version>
+      <version>7.0.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>net.sf.ehcache</groupId>
@@ -213,7 +213,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication</artifactId>
-      <version>6.0.0</version>
+      <version>7.0.0-SNAPSHOT</version>
     </dependency><!--
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -491,6 +491,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
+          <licenseResolver>${project.baseUri}/../license</licenseResolver>
           <excludes>
             <exclude>**/*.properties</exclude>
             <exclude>**/*.json</exclude>
