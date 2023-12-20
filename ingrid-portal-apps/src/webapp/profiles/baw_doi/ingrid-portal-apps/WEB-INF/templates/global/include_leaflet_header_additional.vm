@@ -1,6 +1,8 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.list-markers/list-markers.js"></script>
 <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.list-markers/list-markers.css"/>
 <script src="/decorations/layout/ingrid/scripts/turfjs/6.5.0/turf.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.sidebar/leaflet-sidebar.js"></script>
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/plugins/leaflet.sidebar/leaflet-sidebar.css"/>
 
 <script>
     function addLeafletListViewControl(map, title, position, icon, thisView, switchToView, mainDiv) {
