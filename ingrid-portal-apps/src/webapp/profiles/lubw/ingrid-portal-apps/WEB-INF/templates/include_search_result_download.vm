@@ -212,7 +212,7 @@
                 row['t011_obj_serv.has_access_constraint'].forEach(function(value){
                     if(value === 'Y'){
                       tmpRow += 'Ja';
-                    } else if (value === 'Y') {
+                    } else if (value === 'N') {
                       tmpRow += 'Nein';
                     } else {
                       tmpRow += '--';
