@@ -19,7 +19,7 @@
 
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
-    <measurement.client.version>2.0.6-SNAPSHOT</measurement.client.version>
+    <measurement.client.version>2.0.6</measurement.client.version>
     <ingrid-utils-geo.version>7.0.0-SNAPSHOT</ingrid-utils-geo.version>
   </properties>
 
@@ -509,7 +509,7 @@
           <execution>
             <phase>compile</phase>
             <configuration>
-              <tasks>
+              <target>
                 <echo>INGRID-PORTAL-APPS: Copy default WEB-INF folder to profile 'ingrid'</echo>
                 <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF">
                   <fileset dir="${project.basedir}/src/webapp/WEB-INF/">
@@ -558,7 +558,7 @@
                     <include name="**/messages*.properties" />
                   </fileset>
                 </copy>
-              </tasks>
+              </target>
             </configuration>
             <goals>
               <goal>run</goal>
