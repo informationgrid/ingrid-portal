@@ -1,1 +1,5 @@
 ## USED IN PROFILE BAW_MIS
+## DEFAULT just add bounds to map
+<script>
+    addLayerBounds(map${mapId}, coords, '$leafletBboxColor', $leafletBboxFillOpacity, $leafletBboxWeight, $leafletBboxInverted);
+</script>

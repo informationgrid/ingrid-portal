@@ -7,7 +7,7 @@
     <div class="row columns">
         #if($getAlternateTitle)
             #foreach($t in $getAlternateTitle)
-                <p class="slab-bold">$t</p>
+                <p class="slab-bold">$stringTool.convertUrlInText($t)</p>
             #end
         #end
         #if($getDescription)

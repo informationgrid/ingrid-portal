@@ -329,15 +329,11 @@
     <!-- Help -->
     <rule>
         <from>/hilfe</from>
-        <to type="forward">/error404.html</to>
+        <to type="forward">/portal/help.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/help.psml</from>
         <to>/hilfe</to>
     </outbound-rule>
-    <rule>
-        <from>/portal/help.psml</from>
-        <to type="permanent-redirect">/hilfe</to>
-    </rule>
-    
+
 </urlrewrite>

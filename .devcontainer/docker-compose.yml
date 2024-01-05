@@ -1,0 +1,109 @@
+version: '3.8'
+
+volumes:
+  ingrid-database:
+  ingrid-esdata:
+  ingrid-maven:
+
+services:
+  app:
+    container_name: javadev
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    # environment:
+      # NOTE: POSTGRES_DB/USER/PASSWORD should match values in db container
+    volumes:
+      - ..:/workspaces/ingrid-portal:cached
+      - ingrid-maven:/home/vscode/.m2
+      
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:db
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+  
+  db:
+    image: mysql:5.7
+    platform: linux/amd64
+    command: docker-entrypoint.sh mysqld --character-set-server=utf8 --lower-case-table-names=1 --collation-server=utf8_unicode_ci --sql_mode="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"
+    restart: unless-stopped
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_ROOT_HOST=%%
+    volumes:
+      - ingrid-database:/var/lib/mysql
+    #ports:
+    #  - "3306:3306"
+
+
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.6
+    environment:
+      - cluster.name=ingrid
+      - discovery.type=single-node
+      - ingest.geoip.downloader.enabled=false
+      - http.host=0.0.0.0
+      - transport.host=0.0.0.0
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+      - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
+      - xpack.security.enabled=false
+      # - xpack.monitoring.enabled=false
+      - xpack.ml.enabled=false
+    restart: unless-stopped
+    volumes:
+      - ingrid-esdata:/usr/share/elasticsearch/data
+    #ports:
+    #  - "9200:9200"
+    #  - "9300:9300"
+    network_mode: service:db
+
+  ibus:
+    image: docker-registry.wemove.com/ingrid-ibus
+    depends_on:
+      - elastic
+    environment:
+      # - ADMIN_PASSWORD=admin
+      - INGRID_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:7002,server=y,suspend=n
+      - CODELIST_URL=http://codelist-repo:8080
+      - CODELIST_USERNAME=admin
+      - CODELIST_PASSWORD=admin
+      - ELASTIC_HOSTS=127.0.0.1:9300
+      - JAVA_OPTS=-Xmx384m
+      - SERVER_PORT=10000
+    volumes:
+    #  - ./logs/ibus:/opt/ingrid/ingrid-ibus/logs
+      - ./config/activatedIplugs.properties:/opt/ingrid/ingrid-ibus/conf/activatedIplugs.properties
+      - ./config/application-default.properties:/opt/ingrid/ingrid-ibus/conf/application-default.properties
+    #ports:
+    #  - "7002:7002"
+    #  - "9900:9900"
+    network_mode: service:db
+    command: ["sh", "wait-for-elasticsearch.sh", "127.0.0.1:9200", "/bin/sh start.sh start"]
+
+  ige:
+    image: docker-registry.wemove.com/ingrid-iplug-ige
+    depends_on:
+      - elastic
+      - db
+    environment:
+      # - INGRID_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:7003,server=y,suspend=n
+      - ELASTIC_HOSTS=elastic:9300
+    # ports:
+      # - "7003:7003"
+      # - "8088:8080"
+    volumes:
+    #  - ./logs/iplug-ige:/opt/ingrid/ingrid-iplug-ige/logs
+      - ./config/config.override.properties:/opt/ingrid/ingrid-iplug-ige/conf/config.override.properties:cached
+    command: ["bash", "./wait-for-it.sh", "localhost:3306", "-t", "120", "--", "./run.sh"]
+    network_mode: service:db
+
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)

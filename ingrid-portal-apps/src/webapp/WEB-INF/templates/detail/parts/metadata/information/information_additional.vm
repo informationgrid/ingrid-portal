@@ -9,11 +9,11 @@
     ## Veröffentlichung
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_publish_id.vm")
     ## Eignung/Nutzung
-        #renderTextTable($MESSAGES.getString("t01_object.dataset_usage") $TOOL.getValueFromXPath($xPathAdditionalInfoSpecificUsage))
+        #renderTextTableConvertUrl($MESSAGES.getString("t01_object.dataset_usage") $TOOL.getValueFromXPath($xPathAdditionalInfoSpecificUsage) false false true)
     ## Herstellungszweck
-        #renderTextTable($MESSAGES.getString("t01_object.info_note") $TOOL.getValueFromXPath($xPathAdditionalInfoPurpose))
+        #renderTextTableConvertUrl($MESSAGES.getString("t01_object.info_note") $TOOL.getValueFromXPath($xPathAdditionalInfoPurpose) false false true)
     ## Rechtliche Grundlagen
-        #renderTextListTable($MESSAGES.getString("t015_legist.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoFurtherLegalBasis, "."))
+        #renderTextListTableConvertUrl($MESSAGES.getString("t015_legist.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoFurtherLegalBasis, ".") false false true)
     ## XML-Export-Kriterium
         #renderTextListTable($MESSAGES.getString("t014_info_impart.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoExportCriteria, "."))
     ## Sprache des Datensatzes
@@ -25,7 +25,7 @@
     ## Medien
         #renderTable($TOOL.getMediumOptions($xPathAdditionalInfoMDDistribution))
     ## Bestellinformationen
-        #renderTextTable($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath($xPathAdditionalInfoOrderingInstructions))
+        #renderTextTableConvertUrl($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath($xPathAdditionalInfoOrderingInstructions) false false true)
     </div>
 #end
 
@@ -42,9 +42,11 @@
         #renderTableList($MESSAGES.getString("spatial_scope") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "spatial_scope") true "search_terms_spatial" 10)
         #renderTableList($MESSAGES.getString("gemet_concepts") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "gemet") true "search_terms_gemet" 10)
         #renderTableList($MESSAGES.getString("adv_group") $advGroup true "search_terms_adv" 10)
+        ## INSPIRE-InVeKoS
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_search_terms_invekos.vm")
         ## ISO-Themenkategorien
         #renderTableList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath($xPathKeywordsTopicCategory, "./gmd:MD_TopicCategoryCode", "527") true "search_terms_iso" 10)
         ## Suchbegriffe
-        #renderTableList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "search") true "search_terms" 10)
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_search_terms.vm")
     </div>
 #end

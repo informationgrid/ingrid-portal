@@ -2,16 +2,16 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -27,12 +27,20 @@ import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.routines.UrlValidator;
 
 public class UtilsString {
 
     private static final Logger log = LoggerFactory.getLogger(UtilsString.class);
+
+    private static final String regexUrlFinder = "((((ftp|https?):\\/\\/)|(w{3}.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)[^ ,.]";
 
     // see http://hotwired.lycos.com/webmonkey/reference/special_characters/
     static Object[][] entities = {
@@ -533,5 +541,68 @@ public class UtilsString {
 
     public static int parseInt(String string) {
         return Integer.parseInt(string);
+    }
+    
+    public static String convertUrlInText(String text) {
+        Pattern pattern = Pattern.compile(regexUrlFinder);
+        Matcher m = pattern.matcher(text);
+        ArrayList<String> findUrl = new ArrayList<String>();
+        int last = 0;
+        StringBuilder sb = new StringBuilder();
+        while (m.find()) {
+            String s = null;
+            for (int i = 0; i < m.groupCount(); i++) {
+                s = m.group(i);
+                int startIndex = m.start(i);
+                int endIndex = m.end(i);
+                String validateString = s;
+                UrlValidator validator = new UrlValidator();
+                if(validateString != null) {
+                    if(validateString.startsWith("www.")) {
+                        validateString = "https://" + validateString;
+                    }
+                    if(validator.isValid(validateString)) {
+                        if(StringUtils.countMatches(validateString, "(") == StringUtils.countMatches(validateString, ")")){
+                            StringBuilder sbAddTo = new StringBuilder();
+                            while(s.endsWith(".") || s.endsWith(",") || s.endsWith("!")) {
+                                if(s.endsWith("."))
+                                    sbAddTo.append(".");
+                                if(s.endsWith(","))
+                                    sbAddTo.append(",");
+                                if(s.endsWith("!"))
+                                    sbAddTo.append("!");
+                                s = s.substring(0, s.length() - 1);
+                            }
+                            String tmpText = text.substring(last, startIndex);
+                            if(!tmpText.trim().endsWith("=\"") &&
+                                !tmpText.trim().endsWith("='") &&
+                                !tmpText.trim().endsWith(">")) {
+                                sb.append(tmpText);
+                                sb.append("##" + s + "##" + sbAddTo.toString());
+                                findUrl.add(s);
+                            } else {
+                                sb.append(tmpText);
+                                sb.append(s);
+                            }
+                            last = endIndex;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        sb.append(text.substring(last));
+        text = sb.toString();
+
+        if(!findUrl.isEmpty()) {
+            for (String url : findUrl) {
+                String validateUrl = url;
+                if(validateUrl.startsWith("www.")) {
+                    validateUrl = "https://" + validateUrl;
+                }
+                text = text.replace("##" + url + "##", "<a class=\"intext\" href=\"" + validateUrl + "\" target=\"_blank\" title=\"" + url + "\">" + url + "</a>" );
+            }
+        }
+        return text;
     }
 }

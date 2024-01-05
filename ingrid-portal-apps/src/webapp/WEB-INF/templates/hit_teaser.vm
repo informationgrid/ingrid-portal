@@ -47,7 +47,12 @@
                                                 <span class="">$mode_time</span>
                                             </div>
                                             #end
-                                            <p class="data-text">$hit.getHitDetail().getSummary()</p>
+                                            #if($cutSumHTMLNewLine)
+                                                #set($myDescription = $stringTool.replaceAll($hit.getHitDetail().getSummary(), "\n", "<br>"))
+                                            #else
+                                                #set($myDescription = $stringTool.replaceAll($hit.getHitDetail().getSummary(), "\n", " "))
+                                            #end
+                                            <p class="data-text">$myDescription</p>
                                             #foreach($uvp_category in $hit.getHitDetail().get("uvp_category"))
                                                 <div class="helper icon">
                                                     <span class="ic-ic-$uvp_category"></span>

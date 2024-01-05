@@ -36,7 +36,7 @@
     <div class="row content-small">
         <div class="columns">
             ## Allgemeine Vorhabenbeschreibung
-            #renderTextLabelAbove($MESSAGES.getString("search.detail.uvp.desc") $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
+            #renderTextLabelAbove($MESSAGES.getString("search.detail.uvp.desc") $TOOL.valueHTMLEscape($stringTool.convertUrlInText($TOOL.getValueFromXPath("./descr"))))
         </div>
     </div>
     <div class="row content-small">

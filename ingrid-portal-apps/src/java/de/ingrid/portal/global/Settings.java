@@ -2,16 +2,16 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -237,7 +237,7 @@ public class Settings {
     // NOTICE: Define here only special stuff, WHEN YOU CAN'T USE RESULT_KEY_... from above
     // ===========================================
 
-    public static final String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
+    public static final String HIT_KEY_WMS_URL = "t011_obj_serv_op_connpoint.connect_point";
     
     // needed to determine the display of the "show in map" link 
     public static final String HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT = "t011_obj_serv.has_access_constraint";

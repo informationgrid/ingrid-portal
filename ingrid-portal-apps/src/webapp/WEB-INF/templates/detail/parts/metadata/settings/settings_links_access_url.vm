@@ -1,0 +1,22 @@
+#### URL des Zugangs
+#set($xPathRefAccessUrl = "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata[./srv:operationName/gco:CharacterString[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'getcap')]]/srv:connectPoint")
+#set($xPathRefAccessUrlAlt1 = "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint")
+
+#if($type == 1)
+    ##set($xPathRefAccessUrl = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/*/gmd:URL[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'getcap')]]")
+#elseif($type == 6)
+    #set($xPathRefAccessUrl = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='5066']]")
+#end
+
+## URL des Zugangs
+#set($getAccessUrl = [])
+#if($type == 1)
+    #set($getAccessUrl = [])
+#elseif($type == 3)
+    #set($getAccessUrl = $TOOL.getConnectionPointList($xPathRefAccessUrl))
+    #if($getAccessUrl.isEmpty())
+        #set($getAccessUrl = $TOOL.getConnectionPointList($xPathRefAccessUrlAlt1))
+    #end
+#elseif($type == 6)
+    #set($getAccessUrl = $TOOL.getExternLinks($xPathRefAccessUrl))
+#end

@@ -1,0 +1,33 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/java-postgres
+{
+	"name": "Java & MySQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {}
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or with the host.
+	"forwardPorts": [10000],
+
+	"postCreateCommand": "/bin/mv /tomcat/conf/Catalina/localhost/ingrid-webmap-client.xml /tomcat/conf/Catalina/localhost/ingrid-webmap-client.xml.bak && cp /workspaces/ingrid-portal/.devcontainer/context/* /tomcat/conf/Catalina/localhost/ && sleep 5 && sh /workspaces/ingrid-portal/.devcontainer/init-db.sh",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"redhat.vscode-community-server-connector",
+				"mhutchie.git-graph"
+			]
+		}
+	},
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postStartCommand": "nohup bash -c 'cd /tomcat && /bin/sh /tomcat/bin/startup.sh'"
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}

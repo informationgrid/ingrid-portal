@@ -2,16 +2,16 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -213,11 +213,13 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_HIT_CUT_SUMMARY = "portal.search.hit.cut.summary";
 
-    public static final String PORTAL_SEARCH_HIT_CUT_SUMMARY_LENGTH = "portal.search.hit.cut.summary.length";
+    public static final String PORTAL_SEARCH_HIT_CUT_SUMMARY_LINES = "portal.search.hit.cut.summary.lines";
 
     public static final String PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL = "portal.search.hit.transform.coupled.csw.url";
 
     public static final String PORTAL_SEARCH_HIT_SUMMARY_ABSTRACT_FIELD = "portal.search.hit.summary.abstract.field";
+
+    public static final String PORTAL_SEARCH_HIT_CUTTED_SUMMARY_HTML_NEW_LINE = "portal.search.hit.cutted.summary.html.new.line";
 
     public static final String PORTAL_ADMIN_NUMBER_ROW_PROVIDER = "portal.admin.number.row.provider";
 
@@ -236,6 +238,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS = "portal.detail.view.hidden.keywords";
 
     public static final String PORTAL_DETAIL_VIEW_LIMIT_REFERENCES = "portal.detail.view.limit.references";
+
+    public static final String PORTAL_DETAIL_VIEW_UNLINK_ADDRESS = "portal.detail.view.unlink.address";
 
     public static final String PORTAL_DETAIL_REFERENCE_SYSTEM_LINK = "portal.detail.reference.system.link";
     public static final String PORTAL_DETAIL_REFERENCE_SYSTEM_LINK_REPLACE = "portal.detail.reference.system.link.replace";

@@ -1,2 +1,2 @@
 #### Downloads
-#set($xPathRefDownloads = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']]")
+#set($xPathRefDownloads = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'] or ./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/*/@codeListValue='download']")

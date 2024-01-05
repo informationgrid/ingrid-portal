@@ -2,16 +2,16 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -233,9 +233,6 @@ header a.icon.is-selected {
 .detail p + h4 {
   margin-top: 48px;
 }
-.detail .banner-noimage .helper.icon {
-  padding-bottom: 24px;
-}
 .detail .banner-noimage .page-wrapper {
   background-repeat: no-repeat;
   background-color: #F6F6F6;
@@ -252,9 +249,6 @@ header a.icon.is-selected {
 }
 .nav-content h2 {
   margin-bottom: 48px;
-}
-.nav-content .columns:last-of-type {
-  padding-left: 58px;
 }
 .nav-content .accordion-title span {
   text-transform: none;
@@ -799,12 +793,6 @@ header .menu-tab-row .menu-tab {
   .nav-content .accordion.accordion-filter-group {
     border-radius: 0;
   }
-  .nav-content .accordion.accordion-filter-group .accordion-title-filter-group::after {
-    content: '\e900';
-  }
-  .nav-content .accordion.accordion-filter-group .is-active .accordion-title-filter-group::after {
-    content: '\e903';
-  }
   .nav-content .accordion.accordion-filter-group .accordion-content.filter-wrapper {
     padding: 16px;
   }
@@ -1160,13 +1148,7 @@ footer .footer .logo a img{
   background-color: #871d33;
   border-radius: 5px !important;
 }
-.detail .banner-noimage {
-  padding: 0 0 54px 0;
-}
 @media print, screen and (max-width: 63.9375em) {
-  .detail .banner-noimage {
-    padding: 0;
-  }
   .search-filtered .accordion.accordion-filter-group .accordion-content.filter-wrapper {
     border-radius: 5px;
   }

@@ -2,16 +2,16 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -265,6 +265,45 @@ public class QueryResultPostProcessor {
                 addLegacyWMS(hit, detail);
             }
 
+            tmpArray = getStringArrayFromKey( detail, Settings.HIT_KEY_WMS_URL );
+            if (!doNotShowMaps && tmpArray != null && tmpArray.length > 0) {
+                for (String url : tmpArray) {
+                    String serviceTypeVersion = UtilsSearch.getDetailValue(detail, "t011_obj_serv_version.version_value");
+                    String serviceType = UtilsSearch.getDetailValue(detail, "t011_obj_serv.type");
+
+                    if(serviceTypeVersion.isEmpty() && serviceType.isEmpty()) {
+                        Object objectRefTyps = detail.get("refering.object_reference.type");
+                        Object objectRefVersion = detail.get("refering.object_reference.version");
+                        String[] tmpObjectRefTyps = {};
+                        String[] tmpObjectRefVersion = {};
+                        if (objectRefTyps instanceof ArrayList) {
+                            tmpObjectRefTyps = ((ArrayList<String>) objectRefTyps).toArray(new String[0]);;
+                        } else if(objectRefTyps instanceof String[]) {
+                            tmpObjectRefTyps = (String[])objectRefTyps;
+                        }
+                        if (objectRefVersion instanceof ArrayList ) {
+                            tmpObjectRefVersion = ((ArrayList<String>) objectRefVersion).toArray(new String[0]);
+                        } else if(objectRefVersion instanceof String[]) {
+                            tmpObjectRefVersion = (String[])objectRefVersion;
+                        }
+                        if(tmpObjectRefTyps.length == tmpObjectRefVersion.length) {
+                            for (int i = 0; i < tmpObjectRefTyps.length; i++) {
+                                String objectRefTyp = tmpObjectRefTyps[i];
+                                if(objectRefTyp.equalsIgnoreCase("view") || objectRefTyp.equalsIgnoreCase("wms") || objectRefTyp.equalsIgnoreCase("wmts")) {
+                                    serviceType = objectRefTyp;
+                                    serviceTypeVersion = tmpObjectRefVersion[i];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    String capUrl = UtilsSearch.addCapabilitiesInformation(url, serviceTypeVersion, serviceType);
+                    if(capUrl != null) {
+                        hit.put(Settings.RESULT_KEY_CAPABILITIES_URL, capUrl);
+                        break;
+                    }
+                }
+            }
             PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
 
               if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && UtilsSearch.getDetailValue(detail, "kml").length() > 0){

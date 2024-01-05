@@ -1,4 +1,31 @@
 
+## 7.0.0 (05.01.2024)
+
+### Features
+
+* URL für BB ändern (#5804)
+* Log-in Seite umstellen (#5616)
+* Button zum Teilen in den sozialen Netzwerken von allen Seiten entfernen (#5595)
+* PORTAL: Umsetzung für InVeKos (#5507)
+* Portal: Zugangs-URL von Dienst / Anwendung hervorheben (#5410)
+* PORTAL: Hilfetexte anzeigen (#5291)
+* Portal: Kontakte sollen nicht verlinkt werden (#5271)
+* IGE-NG, PORTAL: verschiedene Geofachportale für Kartenansicht aufrufen können (#5192)
+* IGE-NG: Feld "Produktionsumgebung" hinzufügen (#5191)
+* URLs in bestimmten Textelementen im Portal automatisch als Verweis anzeigen (#4668)
+* Mapclient: OSM als Kartenhintergrund einbinden, Orthofoto austauschen (#4606)
+* Umstellung Lizenz auf EUPL Version 1.2 (#1585)
+
+### Bugfixes
+
+* CSV-Export: Angabe "Zugang geschützt" für Geodatensätze (#5794)
+* XML URL in Detaildarstellung wird nicht korrekt befüllt (#5763)
+* Aktualisierung sicherheitskritischer Libraries (#5724)
+* Fax Icon Farbe korrigieren (#5700)
+* PORTAL: Menüeintrag "Metadaten" entfernen (#5683)
+* Raumbezug mit WKT wird in der NG Testumgebung nicht angezeigt. (#5641)
+* Portal: In der Beschreibung von über- und untergeordneten Objekten werden Zeilenumbrüche nicht angezeigt (#5586)
+    
 ## 6.3.0 (17.10.2023)
 
 ### Features

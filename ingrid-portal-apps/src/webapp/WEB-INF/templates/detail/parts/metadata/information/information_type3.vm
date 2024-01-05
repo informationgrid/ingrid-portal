@@ -20,7 +20,7 @@
 ## Historie
     #renderTextTable($MESSAGES.getString("t011_obj_serv.history") $TOOL.getValueFromXPath($xPathInfo3LIProcessStepDescription))
 ## Fachliche Grundlage
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo3LILineageStatement))
+    #renderTextTableConvertUrl($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo3LILineageStatement) false false true)
 ## Basisdaten
     #renderTextTable($MESSAGES.getString("t011_obj_serv.base") $TOOL.getValueFromXPath($xPathInfo3LISourceDescription))
 ## Erläuterung zum Fachbezug
