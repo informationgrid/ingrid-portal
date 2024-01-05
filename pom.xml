@@ -2,7 +2,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>7.0.0-SNAPSHOT</version>
+    <version>7.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -34,12 +34,12 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
-    <mdek.version>7.0.0-SNAPSHOT</mdek.version>
-    <webmap-client.version>7.0.0-SNAPSHOT</webmap-client.version>
-    <ingrid-codelist-service.version>7.0.0-SNAPSHOT</ingrid-codelist-service.version>
-    <ingrid-utils.version>7.0.0-SNAPSHOT</ingrid-utils.version>
+    <mdek.version>7.0.0</mdek.version>
+    <webmap-client.version>7.0.0</webmap-client.version>
+    <ingrid-codelist-service.version>7.0.0</ingrid-codelist-service.version>
+    <ingrid-utils.version>7.0.0</ingrid-utils.version>
     <measurement.client.version>2.0.6</measurement.client.version>
-    <ingrid-utils-geo.version>7.0.0-SNAPSHOT</ingrid-utils-geo.version>
+    <ingrid-utils-geo.version>7.0.0</ingrid-utils-geo.version>
     <spring.version>5.3.24</spring.version>
     <log4j.version>2.22.1</log4j.version>
   </properties>

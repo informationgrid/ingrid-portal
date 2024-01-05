@@ -267,7 +267,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-ige</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
+      <version>7.0.0</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -289,12 +289,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-services-api</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
+      <version>7.0.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-gemet</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
+      <version>7.0.0</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -305,7 +305,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
+      <version>7.0.0</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -316,7 +316,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-wfs</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
+      <version>7.0.0</version>
       <exclusions>
         <exclusion>
           <groupId>javax.measure</groupId>
