@@ -398,7 +398,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_NAME">
         <name>Verwaltet von</name>
         <id>maintain</id>
-        <field>t02_address.administrative_area_value</field>
+        <field>t02_address.identificationinfo_administrative_area_value</field>
     </facet>
     <facet>
         <name>Open Data</name>
