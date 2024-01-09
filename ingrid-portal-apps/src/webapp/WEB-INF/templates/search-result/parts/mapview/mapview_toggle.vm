@@ -11,4 +11,9 @@
         $("#searchResult").addClass("row-full");
         resizeMap(map_searchview);
     });
+    $( "#list_switcher" ).on("click", function(e) {
+        $("#map_view").addClass("is-hidden");
+        $("#list_view").removeClass("is-hidden");
+        $("#searchResult").removeClass("row-full");
+    });
 </script>
