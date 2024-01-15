@@ -13,7 +13,7 @@
             onAdd: function (map) {
                 var container = L.DomUtil.create('div', 'leaflet-control-listview leaflet-bar');
                 var link = L.DomUtil.create('a', icon, container);
-                link.href = '#';
+                link.href = '#list_view';
                 link.id = 'list_switcher'
                 link.title = title;
                 L.DomEvent.addListener(link, 'click', this._listviewClick, this);
@@ -24,6 +24,7 @@
                 switchToView.removeClass("is-hidden");
                 if(mainDiv) {
                     mainDiv.removeClass("row-full");
+                    updateQueryStringParameter('maps', 'false');
                 }
             }
         });

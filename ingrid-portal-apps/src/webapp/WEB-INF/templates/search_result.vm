@@ -1,7 +1,8 @@
 #parse("/WEB-INF/templates/global/include_hit_image_error.vm")
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 #parse("/WEB-INF/templates/search-result/search_result_settings.vm")
-<div id="searchResult" class="row">
+
+<div id="searchResult" class="row $classFullView">
     #parse ("/WEB-INF/templates/include_search_result_filter.vm")
     #if($enableFacete)
        <div id="filter" class="$filterClass">

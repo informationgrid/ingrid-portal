@@ -1,6 +1,14 @@
-<div id="list_view">
+#set($classListView = "")
+#set($classMapView = "")
+#if($maps == "true")
+    #set($classListView = 'class="is-hidden"')
+#else
+    #set($classMapView = 'class="is-hidden"')
+#end
+
+<div id="list_view" $classListView>
     #parse ('/WEB-INF/templates/include_search_result_ranked_listview.vm')
 </div>
-<div id="map_view" class="is-hidden"> 
+<div id="map_view" $classMapView> 
     #parse ('/WEB-INF/templates/include_search_result_ranked_mapview.vm')
 </div>

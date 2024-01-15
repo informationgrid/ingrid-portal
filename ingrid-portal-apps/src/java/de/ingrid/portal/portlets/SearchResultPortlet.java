@@ -221,6 +221,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("mapParamZoom", request.getParameter("zoom") != null ? request.getParameter("zoom"): "");
         context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent"): "");
         context.put("mapParamLayer", request.getParameter("layer") != null ? request.getParameter("layer"): "");
+        context.put("maps", request.getParameter("maps") != null ? request.getParameter("maps"): "false");
 
         context.put( "leafletBboxInverted", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_INVERTED));
         context.put( "leafletBboxColor", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BBOX_COLOR));

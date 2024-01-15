@@ -413,13 +413,19 @@ function checkPassword(pwd, idMeter, idText) {
 
 function updateQueryStringParameter(key, value) {
   var uri = window.parent.location.href;
+  var uriHash = window.parent.location.hash;
+  if(uriHash) {
+    uri = uri.replace(uriHash, "");
+  }
   var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
   var separator = uri.indexOf('?') !== -1 ? "&" : "?";
   if (uri.match(re)) {
     uri = uri.replace(re, '$1' + key + "=" + value + '$2');
-  }
-  else {
+  } else {
     uri = uri + separator + key + "=" + value;
+  }
+  if(uriHash) {
+    uri = uri + uriHash;
   }
   window.history.replaceState(null,null, uri);
 }

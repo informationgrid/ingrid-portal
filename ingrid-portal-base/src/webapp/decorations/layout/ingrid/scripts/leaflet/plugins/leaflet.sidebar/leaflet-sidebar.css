@@ -91,6 +91,7 @@
  font-size: 12pt;
  overflow: hidden;
  transition: all 80ms;
+ margin-bottom: 0;
 }
 
 .leaflet-sidebar-tabs>li:hover, .leaflet-sidebar-tabs>ul>li:hover {
@@ -172,8 +173,20 @@
  padding: 10px 0 10px 0;
 }
 
+.leaflet-sidebar-pane-content {
+  overflow: hidden;
+  outline: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 48vh;
+}
 .leaflet-sidebar-pane.active {
  display: block;
+}
+
+.leaflet-sidebar-pane p {
+ line-height: 18px;
 }
 
 @media ( min-width : 768px) and (max-width: 991px) {
@@ -196,10 +209,10 @@
 
 .leaflet-sidebar-header {
  margin: -10px 0px 0;
- height: 40px;
- padding: 0 20px;
- line-height: 40px;
- font-size: 14.4pt;
+ min-height: 40px;
+ padding: 6px 8px;
+ line-height: 27px;
+ font-size: 21px;
  color: #fff;
  background-color: #0074d9;
 }
@@ -210,7 +223,7 @@
 
 .leaflet-sidebar-close {
  position: absolute;
- top: 0;
+ top: 8px;
  width: 40px;
  height: 40px;
  text-align: center;

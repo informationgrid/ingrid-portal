@@ -54,8 +54,12 @@
     font-size: 14px;
     color: #666;
     text-decoration: none;
-    min-height: 48px;
 }
+
+.list-markers-li .list-item-controls a {
+    width: unset;
+}
+
 .list-markers-li a:hover {
     color: #0078A8;
     text-decoration: none;

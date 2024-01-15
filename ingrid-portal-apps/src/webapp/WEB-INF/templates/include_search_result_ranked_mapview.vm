@@ -26,7 +26,10 @@
 </div>
 
 <script>
-    var map_searchview = new L.Map('map-searchview');
+    var map_searchview = new L.Map('map-searchview', {
+    minZoom: 0,
+    maxZoom: 18
+    });
     var lat = $facetMapCenter.get(0);
     var lng = $facetMapCenter.get(1);
     var zoom = $facetMapCenter.get(2);
@@ -156,10 +159,12 @@
         if(selectedMarker.options.features) {
             map_searchview.addLayer(selectedMarker.options.features);
         }
-        if(selectedMarker.options.features) {
-            map_searchview.fitBounds(selectedMarker.options.features.getBounds(), { padding: [150, 150] });
+        openDetail(e);
+    }).on('item-zoom-click', function(e) {
+        if(e.layer.options.features) {
+            map_searchview.fitBounds(e.layer.options.features.getBounds(), { padding: [150, 150] });
         } else {
-            map_searchview.panTo( selectedMarker.getLatLng() );
+            map_searchview.panTo( e.layer.getLatLng() );
         }
     });
 
@@ -249,12 +254,13 @@
                                 var tmpFeatures = L.geoJSON(wktJson, {
                                     onEachFeature: function(feature, layer) {
                                         var features = L.marker(layer.getLatLng(), {
-                                            title: title,
                                             id: objUuid,
+                                            title: title,
+                                            summary: summary,
                                             class: objClass,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                         });
-                                        features.on('click', markerClick);
+                                        features.on('click', openDetail);
                                         if(features) {
                                             mapMarkers.addLayer(features);
                                         }
@@ -267,13 +273,14 @@
                                         for (i = 0; i < layers.getLayers().length; i++) {
                                             var layer = layers.getLayers()[0];
                                             var tmp = L.marker(layer.getLatLng(), {
-                                                title: title,
                                                 id: objUuid,
+                                                title: title,
+                                                summary: summary,
                                                 class: objClass,
                                                 features: L.geoJSON(features),
                                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                             });
-                                            tmp.on('click', markerClick);
+                                            tmp.on('click', openDetail);
                                             if(tmp) {
                                                 mapMarkers.addLayer(tmp);
                                             }
@@ -289,15 +296,16 @@
                                     var length = turf.length(wktJson, options);
                                     var along = turf.along(wktJson, length/2, options);
                                     features = L.marker(new L.LatLng(along.geometry.coordinates[1], along.geometry.coordinates[0]), {
-                                        title: title,
                                         id: objUuid,
+                                        title: title,
+                                        summary: summary,
                                         class: objClass,
                                         features: tmpFeatures,
                                         itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/line.png',
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', markerClick);
+                                    features.on('click', openDetail);
                                 }
                             } else if(wktJson.type === 'MultiLineString') {
                                 var tmpFeatures = L.geoJSON(wktJson, {});
@@ -308,15 +316,16 @@
                                     var coord = coordArr[coordIndex];
 
                                     features = L.marker(new L.LatLng(coord[1], coord[0]), {
-                                        title: title,
                                         id: objUuid,
+                                        title: title,
+                                        summary: summary,
                                         class: objClass,
                                         features: tmpFeatures,
                                         itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/line.png',
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', markerClick);
+                                    features.on('click', openDetail);
                                 }
                             /*} else if(wktJson.type === 'Polygon') {
                                 var tmpFeatures = L.geoJSON(wktJson, {});
@@ -324,15 +333,16 @@
                                 if(center.geometry) {
                                     var coord = center.geometry.coordinates;
                                     features = L.marker(new L.LatLng(coord[1], coord[0]), {
-                                        title: title,
                                         id: objUuid,
+                                        title: title,
+                                        summary: summary,
                                         class: objClass,
                                         features: tmpFeatures,
                                         itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', markerClick);
+                                    features.on('click', openDetail);
                                 }
                             } else if(wktJson.type === 'MultiPolygon') {
                                 var tmpFeatures = L.geoJSON(wktJson, {});
@@ -340,15 +350,16 @@
                                 if(center.geometry) {
                                     var coord = center.geometry.coordinates;
                                     features = L.marker(new L.LatLng(coord[1], coord[0]), {
-                                        title: title,
                                         id: objUuid,
+                                        title: title,
+                                        summary: summary,
                                         class: objClass,
                                         features: tmpFeatures,
                                         itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', markerClick);
+                                    features.on('click', openDetail);
                                 }
                             */
                             } else {
@@ -357,15 +368,16 @@
                                 if(center.geometry) {
                                     var coord = center.geometry.coordinates;
                                     features = L.marker(new L.LatLng(coord[1], coord[0]), {
-                                        title: title,
                                         id: objUuid,
+                                        title: title,
+                                        summary: summary,
                                         class: objClass,
                                         features: tmpFeatures,
                                         itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', markerClick);
+                                    features.on('click', openDetail);
                                 }
                             }
                         }
@@ -395,13 +407,14 @@
                                   var coord = coordArr[coordIndex];
     
                                   var features = L.marker(new L.LatLng(coord[1], coord[0]), {
-                                      title: title,
                                       id: objUuid,
-                                      class: objClass,
+                                    title: title,
+                                    summary: summary,
+                                    class: objClass,
                                       features: tmpFeatures,
                                       itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/bwastr.png'
                                   });
-                                  features.on('click', markerClick);
+                                  features.on('click', openDetail);
                                   if(features) {
                                      mapMarkers.addLayer(features);
                                   }
@@ -416,19 +429,24 @@
                                       if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
                                         if(x1Coord === x2Coord && y1Coord === y2Coord) {
                                           var features = L.marker([y1Coord, x1Coord], {
+                                            id: objUuid,
                                             title: title,
+                                            summary: summary,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                           });
+                                          features.on('click', openDetail);
                                           mapMarkers.addLayer(features);
                                         } else {
                                           var bounds = L.latLngBounds(L.latLng(y1Coord, x1Coord), L.latLng(y2Coord, x2Coord));
                                           var center = bounds.getCenter();
                                           var features = L.marker(center, {
-                                            title: title,
                                             id: objUuid,
+                                            title: title,
+                                            summary: summary,
                                             class: objClass,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                           });
+                                          features.on('click', openDetail);
                                           mapMarkers.addLayer(features);
                                         }
                                       }
@@ -446,19 +464,24 @@
                           if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
                             if(x1Coord === x2Coord && y1Coord === y2Coord) {
                               var features = L.marker([y1Coord, x1Coord], {
+                                id: objUuid,
                                 title: title,
+                                summary: summary,
                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                               });
+                              features.on('click', openDetail);
                               mapMarkers.addLayer(features);
                             } else {
                               var bounds = L.latLngBounds(L.latLng(y1Coord, x1Coord), L.latLng(y2Coord, x2Coord));
                               var center = bounds.getCenter();
                               var features = L.marker(center, {
-                                title: title,
                                 id: objUuid,
+                                title: title,
+                                summary: summary,
                                 class: objClass,
                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                               });
+                              features.on('click', openDetail);
                               mapMarkers.addLayer(features);
                             }
                           }
@@ -485,10 +508,45 @@
         }
     }
 
-    function markerClick(e) {
-        var popup = e.target.getPopup();
-        map.spin(true);
-        map.spin(false);
+    function openDetail(e) {
+        var title, summary;
+        if(e.layer) {
+            title = e.layer.options.title;
+            summary = e.layer.options.summary;
+        } else {
+            title = this.options.title;
+            summary = this.options.summary;
+        }
+        var pane = L.DomUtil.create('div', 'leaflet-sidebar-pane');
+        var header = L.DomUtil.create('h1', 'leaflet-sidebar-header', pane);
+        header.innerHTML = title;
+        var detailClose = L.DomUtil.create('span', 'leaflet-sidebar-close', header);
+        var detailCloseIcon = L.DomUtil.create('i', 'ic-ic-cross', detailClose);
+        var content = L.DomUtil.create('div', 'leaflet-sidebar-pane-content', pane);
+        var contentSum = L.DomUtil.create('p', '', content);
+        contentSum.innerHTML = summary;
+        $('.leaflet-sidebar-pane-content').niceScroll({
+            cursorcolor:"#5e788d",
+            cursorwidth:"8px",
+            cursorborderradius: "6px",
+        });
+        L.DomEvent
+            .disableClickPropagation(detailCloseIcon)
+            .on(detailCloseIcon, 'click', L.DomEvent.stop, this)
+            .on(detailCloseIcon, 'click', function(e) {
+                sidebar.removePanel(id);
+                sidebar.open('hits');
+            }, this);
+        var id = 'detailPanel'; 
+        var panelContent = {
+            id: id,
+            tab: '<i class="ic-ic-lupe"></i>',
+            pane: pane,
+            title: title
+        };
+        sidebar.removePanel(id);
+        sidebar.addPanel(panelContent);
+        sidebar.open('detailPanel');
     };
 </script>
 

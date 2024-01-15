@@ -74,7 +74,6 @@ L.Control.ListMarkers = L.Control.extend({
             }
             icon += ' />';
         }
-
         a.href = '#';
         L.DomEvent
             .disableClickPropagation(a)
@@ -90,16 +89,27 @@ L.Control.ListMarkers = L.Control.extend({
                 that.fire('item-mouseout', {layer: layer });
             }, this);
 
-        if( layer.options.hasOwnProperty(this.options.label) )
-        {
+        if( layer.options.hasOwnProperty(this.options.label) ) {
             a.innerHTML = '<span>' + layer.options[this.options.label]+ '</span>' +
                 ' <b>' + this.options.itemArrow+'</b>' + icon;
             a.setAttribute('title', layer.options[this.options.label]);
-        
-        }
-        else
+        } else {
             console.log("propertyName '"+this.options.label+"' not found in marker");
-        
+        }
+
+        var controls = L.DomUtil.create('div', '', li);
+        L.DomUtil.addClass(controls, 'list-item-controls');
+        var zoom = L.DomUtil.create('a', '', controls);
+        var iconZoom = '<i class="ic-ic-lupe" />';
+        zoom.href = '#';
+        zoom.innerHTML = iconZoom;
+
+        L.DomEvent
+            .disableClickPropagation(zoom)
+            .on(zoom, 'click', L.DomEvent.stop, this)
+            .on(zoom, 'click', function(e) {
+                that.fire('item-zoom-click', {layer: layer });
+            }, this);
         return li;
     },
 
