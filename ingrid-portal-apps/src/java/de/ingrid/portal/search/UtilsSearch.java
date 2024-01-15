@@ -2,16 +2,16 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -285,13 +285,7 @@ public class UtilsSearch {
             if (summary == null) {
                 summary = "".intern();
             }
-            
-            boolean isCutSummary = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_CUT_SUMMARY, true);
-            if(isCutSummary) {
-                int cutSummaryLength = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_HIT_CUT_SUMMARY_LENGTH, 200);
-                summary = UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
-                    ""), cutSummaryLength, cutSummaryLength, false);
-            }
+
             result.put(Settings.RESULT_KEY_ABSTRACT, summary);
             String documentId = result.getHit().getDocumentId();
             if (documentId != null && !"null".equals( documentId )) {
@@ -1730,6 +1724,63 @@ public class UtilsSearch {
             }
         }
         return "";
+    }
+
+    public static String addCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){
+        StringBuilder urlValue = new StringBuilder(url);
+        String service = null;
+
+        if (serviceTypeVersion != null && !serviceTypeVersion.isEmpty()) {
+            String tmpService = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
+            if (tmpService != null) {
+                service = tmpService;
+            }
+        }
+        if(service != null && service.trim().contains(" ")) {
+            return url;
+        }
+        // add missing parameters
+        if (url.indexOf("?") != -1) {
+            if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                // if url or parameters already contains a ? or & at the end then do not add another one!
+                if (!(url.lastIndexOf("?") == url.length() - 1 || url.length() > 0)
+                        && !(url.lastIndexOf("&") == url.length() - 1)) {
+                    urlValue.append("&");
+                }
+                urlValue.append("REQUEST=GetCapabilities");
+            }
+            if(service == null) {
+                if (serviceType != null && !serviceType.isEmpty()) {
+                    IngridSysCodeList codelist = new IngridSysCodeList(new Locale("DE"));
+                    String codelistValue = codelist.getNameByCodeListValue("5100", serviceType.trim());
+                    if(codelistValue.isEmpty()) {
+                        service = serviceType.trim();
+                    }
+                }
+            }
+        } else {
+            service = "WMTS";
+        }
+        if(service != null) {
+            if (url.indexOf("?") != -1) {
+                if (url.toLowerCase().indexOf("service=") == -1) {
+                    urlValue.append("&SERVICE=" + service);
+                }
+            }
+            String cap = urlValue.toString().trim();
+            return cap;
+        } else if((service == null && !urlValue.toString().isEmpty()) 
+                && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view")))) {
+            String defaultService = "WMS";
+            if (url.indexOf("?") != -1) {
+                if (url.toLowerCase().indexOf("service=") == -1) {
+                    urlValue.append("&SERVICE=" + defaultService);
+                }
+            }
+            String cap = urlValue.toString().trim();
+            return cap;
+        }
+        return url;
     }
 
     public static String addMapclientCapabilitiesInformation(String url, String serviceTypeVersion, String serviceType){

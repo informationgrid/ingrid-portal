@@ -6,12 +6,12 @@
     #renderSectionTitle($MESSAGES.getString("search.detail.usage"))
     <div class="row columns">
     ## Nutzungsbedingungen (useConstraints)
-        #renderTextListTable($MESSAGES.getString("object_access.license") $useConstraints)
+        #renderTextListTableConvertUrl($MESSAGES.getString("object_access.license") $useConstraints false false $true)
     ## Zugriffsbeschränkungen (accessConstraints)
         #set($consideredValues = ["otherRestrictions"])
-        #renderTextListTable($MESSAGES.getString("object_access.restriction_value") $TOOL.mergeList($TOOL.getListOfValuesFromXPath($xPathUseAccessConstraints, "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues), $TOOL.getSiblingsValuesFromXPath($xPathUseAccessConstraints, "gmd:otherConstraints", false, "6010", $consideredValues)))
+        #renderTextListTableConvertUrl($MESSAGES.getString("object_access.restriction_value") $TOOL.mergeList($TOOL.getListOfValuesFromXPath($xPathUseAccessConstraints, "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues), $TOOL.getSiblingsValuesFromXPath($xPathUseAccessConstraints, "gmd:otherConstraints", false, "6010", $consideredValues)) false false $true)
     ## Anwendungseinschränkungen (useLimitation)
-        #renderTextListTable($MESSAGES.getString("object_access.terms_of_use") $useLimitations)
+        #renderTextListTableConvertUrl($MESSAGES.getString("object_access.terms_of_use") $useLimitations false false  $true)
     ## Sicherheitsstufung
         #parse("/WEB-INF/templates/detail/parts/metadata/use/use_classification_code.vm")
     ## Software

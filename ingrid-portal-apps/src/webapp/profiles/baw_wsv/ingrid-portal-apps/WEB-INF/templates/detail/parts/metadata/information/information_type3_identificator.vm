@@ -1,4 +1,4 @@
     ## Identifikator der Datenquelle
-        #renderTextTable("Identifikator" $TOOL.getValueFromXPath($xPathInfo1MDIdentifierCode))
+        #renderTextTableConvertUrl("Identifikator" $TOOL.getValueFromXPath($xPathInfo1MDIdentifierCode) false false true)
     ## Identifikator der Datenquelle (older iplug)
         #renderTextTable("Identifikator" $TOOL.getValueFromXPath($xPathInfo1RSIdentifierCode))

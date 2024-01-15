@@ -5,6 +5,19 @@
     <a class="anchor" id="${hashDetail3}"></a>
     #renderSectionTitle($MESSAGES.getString("references_tab"))
     <div class="row columns">
+    ## URL des Zugangs
+        #if($getAccessUrl && $getAccessUrl.size() > 0)
+        <div class="sub-section sub-section-unlined">
+            #set($tmpTitle = $MESSAGES.getString("access_url"))
+            #set($tmpCount = $getAccessUrl.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            <a class="anchor" id="${hashDetail3}_access_url"></a>
+            #renderLinkListImageLimit($tmpTitle $getAccessUrl false false $getAccessUrl.size() "access_url_more" "h4")
+            
+        </div>
+        #end
     ## Downloads
         #if($getDownloads && $getDownloads.size() > 0)
         <div class="sub-section sub-section-unlined">

@@ -16,8 +16,10 @@
     #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_vector"), $xPathInfo1MD_VectorSpatialRepresentationGeometricObjects, $headTitles, $headXpathExpressions, $headCodeList))
 ## Erstellungsmaßstab
     #renderTableAsList("" $TOOL.getReferenceObject($xPathInfo1MDResolution) $hideResolutionTitle)
+## Systemumgebung
+    #renderTextTable($MESSAGES.getString("t011_obj_serv.environment") $TOOL.getValueFromXPath($xPathInfo1EnvironmentDescription))
 ## Fachliche Grundlage
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
+    #renderTextTableConvertUrl($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement) false false true)
 ## Datengrundlage
     #renderTextListTable($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getListOfValuesFromXPath($xPathInfo1LISourceDescription, "."))
 ## Herstellungsprozess

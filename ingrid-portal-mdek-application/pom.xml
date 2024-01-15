@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
@@ -33,8 +33,6 @@
     <sonar.exclusions>
       src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*
     </sonar.exclusions>
-    <spring.version>5.3.24</spring.version>
-    <ingrid-utils-geo.version>6.3.0</ingrid-utils-geo.version>
   </properties>
 
   <!-- ==================== Build Configuration ==================== -->
@@ -116,6 +114,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
+          <licenseResolver>${project.baseUri}/../license</licenseResolver>
           <excludes>
             <exclude>**/*.properties</exclude>
             <exclude>**/*.json</exclude>
@@ -268,7 +267,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-ige</artifactId>
-      <version>6.0.0</version>
+      <version>7.0.0</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -290,12 +289,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-services-api</artifactId>
-      <version>6.0.0</version>
+      <version>7.0.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-gemet</artifactId>
-      <version>6.0.0</version>
+      <version>7.0.0</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -306,7 +305,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
-      <version>6.0.0</version>
+      <version>7.0.0</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -317,7 +316,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-wfs</artifactId>
-      <version>6.3.0</version>
+      <version>7.0.0</version>
       <exclusions>
         <exclusion>
           <groupId>javax.measure</groupId>
@@ -921,7 +920,6 @@
         <plugins>
           <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.8</version>
             <executions>
               <execution>
                 <id>compile</id>

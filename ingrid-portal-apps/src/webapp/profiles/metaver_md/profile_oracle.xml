@@ -29,7 +29,7 @@
         </page>
         <page>
             <name>mdek/mdek_portal_admin.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>application/main-application.psml</name>
@@ -102,10 +102,6 @@
         </file>
         <file>
             <action>copy-dir</action>
-            <src>ingrid-portal-mdek-application/</src>
-        </file>
-        <file>
-            <action>copy-dir</action>
             <src>ingrid-webmap-client/</src>
         </file>
         <file>
@@ -137,6 +133,10 @@
         </execute>
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>
+        </execute>
+        <!-- Set folder "/mdek" to hidden -->
+        <execute>
+            <![CDATA[UPDATE folder SET IS_HIDDEN='1' WHERE PATH='/mdek']]>
         </execute>
         <!-- Delete user default-page.psml -->
         <execute>

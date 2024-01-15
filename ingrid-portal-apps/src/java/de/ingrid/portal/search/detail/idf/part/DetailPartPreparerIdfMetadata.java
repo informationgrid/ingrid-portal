@@ -2,16 +2,16 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -275,8 +275,17 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
             }
         } else {
-            // show preview image (with map link information if provided)
-            map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
+            String xpathMapUrl = "./idf:mapUrl";
+            if(xPathUtils.nodeExists(rootNode, xpathMapUrl)) {
+                String mapUrlNodeText = xPathUtils.getNode(rootNode, xpathMapUrl).getTextContent();
+                if(mapUrlNodeText != null && !mapUrlNodeText.isEmpty()) {
+                    map = addBigMapLink(rootNode, "", false, partner, mapUrlNodeText);
+                }
+            }
+            if(map.isEmpty()) {
+                // show preview image (with map link information if provided)
+                map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
+            }
         }
 
         return map;
@@ -598,6 +607,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         List<String> listSearch = new ArrayList<>();
         List<String> listGemet = new ArrayList<>();
         List<String> listInspire = new ArrayList<>();
+        List<String> listInspireInvekos = new ArrayList<>();
         List<String> listPriorityDataset = new ArrayList<>();
         List<String> listSpatialScope = new ArrayList<>();
 
@@ -649,33 +659,43 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             if (!isHidden && !thesaurusName.contains("Service")) {
                                 // "UMTHES Thesaurus"
                                 if (thesaurusName.contains("UMTHES")) {
-                                    listSearch.add(value);
+                                    if(listSearch.indexOf(value) == -1) {
+                                        listSearch.add(value);
+                                    }
                                 // "GEMET - Concepts, version 2.1"
                                 } else if (thesaurusName.contains("Concepts")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listGemet.add(tmpValue);
+                                    if(listGemet.indexOf(tmpValue) == -1) {
+                                        listGemet.add(tmpValue);
+                                    }
                                     // "GEMET - INSPIRE themes, version 1.0"
                                 } else if (thesaurusName.contains("priority")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listPriorityDataset.add(tmpValue);
+                                    if(listPriorityDataset.indexOf(tmpValue) == -1) {
+                                        listPriorityDataset.add(tmpValue);
+                                    }
                                 } else if (thesaurusName.contains("Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listSpatialScope.add(tmpValue);
+                                    if(listSpatialScope.indexOf(tmpValue) == -1) {
+                                        listSpatialScope.add(tmpValue);
+                                    }
                                 } else if (thesaurusName.contains("INSPIRE")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listInspire.add(tmpValue);
+                                    if(listInspire.indexOf(tmpValue) == -1) {
+                                        listInspire.add(tmpValue);
+                                    }
                                     // "German Environmental Classification - Category, version 1.0"
                                 } else if (thesaurusName.contains("German Environmental Classification")) {
                                     // do not used in detail view.
@@ -683,15 +703,23 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 } else if (thesaurusName.contains("Further legal basis")) {
                                     // do not used in detail view.
 
+                                } else if (thesaurusName.equalsIgnoreCase("IACS Data")) {
+                                    if(listInspireInvekos.indexOf(value) == -1) {
+                                        listInspireInvekos.add(value);
+                                    }
                                 } else if (thesaurusName.isEmpty() && type.isEmpty()) {
-                                    listSearch.add(value);
+                                    if(listSearch.indexOf(value) == -1) {
+                                        listSearch.add(value);
+                                    }
                                 } else{
                                     // try to match keyword to  Opendata Category
                                     String tmpValue = sysCodeList.getNameByData("6400", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
-                                    listSearch.add(tmpValue);
+                                    if(listSearch.indexOf(tmpValue) == -1) {
+                                        listSearch.add(tmpValue);
+                                    }
                                 }
                             }
                         }
@@ -713,6 +741,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             case "spatial_scope":
                 sortList(listSpatialScope);
                 return listSpatialScope;
+            case "inspire_invekos":
+                sortList(listInspireInvekos);
+                return listInspireInvekos;
             default:
                 sortList(listSearch);
                 return listSearch;
@@ -1188,7 +1219,127 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
 
                     if (operationName.equals("GetCapabilities")) {
-                        // add missing parameters
+                    // add missing parameters
+                    if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                        if (url.indexOf("?") != -1) {
+                            // if url or parameters already contains a ? or & at the end then do not add another one!
+                            if (!(url.lastIndexOf("?") == url.length() - 1 || url.length() > 0)
+                                    && !(url.lastIndexOf("&") == url.length() - 1)) {
+                                urlValue.append("&");
+                            }
+                            urlValue.append("REQUEST=GetCapabilities");
+                        }
+                    }
+                    if (url.toLowerCase().indexOf("service=") == -1) {
+                        if (url.indexOf("?") != -1) {
+                            NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
+                            for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
+                                Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
+                                String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
+                                if (!tmpServiceTypeVersion.isEmpty()) {
+                                    String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
+                                    if (tmpValue != null) {
+                                        urlValue.append("&SERVICE=" + tmpValue);
+                                        serviceTypeVersion = tmpServiceTypeVersion;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (urlValue.toString().toLowerCase().indexOf("service=") == -1) {
+                        if (url.indexOf("?") != -1) {
+                            NodeList nodeListParameters = xPathUtils.getNodeList(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/gco:CharacterString");
+                            for (int j=0; j<nodeListParameters.getLength();j++){
+                                Node nodeParameter = nodeListParameters.item(j);
+                                String parameter = xPathUtils.getString(nodeParameter, ".").trim();
+                                if (!parameter.isEmpty()) {
+                                    if (parameter.toLowerCase().indexOf("service=") > -1) {
+                                        urlValue.append("&" + parameter);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    element.put("type", "textLabelLeft");
+                    element.put("line", true);
+
+                    HashMap elementCapabilitiesLink = new HashMap();
+                    elementCapabilitiesLink.put("type", "linkLine");
+                    elementCapabilitiesLink.put("hasLinkIcon", true);
+                    elementCapabilitiesLink.put("isExtern", true);
+                    elementCapabilitiesLink.put("title", messages.getString("search.detail.showGetCapabilityUrl.title"));
+                    elementCapabilitiesLink.put("href", urlValue);
+                    element.put("body", elementCapabilitiesLink);
+
+                    if (!hasAccessConstraints()) {
+                        element.put("title", messages.getString("search.detail.showGetCapabilityUrl"));
+                        if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)
+                                && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
+                            HashMap elementMapLink = new HashMap();
+                            elementMapLink.put("type", "linkLine");
+                            elementMapLink.put("hasLinkIcon", true);
+                            elementMapLink.put("isExtern", false);
+                            elementMapLink.put("title", messages.getString("common.result.showMap"));
+                            elementMapLink.put("href", UtilsSearch.addMapclientCapabilitiesInformation(urlValue.toString(), serviceTypeVersion, serviceType)); 
+                            if (xPathUtils.nodeExists(rootNode, "./idf:mapUrl")) {
+                                elementMapLink.put("extMapUrl", xPathUtils.getString(rootNode, "./idf:mapUrl"));
+                            }
+                            element.put("link", elementMapLink);
+                            element.put("linkLeft", true);
+                        }
+                    } else {
+                        // do not display "show in map" link if the map has access constraints
+                        element.put("title", messages.getString("search.detail.showGetCapabilityUrlRestricted"));
+                    }
+                    // ADD FIRST ONE FOUND !!!
+                    break;
+                }
+            }
+        }
+        }
+        return element;
+    }
+
+    public List<HashMap<String, Object>> getConnectionPointList(String xpathExpression) {
+        ArrayList<HashMap<String, Object>> linkList = new ArrayList<>();
+        String serviceType = getValueFromXPath("./gmd:identificationInfo/*/srv:serviceType");
+        if(serviceType != null){
+            serviceType = serviceType.trim();
+        }
+        String serviceTypeVersion = null;
+        if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+
+            for (int i=0; i<nodeList.getLength();i++){
+                if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
+                    Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
+                    String url = xPathUtils.getString(node, ".").trim();
+                    StringBuilder urlValue = new StringBuilder(url);
+                    // do not display empty URLs
+                    if (urlValue.length() == 0) {
+                        continue;
+                    }
+
+                    // do not display empty operations
+                    String operationName = xPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim();
+                    if (operationName == null || operationName.length() == 0) {
+                        continue;
+                    }
+                    String description = "";
+                    if(xPathUtils.nodeExists(nodeList.item(i), "./../srv:operationDescription")){
+                        description = xPathUtils.getString(nodeList.item(i), "./../srv:operationDescription").trim();
+                    }
+                    
+                    // add missing parameters
+                    if(serviceType != null && (
+                            serviceType.trim().equalsIgnoreCase("view") || 
+                            serviceType.trim().equalsIgnoreCase("wms") || 
+                            serviceType.trim().equalsIgnoreCase("wmts") || 
+                            operationName.toLowerCase().trim().indexOf("getcap") > -1
+                        )
+                    ){
                         if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
                             if (url.indexOf("?") != -1) {
                                 // if url or parameters already contains a ? or & at the end then do not add another one!
@@ -1207,10 +1358,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
                                     if (!tmpServiceTypeVersion.isEmpty()) {
                                         String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
-                                        if (tmpValue != null) {
+                                        if (tmpValue != null && !tmpValue.trim().contains(" ")) {
                                             urlValue.append("&SERVICE=" + tmpValue);
                                             serviceTypeVersion = tmpServiceTypeVersion;
                                             break;
+                                        } else {
+                                            if(tmpValue.trim().contains(" ")) {
+                                                urlValue = new StringBuilder(url);
+                                            }
                                         }
                                     }
                                 }
@@ -1231,46 +1386,23 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 }
                             }
                         }
-                        element.put("type", "textLabelLeft");
-                        element.put("line", true);
-
-                        HashMap elementCapabilitiesLink = new HashMap();
-                        elementCapabilitiesLink.put("type", "linkLine");
-                        elementCapabilitiesLink.put("hasLinkIcon", true);
-                        elementCapabilitiesLink.put("isExtern", true);
-                        elementCapabilitiesLink.put("title", messages.getString("search.detail.showGetCapabilityUrl.title"));
-                        elementCapabilitiesLink.put("href", urlValue);
-                        element.put("body", elementCapabilitiesLink);
-
-                        if (!hasAccessConstraints()) {
-                            element.put("title", messages.getString("search.detail.showGetCapabilityUrl"));
-                            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)
-                                    && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
-                                HashMap elementMapLink = new HashMap();
-                                elementMapLink.put("type", "linkLine");
-                                elementMapLink.put("hasLinkIcon", true);
-                                elementMapLink.put("isExtern", false);
-                                elementMapLink.put("title", messages.getString("common.result.showMap"));
-                                elementMapLink.put("href", UtilsSearch.addMapclientCapabilitiesInformation(urlValue.toString(), serviceTypeVersion, serviceType)); 
-                                if (xPathUtils.nodeExists(rootNode, "./idf:mapUrl")) {
-                                    elementMapLink.put("extMapUrl", xPathUtils.getString(rootNode, "./idf:mapUrl"));
-                                }
-                                element.put("link", elementMapLink);
-                                element.put("linkLeft", true);
-                            }
-                        } else {
-                            // do not display "show in map" link if the map has access constraints
-                            element.put("title", messages.getString("search.detail.showGetCapabilityUrlRestricted"));
-                        }
-                        // ADD FIRST ONE FOUND !!!
-                        break;
                     }
+
+                    HashMap elementCapabilitiesLink = new HashMap();
+                    elementCapabilitiesLink.put("type", "linkLine");
+                    elementCapabilitiesLink.put("hasLinkIcon", true);
+                    elementCapabilitiesLink.put("isExtern", true);
+                    elementCapabilitiesLink.put("title", urlValue);
+                    elementCapabilitiesLink.put("href", urlValue);
+                    if (!description.isEmpty()) {
+                        elementCapabilitiesLink.put("description", description);
+                    }
+                    linkList.add(elementCapabilitiesLink);
                 }
             }
         }
-        return element;
+        return linkList;
     }
-
     public Map<String, Object> getAreaGeothesaurus(String xpathExpression){
         HashMap element = new HashMap();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
@@ -1565,8 +1697,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     public String addLinkToGetXML() {
         String htmlLink = null;
         String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
+        String id = this.uuid;
+        if(id == null) {
+            id = this.docid;
+        }
         if (!cswUrl.isEmpty()) {
-            htmlLink = "<a target=\"_blank\" class=\"external-link\" href=\""+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+this.uuid+"&iplug="+this.iPlugId+"&elementSetName=full\">"+messages.getString("xml_link")+"</a>";
+            htmlLink = "<a target=\"_blank\" class=\"external-link\" href=\""+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+this.iPlugId+"&elementSetName=full\">"+messages.getString("xml_link")+"</a>";
         }
         return htmlLink;
     }
@@ -1575,12 +1711,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         HashMap elementLink = null;
         String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
         if (!cswUrl.isEmpty()) {
+            String id = this.uuid;
+            if(id == null) {
+                id = this.docid;
+            }
             elementLink = new HashMap();
             elementLink.put("type", "linkLine");
             elementLink.put("hasLinkIcon", true);
             elementLink.put("isDownload", true);
             elementLink.put("title", messages.getString("xml_link"));
-            elementLink.put("href", cswUrl + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + this.uuid);
+            elementLink.put("href", cswUrl + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + id);
         }
         return elementLink;
     }
@@ -1709,9 +1849,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         ArrayList<HashMap<String, String>> imageUrls = getPreviewImageUrl(null);
         if (imageUrls.isEmpty()) {
             HashMap<String, Object> elementMapLink = new HashMap<>();
-            elementMapLink.put("type", "linkLine");
-            elementMapLink.put("isMapLink", true);
-            elementMapLink.put("isExtern", false);
 
             if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
                 // do not render "show in map" link if the map has access constraints (no href added).
@@ -1724,25 +1861,28 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
                 elementMapLink.put("href", href);
             }
-
-            if(elementCapabilities.get("href") != null || elementMapLink.get("href") != null) {
+            if(extMapUrl != null) {
+                elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                elementMapLink.put("extMapUrl", extMapUrl);
+            }
+            if(elementCapabilities.get("href") != null || elementMapLink.get("href") != null || elementCapabilities.get("extMapUrl") != null) {
                 String mapImage = "image_map";
                 if(partner != null) {
                     mapImage += "_" + partner;
                 }
                 mapImage += ".png";
                 elementMapLink.put("src", "/ingrid-portal-apps/images/maps/" + mapImage);
-                list.add(elementMapLink);
+                
             }
-            if(extMapUrl != null) {
-                elementMapLink.put("extMapUrl", extMapUrl);
+            if(!elementMapLink.isEmpty()) {
+                elementMapLink.put("type", "linkLine");
+                elementMapLink.put("isMapLink", true);
+                elementMapLink.put("isExtern", false);
+                list.add(elementMapLink);
             }
         } else {
             for (HashMap<String, String> imageUrl : imageUrls) {
                 HashMap<String, Object> elementMapLink = new HashMap<>();
-                elementMapLink.put("type", "linkLine");
-                elementMapLink.put("isMapLink", true);
-                elementMapLink.put("isExtern", false);
 
                 if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
                     // do not render "show in map" link if the map has access constraints (no href added).
@@ -1761,9 +1901,15 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
                 elementMapLink.put("description", imageUrl.get("description"));
                 if(extMapUrl != null) {
+                    elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
                     elementMapLink.put("extMapUrl", extMapUrl);
                 }
-                list.add(elementMapLink);
+                if(!elementMapLink.isEmpty()) {
+                    elementMapLink.put("type", "linkLine");
+                    elementMapLink.put("isMapLink", true);
+                    elementMapLink.put("isExtern", false);
+                    list.add(elementMapLink);
+                }
             }
         }
         if(!list.isEmpty()) {

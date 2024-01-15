@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/java-postgres
 {
-	"name": "Java & PostgreSQL",
+	"name": "Java & MySQL",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -13,22 +13,17 @@
 	// This can be used to network with other containers or with the host.
 	"forwardPorts": [10000],
 
-	"postCreateCommand": "/bin/mv /tomcat/conf/Catalina/localhost/ingrid-webmap-client.xml /tomcat/conf/Catalina/localhost/ingrid-webmap-client.xml.bak && cp ${localWorkspaceFolder}/.devcontainer/context/* /tomcat/conf/Catalina/localhost/ && sh ${localWorkspaceFolder}/.devcontainer/init-db.sh",
+	"postCreateCommand": "/bin/mv /tomcat/conf/Catalina/localhost/ingrid-webmap-client.xml /tomcat/conf/Catalina/localhost/ingrid-webmap-client.xml.bak && cp /workspaces/ingrid-portal/.devcontainer/context/* /tomcat/conf/Catalina/localhost/ && sleep 5 && sh /workspaces/ingrid-portal/.devcontainer/init-db.sh",
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"redhat.vscode-community-server-connector"
+				"redhat.vscode-community-server-connector",
+				"mhutchie.git-graph"
 			]
 		}
-	}
+	},
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postStartCommand": [
-	// 	"/bin/ls -al /",
-	// 	"bin/ls -al /tomcat/",
-	// 	"/bin/mv /tomcat/conf/Catalina/localhost/ingrid-webmap-client.xml /tomcat/conf/Catalina/localhost/ingrid-webmap-client.xml.bak"
-	// 	// "cp ${localWorkspaceFolder}/.devcontainer/context/* /tomcat/conf/Catalina/localhost/",
-	// 	// "sh ${localWorkspaceFolder}/.devcontainer/init-db.sh"
-	// ]
+	"postStartCommand": "nohup bash -c 'cd /tomcat && /bin/sh /tomcat/bin/startup.sh'"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

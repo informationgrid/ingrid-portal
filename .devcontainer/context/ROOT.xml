@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<Context path="/ingrid-portal" docBase="/workspaces/java-postgres-2/ingrid-portal-base/target/ingrid-portal" crossContext="true">
+<Context path="/ingrid-portal" docBase="/workspaces/ingrid-portal/ingrid-portal-base/target/ingrid-portal" crossContext="true">
 
   <Realm className="org.apache.catalina.realm.JAASRealm"
          appName="Jetspeed"
@@ -25,7 +25,7 @@ limitations under the License.
   <Resource name="jdbc/jetspeed" auth="Container"
           factory="org.apache.commons.dbcp.BasicDataSourceFactory"
           type="javax.sql.DataSource" username="root" password=""
-          driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/ingrid-portal?useSSL=false"
+          driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/ingrid_portal?useSSL=false"
           maxActive="100" maxIdle="30" maxWait="10000" validationQuery="SELECT 1"
           testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="1800000"
           removeAbandoned="true" removeAbandonedTimeout="60" logAbandoned="true"/> 

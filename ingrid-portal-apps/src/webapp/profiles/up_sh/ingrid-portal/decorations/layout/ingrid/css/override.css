@@ -2,16 +2,16 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -1463,3 +1463,25 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
   padding: 8px 8px 5px;
   color: #FFFFFF;
 }
+
+.menu-login-links {
+  font-family: AvenirNextLTPro-Demi, sans-serif;
+  color: #FFFFFF;
+  background: #003064;
+  padding: 25px 0 25px 0;
+}
+.menu-login-links h6 {
+  padding: 2px 24px;
+  color: #FFFFFF;
+}
+
+.menu-login-links a {
+  color: #FFFFFF;
+}
+
+.menu-login-links a:hover {
+  color: #003064;
+  background: #F0F2F4;
+}
+
+

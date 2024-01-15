@@ -1,8 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>6.2.0</version>
+    <version>7.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -34,11 +34,14 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
-    <mdek.version>6.1.0</mdek.version>
-    <webmap-client.version>6.3.0</webmap-client.version>
-    <ingrid-codelist-service.version>6.3.0</ingrid-codelist-service.version>
-    <ingrid-utils.version>6.3.0</ingrid-utils.version>
-    <log4j.version>2.19.0</log4j.version>
+    <mdek.version>7.0.0</mdek.version>
+    <webmap-client.version>7.0.0</webmap-client.version>
+    <ingrid-codelist-service.version>7.0.0</ingrid-codelist-service.version>
+    <ingrid-utils.version>7.0.0</ingrid-utils.version>
+    <measurement.client.version>2.0.6</measurement.client.version>
+    <ingrid-utils-geo.version>7.0.0</ingrid-utils-geo.version>
+    <spring.version>5.3.24</spring.version>
+    <log4j.version>2.22.1</log4j.version>
   </properties>
 
   <modules>
@@ -179,6 +182,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
+          <licenseResolver>${project.baseUri}/license</licenseResolver>
           <excludes>
             <exclude>**/*.properties</exclude>
             <exclude>**/*.json</exclude>
