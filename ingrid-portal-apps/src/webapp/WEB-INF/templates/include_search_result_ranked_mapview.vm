@@ -2,22 +2,8 @@
 
 <div id="sidebar" class="leaflet-sidebar collapsed">
     <!-- nav tabs -->
-    <div class="leaflet-sidebar-tabs">
-        <!-- top aligned tabs -->
-        <ul role="tablist">
-            <li><a href="#hits" role="tab"><i class="ic-ic-hamburger active"></i></a></li>
-        </ul>
-    </div>
-
     <!-- panel content -->
     <div class="leaflet-sidebar-content">
-        <div class="leaflet-sidebar-pane" id="hits">
-            <h1 class="leaflet-sidebar-header">
-                Ergebnisliste
-                <span class="leaflet-sidebar-close"><i class="ic-ic-arrow-left"></i></span>
-            </h1>
-            <div id="list-markers"></div>
-        </div>
     </div>
 </div>
 <div style="height:75vh">
@@ -27,8 +13,8 @@
 
 <script>
     var map_searchview = new L.Map('map-searchview', {
-    minZoom: 0,
-    maxZoom: 18
+        minZoom: 5,
+        maxZoom: 18
     });
     var lat = $facetMapCenter.get(0);
     var lng = $facetMapCenter.get(1);
@@ -51,11 +37,23 @@
 #end
 <script>
     var sidebar = L.control.sidebar({ container: 'sidebar' })
-        .addTo(map_searchview)
-        .open('hits');
-    map_searchview.on('moveend', function() {
-        //showSearchResults();
-    });
+        .addTo(map_searchview);
+
+    sidebar.on('addPanel', function(e) {
+        if(e.id === 'hitsPanel') {
+            showSearchResults(map_searchview);
+        } else {
+            $('.detail-hit-content').niceScroll({
+                cursorcolor:"#5e788d",
+                cursorwidth:"8px",
+                cursorborderradius: "6px",
+            });
+        }
+    }).on('content', function(e) {
+        if(e.id === 'hitsPanel') {
+            mapListMarkers._updateList();
+        }
+    });;
 
     if('$mapParamN' && '$mapParamE' && '$mapParamZoom') {
         mapLat = parseFloat('$mapParamN') || mapLat;
@@ -81,7 +79,9 @@
         id: 'mapMarkers',
         showCoverageOnHover: false
     });
-    
+
+    addSearchListPane();
+
     ## List markers
     var markersLayer = new L.LayerGroup();
     var mapListMarkers = new L.Control.ListMarkers({
@@ -95,71 +95,45 @@
     map_searchview.addLayer(markersLayerAction);
     var hoverMarker;
     var selectedMarker;
+    
+    var hoverMarkerIcon = L.icon({
+        iconUrl: '/decorations/layout/ingrid/scripts/leaflet/images/marker-select.png',
+        iconSize:    [25, 41],
+        iconAnchor:  [12, 41],
+        popupAnchor: [1, -34],
+        tooltipAnchor: [16, -28],
+        shadowSize:  [41, 41]
+    });
+
+    var selectedMarkerIcon = L.icon({
+        iconUrl: '/decorations/layout/ingrid/scripts/leaflet/images/marker-select.png',
+        iconSize:    [25, 41],
+        iconAnchor:  [12, 41],
+        popupAnchor: [1, -34],
+        tooltipAnchor: [16, -28],
+        shadowSize:  [41, 41]
+    });
+
     mapListMarkers.on('item-mouseover', function(e) {
         hoverMarker = L.marker(e.layer.getLatLng(), { 
             title: e.layer.options.title,
             features: e.layer.options.features,
-            icon: L.icon({
-                iconUrl: '/decorations/layout/ingrid/scripts/leaflet/images/marker-select.png',
-                iconSize:    [25, 41],
-                iconAnchor:  [12, 41],
-                popupAnchor: [1, -34],
-                tooltipAnchor: [16, -28],
-                shadowSize:  [41, 41]
-            }),
+            icon: hoverMarkerIcon,
             zIndexOffset: 1000
         });
-        markersLayerAction.addLayer(hoverMarker);
-        if(hoverMarker.options.features) {
-            markersLayerAction.addLayer(hoverMarker.options.features);
-        }
+        showFeatures(markersLayerAction, hoverMarker);
     }).on('item-mouseout', function(e) {
         if(hoverMarker) {
-            markersLayerAction.removeLayer(hoverMarker);
-            if(hoverMarker.options.features) {
-                markersLayerAction.removeLayer(hoverMarker.options.features);
-            }
+            hideFeatures(markersLayerAction, hoverMarker);
+            hoverMarker = null;
         }
     }).on('item-updatelist', function(e) {
         if(hoverMarker) {
-            markersLayerAction.removeLayer(hoverMarker);
-            if(hoverMarker.options.features) {
-                markersLayerAction.removeLayer(hoverMarker.options.features);
-            }
+            hideFeatures(markersLayerAction, hoverMarker);
+            hoverMarker = null;
         }
     }).on('item-click', function(e) {
-        if(hoverMarker) {
-            map_searchview.removeLayer(hoverMarker);
-            if(hoverMarker.options.features) {
-                map_searchview.addLayer(hoverMarker.options.features);
-            }
-        }
-        if(selectedMarker) {
-            map_searchview.removeLayer(selectedMarker);
-        }
-        selectedMarker = L.marker(e.layer.getLatLng(), { 
-            title: e.layer.options.title,
-            icon: L.icon({
-                iconUrl: '/decorations/layout/ingrid/scripts/leaflet/images/marker-select.png',
-                iconSize:    [25, 41],
-                iconAnchor:  [12, 41],
-                popupAnchor: [1, -34],
-                tooltipAnchor: [16, -28],
-                shadowSize:  [41, 41]
-            }),
-            zIndexOffset: 1000
-        });
-        if(e.layer.options.features && e.layer.options.features.getLayers()) {
-            var featLayer = e.layer.options.features.getLayers()[0];
-            if(featLayer) {
-                selectedMarker.options.features = L.geoJSON(featLayer.feature, {});
-            }
-        }
-        map_searchview.addLayer(selectedMarker);
-        if(selectedMarker.options.features) {
-            map_searchview.addLayer(selectedMarker.options.features);
-        }
-        openDetail(e);
+        selectFeatures(e);
     }).on('item-zoom-click', function(e) {
         if(e.layer.options.features) {
             map_searchview.fitBounds(e.layer.options.features.getBounds(), { padding: [150, 150] });
@@ -204,13 +178,11 @@
         maxWidth: 200
     };
 
-    showSearchResults();
-
-    function showSearchResults() {
-        const x1 = Math.round(map_searchview.getBounds().getWest() * 10000)/10000;
-        const x2 = Math.round(map_searchview.getBounds().getEast() * 10000)/10000;
-        const y1 = Math.round(map_searchview.getBounds().getSouth() * 10000)/10000;
-        const y2 = Math.round(map_searchview.getBounds().getNorth() * 10000)/10000;
+    function showSearchResults(searchMap) {
+        const x1 = Math.round(searchMap.getBounds().getWest() * 10000)/10000;
+        const x2 = Math.round(searchMap.getBounds().getEast() * 10000)/10000;
+        const y1 = Math.round(searchMap.getBounds().getSouth() * 10000)/10000;
+        const y2 = Math.round(searchMap.getBounds().getNorth() * 10000)/10000;
         var url = '$restUrlHttpSearchMap' + '?';
         /*
         url += 'x1=' + x1 + '&';
@@ -260,7 +232,7 @@
                                             class: objClass,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                         });
-                                        features.on('click', openDetail);
+                                        features.on('click', selectFeatures);
                                         if(features) {
                                             mapMarkers.addLayer(features);
                                         }
@@ -271,16 +243,23 @@
                                     onEachFeature: function(features, layers) {
                                         var thatFeature = this;
                                         for (i = 0; i < layers.getLayers().length; i++) {
-                                            var layer = layers.getLayers()[0];
+                                            var layer = layers.getLayers()[i];
                                             var tmp = L.marker(layer.getLatLng(), {
                                                 id: objUuid,
                                                 title: title,
                                                 summary: summary,
                                                 class: objClass,
-                                                features: L.geoJSON(features),
+                                                features: L.geoJSON(features ,{
+                                                    pointToLayer: function (feature, latlng) {
+                                                        var marker = L.marker(latlng, {
+                                                            icon: hoverMarkerIcon
+                                                        });
+                                                        return marker;
+                                                    }
+                                                }),
                                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                             });
-                                            tmp.on('click', openDetail);
+                                            tmp.on('click', selectFeatures);
                                             if(tmp) {
                                                 mapMarkers.addLayer(tmp);
                                             }
@@ -305,7 +284,7 @@
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', openDetail);
+                                    features.on('click', selectFeatures);
                                 }
                             } else if(wktJson.type === 'MultiLineString') {
                                 var tmpFeatures = L.geoJSON(wktJson, {});
@@ -325,45 +304,17 @@
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', openDetail);
+                                    features.on('click', selectFeatures);
                                 }
-                            /*} else if(wktJson.type === 'Polygon') {
-                                var tmpFeatures = L.geoJSON(wktJson, {});
-                                var center = turf.pointOnFeature(wktJson);
-                                if(center.geometry) {
-                                    var coord = center.geometry.coordinates;
-                                    features = L.marker(new L.LatLng(coord[1], coord[0]), {
-                                        id: objUuid,
-                                        title: title,
-                                        summary: summary,
-                                        class: objClass,
-                                        features: tmpFeatures,
-                                        itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
-                                        itemIconWidth: '20px',
-                                        itemIconHeight: '20px'
-                                    });
-                                    features.on('click', openDetail);
-                                }
-                            } else if(wktJson.type === 'MultiPolygon') {
-                                var tmpFeatures = L.geoJSON(wktJson, {});
-                                var center = turf.pointOnFeature(wktJson);
-                                if(center.geometry) {
-                                    var coord = center.geometry.coordinates;
-                                    features = L.marker(new L.LatLng(coord[1], coord[0]), {
-                                        id: objUuid,
-                                        title: title,
-                                        summary: summary,
-                                        class: objClass,
-                                        features: tmpFeatures,
-                                        itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/polygon.png',
-                                        itemIconWidth: '20px',
-                                        itemIconHeight: '20px'
-                                    });
-                                    features.on('click', openDetail);
-                                }
-                            */
                             } else {
-                                var tmpFeatures = L.geoJSON(wktJson, {});
+                                var tmpFeatures = L.geoJSON(wktJson, {
+                                    pointToLayer: function (feature, latlng) {
+                                        var marker = L.marker(latlng, {
+                                            icon: hoverMarkerIcon
+                                        });
+                                        return marker;
+                                    }
+                                });
                                 var center = turf.pointOnFeature(wktJson);
                                 if(center.geometry) {
                                     var coord = center.geometry.coordinates;
@@ -377,7 +328,7 @@
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', openDetail);
+                                    features.on('click', selectFeatures);
                                 }
                             }
                         }
@@ -408,13 +359,13 @@
     
                                   var features = L.marker(new L.LatLng(coord[1], coord[0]), {
                                       id: objUuid,
-                                    title: title,
-                                    summary: summary,
-                                    class: objClass,
+                                      title: title,
+                                      summary: summary,
+                                      class: objClass,
                                       features: tmpFeatures,
                                       itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/bwastr.png'
                                   });
-                                  features.on('click', openDetail);
+                                  features.on('click', selectFeatures);
                                   if(features) {
                                      mapMarkers.addLayer(features);
                                   }
@@ -434,7 +385,7 @@
                                             summary: summary,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                           });
-                                          features.on('click', openDetail);
+                                          features.on('click', addDetailPane);
                                           mapMarkers.addLayer(features);
                                         } else {
                                           var bounds = L.latLngBounds(L.latLng(y1Coord, x1Coord), L.latLng(y2Coord, x2Coord));
@@ -446,7 +397,7 @@
                                             class: objClass,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                           });
-                                          features.on('click', openDetail);
+                                          features.on('click', selectFeatures);
                                           mapMarkers.addLayer(features);
                                         }
                                       }
@@ -469,7 +420,7 @@
                                 summary: summary,
                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                               });
-                              features.on('click', openDetail);
+                              features.on('click', selectFeatures);
                               mapMarkers.addLayer(features);
                             } else {
                               var bounds = L.latLngBounds(L.latLng(y1Coord, x1Coord), L.latLng(y2Coord, x2Coord));
@@ -481,7 +432,7 @@
                                 class: objClass,
                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                               });
-                              features.on('click', openDetail);
+                              features.on('click', selectFeatures);
                               mapMarkers.addLayer(features);
                             }
                           }
@@ -492,61 +443,134 @@
         });
     }
     
-    function showFeatures(m) {
-        if(m.target.options.features){
-            if(map_searchview){
-                map_searchview.addLayer(m.target.options.features);
-            }
+    function showFeatures(layerGroup, layer) {
+        layerGroup.addLayer(layer);
+        if(layer.options.features) {
+            layerGroup.addLayer(layer.options.features);
         }
     }
     
-    function hideFeatures(m) {
-        if(m.target.options.features){
-            if(map_searchview){
-                map_searchview.removeLayer(m.target.options.features);
-            }
+    function hideFeatures(layerGroup, layer) {
+        layerGroup.removeLayer(layer);
+        if(layer.options.features){
+            layerGroup.removeLayer(layer.options.features);
         }
     }
 
-    function openDetail(e) {
-        var title, summary;
+    function selectFeatures(e) {
+        var detailLayer;
         if(e.layer) {
-            title = e.layer.options.title;
-            summary = e.layer.options.summary;
+            detailLayer = e.layer;
         } else {
-            title = this.options.title;
-            summary = this.options.summary;
+            detailLayer = this;
         }
+        if(hoverMarker) {
+            hideFeatures(markersLayerAction, hoverMarker);
+            hoverMarker = null;
+        }
+        if(selectedMarker) {
+            hideFeatures(markersLayerAction, selectedMarker);
+            selectedMarker = null;
+        }
+        selectedMarker = L.marker(detailLayer.getLatLng(), { 
+            title: detailLayer.options.title,
+            features: detailLayer.options.features,
+            icon: selectedMarkerIcon,
+            zIndexOffset: 1000
+        });
+        showFeatures(markersLayerAction, selectedMarker);
+        addDetailPane(detailLayer);
+    }
+
+    function addSearchListPane() {
+        var pane = L.DomUtil.create('div', 'leaflet-sidebar-pane');
+        var header = L.DomUtil.create('h1', 'leaflet-sidebar-header', pane);
+        header.innerHTML = 'Ergebnisliste';
+        var detailClose = L.DomUtil.create('span', 'leaflet-sidebar-close', header);
+        var detailCloseIcon = L.DomUtil.create('i', 'ic-ic-arrow-left', detailClose);
+        var content = L.DomUtil.create('div', 'leaflet-sidebar-pane-content', pane);
+        content.id = 'list-markers';
+        
+        var id = 'hitsPanel'; 
+        var panelContent = {
+            id: id,
+            tab: '<i class="ic-ic-hamburger"></i>',
+            pane: pane,
+            title: 'Ergebnisliste'
+        };
+        sidebar.removePanel(id);
+        sidebar.addPanel(panelContent);
+    }
+
+    function addDetailPane(e) {
+        var title, summary, detailLayer;
+        if(e.layer) {
+            detailLayer = e.layer;
+        } else {
+            detailLayer = e;
+        }
+        title = detailLayer.options.title;
+        summary = detailLayer.options.summary;
         var pane = L.DomUtil.create('div', 'leaflet-sidebar-pane');
         var header = L.DomUtil.create('h1', 'leaflet-sidebar-header', pane);
         header.innerHTML = title;
         var detailClose = L.DomUtil.create('span', 'leaflet-sidebar-close', header);
         var detailCloseIcon = L.DomUtil.create('i', 'ic-ic-cross', detailClose);
         var content = L.DomUtil.create('div', 'leaflet-sidebar-pane-content', pane);
-        var contentSum = L.DomUtil.create('p', '', content);
-        contentSum.innerHTML = summary;
-        $('.leaflet-sidebar-pane-content').niceScroll({
-            cursorcolor:"#5e788d",
-            cursorwidth:"8px",
-            cursorborderradius: "6px",
-        });
+        var controls = L.DomUtil.create('div', 'detail-item-controls', content);
+        var zoom = L.DomUtil.create('a', '', controls);
+        var iconZoom = '<i class="ic-ic-lupe" />';
+        zoom.href = '#';
+        zoom.title = 'Zoom auf Treffer';
+        zoom.innerHTML = iconZoom;
+
+        var detailLink = L.DomUtil.create('a', '', controls);
+        var iconDetail = '<i class="ic-ic-arrow-right" />';
+        detailLink.href = '$renderResponse.encodeURL("/portal/search-detail.psml")?docuuid=' + detailLayer.options.id;
+        detailLink.title = 'Detaildarstellung des Treffers';
+        detailLink.target = '_blank';
+        detailLink.innerHTML = iconDetail;
+
         L.DomEvent
-            .disableClickPropagation(detailCloseIcon)
-            .on(detailCloseIcon, 'click', L.DomEvent.stop, this)
-            .on(detailCloseIcon, 'click', function(e) {
-                sidebar.removePanel(id);
-                sidebar.open('hits');
+            .disableClickPropagation(zoom)
+            .on(zoom, 'click', L.DomEvent.stop, this)
+            .on(zoom, 'click', function(e) {
+                if(detailLayer.options.features) {
+                    map_searchview.fitBounds(detailLayer.options.features.getBounds(), { padding: [150, 150] });
+                } else {
+                    map_searchview.panTo( detailLayer.getLatLng() );
+                }
             }, this);
+
+
+        var hitContent = L.DomUtil.create('div', 'detail-hit-content', content);
+        var titleSum = L.DomUtil.create('h5', '', hitContent);
+        titleSum.innerHTML = 'Beschreibung';
+        var contentSum = L.DomUtil.create('p', '', hitContent);
+        contentSum.innerHTML = summary;
+
+        L.DomEvent
+        .disableClickPropagation(detailCloseIcon)
+        .on(detailCloseIcon, 'click', L.DomEvent.stop, this)
+        .on(detailCloseIcon, 'click', function(e) {
+            if(selectedMarker) {
+                hideFeatures(markersLayerAction, selectedMarker);
+                selectedMarker = null;
+            }
+            sidebar.removePanel(id);
+            sidebar.open('hitsPanel');
+        }, this);
+
         var id = 'detailPanel'; 
         var panelContent = {
             id: id,
-            tab: '<i class="ic-ic-lupe"></i>',
+            tab: '<i class="ic-ic-arrow-right"></i>',
             pane: pane,
             title: title
         };
         sidebar.removePanel(id);
         sidebar.addPanel(panelContent);
-        sidebar.open('detailPanel');
+        sidebar.open(id);
     };
 </script>
 

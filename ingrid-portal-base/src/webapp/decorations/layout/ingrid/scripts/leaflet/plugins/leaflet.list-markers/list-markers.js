@@ -12,6 +12,9 @@ L.Control.ListMarkers = L.Control.extend({
         itemArrow: '&#10148;',
         maxZoom: 9,
         position: 'topleft',
+        labelZoom: 'Zoom auf Treffer',
+        labelDetail: 'Detaildarstellung auf Treffers',
+        detailURL: '/trefferanzeige',
         container: null
     },
 
@@ -91,17 +94,17 @@ L.Control.ListMarkers = L.Control.extend({
 
         if( layer.options.hasOwnProperty(this.options.label) ) {
             a.innerHTML = '<span>' + layer.options[this.options.label]+ '</span>' +
-                ' <b>' + this.options.itemArrow+'</b>' + icon;
+            icon;
             a.setAttribute('title', layer.options[this.options.label]);
         } else {
             console.log("propertyName '"+this.options.label+"' not found in marker");
         }
 
-        var controls = L.DomUtil.create('div', '', li);
-        L.DomUtil.addClass(controls, 'list-item-controls');
+        var controls = L.DomUtil.create('div', 'list-item-controls', li);
         var zoom = L.DomUtil.create('a', '', controls);
         var iconZoom = '<i class="ic-ic-lupe" />';
         zoom.href = '#';
+        zoom.title = this.options.labelZoom;
         zoom.innerHTML = iconZoom;
 
         L.DomEvent
@@ -110,6 +113,14 @@ L.Control.ListMarkers = L.Control.extend({
             .on(zoom, 'click', function(e) {
                 that.fire('item-zoom-click', {layer: layer });
             }, this);
+
+        var detailLink = L.DomUtil.create('a', '', controls);
+        var iconDetail = '<i class="ic-ic-arrow-right" />';
+        detailLink.href = this.options.detailURL + '?docuuid=' + layer.options.id;
+        detailLink.title = this.options.labelDetail;
+        detailLink.target = '_blank';
+        detailLink.innerHTML = iconDetail;
+
         return li;
     },
 
@@ -170,7 +181,13 @@ L.Control.ListMarkers = L.Control.extend({
                                     if(feature.feature.geometry.geometries) {
                                         that.collectionIntersectMarker(that._map, marker, feature.feature.geometry, mapTurfBbox);
                                     } else {
-                                        that.polygonIntersectMarker(that._map, marker, feature.feature.geometry, mapTurfBbox);
+                                        if(feature.feature.geometry.type === 'Point') {
+                                            that.pointIntersectMarker(that._map, marker, [feature.feature.geometry.coordinates], mapTurfBbox)
+                                        } else if(feature.feature.geometry.type === 'MultiPoint') {
+                                            that.pointIntersectMarker(that._map, marker, feature.feature.geometry.coordinates, mapTurfBbox)
+                                        } else {
+                                            that.polygonIntersectMarker(that._map, marker, feature.feature.geometry, mapTurfBbox);
+                                        }
                                     }
                                 }
                             }

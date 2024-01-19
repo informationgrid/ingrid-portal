@@ -348,7 +348,7 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
 
         // Register click listeners, if the sidebar is on the map
         this._tabClick(tab, 'on');
-
+        this.fire('addPanel', { id: data.id });
         return this;
     },
 

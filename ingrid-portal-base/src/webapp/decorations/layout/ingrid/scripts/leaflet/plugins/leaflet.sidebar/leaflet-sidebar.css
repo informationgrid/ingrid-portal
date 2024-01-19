@@ -179,7 +179,6 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  height: 48vh;
 }
 .leaflet-sidebar-pane.active {
  display: block;
@@ -187,6 +186,7 @@
 
 .leaflet-sidebar-pane p {
  line-height: 18px;
+ font-size: 14px;
 }
 
 @media ( min-width : 768px) and (max-width: 991px) {
@@ -317,4 +317,21 @@
 .leaflet-sidebar-right.collapsed ~ .leaflet-control-container .leaflet-right
  {
  right: 50px;
+}
+
+.detail-item-controls {
+  padding: 6px 0;
+  border-bottom: 1px solid #EEE;
+}
+.detail-item-controls a {
+  font-size: 16px;
+  padding: 0 8px;
+}
+.detail-hit-content {
+  padding: 6px 8px;
+  height: 60vh;
+}
+
+.detail-hit-content h5 {
+  margin-bottom: 8px;
 }
