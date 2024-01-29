@@ -1,4 +1,15 @@
 
+## 7.0.2 (29.01.2024)
+
+### Features
+
+* Menü anpassen (#5857)
+* AdV-MIS: Korrektur der Facette "Verwaltet von" (#5692)
+
+### Bugfixes
+
+* PORTAL: Fehler bei der Darstellung der Treffer-Beschreibung (#5900)
+    
 ## 7.0.0 (05.01.2024)
 
 ### Features
