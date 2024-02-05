@@ -110,10 +110,6 @@
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
         </file>
-        <file>
-            <action>copy-dir</action>
-            <src>ingrid-portal-mdek-application/</src>
-        </file>
     </files>
     <sql>
         <!-- Change 'ingrid-portal-apps::SearchSimpleResult' decorator -->
