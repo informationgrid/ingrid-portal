@@ -362,8 +362,8 @@ header {
 }
 .filter-group .accordion-item .accordion-title:hover,
 .filter-group .accordion-item .accordion-title:focus {
-  color: #0c505d;
-  border-color: #0c505d !important;
+  color: #000000;
+  text-decoration: underline;
 }
 .filter-group .accordion-item .accordion-title:hover::after,
 .filter-group .accordion-item .accordion-title:focus::after {
