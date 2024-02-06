@@ -70,9 +70,11 @@
         </div>
     </form>
 </div>
+#if($actionForm)
 <script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmEditCMS');
     }
 </script>
+#end

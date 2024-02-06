@@ -11,9 +11,11 @@
 #parse ('/WEB-INF/templates/global/include_passwort_meter.vm')
 <br/>
 <br/>
+#if($actionForm)
 <script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('edit_account');
     }
 </script>
+#end
