@@ -104,10 +104,12 @@ a.icon:hover .text {
 }
 .button.round {
   color: #0c505d;
+  background: #fafafa;
 }
 .button.round:hover, .button.round:focus {
-  background-color: #0c505d;
-  color: #eaf6ff;
+  background-color: #0c505d !important;
+  color: #FFFFFF;
+  border: 1px solid #0c505d;
 }
 .button.outline {
   color: #0c505d !important;
@@ -797,4 +799,13 @@ footer .footer-buttons-bar .login-buttons .login-form {
 .form-element .input-radio:hover .nr-results,
 .form-element .input-radio:focus-within .nr-results {
   color: #000000;
+}
+
+@media screen and (max-width: 1247px) {
+  .header-menu-open .xsmall-button {
+    display: block;
+  }
+  .header-menu-open .small-button {
+    display: none;
+  }
 }
