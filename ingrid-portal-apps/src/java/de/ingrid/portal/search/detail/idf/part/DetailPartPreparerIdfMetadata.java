@@ -1358,12 +1358,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
                                     if (!tmpServiceTypeVersion.isEmpty()) {
                                         String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
-                                        if (tmpValue != null && !tmpValue.trim().contains(" ")) {
-                                            urlValue.append("&SERVICE=" + tmpValue);
-                                            serviceTypeVersion = tmpServiceTypeVersion;
-                                            break;
-                                        } else {
-                                            if(tmpValue.trim().contains(" ")) {
+                                        if (tmpValue != null) {
+                                            if (!tmpValue.trim().contains(" ")) {
+                                                urlValue.append("&SERVICE=" + tmpValue);
+                                                serviceTypeVersion = tmpServiceTypeVersion;
+                                                break;
+                                            } else {
                                                 urlValue = new StringBuilder(url);
                                             }
                                         }
