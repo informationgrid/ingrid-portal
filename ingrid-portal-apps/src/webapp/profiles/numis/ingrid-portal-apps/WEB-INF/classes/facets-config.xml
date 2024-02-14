@@ -207,7 +207,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>searchResult.facete.metaclass.map</name>
                 <query>t01_object.obj_class:1</query>
-                <id>map</id>
+                <id>geoset</id>
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>1</codelist-entry-id>
                 <display>true</display>
