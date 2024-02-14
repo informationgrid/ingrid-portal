@@ -548,8 +548,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         request.setAttribute( "restUrlHttpSearchDownload", restUrl.toString() );
         //context.put("providerMap", getProviderMap());
 
-        restUrl.setResourceID( "facetValue" );
-        request.setAttribute( "restUrlFacetValue", restUrl.toString() );
+        if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_FACETE_MULTISELECTION, false)) {
+            restUrl.setResourceID( "facetValue" );
+            request.setAttribute( "restUrlFacetValue", restUrl.toString() );
+            boolean displayEmptyFacets = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_FACETE_MULTISELECTION_DISPLAY_EMPTY, false);
+            context.put("displayEmptyFacets", displayEmptyFacets);
+        }
 
         super.doView(request, response);
     }
