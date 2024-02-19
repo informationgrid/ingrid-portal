@@ -38,4 +38,6 @@
     #renderTextListTable($MESSAGES.getString("t011_obj_geo_supplinfo.feature_type") $TOOL.getListOfValuesFromXPath($xPathInfo1MDFeatureCatalogueDescriptionFeatureTypes, "."))
 ## Geometrie-Kontext
     #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_geometrie_context.vm")
+## Anzeige der Bemerkungen
+    #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type1_supplemental_info.vm")
 </div>

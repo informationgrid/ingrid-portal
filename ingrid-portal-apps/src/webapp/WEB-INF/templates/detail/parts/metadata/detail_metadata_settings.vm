@@ -233,6 +233,10 @@
     $xPathInfo1MDIdentifierCode,
     $xPathInfo1RSIdentifierCode
 ])
+
+## Anzeige der Bemerkungen
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_info1_supplemental_info.vm")
+
 ## Messdaten (BAW)
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_measurement.vm")
 
