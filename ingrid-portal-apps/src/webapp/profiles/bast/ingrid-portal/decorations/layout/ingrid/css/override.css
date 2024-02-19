@@ -20,6 +20,11 @@
  * limitations under the Licence.
  * **************************************************#
 */
+
+body {
+  font-family: Calibri !important;
+}
+
 .header__logo {
   width: auto;
 }
@@ -90,6 +95,11 @@ a.icon:hover .text {
 .shrink header .logo a {
     top: 5px;
 }
+.button {
+  font-family: Calibri !important;
+  font-weight: bold;
+}
+
 .button, .teaser-data.search .js-expander-content .button {
   background-color: #0c505d;
   border: 2px solid #0c505d;
@@ -141,6 +151,8 @@ header {
   border-image: linear-gradient(to right, #0c505d, #0c505d) 0 1 100%;
 }
 .menu-tab-row .menu-tab .link-menu-tab {
+  font-family: Calibri !important;
+  font-weight: bold;
   color: #0c505d;
 }
 .menu-tab-row .menu-tab.is-selected .link-menu-tab {
@@ -195,6 +207,9 @@ header {
 .menu-sub-links a:focus, .menu-sub-links .button.logout:focus {
   background-color: #FFFFFF !important;
   color: #0c505d;
+}
+.menu-sub-links .login_user {
+  font-family: Calibri !important;
 }
 .banner {
   background: #2c6c88;
@@ -264,7 +279,6 @@ header {
   width: 35px;
   height: 35px;
 }
-
 .accordion-content button.button.round  span[class^="ic-"] {
   top: 7px;
   left: 1px;
@@ -432,6 +446,7 @@ footer .footer .columns div {
   margin: 10px auto;
 }
 footer .footer .copyright span {
+  font-family: Calibri !important;
   color: #FFFFFF;
   max-width: 275px !important;
 }
@@ -468,11 +483,26 @@ footer .footer-top-link:focus {
   color: #0c505d;
 }
 
+.sitemap .link-list .search-result--nested a {
+  font-weight: normal;
+  font-family: Calibri;
+}
+.catalog a.icon {
+  font-family: Calibri !important;
+  font-weight: bold;
+}
+.catalog span.icon {
+  font-family: Calibri !important;
+  font-weight: bold;
+}
 .nested-group-sub label {
   color: #0c505d;
 }
 .nested-group-sub label:hover {
  color: #0c505d;
+}
+.catalog a.icon span.text {
+  font-family: Calibri !important;
 }
 .dropmenu__box {
   position: relative;
@@ -489,7 +519,7 @@ footer .footer-top-link:focus {
 }
 .nav-desktop {
   background: #4EAD46;
-  font: 700 1rem "Roboto Condensed", sans-serif;
+  font: 700 1rem Calibri;
   position: relative;
   z-index: 1;
 }
@@ -553,7 +583,7 @@ footer .footer-top-link:focus {
   top: 1em;
 }
 .nav__dropdown-item {
-  font: 400 0.875rem "Arial";
+  font: 400 0.875rem "Calibri";
   padding-left: 3rem !important;
 }
 .nav__dropdown-item a:hover {
@@ -704,7 +734,16 @@ header .menu-tab-row .menu-tab {
     padding: 64px 0 40px;
   }
 }
-
+/* menu */
+.menu-main-links a, .header-menu a {
+  font-family: Calibri !important;
+  font-weight: bold;
+}
+/* catalogue */
+.accordion-title {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
 /* search */
 .teaser-data .arrow {
     font-size: 40px;
@@ -757,11 +796,14 @@ h4, h5 {
 }
 
 .js-expander-toggle-all a.icon:hover,
+.js-expander-toggle-all a.icon:focus,
 .js-expander-toggle-all a.icon.is-active {
     background: #0c505d;
     color: #FFFFFF;
 }
-.js-expander-toggle-all a.icon:focus {
+.js-expander-toggle-all a.icon:hover [class^="ic-"],
+.js-expander-toggle-all a.icon:focus [class^="ic-"],
+.js-expander-toggle-all a.icon.is-active [class^="ic-"] {
     background: #0c505d;
     color: #FFFFFF;
 }
@@ -808,4 +850,74 @@ footer .footer-buttons-bar .login-buttons .login-form {
   .header-menu-open .small-button {
     display: none;
   }
+}
+
+.search-filtered .table table th:first-child {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+.search-filtered .table:not(.table--lined) table tr th {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+.slab-bold {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+.form-element label {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+a[class*="js-expander"] span.text {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+b {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+.helper {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+.helper.icon.info span.text {
+  font-family: Calibri !important;
+}
+
+.detail .banner-noimage .helper.icon .text-normal {
+  font-family: Calibri !important;
+}
+
+.search-filtered .table.list table tr td:first-child {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+.search-filtered .table.list .list_entry {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+.search-filtered .table table a:not(.button) {
+  font-family: Calibri !important;
+}
+
+footer .footer .footer-menu-entries a {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+.document-list .image a.icon {
+  font-family: Calibri !important;
+  font-weight: bold !important;
 }
