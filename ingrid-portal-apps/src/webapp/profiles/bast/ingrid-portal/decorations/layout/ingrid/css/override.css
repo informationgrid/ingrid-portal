@@ -32,6 +32,10 @@ body {
 header .logo {
   width: 8.5em;
 }
+header .logo img {
+  width: unset;
+}
+
 @media print, screen and (min-width: 35em) {
     header .logo a {
         top: 11px;
@@ -920,4 +924,13 @@ footer .footer .footer-menu-entries a {
 .document-list .image a.icon {
   font-family: Calibri !important;
   font-weight: bold !important;
+}
+.teaser .teaser-link, 
+.teaser .teaser-link .teaser-number {
+  font-family: Calibri !important;
+  font-weight: bold !important;
+}
+
+[type="text"], [type="password"], [type="date"], [type="datetime"], [type="datetime-local"], [type="month"], [type="week"], [type="email"], [type="number"], [type="search"], [type="tel"], [type="time"], [type="url"], [type="color"], textarea {
+  font-family: Calibri !important;
 }
