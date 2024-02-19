@@ -1,0 +1,2 @@
+## Anzeige der Bemerkungen
+    #renderTextTable($MESSAGES.getString("t011_obj_geo_supplinfo.descr") $TOOL.getValueFromXPath($xPathInfo2SupplementalInformation))
