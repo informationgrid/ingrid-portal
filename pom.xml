@@ -115,6 +115,11 @@
         <artifactId>log4j-1.2-api</artifactId>
         <version>${log4j.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.7.2</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
