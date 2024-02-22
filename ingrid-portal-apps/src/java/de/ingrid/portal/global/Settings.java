@@ -395,7 +395,9 @@ public class Settings {
     public static final String PARAM_DATASOURCE = "ds";
 
     public static final String PARAM_RANKING = "rank";
-    
+
+    public static final String PARAM_FACET = "f";
+
     // history of starthits of grouped pages
     public static final String PARAM_GROUPING_STARTHITS = "grouping_starthits";
 

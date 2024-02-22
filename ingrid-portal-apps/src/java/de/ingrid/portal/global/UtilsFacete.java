@@ -145,6 +145,7 @@ public class UtilsFacete {
     private static final String NODE_UDK_CLASS_VALUE = "udk_class_value"; 
     private static final String NODE_EXPANDABLE = "expandable"; 
 
+    public static final String FACET_CONFIG_DEFAULT = "config_default";
     public static final String FACET_CONFIG = "config";
 
     public static final String SESSION_PARAMS_FACET_GROUPING = "facet_grouping";
@@ -162,38 +163,25 @@ public class UtilsFacete {
 
         // Check for pre prozess doAction.
         String portalTerm = request.getParameter("q");
-        String facetTerm  = (String) getAttributeFromSession(request, "faceteTerm");
+        String paramsFacet = request.getParameter("f");
 
-        if(request.getParameter("f") != null){
-            getFacetAttributsParamsFromUrl(request);
-        }else{
-            if(request.getParameter("js_ranked") == null){
-                String action = request.getParameter("action");
-                if(facetTerm != null && portalTerm != null && action != null && ((portalTerm.equals(facetTerm) && !action.equals("doSearch"))
-                        || (portalTerm.equals(facetTerm) && action == null))){
-                    removeAllFaceteSelections(request);
-                    removeFaceteElementsFromSession(request);
-                }
-            }
+        if(paramsFacet == null) {
+            removeAllFaceteSelections(request);
         }
+
+        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG_DEFAULT);
+        if (config == null) {
+            config = (ArrayList<IngridFacet>) FacetsConfig.getFacets();
+            addDefaultIngridFacets(request, config);
+            setAttributeToSession(request, FACET_CONFIG, config);
+            setAttributeToSession(request, FACET_CONFIG_DEFAULT, config);
+        }
+        getFacetAttributsParamsFromUrl(request, config);
 
         if(portalTerm != null){
             setAttributeToSession(request, "faceteTerm", portalTerm);
         }
 
-        // Create config object
-        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
-        if(config == null){
-            config = (ArrayList<IngridFacet>) FacetsConfig.getFacets();
-            addDefaultIngridFacets(request, config);
-            setAttributeToSession(request, FACET_CONFIG, config);
-        }else{
-            if(facetTerm != null && !facetTerm.equals(portalTerm)){
-                //Reset config facet values
-                resetFacetConfigValues(config, null);
-                setAttributeToSession(request, FACET_CONFIG, config);
-            }
-        }
         // Get all existing selection keys
         if(keys == null || keys.isEmpty()){
             keys = getExistingSelectionKeys(request);
@@ -241,7 +229,8 @@ public class UtilsFacete {
      */
     public static void setParamsToContext(RenderRequest request, Context context) {
 
-        getFacetAttributsParamsFromUrl(request);
+        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
+        getFacetAttributsParamsFromUrl(request, config);
 
         setParamsToContextMap(request, context);
         setParamsToContextGeothesaurus(request, context);
@@ -250,12 +239,11 @@ public class UtilsFacete {
         setParamsToContextWildcard(request, context);
         setParamsToContextTimeref(request, context);
 
-        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         sortingFacet(config);
         selectedFacet(config);
         context.put("facetConfig", config);
         context.put("facetKeys", keys);
-        context.put("searchTerm", SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING));
+        context.put(Settings.PARAM_FACET, request.getParameter(Settings.PARAM_FACET));
         context.put("facetsQuery", getAttributeFromSession(request, "FACETS_QUERY"));
         context.put("searchQuery", getAttributeFromSession(request, "SEARCH_QUERY"));
         context.put("enableFacetSelection", isFacetSelection(request));
@@ -1750,9 +1738,10 @@ public class UtilsFacete {
      * Create facet session by URL parameters
      *
      * @param request
+     * @param config 
      */
     @SuppressWarnings("rawtypes")
-    private static void getFacetAttributsParamsFromUrl(PortletRequest request){
+    private static void getFacetAttributsParamsFromUrl(PortletRequest request, ArrayList<IngridFacet> config){
 
         String paramsFacet = request.getParameter("f");
 
@@ -1936,12 +1925,6 @@ public class UtilsFacete {
             }
 
             // Config
-            ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
-            if(config == null){
-                config = (ArrayList<IngridFacet>) FacetsConfig.getFacets();
-                addDefaultIngridFacets(request, config);
-                setAttributeToSession(request, FACET_CONFIG, config);
-            }
             if(config != null){
                 String[] paramsSplits = paramsFacet.split(";");
                 resetFacetConfigSelect(config, true);

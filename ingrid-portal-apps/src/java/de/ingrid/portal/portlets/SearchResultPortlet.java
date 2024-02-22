@@ -224,6 +224,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("isCutSummary", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_CUT_SUMMARY, true));
         context.put("cutSummaryLines", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_HIT_CUT_SUMMARY_LINES, 2));
         
+        context.put(Settings.PARAM_QUERY_STRING, request.getParameter(Settings.PARAM_QUERY_STRING));
+        context.put(Settings.PARAM_STARTHIT_RANKED, request.getParameter(Settings.PARAM_STARTHIT_RANKED));
+        context.put(Settings.PARAM_CURRENT_SELECTOR_PAGE, request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE));
+        context.put(Settings.PARAM_RANKING, request.getParameter(Settings.PARAM_RANKING));
+
         // add request language, used to localize the map client
         context.put("languageCode",request.getLocale().getLanguage());
         
@@ -358,9 +363,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         QueryDescriptor qd = null;
 
-        // store query in session
-        UtilsSearch.addQueryToHistory(request);
-
         // RANKED
         IngridHitsWrapper rankedHits = null;
         // check if query must be executed
@@ -370,22 +372,15 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 log.debug("Read RANKED hits from CACHE !!! rankedHits=" + rankedHits);
             }
         } else {
-            String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
-            if(queryString == null && SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING).length() > 0){
-                rankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
-            }
-
-            if(rankedHits == null){
-                // process query, create QueryDescriptor
-                qd = QueryPreProcessor.createRankedQueryDescriptor(request);
-                if (qd != null) {
-                    query = qd.getQuery();
-                    if(request.getParameter("rank") != null) {
-                        query.put(IngridQuery.RANKED, request.getParameter("rank"));
-                    }
-                    controller.addQuery("ranked", qd);
-                    SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
+            // process query, create QueryDescriptor
+            qd = QueryPreProcessor.createRankedQueryDescriptor(request);
+            if (qd != null) {
+                query = qd.getQuery();
+                if(request.getParameter("rank") != null) {
+                    query.put(IngridQuery.RANKED, request.getParameter("rank"));
                 }
+                controller.addQuery("ranked", qd);
+                SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
             }
         }
 

@@ -10,7 +10,9 @@
       <div class="page-wrapper">
         <div class="row content-small">
           <div class="columns">
-            <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
+            #set($searchLink = "$renderResponse.encodeURL('/portal/main-search.psml')?")
+            #appendSearchDetailURL($searchLink $q $rstart $currentSelectorPage $rank $f)
+            <a class="helper icon" href="$searchLink" title="$MESSAGES.getString("search.detail.back.to.results")">
                 <span class="ic-ic-arrow-left"></span>
                 <span class="text">$MESSAGES.getString("search.detail.back.to.results")</span>
             </a>

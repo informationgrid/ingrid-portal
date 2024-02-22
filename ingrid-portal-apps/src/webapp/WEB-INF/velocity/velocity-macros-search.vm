@@ -45,9 +45,9 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 
 #macro (renderRankedResultCounterGrouping $pageSelector)
     #set($term = "")
-    #if($searchTerm)
-        #if($searchTerm.trim().length() > 0)
-            #set($term = $searchTerm)
+    #if($q)
+        #if($q.trim().length() > 0)
+            #set($term = $q)
         #end
     #end
     #if($term.length() > 0)
@@ -609,4 +609,22 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 
 #macro (renderFactTitle $title $class)
     <h4 #if($class)class="$class"#end>$title</h4>
+#end
+
+#macro (appendSearchDetailURL $link $query $start $page $rank $filter)
+    #if($query)
+        #set($link = "${link}&q=${query}")
+    #end
+    #if($start)
+        #set($link = "${link}&rstart=${start}")
+    #end
+    #if($page)
+        #set($link = "${link}&currentSelectorPage=${page}")
+    #end
+    #if($rank)
+        #set($link = "${link}&rank=${rank}")
+    #end
+    #if($filter)
+        #set($link = "${link}&f=${filter}")
+    #end
 #end
