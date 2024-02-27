@@ -140,8 +140,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         String queryInState = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
 
         if(action.equals( Settings.PARAMV_ACTION_NEW_SEARCH )
-                || (queryInRequest == null && !queryInState.isEmpty())
-                || (queryInRequest != null && queryInState != null && !queryInRequest.equals(queryInState))) {
+                && ((queryInRequest == null && !queryInState.isEmpty())
+                || (queryInRequest != null && queryInState != null && !queryInRequest.equals(queryInState)))) {
          // reset relevant search stuff, we perform a new one !
             SearchState.resetSearchState( request );
             SearchState.adaptSearchState( request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY );
