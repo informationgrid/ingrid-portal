@@ -446,6 +446,9 @@
     $xPathAdditionalInfoOrderingInstructions
 ])
 
+## Geodatenlink
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_additional_info_geodatalink.vm")
+
 #### Schlagworte
 #set($xPathKeywordsDescriptiveKeywords = "./gmd:identificationInfo/*/gmd:descriptiveKeywords")
 #set($xPathKeywordsTopicCategory = "./gmd:identificationInfo/*/gmd:topicCategory")

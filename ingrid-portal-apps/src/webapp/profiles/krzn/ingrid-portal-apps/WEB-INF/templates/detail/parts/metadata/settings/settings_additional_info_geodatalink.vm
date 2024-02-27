@@ -1,0 +1,3 @@
+## Geodatenlink
+#set($xPathAdditionalInfoGeodataLink = "./gmd:dataSetURI/gco:CharacterString")
+#set($add = $xPathListAdditionalInfo.add($xPathAdditionalInfoGeodataLink))

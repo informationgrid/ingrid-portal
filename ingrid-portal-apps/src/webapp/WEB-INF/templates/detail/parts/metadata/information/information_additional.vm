@@ -22,6 +22,8 @@
         #renderTableSymbols ($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport) [2] $tmpConformityDataSymbols [0])
     ## Datenformat
         #renderTable($TOOL.getAvailability($xPathAdditionalInfoMDDistribution))
+    ## Geodatenlink
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_geodatalink.vm")
     ## Medien
         #renderTable($TOOL.getMediumOptions($xPathAdditionalInfoMDDistribution))
     ## Bestellinformationen
