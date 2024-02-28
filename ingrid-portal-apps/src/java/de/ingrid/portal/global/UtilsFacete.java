@@ -2452,6 +2452,7 @@ public class UtilsFacete {
                     String restrictPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
                     List<IngridPartner> partners = UtilsDB.getPartners();
                     if(partners != null){
+                        boolean isQueryOr = facet.getQueryType() != null && facet.getQueryType().equals("OR");
                         if(restrictPartner != null && restrictPartner.length() > 0){
                             // Partner restriction (set tmpFacet.setParentHidden(true))
                             for(IngridPartner partner : partners){
@@ -2464,6 +2465,9 @@ public class UtilsFacete {
                                         tmpProvidersFacet.setQuery("provider:"+ provider.getIdent());
                                         tmpProvidersFacet.setName(provider.getName());
                                         tmpProvidersFacet.setParent(facet);
+                                        if(isQueryOr) {
+                                            tmpProvidersFacet.setDisplay(true);
+                                        }
                                         if(listProviders == null){
                                             listProviders = new ArrayList<>();
                                         }
@@ -2481,7 +2485,6 @@ public class UtilsFacete {
                                 tmpFacet.setName(partner.getName());
                                 tmpFacet.setSort(facet.getSort());
                                 tmpFacet.setParent(facet);
-                                boolean isQueryOr = facet.getQueryType() != null && facet.getQueryType().equals("OR");
                                 IngridFacet newFacet = null;
                                 if(isQueryOr) {
                                     newFacet = new IngridFacet();
