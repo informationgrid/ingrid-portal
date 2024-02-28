@@ -1975,13 +1975,30 @@ public class UtilsFacete {
                                                 }
                                             }
                                         }
-                                        if(tmpFacetValue.isSelect() && tmpFacetValue.getSelectFacet() != null) {
-                                            IngridFacet tmpSelectFacet = getFacetById(config, tmpFacetValue.getSelectFacet());
-                                            if(tmpSelectFacet != null) {
-                                                tmpSelectFacet.setSelect(true);
-                                            }
-                                        } 
                                     }
+                                    if(tmpFacetValue.isSelect() && tmpFacetValue.getSelectFacet() != null) {
+                                        IngridFacet tmpSelectFacet = getFacetById(config, tmpFacetValue.getSelectFacet());
+                                        if(tmpSelectFacet != null) {
+                                            tmpSelectFacet.setSelect(true);
+                                        }
+                                        ArrayList<IngridFacet> facetDepList = new ArrayList<>();
+                                        getDependencyFacetById(config, facetDepList, tmpSelectFacet.getId());
+                                        for(IngridFacet facetDep : facetDepList){
+                                            IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
+                                            if(dependencyValue != null) {
+                                                if(dependencyValue.isSelect()){
+                                                    facetDep.setDependencySelect(dependencyValue.isSelect());
+                                                }else {
+                                                    if (facetDep.getFacets() != null) {
+                                                        for (IngridFacet facetChild : facetDep.getFacets()) {
+                                                            facetChild.setSelect(dependencyValue.isSelect());
+                                                        }
+                                                    }
+                                                    facetDep.setDependencySelect(dependencyValue.isSelect());
+                                                }
+                                            }
+                                        }
+                                    } 
                                 }
                                 for (IngridFacet tmpSubFacet : tmpFacetKey.getFacets()) {
                                     if(tmpSubFacet.getToggle() != null) {
