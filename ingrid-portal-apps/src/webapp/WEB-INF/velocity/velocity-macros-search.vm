@@ -613,18 +613,18 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 
 #macro (appendSearchDetailURL $link $query $start $page $rank $filter)
     #if($query)
-        #set($link = "${link}&q=${query}")
+        #set($link = "${link}&q=$escTool.url(${query})")
     #end
     #if($start)
-        #set($link = "${link}&rstart=${start}")
+        #set($link = "${link}&rstart=$escTool.url(${start})")
     #end
     #if($page)
-        #set($link = "${link}&currentSelectorPage=${page}")
+        #set($link = "${link}&currentSelectorPage=$escTool.url(${page})")
     #end
     #if($rank)
-        #set($link = "${link}&rank=${rank}")
+        #set($link = "${link}&rank=$escTool.url(${rank})")
     #end
     #if($filter)
-        #set($link = "${link}&f=${filter}")
+        #set($link = "${link}&f=$escTool.url(${filter})")
     #end
 #end
