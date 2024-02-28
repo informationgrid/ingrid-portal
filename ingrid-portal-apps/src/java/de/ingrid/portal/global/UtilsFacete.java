@@ -355,6 +355,14 @@ public class UtilsFacete {
                                                 tmpSubFacet.setSelect(false);
                                             }
                                         }
+                                        if(tmpFacetValue.isSelect() == false && tmpFacetValue.getSelectGroup() != null) {
+                                            IngridFacet tmpSelectGroup = getFacetById(config, tmpFacetValue.getSelectGroup());
+                                            if(tmpSelectGroup != null && tmpSelectGroup.getFacets() != null) {
+                                                for(IngridFacet tmpSubFacet : tmpSelectGroup.getFacets()){
+                                                    tmpSubFacet.setSelect(false);
+                                                }
+                                            }
+                                        }
                                     }else{
                                         tmpFacetValue.setSelect(true);
                                         facetIsSelect = true;
@@ -1967,6 +1975,12 @@ public class UtilsFacete {
                                                 }
                                             }
                                         }
+                                        if(tmpFacetValue.isSelect() && tmpFacetValue.getSelectFacet() != null) {
+                                            IngridFacet tmpSelectFacet = getFacetById(config, tmpFacetValue.getSelectFacet());
+                                            if(tmpSelectFacet != null) {
+                                                tmpSelectFacet.setSelect(true);
+                                            }
+                                        } 
                                     }
                                 }
                                 for (IngridFacet tmpSubFacet : tmpFacetKey.getFacets()) {

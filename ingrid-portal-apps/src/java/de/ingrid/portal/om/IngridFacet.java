@@ -50,6 +50,7 @@ public class IngridFacet {
     private String info;
     private String infoResultSelect;
     private String selectGroup;
+    private String selectFacet;
     private boolean hierarchyTree;
     private boolean hierarchyTreeLeaf;
     private String hierarchyTreeTypes;
@@ -262,6 +263,12 @@ public class IngridFacet {
     }
     public void setSelectGroup(String selectGroup) {
         this.selectGroup = selectGroup;
+    }
+    public String getSelectFacet() {
+        return selectFacet;
+    }
+    public void setSelectFacet(String selectFacet) {
+        this.selectFacet = selectFacet;
     }
     public String getField() {
         return field;

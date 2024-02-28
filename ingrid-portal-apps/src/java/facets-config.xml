@@ -206,6 +206,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>0</codelist-entry-id>
                 <display>true</display>
+                <selectFacet>metadata</selectFacet>
             </facet>
         <!-- Dienst /Anwendung / Informationssystem -->
             <facet>
@@ -215,6 +216,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>6</codelist-entry-id>
                 <display>true</display>
+                <selectFacet>metadata</selectFacet>
             </facet>
         <!-- Geo-Information / Karte -->
             <facet>
@@ -224,6 +226,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>1</codelist-entry-id>
                 <display>true</display>
+                <selectFacet>metadata</selectFacet>
             </facet>
         <!-- Dokument / Bericht / Literatur -->
             <facet>
@@ -233,6 +236,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>2</codelist-entry-id>
                 <display>true</display>
+                <selectFacet>metadata</selectFacet>
             </facet>
         <!-- Geodatendienst -->
             <facet>
@@ -242,6 +246,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>3</codelist-entry-id>
                 <display>true</display>
+                <selectFacet>metadata</selectFacet>
             </facet>
         <!-- Vorhaben / Projekt / Programm -->
             <facet>
@@ -251,6 +256,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>4</codelist-entry-id>
                 <display>true</display>
+                <selectFacet>metadata</selectFacet>
             </facet>
         <!-- Datensammlung / Datenbank -->
             <facet>
@@ -260,6 +266,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>5</codelist-entry-id>
                 <display>true</display>
+                <selectFacet>metadata</selectFacet>
             </facet>
         </facets>
     </facet>
