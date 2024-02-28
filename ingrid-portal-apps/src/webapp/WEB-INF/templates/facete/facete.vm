@@ -258,7 +258,7 @@
                                     <hr class="no-margin border-dotted">
                                     #foreach($subFacet in $facet.getFacets())
                                         #if(!$subFacet.isSelect())
-                                            #if($facet.getListLength() != 0 && $count == $listLength)
+                                            #if(!$isGreaterThanSubFacetsCount)
                                                 #set($isGreaterThanSubFacetsCount = true)
                                                 <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
                                                     <div class="accordion-item text-right" data-accordion-item="">

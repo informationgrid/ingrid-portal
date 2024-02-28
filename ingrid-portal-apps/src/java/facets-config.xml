@@ -138,7 +138,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.types</name>
         <id>type</id>
-        <isOpen>true</isOpen>
         <queryType>OR</queryType>
         <facets>
         <!-- Webseiten -->
@@ -324,6 +323,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_VALUE_DESC">
         <name>searchResult.facete.title.provider</name>
         <id>provider</id>
+        <queryType>OR</queryType>
+        <listLength>6</listLength>
     </facet>
     <!-- Zeitbezug -->
     <!-- Kann erweitert werden -->
