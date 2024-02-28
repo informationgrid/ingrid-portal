@@ -2392,7 +2392,8 @@ public class UtilsFacete {
 
     public static void addDefaultIngridFacets(PortletRequest request, List<IngridFacet> config) {
         if(config != null){
-            for(IngridFacet facet : config){
+            for(int i = 0; i < config.size(); i++){
+                IngridFacet facet = config.get(i);
                 if(facet.getId().equals("topic")){
                     ArrayList<IngridFacet> list = (ArrayList<IngridFacet>) facet.getFacets();
                     facet.setSort("SORT_BY_VALUE_DESC");
@@ -2424,7 +2425,6 @@ public class UtilsFacete {
                             // Partner restriction (set tmpFacet.setParentHidden(true))
                             for(IngridPartner partner : partners){
                                 if(partner.getIdent().equals(restrictPartner)){
-                                    facet.setSort("SORT_BY_VALUE_DESC");
                                     List<IngridProvider> providers = UtilsDB.getProvidersFromPartnerKey(partner.getIdent());
                                     ArrayList<IngridFacet> listProviders = null;
                                     for(IngridProvider provider : providers){
@@ -2448,8 +2448,21 @@ public class UtilsFacete {
                                 tmpFacet.setId(partner.getIdent());
                                 tmpFacet.setQuery("partner:"+ partner.getIdent());
                                 tmpFacet.setName(partner.getName());
-                                tmpFacet.setSort("SORT_BY_VALUE_DESC");
+                                tmpFacet.setSort(facet.getSort());
                                 tmpFacet.setParent(facet);
+                                boolean isQueryOr = facet.getQueryType() != null && facet.getQueryType().equals("OR");
+                                IngridFacet newFacet = null;
+                                if(isQueryOr) {
+                                    newFacet = new IngridFacet();
+                                    newFacet.setId(partner.getIdent() + "_group");
+                                    newFacet.setDependency(partner.getIdent());
+                                    newFacet.setName(partner.getName());
+                                    // Get some values from initial facet
+                                    newFacet.setListLength(facet.getListLength());
+                                    newFacet.setSort(facet.getSort());
+                                    newFacet.setQueryType(facet.getQueryType());
+                                    tmpFacet.setDisplay(true);
+                                }
                                 List<IngridProvider> providers = UtilsDB.getProvidersFromPartnerKey(partner.getIdent());
                                 ArrayList<IngridFacet> listProviders = null;
                                 for(IngridProvider provider : providers){
@@ -2457,14 +2470,27 @@ public class UtilsFacete {
                                     tmpProvidersFacet.setId(provider.getIdent());
                                     tmpProvidersFacet.setQuery("provider:"+ provider.getIdent());
                                     tmpProvidersFacet.setName(provider.getName());
-                                    tmpProvidersFacet.setParent(tmpFacet);
+                                    if(isQueryOr) {
+                                        tmpProvidersFacet.setParent(newFacet);
+                                        tmpProvidersFacet.setDisplay(true);
+                                    } else {
+                                        tmpProvidersFacet.setParent(tmpFacet);
+                                    }
                                     if(listProviders == null){
                                         listProviders = new ArrayList<>();
                                     }
                                     listProviders.add(tmpProvidersFacet);
                                 }
                                 if(listProviders != null){
-                                    tmpFacet.setFacets(listProviders);
+                                    if(isQueryOr) {
+                                        if(newFacet != null) {
+                                            newFacet.setFacets(listProviders);
+                                            config.add(i+1, newFacet);
+                                            i++;
+                                        }
+                                    } else {
+                                        tmpFacet.setFacets(listProviders);
+                                    }
                                 }
                                 if(list == null){
                                     list = new ArrayList<>();
