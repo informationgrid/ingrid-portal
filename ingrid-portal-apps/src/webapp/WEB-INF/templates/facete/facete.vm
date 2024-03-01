@@ -255,6 +255,7 @@
                                     #end
                                 #end
                                 #if($hasUnselectedDisplayFacet)
+                                    <hr class="no-margin border-dotted">
                                     #foreach($subFacet in $facet.getFacets())
                                         #if(!$subFacet.isSelect())
                                             #if($facet.getListLength() != 0 && $count == $listLength)
@@ -262,7 +263,6 @@
                                                 <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
                                                     <div class="accordion-item text-right" data-accordion-item="">
                                                         <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
-                                                            <hr class="no-margin border-dotted">
                                             #end
                                             #renderFacetCategoryEntry($subFacet $facet.getId())
                                             #if($subFacet.isDisplay())
