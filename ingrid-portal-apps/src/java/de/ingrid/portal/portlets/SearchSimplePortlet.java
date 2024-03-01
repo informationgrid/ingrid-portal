@@ -317,12 +317,15 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             if (request.getParameter( "doSetQuery" ) == null && request.getParameter( "doDeleteQuery" ) == null) {
                 // redirect to our page wih parameters for bookmarking
                 String url = "";
-                if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-                    String queryType = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
-                    if (queryType != null && queryType.equals(Settings.MSGV_NO_QUERY)) {
-                        SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+                ContentPage page = (ContentPage) request.getAttribute( "org.apache.jetspeed.Page" );
+                if(Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1) {
+                    if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+                        String queryType = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
+                        if (queryType != null && queryType.equals(Settings.MSGV_NO_QUERY)) {
+                            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+                        }
+                        url = UtilsFacete.setFaceteParamsToSessionByAction(request);
                     }
-                    url = UtilsFacete.setFaceteParamsToSessionByAction(request);
                 }
                 actionResponse.sendRedirect( actionResponse.encodeURL( Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch( request ) ) + url);
             }
