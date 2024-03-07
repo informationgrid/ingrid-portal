@@ -1444,7 +1444,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         ArrayList row = new ArrayList();
 
                         if(!subjectEntries.isEmpty()){
-                            if (subjectEntries.get(j)!= null) {
+                            if (j < subjectEntries.size() && subjectEntries.get(j) != null) {
                                 row.add(subjectEntries.get(j));
                             }else {
                                 row.add("");
