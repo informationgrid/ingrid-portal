@@ -1,0 +1,4 @@
+#set ($uuid = $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.org_obj_id" ))
+#set ($lat_center = "")
+#set ($lon_center = "")
+#set ($mapInfo = "")
