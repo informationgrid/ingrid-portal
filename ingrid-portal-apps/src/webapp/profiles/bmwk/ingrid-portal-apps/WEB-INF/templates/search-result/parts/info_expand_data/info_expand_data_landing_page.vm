@@ -1,0 +1,2 @@
+## Webseite
+#set($landing_page = $hit.getHitDetail().get("landing_page"))

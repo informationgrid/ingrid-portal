@@ -159,9 +159,19 @@
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
 ## Ort
                     #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_coords.vm")
-
+## Ressourcen
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_distributions.vm")
+## Webseite
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_landing_page.vm")
+## Rechtsgrundlage für die Zugangseröffnung
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_legal_basis.vm")
+## Qualitätssicherungsprozess URI
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_quality_process_uri.vm")
+## Open Data Kategorie
+                    #parse("/WEB-INF/templates/search-result/parts/info_expand/info_expand_categories.vm")
                     <div class="teaser-links">
                         #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
+                        #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_rdf_xml.vm")
                     </div>
                     <!--
                     #if($adminContent)

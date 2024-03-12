@@ -1,0 +1,3 @@
+#set($searchTerm = $UTIL_SEARCH.getDetailValueList( $rs.getHitDetail(), "t04_search.searchterm" ))
+#set($accessConstraint = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.has_access_constraint" ))
+#renderSearchTerm($searchTerm $accessConstraint)

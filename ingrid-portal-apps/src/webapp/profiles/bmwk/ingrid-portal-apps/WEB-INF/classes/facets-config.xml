@@ -136,7 +136,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
 <facets>
     <!-- Ergebnistypen -->
     <facet>
-        <name>Open Data Kategorien</name>
+        <name>Kategorien</name>
         <id>type</id>
         <queryType>OR</queryType>
         <listLength>6</listLength>

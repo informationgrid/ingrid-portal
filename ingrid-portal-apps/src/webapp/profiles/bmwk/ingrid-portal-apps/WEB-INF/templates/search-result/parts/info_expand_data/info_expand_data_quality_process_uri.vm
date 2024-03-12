@@ -1,0 +1,2 @@
+## Qualitätssicherungsprozess URI
+#set($quality_process_uri = $hit.getHitDetail().get("quality_process_uri"))
