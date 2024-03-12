@@ -136,58 +136,140 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
 <facets>
     <!-- Ergebnistypen -->
     <facet>
-        <name>searchResult.facete.title.types</name>
+        <name>Open Data Kategorien</name>
         <id>type</id>
         <queryType>OR</queryType>
+        <listLength>6</listLength>
+        <isOpen>true</isOpen>
         <facets>
-        <!-- Webseiten -->
+            <!-- Landwirtschaft, Fischerei, Forstwirtschaft und Nahrungsmittel -->
             <facet>
-                <name>searchResult.facete.datatype.www</name>
-                <query>datatype:www</query>
-                <id>www</id>
+                <name>agri</name>
+                <query>t04_search.searchterm:agri</query>
+                <id>agri</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>1</codelist-entry-id>
                 <display>true</display>
             </facet>
-        <!-- Metadaten -->
+            <!-- Wirtschaft und Finanzen -->
             <facet>
-                <name>searchResult.facete.title.metaclass</name>
-                <query>datatype:metadata</query>
-                <id>metadata</id>
-                <display>true</display>
-                <selectGroup>metadata_group</selectGroup>
-            </facet>
-        <!-- INSPIRE-relevant -->
-            <facet>
-                <name>INSPIRE</name>
-                <query>t04_search.searchterm:inspireidentifiziert</query>
-                <id>inspire</id>
+                <name>econ</name>
+                <query>t04_search.searchterm:econ</query>
+                <id>econ</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>2</codelist-entry-id>
                 <display>true</display>
             </facet>
-        <!-- Open Data -->
-           <facet>
-                <name>Open Data</name>
-                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
-                <id>opendata</id>
+            <!-- Bildung, Kultur und Sport -->
+            <facet>
+                <name>educ</name>
+                <query>t04_search.searchterm:educ</query>
+                <id>educ</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>3</codelist-entry-id>
                 <display>true</display>
             </facet>
-        <!-- Karten -->
+            <!-- Energie -->
             <facet>
-                <name>searchResult.facete.datatype.map</name>
-                <query>capabilities_url:http* datatype:metadata</query>
-                <id>map</id>
+                <name>ener</name>
+                <query>t04_search.searchterm:ener</query>
+                <id>ener</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>4</codelist-entry-id>
                 <display>true</display>
             </facet>
-        <!-- Adressen -->
+            <!-- Umwelt -->
             <facet>
-                <name>searchResult.facete.datatype.address</name>
-                <query>datatype:address</query>
-                <id>address</id>
+                <name>envi</name>
+                <query>t04_search.searchterm:envi</query>
+                <id>envi</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>5</codelist-entry-id>
                 <display>true</display>
             </facet>
-        <!-- Weitere Daten -->
+            <!-- Gesundheit -->
             <facet>
-                <name>searchResult.facete.datatype.other</name>
-                <query>datatype:dsc_other</query>
-                <id>other</id>
+                <name>heal</name>
+                <query>t04_search.searchterm:heal</query>
+                <id>heal</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>6</codelist-entry-id>
+                <display>true</display>
+            </facet>
+            <!-- Internationale Themen -->
+            <facet>
+                <name>intr</name>
+                <query>t04_search.searchterm:intr</query>
+                <id>intr</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>7</codelist-entry-id>
+                <display>true</display>
+            </facet>
+            <!-- Justiz, Rechtssystem und öffentliche Sicherheit -->
+            <facet>
+                <name>just</name>
+                <query>t04_search.searchterm:just</query>
+                <id>just</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>8</codelist-entry-id>
+                <display>true</display>
+            </facet>
+            <!-- Bevölkerung und Gesellschaft -->
+            <facet>
+                <name>soci</name>
+                <query>t04_search.searchterm:soci</query>
+                <id>soci</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>9</codelist-entry-id>
+                <display>true</display>
+            </facet>
+            <!-- Regierung und öffentlicher Sektor -->
+            <facet>
+                <name>gove</name>
+                <query>t04_search.searchterm:gove</query>
+                <id>gove</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>10</codelist-entry-id>
+                <display>true</display>
+            </facet>
+            <!-- Regionen und Städte -->
+            <facet>
+                <name>regi</name>
+                <query>t04_search.searchterm:regi</query>
+                <id>regi</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>11</codelist-entry-id>
+                <display>true</display>
+            </facet>
+            <!-- Wissenschaft und Technologie -->
+            <facet>
+                <name>tech</name>
+                <query>t04_search.searchterm:tech</query>
+                <id>tech</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>12</codelist-entry-id>
+                <display>true</display>
+            </facet>
+            <!-- Verkehr -->
+            <facet>
+                <name>tran</name>
+                <query>t04_search.searchterm:tran</query>
+                <id>tran</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>13</codelist-entry-id>
                 <display>true</display>
             </facet>
         </facets>
@@ -265,53 +347,148 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>category</id>
         <categoryOnly>true</categoryOnly>
         <facets>
-            <!-- RSS -->
+            <!-- Landwirtschaft, Fischerei, Forstwirtschaft und Nahrungsmittel -->
             <facet>
-                <name>category.news.title</name>
-                <id>rss</id>
-                <icon>ic-rss</icon>
-                <url>/neuigkeiten</url>
+                <name>agri</name>
+                <query>t04_search.searchterm:agri</query>
+                <id>agri</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>1</codelist-entry-id>
                 <display>true</display>
+                <icon>ic-agri</icon>
             </facet>
-            <!-- Webseiten -->
+            <!-- Wirtschaft und Finanzen -->
             <facet>
-                <name>searchResult.facete.datatype.www</name>
-                <query>datatype:www</query>
-                <id>www</id>
+                <name>econ</name>
+                <query>t04_search.searchterm:econ</query>
+                <id>econ</id>
                 <parentId>type</parentId>
-                <icon>ic-www</icon>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>2</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-econ</icon>
             </facet>
-            <!-- Metadaten -->
+            <!-- Bildung, Kultur und Sport -->
             <facet>
-                <name>searchResult.facete.title.metaclass</name>
-                <query>datatype:metadata</query>
-                <id>metadata</id>
+                <name>educ</name>
+                <query>t04_search.searchterm:educ</query>
+                <id>educ</id>
                 <parentId>type</parentId>
-                <icon>ic-metadata</icon>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>3</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-educ</icon>
             </facet>
-        <!-- INSPIRE-relevant -->
+            <!-- Energie -->
             <facet>
-                <name>INSPIRE</name>
-                <query>t04_search.searchterm:inspireidentifiziert</query>
-                <id>inspire</id>
+                <name>ener</name>
+                <query>t04_search.searchterm:ener</query>
+                <id>ener</id>
                 <parentId>type</parentId>
-                <icon>ic-inspire</icon>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>4</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-ener</icon>
             </facet>
-        <!-- Open Data -->
-           <facet>
-                <name>Open Data</name>
-                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
-                <id>opendata</id>
-                <parentId>type</parentId>
-                <icon>ic-opendata</icon>
-            </facet>
-        <!-- Karten -->
+            <!-- Umwelt -->
             <facet>
-                <name>searchResult.facete.datatype.map</name>
-                <query>capabilities_url:http* datatype:metadata</query>
-                <id>map</id>
+                <name>envi</name>
+                <query>t04_search.searchterm:envi</query>
+                <id>envi</id>
                 <parentId>type</parentId>
-                <icon>ic-map</icon>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>5</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-envi</icon>
+            </facet>
+            <!-- Gesundheit -->
+            <facet>
+                <name>heal</name>
+                <query>t04_search.searchterm:heal</query>
+                <id>heal</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>6</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-heal</icon>
+            </facet>
+            <!-- Internationale Themen -->
+            <facet>
+                <name>intr</name>
+                <query>t04_search.searchterm:intr</query>
+                <id>intr</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>7</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-intr</icon>
+            </facet>
+            <!-- Justiz, Rechtssystem und öffentliche Sicherheit -->
+            <facet>
+                <name>just</name>
+                <query>t04_search.searchterm:just</query>
+                <id>just</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>8</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-just</icon>
+            </facet>
+            <!-- Bevölkerung und Gesellschaft -->
+            <facet>
+                <name>soci</name>
+                <query>t04_search.searchterm:soci</query>
+                <id>soci</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>9</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-soci</icon>
+            </facet>
+            <!-- Regierung und öffentlicher Sektor -->
+            <facet>
+                <name>gove</name>
+                <query>t04_search.searchterm:gove</query>
+                <id>gove</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>10</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-gove</icon>
+            </facet>
+            <!-- Regionen und Städte -->
+            <facet>
+                <name>regi</name>
+                <query>t04_search.searchterm:regi</query>
+                <id>regi</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>11</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-regi</icon>
+            </facet>
+            <!-- Wissenschaft und Technologie -->
+            <facet>
+                <name>tech</name>
+                <query>t04_search.searchterm:tech</query>
+                <id>tech</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>12</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-tech</icon>
+            </facet>
+            <!-- Verkehr -->
+            <facet>
+                <name>tran</name>
+                <query>t04_search.searchterm:tran</query>
+                <id>tran</id>
+                <parentId>type</parentId>
+                <codelist-id>6400</codelist-id>
+                <codelist-entry-id>13</codelist-entry-id>
+                <display>true</display>
+                <icon>ic-tran</icon>
             </facet>
         </facets>
     </facet>
