@@ -1,2 +1,5 @@
 ## Webseite
-#set($landing_page = $hit.getHitDetail().get("landing_page"))
+#set($landing_page = [])
+#if($hit.getHitDetail().get("landing_page"))
+    #set($landing_page = $hit.getHitDetail().get("landing_page"))
+#end

@@ -1,4 +1,0 @@
-## Ressourcen
-#set($distribution_title = $hit.getHitDetail().get("distribution.title"))
-#set($distribution_description = $hit.getHitDetail().get("distribution.description"))
-#set($distribution_access_url = $hit.getHitDetail().get("distribution.access_url"))

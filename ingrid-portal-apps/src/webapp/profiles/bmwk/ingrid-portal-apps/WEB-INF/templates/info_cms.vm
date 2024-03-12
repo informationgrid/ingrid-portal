@@ -1,11 +1,11 @@
 #if($cmsItemValue)
 <div class="about-wrapper dark">
-    <h2 class="hide-for-large">
+    <h2 class="text-center hide-for-large">
         $cmsItemTitle
     </h2>
     <div class="row">
         <div class="columns">
-            <h2 class="show-for-large">
+            <h2 class="text-center show-for-large">
                 $cmsItemTitle
             </h2>
             $cmsItemValue
