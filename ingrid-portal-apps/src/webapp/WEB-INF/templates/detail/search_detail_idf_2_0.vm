@@ -1140,7 +1140,7 @@
 
 #macro (renderLinkTable $title $entry $cssClass)
     #if($tool.hasContent($entry))
-    <div class="table table--lined ${cssClass}">
+    <div class="table table--lined #if($cssClass)${cssClass}#end">
         <table>
             <tr>
             #if($tool.hasContent($title))
@@ -1161,7 +1161,7 @@
 
 #macro (renderLinkListTable $title $entryList $cssClass $expandable $expandableId)
     #if($tool.hasContent($entryList))
-    <div class="table table--lined ${cssClass}">
+    <div class="table table--lined #if($cssClass)${cssClass}#end">
         <table>
             <tr>
             #if($tool.hasContent($title))
