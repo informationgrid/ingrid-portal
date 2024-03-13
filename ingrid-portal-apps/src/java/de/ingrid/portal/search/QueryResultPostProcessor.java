@@ -497,7 +497,9 @@ public class QueryResultPostProcessor {
             }
             String rdfUrl = PortalConfig.getInstance().getString(PortalConfig.RDF_INTERFACE_URL, "");
             if(id != null){
-                hit.put(Settings.RESULT_KEY_RDF_INTERFACE_URL, rdfUrl + id);
+                if (!rdfUrl.isEmpty()) {
+                    hit.put(Settings.RESULT_KEY_RDF_INTERFACE_URL, rdfUrl + id);
+                }
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {

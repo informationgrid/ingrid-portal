@@ -118,6 +118,11 @@
                                         #set($tmpTitle = $MESSAGES.getString("www_references"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
+                                    #if($getDistributionLinks && $getDistributionLinks.size() > 0)
+                                        #set($tmpHash = "${hashDetail3}_distribution")
+                                        #set($tmpTitle = $MESSAGES.getString("Ressourcen"))
+                                        #renderSubNavigation($tmpTitle $tmpHash)
+                                    #end
                                     #if($getSubordinatedLinks && $getSubordinatedLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_subordinated_references")
                                         #set($tmpTitle = $MESSAGES.getString("subordinated_references"))

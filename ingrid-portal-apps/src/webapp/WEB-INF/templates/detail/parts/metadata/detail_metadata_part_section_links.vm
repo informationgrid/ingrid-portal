@@ -54,7 +54,18 @@
             #renderLinkListImageLimit($tmpTitle $getOtherLinks false false $getOtherLinks.size() "others_more" "h4")
         </div>
         #end
-        
+    ## Ressourcen
+        #if($getDistributionLinks && $getDistributionLinks.size() > 0)
+        <div class="sub-section sub-section-unlined">
+            #set($tmpTitle = $MESSAGES.getString("Ressourcen"))
+            #set($tmpCount = $getDistributionLinks.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            <a class="anchor" id="${hashDetail3}_distribution"></a>
+            #renderLinkListImageLimit($tmpTitle $getDistributionLinks false false $getDistributionLinks.size() "distribution_more" "h4")
+        </div>
+        #end
     ## Untergeordnete Objekte
         #if($getSubordinatedLinks && $getSubordinatedLinks.size() > 0)
         <div class="sub-section sub-section-unlined">

@@ -121,6 +121,8 @@
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_references.vm")
 #### Weitere Verweise
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_others.vm")
+#### Ressourcen
+#set($xPathRefDistribution = "./idf:distribution")
 ## Untergeordnete Objekte
 #set($xPathRefSubordinated = "./idf:subordinatedReference")
 ## Übergeordnetet Objekte
@@ -132,6 +134,7 @@
     $xPathRefDownloads,
     $xPathRefLinks,
     $xPathRefOthers,
+    $xPathRefDistribution,
     $xPathRefSubordinated,
     $xPathRefSuperior,
     $xPathAdditionalInfoParentIdentifier
@@ -140,6 +143,7 @@
 #set($getDownloads = $TOOL.getExternLinks($xPathRefDownloads, true))
 #set($getLinks = $TOOL.getReference($xPathRefLinks, true))
 #set($getOtherLinks = $TOOL.getExternLinks($xPathRefOthers))
+#set($getDistributionLinks = $TOOL.getDistributionLinks($xPathRefDistribution))
 #set($getSubordinatedLinks = $TOOL.getReference($xPathRefSubordinated))
 #set($getSuperiorLinks = $TOOL.getReference($xPathRefSuperior))
 
@@ -471,6 +475,9 @@
 #if($cswURL)
     #set($add = $getXML.put("href", $cswURL))
 #end
+#### XML Darstellung
+#set($getRDF = $TOOL.addLinkElementToGetRDF())
+
 #### Ansprechpartner (Metadatum)
 #set($xPathUseContact = "./gmd:contact")
 #### Datensatz/Datenserie
