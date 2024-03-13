@@ -556,7 +556,7 @@
 
 ## Kontakt
 #### Addressen
-#set($xPathUsePointOfContact = "./gmd:identificationInfo/*/gmd:pointOfContact")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_contact.vm")
 
 #set($xPathListContact = [
     $xPathUsePointOfContact

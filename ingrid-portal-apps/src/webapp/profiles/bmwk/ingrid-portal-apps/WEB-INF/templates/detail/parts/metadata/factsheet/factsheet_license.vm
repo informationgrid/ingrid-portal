@@ -1,5 +1,7 @@
 ## Lizenz
 #if($tmpGetDistributionLicense && $tmpGetDistributionLicense.size() > 0)
-    #set($tmp2 = [$tmpGetDistributionLicense.get(0)])
-    #renderLinkListImageLimit($MESSAGES.getString("object_access.license") $tmp2 false false 2 "")
+    <div class="sub-section sub-section-unlined">
+        #set($tmp2 = [$tmpGetDistributionLicense.get(0)])
+        #renderLinkListImageLimit($MESSAGES.getString("object_access.license") $tmp2 false)
+    </div>
 #end
