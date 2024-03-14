@@ -58,6 +58,8 @@ define([
         selectRequired: false,
 
         freeTextRequired: false,
+        
+        showSourceNote: true,
 
         templateString:
         "<div>" +
@@ -67,10 +69,6 @@ define([
         "        <label>${label}</label>" +
         "      </span>" +
         "      <div class='outlined'>" +
-        "        <!--<span class='functionalLink'>" +
-        "          <img src='img/ic_fl_popup.gif' width='10' height='9' alt='Popup' />" +
-        "          <a id='spatialRefAdminUnitLink' href='javascript:void(0);'>Freitext Vorlagen</a>" +
-        "        </span>-->" +
         "        <div>" +
         "          <span class='outer'>" +
         "            <div>" +
@@ -88,6 +86,14 @@ define([
         "            </div>" +
         "          </span>" +
         "        </div>" +
+        "        <SOURCE_NOTE></SOURCE_NOTE>"+
+        "        <div class='clear'></div>" +
+        "      </div>" +
+        "    </div>" +
+        "  </span>" +
+        "</div>",
+        
+        templateSourceNote:
         "        <div>" +
         "          <span class='outer'>" +
         "            <div>" +
@@ -99,17 +105,20 @@ define([
         "              </div>" +
         "            </div>" +
         "          </span>" +
-        "        </div>" +
-        "        <div class='clear'></div>" +
-        "      </div>" +
-        "    </div>" +
-        "  </span>" +
-        "</div>",
+        "        </div>",
 
         widgetsInTemplate: true,
 
         // handle data as complex value
         valueAsTableData: true,
+
+        postMixInProperties: function() {
+            if (this.showSourceNote) {
+                this.templateString = this.templateString.replace("<SOURCE_NOTE></SOURCE_NOTE>", this.templateSourceNote);
+            } else {
+                this.templateString = this.templateString.replace("<SOURCE_NOTE></SOURCE_NOTE>", "");
+            }
+        },
 
         postCreate: function() {
             console.log("MultiInputInfoField: postCreate");
@@ -183,30 +192,33 @@ define([
         get: function(attr) {
             if (attr !== "displayedValue") return;
 
+            var entries = [];
             console.log("returning value of MultiInputInfoField");
 
-            entrySelect = {
+            entries.push({
                 identifier: this.id + "_select",
                 value: null, // this.selectInput.get("value"),
                 listId: this.selectInput.get("value"),
                 tableRows: null
-            };
+            });
 
-            entryFreeText = {
+            entries.push({
                 identifier: this.id + "_freeText",
                 value: this.freeTextInput.get("value"),
                 listId: null,
                 tableRows: null
-            };
+            });
 
-            entrySourceNote = {
-                identifier: this.id + "_sourceNote",
-                value: this.sourceNote.get("value"),
-                listId: null,
-                tableRows: null
-            };
+            if (this.showSourceNote) {
+                entries.push({
+                    identifier: this.id + "_sourceNote",
+                    value: this.sourceNote.get("value"),
+                    listId: null,
+                    tableRows: null
+                });
+            }
 
-            return [[entrySelect, entryFreeText, entrySourceNote]];
+            return [entries];
         },
 
         getDisplayedLabel: function() {
@@ -252,10 +264,12 @@ define([
                 return this.validator();
             };
 
-            this.sourceNote.validator = this.freeTextInput.validator;
-            this.sourceNote.validate = function() {
-                return this.validator();
-            };
+            if (this.sourceNote) {
+                this.sourceNote.validator = this.freeTextInput.validator;
+                this.sourceNote.validate = function () {
+                    return this.validator();
+                };
+            }
         },
 
         setCodelist: function(codelist) {
@@ -277,7 +291,7 @@ define([
             this.selectInput.set("value", null);
             this.selectInput.reset();
             this.freeTextInput.set("value", "");
-            this.sourceNote.set("value", "");
+            if (this.sourceNote) this.sourceNote.set("value", "");
         }
 
     });

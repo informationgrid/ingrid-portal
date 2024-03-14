@@ -45,7 +45,8 @@ define([
                 id: "bkg_accessConstraints",
                 label: "Zugriffsbeschränkungen",
                 codelist: 10001,
-                codelistForText: 10002
+                codelistForText: 10002,
+                showSourceNote: false
             }).placeAt(rubric, "first");
 
             domClass.add(multiInputInfoFieldWidget.domNode, "required");
