@@ -176,17 +176,20 @@
                     #end
                 #end
             </div>
+            
             #if(($coords.size() > 0) ||
                 ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty()) ||
                 $hasOtherAreaDetails || 
-                $rs.wms_url
+                $rs.wms_url ||
+                $wkt && !$wkt.isEmpty() ||
+                $bwastr && !$bwastr.isEmpty()
             )
             <div class="columns">
                 #set($hasArea = false)
                 #set($hasPreview = false)
                 #set($hasSwipe = false)
                 #set($hasAreaAsPreview = false)
-                #if($coords.size() > 0 || $hasOtherAreaDetails)
+                #if($coords.size() > 0 || $wkt && !$wkt.isEmpty() || $bwastr && !$bwastr.isEmpty() || $hasOtherAreaDetails)
                     #set($hasArea = true)
                 #end
                 #if($rs.additional_html_1 && !$rs.additional_html_1.isEmpty())
