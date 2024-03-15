@@ -22,7 +22,7 @@
 #if($tmpX1)
     #set($tmpCount = 0)
     #foreach($tmp in $tmpX1.split(","))
-        #if($tmpLocation)
+        #if($tmpLocation && !$tmpLocation.isEmpty() && $tmpLocation != "null")
             #if($tmpCount < $tmpLocation.split(",").size())
                 #set($tmpTitle = $tmpLocation.split(",").get($tmpCount))
             #end

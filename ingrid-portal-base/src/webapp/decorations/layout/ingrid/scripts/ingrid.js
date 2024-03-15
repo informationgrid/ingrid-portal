@@ -491,7 +491,12 @@ function addLayerBWaStr(map, ids, restUrlBWaStr, wkt, coords, bboxColor, bboxFil
 }
 
 function addLayerWKT(map, wkt, coords, bboxColor, bboxFillOpacity, bboxWeight, inverted) {
-  var features = L.geoJSON(JSON.parse(wkt));
+  var features = L.geoJSON(JSON.parse(wkt), {
+      invert: inverted || false,
+      color: bboxColor,
+      fillOpacity: bboxFillOpacity,
+      weight: bboxWeight || 1
+    });
   if(features) {
       features.addTo(map);
       map.fitBounds(features.getBounds());
