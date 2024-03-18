@@ -216,17 +216,29 @@ header {
   font-family: Calibri !important;
 }
 .banner {
-  background: #2c6c88;
+  background: #e0e0e0;
 }
 .banner.home {
   padding-top: 0;
-  background: #2c6c88;
+  background: #e0e0e0;
 }
 .banner.home .dark h1, .banner.home .dark h2, .banner.home .dark p, .banner.home .dark a, .banner.home .dark abbr{
-  color: #FFFFFF;
+  color: #0c505d;
+}
+.dark h1, .dark h2, .dark p, .dark a, .dark abbr {
+    color: #0c505d;
+}
+.banner.home h1.green span {
+  display: none;
+}
+.banner.home .home-wrapper .indent span {
+  display: none;
+}
+.banner.home h1, .category .text-center h2 {
+    text-transform: none;
 }
 .banner.search {
-  background: linear-gradient(315deg, #E8EFF0 0%, #F0F7FC 100%);
+  background: #e0e0e0;
 }
 .about {
   margin-bottom: 0;
@@ -242,7 +254,7 @@ header {
   color: #0c505d;
 }
 .banner.home h1.green {
-  color: #85b723;
+  color: #2c6c88;
 }
 .banner.home .home-wrapper .indent span {
   color: #85b723;
@@ -374,6 +386,7 @@ header {
 }
 .filter-group .accordion-item .accordion-title {
   color: #0c505d;
+  text-transform: none;
 }
 .filter-group .accordion-item .accordion-title::after {
   color: #0c505d;
