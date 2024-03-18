@@ -35,12 +35,15 @@
         </div>
       </div>
     </div>
+    #set($descr = $TOOL.getValueFromXPath("./descr"))
+    #if($descr)
     <div class="row content-small">
         <div class="columns">
             ## Allgemeine Vorhabenbeschreibung
-            #renderTextLabelAbove($MESSAGES.getString("search.detail.uvp.desc") $TOOL.valueHTMLEscape($stringTool.convertUrlInText($TOOL.getValueFromXPath("./descr"))))
+            #renderTextLabelAbove($MESSAGES.getString("search.detail.uvp.desc") $TOOL.valueHTMLEscape($stringTool.convertUrlInText($descr)))
         </div>
     </div>
+    #end
     <div class="row content-small">
         <div class="columns">
             ## UVP Kategorien
