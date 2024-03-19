@@ -330,7 +330,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.timeref</name>
         <id>timeref</id>
-        <dependency>metadata</dependency>
     </facet>
     <!-- Kategorie -->
     <facet>
