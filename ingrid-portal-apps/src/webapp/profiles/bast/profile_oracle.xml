@@ -21,7 +21,7 @@
         </page>
         <page>
             <name>service-sitemap.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>administration/admin-content-rss.psml</name>

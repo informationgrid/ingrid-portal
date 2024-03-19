@@ -15,7 +15,7 @@ UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
 UPDATE folder SET is_hidden = 1 WHERE path = '/application';
 
 -- Hide '/service-sitemap.psml'
-UPDATE page SET is_hidden = 1 WHERE path = '/service-sitemap.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/service-sitemap.psml';
 
 -- Hide '/main-about-data-source.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/main-about-data-source.psml';
