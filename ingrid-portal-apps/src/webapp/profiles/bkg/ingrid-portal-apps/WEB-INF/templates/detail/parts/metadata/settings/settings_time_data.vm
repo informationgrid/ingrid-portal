@@ -3,3 +3,4 @@
     $xPathListTimeTimePeriodBeginPosition,
     $xPathListTimeTimePeriodEndPosition
 ])
+#set($hideDescriptionTimeDataForServices = false)

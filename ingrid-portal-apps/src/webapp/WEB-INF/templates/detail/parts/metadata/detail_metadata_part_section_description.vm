@@ -26,7 +26,7 @@
         </button>
         #end
     ## Zeit
-        #if($isTimeInDescription)
+        #if($isTimeInDescription && !($hideDescriptionTimeDataForServices && $type == "3"))
             #parse("/WEB-INF/templates/detail/parts/metadata/description/description_time.vm")
         #end
     </div>
