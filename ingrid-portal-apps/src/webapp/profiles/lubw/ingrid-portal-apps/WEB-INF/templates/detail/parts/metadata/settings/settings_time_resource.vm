@@ -1,0 +1,6 @@
+#if($type == 3)
+    #set($xPathListTimeResource = [])
+    #set($getTimeDates = false)
+#else
+    #set($xPathListTimeResource = [])
+#end
