@@ -7,4 +7,3 @@
     $xPathListTimeUserDefinedMaintenanceFrequency,
     $xPathListTimeMaintenanceNote
 ])
-#set($hideDescriptionTimeDataForServices = false)

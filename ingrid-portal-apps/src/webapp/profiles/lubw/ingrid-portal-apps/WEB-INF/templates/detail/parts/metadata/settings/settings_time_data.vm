@@ -1,10 +1,15 @@
-#set($xPathListTime = [
-    $xPathListTimeTimePeriodInstantPosition,
-    $xPathListTimeTimePeriodBeginPosition,
-    $xPathListTimeTimePeriodEndPosition,
-    $xPathListTimeMDProgressCode,
-    $xPathListTimeMDMaintenanceFrequencyCode,
-    $xPathListTimeUserDefinedMaintenanceFrequency,
-    $xPathListTimeMaintenanceNote
-])
-#set($hideDescriptionTimeDataForServices = true)
+#if($type == 3)
+    #set($xPathListTime = [])
+    #set ($getTimeMeasurementValue = false)
+    #set ($getTimeMeasurementUnit = false)
+#else
+    #set($xPathListTime = [
+        $xPathListTimeTimePeriodInstantPosition,
+        $xPathListTimeTimePeriodBeginPosition,
+        $xPathListTimeTimePeriodEndPosition,
+        $xPathListTimeMDProgressCode,
+        $xPathListTimeMDMaintenanceFrequencyCode,
+        $xPathListTimeUserDefinedMaintenanceFrequency,
+        $xPathListTimeMaintenanceNote
+    ])
+#end
