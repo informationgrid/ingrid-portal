@@ -203,7 +203,8 @@ public class DetailPartPreparer {
                     return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
                 }
             } catch (Exception e) {
-                log.error("Error on getDateFormatValue() for input: " + value);
+                if(log.isDebugEnabled())
+                    log.debug("Error on getDateFormatValue() for input: " + value);
             }
         }
         return value;

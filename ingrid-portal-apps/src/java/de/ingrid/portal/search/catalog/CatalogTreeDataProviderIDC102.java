@@ -72,8 +72,8 @@ public class CatalogTreeDataProviderIDC102 implements CatalogTreeDataProvider {
             }
         }
         
-        if (isCorrupt && log.isWarnEnabled()) {
-            log.warn(String.format("CORRUPT PlugDescription ! We skip this plug: %s", plug));
+        if (isCorrupt && log.isDebugEnabled()) {
+            log.debug(String.format("CORRUPT PlugDescription ! We skip this plug: %s", plug));
         }
 
         return isCorrupt;
