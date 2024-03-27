@@ -35,10 +35,10 @@
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
     <mdek.version>7.0.0</mdek.version>
-    <webmap-client.version>7.1.0-SNAPSHOT</webmap-client.version>
-    <ingrid-codelist-service.version>7.1.0-SNAPSHOT</ingrid-codelist-service.version>
-    <ingrid-utils.version>7.1.0-SNAPSHOT</ingrid-utils.version>
-    <measurement.client.version>2.0.7-SNAPSHOT</measurement.client.version>
+    <webmap-client.version>7.1.0</webmap-client.version>
+    <ingrid-codelist-service.version>7.1.0</ingrid-codelist-service.version>
+    <ingrid-utils.version>7.1.0</ingrid-utils.version>
+    <measurement.client.version>7.1.0</measurement.client.version>
     <ingrid-utils-geo.version>7.0.0</ingrid-utils-geo.version>
     <spring.version>5.3.24</spring.version>
     <log4j.version>2.22.1</log4j.version>
