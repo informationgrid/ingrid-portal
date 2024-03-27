@@ -1,5 +1,11 @@
-#if(!$jetspeed.getLoggedOn())
-    <a href="$jetspeed.getAbsoluteUrl('/service-myportal.psml')" title="Anmelden">
+</div>
+<div class="menu-login-links">
+    <h6 class="login_user">Login Bereich</h6>
+    #if(!$jetspeed.getLoggedOn())
+        <a href="$jetspeed.getAbsoluteUrl('/service-myportal.psml')" title="Interner Bereich - Portal">
+            <span class="text">Interner Bereich - Portal</span>
+        </a>
+    #end
+    <a target="_blank" href="/log-in" title="Interner Bereich - Metadaten">
         <span class="text">Interner Bereich - Metadaten</span>
     </a>
-#end

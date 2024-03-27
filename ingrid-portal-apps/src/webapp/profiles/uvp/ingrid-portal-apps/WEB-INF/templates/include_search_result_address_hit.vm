@@ -32,8 +32,9 @@
                 </div>
                 #if($rs.docuuid)
                     #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address#if($detailUseParamPlugid)&plugid=$rs.plugid#end")
+                    #appendSearchDetailURL($detailLink $q $rstart $currentSelectorPage $rank $f)
                 #end
-                <a href="$detailLink">
+                <a href="$detailLink" title="$stringTool.htmlescape($title)">
                     <h2 class="header">#renderTitle($title)</h2>
                 </a>
                 #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t02_address.mod_time" )))
@@ -41,8 +42,9 @@
                 ##renderUDKAddressIcon($rs.udk_class $udkAdrClassName)
                 #if($rs.docuuid)
                     #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address#if($detailUseParamPlugid)&plugid=$rs.plugid#end")
+                    #appendSearchDetailURL($detailLink $q $rstart $currentSelectorPage $rank $f)
                 #end
-                <a href="$detailLink">
+                <a href="$detailLink" title="$stringTool.htmlescape($title)">
                     <h2 class="header">#renderTitle($title)</h2>
                 </a>
                 #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t02_address.mod_time" )))

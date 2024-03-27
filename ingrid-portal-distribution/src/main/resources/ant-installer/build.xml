@@ -41,7 +41,7 @@
     
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.49.jar"/>
     <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc8.jar"/>
-    <property name="postgresDbDriverInApache"      location="./distribution/${tomcat-artifact}/shared/lib/postgresql-42.6.0.jar"/>
+    <property name="postgresDbDriverInApache"      location="./distribution/${tomcat-artifact}/shared/lib/postgresql-42.7.2.jar"/>
     
     <property name="prop-root"                     value="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/classes/bootstrap.override.properties"/>
 

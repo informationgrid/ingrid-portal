@@ -956,12 +956,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 element.put("title", messages.getString("t0112_media_option.medium"));
                 ArrayList head = new ArrayList();
                 head.add(messages.getString("t0112_media_option.medium_name"));
-                head.add(messages.getString("t0112_media_option.transfer_size") + " [MB]");
+                head.add(messages.getString("t0112_media_option.transfer_size"));
                 head.add(messages.getString("t0112_media_option.medium_note"));
                 element.put("head", head);
                 ArrayList body = new ArrayList();
                 element.put("body", body);
 
+                String unit = "MB";
                 for (int i = 0; i < nodeList.getLength(); i++) {
                     Node nodeListItem = nodeList.item(i);
                     ArrayList row = new ArrayList();
@@ -975,9 +976,18 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             row.add("");
                         }
 
+                        xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:unitsOfDistribution/gco:CharacterString";
+                        if (xPathUtils.nodeExists(nodeListItem, xpathExpression)) {
+                            String value = notNull(xPathUtils.getString(nodeListItem, xpathExpression)).trim();
+                            if(!value.isEmpty()) {
+                                unit = value;
+                            }
+                        }
+
                         xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:transferSize";
                         if (xPathUtils.nodeExists(nodeListItem, xpathExpression)) {
-                            row.add(notNull(xPathUtils.getString(nodeListItem, xpathExpression)).trim());
+                            String transferSize = notNull(xPathUtils.getString(nodeListItem, xpathExpression)).trim();
+                            row.add(transferSize + " " + unit);
                         } else {
                             row.add("");
                         }
@@ -989,6 +999,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             row.add("");
                         }
 
+                        
                         if (!isEmptyRow(row)) {
                             body.add(row);
                         }
@@ -1358,12 +1369,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
                                     if (!tmpServiceTypeVersion.isEmpty()) {
                                         String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
-                                        if (tmpValue != null && !tmpValue.trim().contains(" ")) {
-                                            urlValue.append("&SERVICE=" + tmpValue);
-                                            serviceTypeVersion = tmpServiceTypeVersion;
-                                            break;
-                                        } else {
-                                            if(tmpValue.trim().contains(" ")) {
+                                        if (tmpValue != null) {
+                                            if (!tmpValue.trim().contains(" ")) {
+                                                urlValue.append("&SERVICE=" + tmpValue);
+                                                serviceTypeVersion = tmpServiceTypeVersion;
+                                                break;
+                                            } else {
                                                 urlValue = new StringBuilder(url);
                                             }
                                         }
@@ -1444,7 +1455,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         ArrayList row = new ArrayList();
 
                         if(!subjectEntries.isEmpty()){
-                            if (subjectEntries.get(j)!= null) {
+                            if (j < subjectEntries.size() && subjectEntries.get(j) != null) {
                                 row.add(subjectEntries.get(j));
                             }else {
                                 row.add("");

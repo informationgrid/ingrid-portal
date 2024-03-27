@@ -1,3 +1,0 @@
-<script>
-    addLayerWKT(map${mapId}, '${wkt}', coords, '$leafletBboxColor', $leafletBboxFillOpacity, $leafletBboxInverted);
-</script>

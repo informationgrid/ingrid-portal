@@ -1,4 +1,4 @@
-#if($coords.size() > 0)
+#if($hasArea)
     <div id="map${mapId}" class="map-ingrid" style="height:320px; margin-bottom: 24px;"></div>
     
     <script>

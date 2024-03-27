@@ -233,6 +233,10 @@
     $xPathInfo1MDIdentifierCode,
     $xPathInfo1RSIdentifierCode
 ])
+
+## Anzeige der Bemerkungen
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_info1_supplemental_info.vm")
+
 ## Messdaten (BAW)
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_measurement.vm")
 
@@ -441,6 +445,9 @@
     "${xPathAdditionalInfoMDDistribution}/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:transferSize",
     $xPathAdditionalInfoOrderingInstructions
 ])
+
+## Geodatenlink
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_additional_info_geodatalink.vm")
 
 #### Schlagworte
 #set($xPathKeywordsDescriptiveKeywords = "./gmd:identificationInfo/*/gmd:descriptiveKeywords")

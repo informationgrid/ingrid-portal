@@ -126,10 +126,12 @@
         </div>
     </form>
 </div>
+#if($actionForm)
 <script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmCreateUser');
     }
 </script>
+#end
 #parse ('/WEB-INF/templates/global/include_passwort_meter.vm')

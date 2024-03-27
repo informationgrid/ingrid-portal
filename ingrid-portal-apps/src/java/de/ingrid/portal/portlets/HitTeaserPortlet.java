@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
@@ -76,7 +77,7 @@ public class HitTeaserPortlet extends GenericVelocityPortlet {
         context.put( "Codelists", CodeListServiceFactory.instance() );
         context.put( "languageCode", request.getLocale().getLanguage() );
         context.put( "UtilsSearch", new UtilsSearch() );
-        
+        context.put("stringTool", new UtilsString());
         context.put( "leafletEpsg", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_EPSG, "3857"));
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
         context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));

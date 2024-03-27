@@ -139,107 +139,120 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.types</name>
         <id>type</id>
         <isOpen>true</isOpen>
+        <queryType>OR</queryType>
         <facets>
         <!-- Webseiten -->
             <facet>
                 <name>searchResult.facete.datatype.www</name>
                 <query>datatype:www</query>
                 <id>www</id>
+                <display>true</display>
             </facet>
         <!-- Metadaten -->
             <facet>
                 <name>searchResult.facete.title.metaclass</name>
                 <query>datatype:metadata</query>
                 <id>metadata</id>
-                <facets>
-              <!-- INSPIRE-relevant -->
-                    <facet>
-<!--                    <name>searchResult.facete.metaclass.inspire</name> -->
-                        <name>INSPIRE</name>
-                        <query>t04_search.searchterm:inspireidentifiziert</query>
-                        <id>inspire_metadata</id>
-                    </facet>
-              <!-- Open Data -->
-                     <facet>
-                        <name>Open Data</name>
-                        <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
-                        <id>opendata_metadata</id>
-                    </facet>
-                <!-- Organisationseinheit / Fachaufgabe -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.job</name>
-                        <query>t01_object.obj_class:0</query>
-                        <id>job</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>0</codelist-entry-id>
-                    </facet>
-                <!-- Dienst /Anwendung / Informationssystem -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.service</name>
-                        <query>t01_object.obj_class:6</query>
-                        <id>service</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>6</codelist-entry-id>
-                    </facet>
-                <!-- Geo-Information / Karte -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.map</name>
-                        <query>t01_object.obj_class:1</query>
-                        <id>map</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>1</codelist-entry-id>
-                    </facet>
-                <!-- Dokument / Bericht / Literatur -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.document</name>
-                        <query>t01_object.obj_class:2</query>
-                        <id>document</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>2</codelist-entry-id>
-                    </facet>
-                <!-- Geodatendienst -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.geoservice</name>
-                        <query>t01_object.obj_class:3</query>
-                        <id>geoservice</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>3</codelist-entry-id>
-                    </facet>
-                <!-- Vorhaben / Projekt / Programm -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.project</name>
-                        <query>t01_object.obj_class:4</query>
-                        <id>project</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>4</codelist-entry-id>
-                    </facet>
-                <!-- Datensammlung / Datenbank -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.database</name>
-                        <query>t01_object.obj_class:5</query>
-                        <id>database</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>5</codelist-entry-id>
-                    </facet>
-                </facets>
+                <display>true</display>
+                <selectGroup>metadata_group</selectGroup>
             </facet>
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
                 <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
+                <display>true</display>
             </facet>
         <!-- Open Data -->
            <facet>
                 <name>Open Data</name>
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
+                <display>true</display>
             </facet>
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
                 <query>capabilities_url:http* datatype:metadata</query>
                 <id>map</id>
+                <display>true</display>
+            </facet>
+        </facets>
+    </facet>
+<!-- Metadaten -->
+    <facet>
+        <name>searchResult.facete.title.metaclass</name>
+        <id>metadata_group</id>
+        <queryType>OR</queryType>
+        <facets>
+        <!-- Organisationseinheit / Fachaufgabe -->
+            <facet>
+                <name>searchResult.facete.metaclass.job</name>
+                <query>t01_object.obj_class:0</query>
+                <id>job</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>0</codelist-entry-id>
+                <display>true</display>
+                <selectFacet>metadata</selectFacet>
+            </facet>
+        <!-- Dienst /Anwendung / Informationssystem -->
+            <facet>
+                <name>searchResult.facete.metaclass.service</name>
+                <query>t01_object.obj_class:6</query>
+                <id>service</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>6</codelist-entry-id>
+                <display>true</display>
+                <selectFacet>metadata</selectFacet>
+            </facet>
+        <!-- Geo-Information / Karte -->
+            <facet>
+                <name>searchResult.facete.metaclass.map</name>
+                <query>t01_object.obj_class:1</query>
+                <id>geoset</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>1</codelist-entry-id>
+                <display>true</display>
+                <selectFacet>metadata</selectFacet>
+            </facet>
+        <!-- Dokument / Bericht / Literatur -->
+            <facet>
+                <name>searchResult.facete.metaclass.document</name>
+                <query>t01_object.obj_class:2</query>
+                <id>document</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>2</codelist-entry-id>
+                <display>true</display>
+                <selectFacet>metadata</selectFacet>
+            </facet>
+        <!-- Geodatendienst -->
+            <facet>
+                <name>searchResult.facete.metaclass.geoservice</name>
+                <query>t01_object.obj_class:3</query>
+                <id>geoservice</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>3</codelist-entry-id>
+                <display>true</display>
+            </facet>
+        <!-- Vorhaben / Projekt / Programm -->
+            <facet>
+                <name>searchResult.facete.metaclass.project</name>
+                <query>t01_object.obj_class:4</query>
+                <id>project</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>4</codelist-entry-id>
+                <display>true</display>
+                <selectFacet>metadata</selectFacet>
+            </facet>
+        <!-- Datensammlung / Datenbank -->
+            <facet>
+                <name>searchResult.facete.metaclass.database</name>
+                <query>t01_object.obj_class:5</query>
+                <id>database</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>5</codelist-entry-id>
+                <display>true</display>
+                <selectFacet>metadata</selectFacet>
             </facet>
         </facets>
     </facet>
@@ -249,6 +262,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.time</name>
         <id>modtime</id>
         <dependency>metadata</dependency>
+         <queryType>OR</queryType>
         <facets>
             <!-- letzter Monat -->
             <facet>
@@ -257,6 +271,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <from>P1MT</from>
                 <to>PT</to>
                 <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+                <display>true</display>
             </facet>
             <!-- letzte 3 Monate -->
             <facet>
@@ -265,6 +280,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <from>P3MT</from>
                 <to>P1M1DT</to>
                 <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+                <display>true</display>
             </facet>
             <!-- letztes Jahr -->
             <facet>
@@ -273,6 +289,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <from>P1YT</from>
                 <to>P3M1DT</to>
                 <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+                <display>true</display>
             </facet>
             <!-- letzte 5 Jahre -->
             <facet>
@@ -281,6 +298,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <from>P5YT</from>
                 <to>P1Y1DT</to>
                 <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+                <display>true</display>
             </facet>
             <!-- Älter als 5 Jahre -->
             <facet>
@@ -289,6 +307,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <from></from>
                 <to>P5Y1DT</to>
                 <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+                <display>true</display>
             </facet>
         </facets>
     </facet>
@@ -297,6 +316,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_VALUE_DESC">
         <name>searchResult.facete.title.provider</name>
         <id>provider</id>
+        <queryType>OR</queryType>
+        <listLength>6</listLength>
     </facet>
     <!-- Raumbezug -->
     <!-- Standard - Kann nicht erweitert werden -->

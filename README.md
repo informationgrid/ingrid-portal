@@ -136,7 +136,7 @@ To set up the environment execute the following steps:
 
 The database server is hosted inside a *Docker* container which is set up by executing the following command inside the project's root directory:
 ```
-docker-compose -f docker-compose.ige.yml up -d
+docker-compose -f docker-compose.ige.yml up -d mysql phpmyadmin
 ```
 
 The following containers will be created:
@@ -165,6 +165,7 @@ For instructions how to set up and run the application in Eclipse see https://gi
 The InGrid editor is a web application that is started by executing the following command inside the `ingrid-portal-mdek-application` sub directory:
 
 ```
+mvn package
 run.sh [<profile>]
 ```
 

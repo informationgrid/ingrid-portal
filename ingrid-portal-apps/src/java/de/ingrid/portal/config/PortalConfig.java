@@ -205,6 +205,10 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_FACETE_DISPLAY_DATE_SELECTION = "portal.search.facete.display.date.selection";
 
+    public static final String PORTAL_SEARCH_FACETE_MULTISELECTION = "portal.search.facete.multiselection";
+
+    public static final String PORTAL_SEARCH_FACETE_MULTISELECTION_DISPLAY_EMPTY = "portal.search.facete.multiselection.display.empty";
+
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
 
     public static final String PORTAL_SEARCH_HIT_PARTNER_LOGO = "portal.search.hit.partner.logo";

@@ -1,0 +1,25 @@
+#if($displayEmptyFacets)
+    #renderFacetCategory($facetConfig)
+#else
+    #if($rankedHitslenght > 0)
+        #renderFacetCategory($facetConfig)
+    #else
+        <p>
+            #if($isSelection)
+                $MESSAGES.getString("searchResult.facete.category.error")
+            #else
+                $MESSAGES.getString("searchResult.facete.category.no.hits") 
+            #end
+        </p>
+        #if($enableFacetSelection && $isSelection)
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("doRemoveLast", "true")
+            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
+        #end
+        #if($enableFacetSelection || $isSelection)
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("doRemoveAll", "true")
+            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
+        #end
+    #end
+#end

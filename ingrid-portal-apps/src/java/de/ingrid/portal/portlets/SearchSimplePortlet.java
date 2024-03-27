@@ -130,11 +130,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         if (action == null) {
             action = "";
         }
-        if (action.equals( Settings.PARAMV_ACTION_NEW_SEARCH )) {
-            // reset relevant search stuff, we perform a new one !
-            SearchState.resetSearchState( request );
-            SearchState.adaptSearchState( request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY );
-        }
 
         // NOTICE: if no query string in request, we keep the old query string
         // in state, so it is
@@ -142,7 +137,15 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // empty result portlet,
         // empty similar portlet etc.
         String queryInRequest = request.getParameter( Settings.PARAM_QUERY_STRING );
+        String queryInState = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
 
+        if(action.equals( Settings.PARAMV_ACTION_NEW_SEARCH )
+                && ((queryInRequest == null && !queryInState.isEmpty())
+                || (queryInRequest != null && queryInState != null && !queryInRequest.equals(queryInState)))) {
+         // reset relevant search stuff, we perform a new one !
+            SearchState.resetSearchState( request );
+            SearchState.adaptSearchState( request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY );
+        }
         // get queryString extension from request
         String queryExtInRequest = request.getParameter( Settings.PARAM_QUERY_STRING_EXT );
         if (queryExtInRequest != null) {
@@ -192,7 +195,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // NOTICE: this may be former query, if no query in request ! we keep
         // that one for convenience
         // (although this state is not bookmarkable !)
-        String queryString = SearchState.getSearchStateObjectAsString( request, Settings.PARAM_QUERY_STRING );
+        String queryString = queryInRequest;
         if(this.getPortletName().equals("SearchSimple") && PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_SEARCH_RESET_QUERY, Boolean.FALSE )) {
             af.setInput( SearchSimpleForm.FIELD_QUERY, "" );
         } else {
@@ -302,13 +305,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
             // set querystring to search state if the delete button was not
             // pressed
-            if (request.getParameter( "doDeleteQuery" ) == null) {
-                SearchState.adaptSearchState( request, Settings.PARAM_QUERY_STRING, request.getParameter( Settings.PARAM_QUERY_STRING ) );
-            } else {
-                SearchState.adaptSearchState( request, Settings.PARAM_QUERY_STRING, "" );
-                SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm( request, SearchSimpleForm.SESSION_KEY, PortletSession.APPLICATION_SCOPE );
-                af.setInput( "q", "" );
-            }
+            SearchState.adaptSearchState( request, Settings.PARAM_QUERY_STRING, request.getParameter( Settings.PARAM_QUERY_STRING ) );
 
             // Adapt search state to settings of IngridSessionPreferences !!!
             // On new search, no temporary stuff from bookmarks etc. should be
@@ -320,12 +317,15 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             if (request.getParameter( "doSetQuery" ) == null && request.getParameter( "doDeleteQuery" ) == null) {
                 // redirect to our page wih parameters for bookmarking
                 String url = "";
-                if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-                    String queryType = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
-                    if (queryType != null && queryType.equals(Settings.MSGV_NO_QUERY)) {
-                        SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+                ContentPage page = (ContentPage) request.getAttribute( "org.apache.jetspeed.Page" );
+                if(Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1) {
+                    if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+                        String queryType = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
+                        if (queryType != null && queryType.equals(Settings.MSGV_NO_QUERY)) {
+                            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+                        }
+                        url = UtilsFacete.setFaceteParamsToSessionByAction(request);
                     }
-                    url = UtilsFacete.setFaceteParamsToSessionByAction(request);
                 }
                 actionResponse.sendRedirect( actionResponse.encodeURL( Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch( request ) ) + url);
             }

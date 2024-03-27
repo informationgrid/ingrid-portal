@@ -1310,31 +1310,6 @@ public class UtilsSearch {
     }
 
     /**
-     * Add a querystring to the session querystring history.
-     * 
-     * @param request
-     *            The request.
-     */
-    public static void addQueryToHistory(RenderRequest request) {
-        String action = request.getParameter(Settings.PARAM_ACTION);
-        if (action == null || !action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)) {
-            return;
-        }
-
-        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-        String urlStr = Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request);
-        IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
-                IngridSessionPreferences.SESSION_KEY);
-        QueryHistory history = (QueryHistory) sessionPrefs.getInitializedObject(IngridSessionPreferences.QUERY_HISTORY,
-                QueryHistory.class);
-        String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
-        if (selectedDS == null) {
-            selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
-        }
-        history.add(queryString, urlStr, selectedDS);
-    }
-
-    /**
      * Add plug ids to the query.
      * 
      * @param query

@@ -38,7 +38,6 @@ define([
         run: function () {
             topic.subscribe("/onObjectClassChange", function(data) {
 
-                var isGeodata = data.objClass === "Class1";
                 var isLiterature = data.objClass === "Class2";
 
                 var doiIdField = registry.byId('doiId');
@@ -52,23 +51,27 @@ define([
                     return item.name === "LiteraturAdmin";
                 });
 
-                if (isGeodata && !isLiteratureAdmin) {
-                    if (doiIdField) {
-                        doiIdField.set('disabled', true);
-                        doiTypeField.set('disabled', true);
-                    }
-                } else {
+                if (isLiteratureAdmin) {
                     if (doiTypeField) {
                         doiIdField.set('disabled', false);
                         doiTypeField.set('disabled', false);
                     }
-                }
-
-                if (isLiterature && !isLiteratureAdmin) {
+                    if (publishArea) {
+                        publishArea.set('disabled', false);
+                    }
+                } else if (isLiterature) {
+                    if (publishArea) {
+                        doiIdField.set('disabled', false);
+                        doiTypeField.set('disabled', false);
+                    }
                     if (publishArea) {
                         publishArea.set('disabled', true);
                     }
                 } else {
+                    if (doiIdField) {
+                        doiIdField.set('disabled', true);
+                        doiTypeField.set('disabled', true);
+                    }
                     if (publishArea) {
                         publishArea.set('disabled', false);
                     }

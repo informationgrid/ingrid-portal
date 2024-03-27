@@ -1,0 +1,2 @@
+## Geodatenlink
+    #renderTextTableConvertUrl($MESSAGES.getString("geodata_link") $TOOL.getValueFromXPath($xPathAdditionalInfoGeodataLink) false false true)

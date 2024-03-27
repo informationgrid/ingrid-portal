@@ -170,21 +170,12 @@
 
               ## Downloaddienst
               var tmpValue = '';
-              var urlRefIds = row['t017_url_ref.special_ref'];
-              var urlRefUrls = row['t017_url_ref.url_link'];
-              if(urlRefIds && urlRefUrls){
-                var tmpCount = 0;
-                urlRefUrls.forEach(function(value){
-                    if(urlRefIds.length > tmpCount) {
-                        var urlRefId = urlRefIds[tmpCount];
-                        if(urlRefId === "9990") {
-                            if(tmpValue !== ''){
-                                tmpValue += ', ';
-                            }
-                            tmpValue += value;
-                        }
+              if(row['capabilities_download_url']){
+                row['capabilities_download_url'].forEach(function(value){
+                    if(tmpValue !== ''){
+                        tmpValue += ', ';
                     }
-                    tmpCount++;
+                    tmpValue += value;
                 });
               }
               tmpRow += tmpValue + delimiter;

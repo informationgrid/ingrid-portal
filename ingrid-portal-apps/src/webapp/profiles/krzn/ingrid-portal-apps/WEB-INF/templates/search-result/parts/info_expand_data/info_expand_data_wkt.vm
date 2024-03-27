@@ -1,2 +1,0 @@
-## WKT
-#set($wkt = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "wkt_geo_text"))

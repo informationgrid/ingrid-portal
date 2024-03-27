@@ -35,7 +35,7 @@
     <property name="postgresDialect"                  value="org.hibernate.dialect.PostgreSQLDialect"/>
     <property name="postgresDialectPortal"            value="org.hibernate.dialect.PostgreSQLDialect"/>
     <property name="postgresValidationQuery"          value="SELECT 1"/>
-    <property name="postgresDbDriver"                 location="${basedir}/postgresql-42.6.0.jar"/>
+    <property name="postgresDbDriver"                 location="${basedir}/postgresql-42.7.2.jar"/>
     <property name="postgresQuartzDriverDelegate"     value="org.quartz.impl.jdbcjobstore.PostgreSQLDelegate"/>
 
     <target name="CheckDbs" depends="checkPortalDbPostgres, checkMdekDbPostgres" if="usePostgres">

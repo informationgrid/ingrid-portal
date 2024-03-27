@@ -243,6 +243,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         boolean detailUseParamPlugid = PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_DETAIL_USE_PARAMETER_PLUGID);
         context.put("detailUseParamPlugid", detailUseParamPlugid);
 
+        context.put(Settings.PARAM_FACET, request.getParameter(Settings.PARAM_FACET));
+        context.put(Settings.PARAM_QUERY_STRING, request.getParameter(Settings.PARAM_QUERY_STRING));
+        context.put(Settings.PARAM_STARTHIT_RANKED, request.getParameter(Settings.PARAM_STARTHIT_RANKED));
+        context.put(Settings.PARAM_CURRENT_SELECTOR_PAGE, request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE));
+        context.put(Settings.PARAM_RANKING, request.getParameter(Settings.PARAM_RANKING));
+
         String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
         String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
         if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){

@@ -71,9 +71,11 @@
         </form>
     </div>
 </div>
+#if($actionForm)
 <script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('contact');
     }
 </script>
+#end

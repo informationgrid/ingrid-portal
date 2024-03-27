@@ -145,6 +145,7 @@ public class UtilsFacete {
     private static final String NODE_UDK_CLASS_VALUE = "udk_class_value"; 
     private static final String NODE_EXPANDABLE = "expandable"; 
 
+    public static final String FACET_CONFIG_DEFAULT = "config_default";
     public static final String FACET_CONFIG = "config";
 
     public static final String SESSION_PARAMS_FACET_GROUPING = "facet_grouping";
@@ -162,38 +163,25 @@ public class UtilsFacete {
 
         // Check for pre prozess doAction.
         String portalTerm = request.getParameter("q");
-        String facetTerm  = (String) getAttributeFromSession(request, "faceteTerm");
+        String paramsFacet = request.getParameter("f");
 
-        if(request.getParameter("f") != null){
-            getFacetAttributsParamsFromUrl(request);
-        }else{
-            if(request.getParameter("js_ranked") == null){
-                String action = request.getParameter("action");
-                if(facetTerm != null && portalTerm != null && action != null && ((portalTerm.equals(facetTerm) && !action.equals("doSearch"))
-                        || (portalTerm.equals(facetTerm) && action == null))){
-                    removeAllFaceteSelections(request);
-                    removeFaceteElementsFromSession(request);
-                }
-            }
+        if(paramsFacet == null) {
+            removeAllFaceteSelections(request);
         }
+
+        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG_DEFAULT);
+        if (config == null) {
+            config = (ArrayList<IngridFacet>) FacetsConfig.getFacets();
+            addDefaultIngridFacets(request, config);
+            setAttributeToSession(request, FACET_CONFIG, config);
+            setAttributeToSession(request, FACET_CONFIG_DEFAULT, config);
+        }
+        getFacetAttributsParamsFromUrl(request, config);
 
         if(portalTerm != null){
             setAttributeToSession(request, "faceteTerm", portalTerm);
         }
 
-        // Create config object
-        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
-        if(config == null){
-            config = (ArrayList<IngridFacet>) FacetsConfig.getFacets();
-            addDefaultIngridFacets(request, config);
-            setAttributeToSession(request, FACET_CONFIG, config);
-        }else{
-            if(facetTerm != null && !facetTerm.equals(portalTerm)){
-                //Reset config facet values
-                resetFacetConfigValues(config, null);
-                setAttributeToSession(request, FACET_CONFIG, config);
-            }
-        }
         // Get all existing selection keys
         if(keys == null || keys.isEmpty()){
             keys = getExistingSelectionKeys(request);
@@ -241,7 +229,8 @@ public class UtilsFacete {
      */
     public static void setParamsToContext(RenderRequest request, Context context) {
 
-        getFacetAttributsParamsFromUrl(request);
+        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
+        getFacetAttributsParamsFromUrl(request, config);
 
         setParamsToContextMap(request, context);
         setParamsToContextGeothesaurus(request, context);
@@ -250,12 +239,11 @@ public class UtilsFacete {
         setParamsToContextWildcard(request, context);
         setParamsToContextTimeref(request, context);
 
-        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         sortingFacet(config);
         selectedFacet(config);
         context.put("facetConfig", config);
         context.put("facetKeys", keys);
-        context.put("searchTerm", SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING));
+        context.put(Settings.PARAM_FACET, request.getParameter(Settings.PARAM_FACET));
         context.put("facetsQuery", getAttributeFromSession(request, "FACETS_QUERY"));
         context.put("searchQuery", getAttributeFromSession(request, "SEARCH_QUERY"));
         context.put("enableFacetSelection", isFacetSelection(request));
@@ -365,6 +353,14 @@ public class UtilsFacete {
                                         if(tmpFacetValue.getFacets() != null){
                                             for(IngridFacet tmpSubFacet : tmpFacetValue.getFacets()){
                                                 tmpSubFacet.setSelect(false);
+                                            }
+                                        }
+                                        if(tmpFacetValue.isSelect() == false && tmpFacetValue.getSelectGroup() != null) {
+                                            IngridFacet tmpSelectGroup = getFacetById(config, tmpFacetValue.getSelectGroup());
+                                            if(tmpSelectGroup != null && tmpSelectGroup.getFacets() != null) {
+                                                for(IngridFacet tmpSubFacet : tmpSelectGroup.getFacets()){
+                                                    tmpSubFacet.setSelect(false);
+                                                }
                                             }
                                         }
                                     }else{
@@ -1750,9 +1746,10 @@ public class UtilsFacete {
      * Create facet session by URL parameters
      *
      * @param request
+     * @param config 
      */
     @SuppressWarnings("rawtypes")
-    private static void getFacetAttributsParamsFromUrl(PortletRequest request){
+    private static void getFacetAttributsParamsFromUrl(PortletRequest request, ArrayList<IngridFacet> config){
 
         String paramsFacet = request.getParameter("f");
 
@@ -1936,12 +1933,6 @@ public class UtilsFacete {
             }
 
             // Config
-            ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
-            if(config == null){
-                config = (ArrayList<IngridFacet>) FacetsConfig.getFacets();
-                addDefaultIngridFacets(request, config);
-                setAttributeToSession(request, FACET_CONFIG, config);
-            }
             if(config != null){
                 String[] paramsSplits = paramsFacet.split(";");
                 resetFacetConfigSelect(config, true);
@@ -1985,6 +1976,29 @@ public class UtilsFacete {
                                             }
                                         }
                                     }
+                                    if(tmpFacetValue.isSelect() && tmpFacetValue.getSelectFacet() != null) {
+                                        IngridFacet tmpSelectFacet = getFacetById(config, tmpFacetValue.getSelectFacet());
+                                        if(tmpSelectFacet != null) {
+                                            tmpSelectFacet.setSelect(true);
+                                        }
+                                        ArrayList<IngridFacet> facetDepList = new ArrayList<>();
+                                        getDependencyFacetById(config, facetDepList, tmpSelectFacet.getId());
+                                        for(IngridFacet facetDep : facetDepList){
+                                            IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
+                                            if(dependencyValue != null) {
+                                                if(dependencyValue.isSelect()){
+                                                    facetDep.setDependencySelect(dependencyValue.isSelect());
+                                                }else {
+                                                    if (facetDep.getFacets() != null) {
+                                                        for (IngridFacet facetChild : facetDep.getFacets()) {
+                                                            facetChild.setSelect(dependencyValue.isSelect());
+                                                        }
+                                                    }
+                                                    facetDep.setDependencySelect(dependencyValue.isSelect());
+                                                }
+                                            }
+                                        }
+                                    } 
                                 }
                                 for (IngridFacet tmpSubFacet : tmpFacetKey.getFacets()) {
                                     if(tmpSubFacet.getToggle() != null) {
@@ -2392,7 +2406,8 @@ public class UtilsFacete {
 
     public static void addDefaultIngridFacets(PortletRequest request, List<IngridFacet> config) {
         if(config != null){
-            for(IngridFacet facet : config){
+            for(int i = 0; i < config.size(); i++){
+                IngridFacet facet = config.get(i);
                 if(facet.getId().equals("topic")){
                     ArrayList<IngridFacet> list = (ArrayList<IngridFacet>) facet.getFacets();
                     facet.setSort("SORT_BY_VALUE_DESC");
@@ -2420,11 +2435,11 @@ public class UtilsFacete {
                     String restrictPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
                     List<IngridPartner> partners = UtilsDB.getPartners();
                     if(partners != null){
+                        boolean isQueryOr = facet.getQueryType() != null && facet.getQueryType().equals("OR");
                         if(restrictPartner != null && restrictPartner.length() > 0){
                             // Partner restriction (set tmpFacet.setParentHidden(true))
                             for(IngridPartner partner : partners){
                                 if(partner.getIdent().equals(restrictPartner)){
-                                    facet.setSort("SORT_BY_VALUE_DESC");
                                     List<IngridProvider> providers = UtilsDB.getProvidersFromPartnerKey(partner.getIdent());
                                     ArrayList<IngridFacet> listProviders = null;
                                     for(IngridProvider provider : providers){
@@ -2433,6 +2448,9 @@ public class UtilsFacete {
                                         tmpProvidersFacet.setQuery("provider:"+ provider.getIdent());
                                         tmpProvidersFacet.setName(provider.getName());
                                         tmpProvidersFacet.setParent(facet);
+                                        if(isQueryOr) {
+                                            tmpProvidersFacet.setDisplay(true);
+                                        }
                                         if(listProviders == null){
                                             listProviders = new ArrayList<>();
                                         }
@@ -2448,8 +2466,20 @@ public class UtilsFacete {
                                 tmpFacet.setId(partner.getIdent());
                                 tmpFacet.setQuery("partner:"+ partner.getIdent());
                                 tmpFacet.setName(partner.getName());
-                                tmpFacet.setSort("SORT_BY_VALUE_DESC");
+                                tmpFacet.setSort(facet.getSort());
                                 tmpFacet.setParent(facet);
+                                IngridFacet newFacet = null;
+                                if(isQueryOr) {
+                                    newFacet = new IngridFacet();
+                                    newFacet.setId(partner.getIdent() + "_group");
+                                    newFacet.setDependency(partner.getIdent());
+                                    newFacet.setName(partner.getName());
+                                    // Get some values from initial facet
+                                    newFacet.setListLength(facet.getListLength());
+                                    newFacet.setSort(facet.getSort());
+                                    newFacet.setQueryType(facet.getQueryType());
+                                    tmpFacet.setDisplay(true);
+                                }
                                 List<IngridProvider> providers = UtilsDB.getProvidersFromPartnerKey(partner.getIdent());
                                 ArrayList<IngridFacet> listProviders = null;
                                 for(IngridProvider provider : providers){
@@ -2457,14 +2487,27 @@ public class UtilsFacete {
                                     tmpProvidersFacet.setId(provider.getIdent());
                                     tmpProvidersFacet.setQuery("provider:"+ provider.getIdent());
                                     tmpProvidersFacet.setName(provider.getName());
-                                    tmpProvidersFacet.setParent(tmpFacet);
+                                    if(isQueryOr) {
+                                        tmpProvidersFacet.setParent(newFacet);
+                                        tmpProvidersFacet.setDisplay(true);
+                                    } else {
+                                        tmpProvidersFacet.setParent(tmpFacet);
+                                    }
                                     if(listProviders == null){
                                         listProviders = new ArrayList<>();
                                     }
                                     listProviders.add(tmpProvidersFacet);
                                 }
                                 if(listProviders != null){
-                                    tmpFacet.setFacets(listProviders);
+                                    if(isQueryOr) {
+                                        if(newFacet != null) {
+                                            newFacet.setFacets(listProviders);
+                                            config.add(i+1, newFacet);
+                                            i++;
+                                        }
+                                    } else {
+                                        tmpFacet.setFacets(listProviders);
+                                    }
                                 }
                                 if(list == null){
                                     list = new ArrayList<>();

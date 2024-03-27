@@ -1463,3 +1463,25 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
   padding: 8px 8px 5px;
   color: #FFFFFF;
 }
+
+.menu-login-links {
+  font-family: AvenirNextLTPro-Demi, sans-serif;
+  color: #FFFFFF;
+  background: #003064;
+  padding: 25px 0 25px 0;
+}
+.menu-login-links h6 {
+  padding: 2px 24px;
+  color: #FFFFFF;
+}
+
+.menu-login-links a {
+  color: #FFFFFF;
+}
+
+.menu-login-links a:hover {
+  color: #003064;
+  background: #F0F2F4;
+}
+
+
