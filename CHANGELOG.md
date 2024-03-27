@@ -51,6 +51,32 @@
 * "Stationen" der Messnetze im NUMIS-Messdatenviewer werden nicht angezeigt (#5926)
 * PORTAL: Fehler bei der Darstellung der Treffer-Beschreibung (#5900)
     
+## 7.1.0 (27.03.2024)
+
+### Features
+
+* Verringerung von Exceptions im LOG des Portals (#6125)
+* Für Dienste-MD die Angaben zum Zeitbezug im Portal NICHT anzeigen (#6028)
+* Umstellung auf Checkboxen in der Facettierung auf der Suchseite, Verhalten der Facettierung bei 0 Treffern (#5963)
+* Menüeintrag "Metadaten" im Portal entfernen (#5931)
+* Einrichtung des Feldes dataSetURI / Geodatenlink für Geodatensätze (#5908)
+* Menü anpassen (#5857)
+* Fehlerhafte URL bei automatischer E-Mail mit Betreff: "[IGE] Information" (#5843)
+* IGE-NG, BASt-Profil umsetzen (#5775)
+* Konzeption BASt-spezifisches Layout (#5768)
+* AdV-MIS: Korrektur der Facette "Verwaltet von" (#5692)
+* IGE: BKG-MIS - Feld "Zugriffsbeschränkungen" wieder herstellen (#5481)
+* Filter (Einschränkung) bei der Suche bei Seitenwechsel löschen (#4605)
+
+### Bugfixes
+
+* Korrekte Wiedergabe der WMS und WFS URLs im CSV-Export (#6074)
+* Aktualisierung sicherheitskritischer Libraries (#6018)
+* Portal: Rubrik Nutzung - Textausgabe - unterschiedlichen Zeilenabstand angleichen (#5998)
+* HMDK-Classic: Fehler in der Portal Detaildarstellung (#5992)
+* "Stationen" der Messnetze im NUMIS-Messdatenviewer werden nicht angezeigt (#5926)
+* PORTAL: Fehler bei der Darstellung der Treffer-Beschreibung (#5900)
+    
 ## 7.0.0 (05.01.2024)
 
 ### Features
