@@ -134,111 +134,81 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
  -->
  
 <facets>
-    <!-- Ergebnistypen -->
+    <!-- Kategorie (Ergebnisliste) -->
     <facet>
-        <name>searchResult.facete.title.types</name>
-        <id>type</id>
-        <isOpen>true</isOpen>
+        <name>searchResult.facete.title.category</name>
+        <id>categ</id>
         <facets>
-        <!-- Webseiten -->
+            <!-- Vorhaben / Projekt / Programm -->
             <facet>
-                <name>searchResult.facete.datatype.www</name>
-                <query>datatype:www</query>
-                <id>www</id>
+                <name>searchResult.facete.metaclass.project</name>
+                <query>t01_object.obj_class:4</query>
+                <id>project</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>4</codelist-entry-id>
             </facet>
-        <!-- Metadaten -->
+            <!-- Geodatensatz -->
             <facet>
-                <name>searchResult.facete.title.metaclass</name>
-                <query>datatype:metadata</query>
-                <id>metadata</id>
-                <facets>
-              <!-- INSPIRE-relevant -->
-                    <facet>
-<!--                    <name>searchResult.facete.metaclass.inspire</name> -->
-                        <name>INSPIRE</name>
-                        <query>t04_search.searchterm:inspireidentifiziert</query>
-                        <id>inspire_metadata</id>
-                    </facet>
-              <!-- Open Data -->
-                     <facet>
-                        <name>Open Data</name>
-                        <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
-                        <id>opendata_metadata</id>
-                    </facet>
-                <!-- Organisationseinheit / Fachaufgabe -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.job</name>
-                        <query>t01_object.obj_class:0</query>
-                        <id>job</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>0</codelist-entry-id>
-                    </facet>
-                <!-- Dienst /Anwendung / Informationssystem -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.service</name>
-                        <query>t01_object.obj_class:6</query>
-                        <id>service</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>6</codelist-entry-id>
-                    </facet>
-                <!-- Geo-Information / Karte -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.map</name>
-                        <query>t01_object.obj_class:1</query>
-                        <id>map</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>1</codelist-entry-id>
-                    </facet>
-                <!-- Dokument / Bericht / Literatur -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.document</name>
-                        <query>t01_object.obj_class:2</query>
-                        <id>document</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>2</codelist-entry-id>
-                    </facet>
-                <!-- Geodatendienst -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.geoservice</name>
-                        <query>t01_object.obj_class:3</query>
-                        <id>geoservice</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>3</codelist-entry-id>
-                    </facet>
-                <!-- Vorhaben / Projekt / Programm -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.project</name>
-                        <query>t01_object.obj_class:4</query>
-                        <id>project</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>4</codelist-entry-id>
-                    </facet>
-                <!-- Datensammlung / Datenbank -->
-                    <facet>
-                        <name>searchResult.facete.metaclass.database</name>
-                        <query>t01_object.obj_class:5</query>
-                        <id>database</id>
-                        <codelist-id>8000</codelist-id>
-                        <codelist-entry-id>5</codelist-entry-id>
-                    </facet>
-                </facets>
+                <name>searchResult.facete.metaclass.geodata</name>
+                <query>t01_object.obj_class:1</query>
+                <id>geodata</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>1</codelist-entry-id>
             </facet>
-        <!-- INSPIRE-relevant -->
+            <!-- Geodatendienst -->
+            <facet>
+                <name>searchResult.facete.metaclass.geoservice</name>
+                <query>t01_object.obj_class:3</query>
+                <id>geoservice</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>3</codelist-entry-id>
+            </facet>
+            <!-- Dokument / Bericht / Literatur -->
+            <facet>
+                <name>searchResult.facete.metaclass.document</name>
+                <query>t01_object.obj_class:2</query>
+                <id>document</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>2</codelist-entry-id>
+            </facet>
+            <!-- Datensammlung / Datenbank -->
+            <facet>
+                <name>searchResult.facete.metaclass.database</name>
+                <query>t01_object.obj_class:5</query>
+                <id>database</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>5</codelist-entry-id>
+            </facet>
+            <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
                 <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
             </facet>
-        <!-- Open Data -->
+            <!-- Open Data -->
            <facet>
                 <name>Open Data</name>
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
             </facet>
+        </facets>
+    </facet>
+    <!-- Wasserstraße -->
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>searchResult.facete.title.waterway</name>
+        <id>waterway</id>
+        <field>bwstr-bwastr_name</field>
+        <listLength>6</listLength>
+    </facet>
+    <!-- Ergebnistypen -->
+    <facet>
+        <name>searchResult.facete.title.types</name>
+        <id>type</id>
+        <facets>
             <facet>
                 <name>searchResult.facete.datatype.simulation.data</name>
                 <query>data_category:Simulationsdaten</query>
-                <id>cat_simulationsdaten</id>
+                <id>type_simulation</id>
             </facet>
             <facet>
                 <name>searchResult.facete.datatype.measurement.data</name>
@@ -255,6 +225,47 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.datatype.map</name>
                 <query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
                 <id>map</id>
+            </facet>
+        </facets>
+    </facet>
+    <facet>
+        <name>searchResult.facete.datatype.simulation.data</name>
+        <id>simulation</id>
+        <facets>
+            <facet>
+                <name>searchResult.facete.datatype.simulation.preprocessing</name>
+                <query>simulation_data_type:Preprocessing</query>
+                <id>preprocessing</id>
+            </facet>
+            <facet>
+                <name>searchResult.facete.datatype.simulation.variant</name>
+                <query>simulation_data_type:Variante</query>
+                <id>variant</id>
+            </facet>
+            <facet>
+                <name>searchResult.facete.datatype.simulation.scenario</name>
+                <query>simulation_data_type:Szenario</query>
+                <id>scenario</id>
+            </facet>
+            <facet>
+                <name>searchResult.facete.datatype.simulation.scenario</name>
+                <query>simulation_data_type:Simulationsmodell</query>
+                <id>simulationsmodel</id>
+            </facet>
+            <facet>
+                <name>searchResult.facete.datatype.simulation.run</name>
+                <query>simulation_data_type:Simulationslauf</query>
+                <id>simulationrun</id>
+            </facet>
+            <facet>
+                <name>searchResult.facete.datatype.simulation.file</name>
+                <query>simulation_data_type:Simulationsdatei</query>
+                <id>simulationfile</id>
+            </facet>
+            <facet>
+                <name>searchResult.facete.datatype.simulation.postprocessing</name>
+                <query>simulation_data_type:Postprocessing</query>
+                <id>postprocessing</id>
             </facet>
         </facets>
     </facet>
@@ -297,7 +308,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <dependency>research</dependency>
         <id>attribute</id>
     </facet>
-    <!-- Kategorie -->
+    <!-- Kategorie (Startseite) -->
     <facet>
         <name>searchResult.facete.title.category</name>
         <id>category</id>
@@ -324,7 +335,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.title.metaclass</name>
                 <query>datatype:metadata</query>
                 <id>metadata</id>
-                <parentId>type</parentId>
+                <!-- <parentId>type</parentId> -->
                 <icon>ic-metadata</icon>
             </facet>
         <!-- INSPIRE-relevant -->
@@ -342,7 +353,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Open Data</name>
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
-                <parentId>type</parentId>
+                <parentId>categ</parentId>
                 <icon>ic-opendata</icon>
             </facet>
         <!-- Karten -->
@@ -366,7 +377,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.waterway.donau.title</name>
                 <query>bwstr-bwastr_name.phrase:"donau"</query>
                 <id>Donau</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <!-- <icon>/decorations/layout/ingrid/images/template/icon_donau_mdk.svg</icon> -->
                 <shortcut>Do</shortcut>
             </facet>
@@ -375,7 +386,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Eider</name>
                 <query>bwstr-bwastr_name.phrase:"eider"</query>
                 <id>Eider</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>Ei</shortcut>
             </facet>
             <!-- Elbe -->
@@ -383,7 +394,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Elbe</name>
                 <query>bwstr-bwastr_name.phrase:"elbe"</query>
                 <id>Elbe</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <!-- <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon> -->
                 <shortcut>El</shortcut>
             </facet>
@@ -392,7 +403,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Ems</name>
                 <query>bwstr-bwastr_name.phrase:"ems"</query>
                 <id>Ems</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>Em</shortcut>
             </facet>
             <!-- Main-Donau-Kanal -->
@@ -400,7 +411,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.waterway.mdk.title</name>
                 <query>bwstr-bwastr_name.phrase:"main-donau-kanal"</query>
                 <id>Main-Donau-Kanal</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>MDK</shortcut>
             </facet>
             <!-- Mittellandkanal -->
@@ -408,7 +419,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.waterway.mlk.title</name>
                 <query>bwstr-bwastr_name.phrase:"mittellandkanal"</query>
                 <id>Mittellandkanal</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>MLK</shortcut>
             </facet>
             <!-- Mosel -->
@@ -416,7 +427,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.waterway.mosel.title</name>
                 <query>bwstr-bwastr_name.phrase:"mosel"</query>
                 <id>Mosel</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>Mo</shortcut>
             </facet>
             <!-- Neckar -->
@@ -424,7 +435,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Neckar</name>
                 <query>bwstr-bwastr_name.phrase:"neckar"</query>
                 <id>Neckar</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>Ne</shortcut>
             </facet>
             <!-- Nord-Ostsee-Kanal  -->
@@ -432,7 +443,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.waterway.nok.title</name>
                 <query>bwstr-bwastr_name.phrase:"nord-ostsee-kanal"</query>
                 <id>Nord-Ostsee-Kanal</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>NOK</shortcut>
             </facet>
             <!-- Nordsee -->
@@ -440,7 +451,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.waterway.nordsee.title</name>
                 <query>bwstr-bwastr_name.phrase:"nordsee"</query>
                 <id>Nordsee</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>NSee</shortcut>
             </facet>
             <!-- Oder -->
@@ -448,7 +459,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Oder</name>
                 <query>bwstr-bwastr_name.phrase:"oder"</query>
                 <id>Oder</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>Od</shortcut>
             </facet>
             <!-- Ostsee -->
@@ -456,7 +467,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.waterway.ostsee.title</name>
                 <query>bwstr-bwastr_name.phrase:"ostsee"</query>
                 <id>Ostsee</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>OSee</shortcut>
             </facet>
             <!-- Rhein -->
@@ -464,7 +475,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.waterway.rhein.title</name>
                 <query>bwstr-bwastr_name.phrase:"rhein"</query>
                 <id>Rhein</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <!-- <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon> -->
                 <shortcut>Rh</shortcut>
             </facet>
@@ -473,7 +484,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Weser</name>
                 <query>bwstr-bwastr_name.phrase:"weser"</query>
                 <id>Weser</id>
-                <parentId>wasserstrasse</parentId>
+                <parentId>waterway</parentId>
                 <shortcut>We</shortcut>
             </facet>
         </facets>
