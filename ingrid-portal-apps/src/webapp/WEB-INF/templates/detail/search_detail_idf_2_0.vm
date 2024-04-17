@@ -738,12 +738,13 @@
             #end
             #foreach($additionalRow in $additionalRows)
                 #if($additionalRow)
+                    #set($additionalRowValue = false)
                     #set($additionalRowValue = $TOOL.getValueFromXPath($additionalRow.xpath))
                     #if($additionalRowValue)
                     <tr>
                         <th>$additionalRow.title</th>
                         #set($colspan = $entry.head.size() - 1)
-                        <td colspan="$colspan">$TOOL.getValueFromXPath($additionalRow.xpath)</td>
+                        <td colspan="$colspan">$additionalRowValue</td>
                     </tr>
                     #end
                 #end
