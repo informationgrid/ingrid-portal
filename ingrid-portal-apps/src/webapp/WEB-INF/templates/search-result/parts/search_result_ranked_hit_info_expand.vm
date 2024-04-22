@@ -14,7 +14,12 @@
                 #if(!$accessUrl.isEmpty() && !$accessName.isEmpty())
                     <div class="sub-section">
                         #set($countRefs = $accessUrl.size())
-                        #renderFactTitle("$MESSAGES.getString('searchResult.info.access_url') <span>($countRefs)</span>")
+                        #set($tmpTitle = $MESSAGES.getString('searchResult.info.access_url'))
+                        #set($tmpTitleExtend = $sysCodeList.getNameByCodeListValue("5100", $serviceType))
+                        #if($showServiceTypToAccessURL && $tmpTitleExtend)
+                            #set($tmpTitle = "$tmpTitle: $tmpTitleExtend")
+                        #end
+                        #renderFactTitle("$tmpTitle <span>($countRefs)</span>")
                         <div class="document-list">
                             #set($count = 0)
                             #foreach($url in $accessUrl)

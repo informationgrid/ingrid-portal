@@ -20,3 +20,5 @@
 #elseif($type == 6)
     #set($getAccessUrl = $TOOL.getExternLinks($xPathRefAccessUrl))
 #end
+
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_access_url_class.vm")
