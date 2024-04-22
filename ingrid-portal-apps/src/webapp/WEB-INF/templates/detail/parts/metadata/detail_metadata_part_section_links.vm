@@ -9,6 +9,10 @@
         #if($getAccessUrl && $getAccessUrl.size() > 0)
         <div class="sub-section sub-section-unlined">
             #set($tmpTitle = $MESSAGES.getString("access_url"))
+            #set($tmpTitleExtend = $TOOL.getValueFromXPath($xPathInfo3ServiceType, "5100"))
+            #if($showServiceTypToAccessURL && $tmpTitleExtend)
+                #set($tmpTitle = "$tmpTitle: $tmpTitleExtend")
+            #end
             #set($tmpCount = $getAccessUrl.size())
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")

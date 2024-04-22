@@ -1,0 +1,2 @@
+#### URL des Zugangs
+#set($showServiceTypToAccessURL = true)

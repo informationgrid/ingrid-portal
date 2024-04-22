@@ -1,2 +1,4 @@
 #set($filterClass = "xsmall-24 large-8 xlarge-6 columns")
 #set($resultsClass = "xsmall-24 large-16 xlarge-18 columns")
+
+#parse("/WEB-INF/templates/search-result/parts/settings/settings_links_access_url_class.vm")
