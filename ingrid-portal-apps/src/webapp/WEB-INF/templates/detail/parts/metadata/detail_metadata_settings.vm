@@ -121,6 +121,8 @@
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_references.vm")
 #### Weitere Verweise
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_links_others.vm")
+#### Ressourcen
+#set($xPathRefDistribution = "./idf:distribution")
 ## Untergeordnete Objekte
 #set($xPathRefSubordinated = "./idf:subordinatedReference")
 ## Übergeordnetet Objekte
@@ -132,6 +134,7 @@
     $xPathRefDownloads,
     $xPathRefLinks,
     $xPathRefOthers,
+    $xPathRefDistribution,
     $xPathRefSubordinated,
     $xPathRefSuperior,
     $xPathAdditionalInfoParentIdentifier
@@ -140,6 +143,7 @@
 #set($getDownloads = $TOOL.getExternLinks($xPathRefDownloads, true))
 #set($getLinks = $TOOL.getReference($xPathRefLinks, true))
 #set($getOtherLinks = $TOOL.getExternLinks($xPathRefOthers))
+#set($getDistributionLinks = $TOOL.getDistributionLinks($xPathRefDistribution))
 #set($getSubordinatedLinks = $TOOL.getReference($xPathRefSubordinated))
 #set($getSuperiorLinks = $TOOL.getReference($xPathRefSuperior))
 
@@ -173,8 +177,28 @@
 #### Zugriffsbeschränkungen (accessConstraints)
 #set($xPathUseAccessConstraints = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints")
 
+#### Lizenzen (idf:distribution)
+#set($xPathUseDistributionLicense = "./idf:distribution/idf:license/text()")
+#set($tmpGetDistributionLicense = [])
+#set($tmpGetDistributionLicenseKey = [])
+
+#foreach($getDistributionLink in $getDistributionLinks)
+    #set($tmpLicense = $getDistributionLink.get("license"))
+    #if($tmpLicense)
+        #if($tmpGetDistributionLicenseKey.indexOf($tmpLicense.get("key")) == -1)
+            #set($tmpLicenseMap = {})
+            #set($add = $tmpLicenseMap.put("isExtern", true))
+            #set($add = $tmpLicenseMap.put("hasLinkIcon", true))
+            #set($add = $tmpLicenseMap.put("href", $tmpLicense.get("key")))
+            #set($add = $tmpLicenseMap.put("title", $tmpLicense.get("value")))
+            #set($add = $tmpGetDistributionLicense.add($tmpLicenseMap))
+            #set($add = $tmpGetDistributionLicenseKey.add($tmpLicense.get("key")))
+        #end
+    #end
+#end
 #set($xPathListUse = [
-    "${xPathUseAccessConstraints}/gmd:MD_RestrictionCode/@codeListValue"
+    "${xPathUseAccessConstraints}/gmd:MD_RestrictionCode/@codeListValue",
+    "$xPathUseDistributionLicense"
 ])
 
 ## Software
@@ -471,6 +495,9 @@
 #if($cswURL)
     #set($add = $getXML.put("href", $cswURL))
 #end
+#### XML Darstellung
+#set($getRDF = $TOOL.addLinkElementToGetRDF())
+
 #### Ansprechpartner (Metadatum)
 #set($xPathUseContact = "./gmd:contact")
 #### Datensatz/Datenserie
@@ -529,7 +556,7 @@
 
 ## Kontakt
 #### Addressen
-#set($xPathUsePointOfContact = "./gmd:identificationInfo/*/gmd:pointOfContact")
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_contact.vm")
 
 #set($xPathListContact = [
     $xPathUsePointOfContact

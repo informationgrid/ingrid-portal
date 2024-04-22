@@ -330,7 +330,7 @@
                                             #set($isGreaterThanSubFacetsCount = true)
                                             <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
                                                 <div class="accordion-item text-right" data-accordion-item="">
-                                                    <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="facet.getId()_more" aria-hidden="false" style="display: none;">
+                                                    <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$facet.getId()_more" aria-hidden="false" style="display: none;">
                                         #end
                                         #renderFacetCategoryEntry($subFacet $facet.getId())
                                         #if($subFacet.isDisplay() || $subFacet.getFacetValue())

@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -75,6 +76,7 @@ public class HitTeaserPortlet extends GenericVelocityPortlet {
             context.put( "hits", hits.getHits() );
         }
         context.put( "Codelists", CodeListServiceFactory.instance() );
+        context.put( "sysCodeList", new IngridSysCodeList(request.getLocale()));
         context.put( "languageCode", request.getLocale().getLanguage() );
         context.put( "UtilsSearch", new UtilsSearch() );
         context.put("stringTool", new UtilsString());

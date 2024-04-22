@@ -44,8 +44,7 @@
                             <span class="ic-ic-webseiten"></span>
                             <span class="text">Webseite</span>
                         </div>
-                        #set($searchTerm = $UTIL_SEARCH.getDetailValueList( $rs.getHitDetail(), "t04_search.searchterm" ))
-                        #renderSearchTerm($searchTerm)
+                        #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_searchterm.vm")
                         #set($detailLink ="$!rs.url")
                         <a href="$detailLink" title="$stringTool.htmlescape($hitTitle)" target="_blank" class="external-link">
                             <h2 class="header">$hitTitle</h2>
@@ -73,8 +72,7 @@
                                 #appendSearchDetailURL($detailLink $q $rstart $currentSelectorPage $rank $f)
                             #end
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_addr.vm")
-                            #set($searchTerm = $UTIL_SEARCH.getDetailValueList( $rs.getHitDetail(), "t04_search.searchterm" ))
-                            #renderSearchTerm($searchTerm)
+                            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_searchterm.vm")
                             <a href="$detailLink" title="$stringTool.htmlescape($hitTitle)">
                                 <h2 class="header">$hitTitle</h2>
                             </a>
@@ -85,8 +83,7 @@
                                 #appendSearchDetailURL($detailLink $q $rstart $currentSelectorPage $rank $f)
                             #end
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_obj.vm")
-                            #set($searchTerm = $UTIL_SEARCH.getDetailValueList( $rs.getHitDetail(), "t04_search.searchterm" ))
-                            #renderSearchTerm($searchTerm $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.has_access_constraint" ))
+                            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_searchterm.vm")
                             <a href="$detailLink" title="$stringTool.htmlescape($hitTitle)">
                                 <h2 class="header">$hitTitle</h2>
                             </a>
@@ -107,8 +104,7 @@
                     <div class="helper text">
                         <span class="">$udkObjClassName</span>
                     </div>
-                    #set($searchTerm = $UTIL_SEARCH.getDetailValueList( $rs.getHitDetail(), "t04_search.searchterm" ))
-                    #renderSearchTerm($searchTerm)
+                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_searchterm.vm")
                     <h2 class="header">
                         $hitTitle
                     </h2>

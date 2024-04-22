@@ -1,0 +1,5 @@
+<div class="helper icon">
+    #set($udkObjClass = $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ))
+    #set($udkObjClassName = $Codelists.getCodeListValue('8000', $udkObjClass, $languageCode))
+    #renderUDKIcon($udkObjClass $udkObjClassName $udkObjClassName)
+</div>

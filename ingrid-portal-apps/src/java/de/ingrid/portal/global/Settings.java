@@ -231,6 +231,7 @@ public class Settings {
     public static final String RESULT_KEY_COUPLED_RESOURCE = "coupled_resource";
     
     public static final String RESULT_KEY_CSW_INTERFACE_URL = "csw_link";
+    public static final String RESULT_KEY_RDF_INTERFACE_URL = "rdf_link";
 
     // ===========================================
     // Hit Detail data (get data from hit details)

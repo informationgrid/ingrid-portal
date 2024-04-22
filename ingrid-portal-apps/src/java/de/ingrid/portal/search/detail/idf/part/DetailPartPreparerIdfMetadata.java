@@ -603,6 +603,104 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return linkList;
     }
 
+    public List<HashMap<String, Object>> getDistributionLinks(String xpathExpression) {
+        ArrayList<HashMap<String, Object>> linkList = new ArrayList<>();
+        if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i=0; i<nodeList.getLength();i++){
+                Node node = nodeList.item(i);
+                String format = "";
+                String accessURL = "";
+                String modified = "";
+                String title = "";
+                String description = "";
+                HashMap<String, String> license  = null;
+                String byClause = "";
+                ArrayList<String> languages = null;
+                String availability = "";
+
+                xpathExpression = "./idf:format";
+                if(xPathUtils.nodeExists(node, xpathExpression)){
+                    format = xPathUtils.getString(node, xpathExpression).trim();
+                }
+
+                xpathExpression = "./idf:accessURL";
+                if(xPathUtils.nodeExists(node, xpathExpression)){
+                    accessURL = xPathUtils.getString(node, xpathExpression).trim();
+                }
+
+                xpathExpression = "./idf:modified";
+                if(xPathUtils.nodeExists(node, xpathExpression)){
+                    modified = xPathUtils.getString(node, xpathExpression).trim();
+                }
+
+                xpathExpression = "./idf:title";
+                if(xPathUtils.nodeExists(node, xpathExpression)){
+                    title = xPathUtils.getString(node, xpathExpression).trim();
+                }
+
+                xpathExpression = "./idf:description";
+                if(xPathUtils.nodeExists(node, xpathExpression)){
+                    description = xPathUtils.getString(node, xpathExpression).trim();
+                }
+
+                xpathExpression = "./idf:byClause";
+                if(xPathUtils.nodeExists(node, xpathExpression)){
+                    byClause = xPathUtils.getString(node, xpathExpression).trim();
+                }
+
+                xpathExpression = "./idf:availability";
+                if(xPathUtils.nodeExists(node, xpathExpression)){
+                    availability = xPathUtils.getString(node, xpathExpression).trim();
+                }
+
+                xpathExpression = "./idf:license";
+                if(xPathUtils.nodeExists(node, xpathExpression)){
+                    Node tmpNode = xPathUtils.getNode(node, xpathExpression);
+                    license = new HashMap<>();
+                    String key = null;
+                    String value = null;
+                    if(xPathUtils.nodeExists(tmpNode, "./@key")){
+                        key = xPathUtils.getString(tmpNode, "./@key").trim();
+                        license.put("key", key);
+                    }
+                    if(xPathUtils.nodeExists(tmpNode, ".")){
+                        value = xPathUtils.getString(tmpNode, ".").trim();
+                        license.put("value", value);
+                    }
+                }
+                
+                xpathExpression = "./idf:languages/idf:language";
+                if(xPathUtils.nodeExists(node, xpathExpression)){
+                    NodeList tmpNodes = xPathUtils.getNodeList(node, xpathExpression);
+                    languages = new ArrayList<>();
+                    for (int j=0; j<tmpNodes.getLength();j++){
+                        Node tmpNode = tmpNodes.item(j);
+                        String tmpValue = tmpNode.getTextContent();
+                        if(tmpValue != null && !tmpValue.trim().isEmpty()) {
+                            languages.add(tmpNode.getTextContent());
+                        }
+                    }
+                }
+
+                HashMap<String, Object> link = new HashMap<>();
+                link.put("hasLinkIcon", true);
+                link.put("isExtern", true);
+                link.put("format", format);
+                link.put("href", accessURL);
+                link.put("modified", modified);
+                link.put("title", !title.isEmpty() ? title : accessURL);
+                link.put("description", description);
+                link.put("license", license);
+                link.put("byClause", byClause);
+                link.put("languages", languages);
+                link.put("availability", availability);
+                linkList.add(link);
+            }
+        }
+        return linkList;
+    }
+
     public List<String> getIndexInformationKeywords(String xpathExpression, String keywordType) {
         List<String> listSearch = new ArrayList<>();
         List<String> listGemet = new ArrayList<>();
@@ -1732,6 +1830,23 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             elementLink.put("isDownload", true);
             elementLink.put("title", messages.getString("xml_link"));
             elementLink.put("href", cswUrl + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + id);
+        }
+        return elementLink;
+    }
+
+    public HashMap addLinkElementToGetRDF() {
+        HashMap elementLink = null;
+        String rdfUrl = PortalConfig.getInstance().getString(PortalConfig.RDF_INTERFACE_URL, "");
+        if (!rdfUrl.isEmpty()) {
+            String id = this.uuid;
+            if(id != null) {
+                elementLink = new HashMap();
+                elementLink.put("type", "linkLine");
+                elementLink.put("hasLinkIcon", true);
+                elementLink.put("isDownload", true);
+                elementLink.put("title", messages.getString("rdf_link"));
+                elementLink.put("href", rdfUrl + "" + id);
+            }
         }
         return elementLink;
     }

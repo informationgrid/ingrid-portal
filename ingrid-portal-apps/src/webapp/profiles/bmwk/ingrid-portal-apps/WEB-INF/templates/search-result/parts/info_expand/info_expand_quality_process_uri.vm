@@ -1,0 +1,20 @@
+## Qualitätssicherungsprozess URI
+#if($quality_process_uri && $quality_process_uri.size() > 0)
+    <div class="sub-section">
+        #renderFactTitle("Qualitätssicherungsprozess URI")
+        <div class="document-list">
+            #foreach($value in $quality_process_uri)
+            <div class="list-item">
+                <div>
+                    <a href="$value" class="icon external-link" title="$value" target="_blank" rel="noopener noreferrer">
+                        <span class="ic-ic-external"></span>
+                        <span class="text">
+                            $value
+                        </span>
+                    </a>
+                </div>
+            </div>
+            #end
+        </div>
+    </div>
+#end

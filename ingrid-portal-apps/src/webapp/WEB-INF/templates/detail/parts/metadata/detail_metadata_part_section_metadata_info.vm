@@ -16,6 +16,8 @@
         #parse("/WEB-INF/templates/detail/parts/metadata/metadata_info/metadata_info_data_set_series.vm")
     ## XML Darstellung 
         #renderLinkTable($MESSAGES.getString("xml_link_label") $getXML)
+    ## RDF/XML 
+        #renderLinkTable($MESSAGES.getString("rdf_link_label") $getRDF)
     ## Ansprechpartner (Metadatum)
         #parse("/WEB-INF/templates/detail/parts/metadata/metadata_info/metadata_info_metadatum.vm")
     ## Metadatenquellen

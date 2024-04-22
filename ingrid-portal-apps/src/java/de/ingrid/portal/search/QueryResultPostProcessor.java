@@ -495,6 +495,12 @@ public class QueryResultPostProcessor {
                     hit.put(Settings.RESULT_KEY_CSW_INTERFACE_URL, cswUrl + parameter);
                 }
             }
+            String rdfUrl = PortalConfig.getInstance().getString(PortalConfig.RDF_INTERFACE_URL, "");
+            if(id != null){
+                if (!rdfUrl.isEmpty()) {
+                    hit.put(Settings.RESULT_KEY_RDF_INTERFACE_URL, rdfUrl + id);
+                }
+            }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems processing DSC Hit ! hit = " + hit + ", detail=" + detail, ex);
