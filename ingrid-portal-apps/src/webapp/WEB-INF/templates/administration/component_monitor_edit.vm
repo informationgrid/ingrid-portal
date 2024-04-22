@@ -216,7 +216,7 @@
 #if($actionForm)
 <script>
     var error = $actionForm.hasErrors();
-    if#if($actionForm)(error){
+    if(error){
         goToByScroll('frmEditProvider');
     }
 </script>
