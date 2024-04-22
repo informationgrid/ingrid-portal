@@ -23,7 +23,7 @@
 ## Datengrundlage
     #renderTextListTable($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getListOfValuesFromXPath($xPathInfo1LISourceDescription, "."))
 ## Herstellungsprozess
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.method") $TOOL.getValueFromXPath($xPathInfo1LIProcessStep))
+    #renderTextListTable($MESSAGES.getString("t011_obj_geo.method") $TOOL.getListOfValuesFromXPath($xPathInfo1LIProcessStep, "."))
 ## Symbolkatalog
     #set($headTitles = [$MESSAGES.getString("t011_obj_geo_symc.symbol_cat"),$MESSAGES.getString("t011_obj_geo_symc.symbol_date"),$MESSAGES.getString("t011_obj_geo_symc.edition")])
     #set($headXpathExpressions = ["./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:title","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:edition"])
