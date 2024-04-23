@@ -1,0 +1,9 @@
+#foreach($searchterm in $hit.getHitDetail().get("t04_search.searchterm"))
+    #set($category = $sysCodeList.getNameByData("6400", $searchterm))
+    #if($category && !$category.isEmpty())
+        <div class="helper icon">
+            <span class="ic-ic-$searchterm.toLowerCase()"></span>
+            <span class="text">$category</span>
+        </div>
+    #end
+#end

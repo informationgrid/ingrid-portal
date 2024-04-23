@@ -1,0 +1,14 @@
+## Kategorien
+#if($categories.size() > 0)
+    #renderFactTitle("Kategorien")
+    #foreach($searchterm in $categories)
+        #set($category = $sysCodeList.getNameByData("6400", $searchterm))
+        #if($category && !$tmpCategory.isEmpty())
+            <div class="helper icon">
+                <span class="ic-ic-$searchterm.toLowerCase()"></span>
+                <span class="text">$category</span>
+            </div>
+        #end
+    #end
+#end
+
