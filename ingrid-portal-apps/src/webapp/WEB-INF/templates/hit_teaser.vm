@@ -72,7 +72,7 @@
                                                     northEast = L.latLng($y2, $x2);
                                                     bounds = L.latLngBounds(southWest, northEast);
                                                 }
-                                                var map = addLeafletMapWithId('map-id-$uuid', layer, bounds, #if($lat_center && !$lat_center.isEmpty() && $lon_center && !$lon_center.isEmpty()) new L.LatLng($lat_center, $lon_center))#else null#end, 10);
+                                                var map = addLeafletMapWithId('map-id-$uuid', layer, bounds, #if($lat_center && !$lat_center.isEmpty() && $lon_center && !$lon_center.isEmpty()) new L.LatLng($lat_center, $lon_center)#else null#end, 10);
                                                 map.gestureHandling.enable();
                                                 addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
                                                 if(bounds) {
