@@ -120,6 +120,11 @@
         <artifactId>postgresql</artifactId>
         <version>42.7.2</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.xmlbeans</groupId>
+        <artifactId>xmlbeans</artifactId>
+        <version>3.0.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -160,23 +165,6 @@
     <finalName>ingrid-portal-project-${project.version}</finalName>
     <!-- <resources><resource><directory>src/main/resources</directory><excludes><exclude>*.xml</exclude><exclude>*.properties</exclude><exclude>*.bak</exclude></excludes></resource></resources>-->
     <plugins>
-      <plugin>
-        <groupId>org.openrewrite.maven</groupId>
-        <artifactId>rewrite-maven-plugin</artifactId>
-        <version>4.35.1</version>
-        <configuration>
-          <activeRecipes>
-            <recipe>org.openrewrite.java.spring.framework.UpgradeSpringFramework_5_3</recipe>
-          </activeRecipes>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-spring</artifactId>
-            <version>4.29.0</version>
-          </dependency>
-        </dependencies>
-      </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
