@@ -24,8 +24,9 @@ define([
     "dijit/registry",
     "dojo/_base/declare",
     "dojo/dom-class",
-    "dojo/topic"
-], function(registry, declare, domClass, topic) {
+    "dojo/topic",
+    "ingrid/utils/Security"
+], function(registry, declare, domClass, topic, UtilSecurity) {
 
     return declare(null, {
         title: "BAW-Allgemein",
@@ -278,6 +279,13 @@ define([
             var datasetCharsetNodeId = "uiElement5043";
             if(!domClass.contains(datasetCharsetNodeId, "hide")) {
                 domClass.add(datasetCharsetNodeId, "required");
+            }
+
+            var isKatAdmin = UtilSecurity.currentUser.role === 1;
+            if (isKatAdmin) {
+                domClass.remove('uiElement3571', 'hide');
+            } else {
+                domClass.add('uiElement3571', 'hide');
             }
 
             // XML-Export-Kriterium
