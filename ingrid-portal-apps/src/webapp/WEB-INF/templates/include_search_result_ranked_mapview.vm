@@ -234,7 +234,7 @@
                                             class: objClass,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                         });
-                                        features.on('click', selectFeatures);
+                                        // features.on('click', selectFeatures);
                                         if(features) {
                                             mapMarkers.addLayer(features);
                                         }
@@ -261,7 +261,7 @@
                                                 }),
                                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                             });
-                                            tmp.on('click', selectFeatures);
+                                            // tmp.on('click', selectFeatures);
                                             if(tmp) {
                                                 mapMarkers.addLayer(tmp);
                                             }
@@ -286,7 +286,7 @@
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', selectFeatures);
+                                    // features.on('click', selectFeatures);
                                 }
                             } else if(wktJson.type === 'MultiLineString') {
                                 var tmpFeatures = L.geoJSON(wktJson, {});
@@ -306,7 +306,7 @@
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', selectFeatures);
+                                    // features.on('click', selectFeatures);
                                 }
                             } else {
                                 var tmpFeatures = L.geoJSON(wktJson, {
@@ -330,7 +330,7 @@
                                         itemIconWidth: '20px',
                                         itemIconHeight: '20px'
                                     });
-                                    features.on('click', selectFeatures);
+                                    // features.on('click', selectFeatures);
                                 }
                             }
                         }
@@ -367,7 +367,7 @@
                                       features: tmpFeatures,
                                       itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/bwastr.png'
                                   });
-                                  features.on('click', selectFeatures);
+                                  // features.on('click', selectFeatures);
                                   if(features) {
                                      mapMarkers.addLayer(features);
                                   }
@@ -387,7 +387,7 @@
                                             summary: summary,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                           });
-                                          features.on('click', addDetailPane);
+                                          // features.on('click', addDetailPane);
                                           mapMarkers.addLayer(features);
                                         } else {
                                           var bounds = L.latLngBounds(L.latLng(y1Coord, x1Coord), L.latLng(y2Coord, x2Coord));
@@ -399,7 +399,7 @@
                                             class: objClass,
                                             itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                                           });
-                                          features.on('click', selectFeatures);
+                                          // features.on('click', selectFeatures);
                                           mapMarkers.addLayer(features);
                                         }
                                       }
@@ -422,7 +422,7 @@
                                 summary: summary,
                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                               });
-                              features.on('click', selectFeatures);
+                              // features.on('click', selectFeatures);
                               mapMarkers.addLayer(features);
                             } else {
                               var bounds = L.latLngBounds(L.latLng(y1Coord, x1Coord), L.latLng(y2Coord, x2Coord));
@@ -434,7 +434,7 @@
                                 class: objClass,
                                 itemIcon: '/decorations/layout/ingrid/scripts/leaflet/images/marker-icon.png'
                               });
-                              features.on('click', selectFeatures);
+                              // features.on('click', selectFeatures);
                               mapMarkers.addLayer(features);
                             }
                           }
