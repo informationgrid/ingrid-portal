@@ -241,6 +241,14 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <parentId>type</parentId>
                 <icon>ic-inspire</icon>
             </facet>
+            <!-- Open Data -->
+            <facet>
+                <name>Open Data</name>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
+                <id>opendata</id>
+                <parentId>type</parentId>
+                <icon>ic-opendata</icon>
+            </facet>
             <!-- Umwelt-Daten und -Karten Online -->
             <facet>
                 <name>Umwelt-Daten und -Karten Online</name>
