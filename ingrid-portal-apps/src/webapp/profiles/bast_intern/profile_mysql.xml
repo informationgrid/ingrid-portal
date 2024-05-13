@@ -94,11 +94,6 @@
         </file>
         <file>
             <action>copy-dir</action>
-            <src>../bast/ingrid-portal-apps/</src>
-            <dst>ingrid-portal-apps/</dst>
-        </file>
-        <file>
-            <action>copy-dir</action>
             <src>../bast/ingrid-webmap-client/</src>
             <dst>ingrid-webmap-client/</dst>
         </file>
