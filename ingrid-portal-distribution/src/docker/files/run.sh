@@ -141,6 +141,14 @@ else
             cp -R $PROFILES_DIR/bkg/ingrid-portal-apps/* webapps/ingrid-portal-apps
         fi
 
+        if [ "$PORTAL_PROFILE" == "bast_intern" ]; then
+            echo "Copying profile files from parent (bast) into portal directories ..."
+            cp -R $PROFILES_DIR/bast/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/bast/ingrid-portal-apps/* webapps/ingrid-portal-apps
+            cp -R $PROFILES_DIR/bast/ingrid-webmap-client/* webapps/ingrid-webmap-client
+            cp -R $PROFILES_DIR/bast/ingrid-webmap-client/frontend/src/* webapps/ingrid-webmap-client/frontend/prd
+        fi
+
         echo "Copying profile files into portal directories ..."
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/* webapps/ingrid-portal-apps
