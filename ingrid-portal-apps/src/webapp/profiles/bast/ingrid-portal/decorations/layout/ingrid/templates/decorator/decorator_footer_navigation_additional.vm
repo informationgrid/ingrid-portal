@@ -1,3 +1,2 @@
-#if($lang == "de")
-    <a href="$jetspeed.getAbsoluteUrl('/service-contact.psml')" title="$MESSAGES.getString('ingrid.page.accessiblity.report.title')" class="icon"><span class="text">$MESSAGES.getString("ingrid.page.accessiblity.report")</span></a>
-#end
+#set ($lang = $renderRequest.Locale.getLanguage())
+<a href="$jetspeed.getAbsoluteUrl('/service-contact.psml')" title="$MESSAGES.getString('ingrid.page.accessiblity.report.title')" class="icon"><span class="text">$MESSAGES.getString("ingrid.page.accessiblity.report")</span></a>
