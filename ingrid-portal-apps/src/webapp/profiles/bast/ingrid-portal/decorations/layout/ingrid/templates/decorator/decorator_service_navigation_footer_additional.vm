@@ -1,0 +1,3 @@
+#if($lang == "de")
+    <a href="$jetspeed.getAbsoluteUrl('/service-contact.psml')" title="$MESSAGES.getString('ingrid.page.accessiblity.report.title')" #if($isSelected)class="is-active"#end><span class="text">$MESSAGES.getString("ingrid.page.accessiblity.report")</span></a>
+#end

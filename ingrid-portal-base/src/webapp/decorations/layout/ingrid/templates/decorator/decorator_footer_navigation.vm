@@ -18,5 +18,6 @@
         <a href="$linkUrl" title="$linkTitle" class="icon"><span class="text">$linkName</span></a>
       #end
     #end
+    #parse("/decorations/layout/ingrid/templates/decorator/decorator_footer_navigation_additional.vm")
 </div>
 #end
