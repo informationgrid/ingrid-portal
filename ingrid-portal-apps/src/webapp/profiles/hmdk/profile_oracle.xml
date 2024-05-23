@@ -29,7 +29,7 @@
         </page>
         <page>
             <name>mdek/mdek_portal_admin.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>application/main-application.psml</name>
@@ -93,10 +93,6 @@
         </file>
         <file>
             <action>copy-dir</action>
-            <src>ingrid-portal-mdek-application/</src>
-        </file>
-        <file>
-            <action>copy-dir</action>
             <src>ingrid-webmap-client/</src>
         </file>
         <file>
@@ -112,6 +108,10 @@
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link']]>
+        </execute>
+        <!-- Set folder "/mdek" to hidden -->
+        <execute>
+            <![CDATA[UPDATE folder SET IS_HIDDEN='1' WHERE PATH='/mdek']]>
         </execute>
         <!-- Change main menu order -->
         <execute>
