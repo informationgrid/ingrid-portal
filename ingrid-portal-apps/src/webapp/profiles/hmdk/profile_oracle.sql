@@ -51,6 +51,12 @@ UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 -- Hide '/rsspage.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/rsspage.psml';
 
+-- Hide 'mdek/mdek_portal_admin.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/mdek/mdek_portal_admin.psml';
+
+-- Set folder "/mdek" to hidden
+UPDATE folder SET is_hidden = 1 WHERE path = '/mdek';
+
 -- Set folder "/application" to display
 UPDATE folder SET is_hidden = 0 WHERE path = '/application';
 
