@@ -263,14 +263,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
-    <!-- Anbieter -->
-    <!-- Standard - Kann nicht erweitert werden -->
-    <facet sort="SORT_BY_VALUE_DESC">
-        <name>searchResult.facete.title.provider</name>
-        <id>provider</id>
-        <queryType>OR</queryType>
-        <listLength>6</listLength>
-    </facet>
     <!-- Zeitbezug -->
     <!-- Kann erweitert werden -->
     <facet>
