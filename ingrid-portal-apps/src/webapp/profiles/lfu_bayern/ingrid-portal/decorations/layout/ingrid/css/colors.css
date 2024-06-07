@@ -1,0 +1,13 @@
+:root {
+  --main-font: Roboto, sans-serif;
+
+  --text-color: #3e5461;
+  --text-color-darker: #212529;
+  --link-color: #00649e;
+  --link-hover-color: #3089e7;
+
+  --color-grey: #e0e5e8;
+  --color-grey-darker: #526e7f;
+  --color-sky: #0089c7;
+  --color-sky-darker: #00649e;
+}

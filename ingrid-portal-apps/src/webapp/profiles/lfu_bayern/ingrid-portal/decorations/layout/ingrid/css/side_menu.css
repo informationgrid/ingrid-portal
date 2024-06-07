@@ -1,0 +1,50 @@
+.header-menu {
+  background: var(--color-grey);
+
+  a {
+    font-weight: 500;
+    text-transform: none;
+    transition: all 250ms;
+  }
+
+  .menu-main-links {
+    a.header-menu-entry {
+      font-size: 22px;
+    }
+
+    a {
+      font-size: 18px;
+      font-family: var(--main-font);
+      color: var(--color-grey-darker);
+
+      &:hover, &:focus-visible, &.is-active {
+        color: white;
+        background: var(--color-grey-darker);
+      }
+    }
+  }
+
+  .menu-sub-links {
+    background: var(--color-grey-darker);
+
+    a {
+      font-size: 18px;
+      font-family: var(--main-font);
+      color: white;
+
+      &:hover, &:focus-visible, &.is-active {
+        color: var(--color-grey-darker);
+        background: white;
+      }
+    }
+
+    .button.logout {
+      color: var(--color-grey-darker);
+      background: var(--color-grey);
+
+      &:hover, &:focus-visible {
+        background: white;
+      }
+    }
+  }
+}
