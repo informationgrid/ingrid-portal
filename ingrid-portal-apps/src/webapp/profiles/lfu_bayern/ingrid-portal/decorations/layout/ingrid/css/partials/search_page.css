@@ -82,7 +82,9 @@
   }
 
   .accordion-item a.accordion-title {
+    font-weight: 700;
     color: var(--link-color);
+    font-family: var(--main-font);
 
     &:after {
       color: var(--link-color);

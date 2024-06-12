@@ -23,6 +23,7 @@
 
 @import "partials/variables.css";
 @import "partials/buttons.css";
+@import "partials/tables.css";
 @import "partials/side_menu.css";
 @import "partials/search_page.css";
 @import "partials/catalog_page.css";
@@ -147,7 +148,7 @@ header {
   }
 }
 
-.dark h1, .dark h2, .dark p, .dark a, .dark abbr {
+.dark h1, .dark h2, .dark abbr {
   color: var(--text-color-darker);
 }
 
@@ -358,6 +359,19 @@ footer {
 .row.alert .success {
   color: #526e7f;
   border: 1px solid #526e7f;
+}
+
+.popup .headline {
+  background: var(--color-grey-darker);
+
+  .button.round {
+    border: none;
+
+    &:hover .ic-ic-cross {
+      color: white;
+
+    }
+  }
 }
 
 @media print, screen and (max-width: 100em) {

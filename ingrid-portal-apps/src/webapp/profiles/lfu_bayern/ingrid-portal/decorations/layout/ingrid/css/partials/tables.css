@@ -21,55 +21,10 @@
  * **************************************************#
 */
 
-.button.disabled,
-.button.disabled:hover,
-.button.disabled:focus,
-.button[disabled],
-.button[disabled]:hover,
-.button[disabled]:focus {
-  background: var(--color-sky-darker);
+thead tr, tfoot tr {
+  background: var(--color-grey-darker);
 }
 
-.button.outline {
-  color: var(--color-sky-darker);
-  border: 2px solid var(--color-sky-darker);
-
-  &:hover, &:focus-visible {
-    color: white;
-    background: var(--color-sky-darker);
-  }
-}
-
-.button.round {
-  color: var(--color-grey-darker);
-  background: var(--color-grey-lighter);
-
-  &:hover, &:focus-visible {
-    color: white;
-    background: var(--color-grey-darker);
-  }
-}
-
-.button.pill {
-  color: white;
-  background: var(--link-color);
-  border: none;
-
-  &:hover, &:focus-visible, &:focus {
-    color: white;
-    background: var(--link-hover-color);
-
-    span {
-      color: white;
-    }
-  }
-
-  &[type="reset"] {
-    color: var(--color-grey-darker);
-    background: var(--color-grey);
-
-    &:hover, &:focus-visible, &:focus {
-      background: var(--color-grey-darker);
-    }
-  }
+.boxed-table tbody tr:nth-child(even), .boxed-table tfoot {
+  background: var(--color-grey);
 }
