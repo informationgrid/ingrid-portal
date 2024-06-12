@@ -21,9 +21,10 @@
  * **************************************************#
 */
 
-@import "colors.css";
-@import "side_menu.css";
-@import "search_page.css";
+@import "partials/variables.css";
+@import "partials/buttons.css";
+@import "partials/side_menu.css";
+@import "partials/search_page.css";
 
 a {
   color: var(--link-color);
@@ -346,6 +347,11 @@ footer {
       background: var(--color-sky);
     }
   }
+}
+
+.row.alert .success {
+  color: #526e7f;
+  border: 1px solid #526e7f;
 }
 
 @media print, screen and (max-width: 100em) {
