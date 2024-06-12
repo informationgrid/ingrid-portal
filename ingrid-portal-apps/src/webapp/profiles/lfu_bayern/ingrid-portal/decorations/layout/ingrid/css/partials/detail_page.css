@@ -21,46 +21,50 @@
  * **************************************************#
 */
 
-.button.outline {
-  color: var(--color-sky-darker);
-  border: 2px solid var(--color-sky-darker);
-
-  &:hover, &:focus-visible {
-    color: white;
-    background: var(--color-sky-darker);
+#detail {
+  .banner-noimage .page-wrapper {
+    background-color: var(--color-grey);
   }
-}
 
-.button.round {
-  color: var(--color-grey-darker);
-  background: var(--color-grey-lighter);
+  .accordion-content.filter-wrapper {
+    border-radius: 0;
+    box-shadow: none;
+    border: 2px solid var(--color-grey);
 
-  &:hover, &:focus-visible {
-    color: white;
-    background: var(--color-grey-darker);
-  }
-}
+    .filter-group .accordion-item {
+      .accordion-title {
+        border-radius: 0 !important;
+        color: var(--link-color);
 
-.button.pill {
-  color: white;
-  background: var(--link-color);
-  border: none;
+        &:hover, &:focus-visible {
+          color: var(--link-hover-color);
+        }
+      }
 
-  &:hover, &:focus-visible, &:focus {
-    color: white;
-    background: var(--link-hover-color);
-
-    span {
-      color: white;
+      &.is-active .accordion-title {
+        background: var(--link-color);
+      }
     }
   }
 
-  &[type="reset"] {
-    color: var(--color-grey-darker);
-    background: var(--color-grey);
+  .search-filtered .teaser-data.is-active {
+    box-shadow: none;
+    border: 2px solid var(--color-grey);
+    border-radius: 0;
 
-    &:hover, &:focus-visible, &:focus {
-      background: var(--color-grey-darker);
+    .button {
+      border: none;
+      font-family: var(--main-font);
+      color: white;
+      background: var(--link-color);
+
+      &:hover, &:focus-visible {
+        background: var(--link-hover-color);
+
+        span {
+          color: white;
+        }
+      }
     }
   }
 }

@@ -25,8 +25,14 @@
 @import "partials/buttons.css";
 @import "partials/side_menu.css";
 @import "partials/search_page.css";
+@import "partials/catalog_page.css";
+@import "partials/detail_page.css";
 
-a {
+body {
+  color: var(--text-color-darker);
+}
+
+a, a.icon {
   color: var(--link-color);
 
   &:hover, &:focus-visible {
