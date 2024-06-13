@@ -210,7 +210,7 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 	private void getDoi(Node node){
 		String doi = (String) context.get("doiHeadMeta");
 		if(doi == null || doi.length() == 0){
-			String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString[contains(text(),'doi')]";
+			String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor][contains(text(),'doi')]";
 			if (XPathUtils.nodeExists(node, xpathExpression)) {
 				Node tmpNode = XPathUtils.getNode(node, xpathExpression);
 				String tmpDoi = tmpNode.getTextContent().trim();

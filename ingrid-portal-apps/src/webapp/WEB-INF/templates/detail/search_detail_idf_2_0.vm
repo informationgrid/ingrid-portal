@@ -569,7 +569,7 @@
                             </div>
                         #end
                         ## Servicezeiten
-                        #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString")
+                        #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/*[self::gco:CharacterString or self::gmx:Anchor]")
                         #if($TOOL.nodeExist($xPath, $node) && $TOOL.getValueFromXPath($xPath, null, $node))
                             <div>
                                 $MESSAGES.getString('t02_address.hours_of_service')

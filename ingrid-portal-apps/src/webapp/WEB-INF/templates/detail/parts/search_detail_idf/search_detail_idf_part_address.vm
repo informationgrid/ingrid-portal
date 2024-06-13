@@ -68,7 +68,7 @@
         #end
     #else
         ## Organisation
-        #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
+        #set($xPath = "$xParentPath/gmd:organisationName/*[self::gco:CharacterString or self::gmx:Anchor]")
         #if($TOOL.nodeExist($xPath, $node))
             #set($tmpValue = $TOOL.getValueFromXPath($xPath, null, $node))
             #if($tmpValue)
@@ -100,7 +100,7 @@
         <br>
     #end
     ## Organisation
-    #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
+    #set($xPath = "$xParentPath/gmd:organisationName/*[self::gco:CharacterString or self::gmx:Anchor]")
     #if($TOOL.nodeExist($xPath, $node))
         #set($tmpValue = $TOOL.getValueFromXPath($xPath, null, $node))
         #if($tmpValue)

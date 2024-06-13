@@ -279,7 +279,7 @@ public class DetailPartPreparer {
         final String licenceList = "6500";
         final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
         final String restrictionCodeXpath = "./gmd:useConstraints/gmd:MD_RestrictionCode[not(@codeListValue='otherRestrictions')]";
-        final String constraintsTextXpath = "./gmd:otherConstraints/gco:CharacterString";
+        final String constraintsTextXpath = "./gmd:otherConstraints/*[self::gco:CharacterString or self::gmx:Anchor]";
         final String constraintsTextXpathAnchor = "./gmd:otherConstraints/gmx:Anchor";
         List<String> result = new ArrayList<>();
 
@@ -488,7 +488,7 @@ public class DetailPartPreparer {
     }
 
     public List<String> getUseLimitations() {
-        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation/gco:CharacterString";
+        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation/*[self::gco:CharacterString or self::gmx:Anchor]";
 
         List<String> result = new ArrayList<>();
 
@@ -556,7 +556,7 @@ public class DetailPartPreparer {
 
         for (Node sibling : siblingList) {
             // get gco:CharacterString child to strip localisation REDMINE-1882
-            Node nextSibling = xPathUtils.getNode(sibling, "./gco:CharacterString");
+            Node nextSibling = xPathUtils.getNode(sibling, "./*[self::gco:CharacterString or self::gmx:Anchor]");
             if(nextSibling != null) {
                 sibling = nextSibling;
             }

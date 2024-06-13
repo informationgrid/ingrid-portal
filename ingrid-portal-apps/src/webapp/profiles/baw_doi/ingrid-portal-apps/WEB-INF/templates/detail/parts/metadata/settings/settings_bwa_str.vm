@@ -1,12 +1,12 @@
 ## BAW Auftragsnummer
-## #set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
+## #set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]"))
 ## #if($type == 4)
-##     #set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
+##     #set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]"))
 ## #end
 ## ## BAW Auftragstitel
-## #set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[not(./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = 'crossReference')]/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString"))
+## #set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[not(./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = 'crossReference')]/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor]"))
 ## #if($type == 4)
-##     #set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"))
+##     #set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor]"))
 ## #end
 
 ## BwaStr location

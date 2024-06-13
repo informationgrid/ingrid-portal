@@ -26,7 +26,7 @@
         #set($rowSpan = $subSize + 2)
         ## Name
             <td #if($subSize > 0)class="rowspan" rowspan="$rowSpan"#end>
-                #set($tmpValue = $TOOL.getValueFromXPath("./igctx:geometryType/gco:CharacterString", "", $tmpNode))
+                #set($tmpValue = $TOOL.getValueFromXPath("./igctx:geometryType/*[self::gco:CharacterString or self::gmx:Anchor]", "", $tmpNode))
                 #if($tmpValue)
                     $tmpValue
                 #end
@@ -34,7 +34,7 @@
             </td>
         ## Geometrie-Typ
             <td #if($subSize > 0)class="rowspan" rowspan="$rowSpan"#end>
-                #set($tmpValue = $TOOL.getValueFromXPath("./igctx:geometricFeature/*/igctx:featureName/gco:CharacterString", "", $tmpNode))
+                #set($tmpValue = $TOOL.getValueFromXPath("./igctx:geometricFeature/*/igctx:featureName/*[self::gco:CharacterString or self::gmx:Anchor]", "", $tmpNode))
                 #if($tmpValue)
                     $tmpValue
                 #end
@@ -42,7 +42,7 @@
             </td>
         ## Beschreibung
             <td #if($subSize > 0)colspan="4"#end>
-                #set($tmpValue = $TOOL.getValueFromXPath("./igctx:geometricFeature/*/igctx:featureDescription/gco:CharacterString", "", $tmpNode))
+                #set($tmpValue = $TOOL.getValueFromXPath("./igctx:geometricFeature/*/igctx:featureDescription/*[self::gco:CharacterString or self::gmx:Anchor]", "", $tmpNode))
                 #if($tmpValue)
                     $tmpValue
                 #end
@@ -60,7 +60,7 @@
                     #set($tmpSubNode = $TOOL.getNodeFromXPath($tmpSubXPath))
                     ## Code
                     <td>
-                        #set($tmpValue = $TOOL.getValueFromXPath("./igctx:attributeCode|igctx:attributeContent/gco:CharacterString", "", $tmpSubNode))
+                        #set($tmpValue = $TOOL.getValueFromXPath("./igctx:attributeCode|igctx:attributeContent/*[self::gco:CharacterString or self::gmx:Anchor]", "", $tmpSubNode))
                         #if($tmpValue)
                             $tmpValue
                         #end
@@ -68,7 +68,7 @@
                     </td>
                     ## Beschreibung
                     <td colspan="3">
-                        #set($tmpValue = $TOOL.getValueFromXPath("./igctx:attributeDescription/gco:CharacterString", "", $tmpSubNode))
+                        #set($tmpValue = $TOOL.getValueFromXPath("./igctx:attributeDescription/*[self::gco:CharacterString or self::gmx:Anchor]", "", $tmpSubNode))
                         #if($tmpValue)
                             $tmpValue
                         #end
