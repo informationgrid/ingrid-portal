@@ -155,9 +155,30 @@
   background: var(--link-color) !important;
 }
 
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  border-radius: 0;
+  border: 1px solid var(--link-color);
+  box-shadow: none;
+}
+
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--single,
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple,
+ul.select2-results__options {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.select2-container--default .select2-selection--single::after {
+  color: var(--link-color);
+}
+
 .js-expander-toggle-all {
+  height: 36px;
+  align-self: center;
+
   display: flex;
-  margin: 0 !important;
+  margin-top: 0 !important;
 
   a.icon {
     border: 1px solid var(--link-color);

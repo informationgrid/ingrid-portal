@@ -21,7 +21,7 @@
  * **************************************************#
 */
 
-thead tr, tfoot tr {
+.boxed-table thead {
   background: var(--color-grey-darker);
 }
 
