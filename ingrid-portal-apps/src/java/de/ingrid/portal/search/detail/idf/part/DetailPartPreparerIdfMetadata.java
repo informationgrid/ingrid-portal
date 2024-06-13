@@ -1130,7 +1130,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 if(xPathUtils.nodeExists(node, "./gmd:DQ_DomainConsistency")){
                     ArrayList row = new ArrayList();
 
-                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString";
+                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor]";
                     if (xPathUtils.nodeExists(node, xpathExpression)) {
                         String value = xPathUtils.getString(node, xpathExpression).trim();
                         row.add(notNull(value));
