@@ -105,6 +105,7 @@
 #results .teaser-data.search {
   border-radius: 0;
   transition: border 250ms;
+  box-shadow: none;
   border: 2px solid var(--color-grey);
 
   &:hover, &:focus-within {
@@ -148,6 +149,12 @@
     &:hover, &:focus-visible {
       background: var(--link-hover-color);
     }
+  }
+}
+
+#results .teaser-data.is-active {
+  .arrow {
+    color: var(--link-color);
   }
 }
 

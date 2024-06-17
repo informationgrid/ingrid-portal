@@ -32,4 +32,8 @@
       box-shadow: none;
     }
   }
+
+  span.icon span {
+    color: var(--link-color);
+  }
 }
