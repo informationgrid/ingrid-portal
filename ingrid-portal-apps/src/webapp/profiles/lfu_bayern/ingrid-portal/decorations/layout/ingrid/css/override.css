@@ -21,6 +21,7 @@
  * **************************************************#
 */
 
+@import "partials/fonts.css";
 @import "partials/variables.css";
 @import "partials/buttons.css";
 @import "partials/icons.css";
@@ -28,7 +29,7 @@
 @import "partials/side_menu.css";
 @import "partials/search_page.css";
 @import "partials/catalog_page.css";
-@import "partials/detail_page.css";
+@import "partials/accordion_menu.css";
 
 body {
   color: var(--text-color-darker);
@@ -149,7 +150,7 @@ header {
   }
 }
 
-.dark p, .dark h1, .dark h2, .dark abbr {
+.dark p, .dark h1, .dark h2, .dark abbr, .dark a {
   color: var(--text-color-darker);
 }
 
@@ -347,12 +348,15 @@ footer {
   }
 
   .footer-top-link {
+    transition: all 250ms;
     background: var(--color-sky-darker);
     font-family: var(--main-font);
     font-weight: bold;
 
     &:hover, &:focus-visible {
+      color: white;
       background: var(--color-sky);
+      text-decoration: unset;
     }
   }
 }

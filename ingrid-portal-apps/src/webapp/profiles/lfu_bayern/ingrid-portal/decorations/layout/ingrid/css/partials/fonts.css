@@ -21,50 +21,37 @@
  * **************************************************#
 */
 
-#detail {
-  .banner-noimage .page-wrapper {
-    background-color: var(--color-grey);
-  }
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../../fonts/Roboto-Regular.ttf') format('truetype');
+}
 
-  .accordion-content.filter-wrapper {
-    border-radius: 0;
-    box-shadow: none;
-    border: 2px solid var(--color-grey);
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-style: italic;
+  src: url('../../fonts/Roboto-Italic.ttf') format('truetype');
+}
 
-    .filter-group .accordion-item {
-      .accordion-title {
-        border-radius: 0 !important;
-        color: var(--link-color);
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-style: normal;
+  src: url('../../fonts/Roboto-Medium.ttf') format('truetype');
+}
 
-        &:hover, &:focus-visible {
-          color: var(--link-hover-color);
-        }
-      }
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-style: italic;
+  src: url('../../fonts/Roboto-MediumItalic.ttf') format('truetype');
+}
 
-      &.is-active .accordion-title {
-        background: var(--link-color);
-      }
-    }
-  }
-
-  .search-filtered .teaser-data.is-active {
-    box-shadow: none;
-    border: 2px solid var(--color-grey);
-    border-radius: 0;
-
-    .button {
-      border: none;
-      font-family: var(--main-font);
-      color: white;
-      background: var(--link-color);
-
-      &:hover, &:focus-visible {
-        background: var(--link-hover-color);
-
-        span {
-          color: white;
-        }
-      }
-    }
-  }
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-style: normal;
+  src: url('../../fonts/Roboto-Bold.ttf') format('truetype');
 }
