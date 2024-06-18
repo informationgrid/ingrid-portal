@@ -52,7 +52,7 @@
             </li>
         </ul>
     #else
-        #if($nodeUrl != '')
+        #if($nodeUrl != '' && $node.udk_class != "1000")
             <div class="accordion-item-sub">
                 <a href="$nodeUrl" class="icon" title="$nodeTitle">
                     #if ($node.plugType == 'dsc_ecs')
