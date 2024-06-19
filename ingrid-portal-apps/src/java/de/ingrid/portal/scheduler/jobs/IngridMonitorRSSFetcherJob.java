@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * https://joinup.ec.europa.eu/software/page/eupl
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,6 +22,8 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -43,17 +45,17 @@ import de.ingrid.portal.scheduler.IngridMonitorFacade;
 
 /**
  * TODO Describe your created type (class, etc.) here.
- * 
+ *
  * @author joachim@wemove.com
  */
 public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
 
 	public static final String COMPONENT_TYPE = "component.monitor.general.type.rssfetcher";
-	
+
 	public static final String PARAM_PREVIOUS_NUM = "component.monitor.rsschecker.num";
-	
+
 	public static final String PARAM_PREVIOUS_DATE = "component.monitor.rsschecker.date";
-	
+
 	public static final String JOB_ID = "RSS-Fetcher-Monitor";
 
 	private static final Logger log = LoggerFactory.getLogger(IngridMonitorRSSFetcherJob.class);
@@ -63,65 +65,65 @@ public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
 	 */
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		long startTime = 0;
-		
+
 		if (log.isDebugEnabled()) {
 			startTime = System.currentTimeMillis();
 			log.debug("Job (" + context.getJobDetail().getName() + ") is executed...");
 		}
-		
+
 		JobDetail jobDetail = context.getJobDetail();
 		JobDataMap dataMap = jobDetail.getJobDataMap();
 		String url 			= dataMap.getString(PARAM_SERVICE_URL);
-		
+
 		int status = 0;
 		String statusCode = null;
 
         try {
           	startTimer();
-              
+
             status = STATUS_OK;
 			statusCode = STATUS_CODE_NO_ERROR;
-            
+
 			int previousNum = -1;
 			Date previousFireTime = null;
 			Date nextFireTime = null;
-			
+
 			if (dataMap.containsKey(PARAM_PREVIOUS_NUM)) previousNum = dataMap.getInt(PARAM_PREVIOUS_NUM);
 			if (dataMap.containsKey(PARAM_PREVIOUS_DATE)) previousFireTime = (Date)dataMap.get(PARAM_PREVIOUS_DATE);
 
 			int num = context.getScheduler().getJobDetail("RSSFetcherJob", "DEFAULT").getJobDataMap().getInt(PARAM_TIMER_NUM);
-			
-			// return if there is 
-			if (context.getScheduler().getTriggersOfJob("RSSFetcherJob", "DEFAULT") != null ) 
+
+			// return if there is
+			if (context.getScheduler().getTriggersOfJob("RSSFetcherJob", "DEFAULT") != null )
 				nextFireTime = context.getScheduler().getTriggersOfJob("RSSFetcherJob", "DEFAULT")[0].getNextFireTime();
 			else
 				return;
-            
+
 			// TODO AW: is the job executing right now?
 			IngridMonitorFacade monitor = IngridMonitorFacade.instance();
 			if (!monitor.isExecuting("RSSFetcherJob", "DEFAULT", context)) {
 				// if it's the first start
 	            if (previousFireTime == null)
 	            	previousFireTime = nextFireTime;
-				
+
 	            // num must have changed after last time
 	            if (nextFireTime.before(new Date())) {
 	            	status = STATUS_ERROR;
 	    			statusCode = "NextFireTime is in the past!";
 	            }
-	            
+
 	            // what if restarting tomcat? num will be back to 1
 	            if (num == previousNum && nextFireTime.compareTo(previousFireTime)!=0) {
 	            	status = STATUS_ERROR;
 	    			statusCode = "Number of executions is not increasing!";
 	    			dataMap.put(PARAM_PREVIOUS_DATE, nextFireTime);
 	        	}
-	            
+
 	            if (status == STATUS_OK && nextFireTime.compareTo(previousFireTime)!=0) {
 	               dataMap.put(PARAM_PREVIOUS_DATE, nextFireTime);
 	               dataMap.put(PARAM_PREVIOUS_NUM, num);
 	            }
-	            
+
 	            // check database for last change
 	            Session session = HibernateUtil.currentSession();
 	            Transaction tx = null;
@@ -133,15 +135,23 @@ public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
 	            cal.setTime(new Date());
 	            if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) days = 3;
 	            else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) days = 4;
-	            
+
 	            tx = session.beginTransaction();
 	            IngridRSSStore rssStore = null;
-	            
+
 	            // get the most recent RSS News
 	    		List rssStores = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setMaxResults(1).list();
 	    		rssStore = (IngridRSSStore)rssStores.get(0);
-	    		
-	    		cal.setTime(rssStore.getPublishedDate());
+				// here too?
+
+				// check for published date in the entry
+	    		Date publishedDate = rssStore.getPublishedDate();
+				if (publishedDate == null) {
+					// if no published date, extract date from link entry
+					publishedDate = extractDateFromLink(rssStore.getLink());
+				}
+				cal.setTime(publishedDate);
+
 	    		cal.add(Calendar.HOUR, days*24);
 	    		if (cal.getTime().before(new Date())) {
 	    			status = STATUS_ERROR;
@@ -153,7 +163,7 @@ public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
 	                log.info("RSS FetcherJob is executing right now!");
 	            }
 			}
-            
+
         } catch (Exception e) {
             if (log.isInfoEnabled()) {
                 log.info("Error building RSS feed (" + url + "). [" + e.getMessage() + "]");
@@ -166,14 +176,39 @@ public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
         } finally {
         	computeTime(jobDetail.getJobDataMap(), stopTimer());
         }
-        
+
         updateJobData(context, status, statusCode);
 		sendAlertMail(context);
 		updateJob(context);
-		
+
 		if (log.isDebugEnabled()) {
 			log.debug("Job (" + context.getJobDetail().getName() + ") finished in "
 					+ (System.currentTimeMillis() - startTime) + " ms.");
 		}
 	}
+
+	private Date extractDateFromLink(String url) {
+		Calendar cal = Calendar.getInstance();
+		// url in format: ../yymmdd_xxx(_xxx).html, extract yymmdd
+		int lastSlashIndex = url.lastIndexOf('/');
+		int firstUnderscoreAfterLastSlash = url.indexOf('_', lastSlashIndex);
+
+
+		if (lastSlashIndex != -1 && firstUnderscoreAfterLastSlash != -1) {
+			String extractedDate = url.substring(lastSlashIndex + 1, firstUnderscoreAfterLastSlash);
+
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+				Date date = sdf.parse(extractedDate);
+				cal.setTime(date);
+				log.debug("Date has been set to value extracted from link: {}", cal.getTime());
+			} catch (ParseException e) {
+				log.debug("Error parsing date from URL: {} [{}]", url, e.getMessage());
+			}
+		}
+
+		// if url or date extraction failed, return current date
+		return cal.getTime();
+	}
+
 }
