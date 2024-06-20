@@ -41,23 +41,40 @@
 }
 
 .button.round {
-  color: var(--color-grey-darker);
-  background: var(--color-grey-lighter);
+  border-radius: 0;
+  color: white;
+  background: var(--color-grey-darker);
 
-  &:hover, &:focus-visible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover, &:focus, &:focus-visible {
     color: white;
     background: var(--color-grey-darker);
+  }
+
+  &.social {
+    width: 50px;
+    height: 50px;
+    border: 3px solid;
+  }
+
+  .ic-ic-angle-up {
+    margin: 0;
+    font-size: 30px;
+    position: unset;
   }
 }
 
 .button.pill {
   color: white;
-  background: var(--link-color);
+  background: var(--color-grey-darker);
   border: none;
+  padding: 12px 16px;
 
   &:hover, &:focus-visible, &:focus {
     color: white;
-    background: var(--link-hover-color);
 
     span {
       color: white;

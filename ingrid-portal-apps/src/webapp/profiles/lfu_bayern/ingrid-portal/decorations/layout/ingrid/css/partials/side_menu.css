@@ -39,6 +39,7 @@
       font-size: 18px;
       font-family: var(--main-font);
       color: var(--color-grey-darker);
+      border-radius: unset;
 
       &:hover, &:focus-visible, &.is-active {
         color: white;
@@ -54,6 +55,7 @@
       font-size: 18px;
       font-family: var(--main-font);
       color: white;
+      border-radius: unset;
 
       &:hover, &:focus-visible, &.is-active {
         color: var(--color-grey-darker);

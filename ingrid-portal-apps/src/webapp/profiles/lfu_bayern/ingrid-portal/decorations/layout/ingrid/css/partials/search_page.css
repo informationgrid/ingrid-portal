@@ -83,7 +83,7 @@
 
   .accordion-item a.accordion-title {
     font-weight: 700;
-    color: var(--link-color);
+    color: var(--color-grey-darker);
     font-family: var(--main-font);
 
     &:after {
@@ -110,17 +110,21 @@
 
   &:hover, &:focus-within {
     box-shadow: none;
-    border: 2px solid var(--color-sky);
+    border: 2px solid var(--color-grey-darker);
   }
 
   a {
     text-decoration: none;
 
+    .arrow {
+      color: var(--color-grey-darker);
+    }
+
     &:hover, &:focus-visible {
       color: var(--link-hover-color);
 
       .arrow {
-        color: var(--link-hover-color);
+        color: var(--color-grey-darker);
       }
     }
   }
@@ -200,12 +204,12 @@ ul.select2-results__options {
 
     &.is-active {
       color: white;
-      background: var(--link-color);
+      background: var(--color-grey-darker);
     }
 
     &:hover {
       color: white;
-      background: var(--link-hover-color);
+      background: var(--color-grey-darker);
     }
   }
 }

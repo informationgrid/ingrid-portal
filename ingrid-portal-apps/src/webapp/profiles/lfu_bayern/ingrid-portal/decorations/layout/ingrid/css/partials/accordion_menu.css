@@ -39,7 +39,7 @@
     .filter-group .accordion-item {
       .accordion-title {
         border-radius: 0 !important;
-        color: var(--link-color);
+        color: var(--color-grey-darker);
 
         &:hover, &:focus-visible {
           color: var(--link-hover-color);
@@ -47,7 +47,7 @@
       }
 
       &.is-active .accordion-title {
-        background: var(--link-color);
+        background: var(--color-grey-darker);
       }
     }
   }

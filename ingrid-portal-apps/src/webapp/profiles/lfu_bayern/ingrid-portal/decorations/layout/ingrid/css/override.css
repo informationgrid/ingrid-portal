@@ -59,7 +59,7 @@ h2 {
 
 header {
   border-image: unset;
-  border-bottom: solid 4px var(--color-grey-darker);
+  border-bottom: solid 4px var(--color-orange);
 
   .row > .columns {
     flex: unset;
@@ -80,30 +80,17 @@ header {
   }
 
   .logo a {
-    font-weight: 500;
-    color: var(--color-sky);
-    text-decoration: none;
-
+    padding-right: .5rem;
     position: unset;
     width: 100%;
     height: 100%;
-
     display: flex;
-    gap: 12px;
     align-items: center;
     justify-content: flex-end;
 
-    span {
-      font-family: var(--main-font);
-      font-size: 20px;
-      line-height: 1.35;
-      font-weight: normal;
-      text-align: right;
-    }
-
     img {
       width: auto;
-      height: 86px;
+      height: 70px;
     }
   }
 }
@@ -173,7 +160,7 @@ header {
 }
 
 .banner.home h1.green {
-  color: var(--color-sky);
+  color: var(--text-color-darker);
   font-size: 1.5rem;
   font-weight: 500;
   margin-top: 6px;
@@ -181,11 +168,12 @@ header {
 }
 
 .banner.home .home-wrapper .indent span {
-  color: var(--color-sky);
+  color: var(--text-color-darker);
 }
 
 .button {
   font-weight: bold;
+  border-radius: unset;
   text-transform: unset;
   color: var(--color-grey-darker);
   background: var(--color-grey);
@@ -197,28 +185,29 @@ header {
 
 .button.large {
   padding: 0 30px;
-  border-radius: unset;
   color: white;
   background: var(--color-grey-darker);
-
   font-family: var(--main-font);
-
-  &:hover, &:focus-visible {
-    background: var(--color-sky);
-  }
 }
 
-.midnight {
-  background: var(--color-grey);
+.tabs-panel.midnight {
+  padding: 40px 0;
+  background: white;
 }
 
 .teaser {
-  transition: all 300ms;
+  transition: all 150ms;
   border-radius: 0;
   box-shadow: unset;
+  border: 2px solid var(--color-grey);
 
-  &:hover {
-    transform: scale(1.03);
+  &:hover, &:focus-visible {
+    border: 2px solid var(--color-grey-darker);
+
+    .teaser-link .teaser-number {
+      color: white;
+      background: var(--color-grey-darker);
+    }
   }
 
   .blue-border {
@@ -226,11 +215,11 @@ header {
   }
 
   .teaser-link {
-    padding: 20px 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    font-size: 20px;
 
     [class^="ic-"] {
       flex: 1;
@@ -246,27 +235,29 @@ header {
       }
 
       &:after {
-        opacity: 0.08;
-        background: var(--color-grey-darker);
-        content: "";
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        position: absolute;
+        content: none;
       }
     }
 
     .text {
       color: var(--color-grey-darker);
+      margin-bottom: 20px;
     }
 
     .teaser-number {
+      font-size: 18px;
+      width: 100%;
+      line-height: 1;
+      padding: 10px;
+      margin: 0;
+      border-radius: 0;
       position: unset;
-      color: white;
-      background: var(--color-grey-darker);
+      color: var(--text-color);
+      background: var(--color-grey);
     }
 
     &:hover {
+      border-radius: 0;
       box-shadow: unset;
     }
   }
@@ -319,6 +310,7 @@ footer {
   }
 
   .footer {
+    padding: 18px 0;
     background: var(--color-grey-darker);
 
     .footer-menu-entries {
@@ -339,7 +331,7 @@ footer {
 
   a.icon {
     color: white;
-    font-size: 22px;
+    font-size: 20px;
     text-transform: none;
 
     &:hover, &:focus-visible {
@@ -379,16 +371,12 @@ footer {
   }
 }
 
-@media print, screen and (max-width: 100em) {
-  header {
-    .logo {
-      padding-right: 140px;
-    }
-  }
-}
-
 @media print, screen and (max-width: 60em) {
   header {
+    .logo a img {
+      height: 70px;
+    }
+
     .menu-tab-row .menu-tab {
       min-width: unset;
 
@@ -401,10 +389,6 @@ footer {
           display: none;
         }
       }
-    }
-
-    .logo img {
-      display: none;
     }
   }
 
@@ -421,13 +405,15 @@ footer {
   }
 }
 
+@media print, screen and (max-width: 40em) {
+  header .logo a img {
+    height: 60px;
+  }
+}
+
 /* medium phone screen */
 @media print, screen and (max-width: 35em) {
   header {
-    .logo {
-      padding-right: 70px;
-    }
-
     .menu-tab-row .menu-tab .link-menu-tab {
       top: unset;
       padding: unset;
@@ -443,15 +429,6 @@ footer {
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-  }
-}
-
-/* small phone screen */
-@media print, screen and (max-width: 28em) {
-  header {
-    .logo {
-      display: none;
     }
   }
 }
@@ -473,4 +450,14 @@ footer {
     font-size: 1rem;
     margin-bottom: 36px;
   }
+}
+
+.banner.subpage .align-center {
+  padding: 0 1.5rem;
+  justify-content: unset;
+}
+
+.row.content-small {
+  padding: 0 1.5rem;
+  max-width: 1296px;
 }
