@@ -31,12 +31,12 @@
 }
 
 .button.outline {
-  color: var(--color-sky-darker);
-  border: 2px solid var(--color-sky-darker);
+  color: var(--color-grey-darker);
+  border: 2px solid var(--color-grey-darker);
 
   &:hover, &:focus-visible {
     color: white;
-    background: var(--color-sky-darker);
+    background: var(--color-grey-darker);
   }
 }
 

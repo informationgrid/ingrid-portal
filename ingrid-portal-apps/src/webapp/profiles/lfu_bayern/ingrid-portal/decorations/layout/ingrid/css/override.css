@@ -122,6 +122,10 @@ header {
     align-items: center;
     justify-content: center;
 
+    &:hover .link-menu-tab {
+      color: var(--color-grey-darker);
+    }
+
     .link-menu-tab {
       color: var(--text-color);
 
@@ -315,6 +319,11 @@ footer {
 
     .footer-menu-entries {
       text-align: center;
+
+      a {
+        font-weight: 500;
+        font-family: var(--main-font);
+      }
     }
   }
 

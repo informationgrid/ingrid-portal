@@ -16,6 +16,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>privacy.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>service-sitemap.psml</name>
             <hidden>true</hidden>
         </page>

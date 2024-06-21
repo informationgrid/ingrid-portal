@@ -23,6 +23,10 @@
 
 .boxed-table thead {
   background: var(--color-grey-darker);
+
+  .dark a {
+    color: white;
+  }
 }
 
 .boxed-table tbody tr:nth-child(even), .boxed-table tfoot {
