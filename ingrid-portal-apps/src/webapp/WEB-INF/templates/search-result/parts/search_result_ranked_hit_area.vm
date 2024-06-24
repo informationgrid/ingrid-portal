@@ -52,7 +52,6 @@
         var map${mapId} = addLeafletMapWithId('map${mapId}', bgLayer, bounds${mapId}, null , 10);
         #if($isDetail)
             map${mapId}.gestureHandling.enable();
-            addLeafletHomeControl(map${mapId}, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds${mapId}, '', '23px');
         #else
             disableLeafletMapTouchControl(map${mapId});
         #end
@@ -70,6 +69,9 @@
     <script>
         #if(!$isMoreId)
         $('#map${mapId}').closest('.js-expander-content').addClass('is-hidden');
+        #end
+        #if($isDetail)
+            addLeafletHomeControl(map${mapId}, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds${mapId} ? bounds${mapId} : map${mapId}.getBounds(), '', '23px');
         #end
     </script>
 #end
