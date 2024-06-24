@@ -1,0 +1,21 @@
+#### Konformität
+#set($xPathAdditionalInfoDQDataQualityReport = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report")
+
+#set($tmpConformityDataSymbols = [])
+#set($tmpConformityDataSymbol = {})
+#set($tmpConformityDataValue = $TOOL.getNameFromCodeList("6000", "1"))
+#set($put = $tmpConformityDataSymbol.put("value", $tmpConformityDataValue))
+#set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-check' title='$tmpConformityDataValue'></span>"))
+#set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
+#set($tmpConformityDataSymbol = {})
+#set($tmpConformityDataValue = $TOOL.getNameFromCodeList("6000", "2"))
+#set($put = $tmpConformityDataSymbol.put("value", $tmpConformityDataValue))
+#set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-cross' title='$tmpConformityDataValue'></span>"))
+#set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
+#set($tmpConformityDataSymbol = {})
+#set($tmpConformityDataValue = $TOOL.getNameFromCodeList("6000", "3"))
+#set($put = $tmpConformityDataSymbol.put("value", $tmpConformityDataValue))
+#set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-minus' title='$tmpConformityDataValue'></span>"))
+#set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
+
+#set($add = $xPathListAdditionalInfo.add($xPathAdditionalInfoDQDataQualityReport))

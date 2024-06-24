@@ -428,25 +428,6 @@
 #set($xPathAdditionalInfoExportCriteria = "./idf:exportCriteria")
 #### Sprache des Datensatzes
 #set($xPathAdditionalInfoIdentificationInfoLanguageCode = "./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")
-#### Konformität
-#set($xPathAdditionalInfoDQDataQualityReport = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report")
-
-#set($tmpConformityDataSymbols = [])
-#set($tmpConformityDataSymbol = {})
-#set($tmpConformityDataValue = $TOOL.getNameFromCodeList("6000", "1"))
-#set($put = $tmpConformityDataSymbol.put("value", $tmpConformityDataValue))
-#set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-check' title='$tmpConformityDataValue'></span>"))
-#set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
-#set($tmpConformityDataSymbol = {})
-#set($tmpConformityDataValue = $TOOL.getNameFromCodeList("6000", "2"))
-#set($put = $tmpConformityDataSymbol.put("value", $tmpConformityDataValue))
-#set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-cross' title='$tmpConformityDataValue'></span>"))
-#set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
-#set($tmpConformityDataSymbol = {})
-#set($tmpConformityDataValue = $TOOL.getNameFromCodeList("6000", "3"))
-#set($put = $tmpConformityDataSymbol.put("value", $tmpConformityDataValue))
-#set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-minus' title='$tmpConformityDataValue'></span>"))
-#set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
 
 #### Datenformat
 #set($xPathAdditionalInfoMDDistribution = "./gmd:distributionInfo/gmd:MD_Distribution")
@@ -462,13 +443,14 @@
     $xPathAdditionalInfoFurtherLegalBasis,
     $xPathAdditionalInfoExportCriteria,
     $xPathAdditionalInfoIdentificationInfoLanguageCode,
-    $xPathAdditionalInfoDQDataQualityReport,
     "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format/gmd:name[string-length(text()) > 0] ",
     "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format/gmd:version[string-length(text()) > 0] ",
     "${xPathAdditionalInfoMDDistribution}/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine",
     "${xPathAdditionalInfoMDDistribution}/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:transferSize",
     $xPathAdditionalInfoOrderingInstructions
 ])
+#### Konformität
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_additional_info_data_quality_report.vm")
 
 ## Geodatenlink
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_additional_info_geodatalink.vm")
@@ -553,6 +535,8 @@
     "${xPathDataQualityRelativeInternalPositionalAccuracy}/gmd:nameOfMeasure"
 ])
 
+#### Konformität
+#parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_data_quality_report.vm")
 
 ## Kontakt
 #### Addressen

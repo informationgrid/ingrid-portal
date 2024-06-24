@@ -7,6 +7,8 @@
     #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
     #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
     <div class="row columns">
+    ## Konformität
+        #parse("/WEB-INF/templates/detail/parts/metadata/dataquality/data_quality_report.vm")
     ## Datendefizit
         #renderTextTable($MESSAGES.getString("t011_obj_geo.coverage") $TOOL.getGeoReport($xPathDataQualityCompletenessOmission, "completeness omission (rec_grade)", "Rate of missing items"))
     ## Höhengenauigkeit (m)
