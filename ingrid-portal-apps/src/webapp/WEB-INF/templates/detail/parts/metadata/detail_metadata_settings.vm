@@ -85,13 +85,10 @@
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_time_resource.vm")
 
 ## Darstellung
-#### Geothesaurus-Raumbezug
-#set($xPathPresentEXExtent = "./gmd:identificationInfo/*/*/gmd:EX_Extent")
+#### Geothesaurus-Raumbezug / Höhe
+#set($xPathPresentEXExtent = "./gmd:identificationInfo/*/*/gmd:EX_Extent[./gmd:geographicElement or ./gmd:verticalElement]")
 #### Administrative Einheit (Gemeindenummer)
-#set($xPathPresentEXExtent = "./gmd:identificationInfo/*/*/gmd:EX_Extent")
 #set($xPathPresentMDIdentifierCode =  "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]")
-#### Höhe
-#set($xPathPresentEXExtent = "./gmd:identificationInfo/*/*/gmd:EX_Extent")
 #### Erläuterung zum Raumbezug
 #set($xPathPresentEXExtentDescription = "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description/*[self::gco:CharacterString or self::gmx:Anchor]")
 #### Begrenzungspolygon als WKT
