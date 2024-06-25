@@ -184,6 +184,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("mapLinksNewTab", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPS_LINKS_NEW_TAB, false ));
 
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
+        context.put("hideGeodataSetOnOpenData", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_HIDE_GEODATASET_ON_OPENDATA, false));
 
         context.put("exportCSV", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_EXPORT_CSV, false));
         context.put("exportCSVRequestedFields", PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_EXPORT_CSV_REQUESTED_FIELDS));

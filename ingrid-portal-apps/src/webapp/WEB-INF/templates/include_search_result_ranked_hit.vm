@@ -77,13 +77,11 @@
                                 <h2 class="header">$hitTitle</h2>
                             </a>
                         #else
-                            #set($udkObjClassName = $Codelists.getCodeListValue('8000', $rs.udk_class, $languageCode))
+                            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_banner_obj.vm")
                             #if($rs.docuuid && $rs.docuuid.length() > -1)
                                 #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid#if($detailUseParamPlugid)&plugid=$rs.plugid#end")
                                 #appendSearchDetailURL($detailLink $q $rstart $currentSelectorPage $rank $f)
                             #end
-                            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_obj.vm")
-                            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_searchterm.vm")
                             <a href="$detailLink" title="$stringTool.htmlescape($hitTitle)">
                                 <h2 class="header">$hitTitle</h2>
                             </a>
@@ -100,11 +98,7 @@
                         </a>
                     #end
                 #else
-                    #set($udkObjClassName = $Codelists.getCodeListValue('8000', $rs.udk_class, $languageCode))
-                    <div class="helper text">
-                        <span class="">$udkObjClassName</span>
-                    </div>
-                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_searchterm.vm")
+                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_banner_obj.vm")
                     <h2 class="header">
                         $hitTitle
                     </h2>

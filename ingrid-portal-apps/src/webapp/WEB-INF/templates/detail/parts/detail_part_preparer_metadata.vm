@@ -14,8 +14,7 @@
                     </a>
                 </div>
                 <div class="xsmall-24 large-18 xlarge-18 columns">
-                    #parse("/WEB-INF/templates/detail/parts/metadata/banner/banner_class.vm")
-                    #parse("/WEB-INF/templates/detail/parts/metadata/banner/banner_search_term.vm")
+                    #parse("/WEB-INF/templates/detail/parts/metadata/banner/banner.vm")
                     <h2>$title</h2>
                 </div>
             </div>

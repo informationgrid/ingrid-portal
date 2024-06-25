@@ -1,3 +1,4 @@
+#set($udkObjClassName = $Codelists.getCodeListValue('8000', $rs.udk_class, $languageCode))
 <div class="helper icon">
     #renderUDKIcon($rs.udk_class $udkObjClassName $udkObjClassName)
 </div>
