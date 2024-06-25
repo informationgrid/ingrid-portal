@@ -142,17 +142,9 @@ public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
 	            // get the most recent RSS News
 	    		List rssStores = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setMaxResults(1).list();
 	    		rssStore = (IngridRSSStore)rssStores.get(0);
-				// here too?
 
-				// check for published date in the entry
-	    		Date publishedDate = rssStore.getPublishedDate();
-				if (publishedDate == null) {
-					// if no published date, extract date from link entry
-					publishedDate = extractDateFromLink(rssStore.getLink());
-				}
-				cal.setTime(publishedDate);
-
-	    		cal.add(Calendar.HOUR, days*24);
+				cal.setTime(rssStore.getPublishedDate());
+				cal.add(Calendar.HOUR, days*24);
 	    		if (cal.getTime().before(new Date())) {
 	    			status = STATUS_ERROR;
 	    			statusCode = "No new RSS Feeds for more than " + days + " days!";
@@ -185,30 +177,6 @@ public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
 			log.debug("Job (" + context.getJobDetail().getName() + ") finished in "
 					+ (System.currentTimeMillis() - startTime) + " ms.");
 		}
-	}
-
-	private Date extractDateFromLink(String url) {
-		Calendar cal = Calendar.getInstance();
-		// url in format: ../yymmdd_xxx(_xxx).html, extract yymmdd
-		int lastSlashIndex = url.lastIndexOf('/');
-		int firstUnderscoreAfterLastSlash = url.indexOf('_', lastSlashIndex);
-
-
-		if (lastSlashIndex != -1 && firstUnderscoreAfterLastSlash != -1) {
-			String extractedDate = url.substring(lastSlashIndex + 1, firstUnderscoreAfterLastSlash);
-
-			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-				Date date = sdf.parse(extractedDate);
-				cal.setTime(date);
-				log.debug("Date has been set to value extracted from link: {}", cal.getTime());
-			} catch (ParseException e) {
-				log.debug("Error parsing date from URL: {} [{}]", url, e.getMessage());
-			}
-		}
-
-		// if url or date extraction failed, return current date
-		return cal.getTime();
 	}
 
 }
