@@ -822,8 +822,16 @@ public class DetailPartPreparer {
     }
 
     public String valueHTMLEscape(String value){
+        return valueHTMLEscape(value, false);
+    }
+
+    public String valueHTMLEscape(String value, boolean changeToHTMLNewLine){
         if(value != null){
-            value = value.replaceAll("\n", "<br/>");
+            if(changeToHTMLNewLine) {
+                value = value.replaceAll("\n", "<br/>");
+            } else {
+                value = value.replaceAll("\n", " ");
+            }
             value = value.replaceAll("&lt;", "<");
             value = value.replaceAll("&gt;", ">");
         }

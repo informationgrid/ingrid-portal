@@ -951,3 +951,32 @@ footer .footer .footer-menu-entries a {
 .row.alert p .alert-text {
   font-family: Calibri !important;
 }
+
+.teaser-data.search ul li:before, .section ul li:before {
+  content: "•";
+}
+
+.teaser-data.search ul {
+    margin-left: 1.75rem;
+}
+ul {
+  margin: 6px 0;
+  margin-left: 1.75rem;
+}
+
+ul li::before {
+  font-size: 21px;
+  margin-left: -1.125rem;
+}
+
+li {
+  margin-bottom: 0;
+}
+
+.section a span:not([class*="ic-"]), .section a:not(.icon), .data a span:not([class*="ic-"]) {
+  text-decoration: underline;
+}
+
+.data a[class*="js-expander"] span {
+  text-decoration: none;
+}
