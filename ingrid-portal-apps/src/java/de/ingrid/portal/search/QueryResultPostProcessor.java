@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * https://joinup.ec.europa.eu/software/page/eupl
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -216,7 +216,7 @@ public class QueryResultPostProcessor {
                     for (String url : tmpArray) {
                         String serviceTypeVersion = UtilsSearch.getDetailValue(detail, "t011_obj_serv_version.version_value");
                         String serviceType = UtilsSearch.getDetailValue(detail, "t011_obj_serv.type");
-                        
+
                         if(serviceTypeVersion.isEmpty() && serviceType.isEmpty()) {
                             Object objectRefTyps = detail.get("refering.object_reference.type");
                             Object objectRefVersion = detail.get("refering.object_reference.version");
@@ -248,7 +248,7 @@ public class QueryResultPostProcessor {
                             tmpUrl += URLEncoder.encode("||", "UTF-8");
                             // add layer information to link
                             if (firstResourceId != null) tmpUrl += "" + URLEncoder.encode(firstResourceId, "UTF-8");
-                            // only take the first map url, which should be the only one! 
+                            // only take the first map url, which should be the only one!
                             hit.put(Settings.RESULT_KEY_WMS_URL, tmpUrl);
                             break;
                         } else if (url != null) {
@@ -306,28 +306,12 @@ public class QueryResultPostProcessor {
             }
             PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
 
-              if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && UtilsSearch.getDetailValue(detail, "kml").length() > 0){
-            	  hit.put(Settings.RESULT_KEY_WMS_COORD, "action=doTmpService&" + Settings.RESULT_KEY_PLUG_ID + "=" + hit.getPlugId() + "&" + Settings.RESULT_KEY_DOC_ID + "=" + hit.getDocumentId());
-              }
-            // determine type of hit dependent from plug description !!!
-            boolean isObject = true;
-            Object type = hit.getHit().get("es_type");
-            // the new elastic search type tells us if we have an address or object type
-            if (type != null) {
-                // if type is address then we expect no object, otherwise we always expect an object
-                if ( "address".equals( type )) {
-                    isObject = false;
-                }
-            // if we have an old iplug connected then we check the plug description's datatypes
-            } else if (plugDescr != null) {
-            	List<String> typesPlug = Arrays.asList(plugDescr.getDataTypes());
-            	for (int i=0; i < Settings.getQValuesDatatypesAddress().length; i++) {
-                	if (typesPlug.contains(Settings.getQValuesDatatypesAddress()[i])) {
-                		isObject = false;
-                		break;
-                	}
-            	}
+            if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && UtilsSearch.getDetailValue(detail, "kml").length() > 0) {
+                hit.put(Settings.RESULT_KEY_WMS_COORD, "action=doTmpService&" + Settings.RESULT_KEY_PLUG_ID + "=" + hit.getPlugId() + "&" + Settings.RESULT_KEY_DOC_ID + "=" + hit.getDocumentId());
             }
+
+            boolean isObject = determineIfHitIsObject(hit);
+
             if (isObject) {
                 hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, false);
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS);
@@ -506,6 +490,29 @@ public class QueryResultPostProcessor {
                 log.error("Problems processing DSC Hit ! hit = " + hit + ", detail=" + detail, ex);
             }
         }
+    }
+
+    private static boolean determineIfHitIsObject(IngridHitWrapper hit) {
+        boolean isObject = true;
+        Object datatypes = hit.getHit().getHitDetail().get("datatype");
+        if (datatypes instanceof String[]) {
+            List<String> datatypesArray = Arrays.asList((String[])datatypes);
+            for (String addressTypeIdent : Settings.getQValuesDatatypesAddress()) {
+                if (datatypesArray.contains(addressTypeIdent)) {
+                    isObject = false;
+                    break;
+                }
+            }
+        } else {
+            String datatypesString = (String) datatypes;
+            for (String addressTypeIdent : Settings.getQValuesDatatypesAddress()) {
+                if (addressTypeIdent.equals(datatypesString)) {
+                    isObject = false;
+                    break;
+                }
+            }
+        }
+        return isObject;
     }
 
     private static String addCapabilitiesInformation(String url) throws UnsupportedEncodingException {
