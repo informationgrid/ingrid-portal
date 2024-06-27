@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * https://joinup.ec.europa.eu/software/page/eupl
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -86,7 +86,7 @@ import de.ingrid.utils.udk.UtilsDate;
 
 /**
  * Global STATIC data and utility methods for SEARCH !
- * 
+ *
  * @author Martin Maidhof
  */
 public class UtilsSearch {
@@ -97,7 +97,7 @@ public class UtilsSearch {
 
     /**
      * Generate PageNavigation data for rendering
-     * 
+     *
      * @param startHit
      * @param hitsPerPage
      * @param numberOfHits
@@ -170,19 +170,19 @@ public class UtilsSearch {
     {
         String grouping = (String) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING);
         if (totalNumberOfHits <= 0 ||
-        	grouping == null || 
+        	grouping == null ||
         	grouping.equals(IngridQuery.GROUPED_OFF))
         {
         	return pageNavi;
         }
 
         // NOTICE: when grouping by domain the navigation is DIFFERENT !
-        // partner/provider grouping: only current page in navigation followed by ">>" 
-        // domain grouping: multiple pages in navigation -> equals ungrouped navigation ! 
+        // partner/provider grouping: only current page in navigation followed by ">>"
+        // domain grouping: multiple pages in navigation -> equals ungrouped navigation !
         // we take care, that navigation data is set up correctly !
 
         if (grouping.equals(IngridQuery.GROUPED_BY_DATASOURCE)) {
-        	
+
             int firstSelectorPage = 1;
             boolean selectorHasPreviousPage = false;
 
@@ -192,9 +192,9 @@ public class UtilsSearch {
             }
             // default last page
             int lastSelectorPage = firstSelectorPage + Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT - 1;
-            
+
         	// add missing positions in array containing starthits of pages
-            ArrayList groupedStartHits = 
+            ArrayList groupedStartHits =
             	(ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
         	while (lastSelectorPage > groupedStartHits.size()) {
         		groupedStartHits.add(0);
@@ -222,11 +222,11 @@ public class UtilsSearch {
             		}
             		groupedStartHits.set(i, updatedStartHit);
             	}
-            		
+
         		// if start hit of this page already "out of bounds" set former page as last page
         		if (currStartHit >= totalNumberOfHits) {
         			if (i <= lastSelectorPage) {
-            			lastSelectorPage = i;        				
+            			lastSelectorPage = i;
             			hasMoreGroupedPages = false;
         			}
         			break;
@@ -234,7 +234,7 @@ public class UtilsSearch {
 
             	prevStartHit = currStartHit;
             }
-            
+
             pageNavi.put("firstSelectorPage", firstSelectorPage);
             pageNavi.put("lastSelectorPage", lastSelectorPage);
             pageNavi.put("selectorHasPreviousPage", selectorHasPreviousPage);
@@ -248,13 +248,13 @@ public class UtilsSearch {
 
     /**
      * Transfer commonly used detail parameters from detail object to hitobject.
-     * 
+     *
      * @param result
      * @param detail
      */
     public static void transferHitDetails(IngridHitWrapper result, IngridHitDetail detail) {
         try {
-        	// dummy hit if unranked iplug without results should be displayed 
+        	// dummy hit if unranked iplug without results should be displayed
             result.put(Settings.RESULT_KEY_DUMMY_HIT, false);
         	if (detail.isDummyHit()) {
                 result.put(Settings.RESULT_KEY_DUMMY_HIT, true);
@@ -273,14 +273,10 @@ public class UtilsSearch {
             result.put(Settings.RESULT_KEY_TITLE, title);
             // strip all HTML tags from summary
             String summary = detail.getSummary();
-            
+
             if(!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_SUMMARY_ABSTRACT_FIELD, true)) {
-                String[] summaries = (String[]) detail.getArray("summary");
-                if(summaries != null) {
-                    if(summaries.length > 0) {
-                        summary = summaries[0];
-                    }
-                }
+                String otherSummary = getStringFromDetailField(detail, "summary");
+                if (otherSummary != null) summary = otherSummary;
             }
             if (summary == null) {
                 summary = "".intern();
@@ -294,7 +290,7 @@ public class UtilsSearch {
                 // fallback to old id (integer)
                 result.put(Settings.RESULT_KEY_DOC_ID, result.getHit().getInt(0));
             }
-            
+
             // use internal provider instead of one set in plugdescription
             // e.g. results from Opensearch might support partner and provider
             String provider = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_PROVIDER);
@@ -351,9 +347,19 @@ public class UtilsSearch {
         }
     }
 
+    private static String getStringFromDetailField(IngridHitDetail detail, String field) {
+        Object otherSummary = detail.get(field);
+        if (otherSummary instanceof String[]) {
+            if (((String[]) otherSummary).length > 0) return ((String[])otherSummary)[0];
+        } else {
+            return otherSummary.toString();
+        }
+        return null;
+    }
+
     /**
      * Transfer commonly used plug parameters from PlugDescription to hitobject.
-     * 
+     *
      * @param result
      * @param plugDescr
      */
@@ -379,7 +385,7 @@ public class UtilsSearch {
      * String (concatenated with ", "). If no values are stored an empty string
      * is returned !). NOTICE: Also returns Single Values CORRECTLY ! FURTHER
      * MAPS idValues to correct "names", e.g. partnerId to partnerName.
-     * 
+     *
      * @param detail
      * @param key
      * @return
@@ -393,7 +399,7 @@ public class UtilsSearch {
      * String (concatenated with ", "). If no values are stored an empty string
      * is returned !). NOTICE: Also returns Single Values CORRECTLY ! FURTHER
      * MAPS idValues to correct "names", e.g. partnerId to partnerName.
-     * 
+     *
      * @param detail
      * @param key
      * @param noOfElements If the result is an array, return only the first number of elements, concated by ', ' . If 0 all elements will be returned.
@@ -407,7 +413,7 @@ public class UtilsSearch {
      * The same as getDetailValue(detail, key), but here the result is mapped
      * with the passed resource bundle. Pass null for the resource bundle, if no
      * resource mapping should occur.
-     * 
+     *
      * @param detail
      * @param key
      * @param resources
@@ -420,7 +426,7 @@ public class UtilsSearch {
     /**
      * Get raw detail value with given key, meaning no Mapping occurs ! (same as
      * getDetailValue() but without mapping)
-     * 
+     *
      * @param detail
      * @param key
      * @return
@@ -431,13 +437,13 @@ public class UtilsSearch {
 
     /**
      * Private method handling all Detail Fetching (Mapping)
-     * 
+     *
      * @param detail
      * @param key
      * @param resources
      * @param raw
      * @param noOfElements If the result is an array, return only the first number of elements, concated by ', ' . If 0 all elements will be returned.
-     * 
+     *
      * @return
      */
     private static String getDetailValue(IngridHit detail, String key, IngridResourceBundle resources, boolean raw, int noOfElements) {
@@ -453,7 +459,7 @@ public class UtilsSearch {
             String[] valueArray = (String[]) obj;
             for (int i = 0; i < (noOfElements == 0 ? valueArray.length : Math.min( valueArray.length, noOfElements )); i++) {
             	String value = null;
-                
+
                 if (raw) {
                 	value = valueArray[i];
                 } else {
@@ -505,14 +511,14 @@ public class UtilsSearch {
     /**
      * Returns all values stored with the passed key by filter duplicate values and returns them as one
      * String (concatenated with ", ").
-     * 
+     *
      * @param detail
      * @param key
      * @return
      */
     public static String getFilteredDuplicateDetailValue(IngridHit detail, String key){
         StringBuilder filteredValues = new StringBuilder("");
-        String [] values = getDetailValue( detail, key ).split(DETAIL_VALUES_SEPARATOR); 
+        String [] values = getDetailValue( detail, key ).split(DETAIL_VALUES_SEPARATOR);
         for (int i = 0; i < values.length; i++) {
             String v = values[i].trim();
             if(filteredValues.indexOf(v) == -1){
@@ -527,7 +533,7 @@ public class UtilsSearch {
         }
         return null;
     }
-    
+
     public static String getDateFormatValue (String value){
         if(value != null && !value.isEmpty()){
             String result = UtilsCSWDate.mapFromIgcToIso8601(value);
@@ -553,7 +559,7 @@ public class UtilsSearch {
      * Map the given value to a "real" value, e.g. map partner id to partner
      * name. The passed key determines what kind of id the passed value is (this
      * is the key with which the value was read from result/detail)
-     * 
+     *
      * @param detailKey
      * @param detailValue
      * @param resources
@@ -578,7 +584,7 @@ public class UtilsSearch {
      * Get all terms in Query. NOTICE: If multiple TermQuerys contain the same
      * term, every TermQuery is returned (may differ in "required",
      * "prohibited"). To remove "double" terms use removeDoubleTerms(...).
-     * 
+     *
      * @param q
      * @return
      */
@@ -600,7 +606,7 @@ public class UtilsSearch {
 
     /**
      * Remove the Terms which contain the same term String !
-     * 
+     *
      * @param terms
      * @return
      */
@@ -791,7 +797,7 @@ public class UtilsSearch {
      * it is in positive or negative list ! NOTICE: - only FIELD QUERIES and
      * direct map keys are checked in query and all clause queries ! -
      * comparison is done case insensitive.
-     * 
+     *
      * @param query
      * @param fieldName
      * @return True if the field was found, false if not.
@@ -827,7 +833,7 @@ public class UtilsSearch {
      * Ignores whether it is in positive or negative list ! NOTICE: - only FIELD
      * QUERIES and direct map keys are checked in query and all clause queries ! -
      * comparison is done case insensitive.
-     * 
+     *
      * @param query
      *            The query.
      * @param fieldName
@@ -858,7 +864,7 @@ public class UtilsSearch {
      * UserInterface (the ones above the Simple Search Input) and entered datatypes.
      * May add basic datatype to query.
      * NOTICE: see http://jira.media-style.com/browse/INGRID-1076
-     * 
+     *
      * @param query
      * @param selectedDS
      */
@@ -883,13 +889,13 @@ public class UtilsSearch {
 
             } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
             	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_RESEARCH;
-            
+
             } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_LAW)) {
             	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_LAW;
-            
+
             } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_CATALOG)) {
             	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_CATALOG;
-            }        	
+            }
         }
 
     	if(basicDatatypeForQuery != null && request.getParameter(Settings.PARAM_DATASOURCE) != null || hasDefaultDS){
@@ -900,7 +906,7 @@ public class UtilsSearch {
 
     /**
      * Compares current datasource in GUI (selected search area above query input) with the entered
-     * datatypes. Returns the final PORTAL datasource according to input and selection. 
+     * datatypes. Returns the final PORTAL datasource according to input and selection.
      * @param currentPortalDS selection in GUI ("envinfo", "address", "research", "law")
      * @param q the entered IngridQuery
      * @return the final datasource
@@ -910,13 +916,13 @@ public class UtilsSearch {
         if (qDS != null) {
         	return mapQueryBasicDatasourceToPortalDatasource(qDS);
         }
-        
+
         if (isAddressQuery(q)) {
         	return mapQueryBasicDatasourceToPortalDatasource(Settings.QVALUE_DATATYPE_AREA_ADDRESS);
         }
 
         return currentPortalDS;
-    	
+
     }
 
     /**
@@ -937,7 +943,7 @@ public class UtilsSearch {
                 	ret = dt;
                 	break;
                 }
-            }    		
+            }
     	}
 
     	return ret;
@@ -956,7 +962,7 @@ public class UtilsSearch {
                 if (addressDataTypes.contains(dt) && !prohibited) {
                 	return true;
                 }
-            }    		
+            }
     	}
 
     	return false;
@@ -976,7 +982,7 @@ public class UtilsSearch {
 
     /**
      * Add language to query
-     * 
+     *
      * @param query
      * @param myLocale
      */
@@ -994,13 +1000,13 @@ public class UtilsSearch {
 
     /**
      * Add provider(s) to query
-     * 
+     *
      * @param query
      * @param providers
      */
     public static void processProvider(IngridQuery query, String[] providers) {
         boolean added  = false;
-        
+
         if (providers != null && providers.length > 0 && Utils.getPosInArray(providers, Settings.PARAMV_ALL) == -1) {
             for (int i = 0; i < providers.length; i++) {
                 if (providers[i] != null && providers[i].length() > 0) {
@@ -1009,7 +1015,7 @@ public class UtilsSearch {
                 }
             }
         }
-        
+
         // remove grouped-field
         if (added && IngridQuery.GROUPED_BY_ORGANISATION.equals(query.get(Settings.QFIELD_GROUPED))) {
             query.remove(Settings.QFIELD_GROUPED);
@@ -1019,7 +1025,7 @@ public class UtilsSearch {
     /**
      * Add partner(s) to query and remove grouped-field if it was set to partner.
      * Otherwise the already grouped results will be grouped again
-     * 
+     *
      * @param query
      * @param partners
      */
@@ -1042,7 +1048,7 @@ public class UtilsSearch {
             	query.addClause(cq);
             }
         }
-        
+
         // remove grouped-field
         if (added && IngridQuery.GROUPED_BY_PARTNER.equals(query.get(Settings.QFIELD_GROUPED))) {
             query.remove(Settings.QFIELD_GROUPED);
@@ -1051,7 +1057,7 @@ public class UtilsSearch {
 
     /**
      * Add domain to query
-     * 
+     *
      * @param query
      * @param subject
      */
@@ -1070,10 +1076,10 @@ public class UtilsSearch {
         		if (!UtilsSearch.containsFieldOrKey(query, domainKey)) {
                 	query.addField(new FieldQuery(true, false, domainKey, domainValue));
                 	added = true;
-                }        		
+                }
         	}
         }
-        
+
         // remove grouped-field
         if (added && IngridQuery.GROUPED_BY_DATASOURCE.equals(query.get(Settings.QFIELD_GROUPED))) {
             query.remove(Settings.QFIELD_GROUPED);
@@ -1085,8 +1091,8 @@ public class UtilsSearch {
      * then this method extracts the key/value pair from the domain subject (was passed
      * in request from "Zeige alle ...").
      * NOTICE: a domain can be a datasource (plugid) or a top level domain of a URL ...
-     * ( e.g. domain subject like "site:???" or "plugid:???")  
-     * 
+     * ( e.g. domain subject like "site:???" or "plugid:???")
+     *
      * @param domainSubject the subject as its was passed from "Zeige alle" request
      */
     public static String[] getDomainKeyValuePair(String domainSubject) {
@@ -1095,7 +1101,7 @@ public class UtilsSearch {
 
     /**
      * Add grouping to query
-     * 
+     *
      * @param query
      * @param grouping
      */
@@ -1119,7 +1125,7 @@ public class UtilsSearch {
     /**
      * Encapsulates common doView functionality for all partner selection
      * portlets
-     * 
+     *
      * @param request
      * @param context
      */
@@ -1145,7 +1151,7 @@ public class UtilsSearch {
     /**
      * Encapsulates common processAction functionality for all term-adding
      * portlets.
-     * 
+     *
      * @param request
      * @throws NotSerializableException
      */
@@ -1173,7 +1179,7 @@ public class UtilsSearch {
     /**
      * Encapsulates common processAction functionality for all partner selection
      * portlets
-     * 
+     *
      * @param request
      */
     public static void processActionForPartnerPortlet(ActionRequest request)
@@ -1274,7 +1280,7 @@ public class UtilsSearch {
     /**
      * Adds partner restrictions if they are definied in the portal
      * configuration AND if no partner has been added to the query so far.
-     * 
+     *
      * @param query
      */
     public static void processRestrictingPartners(IngridQuery query) {
@@ -1293,7 +1299,7 @@ public class UtilsSearch {
      * Add a provider from simple search dialog to the query. Add if the query
      * does not already define a provider AND the provider is valid (not null,
      * not empty).
-     * 
+     *
      * @param query
      *            The IngridQuery
      * @param provider
@@ -1311,7 +1317,7 @@ public class UtilsSearch {
 
     /**
      * Add plug ids to the query.
-     * 
+     *
      * @param query
      * @param plugIds
      */
@@ -1453,7 +1459,7 @@ public class UtilsSearch {
 
     /**
      * Get all fields with a specific field name.
-     * 
+     *
      * @param q
      *            The query.
      * @param fieldName
@@ -1475,7 +1481,7 @@ public class UtilsSearch {
      * Returns the WMS URL to cal the WMS Server. It adds necessary data such as
      * session id, locale, javascript enabled. It adds personalized WMS URLs and
      * allows to inject a custom WMS url.
-     * 
+     *
      * @param request
      *            The PortletRequest.
      * @param wmsServiceUrl
@@ -1540,12 +1546,12 @@ public class UtilsSearch {
         }
         return addQueryString;
     }
-    
+
     public static String getCodeListDataValue(String codeListId, String entryId, String dataKey, Locale locale) {
         IngridSysCodeList codelist = new IngridSysCodeList(locale);
         return codelist.getCodeListDataKeyValue(codeListId, entryId, dataKey);
     }
-    
+
     public static String getCodeListDataStringValue(String jsonString, String dataKey) {
         try {
             JSONObject dataJson = new JSONObject(jsonString);
@@ -1603,7 +1609,7 @@ public class UtilsSearch {
     }
 
     public static void changeQueryToClauseQuery(IngridQuery q) {
-        
+
         String origin = q.getString(IngridQuery.ORIGIN);
 
         ClauseQuery cq = new ClauseQuery(true, false);
@@ -1615,7 +1621,7 @@ public class UtilsSearch {
         }
 
         q.remove(IngridQuery.TERM_KEY);
-        
+
         for(ClauseQuery tmp : q.getClauses()){
             cq.addClause(tmp);
         }
@@ -1678,7 +1684,7 @@ public class UtilsSearch {
 
         q.addClause(cq);
     }
-    
+
     public static String getHitShortcut(String serviceTypeVersion, String serviceType) {
         if(serviceTypeVersion != null) {
             String service = CapabilitiesUtils.extractServiceFromServiceTypeVersion(serviceTypeVersion);
@@ -1744,7 +1750,7 @@ public class UtilsSearch {
             }
             String cap = urlValue.toString().trim();
             return cap;
-        } else if((service == null && !urlValue.toString().isEmpty()) 
+        } else if((service == null && !urlValue.toString().isEmpty())
                 && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view")))) {
             String defaultService = "WMS";
             if (url.indexOf("?") != -1) {
@@ -1812,7 +1818,7 @@ public class UtilsSearch {
             } catch (UnsupportedEncodingException e) {
                log.error("Error URLEncode url: " + cap);
             }
-        } else if((service == null && !urlValue.toString().isEmpty()) 
+        } else if((service == null && !urlValue.toString().isEmpty())
                 && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view")))) {
             String defaultService = "WMS";
             if (url.indexOf("?") != -1) {
