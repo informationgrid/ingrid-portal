@@ -351,7 +351,7 @@ public class UtilsSearch {
         Object otherSummary = detail.get(field);
         if (otherSummary instanceof String[]) {
             if (((String[]) otherSummary).length > 0) return ((String[])otherSummary)[0];
-        } else {
+        } else if (otherSummary != null) {
             return otherSummary.toString();
         }
         return null;
