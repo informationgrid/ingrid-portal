@@ -332,13 +332,14 @@ footer {
   }
 
   .footer {
-    padding: 10px 0;
+    padding: 4px 0;
     background: var(--color-grey-darker);
 
     .footer-menu-entries {
       text-align: center;
 
       a {
+        font-size: 14px;
         font-weight: 500;
         font-family: var(--main-font);
       }
