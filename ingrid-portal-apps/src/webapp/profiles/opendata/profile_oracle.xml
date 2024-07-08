@@ -17,7 +17,7 @@
         </page>
         <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>administration/admin-statistics.psml</name>

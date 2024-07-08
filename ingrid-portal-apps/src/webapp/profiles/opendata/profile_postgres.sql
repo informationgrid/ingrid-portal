@@ -12,7 +12,7 @@ UPDATE page SET is_hidden = 1 WHERE path = '/main-measures.psml';
 UPDATE page SET is_hidden = 0 WHERE path = '/main-maps.psml';
 
 -- Hide 'search-catalog/search-catalog-hierarchy.psml'
-UPDATE page SET is_hidden = 1 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
 
 -- Hide '/application/main-application.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
