@@ -27,6 +27,8 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,8 +64,7 @@ import de.ingrid.portal.om.IngridRSSStore;
  * All RSS entries not older than one month will be added to the database table
  * ingrid_rss_store. Entries in ingrid_rss_store that are older than one month
  * will be deleted.
- * 
- * 
+ *
  * @author joachim@wemove.com
  */
 public class RSSFetcherJob extends IngridMonitorAbstractJob {
@@ -174,10 +175,11 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                         publishedDate = entry.getPublishedDate();
                         // check for published date in the entry
                         if (publishedDate == null) {
-                            // if no published date, take the current date instead
-                            publishedDate = cal.getTime();
+                            // if no published date, extract date from link entry
+                            publishedDate = extractDateFromLink(entry.getLink());
+
                             if (log.isDebugEnabled()) {
-                                log.debug("The publishing date could not be retrieved, thus use the current date instead: " + entry);
+                                log.debug("The publishing date could not be retrieved, extract the date from the URL: " + entry);
                             }
                         }
 
@@ -375,6 +377,7 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
 
     /**
      * Process string for store in database and for display as part of news.
+     *
      * @param inString the String to process
      * @param maxLength pass null if string should not be truncated otherwise
      * 		returned string is substring(0, maxLength) !
@@ -395,13 +398,36 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
         return outString;
     }
 
+    private Date extractDateFromLink(String url) {
+        Calendar cal = Calendar.getInstance();
+        // url in format: "../yymmdd_xxx(_xxx).html", extract yymmdd
+        int lastSlashIndex = url.lastIndexOf('/');
+        int firstUnderscoreAfterLastSlash = url.indexOf('_', lastSlashIndex);
+
+
+        if (lastSlashIndex != -1 && firstUnderscoreAfterLastSlash != -1) {
+            String extractedDate = url.substring(lastSlashIndex + 1, firstUnderscoreAfterLastSlash);
+
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+                Date date = sdf.parse(extractedDate);
+                cal.setTime(date);
+                log.debug("Date has been set to value extracted from link: {} {}", date, url);
+            } catch (ParseException e) {
+                log.debug("Error parsing date from URL: " + url + " [" + e.getMessage() + "]");
+            }
+        }
+
+        // if url or date extraction failed, return current date
+        return cal.getTime();
+    }
+
 
     /**
      * Watch dog thread to force timeout of an HttpUrlConnection. The timeout
      * defaults to 8 sec or the read timeout of the UrlConnection being watched.
      * 
      * @author joachim
-     * 
      */
     private class InterruptThread implements Runnable {
         private URLConnection con;

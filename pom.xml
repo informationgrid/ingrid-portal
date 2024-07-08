@@ -8,7 +8,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>7.1.0</version>
+  <version>7.2.0</version>
   <name>InGrid Portal</name>
   <description>This is the portal where documents can be searched through the iBus and new documents can be managed by
     the InGrid Editor.
@@ -34,11 +34,11 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
-    <mdek.version>7.0.0</mdek.version>
-    <webmap-client.version>7.1.0</webmap-client.version>
-    <ingrid-codelist-service.version>7.1.0</ingrid-codelist-service.version>
+    <mdek.version>7.2.0</mdek.version>
+    <webmap-client.version>7.2.0</webmap-client.version>
+    <ingrid-codelist-service.version>7.2.0</ingrid-codelist-service.version>
     <ingrid-utils.version>7.1.0</ingrid-utils.version>
-    <measurement.client.version>2.0.7</measurement.client.version>
+    <measurement.client.version>2.0.8</measurement.client.version>
     <ingrid-utils-geo.version>7.0.0</ingrid-utils-geo.version>
     <spring.version>5.3.24</spring.version>
     <log4j.version>2.22.1</log4j.version>
@@ -120,6 +120,11 @@
         <artifactId>postgresql</artifactId>
         <version>42.7.2</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.xmlbeans</groupId>
+        <artifactId>xmlbeans</artifactId>
+        <version>3.0.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -160,23 +165,6 @@
     <finalName>ingrid-portal-project-${project.version}</finalName>
     <!-- <resources><resource><directory>src/main/resources</directory><excludes><exclude>*.xml</exclude><exclude>*.properties</exclude><exclude>*.bak</exclude></excludes></resource></resources>-->
     <plugins>
-      <plugin>
-        <groupId>org.openrewrite.maven</groupId>
-        <artifactId>rewrite-maven-plugin</artifactId>
-        <version>4.35.1</version>
-        <configuration>
-          <activeRecipes>
-            <recipe>org.openrewrite.java.spring.framework.UpgradeSpringFramework_5_3</recipe>
-          </activeRecipes>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-spring</artifactId>
-            <version>4.29.0</version>
-          </dependency>
-        </dependencies>
-      </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>

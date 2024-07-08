@@ -108,9 +108,27 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         // indicates whether a new query was performed !
         String queryState = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         if (queryState != null && queryState.equals(Settings.MSGV_NEW_QUERY)) {
-            ps.putBoolean("isSimilarOpen", false);
-            ps.put("similarRoot", null);
-            session.removeAttribute("similarRoot");
+            if((boolean)ps.get("isSimilarOpen")) {
+                DisplayTreeNode similarRoot = null;
+                ps.putBoolean("isSimilarOpen", true);
+                IngridQuery queryRoot = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+                similarRoot = DisplayTreeFactory.getTreeFromQueryTerms(queryRoot);
+                session.setAttribute("similarRoot", similarRoot);
+                for (int i = 0; i < similarRoot.getChildren().size(); i++) {
+                    DisplayTreeNode node = (DisplayTreeNode) similarRoot.getChildren().get(i);
+                    openNode(similarRoot, node.getId(), request
+                            .getLocale(), true);
+                    if(i > 0){
+                        node.setOpen(false);
+                    }
+                }
+                ps.put("similarRoot", similarRoot);
+                SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+            } else {
+                ps.putBoolean("isSimilarOpen", false);
+                ps.put("similarRoot", null);
+                session.removeAttribute("similarRoot");   
+            }
         }
         context.put("ps", ps);
 

@@ -1,0 +1,21 @@
+#### Geodatenlink
+#set($xPathGeoDatalink = "./gmd:dataSetURI/gco:CharacterString")
+#set($geoDatalink = $TOOL.getValueFromXPath($xPathGeoDatalink))
+
+#### Interne Bemerkungen
+#set($xPathInternalNotes = "./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/gco:CharacterString")
+#set($internalNotes = $TOOL.getValueFromXPath($xPathInternalNotes))
+
+#if($geoDatalink || $internalNotes)
+    <div class="sub-section">
+        ## Geodatenlink
+        #if($geoDatalink)
+            #renderTextTable($MESSAGES.getString("search.detail.lfu.geo_datalink") $geoDatalink)
+        #end
+        ## Interne Bemerkungen
+        #if($internalNotes)
+            #renderTextTable($MESSAGES.getString("search.detail.lfu.internal_notes") $internalNotes)
+        #end
+    </div>
+#end
+

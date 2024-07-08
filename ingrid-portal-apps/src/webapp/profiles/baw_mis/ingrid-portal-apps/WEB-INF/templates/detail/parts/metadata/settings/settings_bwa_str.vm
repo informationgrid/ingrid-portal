@@ -1,12 +1,12 @@
 ## BAW Auftragsnummer
-#set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = 'largerWorkCitation']/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
+#set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = 'largerWorkCitation']/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]"))
 #if($type == 4)
-    #set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
+    #set($bawAggregateDataSetNameNumber =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]"))
 #end
 ## BAW Auftragstitel
-#set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = 'largerWorkCitation']/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString"))
+#set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = 'largerWorkCitation']/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor]"))
 #if($type == 4)
-    #set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"))
+    #set($bawAggregateDataSetNameTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor]"))
 #end
 ## BAW BWAStrCenter
 #set($bawstrCenterLongitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lon']/idf:data"))
@@ -15,20 +15,20 @@
 ## Format
 #set($xPathBawFormat = "//gmd:resourceFormat/gmd:MD_Format")
 ## Format Name
-#set($xPathBawFormatName = "./gmd:name/gco:CharacterString")
+#set($xPathBawFormatName = "./gmd:name/*[self::gco:CharacterString or self::gmx:Anchor]")
 ## Format Version
-#set($xPathBawVersion = "./gmd:version/gco:CharacterString")
+#set($xPathBawVersion = "./gmd:version/*[self::gco:CharacterString or self::gmx:Anchor]")
 ## Verfahren
-#set($xPathBawProcedure = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.method']//gmd:keyword/gco:CharacterString")
+#set($xPathBawProcedure = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//*[self::gco:CharacterString or self::gmx:Anchor] = 'de.baw.codelist.model.method']//gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]")
 ## Modellart
-#set($xPathBawModellType = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.type']//gmd:keyword/gco:CharacterString")
+#set($xPathBawModellType = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//*[self::gco:CharacterString or self::gmx:Anchor] = 'de.baw.codelist.model.type']//gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]")
 ## Räumliche Dimensionalität
-#set($xPathBawSpatialDimensionality = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.dimensionality']//gmd:keyword/gco:CharacterString")
+#set($xPathBawSpatialDimensionality = "./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//*[self::gco:CharacterString or self::gmx:Anchor] = 'de.baw.codelist.model.dimensionality']//gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]")
 ## Zeitschrittgröße
 #set($xPathBawTimestepSize = "./gmd:dataQualityInfo//gmd:DQ_AccuracyOfATimeMeasurement//gco:Record")
 ## Daten / Größen / Parameter
 #set($xPathBAWDataQuality = "//gmd:DQ_DataQuality")
-#set($xPathBawRole = "./gmd:lineage//gmd:LI_Source/gmd:description/gco:CharacterString")
+#set($xPathBawRole = "./gmd:lineage//gmd:LI_Source/gmd:description/*[self::gco:CharacterString or self::gmx:Anchor]")
 #set($xPathBawName = ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueType/gco:RecordType")
 #set($xPathBawUnit = ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueUnit//gml:catalogSymbol")
 #set($xPathBawValue = ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:value/gco:Record")

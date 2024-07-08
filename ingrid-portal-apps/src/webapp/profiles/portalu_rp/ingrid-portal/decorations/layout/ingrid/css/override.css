@@ -422,6 +422,9 @@ footer .footer .copyright span {
   font-family: Arial, sans-serif !important;
   color: #4A4A4A;
 }
+footer .footer .copyright span.text {
+  max-width: 340px;
+}
 footer .footer .logo {
   width: 2.25em;
 }

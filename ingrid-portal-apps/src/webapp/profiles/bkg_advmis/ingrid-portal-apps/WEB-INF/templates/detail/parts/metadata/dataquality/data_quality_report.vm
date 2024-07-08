@@ -1,0 +1,2 @@
+## Konformität
+    #renderTableSymbols ($TOOL.getConformityData($xPathDataQualityReport) [2] $tmpConformityDataSymbols [0])

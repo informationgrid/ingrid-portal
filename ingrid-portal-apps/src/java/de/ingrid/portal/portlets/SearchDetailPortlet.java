@@ -221,7 +221,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("geoWktToGeoJson", WktToGeoJsonTransformUtil.class);
 
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false));
-
+        context.put("hideGeodataSetOnOpenData", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_HIDE_GEODATASET_ON_OPENDATA, false));
+        
         context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false));
         context.put("mapLinksNewTab", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPS_LINKS_NEW_TAB, false ));
 

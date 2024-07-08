@@ -221,6 +221,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL = "portal.search.hit.transform.coupled.csw.url";
 
+    public static final String PORTAL_SEARCH_HIT_HIDE_GEODATASET_ON_OPENDATA = "portal.search.hit.hide.geodataset.on.opendata";
+
     public static final String PORTAL_SEARCH_HIT_SUMMARY_ABSTRACT_FIELD = "portal.search.hit.summary.abstract.field";
 
     public static final String PORTAL_SEARCH_HIT_CUTTED_SUMMARY_HTML_NEW_LINE = "portal.search.hit.cutted.summary.html.new.line";
@@ -232,6 +234,8 @@ public class PortalConfig extends PropertiesConfiguration {
     // Link to CSW Interface
     public static final String CSW_INTERFACE_URL = "csw.interface.url";
 
+    public static final String RDF_INTERFACE_URL = "rdf.interface.url";
+    
     public static final String PORTAL_CONTACT_UPLOAD_ENABLE = "email.contact.upload.enable";
     public static final String PORTAL_CONTACT_UPLOAD_SIZE = "email.contact.upload.size";
 

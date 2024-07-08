@@ -569,7 +569,7 @@
                             </div>
                         #end
                         ## Servicezeiten
-                        #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString")
+                        #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/*[self::gco:CharacterString or self::gmx:Anchor]")
                         #if($TOOL.nodeExist($xPath, $node) && $TOOL.getValueFromXPath($xPath, null, $node))
                             <div>
                                 $MESSAGES.getString('t02_address.hours_of_service')
@@ -738,12 +738,13 @@
             #end
             #foreach($additionalRow in $additionalRows)
                 #if($additionalRow)
+                    #set($additionalRowValue = false)
                     #set($additionalRowValue = $TOOL.getValueFromXPath($additionalRow.xpath))
                     #if($additionalRowValue)
                     <tr>
                         <th>$additionalRow.title</th>
                         #set($colspan = $entry.head.size() - 1)
-                        <td colspan="$colspan">$TOOL.getValueFromXPath($additionalRow.xpath)</td>
+                        <td colspan="$colspan">$additionalRowValue</td>
                     </tr>
                     #end
                 #end
@@ -1140,7 +1141,7 @@
 
 #macro (renderLinkTable $title $entry $cssClass)
     #if($tool.hasContent($entry))
-    <div class="table table--lined ${cssClass}">
+    <div class="table table--lined #if($cssClass)${cssClass}#end">
         <table>
             <tr>
             #if($tool.hasContent($title))
@@ -1161,7 +1162,7 @@
 
 #macro (renderLinkListTable $title $entryList $cssClass $expandable $expandableId)
     #if($tool.hasContent($entryList))
-    <div class="table table--lined ${cssClass}">
+    <div class="table table--lined #if($cssClass)${cssClass}#end">
         <table>
             <tr>
             #if($tool.hasContent($title))

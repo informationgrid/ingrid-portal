@@ -12,7 +12,7 @@
 
 ## Beschreibung
 #set($getAlternateTitle = $TOOL.getValueFromXPath("./gmd:alternateTitle"))
-#set($getDescription = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName/gco:CharacterString")))
+#set($getDescription = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName/*[self::gco:CharacterString or self::gmx:Anchor]")))
 
 ## Verweise und Downloads
 #### Links/Querweise

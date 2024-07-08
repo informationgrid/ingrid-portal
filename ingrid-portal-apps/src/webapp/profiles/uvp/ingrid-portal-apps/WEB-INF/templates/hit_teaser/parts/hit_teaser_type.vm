@@ -1,0 +1,3 @@
+<div class="helper text">
+    <span>$Codelists.getCodeListValue("8001", $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ), $languageCode)</span>
+</div>

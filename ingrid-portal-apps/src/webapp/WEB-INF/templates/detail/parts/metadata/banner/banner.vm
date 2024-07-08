@@ -1,0 +1,13 @@
+#set($searchTermsLowerCase = [])
+#foreach($term in $searchTerm)
+    #set($add = $searchTermsLowerCase.add($term.toLowerCase()))
+#end
+
+#if($hideGeodataSetOnOpenData && $type == 1 && ($searchTermsLowerCase.contains("opendata") || $searchTermsLowerCase.contains("opendataident")))
+    <div class="helper icon">
+        #renderUDKIcon($type "Open Data" "Open Data")
+    </div>
+#else
+    #parse("/WEB-INF/templates/detail/parts/metadata/banner/banner_class.vm")
+    #parse("/WEB-INF/templates/detail/parts/metadata/banner/banner_search_term.vm")
+#end

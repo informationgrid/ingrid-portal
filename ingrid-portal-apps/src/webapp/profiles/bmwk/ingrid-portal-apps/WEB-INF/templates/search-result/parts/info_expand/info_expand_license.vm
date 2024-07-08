@@ -1,0 +1,46 @@
+## Lizenz
+#set($licenseKey = [])
+#set($licenseValue = [])
+#if($hit.getHitDetail().get("distribution.license"))
+    #set($licenseKeys = $hit.getHitDetail().get("distribution.license"))
+#end
+#if($hit.getHitDetail().get("distribution.license_name"))
+    #set($licenseValues = $hit.getHitDetail().get("distribution.license_name"))
+#end
+
+#set($tmpLicenses = [])
+#set($tmpLicensesKey = [])
+#set($count = 0)
+#foreach($licenseKey in $licenseKeys)
+    #set($key = $licenseKey)
+    #if($tmpLicensesKey.indexOf($key) == -1)
+        #set($value = $licenseKey)
+        #if($licenseValues.size() > $count)
+            #set($value = $licenseValues.get($count))
+        #end
+        #if($key)
+            #set($tmpLicenseMap = {})
+            #set($add = $tmpLicenseMap.put("isExtern", true))
+            #set($add = $tmpLicenseMap.put("hasLinkIcon", true))
+            #set($add = $tmpLicenseMap.put("href", $key))
+            #set($add = $tmpLicenseMap.put("title", $value))
+            #set($add = $tmpLicenses.add($tmpLicenseMap))
+            #set($add = $tmpLicensesKey.add($key))
+            ## Display only one entry
+            #break
+        #end
+    #end
+    #set($count = $count + 1)
+#end
+
+#if($tmpLicenses && $tmpLicenses.size() > 0)
+    #renderFactTitle($MESSAGES.getString("searchResult.info.license"))
+    #foreach($tmpLicense in $tmpLicenses)
+    <p>
+        <a class="icon external-link" href="$tmpLicense.href" title="$stringTool.htmlescape($tmpLicense.title)" target="_blank" rel="noopener noreferrer">
+            <span class="ic-ic-external"></span>
+            <span class="text">$tmpLicense.title</span>
+        </a>
+    </p>
+    #end
+#end

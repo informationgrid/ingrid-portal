@@ -5,6 +5,8 @@
     <a class="anchor" id="${hashDetail4}"></a>
     #renderSectionTitle($MESSAGES.getString("search.detail.usage"))
     <div class="row columns">
+    ## Lizenzen (idf:distribution)
+        #renderLinkListTable($MESSAGES.getString("object_access.license") $tmpGetDistributionLicense "" true)
     ## Nutzungsbedingungen (useConstraints)
         #renderTextListTableConvertUrl($MESSAGES.getString("object_access.license") $useConstraints false false $true)
     ## Zugriffsbeschränkungen (accessConstraints)

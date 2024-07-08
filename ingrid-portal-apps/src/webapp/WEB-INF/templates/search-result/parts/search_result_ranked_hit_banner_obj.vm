@@ -1,0 +1,13 @@
+#set($searchTerm = $UTIL_SEARCH.getDetailValueList( $rs.getHitDetail(), "t04_search.searchterm" ))
+#set($searchTermsLowerCase = [])
+#foreach($term in $searchTerm)
+    #set($add = $searchTermsLowerCase.add($term.toLowerCase()))
+#end
+#if($hideGeodataSetOnOpenData && $rs.udk_class == 1 && ($searchTermsLowerCase.contains("opendata") || $searchTermsLowerCase.contains("opendataident")))
+    <div class="helper icon">
+        #renderUDKIcon($rs.udk_class "Open Data" "Open Data")
+    </div>
+#else
+    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_class_name_obj.vm")
+    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_searchterm.vm")
+#end

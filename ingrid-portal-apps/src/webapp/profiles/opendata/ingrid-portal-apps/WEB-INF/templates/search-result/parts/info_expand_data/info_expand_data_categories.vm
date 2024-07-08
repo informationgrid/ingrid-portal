@@ -1,0 +1,9 @@
+## Kategorien
+#set($searchterms = $hit.getHitDetail().get("t04_search.searchterm"))
+#set($categories = []) 
+#foreach($searchterm in $searchterms)
+    #set($category = $sysCodeList.getNameByData("6400", $searchterm))
+    #if($category && !$category.isEmpty())
+        #set($add = $categories.add($searchterm))
+    #end
+#end

@@ -226,3 +226,18 @@
 
 ## Auftragstitel
 #parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_bwa_title.vm")
+
+## Ressourcen
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_distributions.vm")
+
+## Webseite
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_landing_page.vm")
+
+## Rechtsgrundlage für die Zugangseröffnung
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_legal_basis.vm")
+
+## Qualitätssicherungsprozess URI
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_quality_process_uri.vm")
+
+## Open Data Kategorie
+#parse("/WEB-INF/templates/search-result/parts/info_expand_data/info_expand_data_categories.vm")

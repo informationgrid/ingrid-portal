@@ -246,32 +246,10 @@
     jQuery.get("$restUrlLegendCounter")
     .done(function(data, textStatus, jqxhr) {
         var mapFilter = $('.map-filter ul li div');
+        var mapFilterXs = $('.map-filter-xs');
         var overlayers = {};
 #parse ('/WEB-INF/templates/global/include_leaflet_marker_legend.vm')
 
-        var mapFilterXs = $('.map-filter-xs');
-        if(mapFilterXs && mapFilterXs.length > 0) {
-            if(legendCounter){
-                if(legendCounter.countMarker1){
-                    createLegendEntry(map, mapFilterXs, [mapMarkers10], 'blue', 'mapMarkers10', 'Zulassungsverfahren', 'zv', 'style="padding:0px"');
-                }
-                if(legendCounter.countMarker4){
-                    createLegendEntry(map, mapFilterXs, [mapMarkers12], 'orange', 'mapMarkers12', 'Negative Vorpr&#252;fungen', 'nv', 'style="padding:0px"');
-                }
-                if(legendCounter.countMarker2){
-                    createLegendEntry(map, mapFilterXs, [mapMarkers13], 'red', 'mapMarkers13', 'Raumordnungsverfahren', 'ro', 'style="padding:0px"');
-                }
-                if(legendCounter.countMarker5){
-                    createLegendEntry(map, mapFilterXs, [mapMarkers14], 'purple', 'mapMarkers14', 'Linienbestimmungen', 'li', 'style="padding:0px"');
-                }
-                if(legendCounter.countMarker3){
-                    createLegendEntry(map, mapFilterXs, [mapMarkers11], 'black', 'mapMarkers11', 'Ausl&#228;ndische Vorhaben', 'av', 'style="padding:0px"');
-                }
-                if(legendCounter.countMarkerDevPlan){
-                    createLegendEntry(map, mapFilterXs, [mapMarkersDevPlan], 'green', 'mapMarkersDevPlan', 'Bauleitplanung', 'blp', 'style="padding:0px"');
-                }
-            }
-        }
         if(map){
             map.on('layeradd', onOverlayAdd);
             var mapParamLayer = '$mapParamLayer';

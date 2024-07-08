@@ -1,0 +1,29 @@
+## Ressourcen
+#set($distribution_title = $hit.getHitDetail().get("$distribution.title"))
+#set($distribution_access_url = $hit.getHitDetail().get("$distribution.access_url"))
+#if($distribution_access_url && $distribution_access_url.size() > 0)
+    <div class="sub-section">
+        #renderFactTitle("Ressourcen")
+        <div class="document-list">
+        #set($count = 0)
+        #foreach($value in $distribution_access_url)
+            #set($url = $distribution_access_url.get($count))
+            #set($title = $distribution_title.get($count))
+            #if(!$title || $title.isEmpty())
+                #set($title = $url)
+            #end
+            <div class="list-item">
+                <div>
+                    <a href="$url" class="icon external-link" title="$title" target="_blank" rel="noopener noreferrer">
+                        <span class="ic-ic-external"></span>
+                        <span class="text">
+                            $title
+                        </span>
+                    </a>
+                </div>
+            </div>
+            #set($count = $count + 1)
+        #end
+        </div>
+    </div>
+#end

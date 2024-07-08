@@ -101,6 +101,10 @@
                                     #if($getAccessUrl && $getAccessUrl.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_access_url")
                                         #set($tmpTitle = $MESSAGES.getString("access_url"))
+                                        #set($tmpTitleExtend = $TOOL.getValueFromXPath($xPathInfo3ServiceType, "5100"))
+                                        #if($showServiceTypToAccessURL && $tmpTitleExtend)
+                                            #set($tmpTitle = "$tmpTitle: $tmpTitleExtend")
+                                        #end
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #if($getDownloads && $getDownloads.size() > 0)
@@ -116,6 +120,11 @@
                                     #if($getOtherLinks && $getOtherLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_www_references")
                                         #set($tmpTitle = $MESSAGES.getString("www_references"))
+                                        #renderSubNavigation($tmpTitle $tmpHash)
+                                    #end
+                                    #if($getDistributionLinks && $getDistributionLinks.size() > 0)
+                                        #set($tmpHash = "${hashDetail3}_distribution")
+                                        #set($tmpTitle = $MESSAGES.getString("Ressourcen"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #if($getSubordinatedLinks && $getSubordinatedLinks.size() > 0)

@@ -1,0 +1,5 @@
+## Rechtsgrundlage für die Zugangseröffnung
+#set($legal_basis = [])
+#if($hit.getHitDetail().get("legal_basis"))
+    #set($legal_basis = $hit.getHitDetail().get("legal_basis"))
+#end

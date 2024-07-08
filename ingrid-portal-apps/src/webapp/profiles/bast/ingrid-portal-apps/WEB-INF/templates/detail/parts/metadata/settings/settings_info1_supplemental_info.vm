@@ -1,3 +1,3 @@
 #### Anzeige der Bemerkungen
-#set($xPathInfo1SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation/gco:CharacterString")
+#set($xPathInfo1SupplementalInformation = "./gmd:identificationInfo/*/gmd:supplementalInformation/*[self::gco:CharacterString or self::gmx:Anchor]")
 #set($add = $xPathListInformationType1.add($xPathInfo1SupplementalInformation))

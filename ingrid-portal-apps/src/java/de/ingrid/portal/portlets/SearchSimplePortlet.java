@@ -305,6 +305,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
             // set querystring to search state if the delete button was not
             // pressed
+            SearchState.resetSearchState( request );
+            SearchState.adaptSearchState( request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY );
             SearchState.adaptSearchState( request, Settings.PARAM_QUERY_STRING, request.getParameter( Settings.PARAM_QUERY_STRING ) );
 
             // Adapt search state to settings of IngridSessionPreferences !!!

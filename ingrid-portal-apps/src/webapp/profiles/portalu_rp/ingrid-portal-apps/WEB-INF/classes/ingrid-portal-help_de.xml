@@ -18,7 +18,7 @@
             <content>
                 <p><b>Suche</b>: Zentrale Funktion des Portals mit (einfachen) und (erweiterten) Suchfunktionen.</p>
                 <p><b>Messwerte</b>: Abruf verschiedener Messwerte anhand einer Karte.</p>
-                <p><b>Kataloge</b>: Recherchieren Sie im Umweltdatenkatalog der Informationsanbieter aus Rheinland-Pfalz.</p>
+                <p><b>Themen</b>: Recherchieren Sie im Umweltdatenkatalog der Informationsanbieter aus Rheinland-Pfalz.</p>
                 <p><b>Karten</b>: Aufruf von digitalen Umweltkarten und Angabe und Raumbezüge bei der Suche.</p>
                 <br></br>
             </content>
@@ -584,9 +584,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>Kataloge</header>
+        <header>Themen</header>
         <section help-key="search-catalog-1">
-            <header display="false">Kataloge</header>
+            <header display="false">Themen</header>
             <content>
                 <p>Die angeschlossenen Kataloge und deren Inhalte werden in einem Hierarchie-Baum dargestellt. In jedem Katalog kann durch Klick auf "+" durch Objekte und Adressen navigiert werden. Die Detaildarstellung eines Eintrags erfolgt auf Anfrage, d.h. bei Klick auf dessen Titel, analog zur Funktion der <a href="?hkey=search-results-2">Hauptergebnisliste</a> bei der Suche.</p>
             </content>

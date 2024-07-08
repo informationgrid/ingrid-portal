@@ -57,7 +57,7 @@
             <div class="row columns">
             #renderSectionTitle($MESSAGES.getString("detail_description"))
             #set($tmp = $TOOL.getValueFromXPath("./gmd:alternateTitle"))
-            #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName/gco:CharacterString")))
+            #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName/*[self::gco:CharacterString or self::gmx:Anchor]")))
             #renderTextLabelAbove($tmp $tmp2)
             #set($tmp = "")
             #set($tmp2 = "")
