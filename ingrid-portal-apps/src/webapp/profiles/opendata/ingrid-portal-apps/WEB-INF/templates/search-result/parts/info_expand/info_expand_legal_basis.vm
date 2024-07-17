@@ -1,5 +1,5 @@
 ## Rechtsgrundlage für die Zugangseröffnung
-#if($legal_basis && $legal_basis.size() > 0)
+#if($legal_basis && $legal_basis.size() > 0 && $legal_basis.size() != 1 && !$legal_basis.get(0).isEmpty())
     <div class="sub-section">
         #renderFactTitle("Rechtsgrundlage f&uuml;r die Zugangser&ouml;ffnung")
         #foreach($value in $legal_basis)
