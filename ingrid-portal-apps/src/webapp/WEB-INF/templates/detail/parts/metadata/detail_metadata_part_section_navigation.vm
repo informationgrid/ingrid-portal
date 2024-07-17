@@ -4,7 +4,7 @@
         <div class="accordion-content filter-wrapper" data-tab-content role="tabpanel" aria-labelledby="detail-accordion-label" aria-hidden="true" id="detail-content-accordion">
             <ul class="accordion filter-group nav-group" data-accordion data-allow-all-closed="true" role="tablist">
                 ## Übersicht
-                    #if($TOOL.aNodeOfListExist($xPathListFactSheet) || $getDownloads.size() > 0 || $getLinks.size() > 0 || $useConstraints.size() > 0 || $mapImage)
+                    #if($TOOL.aNodeOfListExist($xPathListFactSheet) || $getDownloads.size() > 0 || $getLinks.size() > 0 || $useConstraints.size() > 0 || $mapImage || $getDistributionLinks && $getDistributionLinks.size() > 0)
                         #set($hasDetail0 = true)
                         <li class="accordion-item" data-accordion-item>
                             <a href="#${hashDetail0}" class="accordion-title js-anchor-target" aria-controls="${hashDetail0}-accordion" role="tab" id="${hashDetail0}-accordion-label">
