@@ -682,20 +682,21 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }
                     }
                 }
-
-                HashMap<String, Object> link = new HashMap<>();
-                link.put("hasLinkIcon", true);
-                link.put("isExtern", true);
-                link.put("format", format);
-                link.put("href", accessURL);
-                link.put("modified", modified);
-                link.put("title", !title.isEmpty() ? title : accessURL);
-                link.put("description", description);
-                link.put("license", license);
-                link.put("byClause", byClause);
-                link.put("languages", languages);
-                link.put("availability", availability);
-                linkList.add(link);
+                if(accessURL != null && !accessURL.isEmpty()) {
+                    HashMap<String, Object> link = new HashMap<>();
+                    link.put("hasLinkIcon", true);
+                    link.put("isExtern", true);
+                    link.put("format", format);
+                    link.put("href", accessURL);
+                    link.put("modified", modified);
+                    link.put("title", !title.isEmpty() ? title : accessURL);
+                    link.put("description", description);
+                    link.put("license", license);
+                    link.put("byClause", byClause);
+                    link.put("languages", languages);
+                    link.put("availability", availability);
+                    linkList.add(link);
+                }
             }
         }
         return linkList;
