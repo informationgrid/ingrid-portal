@@ -277,37 +277,37 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <facets>
             <facet>
                 <name>Meteorologie</name>
-                <query>t04_search.searchterm:"opendata" t04_search.searchterm:"Meteorologie"</query>
+                <query>(t04_search.searchterm:"opendata" OR t04_search.searchterm:"opendataident") t04_search.searchterm:"Meteorologie"</query>
                 <id>meteorologie</id>
                 <display>true</display>
             </facet>
             <facet>
                 <name>Unternehmen und Eigentümerschaft von Unternehmen</name>
-                <query>t04_search.searchterm:"opendata" t04_search.searchterm:"Unternehmen und Eigentümerschaft von Unternehmen"</query>
+                <query>(t04_search.searchterm:"opendata" OR t04_search.searchterm:"opendataident") t04_search.searchterm:"Unternehmen und Eigentümerschaft von Unternehmen"</query>
                 <id>unternehmen</id>
                 <display>true</display>
             </facet>
             <facet>
                 <name>Georaum</name>
-                <query>t04_search.searchterm:"opendata" t04_search.searchterm:"Georaum"</query>
+                <query>(t04_search.searchterm:"opendata" OR t04_search.searchterm:"opendataident") t04_search.searchterm:"Georaum"</query>
                 <id>georaum</id>
                 <display>true</display>
             </facet>
             <facet>
                 <name>Mobilität</name>
-                <query>t04_search.searchterm:"opendata" t04_search.searchterm:"Mobilität"</query>
+                <query>(t04_search.searchterm:"opendata" OR t04_search.searchterm:"opendataident") t04_search.searchterm:"Mobilität"</query>
                 <id>mobilität</id>
                 <display>true</display>
             </facet>
             <facet>
                 <name>Erdbeobachtung und Umwelt</name>
-                <query>t04_search.searchterm:"opendata" t04_search.searchterm:"Erdbeobachtung und Umwelt"</query>
+                <query>(t04_search.searchterm:"opendata" OR t04_search.searchterm:"opendataident") t04_search.searchterm:"Erdbeobachtung und Umwelt"</query>
                 <id>erdbeobachtung</id>
                 <display>true</display>
             </facet>
             <facet>
                 <name>Statistik</name>
-                <query>t04_search.searchterm:"opendata" t04_search.searchterm:"Statistik"</query>
+                <query>(t04_search.searchterm:"opendata" OR t04_search.searchterm:"opendataident") t04_search.searchterm:"Statistik"</query>
                 <id>statistik</id>
                 <display>true</display>
             </facet>
