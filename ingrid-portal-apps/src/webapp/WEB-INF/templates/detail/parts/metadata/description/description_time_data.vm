@@ -23,15 +23,15 @@
 
             #if($tool.hasContent($beginTime) || $tool.hasContent($endTime) || $tool.hasContent($atTime))
                 #if($tool.hasContent($atTime))
-                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $atTime")
+                    #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.at') $atTime")
                 #elseif($beginTime == $endTime)
-                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $beginTime")
+                    #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.at') $beginTime")
                 #elseif($beginTime && !$endTime)
-                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since') $beginTime$toIndeterminate")
+                    #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.since') $beginTime$toIndeterminate")
                 #elseif(!$beginTime && $endTime)
-                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.until') $endTime")
+                    #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.until') $endTime")
                 #elseif($beginTime != $endTime)
-                    #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
+                    #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
                 #end
             #end
         ## Zeitliche Genauigkeit

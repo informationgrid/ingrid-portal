@@ -23,15 +23,15 @@
                 #set($tmpTitle = "time_reference")
             #end
             #if($tool.hasContent($atTime))
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $atTime")
+                #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.at') $atTime")
             #elseif($beginTime == $endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $beginTime")
+                #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.at') $beginTime")
             #elseif($beginTime && !$endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since') $beginTime$toIndeterminate")
+                #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.since') $beginTime$toIndeterminate")
             #elseif(!$beginTime && $endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.until') $endTime")
+                #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.until') $endTime")
             #elseif($beginTime != $endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
+                #renderTextTable($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
             #end
         #end
     ## URL des Zugangs
