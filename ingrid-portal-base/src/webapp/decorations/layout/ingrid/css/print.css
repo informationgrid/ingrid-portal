@@ -160,7 +160,7 @@ div.page-wrapper {
 }
 
 
-.sub-section, .section, h2, h3, h4, h5, div.data {
+.sub-section, .section, h3, h4, h5, div.data {
     margin-bottom: 0 !important;
 }
 
@@ -202,5 +202,10 @@ a {
 
 /* remove all links button */
 a.button.outline{
+    display: none;
+}
+
+/* remove overview */
+div.teaser-data.search{
     display: none;
 }
