@@ -1,4 +1,16 @@
 
+## 7.2.1 (25.07.2024)
+
+### Features
+
+* Anlegen der Seite "Erklärung zur Barrierefreiheit" (#6548)
+* Umbenennung Button "Alle Einschränkungen löschen" (#6517)
+* AdV-MIS: Portalausgabe: Zeitbezug - anders betiteln (#6516)
+* Email Betreff von automatischen Benachrichtgungen flexibilisieren (#6483)
+* Portal-Darstellung HVD Datensätze (#6438)
+* Einrichtung einer DEMO Instanz für den OpenData Anwendungsfall (#6205)
+
+    
 ## 7.1.0 (27.03.2024)
 
 ### Features
