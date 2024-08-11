@@ -1,4 +1,14 @@
 
+## 7.2.2 (11.08.2024)
+
+### Features
+
+* "Ähnliche Begriffe" ausblenden (#6614)
+
+### Bugfixes
+
+* Account anlegen - Request Error Diagnostics (#6626)
+    
 ## 7.2.1 (25.07.2024)
 
 ### Features
