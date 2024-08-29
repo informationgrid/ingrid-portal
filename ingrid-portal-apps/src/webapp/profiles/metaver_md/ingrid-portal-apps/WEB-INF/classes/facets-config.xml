@@ -308,7 +308,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Anbieter -->
     <!-- Standard - Kann nicht erweitert werden -->
-    <facet sort="SORT_BY_VALUE_DESC">
+    <facet sort="SORT_BY_NAME">
         <name>searchResult.facete.title.provider</name>
         <id>provider</id>
     </facet>
