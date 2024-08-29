@@ -1519,7 +1519,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             ArrayList subjectEntries = new ArrayList();
             for (int i = 0; i < nodeList.getLength(); i++) {
-                xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]";
+                xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString";
                 Node node = nodeList.item(i);
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     NodeList childNodeList = xPathUtils.getNodeList(node, xpathExpression);
