@@ -139,24 +139,28 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>Art der Ressource</name>
         <id>type</id>
         <isOpen>true</isOpen>
+        <queryType>OR</queryType>
         <facets>
         <!-- Daten -->
             <facet>
                 <name>Daten</name>
                 <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType OR hierarchylevel:tile)</query>
                 <id>data</id>
+                <display>true</display>
             </facet>
         <!-- Dienste -->
             <facet>
                 <name>Dienste</name>
                 <query>hierarchylevel:service</query>
                 <id>service</id>
+                <display>true</display>
             </facet>
         <!-- Anwendungen -->
              <facet>
                 <name>Anwendungen</name>
                 <query>hierarchylevel:application</query>
                 <id>others</id>
+                <display>true</display>
             </facet>
         </facets>
     </facet>
@@ -164,30 +168,36 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>Art der Dienste</name>
         <id>service_type</id>
+        <queryType>OR</queryType>
         <facets>
         <!-- Darstellungsdienste -->
             <facet>
                 <name>Darstellungsdienste</name>
                 <query>t01_object.obj_class:3 (t011_obj_serv.type:view OR t011_obj_serv.type:wms OR t011_obj_serv.type:wmts OR t011_obj_serv.type:map)</query>
                 <id>service_type_view</id>
+                <display>true</display>
             </facet>
         <!-- Downloaddienste -->
             <facet>
                 <name>Downloaddienste</name>
                 <query>t01_object.obj_class:3 (t011_obj_serv.type:download OR t011_obj_serv.type:feature OR t011_obj_serv.type:wcs OR t011_obj_serv.type:wfs OR t011_obj_serv.type:atom OR t011_obj_serv.type:ogcapifeature OR t011_obj_serv.type:"api feature")</query>
                 <id>service_type_download</id>
+                <display>true</display>
             </facet>
         <!-- Darstellungsdienste -->
             <facet>
                 <name>Sonstige Dienste</name>
                 <query>t01_object.obj_class:3 (-t011_obj_serv.type:view -t011_obj_serv.type:wms -t011_obj_serv.type:wmts -t011_obj_serv.type:map -t011_obj_serv.type:download -t011_obj_serv.type:feature -t011_obj_serv.type:wcs -t011_obj_serv.type:wfs -t011_obj_serv.type:atom -t011_obj_serv.type:ogcapifeature -t011_obj_serv.type:"api feature")</query>
                 <id>service_type_others</id>
+                <display>true</display>
             </facet>
         </facets>
     </facet>
     <facet>
         <name>Produktgruppe</name>
         <id>productgroup</id>
+        <queryType>OR</queryType>
+        <listLength>6</listLength>
         <facets>
             <!-- Digitale Orthophotos -->
             <facet>
@@ -426,6 +436,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>Verwaltet von</name>
         <id>maintain</id>
         <field>t02_address.identificationinfo_administrative_area_value</field>
+        <queryType>OR</queryType>
+        <listLength>6</listLength>
     </facet>
     <facet>
         <name>Open Data</name>
