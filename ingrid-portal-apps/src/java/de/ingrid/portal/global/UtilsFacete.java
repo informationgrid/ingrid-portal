@@ -56,6 +56,7 @@ import de.ingrid.portal.forms.SearchExtAdrPlaceReferenceForm;
 import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.forms.SearchExtResTopicAttributesForm;
 import de.ingrid.portal.forms.SearchExtTimeReferenceForm;
+import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.om.IngridEnvTopic;
@@ -65,13 +66,13 @@ import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.IPlugVersionInspector;
-import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.catalog.CatalogTreeDataProvider;
 import de.ingrid.portal.search.catalog.CatalogTreeDataProviderFactory;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
@@ -470,6 +471,8 @@ public class UtilsFacete {
         HashMap<String, Long> elementsGeothesaurus = null;
         HashMap<String, Long> elementsMap = null;
         Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
+        
+        ArrayList<String> facetsOrFields = new ArrayList<>();
         if(log.isDebugEnabled()) {
             log.debug("Facets from hits: " + facets);
         }
@@ -561,6 +564,7 @@ public class UtilsFacete {
                                             ingridFacet.setFacets(new ArrayList<IngridFacet>());
                                         }
                                         List<IngridFacet> newFieldFacets = ingridFacet.getFacets();
+
                                         boolean isNewFacet = false;
                                         IngridFacet newFieldFacet = getFacetById(newFieldFacets, key.replace(ingridFacet.getId() + ":", ""));
                                         if(newFieldFacet == null) {
@@ -582,18 +586,87 @@ public class UtilsFacete {
                                                     newFieldFacet.setQuery(ingridFacet.getField() + ":\"" + codeListEntry.getField(codelistField) + "\"");
                                                 }
                                             }
+                                            newFieldFacet.setParent(ingridFacet);
+                                            newFieldFacet.setFacetValue(value.toString());
+                                            if(isNewFacet) {
+                                                newFieldFacets.add(newFieldFacet);
+                                            }
+                                            ingridFacet.setFacets(newFieldFacets);
                                         } else {
-                                            String query = ingridFacet.getField().concat(":\"").concat(facetSubkey).concat("\"");
-                                            newFieldFacet.setId(facetSubkey);
-                                            newFieldFacet.setName(facetSubkey);
-                                            newFieldFacet.setQuery(query);
+                                            newFieldFacet.setFacetValue(value.toString());
+                                            if(isNewFacet) {
+                                                String query = ingridFacet.getField().concat(":\"").concat(facetSubkey).concat("\"");
+                                                newFieldFacet.setId(facetSubkey);
+                                                newFieldFacet.setName(facetSubkey);
+                                                newFieldFacet.setQuery(query);
+                                                newFieldFacet.setParent(ingridFacet);
+                                                newFieldFacets.add(newFieldFacet);
+                                            }
+                                            // Add all possible field facets
+                                            if(ingridFacet.getQueryType() != null && ingridFacet.getQueryType().equals("OR")) {
+                                                if(!facetsOrFields.contains(facetKey)) {
+                                                    facetsOrFields.add(facetKey);
+                                                    String portalQueryString = UtilsSearch.updateQueryString("", request);
+                                                    try {
+                                                        IngridQuery tmpQuery = QueryStringParser.parse( portalQueryString );
+                                                        ArrayList<IngridDocument> facetQueries = new ArrayList<>();
+                                                        if (tmpQuery.get( "FACETS" ) == null) {
+                                                            IngridDocument tmpFacets = new IngridDocument();
+                                                            tmpFacets.put("id", ingridFacet.getId());
+                                                            tmpFacets.put("field", ingridFacet.getField());
+                                                            facetQueries.add(tmpFacets);
+                                                            if (!facetQueries.isEmpty()) {
+                                                                tmpQuery.put( "FACETS", facetQueries );
+                                                            }
+                                                        }
+        
+                                                        IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+                                                        IngridHits newHits = ibus.search( tmpQuery, Settings.SEARCH_RANKED_HITS_PER_PAGE, 1, 0, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ) );
+        
+                                                        if (newHits == null) {
+                                                            if (log.isErrorEnabled()) {
+                                                                log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+                                                            }
+                                                        } else {
+                                                            if(newHits.length() > 0) {
+                                                                Map<String, Object> newFacets = (Map<String, Object>) newHits.get("FACETS");
+                                                                if(newFacets != null){
+                                                                    for (Iterator<String> newIter = newFacets.keySet().iterator(); newIter.hasNext();) {
+                                                                        String newKey = newIter.next();
+                                                                        IngridFacet tmpNewFieldFacet = getFacetById(newFieldFacets, newKey.replace(ingridFacet.getId() + ":", ""));
+                                                                        if(tmpNewFieldFacet == null) {
+                                                                            if(newKey.startsWith(ingridFacet.getId() + ":")) {
+                                                                                String newValue = null;
+                                                                                String[] list = newKey.split(":");
+                                                                                if(list.length > 1) {
+                                                                                    newValue = list[1];
+                                                                                } else {
+                                                                                    continue;
+                                                                                }
+                                                                                if(newValue != null) {
+                                                                                    String newQuery = ingridFacet.getField().concat(":\"").concat(newValue).concat("\"");
+                                                                                    tmpNewFieldFacet = new IngridFacet();
+                                                                                    tmpNewFieldFacet.setId(newValue);
+                                                                                    tmpNewFieldFacet.setName(newValue);
+                                                                                    tmpNewFieldFacet.setQuery(newQuery);
+                                                                                    tmpNewFieldFacet.setParent(ingridFacet);
+                                                                                    tmpNewFieldFacet.setDisplay(true);
+                                                                                    tmpNewFieldFacet.setFacetValue("0");
+                                                                                    newFieldFacets.add(tmpNewFieldFacet);
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    } catch (Exception e) {
+                                                        log.error("Error create subfacet for: " + facetSubkey);
+                                                    }
+                                                }
+                                            }
+                                            ingridFacet.setFacets(newFieldFacets);
                                         }
-                                        newFieldFacet.setParent(ingridFacet);
-                                        newFieldFacet.setFacetValue(value.toString());
-                                        if(isNewFacet) {
-                                            newFieldFacets.add(newFieldFacet);
-                                        }
-                                        ingridFacet.setFacets(newFieldFacets);
                                     }
                                 }
                             }
