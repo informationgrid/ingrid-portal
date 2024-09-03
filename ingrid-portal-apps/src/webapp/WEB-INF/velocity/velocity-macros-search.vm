@@ -577,10 +577,13 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #end
 #end
 
-#macro(renderSearchTerm $searchTerms $hasAccessConstraints)
+#macro(renderSearchTerm $searchTerms $hasAccessConstraints $extendedTerms)
     #set($searchTermsLowerCase = [])
     #foreach($searchTerm in $searchTerms)
         #set($add = $searchTermsLowerCase.add($searchTerm.toLowerCase()))
+    #end
+    #foreach($extendedTerm in $extendedTerms)
+        #set($add = $searchTermsLowerCase.add($extendedTerm.toLowerCase()))
     #end
     #if($searchTermsLowerCase.contains("inspireidentifiziert") || $searchTermsLowerCase.contains("inspire")
       || $searchTermsLowerCase.contains("opendata") || $searchTermsLowerCase.contains("opendataident") || $hasAccessConstraints == "Y")
