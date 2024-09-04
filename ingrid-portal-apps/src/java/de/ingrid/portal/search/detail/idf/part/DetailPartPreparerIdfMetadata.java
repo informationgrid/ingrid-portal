@@ -45,7 +45,6 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.capabilities.CapabilitiesUtils;
-import de.ingrid.utils.capabilities.CapabilitiesUtils.ServiceType;
 
 public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
@@ -736,6 +735,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             value = xPathUtils.getString(keywordNode, ".").trim();
                         }
                         boolean isHidden = false;
+                        String[] hvds = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_HIT_HVD_CATEGORIES);
 
                         if(value != null){
                             List hiddenKeywordList = PortalConfig.getInstance().getList(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
@@ -806,7 +806,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                         }
                                         break;
                                     case "hvd":
-                                        String[] hvds = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_HIT_HVD_CATEGORIES);
                                         if(Arrays.asList(hvds).indexOf(value) > -1) {
                                             list.add(value);
                                         }
@@ -823,7 +822,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                         } else{
                                             // try to match keyword to  Opendata Category
                                             String tmpValue = sysCodeList.getNameByData("6400", value);
-                                            if(!tmpValue.isEmpty()){
+                                            if(tmpValue.isEmpty()){
+                                                tmpValue = value;
+                                            }
+                                            if(Arrays.asList(hvds).indexOf(tmpValue) == -1) {
                                                 if(list.indexOf(tmpValue) == -1) {
                                                     list.add(tmpValue);
                                                 }
