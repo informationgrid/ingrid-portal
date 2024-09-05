@@ -73,6 +73,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
     IngridResourceBundle messages = null;
 
+    String lang = null;
+
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
@@ -214,6 +216,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         String action = request.getParameter(Settings.PARAM_ACTION);
         scrollTop = request.getParameter("scrollTop");
 
+        this.lang = request.getLocale().getLanguage();
+
         this.messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
             request.getLocale()), request.getLocale());
 
@@ -240,7 +244,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         } else if (action.equalsIgnoreCase("doOpenNode")) {
             DisplayTreeNode root = (DisplayTreeNode) ps.get("plugsRoot");
             if (root != null) {
-                openNode(root, request.getParameter("nodeId"));
+                openNode(root, request.getParameter("nodeId"), lang, messages);
             }
 
         } else if (action.equalsIgnoreCase("doCloseNode")) {
@@ -260,7 +264,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         return ps;
     }
 
-    private void openNode(DisplayTreeNode rootNode, String nodeId) {
+    private void openNode(DisplayTreeNode rootNode, String nodeId, String lang, IngridResourceBundle messages) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
         if (node != null) {
             node.setOpen(true);
@@ -270,7 +274,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                 node.setLoading(true);
 
                 // handles all stuff
-                DisplayTreeFactory.openECSNode(rootNode, node, this.messages);
+                DisplayTreeFactory.openECSNode(rootNode, node, lang, messages);
 
                 node.setLoading(false);
             }
@@ -288,7 +292,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                 node.setLoading(true);
 
                 // handles all stuff
-                value = DisplayTreeFactory.openECSNodeString(rootNode, node, lang, messages, codeListService);
+                value = DisplayTreeFactory.openECSNodeString(rootNode, node, lang, messages);
 
                 node.setLoading(false);
             } else {
@@ -308,7 +312,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             }
             
         } else {
-            openNode(rootNode, nodeId);
+            openNode(rootNode, nodeId, lang, messages);
         }
         return value;
     }
@@ -335,7 +339,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                 if ((Boolean) subNode.get("expandable")) {
                     String plugType = (String) subNode.get("plugType");
                     if(plugType == null || !(closeAddress && plugType != null && plugType.equals( "dsc_ecs_address" ))){
-                        openNode(rootNode, subNode.getId());
+                        openNode(rootNode, subNode.getId(), lang, messages);
                         paramDefaultOpenNodes.add("'" + subNode.get("level") + "-" + subNode.getId() + "'");
                         openNodesUntilHierarchyLevel(subNode, rootNode, paramDefaultOpenNodes);
                     }
@@ -364,7 +368,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         if(!openNodes.isEmpty()) {
             for (String openNode : openNodes) {
                 String[] nodeIdSplit = openNode.split("-");
-                openNode(node, nodeIdSplit[nodeIdSplit.length-1]);
+                openNode(node, nodeIdSplit[nodeIdSplit.length-1], lang, messages);
             }
         }
         return node;

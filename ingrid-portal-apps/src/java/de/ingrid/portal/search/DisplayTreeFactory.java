@@ -39,6 +39,7 @@ import org.codehaus.jettison.json.JSONObject;
 import de.ingrid.codelists.CodeListService;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -363,7 +364,7 @@ public class DisplayTreeFactory {
         catalogNode.addChild(node);
     }
 
-    public static void openECSNode(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen, IngridResourceBundle messages) {
+    public static void openECSNode(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen, String lang, IngridResourceBundle messages) {
 
         String plugType = (String) nodeToOpen.get(NODE_PLUG_TYPE);
         String plugId = (String) nodeToOpen.get(NODE_PLUG_ID);
@@ -441,6 +442,12 @@ public class DisplayTreeFactory {
             childNode.put(NODE_UDK_CLASS, udkClass);
             childNode.put(NODE_EXPANDABLE, hasChildren);
 
+            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+                childNode.put(NODE_UDK_CLASS_VALUE, messages.getString("udk_adr_class_name_" + udkClass + ""));
+            } else {
+                childNode.put(NODE_UDK_CLASS_VALUE, CodeListServiceFactory.instance().getCodeListValue("8000", udkClass, lang));
+            }
+
             if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS) && udkClass.equals("3")) {
                 freeAddresses.add(childNode);
             } else {
@@ -474,7 +481,7 @@ public class DisplayTreeFactory {
         }
     }
 
-    public static String openECSNodeString(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen, String lang, IngridResourceBundle messages, CodeListService codeListService) {
+    public static String openECSNodeString(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen, String lang, IngridResourceBundle messages) {
 
         JSONArray values = new JSONArray();
         String plugType = (String) nodeToOpen.get(NODE_PLUG_TYPE);
@@ -553,11 +560,15 @@ public class DisplayTreeFactory {
             childNode.put(NODE_UDK_CLASS, udkClass);
             childNode.put(NODE_EXPANDABLE, hasChildren);
 
-            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS) && udkClass.equals("3")) {
+            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
                 childNode.put(NODE_UDK_CLASS_VALUE, messages.getString("udk_adr_class_name_" + udkClass + ""));
+            } else {
+                childNode.put(NODE_UDK_CLASS_VALUE, CodeListServiceFactory.instance().getCodeListValue("8000", udkClass, lang));
+            }
+
+            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS) && udkClass.equals("3")) {
                 freeAddresses.add(childNode);
             } else {
-                childNode.put(NODE_UDK_CLASS_VALUE, codeListService.getCodeListValue("8000", udkClass, lang));
                 childNodes.add(childNode);
             }
         }
