@@ -1,5 +1,5 @@
 #set($type = $TOOL.getAddressClassType())
-#set($title = $TOOL.getAddressClassTitle($type))
+#set($title = $TOOL.getAddressClassTitle($type, $docUuid))
 #set($lang = $TOOL.getLanguage())
 #set($modTime = $TOOL.getDateValueFromXPath("./idf:last-modified"))
 
