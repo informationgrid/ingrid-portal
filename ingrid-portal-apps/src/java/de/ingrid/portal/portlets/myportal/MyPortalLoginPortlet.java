@@ -244,7 +244,6 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         }
         context.put("actionForm", frm);
         context.put("loginConstants", new FieldMethodizer(new LoginConstants()));
-        context.put("enableNewUser", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_ENABLE_NEW_USER, true ));
         if(authLoginFailuresActiv) {
             session.removeAttribute(SESSION_AUTH_FAILURES);
         }
