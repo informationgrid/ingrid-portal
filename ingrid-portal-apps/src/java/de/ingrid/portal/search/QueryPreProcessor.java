@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridPersistencePrefs;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsFacete;
@@ -109,13 +110,14 @@ public class QueryPreProcessor {
     /**
      * Prepares an ranked query for submitting to the ibus. If no query should be submitted,
      * return null.
+     * @param messages 
      * 
      * @param myQuery The query to submit.
      * @param ds The datasource type of the query.
      * @param startHit The hit count to start with.
      * @return The QueryDescriptor describing the query or null if no query should be submitted.
      */
-    public static QueryDescriptor createRankedQueryDescriptor(PortletRequest request) {
+    public static QueryDescriptor createRankedQueryDescriptor(PortletRequest request, IngridResourceBundle messages) {
         // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
         // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
         // we won't complete copy
@@ -139,7 +141,7 @@ public class QueryPreProcessor {
             }
 
             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-                query = UtilsFacete.facetePrepareInGridQuery(request, query);
+                query = UtilsFacete.facetePrepareInGridQuery(request, query, messages);
             }
         } catch (Exception t) {
             if (log.isErrorEnabled()) {

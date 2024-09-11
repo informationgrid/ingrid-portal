@@ -102,20 +102,20 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
             if(resourceID.equals( "devPlanMarker" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
                 if(!queryString.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPMarkerBlp(request, response, queryString, config);
+                    UtilsPortletServeResources.getHttpMarkerUVPMarkerBlp(request, response, queryString, config, messages);
                 }
             }
             if(resourceID.equals( "legendCounter" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_QUERY_LEGEND, "datatype:www OR datatype:metadata");
                 if(!queryString.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPLegendCounter(request, response, queryString, config);
+                    UtilsPortletServeResources.getHttpMarkerUVPLegendCounter(request, response, queryString, config, messages);
                 }
             }
 
             if(resourceID.equals( "facetValue" )){
                 String facetId = request.getParameter("facetId");
                 if(facetId != null) {
-                    UtilsPortletServeResources.getHttpFacetValue(request, response, config, facetId);
+                    UtilsPortletServeResources.getHttpFacetValue(request, response, config, facetId, messages);
                 }
             }
         } catch (Exception e) {

@@ -286,6 +286,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         if (action == null) {
             return;
         }
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()), request.getLocale());
 
         // adapt SearchState (base for generating URL params FOR BOOKMARKING
         // !!!)
@@ -326,7 +328,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                         if (queryType != null && queryType.equals(Settings.MSGV_NO_QUERY)) {
                             SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
                         }
-                        url = UtilsFacete.setFaceteParamsToSessionByAction(request);
+                        url = UtilsFacete.setFaceteParamsToSessionByAction(request, messages);
                     }
                 }
                 actionResponse.sendRedirect( actionResponse.encodeURL( Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch( request ) ) + url);
