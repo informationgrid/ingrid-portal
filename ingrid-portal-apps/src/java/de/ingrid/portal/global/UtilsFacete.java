@@ -158,9 +158,10 @@ public class UtilsFacete {
      *
      * @param ps
      * @param query
+     * @param messages 
      * @throws ParseException
      */
-    public static IngridQuery facetePrepareInGridQuery (PortletRequest request, IngridQuery query) throws ParseException{
+    public static IngridQuery facetePrepareInGridQuery (PortletRequest request, IngridQuery query, IngridResourceBundle messages) throws ParseException{
 
         // Check for pre prozess doAction.
         String portalTerm = request.getParameter("q");
@@ -177,7 +178,7 @@ public class UtilsFacete {
             setAttributeToSession(request, FACET_CONFIG, config);
             setAttributeToSession(request, FACET_CONFIG_DEFAULT, config);
         }
-        getFacetAttributsParamsFromUrl(request, config);
+        getFacetAttributsParamsFromUrl(request, config, messages);
 
         if(portalTerm != null){
             setAttributeToSession(request, "faceteTerm", portalTerm);
@@ -189,7 +190,7 @@ public class UtilsFacete {
         }
 
         // Set selection to query
-        query = getQueryFacets(request, config, query);
+        query = getQueryFacets(request, config, query, messages);
 
         // Get facet query from config file.
         if(query.get("FACETS") == null){
@@ -207,14 +208,14 @@ public class UtilsFacete {
         }
         return query;
     }
-    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query) throws ParseException {
-        return getQueryFacets(request, config, query, null);
+    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query, IngridResourceBundle messages) throws ParseException {
+        return getQueryFacets(request, config, query, messages, null);
     }
 
-    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query, String parentId) throws ParseException {
+    public static IngridQuery getQueryFacets(PortletRequest request, List<IngridFacet> config, IngridQuery query, IngridResourceBundle messages, String parentId) throws ParseException {
         query = setFacetQuery(config, query, parentId);
         addToQueryMap(request, query);
-        addToQueryGeothesaurus(request, query);
+        addToQueryGeothesaurus(request, query, messages);
         addToQueryAttribute(request, query);
         addToQueryAreaAddress(request, query);
         addToQueryWildcard(request, query);
@@ -228,13 +229,13 @@ public class UtilsFacete {
      * @param context
      * @param facete
      */
-    public static void setParamsToContext(RenderRequest request, Context context) {
+    public static void setParamsToContext(RenderRequest request, Context context, IngridResourceBundle messages) {
 
         ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
-        getFacetAttributsParamsFromUrl(request, config);
+        getFacetAttributsParamsFromUrl(request, config, messages);
 
         setParamsToContextMap(request, context);
-        setParamsToContextGeothesaurus(request, context);
+        setParamsToContextGeothesaurus(request, context, messages);
         setParamsToContextAttribute(request, context);
         setParamsToContextAreaAddress(request, context);
         setParamsToContextWildcard(request, context);
@@ -289,7 +290,7 @@ public class UtilsFacete {
      * @return URL with facet parameters
      */
     @SuppressWarnings("rawtypes")
-    public static String setFaceteParamsToSessionByAction(ActionRequest request) {
+    public static String setFaceteParamsToSessionByAction(ActionRequest request, IngridResourceBundle messages) {
         StringBuilder facetUrl = new StringBuilder("&f=");
 
         general(request);
@@ -449,7 +450,7 @@ public class UtilsFacete {
         }
         setAttributeToSession(request, FACET_CONFIG, config);
         setFaceteParamsToSessionMap(request);
-        setFaceteParamsToSessionGeothesaurus(request);
+        setFaceteParamsToSessionGeothesaurus(request, messages);
         setFaceteParamsToSessionAttribute(request);
         setFaceteParamsToSessionAreaAddress(request);
         setFaceteParamsToSessionWildcard(request);
@@ -985,7 +986,7 @@ public class UtilsFacete {
      */
 
     @SuppressWarnings("rawtypes")
-    private static void setFaceteParamsToSessionGeothesaurus(ActionRequest request) {
+    private static void setFaceteParamsToSessionGeothesaurus(ActionRequest request, IngridResourceBundle messages) {
         String doGeothesaurus = request.getParameter("doGeothesaurus");
         String doCancelGeothesaurus = request.getParameter("doCancelGeothesaurus");
         String doAddGeothesaurus = request.getParameter("doAddGeothesaurus");
@@ -1164,7 +1165,7 @@ public class UtilsFacete {
             }
 
             if(doGeothesaurus == null){
-                ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
+                ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request, messages);
                 if(selectedGeothesaurus != null){
                     selectedGeothesaurus.put(GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopics);
                     ArrayList<String> selectedTopicIds = (ArrayList<String>) selectedGeothesaurus.get(GEOTHESAURUS_SELECTED_TOPICS_IDS);
@@ -1185,7 +1186,7 @@ public class UtilsFacete {
         }
     }
 
-    private static void setParamsToContextGeothesaurus (RenderRequest request, Context context){
+    private static void setParamsToContextGeothesaurus (RenderRequest request, Context context, IngridResourceBundle messages){
         // Nach Raumbezug suchen
         IngridHit[] geothesaurusTopics = (IngridHit []) getAttributeFromSession(request, GEOTHESAURUS_TOPICS);
         context.put("geothesaurusTopics", geothesaurusTopics);
@@ -1193,7 +1194,7 @@ public class UtilsFacete {
         context.put("geothesaurusCurrentTopic", getAttributeFromSession(request, GEOTHESAURUS_CURRENT_TOPIC));
         context.put("list_size", getAttributeFromSession(request, GEOTHESAURUS_LIST_SIZE));
 
-        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
+        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request, messages);
         ArrayList<HashMap<String, String>> geothesaurusSelectTopicsSorted = new ArrayList<>();
         ArrayList<HashMap<String, Long>> elementsGeothesaurus = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_GEOTHESAURUS);
 
@@ -1235,8 +1236,8 @@ public class UtilsFacete {
     }
 
 
-    public static void addToQueryGeothesaurus(PortletRequest request, IngridQuery query) {
-        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
+    public static void addToQueryGeothesaurus(PortletRequest request, IngridQuery query, IngridResourceBundle messages) {
+        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request, messages);
         if(!geothesaurusSelectTopics.isEmpty()){
             ClauseQuery cq = null;
 
@@ -1272,7 +1273,7 @@ public class UtilsFacete {
     }
 
     @SuppressWarnings("rawtypes")
-    private static ArrayList<HashMap<String, String>> getSelectedGeothesaurusTopics(PortletRequest request){
+    private static ArrayList<HashMap<String, String>> getSelectedGeothesaurusTopics(PortletRequest request, IngridResourceBundle messages){
         HashMap selectedGeothesaurus = (HashMap) getAttributeFromSession(request, SELECTED_GEOTHESAURUS);
         ArrayList<IngridHit> allGeoThesaurusTopics = (ArrayList<IngridHit>) getAttributeFromSession(request, GEOTHESAURUS_ALL_TOPICS);
         ArrayList<HashMap<String, String>> geothesaurusSelectTopics = new ArrayList<> ();
@@ -1290,7 +1291,14 @@ public class UtilsFacete {
                         }
                         if(topicId != null && topicId.equals(selectedId)){
                             HashMap<String, String> map = new HashMap<>();
-                            map.put("topicTitle", topic.get("topicName").toString());
+                            String type = "";
+                            if(topic.get("abstract") != null) {
+                                String[] splitType = topic.get("abstract").toString().split("#");
+                                if(splitType != null && splitType.length > 1) {
+                                    type = ", " + messages.getString("sns.topic.ref." + splitType[1]);
+                                }
+                            }
+                            map.put("topicTitle", topic.get("topicName") + "" + type);
                             map.put("topicId", selectedId);
                             geothesaurusSelectTopics.add(map);
                             break;
@@ -1822,7 +1830,7 @@ public class UtilsFacete {
      * @param config 
      */
     @SuppressWarnings("rawtypes")
-    private static void getFacetAttributsParamsFromUrl(PortletRequest request, ArrayList<IngridFacet> config){
+    private static void getFacetAttributsParamsFromUrl(PortletRequest request, ArrayList<IngridFacet> config, IngridResourceBundle messages){
 
         String paramsFacet = request.getParameter("f");
 
@@ -1868,8 +1876,15 @@ public class UtilsFacete {
                         addToListOfTopicsGeoThesaurus((IngridHit)topics[j], request);
                         if(topicId.equals(topic.getTopicNativeKey())){
                             HashMap<String, String> addedTopic = new HashMap<>();
+                            String type = "";
+                            if(topic.get("abstract") != null) {
+                                String[] splitType = topic.get("abstract").toString().split("#");
+                                if(splitType != null && splitType.length > 1) {
+                                    type = ", " + messages.getString("sns.topic.ref." + splitType[1]);
+                                }
+                            }
+                            addedTopic.put("topicTitle", topic.getTopicName() + "" + type);
                             addedTopic.put("topicId", topic.getTopicNativeKey());
-                            addedTopic.put("topicTitle", topic.getTopicName());
                             geothesaurusSelectTopics.add(addedTopic);
                         }
                     }

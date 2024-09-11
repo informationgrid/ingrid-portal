@@ -177,7 +177,7 @@ public class UtilsPortletServeResources {
         }
         ArrayList config = (ArrayList<IngridFacet>) UtilsFacete.getAttributeFromSession(request, UtilsFacete.FACET_CONFIG);
         if(config != null) {
-            query = UtilsFacete.getQueryFacets(request, config, query);
+            query = UtilsFacete.getQueryFacets(request, config, query, messages);
         }
         if(query != null){
             // Change query to clause query (with phrase search)
@@ -305,7 +305,7 @@ public class UtilsPortletServeResources {
             }
         }
         if(config != null) {
-            query = UtilsFacete.getQueryFacets(request, config, query);
+            query = UtilsFacete.getQueryFacets(request, config, query, messages);
         }
         int startPage = 0;
         if(request.getParameter("startPage") != null) {
@@ -458,7 +458,7 @@ public class UtilsPortletServeResources {
         response.getWriter().write( bbox.toString() );
     }
 
-    public static void getHttpMarkerUVPMarkerBlp (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
+    public static void getHttpMarkerUVPMarkerBlp (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config, IngridResourceBundle messages) throws IOException, NumberFormatException, JSONException, ParseException {
         IngridQuery query = null;
         if(config != null) {
             String portalQueryString = UtilsSearch.updateQueryString("", request);
@@ -479,7 +479,7 @@ public class UtilsPortletServeResources {
             query = QueryStringParser.parse( queryString );
         }
         if(config != null) {
-            query = UtilsFacete.getQueryFacets(request, config, query);
+            query = UtilsFacete.getQueryFacets(request, config, query, messages);
         }
         int startPage = 0;
         if(request.getParameter("startPage") != null) {
@@ -577,7 +577,7 @@ public class UtilsPortletServeResources {
         response.getWriter().write( jsonData.toString());
     }
 
-    public static void getHttpMarkerUVPLegendCounter (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config) throws IOException, NumberFormatException, JSONException, ParseException {
+    public static void getHttpMarkerUVPLegendCounter (ResourceRequest request, ResourceResponse response, String queryString, List<IngridFacet> config, IngridResourceBundle messages) throws IOException, NumberFormatException, JSONException, ParseException {
         IngridQuery query = null;
         if(config != null) {
             String portalQueryString = UtilsSearch.updateQueryString("", request);
@@ -598,7 +598,7 @@ public class UtilsPortletServeResources {
             query = QueryStringParser.parse( queryString );
         }
         if(config != null) {
-            query = UtilsFacete.getQueryFacets(request, config, query);
+            query = UtilsFacete.getQueryFacets(request, config, query, messages);
         }
         String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
         if(stateRanking == null) {
@@ -927,7 +927,7 @@ public class UtilsPortletServeResources {
         return queryString;
     }
 
-    public static void getHttpFacetValue(ResourceRequest request, ResourceResponse response, ArrayList<IngridFacet> config, String facetId) throws ParseException {
+    public static void getHttpFacetValue(ResourceRequest request, ResourceResponse response, ArrayList<IngridFacet> config, String facetId, IngridResourceBundle messages) throws ParseException {
         IngridFacet facet = UtilsFacete.getFacetById(config, facetId);
         String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
         if(stateRanking == null) {
@@ -959,7 +959,7 @@ public class UtilsPortletServeResources {
                 }
             }
             if(config != null) {
-                query = UtilsFacete.getQueryFacets(request, config, query, facet.getParent().getId());
+                query = UtilsFacete.getQueryFacets(request, config, query, messages, facet.getParent().getId());
             }
             if (query.get( "FACETS" ) == null) {
                 ArrayList<IngridDocument> facetQueries = new ArrayList<>();
