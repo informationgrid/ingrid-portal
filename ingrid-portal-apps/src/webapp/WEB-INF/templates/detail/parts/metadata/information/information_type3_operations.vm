@@ -1,4 +1,54 @@
 ## Operationen
-    #set($headTitles = [$MESSAGES.getString("t011_obj_serv_operation.name"),$MESSAGES.getString("t011_obj_serv_operation.descr"),$MESSAGES.getString("t011_obj_serv_operation.invocation_name")])
-    #set($headXpathExpressions = ["./srv:operationName","./srv:operationDescription","./srv:invocationName"])
-    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_serv_operation"), $xPathInfo3SVOperationMetadata, $headTitles, $headXpathExpressions))
+#set($headTitles = [$MESSAGES.getString("t011_obj_serv_operation.name"),$MESSAGES.getString("t011_obj_serv_operation.descr"),$MESSAGES.getString("t011_obj_serv_operation.invocation_name")])
+#set($headXpathExpressions = ["./srv:operationName","./srv:operationDescription","./srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"])
+#set($entry = $TOOL.getNodeListTable($MESSAGES.getString("t011_obj_serv_operation"), $xPathInfo3SVOperationMetadata, $headTitles, $headXpathExpressions))
+
+#if($tool.hasContent($entry.get("body")))
+<div class="table">
+    #if($entry.title)
+        <h5>$entry.title</h5>
+    #end
+    <table>
+    #if($tool.hasContent($entry.get("head")))
+        <thead>
+            <tr>
+            #set($num = 0)
+            #foreach($th in $entry.head)
+                #if($num == 2)
+                <th colspan="2">$th</th>
+                #else
+                <th>$th</th>
+                #end
+                #set($num = $num + 1)
+            #end
+            </tr>
+        </thead>
+    #end
+    #foreach($tr in $entry.body)
+        <tr>
+        #set($num = 0)
+        #set($operationName = "") 
+        #foreach($td in $tr)
+            #if($num == 2)
+            <td colspan="2">
+                #if($td)
+                    #set($urls = $td.split(";"))
+                    #foreach($url in $urls)
+                    <p>
+                        <span class="text-break">$url<span>
+                    </p>
+                    #end
+                #end
+            </td>
+            #else
+            <td>
+              <span class="text">$td<span>
+            </td>
+            #end
+            #set($num = $num + 1)
+        #end
+        </tr>
+    #end
+    </table>
+</div>
+#end
