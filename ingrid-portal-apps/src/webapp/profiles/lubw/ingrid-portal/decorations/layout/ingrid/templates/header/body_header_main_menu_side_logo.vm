@@ -1,4 +1,30 @@
 ## USED IN LUBW
-<a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="side-logo" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-    <img src="/decorations/layout/ingrid/images/template/lubw_logo.png" alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"/>
-</a>
+<div class="side-logos">
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"
+       title="$MESSAGES.getString('ingrid.page.home.tooltip')"
+    >
+        <img src="/decorations/layout/ingrid/images/template/lubw_logo.png"
+             alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"
+             aria-hidden="true"
+        />
+    </a>
+
+    <a href="$jetspeed.getAbsoluteUrl('/sign-language.psml')"
+       title="$MESSAGES.getString('ingrid.page.home.tooltip')"
+    >
+        <img src="/decorations/layout/ingrid/images/template/sign_language.svg"
+             alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"
+             aria-hidden="true"
+        />
+    </a>
+
+    <a href="$jetspeed.getAbsoluteUrl('/easy-language.psml')"
+       title="$MESSAGES.getString('ingrid.page.home.tooltip')"
+    >
+        <img src="/decorations/layout/ingrid/images/template/simple_language.svg"
+             alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"
+             aria-hidden="true"
+        />
+    </a>
+</div>
+
