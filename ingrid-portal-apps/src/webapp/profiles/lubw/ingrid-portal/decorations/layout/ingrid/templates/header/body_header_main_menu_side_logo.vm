@@ -10,19 +10,19 @@
     </a>
 
     <a href="$jetspeed.getAbsoluteUrl('/sign-language.psml')"
-       title="$MESSAGES.getString('ingrid.page.home.tooltip')"
+       title="$MESSAGES.getString('ingrid.page.signlanguage.tooltip')"
     >
         <img src="/decorations/layout/ingrid/images/template/sign_language.svg"
-             alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"
+             alt="$MESSAGES.getString('ingrid.page.signlanguage.tooltip')"
              aria-hidden="true"
         />
     </a>
 
     <a href="$jetspeed.getAbsoluteUrl('/easy-language.psml')"
-       title="$MESSAGES.getString('ingrid.page.home.tooltip')"
+       title="$MESSAGES.getString('ingrid.page.easylanguage.tooltip')"
     >
         <img src="/decorations/layout/ingrid/images/template/simple_language.svg"
-             alt="$MESSAGES.getString('ingrid.page.logo.alt.header')"
+             alt="$MESSAGES.getString('ingrid.page.easylanguage.tooltip')"
              aria-hidden="true"
         />
     </a>
