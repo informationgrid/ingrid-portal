@@ -1,4 +1,24 @@
 
+## 7.2.3 (25.09.2024)
+
+### Features
+
+* Button "Registrieren" im Portal herausnehmen (#6779)
+* Aktive Ortsfilter im Portal besser darstellen (#6760)
+* Seitenname im Portal anpassen (#6740)
+* HVD-Darstellung im Portal (#6674)
+* "Kopieren"-Button an bestimmter Stelle im Portal anfügen (#6642)
+* Aufruf der Operation - Anpassung ähnlich #4570 umsetzen (#6636)
+* Migration zum IGE-NG (#6136)
+* Portal: Facetten - Mehrfachselektion ermöglichen (AdVMIS und BKG-MIS) (#3841)
+* Sortierreihenfolge für Anbieter in der Facettierung ändern (#3255)
+
+### Bugfixes
+
+* Anzeige der Adressen im Portal (#6773)
+* Portal: Tooltip in der Adresshierarchie korrigieren (#6765)
+* 7.2.1: Tabelle der Raumbezüge verschoben (#6689)
+    
 ## 7.2.2 (11.08.2024)
 
 ### Features
