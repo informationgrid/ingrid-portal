@@ -56,9 +56,9 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
         return "1"; 
     }
     
-    public String getAddressClassTitle(String addressType) {
+    public String getAddressClassTitle(String addressType, String uuid) {
         String addressTitle = null;
-        String xpathExpression = "./idf:hierarchyParty";
+        String xpathExpression = "./idf:hierarchyParty[@uuid='" + uuid + "']";
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
             Node node = xPathUtils.getNode(rootNode, xpathExpression);
             if(addressType.equals("2")){

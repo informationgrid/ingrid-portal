@@ -160,10 +160,14 @@ div.page-wrapper {
 }
 
 
-.sub-section, .section, h2, h3, h4, h5, div.data {
+.sub-section, .section, h3, h4, h5, div.data {
     margin-bottom: 0 !important;
 }
 
+/* do not break headers and content */
+h1, h2, h3, h4, h5 {
+    break-after: avoid;
+}
 
 /* do not break map */
 #map_detail {
@@ -187,5 +191,21 @@ button.js-close-expand-text {
 }
 
 button.js-open-expand-text {
+    display: none;
+}
+
+/* set link color to black */
+a {
+    color: black;
+    text-decoration: none; /* Remove underlines, if desired */
+}
+
+/* remove all links button */
+a.button.outline{
+    display: none;
+}
+
+/* remove overview */
+div.teaser-data.search{
     display: none;
 }

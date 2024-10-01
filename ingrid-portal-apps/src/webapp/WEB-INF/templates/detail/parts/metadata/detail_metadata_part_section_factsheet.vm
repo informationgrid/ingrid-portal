@@ -23,15 +23,15 @@
                 #set($tmpTitle = "time_reference")
             #end
             #if($tool.hasContent($atTime))
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $atTime")
+                #renderTextLabelAbove($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.at') $atTime")
             #elseif($beginTime == $endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at') $beginTime")
+                #renderTextLabelAbove($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.at') $beginTime")
             #elseif($beginTime && !$endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since') $beginTime$toIndeterminate")
+                #renderTextLabelAbove($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.since') $beginTime$toIndeterminate")
             #elseif(!$beginTime && $endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.until') $endTime")
+                #renderTextLabelAbove($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.until') $endTime")
             #elseif($beginTime != $endTime)
-                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
+                #renderTextLabelAbove($MESSAGES.getString("${tmpTitle}_entry") "$MESSAGES.getString('search.detail.time.from') $beginTime $MESSAGES.getString('search.detail.time.to') $endTime")
             #end
         #end
     ## URL des Zugangs
@@ -69,6 +69,18 @@
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
             #renderLinkListImageLimit($tmpTitle $getLinks false false 2 "")
+        </div>
+        #end
+    ## Ressourcen
+        #if($getDistributionLinks && $getDistributionLinks.size() > 0)
+        <div class="sub-section sub-section-unlined">
+            #set($tmpTitle = $MESSAGES.getString("Ressourcen"))
+            #set($tmpCount = $getDistributionLinks.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            <a class="anchor" id="${hashDetail3}_distribution"></a>
+            #renderLinkListImageLimit($tmpTitle $getDistributionLinks false false 2 "")
         </div>
         #end
     ## Zitat für diesen Datensatz

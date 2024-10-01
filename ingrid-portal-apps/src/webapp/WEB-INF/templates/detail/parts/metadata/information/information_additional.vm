@@ -26,6 +26,7 @@
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_geodatalink.vm")
     ## Medien
         #renderTable($TOOL.getMediumOptions($xPathAdditionalInfoMDDistribution))
+        #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_medien_copy_button.vm")
     ## Bestellinformationen
         #renderTextTableConvertUrl($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath($xPathAdditionalInfoOrderingInstructions) false false true)
     </div>
@@ -48,6 +49,8 @@
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_search_terms_invekos.vm")
         ## ISO-Themenkategorien
         #renderTableList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath($xPathKeywordsTopicCategory, "./gmd:MD_TopicCategoryCode", "527") true "search_terms_iso" 10)
+        ## HVD-Kategorie
+        #renderTableList($MESSAGES.getString("hvd_group") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "hvd") true "search_terms_hvd" 10)
         ## Suchbegriffe
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_search_terms.vm")
     </div>

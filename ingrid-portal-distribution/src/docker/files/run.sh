@@ -94,6 +94,12 @@ else
     sed -i 's/portal.enable.caching=true/portal.enable.caching='${PORTAL_CACHE_ENABLE}'/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
     sed -i 's/csw.interface.url=https:\/\/dev.informationgrid.eu\/csw/csw.interface.url='${PORTAL_CSW_URL}'/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
 
+    if [ "$CONTACT_REPORT_SUBJECT" ]; then
+        sed -i -e "s@contact.report.email.subject=.*@contact.report.email.subject=${CONTACT_REPORT_SUBJECT}@" webapps/ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ContactResources_de.properties
+        sed -i -e "s@contact.report.email.subject=.*@contact.report.email.subject=${CONTACT_REPORT_SUBJECT}@" webapps/ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ContactResources_en.properties
+        sed -i -e "s@contact.report.email.subject=.*@contact.report.email.subject=${CONTACT_REPORT_SUBJECT}@" webapps/ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ContactResources.properties
+    fi
+
     # handle portal profiles
     if [ "$PORTAL_PROFILE" ]; then
         echo "Using specific portal profile: $PORTAL_PROFILE"
@@ -101,6 +107,11 @@ else
         if [ ! -d "$PROFILES_DIR/$PORTAL_PROFILE" ]; then
             echo >&2 "PROFILE DIRECTORY NOT FOUND: '$PROFILES_DIR/$PORTAL_PROFILE'"
             exit 1
+        fi
+
+        if [ "$CONTACT_REPORT_SUBJECT" ]; then
+            sed -i -e "s@contact.report.email.subject=.*@contact.report.email.subject=${CONTACT_REPORT_SUBJECT}@" $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ProfileResources_de.properties
+            sed -i -e "s@contact.report.email.subject=.*@contact.report.email.subject=${CONTACT_REPORT_SUBJECT}@" $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ProfileResources_en.properties
         fi
 
         # NUMIS extends UVP layout

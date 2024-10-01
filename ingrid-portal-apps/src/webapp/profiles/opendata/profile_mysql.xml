@@ -17,7 +17,7 @@
         </page>
         <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>administration/admin-statistics.psml</name>
@@ -104,6 +104,15 @@
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/frontend/src</src>
+            <dst>ingrid-webmap-client/frontend/prd</dst>
         </file>
     </files>
     <sql>

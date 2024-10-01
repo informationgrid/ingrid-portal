@@ -20,10 +20,10 @@
         #if($timeTypeTitle)
             <b>$timeTypeTitle</b>:
         #end
-        #if($timeType.indexOf("seit") > -1 && !$t1.isEmpty())
-        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1$MESSAGES.getString('searchResult.hit.time.untilUnknown')</span>
-        #elseif($timeType.indexOf("seitX") > -1 && !$t1.isEmpty())
+        #if($timeType.indexOf("seitX") > -1 && !$t1.isEmpty())
         <span>$MESSAGES.getString('searchResult.hit.time.since') $t1$MESSAGES.getString('searchResult.hit.time.untilNow')</span>
+        #elseif($timeType.indexOf("seit") > -1 && !$t1.isEmpty())
+        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1$MESSAGES.getString('searchResult.hit.time.untilUnknown')</span>
         #elseif ($timeType.indexOf("von") > -1 && !$t1.isEmpty() && !$t2.isEmpty())
             #if ($t1 == $t2)
                 <span>$MESSAGES.getString('searchResult.hit.time.from') $t1</span>

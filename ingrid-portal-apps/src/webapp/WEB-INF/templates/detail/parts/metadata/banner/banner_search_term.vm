@@ -1,1 +1,1 @@
-#renderSearchTerm($searchTerm $hasAccessConstraints)
+#renderSearchTerm($searchTerm $hasAccessConstraints $hvdTerms)

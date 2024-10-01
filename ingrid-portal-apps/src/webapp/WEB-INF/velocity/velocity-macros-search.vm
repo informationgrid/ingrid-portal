@@ -577,10 +577,13 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #end
 #end
 
-#macro(renderSearchTerm $searchTerms $hasAccessConstraints)
+#macro(renderSearchTerm $searchTerms $hasAccessConstraints $extendedTerms)
     #set($searchTermsLowerCase = [])
     #foreach($searchTerm in $searchTerms)
         #set($add = $searchTermsLowerCase.add($searchTerm.toLowerCase()))
+    #end
+    #foreach($extendedTerm in $extendedTerms)
+        #set($add = $searchTermsLowerCase.add($extendedTerm.toLowerCase()))
     #end
     #if($searchTermsLowerCase.contains("inspireidentifiziert") || $searchTermsLowerCase.contains("inspire")
       || $searchTermsLowerCase.contains("opendata") || $searchTermsLowerCase.contains("opendataident") || $hasAccessConstraints == "Y")
@@ -600,8 +603,22 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         #if($searchTermsLowerCase.contains("opendata") || $searchTermsLowerCase.contains("opendataident"))
             <div class="helper icon info">
                 <span class="ic-ic-opendata" title="Open Data"></span>
-                <span class="text">Open Data</span>
+                <span class="text">Open Data
+                #if($hvdDisplayIcon)
+                    #set($isHVD = false)
+                    #foreach($hvdCategory in $hvdCategories)
+                        #if($searchTermsLowerCase.contains($hvdCategory.toLowerCase()))
+                            #set($isHVD = true)
+                            #break
+                        #end
+                    #end
+                    #if($isHVD)
+                        / HVD
+                    #end
+                #end
+                </span>
             </div>
+            
         #end
         </div>
     #end

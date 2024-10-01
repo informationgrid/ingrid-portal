@@ -146,7 +146,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if(resourceID.equals( "devPlanMarker" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
                 if(!queryString.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPMarkerBlp(request, response, queryString, null);
+                    UtilsPortletServeResources.getHttpMarkerUVPMarkerBlp(request, response, queryString, null, messages);
                 }
             }
 
@@ -172,7 +172,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if(resourceID.equals( "legendCounter" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_QUERY_LEGEND, "datatype:www OR datatype:metadata");
                 if(!queryString.isEmpty()) {
-                    UtilsPortletServeResources.getHttpMarkerUVPLegendCounter(request, response, queryString, null);
+                    UtilsPortletServeResources.getHttpMarkerUVPLegendCounter(request, response, queryString, null, messages);
                 }
             }
         } catch (Exception e) {

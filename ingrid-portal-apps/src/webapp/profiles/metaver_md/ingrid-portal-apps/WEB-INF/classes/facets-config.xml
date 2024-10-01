@@ -149,10 +149,17 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <display>true</display>
             </facet>
         <!-- Open Data -->
-           <facet>
+            <facet>
                 <name>Open Data</name>
                 <query>(t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
+                <display>true</display>
+            </facet>
+        <!-- HVD -->
+            <facet>
+                <name>HVD</name>
+                <query>(t04_search.searchterm:"opendata" OR t04_search.searchterm:"opendataident") (t04_search.searchterm:"Meteorologie" OR t04_search.searchterm:"Unternehmen und Eigentümerschaft von Unternehmen" OR t04_search.searchterm:"Georaum" OR t04_search.searchterm:"Mobilität" OR t04_search.searchterm:"Erdbeobachtung und Umwelt" OR t04_search.searchterm:"Statistik")</query>
+                <id>hvd</id>
                 <display>true</display>
             </facet>
         <!-- Adv -->
@@ -308,7 +315,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Anbieter -->
     <!-- Standard - Kann nicht erweitert werden -->
-    <facet sort="SORT_BY_VALUE_DESC">
+    <facet sort="SORT_BY_NAME">
         <name>searchResult.facete.title.provider</name>
         <id>provider</id>
     </facet>

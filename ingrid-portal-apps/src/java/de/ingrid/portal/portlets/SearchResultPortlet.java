@@ -140,7 +140,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if(resourceID.equals( "facetValue" )){
                 String facetId = request.getParameter("facetId");
                 if(facetId != null) {
-                    UtilsPortletServeResources.getHttpFacetValue(request, response, config, facetId);
+                    UtilsPortletServeResources.getHttpFacetValue(request, response, config, facetId, messages);
                 }
             }
         } catch (Exception e) {
@@ -185,6 +185,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
         context.put("hideGeodataSetOnOpenData", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_HIDE_GEODATASET_ON_OPENDATA, false));
+        context.put("hvdDisplayIcon", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_HVD_DISPLAY_ICON, false));
+        context.put("hvdCategories", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_HIT_HVD_CATEGORIES));
 
         context.put("exportCSV", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_EXPORT_CSV, false));
         context.put("exportCSVRequestedFields", PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_EXPORT_CSV_REQUESTED_FIELDS));
@@ -376,7 +378,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         } else {
             // process query, create QueryDescriptor
-            qd = QueryPreProcessor.createRankedQueryDescriptor(request);
+            qd = QueryPreProcessor.createRankedQueryDescriptor(request, messages);
             if (qd != null) {
                 query = qd.getQuery();
                 if(request.getParameter("rank") != null) {
@@ -535,7 +537,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("rankedPageSelector", rankedPageNavigation);
         if(rankedHits != null && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
             UtilsFacete.checkForExistingFacete((IngridHitsWrapper) rankedHits, request);
-            UtilsFacete.setParamsToContext(request, context);
+            UtilsFacete.setParamsToContext(request, context, messages);
         }
         context.put("rankedResultList", rankedHits);
         context.put("rankedSearchFinished", rankedSearchFinished);
@@ -575,7 +577,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             IOException {
         // check whether page navigation was clicked and send according message (Search state)
          PortletSession ps = request.getPortletSession();
-        
+         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                 request.getLocale()), request.getLocale());
+
         // NO GROUPING
         String rankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
         if (rankedStarthit != null) {
@@ -606,7 +610,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if (queryType != null && queryType.equals(Settings.MSGV_NO_QUERY)) {
                 SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
             }
-            url = UtilsFacete.setFaceteParamsToSessionByAction(request);
+            url = UtilsFacete.setFaceteParamsToSessionByAction(request, messages);
         }
         
         String doRanking = request.getParameter("ranking");

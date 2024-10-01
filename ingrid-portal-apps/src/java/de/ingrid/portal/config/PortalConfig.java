@@ -150,8 +150,6 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
 
-    public static final String PORTAL_ENABLE_NEW_USER = "portal.enable.new.user";
-
     public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
 
     public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
@@ -223,6 +221,10 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_HIT_HIDE_GEODATASET_ON_OPENDATA = "portal.search.hit.hide.geodataset.on.opendata";
 
+    public static final String PORTAL_SEARCH_HIT_HVD_DISPLAY_ICON = "portal.search.hit.hvd.display.icon";
+
+    public static final String PORTAL_SEARCH_HIT_HVD_CATEGORIES = "portal.search.hit.hvd.categories";
+    
     public static final String PORTAL_SEARCH_HIT_SUMMARY_ABSTRACT_FIELD = "portal.search.hit.summary.abstract.field";
 
     public static final String PORTAL_SEARCH_HIT_CUTTED_SUMMARY_HTML_NEW_LINE = "portal.search.hit.cutted.summary.html.new.line";

@@ -139,6 +139,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>Art der Ressource</name>
         <id>type</id>
         <isOpen>true</isOpen>
+        <queryType>OR</queryType>
         <facets>
         <!-- Anwendung -->
             <facet>
@@ -147,6 +148,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>application</id>
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>6</codelist-entry-id>
+                <display>true</display>
             </facet>
         <!-- Geo-Information / Karte -->
             <facet>
@@ -155,6 +157,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>map</id>
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>1</codelist-entry-id>
+                <display>true</display>
             </facet>
         <!-- Geodatendienst -->
             <facet>
@@ -163,12 +166,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>geoservice</id>
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>3</codelist-entry-id>
-            </facet>
-        <!-- Sonstige -->
-             <facet>
-                <name>Sonstige</name>
-                <query>-t01_object.obj_class:1 -t01_object.obj_class:3 -t01_object.obj_class:6</query>
-                <id>others</id>
+                <display>true</display>
             </facet>
         </facets>
     </facet>
@@ -177,24 +175,28 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>Art der Dienste</name>
         <id>service_type</id>
         <isOpen>true</isOpen>
+        <queryType>OR</queryType>
         <facets>
         <!-- Darstellungsdienste -->
             <facet>
                 <name>Darstellungsdienste</name>
                 <query>t01_object.obj_class:3 (t011_obj_serv.type:view OR t011_obj_serv.type:wms OR t011_obj_serv.type:wmts OR t011_obj_serv.type:map)</query>
                 <id>service_type_view</id>
+                <display>true</display>
             </facet>
         <!-- Downloaddienste -->
             <facet>
                 <name>Downloaddienste</name>
                 <query>t01_object.obj_class:3 (t011_obj_serv.type:download OR t011_obj_serv.type:feature OR t011_obj_serv.type:wcs OR t011_obj_serv.type:wfs OR t011_obj_serv.type:atom OR t011_obj_serv.type:ogcapifeature OR t011_obj_serv.type:"api feature")</query>
                 <id>service_type_download</id>
+                <display>true</display>
             </facet>
         <!-- Darstellungsdienste -->
             <facet>
                 <name>Sonstige Dienste</name>
                 <query>t01_object.obj_class:3 (-t011_obj_serv.type:view -t011_obj_serv.type:wms -t011_obj_serv.type:wmts -t011_obj_serv.type:map -t011_obj_serv.type:download -t011_obj_serv.type:feature -t011_obj_serv.type:wcs -t011_obj_serv.type:wfs -t011_obj_serv.type:atom -t011_obj_serv.type:ogcapifeature -t011_obj_serv.type:"api feature")</query>
                 <id>service_type_others</id>
+                <display>true</display>
             </facet>
         </facets>
     </facet>

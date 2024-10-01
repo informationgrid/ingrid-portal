@@ -92,7 +92,7 @@
     request.setAttribute("browser", "moz") will be called.
 
     -->
-    
+
     <!-- Startseite  -->
     <rule>
         <from>/startseite</from>
@@ -102,7 +102,7 @@
         <from>/portal/default-page.psml</from>
         <to>/startseite</to>
     </outbound-rule>
-    
+
     <!-- Hauptsuche   -->
     <rule>
         <from>/freitextsuche</from>
@@ -112,7 +112,7 @@
         <from>/portal/main-search.psml</from>
         <to>/freitextsuche</to>
     </outbound-rule>
-    
+
     <!--  Suche - Datenkataloge - Hierarchiebaum -->
     <rule>
         <from>/themenuebersicht</from>
@@ -122,7 +122,7 @@
         <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
         <to>/themenuebersicht</to>
     </outbound-rule>
-    
+
     <!--  Messwerte  -->
     <rule>
         <from>/messwertsuche</from>
@@ -132,7 +132,7 @@
         <from>/portal/main-measures.psml</from>
         <to>/messwertsuche</to>
     </outbound-rule>
-    
+
     <!--  Umweltthemen  -->
     <rule>
         <from>/themensuche</from>
@@ -142,7 +142,7 @@
         <from>/portal/main-environment.psml</from>
         <to>/themensuche</to>
     </outbound-rule>
-    
+
     <!--  Karten   -->
     <rule>
         <from>/kartendienste</from>
@@ -152,7 +152,7 @@
         <from>/portal/main-maps.psml</from>
         <to>/kartendienste</to>
     </outbound-rule>
-    
+
     <!-- Über InGrid-Portal  -->
     <rule>
         <from>/hintergrundinformationen</from>
@@ -192,7 +192,7 @@
         <from>/portal/main-about-data-source.psml</from>
         <to>/datenquellen</to>
     </outbound-rule>
-    
+
     <!-- Mein Portal  -->
     <rule>
         <from>/log-in</from>
@@ -202,7 +202,7 @@
         <from>/portal/service-myportal.psml</from>
         <to>/log-in</to>
     </outbound-rule>
-    
+
     <!-- Datenschutzbestimmung   -->
     <rule>
         <from>/datenschutzbestimmung</from>
@@ -212,7 +212,7 @@
         <from>/portal/privacy.psml</from>
         <to>/datenschutzbestimmung</to>
     </outbound-rule>
-    
+
     <!-- Weitere Meldungen  -->
     <rule>
         <from>/neuigkeiten</from>
@@ -222,7 +222,7 @@
         <from>/portal/rss-news.psml</from>
         <to>/neuigkeiten</to>
     </outbound-rule>
-    
+
     <!--  Inhaltsübersicht  -->
     <rule>
         <from>/inhaltsverzeichnis</from>
@@ -232,7 +232,7 @@
         <from>/portal/service-sitemap.psml</from>
         <to>/inhaltsverzeichnis</to>
     </outbound-rule>
-    
+
     <!-- Kontakt   -->
     <rule>
         <from>/kontakt</from>
@@ -242,7 +242,7 @@
         <from>/portal/service-contact.psml</from>
         <to>/kontakt</to>
     </outbound-rule>
-    
+
     <!-- Impressum   -->
     <rule>
         <from>/impressum</from>
@@ -256,7 +256,7 @@
     <!-- Barrierefreiheit  -->
     <rule>
         <from>/barrierefreiheit</from>
-        <to type="redirect">https://www.lubw.baden-wuerttemberg.de/erklaerung-zur-barrierefreiheit</to>
+        <to type="forward">/portal/accessibility.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/accessibility.psml</from>
@@ -282,7 +282,7 @@
         <from>/portal/search-detail.psml</from>
         <to>/trefferanzeige</to>
     </outbound-rule>
-    
+
     <!-- Help -->
     <rule>
         <from>/hilfe</from>
@@ -292,5 +292,5 @@
         <from>/portal/help.psml</from>
         <to>/hilfe</to>
     </outbound-rule>
-    
+
 </urlrewrite>

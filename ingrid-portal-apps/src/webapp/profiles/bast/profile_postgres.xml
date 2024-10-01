@@ -75,6 +75,18 @@
                 </portlet>
             </portlets>
         </page>
+        <page>
+            <name>main-search.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimpleResult</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::SearchResult</name>
+                </portlet>
+            </portlets>
+        </page>
     </pages>
     <files>
         <!-- COPY BASt FILES -->
@@ -97,6 +109,10 @@
         </file>
     </files>
     <sql>
+        <!-- Change 'ingrid-portal-apps::SearchSimpleResult' decorator -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-clear' WHERE name='ingrid-portal-apps::SearchSimpleResult';]]>
+        </execute>
         <execute>
             <![CDATA[CREATE TABLE IF NOT EXISTS tmp_table (item_key varchar(255) NOT NULL\, item_value integer);]]>
         </execute>
