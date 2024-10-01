@@ -1,4 +1,36 @@
 
+## 7.3.0 (01.10.2024)
+
+### Features
+
+* Button "Registrieren" im Portal herausnehmen (#6779)
+* Aktive Ortsfilter im Portal besser darstellen (#6760)
+* Seitenname im Portal anpassen (#6740)
+* HVD-Darstellung im Portal (#6674)
+* "Kopieren"-Button an bestimmter Stelle im Portal anfügen (#6642)
+* Suchfacettierung "Anbieter" entfernen (#6639)
+* Austausch Icon Geodatensatz auf der Startseite (#6638)
+* Aufruf der Operation - Anpassung ähnlich #4570 umsetzen (#6636)
+* "Ähnliche Begriffe" ausblenden (#6614)
+* Anlegen der Seite "Erklärung zur Barrierefreiheit" (#6548)
+* Umbenennung Button "Alle Einschränkungen löschen" (#6517)
+* AdV-MIS: Portalausgabe: Zeitbezug - anders betiteln (#6516)
+* Email Betreff von automatischen Benachrichtgungen flexibilisieren (#6483)
+* Portal-Darstellung HVD Datensätze (#6438)
+* Einrichtung einer DEMO Instanz für den OpenData Anwendungsfall (#6205)
+*  Bereitstellen von Daten in den Workflow „Editieren von Metadaten“ integrieren (UVP-Lösung) (#6204)
+* Migration zum IGE-NG (#6136)
+* PORTAL: Druck-Layout für Detaildarstellung optimieren (#4848)
+* Portal: Facetten - Mehrfachselektion ermöglichen (AdVMIS und BKG-MIS) (#3841)
+* Sortierreihenfolge für Anbieter in der Facettierung ändern (#3255)
+
+### Bugfixes
+
+* Anzeige der Adressen im Portal (#6773)
+* Portal: Tooltip in der Adresshierarchie korrigieren (#6765)
+* 7.2.1: Tabelle der Raumbezüge verschoben (#6689)
+* Account anlegen - Request Error Diagnostics (#6626)
+    
 ## 7.1.0 (27.03.2024)
 
 ### Features
