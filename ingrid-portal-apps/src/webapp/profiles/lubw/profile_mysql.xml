@@ -16,10 +16,6 @@
             <hidden>false</hidden>
         </page>
         <page>
-            <name>sign-language.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>main-about-partner.psml</name>
             <hidden>true</hidden>
         </page>
@@ -38,6 +34,14 @@
         <page>
             <name>application/main-application.psml</name>
             <hidden>true</hidden>
+        </page>
+        <page>
+            <name>easy-language.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>sign-language.psml</name>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>default-page.psml</name>
