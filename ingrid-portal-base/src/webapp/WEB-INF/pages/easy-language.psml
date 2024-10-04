@@ -1,0 +1,22 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>ingrid.page.easylanguage.tooltip</title>
+  <short-title>ingrid.page.easylanguage</short-title>
+  <metadata name="meta_title">ingrid.page.easylanguage.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.easylanguage.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.easylanguage.meta.keywords</metadata>
+
+  <fragment id="easylanguage" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="easylanguage-1" type="portlet" name="ingrid-portal-apps::EasyLanguagePortlet">
+      <property layout="OneColumn" name="row" value="0" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
