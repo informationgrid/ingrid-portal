@@ -250,7 +250,7 @@
             <description>This is the template in which you setup an email to be sent after user exists</description>
             <name>emailTemplate</name>
             <value>/WEB-INF/templates/administration/userCreatedConfirmationEmail.vm</value>
-        </init-param> 
+        </init-param>
 <!--
         This overrides the settings in jetspeed.properties
 -->
@@ -263,7 +263,7 @@
             <description>This option defines the groups a new user will be registered with</description>
             <name>groups</name>
             <value></value>
-        </init-param>   
+        </init-param>
         <init-param>
             <description>This option defines the rule names a new user will be registered with</description>
             <name>rulesNames</name>
@@ -273,7 +273,7 @@
             <description>This option defines the rule values a new user will be registered with</description>
             <name>rulesValues</name>
             <value>page</value>
-        </init-param>   
+        </init-param>
     </portlet>
 
     <portlet id="AdminIPlugPortlet">
@@ -414,7 +414,7 @@
             <name>ViewPage</name>
             <value>/WEB-INF/templates/administration/admin_homepage.vm</value>
         </init-param>
-        
+
         <portlet-name>AdminHomepagePortlet</portlet-name>
         <display-name>AdminHomepagePortlet</display-name>
         <description>This portlet displays the home page personalization dialog.</description>
@@ -480,7 +480,7 @@
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
-    
+
     <!-- *********************** -->
     <!-- Home                    -->
     <!-- *********************** -->
@@ -546,7 +546,7 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>
     </portlet>
-    
+
     <portlet id="CategoryTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -604,7 +604,7 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle>
         <portlet-preferences>
-            <!-- 
+            <!--
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
@@ -705,7 +705,7 @@
                 <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
-        
+
     </portlet>
 
     <portlet id="CMSPortlet">
@@ -827,7 +827,7 @@
             </preference>
         </portlet-preferences>
     </portlet>
-    
+
     <portlet id="PrivacyPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -884,6 +884,86 @@
             <preference>
                 <name>cmsKey</name>
                 <value>portal.accessibility</value>
+            </preference>
+            <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="EasyLanguagePortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_info.vm</value>
+        </init-param>
+        <portlet-name>EasyLanguagePortlet</portlet-name>
+        <display-name>Easy language portlet</display-name>
+        <description>This portlet displays the information about easy language.</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>easylanguage.title</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/easy_language.vm</value>
+            </preference>
+            <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="SignLanguagePortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_info.vm</value>
+        </init-param>
+        <portlet-name>SignLanguagePortlet</portlet-name>
+        <display-name>Sign language portlet</display-name>
+        <description>This portlet displays the information about sign language.</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>signlanguage.title</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/sign_language.vm</value>
             </preference>
             <preference>
                 <name>bannerStyle</name>
@@ -1046,7 +1126,7 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
-            <!-- 
+            <!--
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
@@ -1190,7 +1270,7 @@
         <init-param>
            <description>This parameter sets the url to which folks will return after they receive an email</description>
            <name>returnURL</name>
-                <!-- the current system simply return the user to the default page where this portlet provides feedback --> 
+                <!-- the current system simply return the user to the default page where this portlet provides feedback -->
            <value>/myportal-create-account.psml</value>
         </init-param>
         <init-param>
@@ -1256,7 +1336,7 @@
             <name>ViewPage</name>
             <value>/WEB-INF/templates/myportal/myportal_edit_account.vm</value>
         </init-param>
-        
+
         <portlet-name>MyPortalEditAccountPortlet</portlet-name>
         <display-name>MyPortalEditAccountPortlet</display-name>
         <description>This portlet displays the myportal edit account dialog.</description>
@@ -1296,7 +1376,7 @@
             <description>This is the template in which you setup an email to be sent after user exists</description>
             <name>emailTemplate</name>
             <value>/WEB-INF/templates/myportal/forgottenPasswdEmail.vm</value>
-        </init-param> 
+        </init-param>
         <portlet-name>MyPortalPasswordForgottenPortlet</portlet-name>
         <display-name>MyPortalPasswordForgottenPortlet</display-name>
         <description>This portlet displays the myportal password forgotten dialog.</description>
@@ -1364,7 +1444,7 @@
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
     </portlet>
-    
+
     <portlet id="ShowDataSourcePortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -1399,7 +1479,7 @@
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
     </portlet>
-        
+
     <portlet id="MeasuresSearch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -1440,13 +1520,13 @@
             <title>Karten</title>
             <short-title>ShowMapsPortlet</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle>
     </portlet>
 
     <!-- *********************** -->
     <!-- Search (general)        -->
     <!-- *********************** -->
-    
+
     <portlet id="SearchSimilar">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -1466,7 +1546,7 @@
             <title>Similar Terms</title>
             <short-title>SimilarTerms</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle>
     </portlet>
 
     <portlet id="SearchResult">
@@ -1498,9 +1578,9 @@
                 <value>1</value>
             </preference>
         </portlet-preferences>
-        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle>
     </portlet>
-    
+
     <portlet id="SearchDetail">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -1578,9 +1658,9 @@
             <title>SprachUmsteller</title>
             <short-title>LangSwitch</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle>
     </portlet>
-    
+
     <portlet id="LanguageSwitchMobile">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -1600,6 +1680,6 @@
             <title>SprachUmsteller</title>
             <short-title>LangSwitch</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle>
     </portlet>
 </portlet-app>
