@@ -2983,7 +2983,7 @@ public class UtilsFacete {
             if(type != null){
                 // OR
                 if(type.equals("OR")){
-                    String orQuery = "(";
+                    String orQuery = "";
                     boolean hasSelected = false;
                     boolean hasSelectedToggle = false;
                     
@@ -3021,16 +3021,19 @@ public class UtilsFacete {
                             }
                         }
                         if(!query.isEmpty()) {
-                            if(orQuery.equals("(")){
+                            if(!orQuery.isEmpty()){
                                 orQuery += "(" + query + ")";
                             }else{
                                 orQuery += " OR (" + query + ")";
                             }
                         }
                     }
-                    orQuery += ")";
-                    if(!orQuery.equals("()")){
-                        term = term + " " + orQuery;
+                    if(!orQuery.equals("")){
+                        if(term.isEmpty()) {
+                            term = orQuery;
+                        } else {
+                            term = term + " (" + orQuery + ")";
+                        }
                     }
                 }
             }else{
