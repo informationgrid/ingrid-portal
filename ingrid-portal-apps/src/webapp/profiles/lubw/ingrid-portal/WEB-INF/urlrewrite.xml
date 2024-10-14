@@ -195,12 +195,12 @@
 
     <!-- Mein Portal  -->
     <rule>
-        <from>/log-in</from>
+        <from>/portal-login</from>
         <to type="forward">/portal/service-myportal.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-myportal.psml</from>
-        <to>/log-in</to>
+        <to>/portal-login</to>
     </outbound-rule>
 
     <!-- Datenschutzbestimmung   -->
@@ -312,5 +312,11 @@
         <from>/portal/help.psml</from>
         <to>/hilfe</to>
     </outbound-rule>
+
+    <!-- IGE-NG -->
+    <rule>
+        <from>/log-in</from>
+        <to type="permanent-redirect">/ige-ng</to>
+    </rule>
 
 </urlrewrite>
