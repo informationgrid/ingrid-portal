@@ -3021,7 +3021,7 @@ public class UtilsFacete {
                             }
                         }
                         if(!query.isEmpty()) {
-                            if(!orQuery.isEmpty()){
+                            if(orQuery.isEmpty()){
                                 orQuery += "(" + query + ")";
                             }else{
                                 orQuery += " OR (" + query + ")";
