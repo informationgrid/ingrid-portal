@@ -177,14 +177,14 @@ header .button .ic-ic-hamburger:before {
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
+}
 
-  a:first-child {
-    margin-left: 15px;
-  }
+.side-logos a:first-child {
+  margin-left: 15px;
+}
 
-  img {
-    max-width: 100px;
-  }
+.side-logos img {
+  max-width: 100px;
 }
 
 .shrink .side-logos {
