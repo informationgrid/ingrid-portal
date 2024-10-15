@@ -22,11 +22,9 @@
  */
 package de.ingrid.portal.global;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,12 +33,14 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UtilsString {
 
     private static final Logger log = LoggerFactory.getLogger(UtilsString.class);
 
-    private static final String regexUrlFinder = "((((ftp|https?):\\/\\/)|(w{3}.))[\\-\\w@:%_\\+.~#?,&\\/\\/=]+)[^ ,.]";
+    private static final String regexUrlFinder = "((((ftp|https?):\\/\\/)|(w{3}.))[\\-A-Za-zÀ-ž-0-9_@:%_\\+.~#?,&\\/\\/=]+)[^ ,.]";
 
     // see http://hotwired.lycos.com/webmonkey/reference/special_characters/
     static Object[][] entities = {
@@ -561,7 +561,8 @@ public class UtilsString {
                     if(validateString.startsWith("www.")) {
                         validateString = "https://" + validateString;
                     }
-                    if(validator.isValid(validateString)) {
+                    String encodedString = replaceUmlauts(validateString);
+                    if(validator.isValid(encodedString)) {
                         if(StringUtils.countMatches(validateString, "(") == StringUtils.countMatches(validateString, ")")){
                             StringBuilder sbAddTo = new StringBuilder();
                             while(s.endsWith(".") || s.endsWith(",") || s.endsWith("!")) {
@@ -605,4 +606,20 @@ public class UtilsString {
         }
         return text;
     }
+
+    public static String replaceUmlauts(String text) {
+        String replaceString = text;
+        try {
+            replaceString = replaceString.replaceAll("Ä",URLEncoder.encode("Ä", "UTF-8"));
+            replaceString = replaceString.replaceAll("ä",URLEncoder.encode("ä", "UTF-8"));
+            replaceString = replaceString.replaceAll("Ö",URLEncoder.encode("Ö", "UTF-8"));
+            replaceString = replaceString.replaceAll("ö",URLEncoder.encode("ö", "UTF-8"));
+            replaceString = replaceString.replaceAll("Ü",URLEncoder.encode("Ü", "UTF-8"));
+            replaceString = replaceString.replaceAll("ü",URLEncoder.encode("ü", "UTF-8"));
+            replaceString = replaceString.replaceAll("ß",URLEncoder.encode("ß", "UTF-8"));
+        } catch (Exception e) {
+        }
+        return replaceString;
+    }
+
 }
