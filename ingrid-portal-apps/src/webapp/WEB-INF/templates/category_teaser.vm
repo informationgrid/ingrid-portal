@@ -216,7 +216,7 @@
 #macro (addToggleParams $tmpFacets $param)
     #if($tmpFacets)
         #foreach($tmpFacet in $tmpFacets)
-            #if($tmpFacet.getFacets().size() > 0)
+            #if($tmpFacet.getFacets() && $tmpFacet.getFacets().size() > 0)
                 #set($length = $tmpFacet.getFacets().size() - 1)
                 #foreach($num in [0..$length])
                     #if($tmpFacet.getFacets().get($num))
