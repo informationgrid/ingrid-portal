@@ -1,4 +1,17 @@
 
+## 7.3.2 (16.10.2024)
+
+### Features
+
+* Login-Seiten umstellen (#6853)
+* Portal: Filterung nach Aktualität, Ergebnisliste verändern (#6793)
+
+### Bugfixes
+
+* AdV-MIS: Filterung "Sonstige Dienste" funktioniert nicht erwartungsgemäß (#6892)
+* Anpassung der Facetten greift nicht mehr? (#6887)
+* Portal: Wandlung URL in Hyperlink in Fließtext - Abbruch an Umlaut "ä"  (#6833)
+    
 ## 7.3.0 (01.10.2024)
 
 ### Features
