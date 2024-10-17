@@ -407,6 +407,7 @@
 #end
 
 #macro (renderFaceteSelectedAttributeNumber $doAction $facet $tooltip $number $isDelete)
+    #if(!$facet.isHiddenSelect())
     <div class="form-element boxed">
         <div class="input-check">
             <div class="control-group">
@@ -450,6 +451,7 @@
             </div>
         </div>
     </div>
+    #end
 #end
 
 #macro (renderFaceteSelectedAttributeHashMapNumber $doAction $title $numbers $key $isDelete)

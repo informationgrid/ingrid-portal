@@ -509,6 +509,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <from>P5YT</from>
                 <to>PT</to>
                 <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
+                <hidden>procedure_10_time</hidden>
             </facet>
             <!-- Älter als 5 Jahre -->
             <facet>

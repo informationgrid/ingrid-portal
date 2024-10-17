@@ -243,6 +243,7 @@ public class UtilsFacete {
 
         sortingFacet(config);
         selectedFacet(config);
+        hiddenFacet(config);
         context.put("facetConfig", config);
         context.put("facetKeys", keys);
         context.put(Settings.PARAM_FACET, request.getParameter(Settings.PARAM_FACET));
@@ -2425,6 +2426,43 @@ public class UtilsFacete {
             for(IngridFacet facet : config){
                 if(facet.getFacets() != null){
                     facet.setSelect(selectedFacetCheck(facet.getFacets()));
+                }
+            }
+        }
+    }
+
+    private static void hiddenFacet(List<IngridFacet> config){
+        hiddenFacet(config, null);
+    }
+
+    private static void hiddenFacet(List<IngridFacet> config, List<IngridFacet> children){
+        if(config != null){
+            List<IngridFacet> tmpList = config;
+            if(children != null) {
+                tmpList = children;
+            }
+            for(IngridFacet facet : tmpList){
+                ArrayList<IngridFacet> facetHidList = (ArrayList<IngridFacet>) getHiddenFacetById(config, new ArrayList<>(), facet.getId());
+                for(IngridFacet facetHid : facetHidList){
+                    boolean isHiddenSelect = false;
+                    if(facet.isSelect()){
+                        isHiddenSelect = true;
+                    }
+                    facetHid.setHiddenSelect(isHiddenSelect);
+                }
+                if(facet.getToggle() != null){
+                    IngridFacet toggle = facet.getToggle();
+                    facetHidList = (ArrayList<IngridFacet>) getHiddenFacetById(config, new ArrayList<>(), toggle.getId());
+                    for(IngridFacet facetHid : facetHidList){
+                        boolean isHiddenSelect = false;
+                        if(toggle.isSelect()){
+                            isHiddenSelect = true;
+                        }
+                        facetHid.setHiddenSelect(isHiddenSelect);
+                    }
+                }
+                if(facet.getFacets() != null){
+                    hiddenFacet(config, facet.getFacets());
                 }
             }
         }
