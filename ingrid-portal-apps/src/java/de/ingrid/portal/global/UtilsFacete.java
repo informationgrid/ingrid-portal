@@ -3021,10 +3021,10 @@ public class UtilsFacete {
             if(type != null){
                 // OR
                 if(type.equals("OR")){
-                    String orQuery = "";
                     boolean hasSelected = false;
                     boolean hasSelectedToggle = false;
-                    
+                    ArrayList<String> queries = new ArrayList<>();
+                    String orQuery = "";
                     for(IngridFacet ingridFacet : facets){
                         if(ingridFacet.isSelect()) {
                             hasSelected = true;
@@ -3059,19 +3059,25 @@ public class UtilsFacete {
                             }
                         }
                         if(!query.isEmpty()) {
-                            if(orQuery.isEmpty()){
-                                orQuery += "(" + query + ")";
-                            }else{
-                                orQuery += " OR (" + query + ")";
-                            }
+                            queries.add(query);
                         }
                     }
-                    if(!orQuery.equals("")){
-                        if(term.isEmpty()) {
-                            term = orQuery;
-                        } else {
-                            term = term + " (" + orQuery + ")";
+                    for (String q : queries) {
+                        if(!orQuery.isEmpty()) {
+                            orQuery += " OR ";
                         }
+                        if(queries.size() > 1 ) {
+                            orQuery += "(" + q + ")";
+                        } else {
+                            orQuery += q;
+                        }
+                    }
+                    if(!orQuery.isEmpty()){
+                        if(!term.isEmpty()) {
+                            term = "(" + term + ") ";
+                            orQuery = "(" + orQuery + ")";
+                        }
+                        term = term + orQuery;
                     }
                 }
             }else{
