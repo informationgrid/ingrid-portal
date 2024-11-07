@@ -56,6 +56,12 @@ UPDATE page SET is_hidden = 1 WHERE path = '/main-about-partner.psml';
 -- Hide '/application/main-application.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
 
+-- Hide 'mdek/mdek_portal_admin.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/mdek/mdek_portal_admin.psml';
+
+-- Set folder "/mdek" to hidden
+UPDATE folder SET is_hidden = 1 WHERE path = '/mdek';
+
 -- Hide folder "/application" to display
 UPDATE folder SET is_hidden = 1 WHERE path = '/application';
 
