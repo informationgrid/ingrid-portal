@@ -9,6 +9,12 @@
     $(".filter .filter-wrapper").getNiceScroll().resize();
   });
 
+  $('.filter .filter-wrapper .more').bind('click',function(){
+    setTimeout(function(){
+      $(".filter .filter-wrapper").getNiceScroll().resize();
+    }, 500);
+  });
+
   $('.filter .accordion-title').bind('click',function(){
     setTimeout(function(){
       $(".filter .filter-wrapper").getNiceScroll().resize();
