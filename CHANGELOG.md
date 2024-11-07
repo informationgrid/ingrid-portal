@@ -1,4 +1,16 @@
 
+## 7.3.3 (07.11.2024)
+
+### Features
+
+* Portal: Filterung nach Aktualität, Ergebnisliste verändern (#6793)
+* Einfügen zweier Logos in die Kopfzeile der RIPS-Metadaten sowie der verlinkten Seiten (#6549)
+
+### Bugfixes
+
+* PORTAL: CSV-Download funktioniert nicht mehr (#6961)
+* Facettierung fehlerhaft (#6925)
+    
 ## 7.3.2 (16.10.2024)
 
 ### Features
