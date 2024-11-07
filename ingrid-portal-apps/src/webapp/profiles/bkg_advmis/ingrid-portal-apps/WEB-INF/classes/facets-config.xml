@@ -142,21 +142,28 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <queryType>OR</queryType>
         <facets>
         <!-- Daten -->
-            <facet>
+            <facet isSelect="true">
                 <name>Daten</name>
-                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType OR hierarchylevel:tile)</query>
+                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType)</query>
                 <id>data</id>
                 <display>true</display>
             </facet>
-        <!-- Dienste -->
+        <!-- Kacheln -->
             <facet>
+                <name>Kacheln</name>
+                <query>datatype:metadata hierarchylevel:tile</query>
+                <id>tile</id>
+                <display>true</display>
+            </facet>
+        <!-- Dienste -->
+            <facet isSelect="true">
                 <name>Dienste</name>
                 <query>hierarchylevel:service</query>
                 <id>service</id>
                 <display>true</display>
             </facet>
         <!-- Anwendungen -->
-             <facet>
+             <facet isSelect="true">
                 <name>Anwendungen</name>
                 <query>hierarchylevel:application</query>
                 <id>others</id>
