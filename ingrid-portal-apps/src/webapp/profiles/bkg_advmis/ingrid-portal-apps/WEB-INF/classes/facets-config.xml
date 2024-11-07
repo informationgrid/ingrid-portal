@@ -499,7 +499,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Geo-Information / Karte -->
             <facet>
                 <name>Daten</name>
-                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType OR hierarchylevel:tile)</query>
+                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType)</query>
                 <id>data</id>
                 <parentId>type</parentId>
                 <icon>ic-map</icon>
