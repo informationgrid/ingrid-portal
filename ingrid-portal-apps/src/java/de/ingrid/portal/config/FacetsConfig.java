@@ -131,6 +131,13 @@ public class FacetsConfig {
                     }
                 }
 
+                if (!facetNode.getAttributes( "isSelect" ).isEmpty()) {
+                    Node node = (Node) facetNode.getAttributes( "isSelect" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setSelect(Boolean.parseBoolean(node.getValue().toString()));
+                    }
+                }
+
                 if (!facetNode.getAttributes( "sort" ).isEmpty()) {
                     Node subNode = (Node) facetNode.getAttributes( "sort" ).get( 0 );
                     ingridFacet.setSort( subNode.getValue().toString() );
