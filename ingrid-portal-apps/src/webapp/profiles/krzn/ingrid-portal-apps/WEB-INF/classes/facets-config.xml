@@ -235,31 +235,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <dependency>metadata</dependency>
     </facet>
     <!-- Raumbezug -->
-    <!-- Standard - Kann nicht erweitert werden -->
-    <facet>
-        <name>searchResult.facete.title.area</name>
-        <id>area</id>
-        <hidden>address</hidden>
-    </facet>
     <facet>
         <name>searchResult.facete.title.area</name>
         <id>area.map</id>
         <hidden>address</hidden>
         <options>inside,intersect,include</options>
-    </facet>
-    <!-- Raumbezug Adressen-->
-    <!-- Standard - Kann nicht erweitert werden -->
-    <facet>
-        <name>searchResult.facete.title.area.address</name>
-        <dependency>address</dependency>
-        <id>area.address</id>
-    </facet>
-    <!-- Attribute (Forschungsprojekte)-->
-    <!-- Standard - Kann nicht erweitert werden -->
-    <facet>
-        <name>searchResult.facete.title.attribute</name>
-        <dependency>research</dependency>
-        <id>attribute</id>
     </facet>
     <!-- Kategorie -->
     <facet>
