@@ -1,3 +1,22 @@
-<div class="columns">
-    TBD
+<div id="easy-language">
+    #parse ('/WEB-INF/templates/easy_language/easy_language_section_01.vm')
+    #parse ('/WEB-INF/templates/easy_language/easy_language_section_02.vm')
+    #parse ('/WEB-INF/templates/easy_language/easy_language_section_03.vm')
 </div>
+
+<script>
+    document.querySelectorAll('section button').forEach((element) => {
+        element.addEventListener('click', (event) => toggleExpandable(event));
+    });
+
+    function toggleExpandable(event) {
+        var section = event.target.parentElement;
+        var content = section.querySelector('.content');
+        section.classList.toggle('expanded');
+        if (section.classList.contains('expanded')) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+            content.style.maxHeight = "";
+        }
+    }
+</script>
