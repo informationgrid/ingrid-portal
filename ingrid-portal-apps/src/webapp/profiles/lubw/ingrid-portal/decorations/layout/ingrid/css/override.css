@@ -1926,3 +1926,109 @@ header .menu-tab-row .menu-tab {
 .search-filtered .table {
   margin-bottom: 4px;
 }
+
+/* easy language */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.item-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.indent-md {
+  text-indent: 2rem;
+}
+
+#easy-language {
+  width: 100%;
+}
+
+#easy-language h1 {
+  font-size: 32px;
+  margin-bottom: 1rem;
+  padding-left: 16px;
+  border-left: 5px solid #024731;
+}
+
+#easy-language h1:not(:first-of-type) {
+  margin-top: 40px;
+}
+
+#easy-language h3 {
+  font-size: 24px;
+  margin-top: 18px;
+  margin-bottom: 12px;
+}
+
+#easy-language li {
+  margin-bottom: 1rem;
+}
+
+#easy-language p {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+#easy-language .accordion {
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: #296e4b;
+  font-family: "EB-Garamond-Bold", sans-serif;
+}
+
+#easy-language .accordion span {
+  color: white;
+  font-size: 26px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+#easy-language .accordion h2 {
+  color: white;
+  font-size: 26px;
+  pointer-events: none;
+  margin: 0;
+}
+
+#easy-language section {
+  margin: 1rem 0;
+}
+
+#easy-language p + section {
+  margin-top: 1.5rem;
+}
+
+#easy-language section .content {
+  background: white;
+  overflow: hidden;
+  max-height: 0;
+  padding: 0 20px;
+  transition: all 0.2s ease-out;
+}
+
+#easy-language section.expanded .content {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#easy-language section.expanded .accordion span {
+  transform: rotate(180deg);
+}
+
+#easy-language section li {
+  display: none;
+}
+
+#easy-language section.expanded li {
+  display: block;
+}
