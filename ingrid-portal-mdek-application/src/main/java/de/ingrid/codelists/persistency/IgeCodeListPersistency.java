@@ -270,7 +270,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 try {
                     doc.putInt(MdekKeys.LST_ID, Integer.valueOf(codelist.getId()));
                 } catch (NumberFormatException e) {
-                    log.debug("Could not parse listId from listKey: " + listKey + " (skipping)");
+                    log.debug("Could not parse listId from listKey: " + codelist.getId() + " (skipping)");
                     continue;
                 }
                 doc.put(MdekKeys.LST_NAME, codelist.getName());
