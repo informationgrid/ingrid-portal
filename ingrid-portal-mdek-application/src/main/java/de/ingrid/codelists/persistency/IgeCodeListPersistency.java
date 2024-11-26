@@ -265,7 +265,14 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         try {
             for (CodeList codelist : codelists) {
                 doc = new IngridDocument();
-                doc.putInt(MdekKeys.LST_ID, Integer.valueOf(codelist.getId()));
+                // FIXME: this is for compatibility reasons.
+                //  remove try/catch when non-numerical codelist IDs are supported everywhere
+                try {
+                    doc.putInt(MdekKeys.LST_ID, Integer.valueOf(codelist.getId()));
+                } catch (NumberFormatException e) {
+                    log.debug("Could not parse listId from listKey: " + listKey + " (skipping)");
+                    continue;
+                }
                 doc.put(MdekKeys.LST_NAME, codelist.getName());
                 doc.put(MdekKeys.LST_DESCRIPTION, codelist.getDescription());
                 doc.putBoolean(MdekKeys.LST_MAINTAINABLE, false);
