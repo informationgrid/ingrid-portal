@@ -1,4 +1,15 @@
 
+## 7.3.4 (26.11.2024)
+
+### Features
+
+* Suchfunktion "Nach Ort Suchen" deaktivieren (#6991)
+* AdV-MIS: Dopplung der HVD-Kategorie in Detailbeschreibung (#6988)
+* Login-Seiten umstellen (#6853)
+* Einfügen zweier Logos in die Kopfzeile der RIPS-Metadaten sowie der verlinkten Seiten (#6549)
+* Portal: AdV-MIS: MD zu Kacheln - erst anzeigen, wenn aktiv ausgewählt (#5922)
+
+    
 ## 7.3.3 (07.11.2024)
 
 ### Features
