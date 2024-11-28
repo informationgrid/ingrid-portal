@@ -220,13 +220,13 @@ header {
 }
 .banner.home {
   padding-top: 0;
-  background: rgba(0, 141, 175, 0.2);
+  background: #e0e0e0;
 }
 .banner.home .dark h1, .banner.home .dark h2, .banner.home .dark p, .banner.home .dark a, .banner.home .dark abbr{
-  color: rgba(0, 141, 175, 0.2);;
+  color: #0c505d;
 }
 .dark h1, .dark h2, .dark p, .dark a, .dark abbr {
-  color: #0c505d;
+    color: #0c505d;
 }
 .banner.home h1.green span {
   display: none;
@@ -238,7 +238,7 @@ header {
     text-transform: none;
 }
 .banner.search {
-  background: rgba(0, 141, 175, 0.2);
+  background: #e0e0e0;
 }
 .about {
   margin-bottom: 0;
