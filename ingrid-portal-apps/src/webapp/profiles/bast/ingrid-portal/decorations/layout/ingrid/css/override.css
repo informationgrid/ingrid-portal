@@ -216,14 +216,14 @@ header {
   font-family: Calibri !important;
 }
 .banner {
-  background: #e0e0e0;
+  background: rgba(0, 141, 175, 0.2);
 }
 .banner.home {
   padding-top: 0;
   background: rgba(0, 141, 175, 0.2);
 }
 .banner.home .dark h1, .banner.home .dark h2, .banner.home .dark p, .banner.home .dark a, .banner.home .dark abbr{
-  color: rgba(0, 141, 175, 0.2);;
+  color: #0c505d;
 }
 .dark h1, .dark h2, .dark p, .dark a, .dark abbr {
   color: #0c505d;
