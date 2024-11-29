@@ -40,17 +40,17 @@
         ## Kategorien
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_keywords_category.vm")
         ## Verschlagwortung
-        #renderTableList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire") true "search_terms_inspire" 10)
-        #renderTableList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "priority") true "search_terms_priority" 10)
-        #renderTableList($MESSAGES.getString("spatial_scope") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "spatial_scope") true "search_terms_spatial" 10)
-        #renderTableList($MESSAGES.getString("gemet_concepts") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "gemet") true "search_terms_gemet" 10)
+        #renderTableList($MESSAGES.getString("inspire_themes") $inspireTerms true "search_terms_inspire" 10)
+        #renderTableList($MESSAGES.getString("priority_dataset") $priorityTerms true "search_terms_priority" 10)
+        #renderTableList($MESSAGES.getString("spatial_scope") $spatialTerms true "search_terms_spatial" 10)
+        #renderTableList($MESSAGES.getString("gemet_concepts") $gemetTerms true "search_terms_gemet" 10)
         #renderTableList($MESSAGES.getString("adv_group") $advGroup true "search_terms_adv" 10)
         ## INSPIRE-InVeKoS
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_search_terms_invekos.vm")
         ## ISO-Themenkategorien
         #renderTableList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath($xPathKeywordsTopicCategory, "./gmd:MD_TopicCategoryCode", "527") true "search_terms_iso" 10)
         ## HVD-Kategorie
-        #renderTableList($MESSAGES.getString("hvd_group") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "hvd") true "search_terms_hvd" 10)
+        #renderTableList($MESSAGES.getString("hvd_group") $hvdTerms true "search_terms_hvd" 10)
         ## Suchbegriffe
         #parse("/WEB-INF/templates/detail/parts/metadata/information/information_additional_search_terms.vm")
     </div>
