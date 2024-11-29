@@ -701,8 +701,18 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return linkList;
     }
 
-    public List<String> getIndexInformationKeywords(String xpathExpression, String keywordType) {
-        List<String> list = new ArrayList<>();
+    public HashMap<String, List<String>> getDefaultIndexInformationKeywords(String xpathExpression) {
+        HashMap<String, List<String>> map = new HashMap<>();
+
+        List<String> listInspire = new ArrayList<>();
+        List<String> listInveskos = new ArrayList<>();
+        List<String> listPriority = new ArrayList<>();
+        List<String> listSpatial = new ArrayList<>();
+        List<String> listGemet = new ArrayList<>();
+        List<String> listHvd = new ArrayList<>();
+        List<String> listSearch = new ArrayList<>();
+
+        List hiddenKeywordList = PortalConfig.getInstance().getList(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
 
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
@@ -713,128 +723,144 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String thesaurusName = "";
 
                 // type
-                xpathExpression = "./gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue";
+                xpathExpression = "./gmd:type/gmd:MD_KeywordTypeCode/@codeListValue";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     type = xPathUtils.getString(node, xpathExpression);
                 }
 
                 // thesaurus
-                xpathExpression = "./gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title";
+                xpathExpression = "./gmd:thesaurusName/gmd:CI_Citation/gmd:title";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     thesaurusName = xPathUtils.getString(node, xpathExpression).trim();
                 }
 
                 // keywords
-                xpathExpression = "./gmd:MD_Keywords/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]";
+                xpathExpression = "./gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     NodeList keywordNodeList = xPathUtils.getNodeList(node, xpathExpression);
                     for (int j = 0; j < keywordNodeList.getLength(); j++) {
                         Node keywordNode = keywordNodeList.item(j);
                         String value = xPathUtils.getString(keywordNode, ".").trim();
-                        if(value.length() < 1){
-                            value = xPathUtils.getString(keywordNode, ".").trim();
-                        }
-                        boolean isHidden = false;
-                        String[] hvds = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_HIT_HVD_CATEGORIES);
 
-                        if(value != null){
-                            List hiddenKeywordList = PortalConfig.getInstance().getList(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
-                            if(hiddenKeywordList != null){
-                                for(int h=0; h < hiddenKeywordList.size(); h++){
-                                    String hiddenValue = (String) hiddenKeywordList.get(h);
-                                    if(value.equalsIgnoreCase(hiddenValue.toLowerCase())){
-                                        isHidden = true;
-                                        break;
-                                    }
-                                }
+                        if(value != null && !value.isEmpty()){
+                            if(hiddenKeywordList.indexOf(value) > -1){
+                                continue;
                             }
 
                             // "Service Classification, version 1.0"
-                            if (!isHidden && !thesaurusName.contains("Service")) {
-                                switch (keywordType) {
-                                    case "gemet":
-                                        // "GEMET - Concepts, version 2.1"
-                                        if (thesaurusName.contains("Concepts")) {
-                                            String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(list.indexOf(tmpValue) == -1) {
-                                                list.add(tmpValue);
-                                            }
-                                        }
-                                        break;
-                                    case "inspire":
-                                        if (thesaurusName.contains("INSPIRE")) {
-                                            String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(list.indexOf(tmpValue) == -1) {
-                                                list.add(tmpValue);
-                                            }
-                                        }
-                                        break;
-                                    case "priority":
-                                        // "GEMET - INSPIRE themes, version 1.0"
-                                        if (thesaurusName.contains("priority")) {
-                                            String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(list.indexOf(tmpValue) == -1) {
-                                                list.add(tmpValue);
-                                            }
-                                        }
-                                        break;
-                                    case "spatial_scope":
-                                        if (thesaurusName.contains("Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
-                                            String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(list.indexOf(tmpValue) == -1) {
-                                                list.add(tmpValue);
-                                            }
-                                        }
-                                        break;
-                                    case "inspire_invekos":
-                                        if (thesaurusName.equalsIgnoreCase("IACS Data")) {
-                                            if(list.indexOf(value) == -1) {
-                                                list.add(value);
-                                            }
-                                        }
-                                        break;
-                                    case "hvd":
-                                        if(Arrays.asList(hvds).indexOf(value) > -1) {
-                                            list.add(value);
-                                        }
-                                        break;
-                                    default:
-                                        if (thesaurusName.contains("UMTHES")) {
-                                            if(list.indexOf(value) == -1) {
-                                                list.add(value);
-                                            }
-                                        } else if (thesaurusName.isEmpty() && type.isEmpty()) {
-                                            if(list.indexOf(value) == -1) {
-                                                list.add(value);
-                                            }
-                                        } else{
-                                            // try to match keyword to  Opendata Category
-                                            String tmpValue = sysCodeList.getNameByData("6400", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(Arrays.asList(hvds).indexOf(tmpValue) == -1) {
-                                                if(list.indexOf(tmpValue) == -1) {
-                                                    list.add(tmpValue);
-                                                }
-                                            }
-                                        }
-                                        break;
+                            if (!thesaurusName.contains("Service")) {
+                                // "GEMET - Concepts, version 2.1"
+                                if (thesaurusName.contains("Concepts")) {
+                                    String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
+                                    if(tmpValue.isEmpty()){
+                                        tmpValue = value;
+                                    }
+                                    if(listGemet.indexOf(tmpValue) == -1) {
+                                        listGemet.add(tmpValue);
+                                    }
+                                } else if (thesaurusName.contains("INSPIRE")) {
+                                    String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
+                                    if(tmpValue.isEmpty()){
+                                        tmpValue = value;
+                                    }
+                                    if(listInspire.indexOf(tmpValue) == -1) {
+                                        listInspire.add(tmpValue);
+                                    }
+                                } else if (thesaurusName.contains("priority")) {
+                                    String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
+                                    if(tmpValue.isEmpty()){
+                                        tmpValue = value;
+                                    }
+                                    if(listPriority.indexOf(tmpValue) == -1) {
+                                        listPriority.add(tmpValue);
+                                    }
+                                } else if (thesaurusName.contains("Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
+                                    String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
+                                    if(tmpValue.isEmpty()){
+                                        tmpValue = value;
+                                    }
+                                    if(listSpatial.indexOf(tmpValue) == -1) {
+                                        listSpatial.add(tmpValue);
+                                    }
+                                } else if (thesaurusName.equalsIgnoreCase("IACS Data")) {
+                                    if(listInveskos.indexOf(value) == -1) {
+                                        listInveskos.add(value);
+                                    }
+                                } else if (thesaurusName.contains("High-value")) {
+                                    if(listHvd.indexOf(value) == -1) {
+                                        listHvd.add(value);
+                                    }
+                                } else if (thesaurusName.contains("UMTHES")) {
+                                    if(listSearch.indexOf(value) == -1) {
+                                        listSearch.add(value);
+                                    }
+                                } else{
+                                    if(listSearch.indexOf(value) == -1) {
+                                        listSearch.add(value);
+                                    }
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+        sortList(listInspire);
+        sortList(listInveskos);
+        sortList(listPriority);
+        sortList(listSpatial);
+        sortList(listGemet);
+        sortList(listHvd);
+        sortList(listSearch);
+        map.put("inspire", listInspire);
+        map.put("inveskos", listInveskos);
+        map.put("priority", listPriority);
+        map.put("spatial", listSpatial);
+        map.put("gemet", listGemet);
+        map.put("hvd", listHvd);
+        map.put("search", listSearch);
+
+        return map;
+    }
+
+    public List<String> getIndexInformationKeywords(String xpathExpression) {
+        return getIndexInformationKeywords(xpathExpression, null, false);
+    }
+
+    public List<String> getIndexInformationKeywords(String xpathExpression, String codelist, boolean checkCodelistData) {
+        List<String> list = new ArrayList<>();
+
+        if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                String value = xPathUtils.getString(node, ".").trim();
+                
+                if(value != null){
+                    String[] hiddenKeywordList = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
+                    if(hiddenKeywordList != null){
+                        for(int h=0; h < hiddenKeywordList.length; h++){
+                            String hiddenValue = hiddenKeywordList[h];
+                            if(value.equalsIgnoreCase(hiddenValue.toLowerCase())){
+                                break;
+                            }
+                        }
+                    }
+
+                    if (codelist != null) {
+                        String tmpValue = "";
+                        if (checkCodelistData) {
+                            tmpValue = sysCodeList.getNameByData(codelist, value);
+                        } else {
+                            tmpValue = sysCodeList.getNameByCodeListValue(codelist, value);
+                        }
+                        if(!tmpValue.isEmpty()) {
+                            value = tmpValue;
+                        }
+                    }
+                    if(!value.isEmpty()) {
+                        list.add(value);
                     }
                 }
             }
