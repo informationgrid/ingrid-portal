@@ -1,3 +1,6 @@
 #set($searchTerm = $UTIL_SEARCH.getDetailValueList( $rs.getHitDetail(), "t04_search.searchterm" ))
+#set($isOpendata = $searchTerm.contains("opendata") || $searchTerm.contains("opendataident"))
+#set($isInspire = $searchTerm.contains("inspire") || $searchTerm.contains("inspireidentifiziert"))
 #set($accessConstraint = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.has_access_constraint" ))
-#renderSearchTerm($searchTerm $accessConstraint)
+#set($isHVD = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "is_hvd" ) == "true")
+#renderSearchTerm($isOpendata $isInspire $accessConstraint $isHVD)
