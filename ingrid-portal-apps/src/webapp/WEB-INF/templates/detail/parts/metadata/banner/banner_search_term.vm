@@ -1,1 +1,4 @@
-#renderSearchTerm($searchTerm $hasAccessConstraints $hvdTerms)
+#set($isOpendata = $TOOL.nodeExist("${xPathKeywordsDescriptiveKeywords}/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor][contains(text(),'opendata') or contains(text(),'opendataident')]"))
+#set($isInspire = $TOOL.nodeExist("${xPathKeywordsDescriptiveKeywords}/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor][contains(text(),'inspire') or contains(text(),'inspireidentifiziert')]"))
+#set($isHVD = $hvdTerms.size() > 0)
+#renderSearchTerm($isOpendata $isInspire $hasAccessConstraints $isHVD)

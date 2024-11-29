@@ -795,8 +795,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                         listSearch.add(value);
                                     }
                                 } else{
-                                    if(listSearch.indexOf(value) == -1) {
-                                        listSearch.add(value);
+                                    // try to match keyword to  Opendata Category
+                                    String tmpValue = sysCodeList.getNameByData("6400", value);
+                                    if(tmpValue.isEmpty()){
+                                        tmpValue = value;
+                                    }
+                                    if(listSearch.indexOf(tmpValue) == -1) {
+                                        listSearch.add(tmpValue);
                                     }
                                 }
                             }
