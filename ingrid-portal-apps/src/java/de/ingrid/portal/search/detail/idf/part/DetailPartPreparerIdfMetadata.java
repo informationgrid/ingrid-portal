@@ -748,9 +748,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             }
 
                             // "Service Classification, version 1.0"
-                            if (!thesaurusName.contains("Service")) {
+                            if (!StringUtils.containsIgnoreCase(thesaurusName, "Service")) {
                                 // "GEMET - Concepts, version 2.1"
-                                if (thesaurusName.contains("Concepts")) {
+                                if (StringUtils.containsIgnoreCase(thesaurusName, "Concepts")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
@@ -758,15 +758,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     if(listGemet.indexOf(tmpValue) == -1) {
                                         listGemet.add(tmpValue);
                                     }
-                                } else if (thesaurusName.contains("INSPIRE")) {
-                                    String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
-                                    if(tmpValue.isEmpty()){
-                                        tmpValue = value;
-                                    }
-                                    if(listInspire.indexOf(tmpValue) == -1) {
-                                        listInspire.add(tmpValue);
-                                    }
-                                } else if (thesaurusName.contains("priority")) {
+                                } else if (StringUtils.containsIgnoreCase(thesaurusName, "priority")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
@@ -774,7 +766,15 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     if(listPriority.indexOf(tmpValue) == -1) {
                                         listPriority.add(tmpValue);
                                     }
-                                } else if (thesaurusName.contains("Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
+                                } else if (StringUtils.containsIgnoreCase(thesaurusName, "INSPIRE")) {
+                                    String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
+                                    if(tmpValue.isEmpty()){
+                                        tmpValue = value;
+                                    }
+                                    if(listInspire.indexOf(tmpValue) == -1) {
+                                        listInspire.add(tmpValue);
+                                    }
+                                } else if (StringUtils.containsIgnoreCase(thesaurusName, "Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
                                     if(tmpValue.isEmpty()){
                                         tmpValue = value;
@@ -782,15 +782,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     if(listSpatial.indexOf(tmpValue) == -1) {
                                         listSpatial.add(tmpValue);
                                     }
-                                } else if (thesaurusName.equalsIgnoreCase("IACS Data")) {
+                                } else if (StringUtils.containsIgnoreCase(thesaurusName, "IACS Data")) {
                                     if(listInveskos.indexOf(value) == -1) {
                                         listInveskos.add(value);
                                     }
-                                } else if (xPathUtils.getString(rootNode, "//gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor][contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'opendata') or contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'opendataident')]") != null && thesaurusName.contains("High-value")) {
+                                } else if (xPathUtils.getString(rootNode, "//gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor][contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'opendata') or contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'opendataident')]") != null 
+                                        && StringUtils.containsIgnoreCase(thesaurusName, "High-value")) {
                                     if(listHvd.indexOf(value) == -1) {
                                         listHvd.add(value);
                                     }
-                                } else if (thesaurusName.contains("UMTHES")) {
+                                } else if (StringUtils.containsIgnoreCase(thesaurusName, "UMTHES")) {
                                     if(listSearch.indexOf(value) == -1) {
                                         listSearch.add(value);
                                     }
@@ -847,7 +848,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(hiddenKeywordList != null){
                         for(int h=0; h < hiddenKeywordList.length; h++){
                             String hiddenValue = hiddenKeywordList[h];
-                            if(value.equalsIgnoreCase(hiddenValue.toLowerCase())){
+                            if(value.equalsIgnoreCase(hiddenValue)){
                                 break;
                             }
                         }
