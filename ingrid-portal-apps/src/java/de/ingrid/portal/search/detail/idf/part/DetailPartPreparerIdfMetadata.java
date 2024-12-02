@@ -848,11 +848,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         List<String> list = new ArrayList<>();
 
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
-            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+            String[] nodeList = xPathUtils.getStringArray(rootNode, xpathExpression);
 
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
-                String value = xPathUtils.getString(node, ".").trim();
+            for (int i = 0; i < nodeList.length; i++) {
+                String value = nodeList[i].trim();
                 
                 if(value != null){
                     String[] hiddenKeywordList = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
@@ -1231,7 +1230,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
 
     public List getServiceClassification(String xpathExpression) {
-        ArrayList list = new ArrayList();
+        ArrayList<String> list = new ArrayList<String>();
 
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
@@ -1246,19 +1245,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     thesaurusName = xPathUtils.getString(node, xpathExpression).trim();
                 }
 
-                // keywords
-                xpathExpression = "./gmd:MD_Keywords/gmd:keyword";
-                if (xPathUtils.nodeExists(node, xpathExpression)) {
-                    NodeList keywordNodeList = xPathUtils.getNodeList(node, xpathExpression);
-                    for (int j = 0; j < keywordNodeList.getLength(); j++) {
-                        Node keywordNode = keywordNodeList.item(j);
-                        String value = xPathUtils.getString(keywordNode, ".").trim();
-                        if(value.length() < 1){
-                            value = xPathUtils.getString(keywordNode, ".").trim();
-                        }
-
-                        // "Service Classification, version 1.0"
-                        if (thesaurusName.contains("Service")) {
+                // "Service Classification, version 1.0"
+                if (thesaurusName.contains("Service")) {
+                    // keywords
+                    xpathExpression = "./gmd:MD_Keywords/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]";
+                    if (xPathUtils.nodeExists(node, xpathExpression)) {
+                        String[] keywordNodeList = xPathUtils.getStringArray(node, xpathExpression);
+                        for (int j = 0; j < keywordNodeList.length; j++) {
+                            String value = keywordNodeList[j].trim();
                             String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
                             if(tmpValue.length() > 0){
                                 value = tmpValue;
@@ -1352,8 +1346,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
             for (int i=0; i<nodeList.getLength();i++){
                 if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
-                    Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
-                    String url = xPathUtils.getString(node, ".").trim();
+                    String url = xPathUtils.getString(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL").trim();
                     StringBuilder urlValue = new StringBuilder(url);
                     // do not display empty URLs
                     if (urlValue.length() == 0) {
@@ -1380,10 +1373,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
                     if (url.toLowerCase().indexOf("service=") == -1) {
                         if (url.indexOf("?") != -1) {
-                            NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
-                            for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
-                                Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
-                                String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
+                            String[] nodeListServiceTypeVersions = xPathUtils.getStringArray(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion/*[self::gco:CharacterString or self::gmx:Anchor]");
+                            for (int j=0; j<nodeListServiceTypeVersions.length;j++){
+                                String tmpServiceTypeVersion = nodeListServiceTypeVersions[j].trim();
                                 if (!tmpServiceTypeVersion.isEmpty()) {
                                     String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
                                     if (tmpValue != null) {
@@ -1397,10 +1389,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
                     if (urlValue.toString().toLowerCase().indexOf("service=") == -1) {
                         if (url.indexOf("?") != -1) {
-                            NodeList nodeListParameters = xPathUtils.getNodeList(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/*[self::gco:CharacterString or self::gmx:Anchor]");
-                            for (int j=0; j<nodeListParameters.getLength();j++){
-                                Node nodeParameter = nodeListParameters.item(j);
-                                String parameter = xPathUtils.getString(nodeParameter, ".").trim();
+                            String[] nodeListParameters = xPathUtils.getStringArray(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/*[self::gco:CharacterString or self::gmx:Anchor]");
+                            for (int j=0; j<nodeListParameters.length;j++){
+                                String parameter = nodeListParameters[j].trim();
                                 if (!parameter.isEmpty()) {
                                     if (parameter.toLowerCase().indexOf("service=") > -1) {
                                         urlValue.append("&" + parameter);
@@ -1500,10 +1491,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }
                         if (url.toLowerCase().indexOf("service=") == -1) {
                             if (url.indexOf("?") != -1) {
-                                NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
-                                for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
-                                    Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
-                                    String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
+                                String[] nodeListServiceTypeVersions = xPathUtils.getStringArray(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion/*[self::gco:CharacterString or self::gmx:Anchor]");
+                                for (int j=0; j<nodeListServiceTypeVersions.length;j++){
+                                    String tmpServiceTypeVersion = nodeListServiceTypeVersions[j].trim();
                                     if (!tmpServiceTypeVersion.isEmpty()) {
                                         String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
                                         if (tmpValue != null) {
@@ -1521,10 +1511,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }
                         if (urlValue.toString().toLowerCase().indexOf("service=") == -1) {
                             if (url.indexOf("?") != -1) {
-                                NodeList nodeListParameters = xPathUtils.getNodeList(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/*[self::gco:CharacterString or self::gmx:Anchor]");
-                                for (int j=0; j<nodeListParameters.getLength();j++){
-                                    Node nodeParameter = nodeListParameters.item(j);
-                                    String parameter = xPathUtils.getString(nodeParameter, ".").trim();
+                                String[] nodeListParameters = xPathUtils.getStringArray(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/*[self::gco:CharacterString or self::gmx:Anchor]");
+                                for (int j=0; j<nodeListParameters.length;j++){
+                                    String parameter = nodeListParameters[j].trim();
                                     if (!parameter.isEmpty()) {
                                         if (parameter.toLowerCase().indexOf("service=") > -1) {
                                             urlValue.append("&" + parameter);
