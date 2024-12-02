@@ -786,7 +786,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     if(listInveskos.indexOf(value) == -1) {
                                         listInveskos.add(value);
                                     }
-                                } else if (thesaurusName.contains("High-value")) {
+                                } else if (xPathUtils.getString(rootNode, "//gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor][contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'opendata') or contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'opendataident')]") != null && thesaurusName.contains("High-value")) {
                                     if(listHvd.indexOf(value) == -1) {
                                         listHvd.add(value);
                                     }
