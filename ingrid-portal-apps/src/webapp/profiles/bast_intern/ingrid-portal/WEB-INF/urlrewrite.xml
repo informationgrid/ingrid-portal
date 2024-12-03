@@ -241,12 +241,17 @@
     <!-- Kontakt   -->
     <rule>
         <from>/kontakt</from>
-        <to type="forward">/portal/service-contact.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-contact.psml</from>
         <to>/kontakt</to>
     </outbound-rule>
+    
+    <rule>
+        <from>/portal/service-contact.psml</from>
+        <to type="permanent-redirect">/kontakt</to>
+    </rule>
     
     <!-- Impressum   -->
     <rule>
