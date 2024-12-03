@@ -1,10 +1,10 @@
 <h1 id="about_internetseite">Informationen über unsere Internet&#183;seite</h1>
 <p>In diesem Text erfahren Sie:</p>
 <ul>
-    <li><a href="#whats_metadata">Was sind Meta&#183;daten?</a></li>
-    <li><a href="#why_internetseite">Wofür gibt es die Internet&#183;seite von RIPS-Meta&#183;daten?</a></li>
-    <li><a href="#what_to_find">Was finden Sie auf der Internet&#183;seite von RIPS-Meta&#183;daten?</a></li>
-    <li><a href="#which_benefits">Welche Vorteile hat die Internet&#183;seite von RIPS-Meta&#183;daten?</a></li>
+    <li><a tag="#whats_metadata">Was sind Meta&#183;daten?</a></li>
+    <li><a tag="#why_internetseite">Wofür gibt es die Internet&#183;seite von RIPS-Meta&#183;daten?</a></li>
+    <li><a tag="#what_to_find">Was finden Sie auf der Internet&#183;seite von RIPS-Meta&#183;daten?</a></li>
+    <li><a tag="#which_benefits">Welche Vorteile hat die Internet&#183;seite von RIPS-Meta&#183;daten?</a></li>
 </ul>
 
 <section id="whats_metadata">

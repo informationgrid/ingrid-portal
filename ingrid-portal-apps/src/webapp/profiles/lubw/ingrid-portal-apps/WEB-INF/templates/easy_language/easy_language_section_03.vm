@@ -2,11 +2,11 @@
 <p>Das ist die Erklärung zur Barriere&#183;freiheit von RIPS-Meta&#183;daten in Leichter Sprache.</p>
 <p>Im Text finden Sie diese Informationen:</p>
 <ul>
-    <li><a href="#accessibility_intro">Einleitung</a></li>
-    <li><a href="#whats_accessibility">Erfüllen wir die Regeln zur Barriere&#183;freiheit?</a></li>
-    <li><a href="#whats_not_accessible">Was ist nicht barriere&#183;frei auf unserer Internet&#183;seite?</a></li>
-    <li><a href="#submit_issues">So können Sie uns Probleme melden</a></li>
-    <li><a href="#complaint">So können Sie sich beschweren</a></li>
+    <li><a tag="#accessibility_intro">Einleitung</a></li>
+    <li><a tag="#whats_accessibility">Erfüllen wir die Regeln zur Barriere&#183;freiheit?</a></li>
+    <li><a tag="#whats_not_accessible">Was ist nicht barriere&#183;frei auf unserer Internet&#183;seite?</a></li>
+    <li><a tag="#submit_issues">So können Sie uns Probleme melden</a></li>
+    <li><a tag="#complaint">So können Sie sich beschweren</a></li>
 </ul>
 <p><b>Hinweis</b>: Der Text in Leichter Sprache ist eine Zusatz&#183;information.</p>
 <p>Der rechts&#183;wirksame Text ist die Erklärung zur Barriere&#183;freiheit in Standard&#183;sprache.</p>
