@@ -216,17 +216,17 @@ header {
   font-family: Calibri !important;
 }
 .banner {
-  background: rgba(0, 141, 175, 0.2);
+  background: rgba(133, 183, 35, 0.8);
 }
 .banner.home {
   padding-top: 0;
-  background: rgba(0, 141, 175, 0.2);
+  background: rgba(133, 183, 35, 0.8);
 }
 .banner.home .dark h1, .banner.home .dark h2, .banner.home .dark p, .banner.home .dark a, .banner.home .dark abbr{
-  color: #0c505d;
+  color: #000000;
 }
 .dark h1, .dark h2, .dark p, .dark a, .dark abbr {
-  color: #0c505d;
+  color: #000000;
 }
 .banner.home h1.green span {
   display: none;
@@ -238,7 +238,7 @@ header {
     text-transform: none;
 }
 .banner.search {
-  background: rgba(0, 141, 175, 0.2);
+  background: rgba(133, 183, 35, 0.8);
 }
 .about {
   margin-bottom: 0;
@@ -254,7 +254,7 @@ header {
   color: #0c505d;
 }
 .banner.home h1.green {
-  color: #2c6c88;
+  color: #0c505d;
 }
 .banner.home .home-wrapper .indent span {
   color: #85b723;
