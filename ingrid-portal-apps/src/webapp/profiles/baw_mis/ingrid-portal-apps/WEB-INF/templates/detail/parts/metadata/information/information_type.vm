@@ -27,7 +27,7 @@
 #elseif($type == "6" && $TOOL.aNodeOfListExist($xPathListInformationType6))
     <div class="sub-section">
         <a class="anchor" id="${hashDetail5}_technical_information"></a>
-        #renderGroupTitle($MESSAGES.getString("technical_information"))
+        #renderGroupTitle($MESSAGES.getString("technical_information_6"))
     ## Einsatzzweck
         #renderTextTable("Einsatzzweck" $TOOL.getValueFromXPath($xPathInfo6Einsatzzweck))
     ## Nutzerkreis

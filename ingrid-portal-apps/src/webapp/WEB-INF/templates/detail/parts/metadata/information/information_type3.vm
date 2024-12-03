@@ -2,7 +2,7 @@
 ################################
 <div class="sub-section">
     <a class="anchor" id="${hashDetail5}_technical_information"></a>
-    #renderGroupTitle($MESSAGES.getString("technical_information"))
+    #renderGroupTitle($MESSAGES.getString("technical_information_3"))
 ## Identifikator
     #parse("/WEB-INF/templates/detail/parts/metadata/information/information_type3_identificator.vm")
 ## Digitale Repräsentation
