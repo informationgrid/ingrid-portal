@@ -1948,11 +1948,16 @@ header .menu-tab-row .menu-tab {
   text-indent: 2rem;
 }
 
-#easy-language {
+#sign-language video {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+#easy-language, #sign-language {
   width: 100%;
 }
 
-#easy-language h1 {
+#easy-language h1, #sign-language h1 {
   font-size: 32px;
   margin-bottom: 1rem;
   padding-left: 16px;
@@ -2009,7 +2014,6 @@ header .menu-tab-row .menu-tab {
 }
 
 #easy-language section .content {
-  background: white;
   overflow: hidden;
   max-height: 0;
   padding: 0 20px;

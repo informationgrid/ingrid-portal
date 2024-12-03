@@ -9,10 +9,10 @@
 <p>Das bedeutet: Im Juli 2024 war der Aufbau von der Internet&#183;seite so.</p>
 <p>Wir beschreiben:</p>
 <ul>
-    <li><a href="#header">die Kopf&#183;zeile</a></li>
-    <li><a href="#main_menu">das Haupt&#183;menü</a></li>
-    <li><a href="#home_page">die Start&#183;seite</a></li>
-    <li><a href="#footer">die Fuß&#183;zeile</a></li>
+    <li><a tag="#header">die Kopf&#183;zeile</a></li>
+    <li><a tag="#main_menu">das Haupt&#183;menü</a></li>
+    <li><a tag="#home_page">die Start&#183;seite</a></li>
+    <li><a tag="#footer">die Fuß&#183;zeile</a></li>
 </ul>
 
 <section id="header">
