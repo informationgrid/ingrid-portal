@@ -69,7 +69,7 @@
 
 ## Beschreibung
 #set($getAlternateTitle = $TOOL.getAlternateTitle())
-#set($getDescription = $TOOL.valueHTMLEscape($stringTool.convertUrlInText($TOOL.getDescription())))
+#set($getDescription = $TOOL.valueHTMLEscape($stringTool.convertUrlInText($TOOL.getDescription()), $cutSumHTMLNewLine))
 
 ## Zeitbezug
 #set($isTimeInDescription = true)
