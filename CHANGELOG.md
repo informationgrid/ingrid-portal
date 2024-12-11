@@ -1,4 +1,20 @@
 
+## 7.3.5 (11.12.2024)
+
+### Features
+
+* Portal: Umbenennung von "Auf Karte festlegen" zu "In Kartenausschnitt suchen" (#7065)
+* AdV-MIS: Dopplung der HVD-Kategorie in Detailbeschreibung (#6988)
+* Unterschiedliche Farbgebungen im internen und externen Portal (#6860)
+* Portal: Bei Geodatendiensten das Label "Informationen zum Datensatz" nach "Informationen zum Dienst" umbenennen (#6820)
+* Formatierung der Beschreibungstexte (#6784)
+* Einfügen zweier Logos in die Kopfzeile der RIPS-Metadaten sowie der verlinkten Seiten (#6549)
+
+### Bugfixes
+
+* Verlinkungen, Layout auf "Fehler 404"-Seite korrigieren; deaktiviere Kontakt im internen Portal (#7100)
+* Zu viele Schlagwörter (#6965)
+    
 ## 7.3.4 (26.11.2024)
 
 ### Features
