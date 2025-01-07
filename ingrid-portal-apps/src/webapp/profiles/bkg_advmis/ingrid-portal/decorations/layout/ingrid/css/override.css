@@ -331,11 +331,11 @@ header {
   background-image: unset;
 }
 .teaser .teaser-link .ic-chemie:before {
-  font-size: 74px;
+  font-size: 70px;
   content: "\e949";
 }
 .teaser .teaser-link .ic-ic-dienste:before {
-  font-size: 74px;
+  font-size: 70px;
 }
 .teaser:hover .teaser-link .ic-chemie, .tabs-content .tabs-panel .teaser:hover .teaser-link .ic-chemie {
   background-image: unset;

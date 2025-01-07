@@ -297,18 +297,18 @@ header {
   content: "\e970";
 }
 .teaser .teaser-link .ic-inspire:before {
-  font-size: 74px;
+  font-size: 70px;
   content: "\e96e"
 }
 .teaser .teaser-link .ic-map:before {
-  font-size: 74px;
+  font-size: 70px;
   content: "\e96c";
 }
 .teaser .teaser-link .ic-chemie {
   background-image: unset;
 }
 .teaser .teaser-link .ic-chemie:before {
-  font-size: 74px;
+  font-size: 70px;
   content: "\e949";
 }
 .teaser .teaser-link .ic-ic-dienste:before {
