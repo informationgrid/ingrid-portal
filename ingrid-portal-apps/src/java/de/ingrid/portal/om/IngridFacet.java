@@ -25,6 +25,8 @@ package de.ingrid.portal.om;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ingrid.portal.search.DisplayTreeNode;
+
 public class IngridFacet {
 
     private String id;
@@ -55,6 +57,7 @@ public class IngridFacet {
     private boolean hierarchyTreeLeaf;
     private String hierarchyTreeTypes;
     private int hierarchyTreeLevel;
+    private DisplayTreeNode hierarchyTreeNode;
     private int showOnMoreThan;
     private int colNum;
     private int listLength;
@@ -329,6 +332,12 @@ public class IngridFacet {
     }
     public void setHierarchyTreeLevel(int hierarchyTreeLevel) {
         this.hierarchyTreeLevel = hierarchyTreeLevel;
+    }
+    public DisplayTreeNode getHierarchyTreeNode() {
+        return hierarchyTreeNode;
+    }
+    public void setHierarchyTreeNode(DisplayTreeNode hierarchyTreeNode) {
+        this.hierarchyTreeNode = hierarchyTreeNode;
     }
     public ArrayList<String> getOptions() {
         return options;

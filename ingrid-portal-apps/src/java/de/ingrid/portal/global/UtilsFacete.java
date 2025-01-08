@@ -367,6 +367,15 @@ public class UtilsFacete {
                                             }
                                         }
                                     }else{
+                                        if(tmpFacetValue.isHierarchyTreeLeaf() &&
+                                            tmpFacetValue.getFacets().isEmpty() &&
+                                            tmpFacetValue.getHierarchyTreeNode() != null) {
+                                            DisplayTreeNode node = tmpFacetValue.getHierarchyTreeNode();
+                                            if(node != null) {
+                                                openNode(node, node.getId());
+                                                addHierarchyNodesToFacets(tmpFacetValue, node.getChildren(), config);
+                                            }
+                                        }
                                         tmpFacetValue.setSelect(true);
                                         facetIsSelect = true;
                                         // Set last selection
@@ -2044,6 +2053,15 @@ public class UtilsFacete {
                                 //Set facet isSelect
                                 IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), split[1]);
                                 if(tmpFacetValue != null) {
+                                    if(tmpFacetValue.isHierarchyTreeLeaf() &&
+                                        tmpFacetValue.getFacets().isEmpty() &&
+                                        tmpFacetValue.getHierarchyTreeNode() != null) {
+                                        DisplayTreeNode node = tmpFacetValue.getHierarchyTreeNode();
+                                        if(node != null) {
+                                            openNode(node, node.getId());
+                                            addHierarchyNodesToFacets(tmpFacetValue, node.getChildren(), config);
+                                        }
+                                    }
                                     tmpFacetValue.setSelect(true);
                                     //Check dependency
                                     if(tmpFacetValue.getId() != null){
@@ -2875,6 +2893,7 @@ public class UtilsFacete {
                 tmpFacet.setName(name);
                 tmpFacet.setParent(ingridFacet);
                 tmpFacet.setHierarchyTreeLeaf(true);
+                tmpFacet.setHierarchyTreeNode(node);
                 if(ingridFacet.getListLength() > 0) {
                     tmpFacet.setListLength(ingridFacet.getListLength());
                 }
@@ -2911,6 +2930,9 @@ public class UtilsFacete {
 
     private static void openNode(DisplayTreeNode rootNode, String nodeId) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
+        if (node == null) {
+            node = rootNode;
+        }
         if (node != null) {
             node.setOpen(true);
 

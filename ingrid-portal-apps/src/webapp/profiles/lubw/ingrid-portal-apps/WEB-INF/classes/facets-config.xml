@@ -206,7 +206,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>metadata_tree</id>
         <hierarchyTree>true</hierarchyTree>
         <hierarchyTreeTypes>dsc_ecs</hierarchyTreeTypes>
-        <hierarchyTreeLevel>4</hierarchyTreeLevel>
+        <hierarchyTreeLevel>3</hierarchyTreeLevel>
         <listLength>5</listLength>
     </facet>
     <!-- Kategorie -->
