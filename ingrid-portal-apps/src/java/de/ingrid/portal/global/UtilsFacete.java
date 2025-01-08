@@ -2876,10 +2876,6 @@ public class UtilsFacete {
     }
 
     private static void addHierarchyNodesToFacets(IngridFacet ingridFacet, List<DisplayTreeNode> nodes, List<IngridFacet> config) {
-        addHierarchyNodesToFacets(ingridFacet, nodes, config, null);
-    }
-
-    private static void addHierarchyNodesToFacets(IngridFacet ingridFacet, List<DisplayTreeNode> nodes, List<IngridFacet> config, String nodeId) {
         List<IngridFacet> newFacets = new ArrayList<IngridFacet>();
         for (DisplayTreeNode node : nodes) {
             String docId = node.get("docId").toString();
@@ -2901,7 +2897,7 @@ public class UtilsFacete {
                     tmpFacet.setSort(ingridFacet.getSort());
                 }
                 newFacets.add(tmpFacet);
-                addHierarchyNodesToFacets(tmpFacet, node.getChildren(), config, id) ;
+                addHierarchyNodesToFacets(tmpFacet, node.getChildren(), config) ;
             }
         }
         ingridFacet.setFacets(newFacets);
