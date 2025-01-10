@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2025 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,6 +24,8 @@ package de.ingrid.portal.om;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.ingrid.portal.search.DisplayTreeNode;
 
 public class IngridFacet {
 
@@ -55,6 +57,7 @@ public class IngridFacet {
     private boolean hierarchyTreeLeaf;
     private String hierarchyTreeTypes;
     private int hierarchyTreeLevel;
+    private DisplayTreeNode hierarchyTreeNode;
     private int showOnMoreThan;
     private int colNum;
     private int listLength;
@@ -329,6 +332,12 @@ public class IngridFacet {
     }
     public void setHierarchyTreeLevel(int hierarchyTreeLevel) {
         this.hierarchyTreeLevel = hierarchyTreeLevel;
+    }
+    public DisplayTreeNode getHierarchyTreeNode() {
+        return hierarchyTreeNode;
+    }
+    public void setHierarchyTreeNode(DisplayTreeNode hierarchyTreeNode) {
+        this.hierarchyTreeNode = hierarchyTreeNode;
     }
     public ArrayList<String> getOptions() {
         return options;

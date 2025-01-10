@@ -69,7 +69,7 @@
                 Mit Hilfe der Facetten "Aktualität" und "Zeitbezug" können Sie Ihre Suchanfrage weiter durch gewisse Einschränkungen spezifizieren. 
                 Hinter den Einschränkungen sehen Sie in Klammern direkt die Anzahl der jeweiligen Treffer zu Ihrer Suchanfrage. 
                 Bei Klick auf eine Einschränkungen wird die Suchergebnisliste auf die jeweilige Auswahl eingeschränkt. 
-                Um die Einschränkung aufzuheben, klicken Sie auf "Alle Einschränkungen löschen" oder auf den 
+                Um die Einschränkung aufzuheben, klicken Sie auf "Gesamte Auswahl zurücksetzen" oder auf den 
                 gewünschten Eintrag in der Liste der grau hinterlegten, aktiven Einschränkungen oberhalb der Ergebnisliste. 
                 Sie können beliebig viele Einschränkungen aus- und wieder abwählen.</p>
             </content>
@@ -315,15 +315,15 @@
             <content>
             </content>
             <section help-key="maps-3-1">
-                <header>Ändern des Kartenmassstabs</header>
+                <header>Ändern des Kartenmaßstabs</header>
                 <content>
-                    <p>Mit jedem Klick auf das "+" oder "-" wird der angezeigte Massstab vergrössert oder verkleinert.</p>
+                    <p>Mit jedem Klick auf das "+" oder "-" wird der angezeigte Maßstab vergrössert oder verkleinert.</p>
                 </content>
             </section>
             <section help-key="maps-3-2">
                 <header>Zoom auf Ausschnitt</header>
                 <content>
-                    <p>Zoom auf Rechteck / Ausschnitt wird über SHIFT Taste und gleichzeitiges Aufziehen eines Rechteckes mit gedrückter linker Maustaste aktiviert.</p>
+                    <p>Zoom auf Rechteck / Ausschnitt wird über SHIFT-Taste und gleichzeitiges Aufziehen eines Rechteckes mit gedrückter linker Maustaste aktiviert.</p>
                 </content>
             </section>
             <section help-key="maps-3-3">
@@ -335,8 +335,8 @@
             <section help-key="maps-3-4">
                 <header>Zentrieren auf Koordinaten</header>
                 <content>
-                    <p>Um die Karte auf einen Punkt zu zentrieren, müssen lediglich die Koordinaten des Punktes in das Suchfeld im oberen Teil der Karte eingegeben und Return gedrückt werden.</p>
-                    <p>Im Defaultkoordinatensystem z.B. "6468101.33 963106.56"</p>
+                    <p>Um die Karte auf einen Punkt zu zentrieren, müssen lediglich die Koordinaten des Punktes in das Suchfeld im oberen Teil der Karte eingegeben und die ENTER-Taste gedrückt werden.</p>
+                    <p>Im Defaultkoordinatensystem z.B. "50.95267°N 7.14753°E"</p>
                 </content>
             </section>
             <section help-key="maps-3-5">
@@ -381,7 +381,7 @@
             <section help-key="maps-4-3">
                 <header>Ändern des Kartenhintergrundes</header>
                 <content>
-                    <p>Mit Klick auf "Hintergrund" rechts unten in der Karte können Sie zwischen verschiedenen Optionen wählen, z.B. gibt es die Hintergrundkarte in Farbe, Grau, OSM oder ganz ohne Hintergrund.</p>
+                    <p>Mit Klick auf "Hintergrund" rechts unten in der Karte können Sie zwischen verschiedenen Optionen wählen, z.B. gibt es die Hintergrundkarte in Farbe, Grau oder ganz ohne Hintergrund.</p>
                 </content>
             </section>
             <section help-key="maps-4-4">
@@ -415,7 +415,7 @@
             <section help-key="maps-4-10">
                 <header>Drucken</header>
                 <content>
-                    <p>Die Kartenansicht und die für deren Verständnis nötigen Elemente (Massstab etc.) kann als pdf-Datei ausgegeben werden.
+                    <p>Die Kartenansicht und die für deren Verständnis nötigen Elemente (Maßstab etc.) kann als pdf-Datei ausgegeben werden.
                         Diese Datei kann dann gespeichert oder ausgedruckt werden.</p>
                     <p>Die Funktion "Drucken" lässt ein Dialogfenster erscheinen, wo die Parameter für die Erzeugung der pdf-Datei gewählt werden können.
                         Diese Parameter sind der Kartenmasstab und A4/A3 Orientierung.
@@ -462,9 +462,9 @@
                         Klicken Sie auf ein Segment, positionieren Sie den neuen Punkt mit Mausklick und verschieben Sie ihn.</p>
                     <p>Das untere linke Fenster ermöglicht:
                         <ul>
-                            <li>- Linie/Fläche: Farbe Linie/Polygon ändern und eine Beschreibung (Text oder HTML) hinzuzufügen.
+                            <li>Linie/Fläche: Farbe Linie/Polygon ändern und eine Beschreibung (Text oder HTML) hinzuzufügen.
                                     Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf die Linie/Fläche sichtbar gemacht.</li>
-                            <li>- Distanz /Fläche : Angaben zu Distanz, Fläche, Azimut</li>
+                            <li>Distanz /Fläche : Angaben zu Distanz, Fläche, Azimut</li>
                         </ul>
                     </p>
                     <p>Sie können jedes Element durch Mausklick ändern.

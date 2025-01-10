@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2025 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -402,7 +402,7 @@ public class DetailPartPreparer {
                             }
                             String value = constraintSource;
                             if(!isSourceOfJson) {
-                                value = String.format("<span>%s%s</span><br><span>%s</span>", restrictionInfo, constraintSource, tmpSource);
+                                value = String.format("%s%s <br><span> %s </span>", restrictionInfo, constraintSource, tmpSource);
                             }
                             furtherOtherConstraints.add( value );
                         } else {
@@ -446,9 +446,9 @@ public class DetailPartPreparer {
                     } else {
                         // NO URL
                         if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
-                            value = String.format("<span>%s%s</span><br><span>%s</span>", restrictionInfo, name, finalValue);
+                            value = String.format("%s%s <br><span> %s </span>", restrictionInfo, name, finalValue);
                         } else if (restrictionCode != null){
-                            value = String.format("<span>%s%s</span>", restrictionInfo, finalValue);
+                            value = String.format("%s%s", restrictionInfo, finalValue);
                         } else {
                             value = finalValue;
                         }

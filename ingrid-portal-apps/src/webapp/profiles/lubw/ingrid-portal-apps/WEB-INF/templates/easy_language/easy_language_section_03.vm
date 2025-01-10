@@ -1,0 +1,275 @@
+<h1>Erklärung zur Barriere&#183;freiheit in Leichter Sprache</h1>
+<p>Das ist die Erklärung zur Barriere&#183;freiheit von RIPS-Meta&#183;daten in Leichter Sprache.</p>
+<p>Im Text finden Sie diese Informationen:</p>
+<ul>
+    <li><a tag="#accessibility_intro">Einleitung</a></li>
+    <li><a tag="#whats_accessibility">Erfüllen wir die Regeln zur Barriere&#183;freiheit?</a></li>
+    <li><a tag="#whats_not_accessible">Was ist nicht barriere&#183;frei auf unserer Internet&#183;seite?</a></li>
+    <li><a tag="#submit_issues">So können Sie uns Probleme melden</a></li>
+    <li><a tag="#complaint">So können Sie sich beschweren</a></li>
+</ul>
+<p><b>Hinweis</b>: Der Text in Leichter Sprache ist eine Zusatz&#183;information.</p>
+<p>Der rechts&#183;wirksame Text ist die Erklärung zur Barriere&#183;freiheit in Standard&#183;sprache.</p>
+<p>Rechts&#183;wirksam bedeutet: Vor Gericht gilt nur der Text in Standard&#183;sprache.</p>
+
+<section id="accessibility_intro">
+    <button class="accordion flex item-center justify-between">
+        <h2>Einleitung</h2>
+        <span class="ic-ic-angle-down"></span>
+    </button>
+    <div class="content">
+        <p>Die Internet&#183;seite von RIPS-Meta&#183;daten gehört zur LUBW.</p>
+        <p>LUBW ist die Abkürzung für:</p>
+        <p class="indent-md"><b>L</b>andes&#183;anstalt für <b>U</b>mwelt <b>B</b>aden-<b>W</b>ürttemberg.</p>
+        <p>Die LUBW ist eine öffentliche Stelle in Baden-Württemberg.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_02.png"
+                style="width: 20%"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Öffentliche Stellen übernehmen viele wichtige Aufgaben.</p>
+        <p>Alle Menschen sollen die öffentlichen Stellen nutzen können.</p>
+        <p>Auch Menschen mit Behinderung.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_26.png"
+                style="width: 30%"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Und deshalb sollen die Internet&#183;seiten von öffentlichen Stellen barriere&#183;frei sein.</p>
+        <p>Das steht sogar in einem Gesetz.</p>
+        <p>In Baden-Württemberg heißt das Gesetz:</p>
+        <p>Landes-Behinderten&#183;gleichstellungs&#183;gesetz Baden-Württemberg.</p>
+        <p>Auch die Internet&#183;seite von RIPS-Meta&#183;daten soll barriere&#183;frei sein.</p>
+        <p>Barriere&#183;freie Internet&#183;seite bedeutet:</p>
+        <p>Auch Menschen mit verschiedenen Behinderungen können die Internet&#183;seite benutzen.</p>
+        <p>Für die Barriere&#183;freiheit von Internet&#183;seiten gibt es Regeln.</p>
+        <p>Diese Regeln stehen in der BITV.</p>
+        <p><b>BITV</b> ist die Abkürzung für:</p>
+        <p class="indent-md"><b>B</b>arrierefreie-<b>I</b>nformations&#183;<b>t</b>echnik-<b>V</b>erordnung.</p>
+        <p>In der BITV steht zum Beispiel auch:</p>
+        <p class="indent-md">Öffentliche Stellen müssen eine Erklärung zur Barriere&#183;freiheit auf ihrer Internet&#183;seite
+            haben.</p>
+        <p class="indent-md">Und die Erklärung muss es auch in Leichter Sprache geben.</p>
+        <p>Dieser Text ist die Erklärung zur Barriere&#183;freiheit in Leichter Sprache für die Internet&#183;seite:
+            <br><a href="https://rips-metadaten.lubw.de/" target="_blank">https://rips-metadaten.lubw.de/</a>
+        </p>
+    </div>
+</section>
+
+<section id="whats_accessibility">
+    <button class="accordion flex item-center justify-between">
+        <h2>Erfüllen wir die Regeln zur Barriere&#183;freiheit?</h2>
+        <span class="ic-ic-angle-down"></span>
+    </button>
+    <div class="content">
+        <p>Fachleute haben die Barriere&#183;freiheit von unserer Internet&#183;seite geprüft.</p>
+        <p>Die Fachleute haben geprüft:</p>
+        <p class="indent-md">Halten wir die Regeln aus der BITV ein?</p>
+        <p>Die Prüfung hat ergeben:</p>
+        <p class="indent-md">Die Internet&#183;seite von RIPS-Meta&#183;daten ist noch <b>nicht</b> ganz barriere&#183;frei.</p>
+        <p>Im nächsten Text&#183;abschnitt beschreiben wir die Barrieren genauer.</p>
+        <p>Die Barrieren sind meist sehr technisch.</p>
+        <p>Deshalb ist auch die Beschreibung sehr technisch.</p>
+        <p>Wir haben die Barrieren in <b>2 Kategorien</b> eingeteilt.</p>
+        <p><b>Kategorie 1</b>: Diese Dinge halten sich <b>nicht</b> an die Regeln aus der BITV.</p>
+        <p><b>Kategorie 2</b>: Andere Barrieren.</p>
+    </div>
+</section>
+
+<section id="whats_not_accessible">
+    <button class="accordion flex item-center justify-between">
+        <h2>Was ist noch nicht barriere&#183;frei auf unserer Internet&#183;seite?</h2>
+        <span class="ic-ic-angle-down"></span>
+    </button>
+    <div class="content">
+        <h3>Kategorie 1: Diese Dinge halten sich nicht an die BITV-Regeln</h3>
+        <p style="margin-top: 1.2rem"><b>HTML-Code</b></p>
+        <p>Mit dem HTML-Code kann man eine Internet&#183;seite mit Texten füllen und ordnen.</p>
+        <p>Mit dem HTML-Code kann man die Elemente auf der Internet&#183;seite nämlich kennzeichnen.</p>
+        <p>Man kann zum Beispiel:</p>
+        <ul>
+            <li>die Überschrift als eine Überschrift kennzeichnen.</li>
+            <li>Text als Text kennzeichnen</li>
+            <li>Links als Links kennzeichnen.</li>
+        </ul>
+        <p>Die Nutzerinnen und Nutzer von der Internet&#183;seite sehen den HTML-Code <b>nicht</b>.</p>
+        <p>Zum HTML-Code gehören auch Alternativ&#183;texte.</p>
+        <p>Ein Alternativ&#183;text ist eine Bild&#183;beschreibung.</p>
+        <p> Menschen mit einer Seh-Behinderung können die Bilder <b>nicht</b> sehen.</p>
+        <p>Und diese Menschen können die Texte nicht lesen.</p>
+        <p>Mit einem Screen&#183;reader können sich diese Menschen die Texte vorlesen lassen.</p>
+        <p>Screen&#183;reader ist das englische Wort für:</p>
+        <p class="indent-md">Bildschirm&#183;vorlese&#183;programm.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_27.png"
+                style="width: 40%"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Der Screen&#183;reader liest den Text auf dem Bildschirm vor.</p>
+        <p>Und der Screen&#183;reader liest auch die Alternativ&#183;texte vor.</p>
+        <p>Manche Bilder auf der Internet&#183;seite von RIPS-Meta&#183;daten haben noch <b>keinen</b> Alternativ&#183;text.</p>
+        <p>Und manche Alternativ&#183;texte sind noch <b>nicht</b> gut genug.</p>
+        <p style="margin-top: 1.2rem"><b>Elemente</b></p>
+        <p>Wir haben verschiedene Elemente auf unserer Internet&#183;seite.</p>
+        <p>Zum Beispiel:</p>
+        <ul>
+            <li>Tabellen</li>
+            <li>Überschriften</li>
+            <li>Themen&#183;bereiche</li>
+        </ul>
+        <p>Diese Elemente sollen die Internet&#183;seite ordnen.</p>
+        <p>Und die Elemente sollen die Internet&#183;seite übersichtlich machen.</p>
+        <p>Die Elemente haben immer einen ganz bestimmten Zweck.</p>
+        <p>Manchmal benutzen wir Elemente anders als zu diesem bestimmten Zweck.</p>
+        <p>Das kann Probleme für den Screen&#183;reader machen.</p>
+        <p style="margin-top: 1.2rem"><b>Erweiterbare Inhalte</b></p>
+        <p>Auf der Internet&#183;seite von RIPS-Meta&#183;daten gibt es verschiedene erweiterbare Inhalte.</p>
+        <p>Erweiterbare Inhalte bedeutet:</p>
+        <p class="indent-md">Die Inhalte verändern sich bei Bedarf.</p>
+        <p>Erweiterbare Inhalte gibt es zum Beispiel bei Beschreibungs&#183;texten.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_28.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Sie sehen zuerst immer nur einen Teil von der Beschreibung.</p>
+        <p>Sie wollen den ganzen Text lesen?</p>
+        <p>Dann müssen Sie auf den kleinen Kasten mit dem Wort Mehr klicken.</p>
+        <p>Erst dann öffnet sich die ganze Beschreibung.</p>
+        <p>Der Screen&#183;reader liest aber immer sofort die ganze Beschreibung.</p>
+        <p style="margin-top: 1.2rem"><b>Kontakt&#183;formulare</b></p>
+        <p>Das Kontakt&#183;formular bietet <b>keine</b> Auto&#183;vervollständigung.</p>
+        <p>Auto&#183;vervollständigung bedeutet:</p>
+        <p class="indent-md">Die Text&#183;felder füllen sich automatisch.</p>
+        <p class="indent-md">Zum Beispiel:</p>
+        <p class="indent-md">Sie klicken in das Feld für Ihren Namen?</p>
+        <p class="indent-md">Dann füllt sich das Text&#183;feld automatisch mit Ihrem Namen.</p>
+        <p>Für das Kontakt&#183;formular auf RIPS-Metadaten können wir <b>keine</b> Auto&#183;vervollständigung umsetzen.</p>
+        <p style="margin-top: 1.2rem"><b>Lesbarkeit verbessern</b></p>
+        <p>Sie wollen die Lesbarkeit auf der Internet&#183;seite verbessern?</p>
+        <p>Sie wollen zum Beispiel die Schrift größer machen?</p>
+        <p>Das macht Probleme mit der Anordnung und mit der Bedienbarkeit.</p>
+        <p>Die Inhalte verschieben sich vielleicht.</p>
+        <p>Und die Seite lässt sich dann <b>nicht</b> mehr gut bedienen.</p>
+        <p style="margin-top: 1.2rem"><b>Tastatur-Bedienung</b></p>
+        <p>Menschen mit einer Seh-Behinderung können <b>keine</b> Computer-Maus benutzen.</p>
+        <p>Deshalb muss die Internet&#183;seite auch über die Tastatur funktionieren.</p>
+        <p>An manchen Stellen auf unserer Internet&#183;seite gibt es Probleme mit der Tastatur-Bedienung.</p>
+        <p style="margin-top: 1.2rem"><b>Links</b></p>
+        <p>Manche Links auf unserer Internet&#183;seite sind <b>nicht</b> barriere&#183;frei.</p>
+        <p>Bei manchen Links wird nämlich <b>nicht</b> deutlich: Wo führt der Link hin?</p>
+        <p style="margin-top: 1.2rem"><b>Fremd&#183;sprachige Wörter</b></p>
+        <p>In manchen Texten auf unserer Internet&#183;seite gibt es Wörter aus anderen Sprachen.</p>
+        <p>Zum Beispiel englische Wörter.</p>
+        <p>Diese Wörter sind im HTML-Code <b>nicht</b> als fremd&#183;sprachige Wörter gekennzeichnet.</p>
+        <p style="margin-top: 1.2rem"><b>Bedien&#183;elemente</b></p>
+        <p>Bedien&#183;elemente sind zum Beispiel:</p>
+        <ul>
+            <li>Themen&#183;bereiche</li>
+            <li>Menü&#183;punkte</li>
+            <li>Bilder</li>
+            <li>Symbole</li>
+        </ul>
+        <p>Über die Bedien&#183;elemente auf einer Internet&#183;seite können Sie die Internet&#183;seite benutzen.</p>
+        <p>An manchen Stellen benutzen wir Links als Bedien&#183;elemente.</p>
+        <p>Dann sind diese Bedien&#183;elemente <b>nicht</b> als Bedien&#183;elemente gekennzeichnet.</p>
+        <p>Die Bedien&#183;elemente sind dann als Links gekennzeichnet.</p>
+        <h3>Kategorie 2: Andere Barrieren</h3>
+        <p style="margin-top: 1.2rem"><b>Karten</b></p>
+        <p>Für die Karten auf unserer Internet&#183;seite gibt es <b>keine</b> Alternativ-Texte.</p>
+        <p style="margin-top: 1.2rem"><b>Inhalte von anderen Organisationen</b></p>
+        <p>Wir verlinken auf unserer Internet&#183;seite manchmal auch auf Informationen von anderen Organisationen.</p>
+        <p>Für diese Informationen sind wir nicht verantwortlich.</p>
+        <p>Das bedeutet:</p>
+        <p>Wir sind auch für die Barriere&#183;freiheit von diesen Informationen <b>nicht</b> verantwortlich.</p>
+    </div>
+</section>
+
+<section id="submit_issues">
+    <button class="accordion flex item-center justify-between">
+        <h2>So können Sie uns Probleme melden</h2>
+        <span class="ic-ic-angle-down"></span>
+    </button>
+    <div class="content">
+        <p>Sie haben Probleme mit unserer Internet&#183;seite?</p>
+        <p>Dann können Sie sich bei uns melden.</p>
+        <p>Sie haben verschiedene Möglichkeiten:</p>
+        <h3>
+            Über unser Feedback-Formular
+            <img
+                    src="/decorations/layout/ingrid/images/template/easy_language_29.png"
+                    style="width: 25%; float: right"
+                    alt="image"
+                    aria-hidden="true"
+            />
+        </h3>
+        <p>Feedback ist ein englisches Wort und bedeutet:</p>
+        <p class="indent-md">Rückmeldung oder Bewertung.</p>
+        <p>Unser Feedback-Formular ist ein Online-Formular.</p>
+        <p><a href="/kontakt">Hier</a> kommen Sie zum Feedback-Formular.</p>
+        <h3>
+            Mit einer E-Mail
+            <img
+                    src="/decorations/layout/ingrid/images/template/easy_language_30.png"
+                    style="width: 18%; float: right"
+                    alt="image"
+                    aria-hidden="true"
+            />
+        </h3>
+        <p>Sie können uns auch eine E-Mail schicken.</p>
+        <p>Unsere E-Mail-Adresse ist: <a href="mailto:poststelle@lubw.bwl.de">poststelle@lubw.bwl.de</a></p>
+        <h3>
+            Über Telefon
+            <img
+                    src="/decorations/layout/ingrid/images/template/easy_language_31.png"
+                    style="width: 18%; float: right"
+                    alt="image"
+                    aria-hidden="true"
+            />
+        </h3>
+        <p>Sie können uns auch anrufen.</p>
+        <p>Unsere Telefon&#183;nummer ist: <a href="tel:0049 721 5600 0">0049 721 5600 0</a></p>
+        <h3>
+            Mit der Post
+            <img
+                    src="/decorations/layout/ingrid/images/template/easy_language_32.png"
+                    style="width: 20%; float: right"
+                    alt="image"
+                    aria-hidden="true"
+            />
+        </h3>
+        <p>Sie können uns auch einen Brief schicken.</p>
+        <p>Unsere Post&#183;adresse ist:</p>
+        <p style="margin-top: 1.2rem">Landesanstalt für Umwelt Baden-Württemberg</p>
+        <p>Grießbachstraße 1</p>
+        <p>76185 Karlsruhe</p>
+    </div>
+</section>
+
+<section id="complaint">
+    <button class="accordion flex item-center justify-between">
+        <h2>So können Sie sich beschweren</h2>
+        <span class="ic-ic-angle-down"></span>
+    </button>
+    <div class="content">
+        <p>Wir haben zusammen <b>keine</b> Lösung für das Problem gefunden?</p>
+        <p>Dann können Sie sich bei der Landes-Behinderten&#183;beauftragten von Baden-Württemberg melden.</p>
+        <p>
+            Der lange Name ist:
+            <b>Beauftragte der Landes&#183;regierung für die Belange von Menschen mit Behinderungen.</b>
+        </p>
+        <p>Simone Fischer ist zurzeit Landes-Behinderten&#183;beauftragte.</p>
+        <p>So erreichen Sie Simone Fischer:</p>
+        <p class="indent-md"><b>Landes-Behindertenbeauftragte</b></p>
+        <p class="indent-md">Simone Fischer</p>
+        <p class="indent-md">Else-Josenhans-Straße 6</p>
+        <p class="indent-md">70173 Stuttgart</p>
+        <p class="indent-md">Telefon: <a href="tel:0049 711 279 3360">0049 711 279 3360</a></p>
+        <p class="indent-md">E-Mail: <a href="mailto:Poststelle@bfbmb.bwl.de">Poststelle@bfbmb.bwl.de</a></p>
+        <p>Oder Sie können sich bei den Beauftragten für Menschen mit Behinderung aus Ihrer Stadt oder Ihrem Land&#183;kreis
+            melden.</p>
+    </div>
+</section>

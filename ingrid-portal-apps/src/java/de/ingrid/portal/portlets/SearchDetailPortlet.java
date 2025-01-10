@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2025 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -223,7 +223,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false));
         context.put("hideGeodataSetOnOpenData", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_HIDE_GEODATASET_ON_OPENDATA, false));
         context.put("hvdDisplayIcon", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_HVD_DISPLAY_ICON, false));
-        context.put("hvdCategories", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_HIT_HVD_CATEGORIES));
 
         context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false));
         context.put("mapLinksNewTab", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPS_LINKS_NEW_TAB, false ));

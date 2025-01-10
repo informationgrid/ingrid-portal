@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
-    <name>numis</name>
-    <description>Portal-Profile für NUMIS</description>
+    <name>lubw</name>
+    <description>Portal-Profile für Landesanstalt für Umwelt Baden-Württemberg</description>
     <pages>
         <page>
             <name>main-measures.psml</name>
@@ -29,11 +29,19 @@
         </page>
         <page>
             <name>mdek/mdek_portal_admin.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>application/main-application.psml</name>
             <hidden>true</hidden>
+        </page>
+        <page>
+            <name>easy-language.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>sign-language.psml</name>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>default-page.psml</name>
@@ -83,10 +91,6 @@
         </file>
         <file>
             <action>copy-dir</action>
-            <src>ingrid-portal-mdek-application/</src>
-        </file>
-        <file>
-            <action>copy-dir</action>
             <src>ingrid-webmap-client/</src>
         </file>
     </files>
@@ -97,6 +101,10 @@
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link';]]>
+        </execute>
+        <!-- Set folder "/mdek" to hidden -->
+        <execute>
+            <![CDATA[UPDATE folder SET IS_HIDDEN='1' WHERE PATH='/mdek';]]>
         </execute>
         <!-- Change main menu order -->
         <execute>

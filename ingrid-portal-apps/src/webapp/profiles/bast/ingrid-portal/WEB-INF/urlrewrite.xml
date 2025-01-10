@@ -126,12 +126,17 @@
     <!--  Messwerte  -->
     <rule>
         <from>/messwertsuche</from>
-        <to type="passthrough">/portal/main-measures.psml</to>
+        <to type="passthrough">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-measures.psml</from>
         <to>/messwertsuche</to>
     </outbound-rule>
+    
+    <rule>
+        <from>/portal/main-measures.psml</from>
+        <to type="permanent-redirect">/messwertsuche</to>
+    </rule>
     
     <!--  Umweltthemen  -->
     <rule>
@@ -166,22 +171,32 @@
     <!-- Informationsanbieter   -->
     <rule>
         <from>/informationsanbieter</from>
-        <to type="forward">/portal/main-about-partner.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about-partner.psml</from>
         <to>/informationsanbieter</to>
     </outbound-rule>
     
+    <rule>
+        <from>/portal/main-about-partner.psml</from>
+        <to type="permanent-redirect">/informationsanbieter</to>
+    </rule>
+    
     <!-- Datenquellen  -->
     <rule>
         <from>/datenquellen</from>
-        <to type="forward">/portal/main-about-data-source.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about-data-source.psml</from>
         <to>/datenquellen</to>
     </outbound-rule>
+    
+    <rule>
+        <from>/portal/main-about-data-source.psml</from>
+        <to type="permanent-redirect">/datenquellen</to>
+    </rule>
     
     <!-- Mein Portal  -->
     <rule>
@@ -286,12 +301,17 @@
     <!-- Api -->
     <rule>
         <from>/api</from>
-        <to type="forward">/portal/application/main-application.psml</to>
+        <to type="forward">/error404.html</to>
     </rule>
     <outbound-rule>
         <from>/portal/application/main-application.psml</from>
         <to>/api</to>
     </outbound-rule>
+
+    <rule>
+        <from>/portal/application/main-application.psml</from>
+        <to type="permanent-redirect">/api</to>
+    </rule>
 
     <!-- IGE-NG -->
     <rule>

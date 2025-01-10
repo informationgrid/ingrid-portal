@@ -142,21 +142,28 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <queryType>OR</queryType>
         <facets>
         <!-- Daten -->
-            <facet>
+            <facet isSelect="true">
                 <name>Daten</name>
-                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType OR hierarchylevel:tile)</query>
+                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType)</query>
                 <id>data</id>
                 <display>true</display>
             </facet>
-        <!-- Dienste -->
+        <!-- Kacheln -->
             <facet>
+                <name>Kacheln</name>
+                <query>datatype:metadata hierarchylevel:tile</query>
+                <id>tile</id>
+                <display>true</display>
+            </facet>
+        <!-- Dienste -->
+            <facet isSelect="true">
                 <name>Dienste</name>
                 <query>hierarchylevel:service</query>
                 <id>service</id>
                 <display>true</display>
             </facet>
         <!-- Anwendungen -->
-             <facet>
+             <facet isSelect="true">
                 <name>Anwendungen</name>
                 <query>hierarchylevel:application</query>
                 <id>others</id>
@@ -184,7 +191,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>service_type_download</id>
                 <display>true</display>
             </facet>
-        <!-- Darstellungsdienste -->
+        <!-- Sonstige Dienste -->
             <facet>
                 <name>Sonstige Dienste</name>
                 <query>t01_object.obj_class:3 (-t011_obj_serv.type:view -t011_obj_serv.type:wms -t011_obj_serv.type:wmts -t011_obj_serv.type:map -t011_obj_serv.type:download -t011_obj_serv.type:feature -t011_obj_serv.type:wcs -t011_obj_serv.type:wfs -t011_obj_serv.type:atom -t011_obj_serv.type:ogcapifeature -t011_obj_serv.type:"api feature")</query>
@@ -492,7 +499,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Geo-Information / Karte -->
             <facet>
                 <name>Daten</name>
-                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType OR hierarchylevel:tile)</query>
+                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType)</query>
                 <id>data</id>
                 <parentId>type</parentId>
                 <icon>ic-map</icon>

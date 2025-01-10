@@ -195,12 +195,12 @@
 
     <!-- Mein Portal  -->
     <rule>
-        <from>/log-in</from>
+        <from>/portal-login</from>
         <to type="forward">/portal/service-myportal.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-myportal.psml</from>
-        <to>/log-in</to>
+        <to>/portal-login</to>
     </outbound-rule>
 
     <!-- Datenschutzbestimmung   -->
@@ -263,6 +263,26 @@
         <to>/barrierefreiheit</to>
     </outbound-rule>
 
+    <!-- Leichte Sprache -->
+    <rule>
+        <from>/leichte-sprache</from>
+        <to type="forward">/portal/easy-language.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/easy-language.psml</from>
+        <to>/leichte-sprache</to>
+    </outbound-rule>
+
+    <!-- Gebärdensprache -->
+    <rule>
+        <from>/gebaerdensprache</from>
+        <to type="forward">/portal/sign-language.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/sign-language.psml</from>
+        <to>/gebaerdensprache</to>
+    </outbound-rule>
+
     <!-- RSS Page  -->
     <rule>
         <from>^/rss</from>
@@ -292,5 +312,11 @@
         <from>/portal/help.psml</from>
         <to>/hilfe</to>
     </outbound-rule>
+
+    <!-- IGE-NG -->
+    <rule>
+        <from>/log-in</from>
+        <to type="permanent-redirect">/ige-ng</to>
+    </rule>
 
 </urlrewrite>

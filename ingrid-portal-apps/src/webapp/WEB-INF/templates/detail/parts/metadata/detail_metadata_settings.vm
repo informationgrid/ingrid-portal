@@ -35,8 +35,18 @@
 #set($showMetadataClassType = true)
 
 #set($advGroup = $TOOL.getAlternateTitleListFromCodelist("8010"))
-#set($searchTerm = $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "search"))
-#set($hvdTerms = $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "hvd"))
+
+#set($xPathKeywordsDescriptiveKeywords = "./gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords")
+
+#set($terms = $TOOL.getDefaultIndexInformationKeywords($xPathKeywordsDescriptiveKeywords))
+#set($inspireTerms = $terms.get("inspire"))
+#set($invekosTerms = $terms.get("invekos"))
+#set($priorityTerms = $terms.get("priority"))
+#set($spatialTerms = $terms.get("spatial"))
+#set($gemetTerms = $terms.get("gemet"))
+#set($hvdTerms = $terms.get("hvd"))
+#set($searchTerm = $terms.get("search"))
+
 #set($mapImage = $TOOL.getMapImage(${plugPartner}))
 
 #if($TOOL.hasAccessConstraints())
@@ -59,7 +69,7 @@
 
 ## Beschreibung
 #set($getAlternateTitle = $TOOL.getAlternateTitle())
-#set($getDescription = $TOOL.valueHTMLEscape($stringTool.convertUrlInText($TOOL.getDescription())))
+#set($getDescription = $TOOL.valueHTMLEscape($stringTool.convertUrlInText($TOOL.getDescription()), $cutSumHTMLNewLine))
 
 ## Zeitbezug
 #set($isTimeInDescription = true)
@@ -203,7 +213,7 @@
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_software.vm")
 
 ## Fachinformationen
-#set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
+#set($serviceClassification = $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(./gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor],'Service')]/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]","5200",false))
 #set($checkOtherInformation = false)
 #set($hideResolutionTitle = false)
 
@@ -454,11 +464,10 @@
 #parse("/WEB-INF/templates/detail/parts/metadata/settings/settings_additional_info_geodatalink.vm")
 
 #### Schlagworte
-#set($xPathKeywordsDescriptiveKeywords = "./gmd:identificationInfo/*/gmd:descriptiveKeywords")
 #set($xPathKeywordsTopicCategory = "./gmd:identificationInfo/*/gmd:topicCategory")
 
 #set($xPathListKeywords = [
-    "${xPathKeywordsDescriptiveKeywords}[not(contains(./gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title,'Service'))]",
+    "./gmd:identificationInfo/*/gmd:descriptiveKeywords[not(contains(./gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title,'Service'))]",
     $xPathKeywordsTopicCategory
 ])
 

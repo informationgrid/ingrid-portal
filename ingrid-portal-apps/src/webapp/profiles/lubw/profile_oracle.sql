@@ -36,7 +36,13 @@ UPDATE page SET is_hidden = 0 WHERE path = '/service-sitemap.psml';
 -- Show '/search-catalog/search-catalog-hierarchy.psml'
 UPDATE page SET is_hidden = 0 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
 
--- Show '/main-measures.psml'
+-- Show '/easy-language.psml'
+UPDATE page SET is_hidden = 0 WHERE path = '/easy-language.psml';
+
+-- Show '/sign-language.psml'
+UPDATE page SET is_hidden = 0 WHERE path = '/sign-language.psml';
+
+-- Hide '/main-measures.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/main-measures.psml';
 
 -- Hide '/language.link'
@@ -50,6 +56,12 @@ UPDATE page SET is_hidden = 1 WHERE path = '/main-about-partner.psml';
 
 -- Hide '/application/main-application.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
+
+-- Hide 'mdek/mdek_portal_admin.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/mdek/mdek_portal_admin.psml';
+
+-- Set folder "/mdek" to hidden
+UPDATE folder SET is_hidden = 1 WHERE path = '/mdek';
 
 -- Hide folder "/application" to display
 UPDATE folder SET is_hidden = 1 WHERE path = '/application';

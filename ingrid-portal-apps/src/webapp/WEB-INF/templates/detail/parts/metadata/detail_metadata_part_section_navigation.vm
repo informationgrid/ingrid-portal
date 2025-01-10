@@ -215,6 +215,11 @@
                                     ($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0)))
                                     #set($tmpHash = "${hashDetail5}_technical_information")
                                     #set($tmpTitle = $MESSAGES.getString("technical_information"))
+                                    #if($type == "3")
+                                        #set($tmpTitle = $MESSAGES.getString("technical_information_3"))
+                                    #elseif($type == "6")
+                                        #set($tmpTitle = $MESSAGES.getString("technical_information_6"))
+                                    #end
                                     #renderSubNavigation($tmpTitle $tmpHash)
                                 #end
                                 #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo) || ($getCitations && $getCitations.size() > 0))

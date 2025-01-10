@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2025 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -243,6 +243,7 @@ public class UtilsFacete {
 
         sortingFacet(config);
         selectedFacet(config);
+        hiddenFacet(config);
         context.put("facetConfig", config);
         context.put("facetKeys", keys);
         context.put(Settings.PARAM_FACET, request.getParameter(Settings.PARAM_FACET));
@@ -366,6 +367,15 @@ public class UtilsFacete {
                                             }
                                         }
                                     }else{
+                                        if(tmpFacetValue.isHierarchyTreeLeaf() &&
+                                            tmpFacetValue.getFacets().isEmpty() &&
+                                            tmpFacetValue.getHierarchyTreeNode() != null) {
+                                            DisplayTreeNode node = tmpFacetValue.getHierarchyTreeNode();
+                                            if(node != null) {
+                                                openNode(node, node.getId());
+                                                addHierarchyNodesToFacets(tmpFacetValue, node.getChildren(), config);
+                                            }
+                                        }
                                         tmpFacetValue.setSelect(true);
                                         facetIsSelect = true;
                                         // Set last selection
@@ -2043,6 +2053,15 @@ public class UtilsFacete {
                                 //Set facet isSelect
                                 IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), split[1]);
                                 if(tmpFacetValue != null) {
+                                    if(tmpFacetValue.isHierarchyTreeLeaf() &&
+                                        tmpFacetValue.getFacets().isEmpty() &&
+                                        tmpFacetValue.getHierarchyTreeNode() != null) {
+                                        DisplayTreeNode node = tmpFacetValue.getHierarchyTreeNode();
+                                        if(node != null) {
+                                            openNode(node, node.getId());
+                                            addHierarchyNodesToFacets(tmpFacetValue, node.getChildren(), config);
+                                        }
+                                    }
                                     tmpFacetValue.setSelect(true);
                                     //Check dependency
                                     if(tmpFacetValue.getId() != null){
@@ -2425,6 +2444,43 @@ public class UtilsFacete {
             for(IngridFacet facet : config){
                 if(facet.getFacets() != null){
                     facet.setSelect(selectedFacetCheck(facet.getFacets()));
+                }
+            }
+        }
+    }
+
+    private static void hiddenFacet(List<IngridFacet> config){
+        hiddenFacet(config, null);
+    }
+
+    private static void hiddenFacet(List<IngridFacet> config, List<IngridFacet> children){
+        if(config != null){
+            List<IngridFacet> tmpList = config;
+            if(children != null) {
+                tmpList = children;
+            }
+            for(IngridFacet facet : tmpList){
+                ArrayList<IngridFacet> facetHidList = (ArrayList<IngridFacet>) getHiddenFacetById(config, new ArrayList<>(), facet.getId());
+                for(IngridFacet facetHid : facetHidList){
+                    boolean isHiddenSelect = false;
+                    if(facet.isSelect()){
+                        isHiddenSelect = true;
+                    }
+                    facetHid.setHiddenSelect(isHiddenSelect);
+                }
+                if(facet.getToggle() != null){
+                    IngridFacet toggle = facet.getToggle();
+                    facetHidList = (ArrayList<IngridFacet>) getHiddenFacetById(config, new ArrayList<>(), toggle.getId());
+                    for(IngridFacet facetHid : facetHidList){
+                        boolean isHiddenSelect = false;
+                        if(toggle.isSelect()){
+                            isHiddenSelect = true;
+                        }
+                        facetHid.setHiddenSelect(isHiddenSelect);
+                    }
+                }
+                if(facet.getFacets() != null){
+                    hiddenFacet(config, facet.getFacets());
                 }
             }
         }
@@ -2820,10 +2876,6 @@ public class UtilsFacete {
     }
 
     private static void addHierarchyNodesToFacets(IngridFacet ingridFacet, List<DisplayTreeNode> nodes, List<IngridFacet> config) {
-        addHierarchyNodesToFacets(ingridFacet, nodes, config, null);
-    }
-
-    private static void addHierarchyNodesToFacets(IngridFacet ingridFacet, List<DisplayTreeNode> nodes, List<IngridFacet> config, String nodeId) {
         List<IngridFacet> newFacets = new ArrayList<IngridFacet>();
         for (DisplayTreeNode node : nodes) {
             String docId = node.get("docId").toString();
@@ -2837,6 +2889,7 @@ public class UtilsFacete {
                 tmpFacet.setName(name);
                 tmpFacet.setParent(ingridFacet);
                 tmpFacet.setHierarchyTreeLeaf(true);
+                tmpFacet.setHierarchyTreeNode(node);
                 if(ingridFacet.getListLength() > 0) {
                     tmpFacet.setListLength(ingridFacet.getListLength());
                 }
@@ -2844,7 +2897,7 @@ public class UtilsFacete {
                     tmpFacet.setSort(ingridFacet.getSort());
                 }
                 newFacets.add(tmpFacet);
-                addHierarchyNodesToFacets(tmpFacet, node.getChildren(), config, id) ;
+                addHierarchyNodesToFacets(tmpFacet, node.getChildren(), config) ;
             }
         }
         ingridFacet.setFacets(newFacets);
@@ -2873,6 +2926,9 @@ public class UtilsFacete {
 
     private static void openNode(DisplayTreeNode rootNode, String nodeId) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
+        if (node == null) {
+            node = rootNode;
+        }
         if (node != null) {
             node.setOpen(true);
 
@@ -2983,10 +3039,10 @@ public class UtilsFacete {
             if(type != null){
                 // OR
                 if(type.equals("OR")){
-                    String orQuery = "(";
                     boolean hasSelected = false;
                     boolean hasSelectedToggle = false;
-                    
+                    ArrayList<String> queries = new ArrayList<>();
+                    String orQuery = "";
                     for(IngridFacet ingridFacet : facets){
                         if(ingridFacet.isSelect()) {
                             hasSelected = true;
@@ -3021,16 +3077,25 @@ public class UtilsFacete {
                             }
                         }
                         if(!query.isEmpty()) {
-                            if(orQuery.equals("(")){
-                                orQuery += "(" + query + ")";
-                            }else{
-                                orQuery += " OR (" + query + ")";
-                            }
+                            queries.add(query);
                         }
                     }
-                    orQuery += ")";
-                    if(!orQuery.equals("()")){
-                        term = term + " " + orQuery;
+                    for (String q : queries) {
+                        if(!orQuery.isEmpty()) {
+                            orQuery += " OR ";
+                        }
+                        if(queries.size() > 1 ) {
+                            orQuery += "(" + q + ")";
+                        } else {
+                            orQuery += q;
+                        }
+                    }
+                    if(!orQuery.isEmpty()){
+                        if(!term.isEmpty()) {
+                            term = "(" + term + ") ";
+                            orQuery = "(" + orQuery + ")";
+                        }
+                        term = term + orQuery;
                     }
                 }
             }else{

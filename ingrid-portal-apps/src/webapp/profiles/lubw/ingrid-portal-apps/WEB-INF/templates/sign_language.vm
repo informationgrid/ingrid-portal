@@ -1,0 +1,48 @@
+<div id="sign-language">
+    <h1>Informationen zum Inhalt der Website in Deutscher Gebärdensprache (mit Untertiteln)</h1>
+    <video controls>
+        <source
+                type="video/mp4"
+                src="/accessibility/videos/video_01.mp4"
+        />
+        <track
+                label="Deutsch"
+                kind="subtitles"
+                srclang="de"
+                src="/accessibility/videos/subtitle_01.vtt"
+                default
+        />
+    </video>
+
+    <h1>Hinweise zur Navigation der Website in Deutscher Gebärdensprache (mit Untertiteln)</h1>
+    <video controls>
+        <source
+                type="video/mp4"
+                src="/accessibility/videos/video_02.mp4"
+        />
+        <track
+                label="Deutsch"
+                kind="subtitles"
+                srclang="de"
+                src="/accessibility/videos/subtitle_02.vtt"
+                default
+        />
+    </video>
+
+    <h1>Erläuterung der wesentlichen Inhalte der Erklärung zur Barrierefreiheit in Gebärdensprache (mit
+        Untertiteln)</h1>
+
+    <video controls>
+        <source
+                type="video/mp4"
+                src="/accessibility/videos/video_03.mp4"
+        />
+        <track
+                label="Deutsch"
+                kind="subtitles"
+                srclang="de"
+                src="/accessibility/videos/subtitle_03.vtt"
+                default
+        />
+    </video>
+</div>

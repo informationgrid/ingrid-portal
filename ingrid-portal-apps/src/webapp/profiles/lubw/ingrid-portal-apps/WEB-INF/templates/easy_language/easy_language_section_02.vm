@@ -1,0 +1,284 @@
+<h1>Informationen über den Aufbau von unserer Internet-Seite</h1>
+<p>Die Internet&#183;seite von RIPS Meta&#183;daten hat viele Seiten.</p>
+<p>Und diese Seiten haben noch weitere Unter&#183;seiten.</p>
+<p>In diesem Text beschreiben wir den Aufbau von der Internet&#183;seite.</p>
+<p><b>Hinweis</b>: Der Aufbau von der Internet&#183;seite kann sich verändern.</p>
+<p>Vielleicht kommen Dinge dazu.</p>
+<p>Oder vielleicht sortieren wir Dinge um.</p>
+<p>In diesem Text beschreiben wir den Stand von November 2024.</p>
+<p>Das bedeutet: Im November 2024 war der Aufbau von der Internet&#183;seite so.</p>
+<p>Wir beschreiben:</p>
+<ul>
+    <li><a tag="#header">die Kopf&#183;zeile</a></li>
+    <li><a tag="#main_menu">das Haupt&#183;menü</a></li>
+    <li><a tag="#home_page">die Start&#183;seite</a></li>
+    <li><a tag="#footer">die Fuß&#183;zeile</a></li>
+</ul>
+
+<section id="header">
+    <button class="accordion flex item-center justify-between">
+        <h2>Die Kopf&#183;zeile</h2>
+        <span class="ic-ic-angle-down"></span>
+    </button>
+    <div class="content">
+        <p>Ganz oben auf unserer Internet&#183;seite ist immer die Kopf&#183;zeile.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_10.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>In der Kopf&#183;zeile finden Sie:</p>
+        <ul>
+            <li>das Wappen</li>
+            <li>die Suche</li>
+            <li>Karten</li>
+            <li>die Themen&#183;übersicht</li>
+            <li>Leichte Sprache</li>
+            <li>Gebärden&#183;sprache</li>
+            <li>das LUBW-Logo</li>
+            <li>das Menü</li>
+        </ul>
+        <h3>Das Wappen</h3>
+        <p>Ganz links in der Kopf&#183;zeile ist das Wappen von Baden-Württemberg.</p>
+        <p>Neben dem Wappen steht:</p>
+        <p>Landesanstalt für Umwelt Baden-Württemberg.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_11.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Sie klicken auf das Wappen oder die Schrift?</p>
+        <p>Dann kommen Sie immer zur Start&#183;seite von RIPS-Meta&#183;daten.</p>
+        <h3>Die Suche</h3>
+        <p>In der Kopf&#183;zeile finden Sie auch die Such&#183;funktion.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_12.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Sie klicken auf die Lupe?</p>
+        <p>Dann öffnet sich eine neue Seite mit einem Text·feld.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_13.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Geben Sie Ihr Such&#183;wort in das Text&#183;feld ein.</p>
+        <p>Klicken Sie dann auf das Wort <b>Suche</b> rechts neben dem Textfeld.</p>
+        <p>Dann bekommen Sie unter dem Text&#183;feld eine Liste mit den Such&#183;ergebnissen.</p>
+        <p>Sie finden auf der Seite auch verschiedene Filter zum Anklicken.</p>
+        <p>Mit den Filtern können Sie die Such&#183;ergebnisse noch genauer machen.</p>
+        <h3>Karten</h3>
+        <p>Sie klicken in der Kopf&#183;zeile auf <b>Karten</b>?</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_14.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Dann kommen Sie zur Karten&#183;komponente von RIPS-Meta&#183;daten.</p>
+        <p>Die Karten&#183;komponente ist eine besondere Funktion.</p>
+        <p>Mit der Karten&#183;komponente können Sie eine interaktive Karte nutzen.</p>
+        <p>Interaktiv bedeutet:</p>
+        <p>Die Karte kann verschiedene Informationen anzeigen.</p>
+        <p>Und Sie können diese Informationen selbst bestimmen.</p>
+        <h3>Die Themen&#183;übersicht</h3>
+        <p>Sie klicken in der Kopf&#183;zeile auf <b>Themen&#183;übersicht</b>?</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_15.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Dann kommen Sie zu einer Liste mit den verschiedenen Themen&#183;gebieten von RIPS-Meta&#183;daten.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_16.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Die Liste ist nach dem Alphabet geordnet.</p>
+        <p>Sie klicken auf das Plus-Zeichen neben einem Themen&#183;gebiet?</p>
+        <p>Dann öffnen sich weitere Unter&#183;themen von dem Themen&#183;gebiet.</p>
+        <p>Sie klicken auf eins von den Unter&#183;themen?</p>
+        <p>Dann kommen Sie zu den Informationen.</p>
+        <h3>Leichte Sprache</h3>
+        <p>Sie klicken in der Kopf&#183;zeile auf <b>Leichte Sprache</b>?</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_17.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Dann kommen Sie zu unseren Informationen in Leichter Sprache.</p>
+        <h3>Gebärden&#183;sprache</h3>
+        <p>Sie klicken in der Kopf&#183;zeile auf <b>Gebärden&#183;sprache</b>?</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_18.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Dann kommen Sie zu unseren Informationen in Gebärden&#183;sprache.</p>
+        <h3>Das LUBW-Logo</h3>
+        <p>Sie klicken in der Kopf&#183;zeile auf das LUBW-Logo?</p>
+        <p>Dann kommen Sie immer zur Start&#183;seite von RIPS-Meta&#183;daten.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_19.png"
+                alt="image"
+                aria-hidden="true"
+        />
+    </div>
+</section>
+
+<section id="main_menu">
+    <button class="accordion flex item-center justify-between">
+        <h2>Das Haupt&#183;menü</h2>
+        <span class="ic-ic-angle-down"></span>
+    </button>
+    <div class="content">
+        <p>Ganz rechts in der Kopf&#183;zeile ist ein Menü.</p>
+        <p>Dieses Menü ist das Haupt&#183;menü von der Internet&#183;seite.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_20.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Sie klicken auf das Menü?</p>
+        <p>Dann öffnet sich eine Liste mit den Menü&#183;punkten.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_21.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Das Menü hat verschiedene Menü&#183;punkte.</p>
+        <p>Ganz oben finden Sie zum Beispiel:</p>
+        <ul>
+            <li>Suche</li>
+            <li>Karten</li>
+            <li>Themen&#183;übersicht</li>
+        </ul>
+        <p>Diese 3 Menü&#183;punkte finden Sie auch direkt in der Kopf&#183;zeile.</p>
+        <p>Außerdem finden Sie im Haupt&#183;menü diese weiteren Menü&#183;punkte:</p>
+        <ul>
+            <li>
+                <b>Über die LUBW</b>
+                <br>Hier finden Sie mehr Informationen über die LUBW.
+            </li>
+            <li>
+                <b>Daten&#183;quellen</b>
+                <br>Hier erfahren Sie:
+                <br>Welche Daten&#183;quellen gibt es?
+                <br>Und woher kommen die Daten auf der Internet&#183;seite?
+                <br><b>Hinweis</b>: Dies ist eine sehr technische Information.
+            </li>
+        </ul>
+        <p>Unten im Haupt&#183;menü finden Sie noch diese Menü&#183;punkte:</p>
+        <ul>
+            <li>Hilfe</li>
+            <li>Kontakt</li>
+            <li>Inhalt</li>
+            <li>Impressum</li>
+            <li>Datenschutz</li>
+            <li>Barrierefreiheit</li>
+        </ul>
+        <p>Diese Menü&#183;punkte finden Sie auch in der <b>Fuß&#183;zeile</b>.</p>
+        <p>Wir beschreiben diese Menü&#183;punkte im Text&#183;abschnitt <a href="#footer"><b>Fuß&#183;zeile</b></a> genauer.</p>
+        <p>Den Text&#183;abschnitt <b>Fuß&#183;zeile</b> finden Sie weiter unten in diesem Text.</p>
+    </div>
+</section>
+
+<section id="home_page">
+    <button class="accordion flex item-center justify-between">
+        <h2>Die Start&#183;seite</h2>
+        <span class="ic-ic-angle-down"></span>
+    </button>
+    <div class="content">
+        <p>Die Start&#183;seite ist der Start&#183;punkt für die Nutzerinnen und Nutzer von RIPS-Meta&#183;daten.</p>
+        <p>Hier bekommen Sie einen Überblick über das Angebot.</p>
+        <p>Und Sie kommen direkt zu den wichtigsten Funktionen.</p>
+        <p style="margin-top: 1.2rem">Oben auf der Start&#183;seite finden Sie eine Such&#183;funktion.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_22.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Hier könne Sie die Internet&#183;seite nach Informationen durchsuchen.</p>
+        <p>Geben Sie einfach Ihr Such&#183;wort in das Text&#183;feld ein.</p>
+        <p>Klicken Sie dann auf auf das Wort Suchen rechts neben dem Text·feld.</p>
+        <p>Dann sucht der Computer in allen RIPS-Meta&#183;daten.</p>
+        <p style="margin-top: 1.2rem">Unter der Such&#183;funktion auf der Start&#183;seite finden Sie eine Auswahl an
+            Kategorien.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_23.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Hier sind die Meta&#183;daten schon in verschiedene Kategorien eingeteilt.</p>
+        <p>So können Sie die passende Kategorie für Ihre Meta&#183;daten-Suche anklicken.</p>
+        <p style="margin-top: 1.2rem">Sie finden hier zurzeit diese Kategorien:</p>
+        <ul>
+            <li>Geo-Daten&#183;satz</li>
+            <li>Download&#183;dienst WFS</li>
+            <li>Darstellungs&#183;dienst WMS</li>
+            <li>INSPIRE</li>
+            <li>Open Data</li>
+            <li>Umwelt&#183;daten und -Karten Online</li>
+        </ul>
+        <p><b>Hinweis</b>: In einem anderen Text in Leichter Sprache beschreiben wir diese Kategorien genauer.</p>
+        <p>Der Text heißt: <a href="#about_internetseite">Über unsere Internet&#183;seite</a>.</p>
+        <p style="margin-top: 1.2rem">Unter den Kategorien finden Sie einen Info&#183;text.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_24.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>Es gibt eine wichtige Information für die Nutzerinnen und Nutzer von der Internet&#183;seite?</p>
+        <p>Dann steht dort diese Information.</p>
+    </div>
+</section>
+
+<section id="footer">
+    <button class="accordion flex item-center justify-between">
+        <h2>Die Fuß&#183;zeile</h2>
+        <span class="ic-ic-angle-down"></span>
+    </button>
+    <div class="content">
+        <p>Ganz unten auf der Internet&#183;seite ist immer die Fuß&#183;zeile.</p>
+        <img
+                src="/decorations/layout/ingrid/images/template/easy_language_25.png"
+                alt="image"
+                aria-hidden="true"
+        />
+        <p>In der Fuß&#183;zeile finden Sie diese Menü&#183;punkte:</p>
+        <ul>
+            <li>Das Wappen</li>
+            <li>Hilfe</li>
+            <li>Kontakt</li>
+            <li>Inhalt</li>
+            <li>Impressum</li>
+            <li>Daten&#183;schutz</li>
+            <li>Barriere&#183;freiheit</li>
+        </ul>
+        <h3>Das Wappen</h3>
+        <p>Sie klicken auf das Wappen?</p>
+        <p>Dann kommen Sie immer zurück zur Start&#183;seite.</p>
+        <h3>Hilfe</h3>
+        <p>Hier finden Sie hilfreiche Informationen über die RIPS-Meta&#183;daten.</p>
+        <h3>Kontakt</h3>
+        <p>Sie haben Fragen?</p>
+        <p>Oder Sie wollen uns etwas sagen?</p>
+        <p>Dann finden Sie hier unser Kontakt&#183;formular.</p>
+        <h3>Inhalt</h3>
+        <p>Hier finden Sie ein Inhalts&#183;verzeichnis von unserer Internet&#183;seite.</p>
+        <p>Das Inhalts&#183;verzeichnis gibt einen Überblick über die verschiedenen Bereiche auf der Internet&#183;seite.</p>
+        <h3>Impressum</h3>
+        <p>Hier steht genau:</p>
+        <p>Wer ist für die Intenet&#183;seite verantwortlich?</p>
+        <h3>Daten&#183;schutz</h3>
+        <p>Hier steht genau:</p>
+        <p>Welche Informationen sammeln wir von Ihnen?</p>
+        <p>Und was passiert mit diesen Informationen?</p>
+        <h3>Barrierefreiheit</h3>
+        <p>Hier finden Sie unsere Erklärung zur Barriere&#183;freiheit.</p>
+        <p>In der Erklärung steht genau:</p>
+        <p>Wie barriere&#183;frei ist die Internet&#183;seite?</p>
+        <p>Und wo können Sie Barrieren melden?</p>
+        <p><b>Hinweis</b>: Wir haben auch eine Erklärung zur Barrier&#183;freiheit in Leichter Sprache.</p>
+    </div>
+</section>

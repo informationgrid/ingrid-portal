@@ -1,4 +1,4 @@
 ## Open Data Kategorie
-    #renderTableList($MESSAGES.getString("Open Data Kategorie") $TOOL.getIndexInformationKeywords("$xPathKeywordsDescriptiveKeywords[./gmd:MD_Keywords/gmd:type]", "search") true "search_terms" 10)
+    #renderTableList($MESSAGES.getString("Open Data Kategorie") $TOOL.getIndexInformationKeywords("$xPathKeywordsDescriptiveKeywords[./gmd:type]", "6400", true) true "search_terms" 10)
 ## Suchbegriffe
-    #renderTableList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords("$xPathKeywordsDescriptiveKeywords[not(./gmd:MD_Keywords/gmd:type)]", "search") true "search_terms" 10)
+    #renderTableList($MESSAGES.getString("search_terms") $searchTerm true "search_terms" 10)

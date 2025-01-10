@@ -1,0 +1,63 @@
+<div id="easy-language">
+    #parse ('/WEB-INF/templates/easy_language/easy_language_section_01.vm')
+    #parse ('/WEB-INF/templates/easy_language/easy_language_section_02.vm')
+    #parse ('/WEB-INF/templates/easy_language/easy_language_section_03.vm')
+
+    <h3 style="margin-top: 30px;">Bildnachweis:</h3>
+    <p>© Lebenshilfe für Menschen mit geistiger Behinderung Bremen e.V., Illustrator Stefan Albers</p>
+    <p>
+        Sie sind verpflichtet, den Illustrator als Urheber der Illustration auszuweisen und bei jeder Veröffentlichung von Abbildungen den Copyright-Vermerk im Sinne des Welturheberrechtsabkommens anzubringen:
+    </p>
+    <p>© Lebenshilfe für Menschen mit geistiger Behinderung Bremen e.V., Illustrator Stefan Albers</p>
+    <p>
+        Als Auftraggeber dürfen Sie die von uns erstellten Übersetzungen inklusive Bebilderung nutzen und ebenfalls verbreiten und veröffentlichen unter Angabe des Bild-Urhebers Stefan Albers und des Copyright-Vermerkes.<br>
+        Sie dürfen die Bilder aber ausschließlich im Rahmen des von Ihnen erstellten Auftrages nutzen. Zur Verdeutlichung: Das Bild darf nur im Zusammenhang mit unseren Übersetzungen genutzt werden. Das Bild darf weder kopiert und/oder für andere Zwecke genutzt werden.
+    </p>
+</div>
+
+<script>
+    document.querySelectorAll('section button').forEach((el) => {
+        el.addEventListener('click', () => toggleExpandable(el));
+    });
+
+    document.querySelectorAll('a[tag]').forEach((el) => {
+        el.addEventListener('click', () => onShortcutClicked(el));
+    });
+
+    function onShortcutClicked(el) {
+        var tag = el.getAttribute('tag');
+        var target = document.querySelector(`${tag} button`);
+        var top = target.getBoundingClientRect().top;
+        var offset = -140;
+
+        if (document.body.classList.contains('shrink')) {
+            offset += 48;
+        }
+
+        setTimeout(() => {
+            scrollTo({
+                top: top + window.scrollY + offset,
+                behavior: "smooth",
+            });
+        }, 120);
+
+        toggleExpandable(target, true);
+    }
+
+    function toggleExpandable(el, toExpand) {
+        var section = el.parentElement;
+        var content = section.querySelector('.content');
+
+        var isExpanded = section.classList.contains('expanded');
+        if (toExpand && isExpanded) {
+            return;
+        }
+
+        section.classList.toggle('expanded');
+        if (section.classList.contains('expanded')) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+            content.style.maxHeight = "";
+        }
+    }
+</script>

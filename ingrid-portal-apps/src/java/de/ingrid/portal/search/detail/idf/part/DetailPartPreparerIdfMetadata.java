@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2025 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -701,8 +701,19 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return linkList;
     }
 
-    public List<String> getIndexInformationKeywords(String xpathExpression, String keywordType) {
-        List<String> list = new ArrayList<>();
+    public HashMap<String, List<String>> getDefaultIndexInformationKeywords(String xpathExpression) {
+        HashMap<String, List<String>> map = new HashMap<>();
+
+        List<String> listInspire = new ArrayList<>();
+        List<String> listInveskos = new ArrayList<>();
+        List<String> listPriority = new ArrayList<>();
+        List<String> listSpatial = new ArrayList<>();
+        List<String> listGemet = new ArrayList<>();
+        List<String> listHvd = new ArrayList<>();
+        List<String> listSearch = new ArrayList<>();
+
+        List hiddenKeywordList = PortalConfig.getInstance().getList(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
+        String opendata = xPathUtils.getString(rootNode, "//gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor][contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'opendata') or contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'opendataident')]");
 
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
@@ -713,128 +724,159 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String thesaurusName = "";
 
                 // type
-                xpathExpression = "./gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue";
+                xpathExpression = "./gmd:type/gmd:MD_KeywordTypeCode/@codeListValue";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     type = xPathUtils.getString(node, xpathExpression);
                 }
 
                 // thesaurus
-                xpathExpression = "./gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title";
+                xpathExpression = "./gmd:thesaurusName/gmd:CI_Citation/gmd:title";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     thesaurusName = xPathUtils.getString(node, xpathExpression).trim();
                 }
 
                 // keywords
-                xpathExpression = "./gmd:MD_Keywords/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]";
-                if (xPathUtils.nodeExists(node, xpathExpression)) {
-                    NodeList keywordNodeList = xPathUtils.getNodeList(node, xpathExpression);
-                    for (int j = 0; j < keywordNodeList.getLength(); j++) {
-                        Node keywordNode = keywordNodeList.item(j);
-                        String value = xPathUtils.getString(keywordNode, ".").trim();
-                        if(value.length() < 1){
-                            value = xPathUtils.getString(keywordNode, ".").trim();
-                        }
-                        boolean isHidden = false;
-                        String[] hvds = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_HIT_HVD_CATEGORIES);
+                xpathExpression = "./gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]";
 
-                        if(value != null){
-                            List hiddenKeywordList = PortalConfig.getInstance().getList(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
-                            if(hiddenKeywordList != null){
-                                for(int h=0; h < hiddenKeywordList.size(); h++){
-                                    String hiddenValue = (String) hiddenKeywordList.get(h);
-                                    if(value.equalsIgnoreCase(hiddenValue.toLowerCase())){
-                                        isHidden = true;
-                                        break;
+                if (xPathUtils.nodeExists(node, xpathExpression)) {
+                    String[] keywordNodeList = xPathUtils.getStringArray(node, xpathExpression);
+                    for (int j = 0; j < keywordNodeList.length; j++) {
+                        String value = keywordNodeList[j].trim();
+
+                        if(value != null && !value.isEmpty()){
+                            if(hiddenKeywordList.indexOf(value) > -1){
+                                continue;
+                            }
+                            if (!thesaurusName.isEmpty()) {
+                                // "Service Classification, version 1.0"
+                                if (!StringUtils.containsIgnoreCase(thesaurusName, "Service")) {
+                                    // "GEMET - Concepts, version 2.1"
+                                    if (StringUtils.containsIgnoreCase(thesaurusName, "Concepts")) {
+                                        String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
+                                        if(tmpValue.isEmpty()){
+                                            tmpValue = value;
+                                        }
+                                        if(listGemet.indexOf(tmpValue) == -1) {
+                                            listGemet.add(tmpValue);
+                                        }
+                                    } else if (StringUtils.containsIgnoreCase(thesaurusName, "priority")) {
+                                        String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
+                                        if(tmpValue.isEmpty()){
+                                            tmpValue = value;
+                                        }
+                                        if(listPriority.indexOf(tmpValue) == -1) {
+                                            listPriority.add(tmpValue);
+                                        }
+                                    } else if (StringUtils.containsIgnoreCase(thesaurusName, "INSPIRE")) {
+                                        String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
+                                        if(tmpValue.isEmpty()){
+                                            tmpValue = value;
+                                        }
+                                        if(listInspire.indexOf(tmpValue) == -1) {
+                                            listInspire.add(tmpValue);
+                                        }
+                                    } else if (StringUtils.containsIgnoreCase(thesaurusName, "Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
+                                        String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
+                                        if(tmpValue.isEmpty()){
+                                            tmpValue = value;
+                                        }
+                                        if(listSpatial.indexOf(tmpValue) == -1) {
+                                            listSpatial.add(tmpValue);
+                                        }
+                                    } else if (StringUtils.containsIgnoreCase(thesaurusName, "IACS Data")) {
+                                        if(listInveskos.indexOf(value) == -1) {
+                                            listInveskos.add(value);
+                                        }
+                                    } else if (opendata != null 
+                                            && StringUtils.containsIgnoreCase(thesaurusName, "High-value")) {
+                                        if(listHvd.indexOf(value) == -1) {
+                                            listHvd.add(value);
+                                        }
+                                    } else if (StringUtils.containsIgnoreCase(thesaurusName, "UMTHES")) {
+                                        if(listSearch.indexOf(value) == -1) {
+                                            listSearch.add(value);
+                                        }
+                                    } else{
+                                        // try to match keyword to  Opendata Category
+                                        String tmpValue = sysCodeList.getNameByData("6400", value);
+                                        if(tmpValue.isEmpty()){
+                                            tmpValue = value;
+                                        }
+                                        if(listSearch.indexOf(tmpValue) == -1) {
+                                            listSearch.add(tmpValue);
+                                        }
                                     }
                                 }
-                            }
-
-                            // "Service Classification, version 1.0"
-                            if (!isHidden && !thesaurusName.contains("Service")) {
-                                switch (keywordType) {
-                                    case "gemet":
-                                        // "GEMET - Concepts, version 2.1"
-                                        if (thesaurusName.contains("Concepts")) {
-                                            String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(list.indexOf(tmpValue) == -1) {
-                                                list.add(tmpValue);
-                                            }
-                                        }
-                                        break;
-                                    case "inspire":
-                                        if (thesaurusName.contains("INSPIRE")) {
-                                            String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(list.indexOf(tmpValue) == -1) {
-                                                list.add(tmpValue);
-                                            }
-                                        }
-                                        break;
-                                    case "priority":
-                                        // "GEMET - INSPIRE themes, version 1.0"
-                                        if (thesaurusName.contains("priority")) {
-                                            String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(list.indexOf(tmpValue) == -1) {
-                                                list.add(tmpValue);
-                                            }
-                                        }
-                                        break;
-                                    case "spatial_scope":
-                                        if (thesaurusName.contains("Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
-                                            String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(list.indexOf(tmpValue) == -1) {
-                                                list.add(tmpValue);
-                                            }
-                                        }
-                                        break;
-                                    case "inspire_invekos":
-                                        if (thesaurusName.equalsIgnoreCase("IACS Data")) {
-                                            if(list.indexOf(value) == -1) {
-                                                list.add(value);
-                                            }
-                                        }
-                                        break;
-                                    case "hvd":
-                                        if(Arrays.asList(hvds).indexOf(value) > -1) {
-                                            list.add(value);
-                                        }
-                                        break;
-                                    default:
-                                        if (thesaurusName.contains("UMTHES")) {
-                                            if(list.indexOf(value) == -1) {
-                                                list.add(value);
-                                            }
-                                        } else if (thesaurusName.isEmpty() && type.isEmpty()) {
-                                            if(list.indexOf(value) == -1) {
-                                                list.add(value);
-                                            }
-                                        } else{
-                                            // try to match keyword to  Opendata Category
-                                            String tmpValue = sysCodeList.getNameByData("6400", value);
-                                            if(tmpValue.isEmpty()){
-                                                tmpValue = value;
-                                            }
-                                            if(Arrays.asList(hvds).indexOf(tmpValue) == -1) {
-                                                if(list.indexOf(tmpValue) == -1) {
-                                                    list.add(tmpValue);
-                                                }
-                                            }
-                                        }
-                                        break;
+                            } else{
+                                // try to match keyword to  Opendata Category
+                                String tmpValue = sysCodeList.getNameByData("6400", value);
+                                if(tmpValue.isEmpty()){
+                                    tmpValue = value;
+                                }
+                                if(listSearch.indexOf(tmpValue) == -1) {
+                                    listSearch.add(tmpValue);
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+        sortList(listInspire);
+        sortList(listInveskos);
+        sortList(listPriority);
+        sortList(listSpatial);
+        sortList(listGemet);
+        sortList(listHvd);
+        sortList(listSearch);
+        map.put("inspire", listInspire);
+        map.put("inveskos", listInveskos);
+        map.put("priority", listPriority);
+        map.put("spatial", listSpatial);
+        map.put("gemet", listGemet);
+        map.put("hvd", listHvd);
+        map.put("search", listSearch);
+
+        return map;
+    }
+
+    public List<String> getIndexInformationKeywords(String xpathExpression) {
+        return getIndexInformationKeywords(xpathExpression, null, false);
+    }
+
+    public List<String> getIndexInformationKeywords(String xpathExpression, String codelist, boolean checkCodelistData) {
+        List<String> list = new ArrayList<>();
+
+        if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
+            String[] nodeList = xPathUtils.getStringArray(rootNode, xpathExpression);
+
+            for (int i = 0; i < nodeList.length; i++) {
+                String value = nodeList[i].trim();
+                
+                if(value != null){
+                    String[] hiddenKeywordList = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
+                    if(hiddenKeywordList != null){
+                        for(int h=0; h < hiddenKeywordList.length; h++){
+                            String hiddenValue = hiddenKeywordList[h];
+                            if(value.equalsIgnoreCase(hiddenValue)){
+                                break;
+                            }
+                        }
+                    }
+
+                    if (codelist != null) {
+                        String tmpValue = "";
+                        if (checkCodelistData) {
+                            tmpValue = sysCodeList.getNameByData(codelist, value);
+                        } else {
+                            tmpValue = sysCodeList.getNameByCodeListValue(codelist, value);
+                        }
+                        if(!tmpValue.isEmpty()) {
+                            value = tmpValue;
+                        }
+                    }
+                    if(!value.isEmpty()) {
+                        list.add(value);
                     }
                 }
             }
@@ -1188,7 +1230,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
 
     public List getServiceClassification(String xpathExpression) {
-        ArrayList list = new ArrayList();
+        ArrayList<String> list = new ArrayList<String>();
 
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
@@ -1203,19 +1245,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     thesaurusName = xPathUtils.getString(node, xpathExpression).trim();
                 }
 
-                // keywords
-                xpathExpression = "./gmd:MD_Keywords/gmd:keyword";
-                if (xPathUtils.nodeExists(node, xpathExpression)) {
-                    NodeList keywordNodeList = xPathUtils.getNodeList(node, xpathExpression);
-                    for (int j = 0; j < keywordNodeList.getLength(); j++) {
-                        Node keywordNode = keywordNodeList.item(j);
-                        String value = xPathUtils.getString(keywordNode, ".").trim();
-                        if(value.length() < 1){
-                            value = xPathUtils.getString(keywordNode, ".").trim();
-                        }
-
-                        // "Service Classification, version 1.0"
-                        if (thesaurusName.contains("Service")) {
+                // "Service Classification, version 1.0"
+                if (thesaurusName.contains("Service")) {
+                    // keywords
+                    xpathExpression = "./gmd:MD_Keywords/gmd:keyword/*[self::gco:CharacterString or self::gmx:Anchor]";
+                    if (xPathUtils.nodeExists(node, xpathExpression)) {
+                        String[] keywordNodeList = xPathUtils.getStringArray(node, xpathExpression);
+                        for (int j = 0; j < keywordNodeList.length; j++) {
+                            String value = keywordNodeList[j].trim();
                             String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
                             if(tmpValue.length() > 0){
                                 value = tmpValue;
@@ -1309,8 +1346,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
             for (int i=0; i<nodeList.getLength();i++){
                 if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
-                    Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
-                    String url = xPathUtils.getString(node, ".").trim();
+                    String url = xPathUtils.getString(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL").trim();
                     StringBuilder urlValue = new StringBuilder(url);
                     // do not display empty URLs
                     if (urlValue.length() == 0) {
@@ -1337,10 +1373,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
                     if (url.toLowerCase().indexOf("service=") == -1) {
                         if (url.indexOf("?") != -1) {
-                            NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
-                            for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
-                                Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
-                                String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
+                            String[] nodeListServiceTypeVersions = xPathUtils.getStringArray(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion/*[self::gco:CharacterString or self::gmx:Anchor]");
+                            for (int j=0; j<nodeListServiceTypeVersions.length;j++){
+                                String tmpServiceTypeVersion = nodeListServiceTypeVersions[j].trim();
                                 if (!tmpServiceTypeVersion.isEmpty()) {
                                     String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
                                     if (tmpValue != null) {
@@ -1354,10 +1389,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
                     if (urlValue.toString().toLowerCase().indexOf("service=") == -1) {
                         if (url.indexOf("?") != -1) {
-                            NodeList nodeListParameters = xPathUtils.getNodeList(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/*[self::gco:CharacterString or self::gmx:Anchor]");
-                            for (int j=0; j<nodeListParameters.getLength();j++){
-                                Node nodeParameter = nodeListParameters.item(j);
-                                String parameter = xPathUtils.getString(nodeParameter, ".").trim();
+                            String[] nodeListParameters = xPathUtils.getStringArray(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/*[self::gco:CharacterString or self::gmx:Anchor]");
+                            for (int j=0; j<nodeListParameters.length;j++){
+                                String parameter = nodeListParameters[j].trim();
                                 if (!parameter.isEmpty()) {
                                     if (parameter.toLowerCase().indexOf("service=") > -1) {
                                         urlValue.append("&" + parameter);
@@ -1457,10 +1491,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }
                         if (url.toLowerCase().indexOf("service=") == -1) {
                             if (url.indexOf("?") != -1) {
-                                NodeList nodeListServiceTypeVersions = xPathUtils.getNodeList(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion");
-                                for (int j=0; j<nodeListServiceTypeVersions.getLength();j++){
-                                    Node nodeServiceTypeVersion = nodeListServiceTypeVersions.item(j);
-                                    String tmpServiceTypeVersion = xPathUtils.getString(nodeServiceTypeVersion, ".").trim();
+                                String[] nodeListServiceTypeVersions = xPathUtils.getStringArray(rootNode, "./gmd:identificationInfo/*/srv:serviceTypeVersion/*[self::gco:CharacterString or self::gmx:Anchor]");
+                                for (int j=0; j<nodeListServiceTypeVersions.length;j++){
+                                    String tmpServiceTypeVersion = nodeListServiceTypeVersions[j].trim();
                                     if (!tmpServiceTypeVersion.isEmpty()) {
                                         String tmpValue = CapabilitiesUtils.extractServiceFromServiceTypeVersion(tmpServiceTypeVersion);
                                         if (tmpValue != null) {
@@ -1478,10 +1511,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }
                         if (urlValue.toString().toLowerCase().indexOf("service=") == -1) {
                             if (url.indexOf("?") != -1) {
-                                NodeList nodeListParameters = xPathUtils.getNodeList(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/*[self::gco:CharacterString or self::gmx:Anchor]");
-                                for (int j=0; j<nodeListParameters.getLength();j++){
-                                    Node nodeParameter = nodeListParameters.item(j);
-                                    String parameter = xPathUtils.getString(nodeParameter, ".").trim();
+                                String[] nodeListParameters = xPathUtils.getStringArray(nodeList.item(i), "./../srv:parameters/srv:SV_Parameter/srv:name/gco:aName/*[self::gco:CharacterString or self::gmx:Anchor]");
+                                for (int j=0; j<nodeListParameters.length;j++){
+                                    String parameter = nodeListParameters[j].trim();
                                     if (!parameter.isEmpty()) {
                                         if (parameter.toLowerCase().indexOf("service=") > -1) {
                                             urlValue.append("&" + parameter);
