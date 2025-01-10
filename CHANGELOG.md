@@ -1,4 +1,37 @@
 
+## 7.4.0 (10.01.2025)
+
+### Features
+
+* Hilfe-Texte im Portal (#7096)
+* Icons für die "Karten"- und "INSPIRE"-Kategorie auf Portal-Startseite austauschen (#7079)
+* Portal: Umbenennung von "Auf Karte festlegen" zu "In Kartenausschnitt suchen" (#7065)
+* Suchfunktion "Nach Ort Suchen" deaktivieren (#6991)
+* AdV-MIS: Dopplung der HVD-Kategorie in Detailbeschreibung (#6988)
+* Twittersymbol bei "Teilen" im Portal aktualisieren (#6929)
+* Unterschiedliche Farbgebungen im internen und externen Portal (#6860)
+* Login-Seiten umstellen (#6853)
+* Portal: Bei Geodatendiensten das Label "Informationen zum Datensatz" nach "Informationen zum Dienst" umbenennen (#6820)
+* Portal: Verlinkung Koordinatensystem - epsg.io durch www.spatialreference.org ersetzen (#6794)
+* Portal: Filterung nach Aktualität, Ergebnisliste verändern (#6793)
+* Formatierung der Beschreibungstexte (#6784)
+* Portal: Kartenansicht wieder aktivieren (#6702)
+* Einfügen zweier Logos in die Kopfzeile der RIPS-Metadaten sowie der verlinkten Seiten (#6549)
+* HVD Kategorien als Codeliste aufnehmen (#6494)
+* UVP-Portal - Suche nach älteren Vorhaben verbessern (#6362)
+* Portal: AdV-MIS: MD zu Kacheln - erst anzeigen, wenn aktiv ausgewählt (#5922)
+
+### Bugfixes
+
+* Verlinkungen, Layout auf "Fehler 404"-Seite korrigieren; deaktiviere Kontakt im internen Portal (#7100)
+* Zu viele Schlagwörter (#6965)
+* PORTAL: CSV-Download funktioniert nicht mehr (#6961)
+* Facettierung fehlerhaft (#6925)
+* AdV-MIS: Filterung "Sonstige Dienste" funktioniert nicht erwartungsgemäß (#6892)
+* Anpassung der Facetten greift nicht mehr? (#6887)
+* Laden der Portalseite dauert vglw. lang (#6869)
+* Portal: Wandlung URL in Hyperlink in Fließtext - Abbruch an Umlaut "ä"  (#6833)
+    
 ## 7.3.0 (01.10.2024)
 
 ### Features
