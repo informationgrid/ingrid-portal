@@ -272,7 +272,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-ige</artifactId>
-      <version>7.0.0</version>
+      <version>7.5.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
