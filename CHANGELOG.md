@@ -10,6 +10,17 @@
 
 * Sicherheitslücke in GeoTools und Commons Collection Bibliothek (#7326)
     
+## 7.4.3 (10.03.2025)
+
+### Features
+
+* Anpassung der Portal-Kategorie „Umwelt-Daten und -Karten Online“ (#7350)
+* Migration NI zum UVP-Verbund (#6881)
+
+### Bugfixes
+
+* Sicherheitslücke in GeoTools und Commons Collection Bibliothek (#7326)
+    
 ## 7.4.0 (10.01.2025)
 
 ### Features
