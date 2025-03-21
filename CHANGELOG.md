@@ -1,4 +1,17 @@
 
+## 7.5.0 (21.03.2025)
+
+### Features
+
+* Anpassung der Portal-Kategorie „Umwelt-Daten und -Karten Online“ (#7350)
+* Anpassungen bzgl. Umbenennung der BASt (#7304)
+* Anpassung Messwerteclient: Parameter-Filter: Zusammenfassung von Parametern mit gleichem Namen aber unterschiedlicher ID; Entfernen des Parameter-Sliders (#7244)
+* Migration NI zum UVP-Verbund (#6881)
+
+### Bugfixes
+
+* Sicherheitslücke in GeoTools und Commons Collection Bibliothek (#7326)
+    
 ## 7.4.0 (10.01.2025)
 
 ### Features
