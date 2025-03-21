@@ -945,13 +945,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                         <query>procedure:dev_plan</query>
                         <id>procedure_dev_plan</id>
                         <parentId>procedure</parentId>
-                        <url>https://uvp.niedersachsen.de</url>
                     </facet>
                     <facet>
                         <name>UVP-Vorhaben</name>
                         <query>-procedure:dev_plan ranking:date</query>
                         <parentId>procedure</parentId>
-                        <url>https://uvp.niedersachsen.de</url>
                     </facet>
                 </facets>
             </facet>
