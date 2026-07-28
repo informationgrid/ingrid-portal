@@ -29,6 +29,9 @@
 {# Höhe #}
 {% set mapRefs = addKeyValue(mapRefs, "areaHeight", hit.areaHeight) %}
 
+{# Bundeswasserstraßenstrecken #}
+{% set mapRefs = addKeyValue(mapRefs, "geographicElementBwaStr", hit.geographicElementBwaStr) %}
+
 {# Fachinformationen #}
 {% switch class %}
     {% case '6' %}

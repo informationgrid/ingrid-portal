@@ -3,6 +3,7 @@ namespace Grav\Theme;
 
 use Grav\Common\File\CompiledYamlFile;
 use Grav\Common\Theme;
+use Grav\Plugin\CodelistHelper;
 use Grav\Plugin\ElasticsearchHelper;
 use Grav\Plugin\IdfHelper;
 use RocketTheme\Toolbox\Event\Event;
@@ -466,6 +467,97 @@ class BawDoi extends Theme
                 }
             }
         }
+
+        $hit->geographicElement = self::getGeographicElements($node, $lang);
+        $hit->geographicElementBwaStr = self::getGeographicElementsBwaStr($node, $lang);
+    }
+
+    private static function getGeographicElements(\SimpleXMLElement $node, string $lang): array
+    {
+        $array = [];
+        $tmpNodes = IdfHelper::getNodeList($node, "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox[./*]");
+        foreach ($tmpNodes as $tmpNode) {
+            $item = [];
+
+            $item[] = array(
+                "value" => IdfHelper::getNodeValue($tmpNode, "(../preceding-sibling::gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor])[last()]") ?? '',
+                "type" => "text"
+            );
+
+            $westBoundLongitude = IdfHelper::getNodeValue($tmpNode, "./gmd:westBoundLongitude/gco:Decimal");
+            $southBoundLatitude = IdfHelper::getNodeValue($tmpNode, "./gmd:southBoundLatitude/gco:Decimal");
+            $eastBoundLongitude = IdfHelper::getNodeValue($tmpNode, "./gmd:eastBoundLongitude/gco:Decimal");
+            $northBoundLatitude = IdfHelper::getNodeValue($tmpNode, "./gmd:northBoundLatitude/gco:Decimal");
+
+            $value = null;
+            if (isset($westBoundLongitude) && isset($southBoundLatitude)) {
+                $value = round((float) $westBoundLongitude, 3) . "°/" . round((float) $southBoundLatitude, 3) . "°";
+            }
+            $item[] = array(
+                "value" => $value ?? '',
+                "type" => "text"
+            );
+
+            $value = null;
+            if (isset($eastBoundLongitude) && isset($northBoundLatitude)) {
+                $value = round((float) $eastBoundLongitude, 3) . "°/" . round((float) $northBoundLatitude, 3) . "°";
+            }
+            $item[] = array(
+                "value" => $value ?? '',
+                "type" => "text"
+            );
+
+            $array[] = $item;
+        }
+        return $array;
+    }
+
+    private static function getGeographicElementsBwaStr(\SimpleXMLElement $node, string $lang): array
+    {
+        $array = [];
+        $tmpNodes = IdfHelper::getNodeList($node, "./gmd:identificationInfo/*/*/gmd:EX_Extent/*[not(following-sibling::gmd:geographicElement/gmd:EX_GeographicBoundingBox)]/gmd:EX_GeographicDescription[./*]");
+        foreach ($tmpNodes as $tmpNode) {
+            $item = [];
+            $title = IdfHelper::getNodeValue($tmpNode, "./gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString");
+            if (isset($title)) {
+                $values = preg_replace('/[^-?0-9.0-9]+/', '', $title);
+                $values = str_replace('-', ' ', $values);
+                $values = explode(' ', trim($values));
+                if (!empty(reset($values))) {
+                    $id = $values[0];
+                    $from = $values[1] ?? '';
+                    $to = $values[2] ?? '';
+
+                    if ($id) {
+                        if (str_ends_with($id, '00')) {
+                            $id = substr($id, 0, -2);
+                            $id = $id . '01';
+                        }
+
+                        $item[] = array(
+                            "value" => CodelistHelper::getCodelistEntry(["3950010"], (int)$id, $lang),
+                            "type" => "text"
+                        );
+                    }
+                    if ($from) {
+                        $item[] = array(
+                            "value" => $from,
+                            "type" => "text"
+                        );
+                    }
+                    if ($to) {
+                        $item[] = array(
+                            "value" => $to,
+                            "type" => "text"
+                        );
+                    }
+                }
+                if(!empty($item)) {
+                    $array[] = $item;
+                }
+            }
+        }
+        return $array;
     }
 
     private static function getAreaHeight(\SimpleXMLElement $node, string $lang): array

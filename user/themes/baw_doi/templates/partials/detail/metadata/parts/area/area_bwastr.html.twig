@@ -1,0 +1,8 @@
+{# Bundeswasserstraßenstrecken #}
+
+{% set header = [
+    "SEARCH_DETAIL.BWA_STR.ID"|t,
+    "SEARCH_DETAIL.BWA_STR.FROM"|t,
+    "SEARCH_DETAIL.BWA_STR.TO"|t,
+] %}
+{{ hit_macros.render_table("SEARCH_DETAIL.BWA_STR.TITLE"|t, header, mapRefs.geographicElementBwaStr, [0]) }}

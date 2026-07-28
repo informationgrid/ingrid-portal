@@ -191,6 +191,11 @@ SEARCH_DETAIL:
     ORDER:
         NUMBER: Auftragsnummer
         TITLE: Auftragstitel
+    BWA_STR:
+        TITLE: Bundeswasserstraßenstrecken
+        ID: Bundeswasserstraßenstrecken
+        FROM: km von
+        TO: km bis
 
 FACETS:
     FACET_LABEL:
