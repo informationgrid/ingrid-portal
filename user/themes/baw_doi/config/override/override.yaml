@@ -12,28 +12,109 @@ home:
             {
                 "id": "type",
                 "facets": {
-                    "www": {
-                        "icon": "ic-www",
+                    "project": {
+                        "codelist": "8000",
+                        "codelist_entry_id": "4",
+                        "parent": "categ",
+                        "icon": "ic-project",
                         "query": {
                             "filter": {
                                 "term": {
-                                    "datatype": "www"
+                                    "t01_object.obj_class": "4"
                                 }
                             }
                         }
                     },
-                    "metadata": {
-                        "icon": "ic-metadata",
+                    "geodata": {
+                        "codelist": "8000",
+                        "codelist_entry_id": "1",
+                        "parent": "categ",
+                        "icon": "ic-karte",
                         "query": {
                             "filter": {
                                 "term": {
-                                    "datatype": "metadata"
+                                    "t01_object.obj_class": "1"
                                 }
                             }
                         }
+                    },
+                    "geoservice": {
+                        "codelist": "8000",
+                        "codelist_entry_id": "3",
+                        "parent": "categ",
+                        "icon": "ic-dienste",
+                        "query": {
+                            "filter": {
+                                "term": {
+                                    "t01_object.obj_class": "3"
+                                }
+                            }
+                        }
+                    },
+                    "document": {
+                        "codelist": "8000",
+                        "codelist_entry_id": "2",
+                        "parent": "categ",
+                        "icon": "ic-katalog",
+                        "query": {
+                            "filter": {
+                                "term": {
+                                    "t01_object.obj_class": "2"
+                                }
+                            }
+                        }
+                    },
+                    "database": {
+                        "codelist": "8000",
+                        "codelist_entry_id": "5",
+                        "parent": "categ",
+                        "icon": "ic-metadaten",
+                        "query": {
+                            "filter": {
+                                "term": {
+                                    "t01_object.obj_class": "5"
+                                }
+                            }
+                        }
+                    },
+                    "software": {
+                        "codelist": "8000",
+                        "codelist_entry_id": "6",
+                        "parent": "categ",
+                        "icon": "ic-chemie",
+                        "query": {
+                            "filter": {
+                                "term": {
+                                    "t01_object.obj_class": "6"
+                                }
+                            }
+                        }
+                    },
+                    "inspire": {
+                        "label": "Inspire",
+                        "icon": "ic-inspire",
+                        "query": {
+                            "filter": {
+                                "bool": {
+                                    "should": [
+                                        {
+                                            "term": {
+                                                "t04_search.searchterm": "inspire"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "t04_search.searchterm": "inspireidentifiziert"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
                     },
                     "opendata": {
                         "icon": "ic-opendata",
+                        "parent": "categ",
                         "query": {
                             "filter": {
                                 "bool": {
@@ -267,6 +348,17 @@ hit_search:
                         "filter": {
                             "term": {
                                 "t01_object.obj_class": "5"
+                            }
+                        }
+                    }
+                },
+                "software": {
+                    "codelist": "8000",
+                    "codelist_entry_id": "6",
+                    "query": {
+                        "filter": {
+                            "term": {
+                                "t01_object.obj_class": "6"
                             }
                         }
                     }
