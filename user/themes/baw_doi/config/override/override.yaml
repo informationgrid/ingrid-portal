@@ -93,6 +93,7 @@ home:
                     "inspire": {
                         "label": "Inspire",
                         "icon": "ic-inspire",
+                        "parent": "categ",
                         "query": {
                             "filter": {
                                 "bool": {
