@@ -272,6 +272,31 @@ header {
   font-size: 52px;
   content: "\e970";
 }
+.teaser .teaser-link .ic-karte:before {
+    font-size: 52px;
+    content: "\e96c";
+}
+.teaser .teaser-link .ic-project:before {
+    font-size: 52px;
+    content: "\e96a";
+}
+.teaser .teaser-link .ic-dienste:before {
+    font-size: 52px;
+    content: "\e96f";
+}
+.teaser .teaser-link .ic-katalog:before {
+    font-size: 52px;
+    content: "\e961";
+}
+.teaser .teaser-link .ic-metadaten:before {
+    font-size: 52px;
+    content: "\e962";
+}
+.teaser .teaser-link .ic-chemie:before {
+    font-size: 52px;
+    content: "\e949";
+}
+
 .teaser .teaser-link [class^="ic-"],
 .teaser .teaser-link [class*=" ic-"] {
   background-image: -moz-linear-gradient(to bottom, var(--colorTeaser1), var(--colorTeaser2));
