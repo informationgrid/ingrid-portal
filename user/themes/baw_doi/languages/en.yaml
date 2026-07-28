@@ -149,6 +149,13 @@ SEARCH_DETAIL:
             HEADER_2: WSV-Auftrag
             HEADER_3: FuE
             HEADER_4: Andere
+            RIGHTS:
+                SOURCE:
+                    TITLE: BAW-Rechte an den Quellen
+                    NOTE: Anmerkungen
+                THIRD_PARTY:
+                    TITLE: Rechte bei Nutzung der SW durch Dritte
+                    NOTE: Anmerkungen
         SUPPLEMENTARY: Ergänzungsmodul zu Marktsoftware
         ADDITIONAL: Name der Marktsoftware
         SYSTEM:
@@ -182,6 +189,11 @@ SEARCH_DETAIL:
     ORDER:
         NUMBER: Auftragsnummer
         TITLE: Auftragstitel
+    BWA_STR:
+        TITLE: Bundeswasserstraßenstrecken
+        ID: Bundeswasserstraßenstrecken
+        FROM: km von
+        TO: km bis
 
 FACETS:
     FACET_LABEL:

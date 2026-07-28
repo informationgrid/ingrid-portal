@@ -13,6 +13,8 @@
             "SEARCH_DETAIL.SPATIAL_REF_VALUE_Y1"|t,
         ] %}
         {{ hit_macros.render_table("SEARCH_DETAIL.GEOTHESAURUS_SPACIAL_REFERENCE"|t, header, mapRefs.geographicElement, [0]) }}
+    {# BwaStr #}
+        {% include 'partials/detail/metadata/parts/area/area_bwastr.html.twig' ignore missing %}
     {# Regionalschlüssel #}
         {{ hit_macros.render_label_link("SEARCH_DETAIL.REGIONKEY"|t, mapRefs.regionKey.key, mapRefs.regionKey.url, "external") }}
     {# Höhe #}
