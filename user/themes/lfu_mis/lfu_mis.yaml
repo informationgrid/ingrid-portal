@@ -176,6 +176,7 @@ hit_detail:
     - author
   display_use_constraints_json: false
   remove_use_constraints_prefix: true
+  keywords_as_link: true
   link_sort_asc: true
 map:
   url: /ingrid-webmap-client/frontend/prd
