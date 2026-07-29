@@ -10,12 +10,11 @@ home:
     categories:
         facet_config: [
             {
-                "id": "type",
+                "id": "categ",
                 "facets": {
                     "project": {
                         "codelist": "8000",
                         "codelist_entry_id": "4",
-                        "parent": "categ",
                         "icon": "ic-project",
                         "query": {
                             "filter": {
@@ -28,7 +27,6 @@ home:
                     "geodata": {
                         "codelist": "8000",
                         "codelist_entry_id": "1",
-                        "parent": "categ",
                         "icon": "ic-karte",
                         "query": {
                             "filter": {
@@ -41,7 +39,6 @@ home:
                     "geoservice": {
                         "codelist": "8000",
                         "codelist_entry_id": "3",
-                        "parent": "categ",
                         "icon": "ic-dienste",
                         "query": {
                             "filter": {
@@ -54,7 +51,6 @@ home:
                     "document": {
                         "codelist": "8000",
                         "codelist_entry_id": "2",
-                        "parent": "categ",
                         "icon": "ic-katalog",
                         "query": {
                             "filter": {
@@ -67,7 +63,6 @@ home:
                     "database": {
                         "codelist": "8000",
                         "codelist_entry_id": "5",
-                        "parent": "categ",
                         "icon": "ic-metadaten",
                         "query": {
                             "filter": {
@@ -80,7 +75,6 @@ home:
                     "software": {
                         "codelist": "8000",
                         "codelist_entry_id": "6",
-                        "parent": "categ",
                         "icon": "ic-chemie",
                         "query": {
                             "filter": {
@@ -93,7 +87,6 @@ home:
                     "inspire": {
                         "label": "Inspire",
                         "icon": "ic-inspire",
-                        "parent": "categ",
                         "query": {
                             "filter": {
                                 "bool": {
@@ -115,7 +108,6 @@ home:
                     },
                     "opendata": {
                         "icon": "ic-opendata",
-                        "parent": "categ",
                         "query": {
                             "filter": {
                                 "bool": {
@@ -137,6 +129,7 @@ home:
                     },
                     "maps": {
                         "icon": "ic-map",
+                        "parent": "type",
                         "query": {
                             "filter": {
                                 "wildcard": {

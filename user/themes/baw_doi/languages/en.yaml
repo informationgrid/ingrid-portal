@@ -197,7 +197,7 @@ SEARCH_DETAIL:
 
 FACETS:
     FACET_LABEL:
-        TYPE: Kategorie
+        TYPE: Ergebnistypen
         CATEG: Kategorie
         WATERWAY: Wasserstraße
         SIMULATION: Simulationsdaten
@@ -230,6 +230,10 @@ FACETS:
         RUN: Simulationslauf
         FILE: Simulationsdatei
         POSTPROCESSING: Postprocessing
+    CATEG:
+        OPENDATA: Open Data
+        MAPS: Karten
+
 THEME:
     ADMIN:
         BWASTR:
