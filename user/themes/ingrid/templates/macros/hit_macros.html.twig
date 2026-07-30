@@ -1383,6 +1383,83 @@
 {% endmacro %}
 
 
+{% macro render_table_type_info (title, header, entries, increaseColumns, expandableId, expandableLimit, helpTitle, helpMessage) %}
+    {% if entries and entries|length > 0 %}
+        <div class="table">
+            {% if title %}
+                <h5>
+                    {{ title|raw }}
+                    {% if helpMessage %}
+                        <span class="info--right ic-ic-info js-popup" data-title="{{ helpTitle|default(title) }}" data-content="{{ helpMessage }}"></span>
+                    {% endif %}
+                </h5>
+            {% endif %}
+            {% if titleInfo %}
+            {% endif %}
+            <table class="js-expand-table-box">
+                {% if header and header|length > 0 %}
+                    <thead>
+                        <tr>
+                        {% for head in header %}
+                            {% set num = loop.index - 1 %}
+                            {% set isIncreaseColumn = false %}
+                            {% if increaseColumns %}
+                                {% if num in increaseColumns %}
+                                    {% set isIncreaseColumn = true %}
+                                {% endif %}
+                            {% endif %}
+                            <th {% if isIncreaseColumn %}class="column--increase"{% endif %} {% if setCenter %}style="text-align:center;"{% endif %}>{{ head }}</th>
+                        {% endfor %}
+                        </tr>
+                    </thead>
+                {% endif %}
+                {% set hasLimit = false %}
+                {% for items in entries if not hasLimit %}
+                    {% set num = loop.index %}
+                    {% if num > expandableLimit %}
+                        {% set hasLimit = true %}
+                    {% endif %}
+                    {% if not hasLimit %}
+                        <tr>
+                            {% for item in items %}
+                                {{ _self.render_table_entry_value(item) }}
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                {% if hasLimit %}
+                    {% for items in entries %}
+                        {% set num = loop.index %}
+                        {% if num > expandableLimit %}
+                            <tr class="js-expand-table is-hidden">
+                                {% for item in items %}
+                                    {{ _self.render_table_entry_value(item) }}
+                                {% endfor %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        {% for head in header %}
+                            {% set num = loop.index %}
+                            {% if num < header|length %}
+                                <td></td>
+                            {% endif %}
+                        {% endfor %}
+                        <td>
+                            <button type="button" class="js-open-expand-table button outline is-hidden" title="{{ "SEARCH_DETAIL.INFO_MORE"|t }}">
+                                {{ "SEARCH_DETAIL.INFO_MORE"|t }}
+                            </button>
+                            <button type="button" class="js-close-expand-table button outline is-hidden" title="{{ "SEARCH_DETAIL.INFO_LESS"|t }}">
+                                {{ "SEARCH_DETAIL.INFO_LESS"|t }}
+                            </button>
+                        </td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+    {% endif %}
+{% endmacro %}
+
 {% macro render_table_list (title, header, entries) %}
     {% if entries and entries|length > 0 %}
         <div class="table table--lined--list">

@@ -1,0 +1,9 @@
+{# Sachattributen #}
+{% set header = [
+    "SEARCH_DETAIL.OBJECT_ATTRIBUTE.GROUP"|t,
+    "SEARCH_DETAIL.OBJECT_ATTRIBUTE.DESIGNATION"|t,
+    "SEARCH_DETAIL.OBJECT_ATTRIBUTE.DESCRIPTION"|t,
+    "SEARCH_DETAIL.OBJECT_ATTRIBUTE.CATEGORY"|t,
+    "SEARCH_DETAIL.OBJECT_ATTRIBUTE.TRANSMISSION_LEVEL"|t
+] %}
+{{ hit_macros.render_table_type_info("SEARCH_DETAIL.OBJECT_ATTRIBUTE.TITLE"|t, header, infoRefs.objectAttribute, [], "object_attribute_id", 2, "", "SEARCH_DETAIL.OBJECT_ATTRIBUTE.INFO"|t) }}

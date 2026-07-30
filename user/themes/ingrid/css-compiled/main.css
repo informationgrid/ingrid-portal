@@ -9738,6 +9738,11 @@ meter[value="5"]::-moz-meter-bar {
   background: none;
 }
 
+.js-expand-table-box button {
+  padding: 8px 14px;
+  font-size: 14px !important;
+}
+
 .image div.description, .no-image div.description {
   position: relative;
 }
