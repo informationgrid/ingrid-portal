@@ -2,4 +2,6 @@
     {% set timeRefs = {} %}
 {% endif %}
 
+{% set infoRefs = addKeyValue(infoRefs, "objectAttribute", hit.objectAttribute) %}
+
 {% include 'partials/detail/metadata/detail_metadata_view.html.twig' %}

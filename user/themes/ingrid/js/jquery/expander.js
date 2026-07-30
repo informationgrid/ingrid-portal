@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +27,7 @@ var expander = (function () {
     var expander_open = null;
     var expander_close = null;
     var expander_content = null;
-    
+
     function expand(ident, isAll) {
         if(ident){
             expander_content = $('.js-expander-content.' + ident);
@@ -116,7 +116,7 @@ var expander = (function () {
         }
       }
       var urlSplit = url.split("?");
-      
+
       history.replaceState(null, null, "?"+urlSplit[urlSplit.length - 1]);
     }
 
@@ -194,7 +194,7 @@ $(function(){
               openButton.removeClass('is-hidden');
             }
           }
-      
+
           openButton.click(function() {
               $(this).addClass('is-hidden');
               expanderBox.addClass('is-active');
@@ -202,7 +202,7 @@ $(function(){
               expanderBox.find('~ .js-close-expand-text').removeClass('is-hidden');
               expanderBox.find('.js-expand-text-fade').addClass('is-hidden');
           });
-      
+
           closeButton.click(function() {
               $(this).addClass('is-hidden');
               expanderBox.removeClass('is-active');
@@ -210,7 +210,7 @@ $(function(){
               expanderBox.find('~ .js-open-expand-text').removeClass('is-hidden');
               expanderBox.find('.js-expand-text-fade').removeClass('is-hidden');
           });
-          
+
         });
     };
     checkExpandBox();

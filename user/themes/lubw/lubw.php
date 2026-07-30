@@ -5,6 +5,7 @@ use Grav\Common\File\CompiledYamlFile;
 use Grav\Common\Theme;
 use Grav\Plugin\CodelistHelper;
 use Grav\Plugin\ElasticsearchHelper;
+use Grav\Plugin\IdfHelper;
 use RocketTheme\Toolbox\Event\Event;
 
 class Lubw extends Theme
@@ -13,6 +14,7 @@ class Lubw extends Theme
     {
         return [
             'onThemeInitialized' => ['onThemeInitialized', 0],
+            'onThemeDetailMetadataEvent' => ['onThemeDetailMetadataEvent', 0],
             'onThemeDetailHitMetadataWithOtherParamsEvent' => ['onThemeDetailHitMetadataWithOtherParamsEvent', 0],
         ];
     }
@@ -33,12 +35,37 @@ class Lubw extends Theme
         }
     }
 
+    public function onThemeDetailMetadataEvent(Event $event): void
+    {
+        // Get variables from event
+        $content = $event['content'];
+        $hit = $event['hit'];
+        $esHit = $event['esHit'];
+        $lang = $event['lang'];
+
+
+        $objClass = ElasticsearchHelper::getValue($esHit, 't01_object.obj_class');
+
+        $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
+
+
+        // Sachattributen
+        $xpathExpression = './idf:objectAttribute';
+        $xpathExpressionSub = [
+            "./idf:group",
+            "./idf:designation",
+            "./idf:description",
+            "./idf:category",
+            "./idf:transmissionLevel"
+        ];
+        $hit->objectAttribute = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+    }
+
     public function onThemeDetailHitMetadataWithOtherParamsEvent(Event $event): void
     {
         // Get variables from event
         $uri = $event['uri'];
         $detailController = $event['detailController'];
-        $response = '';
 
         if ($uri && $detailController) {
             $oac = $this->grav['uri']->query('oac') ?? '';
