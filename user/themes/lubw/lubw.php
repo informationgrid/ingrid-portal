@@ -50,12 +50,10 @@ class Lubw extends Theme
 
 
         // Sachattributen
-        $xpathExpression = './idf:objectAttribute';
+        $xpathExpression = "./idf:objectAttribute[./idf:transmissionLevel[contains(text(),'0 -') or contains(text(),'1 -')]]";
         $xpathExpressionSub = [
-            "./idf:group",
             "./idf:designation",
             "./idf:description",
-            "./idf:category",
             "./idf:transmissionLevel"
         ];
         $hit->objectAttribute = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
