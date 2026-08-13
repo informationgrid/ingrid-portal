@@ -29,8 +29,8 @@ pipeline {
 
                     def version = computeVersion()
 
-                    docker.withRegistry('https://docker-registry.wemove.com', 'docker-registry-wemove') {
-                        def customImage = docker.build("docker-registry.wemove.com/ingrid-portal:${version}", "--pull --build-arg GRAV_VERSION=${versions['GRAV_VERSION']} --build-arg MVIS_VERSION=${versions['MVIS_VERSION']} .")
+                    docker.withRegistry('https://registry.opencode.de', 'registry-opencode') {
+                        def customImage = docker.build("registry.opencode.de/informationgrid/ingrid-portal:${version}", "--pull --build-arg GRAV_VERSION=${versions['GRAV_VERSION']} --build-arg MVIS_VERSION=${versions['MVIS_VERSION']} .")
 
                         /* Push the container to the custom Registry */
                         customImage.push()
@@ -53,8 +53,8 @@ pipeline {
                 }
                 script {
                     def versions = readProperties file: 'versions.props'
-                    docker.withRegistry('https://docker-registry.wemove.com', 'docker-registry-wemove') {
-                        def customImage = docker.build("docker-registry.wemove.com/ingrid-portal:${env.TAG_NAME}", "--pull --build-arg GRAV_VERSION=${versions['GRAV_VERSION']} --build-arg MVIS_VERSION=${versions['MVIS_VERSION']} .")
+                    docker.withRegistry('https://registry.opencode.de', 'registry-opencode') {
+                        def customImage = docker.build("registry.opencode.de/informationgrid/ingrid-portal:${env.TAG_NAME}", "--pull --build-arg GRAV_VERSION=${versions['GRAV_VERSION']} --build-arg MVIS_VERSION=${versions['MVIS_VERSION']} .")
 
                         /* Push the container to the custom Registry */
                         customImage.push()
@@ -128,10 +128,10 @@ pipeline {
 
                 script {
                     def version = computeVersion()
-                    def imageToScan = "docker-registry.wemove.com/ingrid-portal:${version}"
+                    def imageToScan = "registry.opencode.de/informationgrid/ingrid-portal:${version}"
                     def sbomFilename = "ingrid-portal-${determineVersion()}-sbom.json"
 
-                    docker.withRegistry('https://docker-registry.wemove.com', 'docker-registry-wemove') {
+                    docker.withRegistry('https://registry.opencode.de', 'registry-opencode') {
                         sh """
                             docker run --rm --pull=always --volumes-from jenkins anchore/syft:latest ${imageToScan} --output cyclonedx-json=${WORKSPACE}/build/${sbomFilename}
                         """
