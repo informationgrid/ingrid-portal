@@ -310,7 +310,7 @@
         {% elseif role %}
             {{ _self.render_fact_title(role) }}
         {% endif %}
-        <p>
+        <div><p>
 {# Adressen #}
         {% set types = sortAddressTyp %}
         {% for type in types %}
@@ -419,7 +419,7 @@
             </div>
         {% endif %}
         {% set break = true %}
-        </p>
+        </div>
     {% endfor %}
 {% endmacro %}
 
