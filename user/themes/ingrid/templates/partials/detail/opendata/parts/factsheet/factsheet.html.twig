@@ -39,7 +39,7 @@
             {% if linkOtherRefs and linkOtherRefs|length > 0 %}
             <div class="sub-section sub-section-unlined">
                 {% set tmpTitle = "SEARCH_DETAIL.OPENDATA.DISTRIBUTIONS.TITLE"|t %}
-                {{ hit_macros_opendata.render_label_link_image_list(tmpTitle, linkOtherRefs, null, page, true, 2, partners) }}
+                {{ hit_macros_opendata.render_label_link_image_list(tmpTitle, linkOtherRefs, 'external', page, true, 2, partners) }}
             </div>
             {% endif %}
         {# Lizenz #}
