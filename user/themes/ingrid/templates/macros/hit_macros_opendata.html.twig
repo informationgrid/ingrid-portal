@@ -281,7 +281,7 @@
                 <div class="info--right">
                     {% if entry.formats %}
                         {% for format in entry.formats %}
-                            <span>{{ format|t }}</span>
+                            <span>{{ getMimeByContentType(format)|upper }}</span>
                         {% endfor %}
                     {% endif %}
                 </div>
