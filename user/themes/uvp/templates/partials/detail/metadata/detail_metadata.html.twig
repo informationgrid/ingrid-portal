@@ -309,6 +309,9 @@
             {{ urlDecode(linkText) }}
             <span class="downloadText">
                 {% set getUrlFileSize = "rest/getUrlFileSize?url=" ~ entryLink|url_encode %}
+                {% if entry.timestamp %}
+                    {% set getUrlFileSize = getUrlFileSize ~ "&hash=" ~ (entry.timestamp)|md5 %}
+                {% endif %}
                 <span hx-get="{{ getUrlFileSize }}" hx-trigger="load once" hx-target="this">
                 </span>
             </span>
@@ -365,6 +368,9 @@
                         {{ urlDecode(linkText) }}
                         <span class="downloadText">
                             {% set getUrlFileSize = "rest/getUrlFileSize?url=" ~ entryLink|url_encode %}
+                            {% if entry.timestamp %}
+                                {% set getUrlFileSize = getUrlFileSize ~ "&hash=" ~ (entry.timestamp)|md5 %}
+                            {% endif %}
                             <span hx-get="{{ getUrlFileSize }}" hx-trigger="load once" hx-target="this">
                             </span>
                         </span>
