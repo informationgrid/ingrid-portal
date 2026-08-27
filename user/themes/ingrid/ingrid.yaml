@@ -244,9 +244,8 @@ measure:
   networks:
     exclude:
     initial:
-      - luen
-  url: '/mvis/index.html'
-  elastic: 'https://dev.informationgrid.eu/elastic-measure/'
+  url: 'https://dev.informationgrid.eu/masterportal/messwertsuche/'
+  elastic: ''
 redirect:
   pages_to_404:
   pages_to_redirect:

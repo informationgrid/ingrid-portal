@@ -457,9 +457,6 @@ runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-rss-index
 INGRID_GRAV_THEME_CONFIG_YAML=/var/www/"$GRAV_FOLDER"/user/config/themes/"$THEME".yaml
 
 if [ -f "$INGRID_GRAV_THEME_CONFIG_YAML" ]; then
-  # Change measure URL
-  yq -i '.measure.url = "/mvis/index.html"' "$INGRID_GRAV_THEME_CONFIG_YAML"
-
   # Remove facets config
   yq -i 'del(.home.hits.requested_fields)' "$INGRID_GRAV_THEME_CONFIG_YAML"
   yq -i 'del(.home.hits.source)' "$INGRID_GRAV_THEME_CONFIG_YAML"
