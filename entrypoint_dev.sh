@@ -7,6 +7,7 @@ ENABLE_MVIS=${ENABLE_MVIS:-true}
 ENABLE_CACHE=${ENABLE_CACHE:-false}
 ENABLE_SCHEDULER_CODELIST=${ENABLE_SCHEDULER_CODELIST:-true}
 ENABLE_SCHEDULER_RSS=${ENABLE_SCHEDULER_RSS:-true}
+ENABLE_SCHEDULER_UVP_ZIP=${ENABLE_SCHEDULER_UVP_ZIP:-true}
 MARKDOWN_AUTO_LINE_BREAKS=${MARKDOWN_AUTO_LINE_BREAKS:-true}
 SITE_DEFAULT_LANG=${SITE_DEFAULT_LANG:-de}
 PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-1024M}
@@ -83,6 +84,12 @@ else
   yq -i '.status.ingrid-rss-index = "disabled"' "$SCHEDULER_YAML"
 fi
 
+if [ "$ENABLE_SCHEDULER_UVP_ZIP" = "true" ] | [ "$THEME" = "uvp" ]; then
+  yq -i '.status.ingrid-uvp-zip-index = "enabled"' "$SCHEDULER_YAML"
+else
+  yq -i '.status.ingrid-uvp-zip-index = "disabled"' "$SCHEDULER_YAML"
+fi
+
 # Copy grav sources
 cp -R /var/www/grav-admin/system/* /var/www/html/system
 
@@ -106,6 +113,7 @@ ln -s /usr/local/bin/php /usr/bin/php
 cd /var/www/"$GRAV_FOLDER"
 runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-codelist-index
 runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-rss-index
+runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-uvp-zip-index
 
 service cron start
 
