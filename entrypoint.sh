@@ -7,6 +7,7 @@ ENABLE_CACHE=${ENABLE_CACHE:-true}
 THEME_COPY_PAGES_INIT=${THEME_COPY_PAGES_INIT:-false}
 ENABLE_SCHEDULER_CODELIST=${ENABLE_SCHEDULER_CODELIST:-true}
 ENABLE_SCHEDULER_RSS=${ENABLE_SCHEDULER_RSS:-true}
+ENABLE_SCHEDULER_UVP_ZIP=${ENABLE_SCHEDULER_UVP_ZIP:-false}
 ENABLE_SCHEDULER_BACKUP=${ENABLE_SCHEDULER_BACKUP:-false}
 MARKDOWN_AUTO_LINE_BREAKS=${MARKDOWN_AUTO_LINE_BREAKS:-true}
 SITE_DEFAULT_LANG=${SITE_DEFAULT_LANG:-de}
@@ -426,6 +427,12 @@ else
   yq -i '.status.ingrid-rss-index = "disabled"' "$SCHEDULER_YAML"
 fi
 
+if [ "$ENABLE_SCHEDULER_UVP_ZIP" = "true" ] | [ "$THEME" = "uvp" ]; then
+  yq -i '.status.ingrid-uvp-zip-index = "enabled"' "$SCHEDULER_YAML"
+else
+  yq -i '.status.ingrid-uvp-zip-index = "disabled"' "$SCHEDULER_YAML"
+fi
+
 if [ "$ENABLE_SCHEDULER_BACKUP" = "true" ]; then
   yq -i '.status.default-site-backup = "enabled"' "$SCHEDULER_YAML"
 else
@@ -450,6 +457,9 @@ ln -s /usr/local/bin/php /usr/bin/php
 cd /var/www/"$GRAV_FOLDER"
 runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-codelist-index
 runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-rss-index
+if [ "$THEME" = "uvp" ]; then
+  runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-uvp-zip-index
+fi
 
 ##########################
 # Migration theme settings
