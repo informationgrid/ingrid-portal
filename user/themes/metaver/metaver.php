@@ -55,11 +55,11 @@ class Metaver extends Theme
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
 
-        $hit->links = self::getLinkRefs($node, $hit->links ?? [], $lang);
+        $hit->links = self::getLinkRefs($node, $hit->links ?? [], $lang, $hit->metaClass);
 
     }
 
-    private static function getLinkRefs(\SimpleXMLElement $node, array $list, string $lang): array
+    private static function getLinkRefs(\SimpleXMLElement $node, array $list, string $lang, string $metaClass): array
     {
         $array = [];
 
@@ -89,7 +89,17 @@ class Metaver extends Theme
         }
 
         // Weitere Verweise ohne Verordnung
-        $xpathExpression = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[not(./*/idf:attachedToField[@entry-id='9980']) and not(./*/idf:attachedToField[@entry-id='9990']) and not(./*/idf:attachedToField[@entry-id='5066']) and not(./*/gmd:function/*/@codeListValue='download')][./*]";
+
+        // Do not filter "Verweis zum Dienst" for Geodatasets
+        $serviceFilter = $metaClass == "1" ? "" : " and not(./*/idf:attachedToField[@entry-id='5066'])";
+
+        $xpathExpression =
+            "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine["
+            . "not(./*/idf:attachedToField[@entry-id='9980'])"
+            . " and not(./*/idf:attachedToField[@entry-id='9990'])"
+            . $serviceFilter
+            . " and not(./*/gmd:function/*/@codeListValue='download')"
+            . "][./*]";
         $tmpNodes = IdfHelper::getNodeList($node, $xpathExpression);
         foreach ($tmpNodes as $tmpNode) {
             $url = IdfHelper::getNodeValue($tmpNode, "./*/gmd:linkage/gmd:URL");
