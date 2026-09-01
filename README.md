@@ -1,10 +1,10 @@
-# InGrid Portal-NG
+# InGrid Portal
 
 <img src="https://ingrid-oss.eu/8.2.0/assets/components/ingrid-plattform.png" alt="InformationGrid illustration" width="480" align="right">
 
 This repository is part of **[InGrid](https://ingrid-oss.eu)**, an open-source solution for building, managing, and exposing metadata-driven information systems. 
 
-**About InGrid Portal-NG:**  
+**About InGrid Portal:**  
 User-friendly search across the InGrid data space and services — catalog browsing, map client, time series — with faceted search, news aggregation, and profile-based customization.
 
 ## Development
@@ -44,4 +44,5 @@ Any changes made on the styles will be compiled and made available in the portal
 
 ### Debugging
 
-In IntelliJ, you need to have the Python plugin installed. Then you need to run `Run -> Start Listening for PHP Debug Connections` and set your breakpoints in your php-files.
+In IntelliJ, you need to have the PHP plugin installed. Then you need to run `Run -> Start Listening for PHP Debug Connections` and set your breakpoints in your php-files or twig-templates.
+For easy printing of variables, you can use the `vardump` function inside your twig-templates.
