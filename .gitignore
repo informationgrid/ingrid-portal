@@ -1,13 +1,15 @@
 /.idea/
-/user/plugins/admin/
+/user/plugins/admin2/
+/user/plugins/api/
 /user/plugins/devtools/
 /user/plugins/email/
 /user/plugins/error/
 /user/plugins/flex-objects/
 /user/plugins/form/
+/user/plugins/github-markdown-alerts/
 /user/plugins/login/
-/user/plugins/markdown-notices/
 /user/plugins/problems/
+/user/plugins/shortcode-core/
 /user/plugins/ingrid-grav/vendor/
 /user/themes/*/node_modules
 /user/themes/*/pages/init/home/modular.md
@@ -22,7 +24,9 @@
 /data/contact-form/
 /data/scheduler/
 /data/mvis/
+/data/grav-security-probe.dat
 /develop/config/plugins/
 /develop/config/system.yaml
+/develop/config/security-private.php
 /system
 **/vendor
