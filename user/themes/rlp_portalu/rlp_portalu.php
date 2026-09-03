@@ -4,7 +4,7 @@ namespace Grav\Theme;
 use Grav\Common\File\CompiledYamlFile;
 use Grav\Common\Theme;
 
-class Rlp extends Theme
+class RlpPortalu extends Theme
 {
 
     public static function getSubscribedEvents(): array
