@@ -1,16 +1,8 @@
 [submodule "user/plugins/ingrid-grav"]
     path = user/plugins/ingrid-grav
     url = https://github.com/informationgrid/ingrid-grav-plugin.git
-<<<<<<< HEAD
     branch = feature/9007-indexformat
 [submodule "user/plugins/ingrid-grav-utils"]
     path = user/plugins/ingrid-grav-utils
     url = https://github.com/informationgrid/ingrid-grav-plugin-utils.git
     branch = feature/9007-indexformat
-=======
-    branch = feature/9427-grav2
-[submodule "user/plugins/ingrid-grav-utils"]
-    path = user/plugins/ingrid-grav-utils
-    url = https://github.com/informationgrid/ingrid-grav-plugin-utils.git
-    branch = feature/9427-grav2
->>>>>>> feature/9427-grav2
