@@ -1,4 +1,24 @@
 
+## 8.4.1 (04.09.2026)
+
+### Features
+
+* ingrid-with-opendata- Darstellung der Ressource im Portal (#9232)
+* Portal LUBW: Sachattribute mit Übermittlungsstufen 0 und 1 sollen im Portal angezeigt werden. (#9003)
+* Mapping und Portal-Anzeige für BWaStr.-Strecken Raumbezüge (#8949)
+* Portal-NG: Nacharbeiten  (#8825)
+* ISO Erweiterung für BAW-spezifische Felder (#8814)
+* ZEITERFASSUNG VKoopUIS (#2)
+
+### Bugfixes
+
+* Portal gibt ZIP-Datei mit veralteten Dateien zurück (#9412)
+* Geodatensatz: Verweis zu Dienst wird nicht in das Portal übertragen (#9341)
+* AdV-MIS: Portal: Verhalten der Filterung "Art der Ressource" fehlerhaft (#9283)
+* RDF-Dateien werden im Zip-Download zu bin-Dateien (#9280)
+* Falsche Verknüpfung der Kategorien auf der Startseite (#9136)
+* Begrenzung der Größe aller erstellten ZIP Dateien (#8929)
+    
 ## 8.4.0 (06.07.2026)
 
 ### Features
