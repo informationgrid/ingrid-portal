@@ -1103,7 +1103,7 @@
                 {% elseif entry.cswUrl %}
                     {% set link = "?cswUrl=" ~ entry.cswUrl|url_encode %}
                 {% endif %}
-                {% if entry.type is not empty and isFacts is not sameas(true) %}
+                {% if entry.type is not empty and isFacts is not same as(true) %}
                     <div class="helper icon">
                     {{ _self.render_metadata_icon(entry.type, entry.type_name, entry.type_name) }}
                     </div>
@@ -1115,7 +1115,7 @@
                         {% elseif isDownload %}
                             <span class="ic-ic-download"></span>
                         {% endif %}
-                        {% if entry.type and isFacts is sameas(true) %}
+                        {% if entry.type and isFacts is same as(true) %}
                             {{ _self.render_metadata_icon(entry.type, null, entry.type_name) }}
                         {% endif %}
                         <span class="text">{{ removeHashLocale(entry.title) }}</span>
@@ -1126,7 +1126,7 @@
                 {% if entry.attachedToField %}
                     <small>{{ convertUrlInText(entry.attachedToField)|raw }}</small>
                 {% endif %}
-                {% if isFacts is not sameas(true) and entry.previews and entry.previews|length > 0 %}
+                {% if isFacts is not same as(true) and entry.previews and entry.previews|length > 0 %}
                     {% if entry.previews|length > 1 %}
                         <div class="preview">
                             <div class="swiper-container swiper-container-background">

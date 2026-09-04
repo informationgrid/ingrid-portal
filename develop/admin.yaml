@@ -8,4 +8,7 @@ access:
     super: true
   site:
     login: true
+  api:
+      access: true
+      super: true
 hashed_password: $2y$10$gLYMMT9qkpIKhV.OCLx60.8MJ4XOveKqTxDnaSGEUZkZ1.0MpAxS6

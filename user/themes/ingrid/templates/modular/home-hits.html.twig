@@ -17,9 +17,9 @@
             {% if hits %}
                 {% for hit in hits %}
                     {% if (hit.datatypes) %}
-                        {% if in_array('address', hit.datatypes) %}
+                        {% if 'address' in hit.datatypes %}
                             {% include 'partials/search/result/address/result_address.html.twig' with {hit:hit, counter: loop.index0} %}
-                        {% elseif in_array('www', hit.datatypes) %}
+                        {% elseif 'www' in hit.datatypes %}
                             {% include 'partials/search/result/www/result_www.html.twig' with {hit:hit} %}
                         {% else %}
                             {% include 'partials/search/result/metadata/result_metadata.html.twig' with {hit:hit, counter: loop.index0} %}

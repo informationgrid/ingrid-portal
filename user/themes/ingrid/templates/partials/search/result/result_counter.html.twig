@@ -40,7 +40,7 @@
                     {% set key = param[0] %}
                     {% if key is not empty %}
                         {% set value = uri.query(key) %}
-                        {% if key is not sameas('ranking') and key is not sameas('page') %}
+                        {% if key is not same as('ranking') and key is not same as('page') %}
                             <input type="hidden" name="{{ key }}" value="{{ value }}"/>
                         {% endif %}
                     {% endif %}
