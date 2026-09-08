@@ -667,17 +667,6 @@ hit_search:
                         }
                     }
                 },
-                "at28": {
-                    "label": "INSPIRE Boden",
-                    "display_on_empty": true,
-                    "query": {
-                        "filter": {
-                            "term": {
-                                "alternatetitle": "INSPIRE Boden"
-                            }
-                        }
-                    }
-                },
                 "at29": {
                     "label": "INSPIRE Bodennutzung",
                     "display_on_empty": true,
