@@ -8,11 +8,13 @@ Group:          Applications/Internet
 License:        Proprietary
 URL:            https://www.wemove.com/
 BuildArch:      noarch
-AutoReqProv: no
+AutoReqProv:    no
+Requires:       php-dom php-gd php-mbstring php-xml php-zip
 
 %define context_path ingrid-portal-grav
 %define install_root /var/www/%{context_path}
 %define system_yaml %{buildroot}%{install_root}/user/config/system.yaml
+# the versions are replaced during build with versions.props
 %define version_grav 1.7.52
 %define version_mvis 2.0.11
 
