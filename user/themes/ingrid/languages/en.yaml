@@ -372,8 +372,8 @@ SEARCH_DETAIL:
     GENERAL_TAB: General
     AVAILABILITY_TAB: Availability
     GEOTHESAURUS_SPACIAL_REFERENCE: Geothesaurus-Reference
-    SPATIAL_REF_VALUE_X1: SW Longitude/Latitude (WGS84)
-    SPATIAL_REF_VALUE_Y1: NO Longitude/Latitude (WGS84)
+    SPATIAL_REF_VALUE_X1: SW Latitude / Longitude (WGS84)
+    SPATIAL_REF_VALUE_Y1: NO Latitude / Longitude (WGS84)
     SPATIAL_REF_VALUE_X2: Longitude 2
     SPATIAL_REF_VALUE_Y2: Latitude 2
     POINTOFCONTACT_METADATA: ' (Meta data)'
