@@ -11,7 +11,7 @@ BuildArch:      noarch
 AutoReqProv:    no
 Requires:       php-dom php-gd php-mbstring php-xml php-zip
 
-%define context_path ingrid-portal-grav
+%define context_path ingrid-portal
 %define install_root /var/www/%{context_path}
 %define system_yaml %{buildroot}%{install_root}/user/config/system.yaml
 # the versions are replaced during build with versions.props
