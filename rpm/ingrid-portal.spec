@@ -68,11 +68,28 @@ cd %{buildroot}%{install_root}/user/plugins/ingrid-grav-utils && composer update
 ################################################################################
 %files
 %defattr(0644,root,root,0755)
-%attr(0755,www-data,www-data) %{install_root}
+%{install_root}
 %config(noreplace) %{install_root}/user/pages
 
 ################################################################################
 %pre
+
+################################################################################
+%post
+WEB_USER="nginx"
+WEB_GROUP="nginx"
+
+if getent group apache >/dev/null 2>&1; then
+    WEB_USER="apache"
+    WEB_GROUP="apache"
+elif getent group www-data >/dev/null 2>&1; then
+    WEB_USER="www-data"
+    WEB_GROUP="www-data"
+fi
+
+# Eigentümer für den Ordner und dessen Inhalte dynamisch anpassen
+chown -R ${WEB_USER}:${WEB_GROUP} %{install_root}
+chmod 0755 %{install_root}
 
 ################################################################################
 %preun
