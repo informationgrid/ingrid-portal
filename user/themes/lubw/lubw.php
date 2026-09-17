@@ -65,7 +65,19 @@ class Lubw extends Theme
         $detailController = $event['detailController'];
 
         if ($uri && $detailController) {
-            $oac = $this->grav['uri']->query('oac') ?? '';
+            $queries = $this->grav['uri']->query(null, true);
+            $oac = null;
+
+            if (!empty($queries)) {
+
+                foreach ($queries as $key => $value) {
+                    if (strcasecmp($key, 'oac') === 0) {
+                        $oac = $value;
+                        break;
+                    }
+                }
+            }
+
             if ($oac) {
                 $responseContent = $detailController->getResponseContent($detailController->configApi, $oac, $detailController->type, 'oac');
                 if ($responseContent) {
