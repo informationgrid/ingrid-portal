@@ -91,6 +91,12 @@
                                     {% set tmpTitle = "SEARCH_DETAIL.SUPERIOR_REFERENCES"|t %}
                                     {{ hit_macros.render_sub_navigation(tmpTitle, tmpHash) }}
                                 {% endif %}
+                                {# Verweise #}
+                                {% if linkWebsiteRefs|length > 0 %}
+                                    {% set tmpHash = hash_links ~ "_website_references" %}
+                                    {% set tmpTitle = "SEARCH_DETAIL.REFERENCES"|t %}
+                                    {{ hit_macros.render_sub_navigation(tmpTitle, tmpHash) }}
+                                {% endif %}
                             </div>
                         </div>
                     </li>
