@@ -535,7 +535,7 @@ class BawMis extends Theme
                         }
 
                         $item[] = array(
-                            "value" => CodelistHelper::getCodelistEntry(["3950010"], (int)$id, $lang),
+                            "value" => "temp",//CodelistHelper::getCodelistEntry(["3950010"], (int)$id, $lang),
                             "type" => "text"
                         );
                     }

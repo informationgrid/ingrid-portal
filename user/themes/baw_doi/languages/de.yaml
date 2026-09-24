@@ -252,6 +252,3 @@ THEME:
             EPSG:
                 LABEL: BWaStr Projektionssystem
                 HELP: BWaStr Projektionssystem
-            LIMIT:
-                LABEL: BWaStr Limit
-                HELP: BWaStr Limit

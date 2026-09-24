@@ -35,8 +35,3 @@ form:
           type: text
           label: THEME.ADMIN.BWASTR.EPSG.LABEL
           help: THEME.ADMIN.BWASTR.EPSG.HELP
-
-        bwastr.get_data_lower:
-          type: number
-          label: THEME.ADMIN.BWASTR.LIMIT.LABEL
-          help: THEME.ADMIN.BWASTR.LIMIT.HELP
