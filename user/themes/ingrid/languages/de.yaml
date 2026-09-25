@@ -906,8 +906,6 @@ SEARCH_DETAIL:
             TITLE: Erstellt am
         ISSUED:
             TITLE: Veröffentlicht am
-        MODIFIED:
-            TITLE: Geändert am
     TIME:
       HELP:
         CREATION:

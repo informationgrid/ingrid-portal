@@ -50,6 +50,9 @@
 {% if linkRefs.links %}
     {% set linkOtherRefs = linkRefs.links %}
 {% endif %}
+{% if landing_page %}
+    {% set linkWebsiteRefs = [{ access_url: landing_page }] %}
+{% endif %}
 
 {# Fachinformationen #}
 {% set infoRefs = {} %}
