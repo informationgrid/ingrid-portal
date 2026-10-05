@@ -38,10 +38,9 @@ SEARCH_DETAIL:
             SPATIALORIENTATION: Räumlichkeit
             MEASUREMENTDEPTH:
                 TITLE: Messtiefe
-                DEPTH: Messtiefe
-                UOM: Maßeinheit
+                DEPTH: Messtiefe [m]
                 VERTICALCRS: Höhenbezugssystem
-            TIME_MEASUREMENT: Zeitliche Genauigkeit
+            TIME_MEASUREMENT: Zeitliche Genauigkeit [s]
             MEASUREMENTFREQUENCY: Frequenz der Messung [s]
             MEANWATERLEVEL:
                 TITLE: Gemittelter Wasserstand, auf den sich die Messwerte beziehen

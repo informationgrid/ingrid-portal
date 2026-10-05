@@ -259,7 +259,6 @@ class BawDoi extends Theme
                         $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:measurementDepth/baw:MeasurementDepth[./*]';
                         $xpathExpressionSub = [
                             "./baw:measurementDepth/gco:Decimal",
-                            "./baw:uom/gco:CharacterString",
                             "./baw:verticalCRS/gmx:Anchor"
                         ];
                         $hit->measurementDepth = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
