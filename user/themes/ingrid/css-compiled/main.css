@@ -10558,10 +10558,13 @@ div.description {
 .search-filtered .list-item .table table {
   background: transparent;
   margin: 0;
+  border-collapse: separate;
+  border-spacing: 0 4px;
 }
 .search-filtered .list-item .table table tr th, .search-filtered .list-item .table table tr td {
   padding: 0;
   font-size: 14px;
+  line-height: 24px;
 }
 .search-filtered .list-item .table table a:not(.button) {
   font-size: 14px;
