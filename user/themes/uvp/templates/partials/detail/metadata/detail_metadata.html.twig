@@ -225,9 +225,9 @@
                                         {# Entscheidung #}
                                         {{ _self.renderTableToTree(("SEARCH_DETAIL.UVP_" ~ type|upper ~ "_DOC_DESIGNDOCS")|t, step.designDocs, "designDocs") }}
                                         {# Informationen zum Scoping-Termin #}
-                                        {{ _self.renderTableToTree(("SEARCH_DETAIL.UVP_" ~ type|upper ~ "_DOC_SCOPINGGENERALDOCS")|t, step.scopingGeneralDocs, "scopingGeneralDocs") }}
-                                        {# Scoping-Unterlagen #}
                                         {{ _self.renderTableToTree(("SEARCH_DETAIL.UVP_" ~ type|upper ~ "_DOC_SCOPINGDATEDOCS")|t, step.scopingDateDocs, "scopingDateDocs") }}
+                                        {# Scoping-Unterlagen #}
+                                        {{ _self.renderTableToTree(("SEARCH_DETAIL.UVP_" ~ type|upper ~ "_DOC_SCOPINGGENERALDOCS")|t, step.scopingGeneralDocs, "scopingGeneralDocs") }}
                                     {% endif %}
                                 {% endfor %}
                                 <h2 class="icon-dot icon-dot-small">
