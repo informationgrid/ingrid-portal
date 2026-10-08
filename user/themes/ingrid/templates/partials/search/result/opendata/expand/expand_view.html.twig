@@ -30,7 +30,7 @@
                                             {% endfor %}
                                         </div>
                                     {% endif %}
-                                    <a href="{{ distributionUrl }}" class="icon external-link" title="{{ distributionTitle }}" target="_blank" rel="noopener noreferrer">
+                                    <a href="{{ distributionUrl }}" class="icon external-link" title="{{ distributionTitle }}" data-signature="{{ signatureUrl('url=' ~ distributionUrl|url_encode) }}" target="_blank" rel="noopener noreferrer">
                                         <span class="ic-ic-external"></span>
                                         <span class="text">
                                         {{ distributionTitle }}
@@ -76,7 +76,7 @@
                     <div class="swiper-slide">
                         {{ hit_macros.render_fact_title("SEARCH_RESULT.INFO_PREVIEW"|t, null, 'text-center') }}
                         <a target="_blank" class="external-link" href="{{ link.url }}" title="{{ link.title }}" rel="noopener noreferrer">
-                            <img {% if 'http:' in link.url %} src="./" data-src={% else %} src={% endif %}"{{ link.url }}" height="100" class="preview_image" alt="{{ link.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" title="{{ link.title }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');">
+                            <img {% if 'http:' in link.url %} src="./" data-src={% else %} src={% endif %}"{{ link.url }}" height="100" class="preview_image" alt="{{ link.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" title="{{ link.title }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');" data-signature="{{ signatureUrl('url=' ~ link.url|url_encode) }}">
                         </a>
                     </div>
                 {% endfor %}

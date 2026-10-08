@@ -5,7 +5,7 @@
             {% for link in access %}
                 <div class="list-item">
                     <div>
-                        <a href="{{ link.url }}" class="icon external-link" title="{{ link.title }}" target="_blank" rel="noopener noreferrer">
+                        <a href="{{ link.url }}" class="icon external-link" title="{{ link.title }}" data-signature="{{ signatureUrl("url=" ~ link.url|url_encode) }}" target="_blank" rel="noopener noreferrer">
                             <span class="ic-ic-external"></span>
                             <span class="text">
                                 {{ link.title ?? link.url }}
