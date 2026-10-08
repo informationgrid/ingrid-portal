@@ -1750,20 +1750,20 @@
 {% macro render_table_entry_value (item, colspan) %}
     {% if item.type == "text" %}
         {% if item.value is not null %}
-            <td {% if colspan %}colspan="{{ colspan }}{% endif %}">{{ item.value }}</td>
+            <td {% if colspan %}colspan="{{ colspan }}"{% endif %}>{{ item.value }}</td>
         {% elseif item.values is not null %}
-            <td {% if colspan %}colspan="{{ colspan }}{% endif %}">
+            <td {% if colspan %}colspan="{{ colspan }}"{% endif %}>
             {% for value in item.values %}
                 <p>{{ value }}</p>
             {% endfor %}
             </td>
         {% endif %}
     {% elseif item.type == "date" %}
-        <td {% if colspan %}colspan="{{ colspan }}{% endif %}">{{ item.value|date("d.m.Y") }}</td>
+        <td {% if colspan %}colspan="{{ colspan }}"{% endif %}>{{ item.value|date("d.m.Y") }}</td>
     {% elseif item.type == "link" %}
-        <td {% if colspan %}colspan="{{ colspan }}{% endif %}"><a href="{{ item.value }}" title="{{ item.value }}">{{ item.value }}</a></td>
+        <td {% if colspan %}colspan="{{ colspan }}"{% endif %}><a href="{{ item.value }}" title="{{ item.value }}">{{ item.value }}</a></td>
     {% elseif item.type == "symbol" %}
-        <td {% if colspan %}colspan="{{ colspan }}{% endif %}" class="symbol" {% if setCenter %}style="text-align:center;"{% endif %}>
+        <td {% if colspan %}colspan="{{ colspan }}"{% endif %} class="symbol" {% if setCenter %}style="text-align:center;"{% endif %}>
         {% if item.value == "true" %}
             <span class="ic-ic-check" title="{{ ("COMMON.GENERAL_" ~ item.value|upper)|t }}"></span>
         {% elseif item.value == "false" %}
