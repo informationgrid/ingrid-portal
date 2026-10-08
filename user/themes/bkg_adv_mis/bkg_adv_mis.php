@@ -3,6 +3,8 @@ namespace Grav\Theme;
 
 use Grav\Common\File\CompiledYamlFile;
 use Grav\Common\Theme;
+use Grav\Plugin\ElasticsearchHelper;
+use RocketTheme\Toolbox\Event\Event;
 
 class BkgAdvMis extends Theme
 {
@@ -11,6 +13,7 @@ class BkgAdvMis extends Theme
     {
         return [
             'onThemeInitialized' => ['onThemeInitialized', 0],
+            'onThemeSearchHitMetadataEvent' => ['addThemeSearchHitMetadataContent', 0],
         ];
     }
 
@@ -28,5 +31,16 @@ class BkgAdvMis extends Theme
                 );
             }
         }
+    }
+
+    public function addThemeSearchHitMetadataContent(Event $event): void
+    {
+        // Get variables from event
+        $content = $event['content'];
+        $hit = $event['hit'];
+        $lang = $event['lang'];
+
+        $hit->hierarchyLevel = ElasticsearchHelper::getValue($content, "hierarchylevel");
+
     }
 }
