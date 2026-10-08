@@ -235,7 +235,7 @@
                     <div class="swiper-slide">
                         <p class="caption">
                             <a target="_blank" class="external-link" href="{{ preview }}" title="{{ title }}" rel="noopener noreferrer">
-                                <img class="preview_image"{% if 'http:' in  preview %} src="./" data-src={% else %} src={% endif %}"{{ preview }}" title="{{ title }}" alt="{{ title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');">
+                                <img class="preview_image"{% if 'http:' in  preview %} src="./" data-src={% else %} src={% endif %}"{{ preview }}" title="{{ title }}" alt="{{ title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');" data-signature="{{ signatureUrl('url=' ~ preview|url_encode) }}">
                                 <noscript>
                                   <img class="preview_image" src="{{ preview }}" title="{{ title }}" alt="{{ title ?? 'SEARCH_DETAIL.PREVIEW'|t }}">
                                 </noscript>
@@ -251,7 +251,7 @@
         <div class="preview">
             {% for preview in previews %}
                 <a target="_blank" class="external-link" href="{{ preview }}" title="{{ title }}" rel="noopener noreferrer">
-                    <img class="preview_image"{% if 'http:' in  preview %} src="./" data-src={% else %} src={% endif %}"{{ preview }}" title="{{ title }}" alt="{{ title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');">
+                    <img class="preview_image"{% if 'http:' in  preview %} src="./" data-src={% else %} src={% endif %}"{{ preview }}" title="{{ title }}" alt="{{ title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');" data-signature="{{ signatureUrl('url=' ~ preview|url_encode) }}">
                     <noscript>
                         <img class="preview_image" src="{{ preview }}" title="{{ title }}" alt="{{ title ?? 'SEARCH_DETAIL.PREVIEW'|t }}">
                     </noscript>
@@ -1109,7 +1109,7 @@
                     </div>
                 {% endif %}
                 {% if link %}
-                    <a {% if isExternal %}target="_blank"{% endif %} href="{{ link }}" class="icon" title="{{ entry.title }}">
+                    <a {% if isExternal %}target="_blank"{% endif %} href="{{ link }}" class="icon" {% if isExternal or isDownload %}data-signature="{{ signatureUrl('url=' ~ link|url_encode) }}" {% endif %}title="{{ entry.title }}">
                         {% if isExternal %}
                             <span class="ic-ic-external"></span>
                         {% elseif isDownload %}
@@ -1135,7 +1135,7 @@
                                     <div class="swiper-slide">
                                         <p class="caption">
                                             <a target="_blank" class="external-link" href="{{ preview }}" title="{{ entry.title }}" rel="noopener noreferrer">
-                                                <img class="preview_image"{% if 'http:' in  preview %} src="./" data-src={% else %} src={% endif %}"{{ preview }}" title="{{ entry.title }}" alt="{{ entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');">
+                                                <img class="preview_image"{% if 'http:' in  preview %} src="./" data-src={% else %} src={% endif %}"{{ preview }}" title="{{ entry.title }}" alt="{{ entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');" data-signature="{{ signatureUrl('url=' ~ preview|url_encode) }}">
                                                 <noscript>
                                                     <img class="preview_image" src="{{ preview }}" title="{{ entry.title }}" alt="{{ entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}">
                                                 </noscript>
@@ -1167,7 +1167,7 @@
                         <div class="preview">
                             {% set tmpUrl = entry.previews[0] %}
                             <a target="_blank" class="external-link" href="{{ tmpUrl }}" title="{{ entry.title }}" rel="noopener noreferrer">
-                                <img class="preview_image"{% if 'http:' in  tmpUrl %} src="./" data-src={% else %} src={% endif %}"{{ tmpUrl }}" title="{{ entry.title }}" alt="{{ entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');">
+                                <img class="preview_image"{% if 'http:' in  tmpUrl %} src="./" data-src={% else %} src={% endif %}"{{ tmpUrl }}" title="{{ entry.title }}" alt="{{ entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');" data-signature="{{ signatureUrl('url=' ~ tmpUrl|url_encode) }}">
                                 <noscript>
                                     <img class="preview_image" src="{{ tmpUrl }}" title="{{ entry.title }}" alt="{{ entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}">
                                 </noscript>
@@ -1538,7 +1538,7 @@
                 <div class="swiper-slide">
                     <p class="caption">
                         <a target="_blank" class="external-link" href="{{ entry.url }}" title="{{ entry.descr ?? entry.title ?? entry.url }}" rel="noopener noreferrer">
-                            <img class="preview_image"{% if 'http:' in  entry.url %} src="./" data-src={% else %} src={% endif %}"{{ entry.url }}" title="{{ entry.descr ?? entry.title ?? entry.url }}" alt="{{ entry.descr ?? entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');">
+                            <img class="preview_image"{% if 'http:' in  entry.url %} src="./" data-src={% else %} src={% endif %}"{{ entry.url }}" title="{{ entry.descr ?? entry.title ?? entry.url }}" alt="{{ entry.descr ?? entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');" data-signature="{{ signatureUrl('url=' ~ entry.url|url_encode) }}">
                             <noscript>
                                 <img class="preview_image" src="{{ entry.url }}" title="{{ entry.descr ?? entry.title ?? entry.url }}" alt="{{ entry.descr ?? entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}">
                             </noscript>
@@ -1555,7 +1555,7 @@
                 <div class="swiper-slide">
                     <p class="caption">
                         <a target="_blank" class="external-link" href="{{ entry.url }}" title="{{ entry.descr ?? entry.title ?? entry.url }}" rel="noopener noreferrer">
-                            <img class="preview_image"{% if 'http:' in  entry.url %} src="./" data-src={% else %} src={% endif %}"{{ entry.url }}" title="{{ entry.descr ?? entry.title ?? entry.url }}" alt="{{ entry.descr ?? entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');">
+                            <img class="preview_image"{% if 'http:' in  entry.url %} src="./" data-src={% else %} src={% endif %}"{{ entry.url }}" title="{{ entry.descr ?? entry.title ?? entry.url }}" alt="{{ entry.descr ?? entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');" data-signature="{{ signatureUrl('url=' ~ entry.url|url_encode) }}">
                             <noscript>
                                 <img class="preview_image" src="{{ entry.url }}" title="{{ entry.descr ?? entry.title ?? entry.url }}" alt="{{ entry.descr ?? entry.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}">
                             </noscript>

@@ -6,6 +6,7 @@
             if (a) {
                 if(a.length > 0){
                     var href = a[0].href;
+                    var signature = a[0].dataset ? a[0].dataset.signature : undefined;
                     var spanParent = aParent.find('.info--right').first();
                     if(spanParent.length === 0) {
                         aParent.prepend('<div class="info--right"></div>');
@@ -14,7 +15,7 @@
                     if(href){
                         spanParent.append('<span></span>');
                         var span = spanParent.find('span:empty').first();
-                        getLinkFileDataType('rest/getMimeType?url=' + encodeURIComponent(href), span);
+                        getLinkFileDataType('rest/getMimeType?' + (signature ? signature : encodeURIComponent(href)), span);
                     }
                 }
             }

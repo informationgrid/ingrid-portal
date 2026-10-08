@@ -312,7 +312,7 @@
             {% endif %}
             {{ urlDecode(linkText) }}
             <span class="downloadText">
-                {% set getUrlFileSize = "rest/getUrlFileSize?url=" ~ entryLink|url_encode %}
+                {% set getUrlFileSize = "rest/getUrlFileSize?" ~ signatureUrl("url=" ~ entryLink|url_encode) %}
                 {% if entry.timestamp %}
                     {% set getUrlFileSize = getUrlFileSize ~ "&hash=" ~ (entry.timestamp)|md5 %}
                 {% endif %}
@@ -371,7 +371,7 @@
                         {% endif %}
                         {{ urlDecode(linkText) }}
                         <span class="downloadText">
-                            {% set getUrlFileSize = "rest/getUrlFileSize?url=" ~ entryLink|url_encode %}
+                            {% set getUrlFileSize = "rest/getUrlFileSize?" ~ signatureUrl("url=" ~ entryLink|url_encode) %}
                             {% if entry.timestamp %}
                                 {% set getUrlFileSize = getUrlFileSize ~ "&hash=" ~ (entry.timestamp)|md5 %}
                             {% endif %}

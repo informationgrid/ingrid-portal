@@ -23,7 +23,7 @@
                         {% for link in regulation %}
                             <div class="list-item">
                                 <div>
-                                    <a href="{{ link.url }}" class="icon external-link" title="{{ link.title }}" target="_blank" rel="noopener noreferrer">
+                                    <a href="{{ link.url }}" class="icon external-link" title="{{ link.title }}" data-signature="{{ signatureUrl('url=' ~ link.url|url_encode) }}" target="_blank" rel="noopener noreferrer">
                                         <span class="ic-ic-external"></span>
                                         <span class="text">
                                             {{ link.title ?? link.url }}
@@ -61,7 +61,7 @@
                                             <span>{{ link.serviceType }}</span>
                                         {% endif %}
                                     </div>
-                                    <a href="{{ link.url }}" class="icon external-link" title="{{ link.title }}" target="_blank" rel="noopener noreferrer">
+                                    <a href="{{ link.url }}" class="icon external-link" title="{{ link.title }}" data-signature="{{ signatureUrl('url=' ~ link.url|url_encode) }}" target="_blank" rel="noopener noreferrer">
                                         <span class="ic-ic-download"></span>
                                         <span class="text">
                                             {{ link.title ?? link.url }}
@@ -132,7 +132,7 @@
                                                 <span>{{ link.serviceType }}</span>
                                             {% endif %}
                                         </div>
-                                        <a href="{{ link.url }}" class="icon external-link" title="{{ link.title }}" target="_blank" rel="noopener noreferrer">
+                                        <a href="{{ link.url }}" class="icon external-link" title="{{ link.title }}" data-signature="{{ signatureUrl('url=' ~ link.url|url_encode) }}" target="_blank" rel="noopener noreferrer">
                                             <span class="ic-ic-external"></span>
                                             <span class="text">
                                                 {{ link.title ?? link.url }}
@@ -218,7 +218,7 @@
                         <div class="swiper-slide">
                             {{ hit_macros.render_fact_title("SEARCH_RESULT.INFO_PREVIEW"|t, null, 'text-center') }}
                             <a target="_blank" class="external-link" href="{{ link.url }}" title="{{ link.title }}" rel="noopener noreferrer">
-                                <img {% if 'http:' in link.url %} src="./" data-src={% else %} src={% endif %}"{{ link.url }}" height="100" class="preview_image" alt="{{ link.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" title="{{ link.title }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');">
+                                <img {% if 'http:' in link.url %} src="./" data-src={% else %} src={% endif %}"{{ link.url }}" height="100" class="preview_image" alt="{{ link.title ?? 'SEARCH_DETAIL.PREVIEW'|t }}" title="{{ link.title }}" onerror="loadDefaultMapImage(this, '{{ url("theme://images/maps/image_map_" ~ partners[0] ~ ".png") }}', '{{ url("theme://images/maps/image_map.png") }}');" data-signature="{{ signatureUrl('url=' ~ link.url|url_encode) }}">
                             </a>
                         </div>
                     {% endfor %}
