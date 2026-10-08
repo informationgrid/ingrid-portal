@@ -4,6 +4,7 @@ namespace Grav\Theme;
 use Grav\Common\File\CompiledYamlFile;
 use Grav\Common\Theme;
 use Grav\Plugin\ElasticsearchHelper;
+use Grav\Plugin\IdfHelper;
 use RocketTheme\Toolbox\Event\Event;
 
 class BkgAdvMis extends Theme
@@ -13,6 +14,7 @@ class BkgAdvMis extends Theme
     {
         return [
             'onThemeInitialized' => ['onThemeInitialized', 0],
+            'onThemeDetailMetadataEvent' => ['addThemeDetailMetadataContent', 0],
             'onThemeSearchHitMetadataEvent' => ['addThemeSearchHitMetadataContent', 0],
         ];
     }
@@ -42,5 +44,17 @@ class BkgAdvMis extends Theme
 
         $hit->hierarchyLevel = ElasticsearchHelper::getValue($content, "hierarchylevel");
 
+    }
+
+    public function addThemeDetailMetadataContent(Event $event): void
+    {
+        // Get variables from event
+        $content = $event['content'];
+        $hit = $event['hit'];
+        $lang = $event['lang'];
+
+        $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
+
+        $hit->hierarchyLevelKey = IdfHelper::getNodeValue($node, "./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue");
     }
 }
