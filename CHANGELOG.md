@@ -1,4 +1,42 @@
 
+## 8.5.0 (09.10.2026)
+
+### Features
+
+* Case-sensitivity für Aufruf mit oac entfernen (#9505)
+* Erstellung von RPM Paketen für RHEL 10 für InGrid Komponenten (#9371)
+* ingrid-with-opendata- Platzierung des Feldes "Webseite" (#9247)
+* ingrid-with-opendata- Darstellung der Ressource im Portal (#9232)
+* ingrid-with-opendata - Anzeige Informationen zum Metadatensatz (#9230)
+* ingrid-with-opendata - Telefonnummer wird nicht im Portal angezeigt (#9228)
+* Austausch des Messdatenclient auf dev.informationgrid.eu (#9160)
+* Portal: Suchergebnis- und Detail-Anzeige - Kachel-MD mit "Kachel" labeln (#9070)
+* Portal LUBW: Sachattribute mit Übermittlungsstufen 0 und 1 sollen im Portal angezeigt werden. (#9003)
+* Mapping und Portal-Anzeige für BWaStr.-Strecken Raumbezüge (#8949)
+* Neuer Verfahrensschritt: „Unterrichtung über den Untersuchungsrahmen“ (#8934)
+* AdV-MIS: Facette "Produktgruppe" - Wert "INSPIRE Boden" entfernen (#8918)
+* Schlagwörter für die Abgabe von MD an die Mobilithek angeben können (#8906)
+* Portal-NG: Nacharbeiten  (#8825)
+* ISO Erweiterung für BAW-spezifische Felder (#8814)
+* Portal-Anpassungen für NLPV (#7339)
+* Angaben der Geokoordinaten vereinheitlichen (#7223)
+* ZEITERFASSUNG - InGrid Installation Niedersachsen (NUMIS) (#3)
+* ZEITERFASSUNG VKoopUIS (#2)
+
+### Bugfixes
+
+* Mögliche Sicherheitslücke beim ZIP-Download (#9576)
+* UVP: Fehler beim Download von erstellten ZIPs in der Detaildarstellung (#9569)
+* Darstellungsdefizite von "Messdaten" im Portal (#9557)
+* SSRF Lücke im Portal (#9549)
+* OpenData "Datensatz" erscheint nicht in der Übersicht, wenn ich nach Open Data filtere (#9462)
+* Portal gibt ZIP-Datei mit veralteten Dateien zurück (#9412)
+* Geodatensatz: Verweis zu Dienst wird nicht in das Portal übertragen (#9341)
+* AdV-MIS: Portal: Verhalten der Filterung "Art der Ressource" fehlerhaft (#9283)
+* RDF-Dateien werden im Zip-Download zu bin-Dateien (#9280)
+* Falsche Verknüpfung der Kategorien auf der Startseite (#9136)
+* Begrenzung der Größe aller erstellten ZIP Dateien (#8929)
+    
 ## 8.4.0 (06.07.2026)
 
 ### Features
