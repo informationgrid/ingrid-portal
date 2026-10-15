@@ -10559,7 +10559,7 @@ div.description {
   background: transparent;
   margin: 0;
   border-collapse: separate;
-  border-spacing: 0 4px;
+  border-spacing: 0 10px;
 }
 .search-filtered .list-item .table table tr th, .search-filtered .list-item .table table tr td {
   padding: 0;
