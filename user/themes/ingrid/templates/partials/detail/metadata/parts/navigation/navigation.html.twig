@@ -137,14 +137,29 @@
                         <div class="accordion-content" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="{{ hash_info }}-accordion-label" id="{{ hash_info }}-accordion">
                             <div class="boxes">
                                 {% if infoRefs|length > 0 %}
-                                    {% set tmpHash = hash_info ~ "_technical_information" %}
-                                    {% set tmpTitle = "SEARCH_DETAIL.TECHNICAL_INFORMATION"|t %}
-                                    {% if class == "3" %}
-                                        {% set tmpTitle = "SEARCH_DETAIL.TECHNICAL_INFORMATION_3"|t %}
-                                    {% elseif class == "6" %}
-                                        {% set tmpTitle = "SEARCH_DETAIL.TECHNICAL_INFORMATION_6"|t %}
+                                    {% if class == "7" %}
+                                        {% if infoRefs.algorithmType or infoRefs.algorithmTypeOfUse or infoRefs.algorithmExplanation or infoRefs.algorithmMethods|length > 0 or infoRefs.algorithmTrainingData or infoRefs.algorithmDataBias or infoRefs.algorithmErrorBias or infoRefs.algorithmMonitoring %}
+                                            {{ hit_macros.render_sub_navigation("SEARCH_DETAIL.TECHNICAL_INFORMATION_7"|t, hash_info ~ "_technical_information") }}
+                                        {% endif %}
+                                        {% if infoRefs.algorithmInputData|length > 0 %}
+                                            {{ hit_macros.render_sub_navigation("SEARCH_DETAIL.ALG_INPUT_DATA"|t, hash_info ~ "_alg_input_data") }}
+                                        {% endif %}
+                                        {% if infoRefs.algorithmOutputData|length > 0 %}
+                                            {{ hit_macros.render_sub_navigation("SEARCH_DETAIL.ALG_OUTPUT_DATA"|t, hash_info ~ "_alg_output_data") }}
+                                        {% endif %}
+                                        {% if infoRefs.algorithmApiUrl or infoRefs.algorithmSourceCodeUrl or infoRefs.algorithmWebsiteUrl or infoRefs.algorithmExampleUrl or infoRefs.algorithmPubliccodeUrl or infoRefs.algorithmAdditionalUrls|length > 0 %}
+                                            {{ hit_macros.render_sub_navigation("SEARCH_DETAIL.ALG_LINKS"|t, hash_info ~ "_alg_links") }}
+                                        {% endif %}
+                                    {% else %}
+                                        {% set tmpHash = hash_info ~ "_technical_information" %}
+                                        {% set tmpTitle = "SEARCH_DETAIL.TECHNICAL_INFORMATION"|t %}
+                                        {% if class == "3" %}
+                                            {% set tmpTitle = "SEARCH_DETAIL.TECHNICAL_INFORMATION_3"|t %}
+                                        {% elseif class == "6" %}
+                                            {% set tmpTitle = "SEARCH_DETAIL.TECHNICAL_INFORMATION_6"|t %}
+                                        {% endif %}
+                                        {{ hit_macros.render_sub_navigation(tmpTitle, tmpHash) }}
                                     {% endif %}
-                                    {{ hit_macros.render_sub_navigation(tmpTitle, tmpHash) }}
                                 {% endif %}
                                 {% if infoRefs_additional|length > 0 %}
                                     {% set tmpHash = hash_info ~ "_additional_information" %}
