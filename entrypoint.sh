@@ -487,6 +487,12 @@ if [ -f "$INGRID_PAGES_CONTACT_FORM" ]; then
   sed -i "s/      - name: user_organisation$/      - name: user_company/" "$INGRID_PAGES_CONTACT_FORM"
 fi
 
+LOGROTATE_GRAV_FILE=/etc/logrotate.d/grav
+
+if [ -f "$LOGROTATE_GRAV_FILE" ]; then
+  sed -i "s/portal/$GRAV_FOLDER/" "$LOGROTATE_GRAV_FILE"
+fi
+
 service cron start
 
 exec gosu www-data "$@"

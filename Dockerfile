@@ -33,7 +33,8 @@ RUN groupadd --system foo; \
         gosu \
         cron \
         apache2-utils \
-        wget
+        wget \
+        logrotate
 
 RUN apt install -y --no-install-recommends \
     libfreetype6-dev \
@@ -102,6 +103,13 @@ RUN cd /usr/share/grav-admin \
  && unzip mvis.zip \
  && mv /usr/share/grav-admin/measurement-client-"${MVIS_VERSION}" /usr/share/grav-admin/mvis \
  && rm mvis.zip
+
+# Logrotate
+COPY logrotate/grav /etc/logrotate.d/grav
+RUN chmod 0644 /etc/logrotate.d/grav
+RUN echo '*/5 * * * * root /usr/sbin/logrotate /etc/logrotate.conf' \
+    > /etc/cron.d/logrotate \
+    && chmod 0644 /etc/cron.d/logrotate
 
 COPY entrypoint.sh /entrypoint.sh
 #COPY grav.ini $PHP_INI_DIR/conf.d/
