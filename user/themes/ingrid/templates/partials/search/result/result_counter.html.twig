@@ -5,7 +5,7 @@
     {% if query is empty %}
         {{ "COMMON.RESULT_COUNTER_RANKED"|t(numOfHits)|raw }}
     {% else %}
-        {{ "COMMON.RESULT_COUNTER_RANKED_WITHSEARCHVALUE"|t(numOfHits, query)|raw }}
+        {{ "COMMON.RESULT_COUNTER_RANKED_WITHSEARCHVALUE"|t(numOfHits, query|e)|raw }}
     {% endif %}
     </h3>
     {% include 'partials/search/result/result_counter_download.html.twig' ignore missing %}
