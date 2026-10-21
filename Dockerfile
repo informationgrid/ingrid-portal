@@ -3,7 +3,7 @@ FROM php:8.3-fpm-trixie
 SHELL [ "/bin/bash", "-exo", "pipefail", "-c" ]
 
 # renovate: datasource=github-tags depName=getgrav/grav versioning=semver
-ENV GRAV_VERSION=1.7.49.5
+ENV GRAV_VERSION=1.7.52
 # renovate: datasource=github-tags depName=krakjoe/apcu versioning=semver
 ENV PHP_APCU_VERSION=v5.1.23
 # renovate: datasource=github-tags depName=php/pecl-file_formats-yaml versioning=semver
@@ -70,7 +70,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp; \
     mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini";
 
 WORKDIR /var/www
-RUN curl -o grav-admin.zip -SL https://getgrav.org/download/core/grav-admin/${GRAV_VERSION} && \
+RUN curl -o grav-admin.zip -SL https://github.com/getgrav/grav/releases/download/${GRAV_VERSION}/grav-admin-v${GRAV_VERSION}.zip && \
     unzip -qq grav-admin.zip -d /usr/share -x "grav-admin/user/themes/*" -x "grav-admin/user/pages/*" && \
     rm grav-admin.zip
 
