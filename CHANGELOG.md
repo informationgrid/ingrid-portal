@@ -1,4 +1,15 @@
 
+## 8.5.1 (21.10.2026)
+
+### Features
+
+* ingrid-with-opendata- Darstellung der Ressource im Portal (#9232)
+
+### Bugfixes
+
+* Portal nicht aufrufbar, nach Löschen der Ingrid API (#9577)
+* Verbesserung der Sicherheit im InGrid Portal (#9345)
+    
 ## 8.5.0 (09.10.2026)
 
 ### Features
