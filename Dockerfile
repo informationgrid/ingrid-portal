@@ -10,9 +10,9 @@ ENV GRAV_VERSION=${GRAV_VERSION}
 ENV MVIS_VERSION=${MVIS_VERSION}
 
 # renovate: datasource=github-tags depName=krakjoe/apcu versioning=semver
-ENV PHP_APCU_VERSION=v5.1.23
+ENV PHP_APCU_VERSION=v5.1.28
 # renovate: datasource=github-tags depName=php/pecl-file_formats-yaml versioning=semver
-ENV PHP_YAML_VERSION=2.2.5
+ENV PHP_YAML_VERSION=2.3.0
 
 
 ENV YQ_VERSION=v4.52.4
@@ -20,6 +20,8 @@ ENV YQ_VERSION=v4.52.4
 ENV ADMIN_EMAIL=portal@test.de
 ENV ADMIN_FULL_NAME="The Admin"
 ENV TZ='Europe/Berlin'
+
+COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
 
 RUN groupadd --system foo; \
     useradd --no-log-init --system --gid foo --create-home foo; \
@@ -56,8 +58,8 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp; \
         dom \
         intl \
     ; \
-    pecl install apcu-${PHP_APCU_VERSION:1}; \
-    pecl install yaml-$PHP_YAML_VERSION; \
+    pie install apcu/apcu:${PHP_APCU_VERSION:1}; \
+    pie install pecl/yaml:$PHP_YAML_VERSION; \
     \
     docker-php-ext-enable \
         apcu \
