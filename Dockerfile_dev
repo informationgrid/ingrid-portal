@@ -22,8 +22,10 @@ RUN curl -o grav-admin.zip -SL https://github.com/getgrav/grav/releases/download
     cp -rT /var/www/grav-admin /var/www/html && \
     rm grav-admin.zip
 
+COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
+
 RUN chown -R --from=root:root www-data:www-data /var/www/html
-RUN pecl install xdebug
+RUN pie install xdebug/xdebug
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
