@@ -507,6 +507,17 @@ hit_search:
                         }
                     }
                 },
+                "7": {
+                    "codelist": "8000",
+                    "codelist_entry_id": "7",
+                    "query": {
+                        "filter": {
+                            "term": {
+                                "t01_object.obj_class": "7"
+                            }
+                        }
+                    }
+                },
                 "opendata_metadata": {
                     "query": {
                         "filter": {

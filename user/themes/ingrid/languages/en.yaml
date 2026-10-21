@@ -338,6 +338,7 @@ SEARCH_DETAIL:
     TECHNICAL_INFORMATION: Technical Informationen
     TECHNICAL_INFORMATION_3: Technical Informationen
     TECHNICAL_INFORMATION_6: Technical Informationen
+    TECHNICAL_INFORMATION_7: Information about the Algorithm
     ADDITIONAL_INFORMATION: Additional Information
     SEARCH_TERMS: Search Terms
     INSPIRE_THEMES: Inspire-Themes
@@ -572,6 +573,26 @@ SEARCH_DETAIL:
     T011_OBJ_SERV_URL_NAME: Name
     T011_OBJ_SERV_URL_URL: Url
     T011_OBJ_SERV_URL_DESCRIPTION: Description
+    ALG_TYPE: Type of Algorithm
+    ALG_TYPE_OF_USE: Type of Use of the Algorithm
+    ALG_EXPLANATION: Explanation
+    ALG_METHODS: Methods and Models
+    ALG_TRAINING_DATA: Training Data
+    ALG_INPUT_DATA: Input Data
+    ALG_OUTPUT_DATA: Output Data
+    ALG_ATTRIBUTE_NAME: Attribute Name
+    ALG_ATTRIBUTE_UNIT: Unit
+    ALG_ATTRIBUTE_SPATIAL_RESOLUTION: Spatial Resolution
+    ALG_ATTRIBUTE_TEMPORAL_RESOLUTION: Temporal Resolution
+    ALG_DATA_BIAS: Data Bias
+    ALG_ERROR_BIAS: Error/Bias
+    ALG_MONITORING: Performance Monitoring
+    ALG_API_URL: API Link
+    ALG_SOURCE_CODE_URL: Source Code URL
+    ALG_WEBSITE_URL: Website
+    ALG_EXAMPLE_URL: Link to Example Application
+    ALG_PUBLICCODE_URL: URL to publiccode.yml
+    ALG_LINKS: Links
     T011_OBJ_SERV_VERSION_OBJ_ID: Object-ID
     T011_OBJ_SERV_VERSION_LINE: Line-Number
     T011_OBJ_SERV_VERSION_VERSION: Service Version

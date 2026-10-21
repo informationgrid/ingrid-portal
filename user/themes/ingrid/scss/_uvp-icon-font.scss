@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('../fonts/icomoon.eot?t4sgfv');
-  src:  url('../fonts/icomoon.eot?t4sgfv#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?t4sgfv') format('truetype'),
-    url('../fonts/icomoon.woff?t4sgfv') format('woff'),
-    url('../fonts/icomoon.svg?t4sgfv#icomoon') format('svg');
+  src:  url('../fonts/icomoon.eot?v20261020b');
+  src:  url('../fonts/icomoon.eot?v20261020b#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?v20261020b') format('truetype'),
+    url('../fonts/icomoon.woff?v20261020b') format('woff'),
+    url('../fonts/icomoon.svg?v20261020b#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -446,4 +446,7 @@
 }
 .ic-ic-mastodon:before {
   content: "\e976";
+}
+.ic-ic-algorithmus:before {
+  content: "\e977";
 }

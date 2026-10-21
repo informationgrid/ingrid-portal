@@ -78,6 +78,9 @@
     {% elseif class == 6 %}
         {# Informationssystem #}
         <span class="ic-ic-chemie"
+    {% elseif class == 7 %}
+        {# Algorithmus #}
+        <span class="ic-ic-algorithmus"
     {% else %}
         <span
     {% endif %}
@@ -666,6 +669,43 @@
                 <p class="list-item">{{ convertUrlInText(entry)|raw }}</p>
             {% endif %}
         {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_entry_table (title, link, header, entries) %}
+    {# Entry name (linked, if a link is given) as header row, followed by its attribute rows within one table box. #}
+    {% if title %}
+        <div class="table table--lined">
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="{{ header|length }}">
+                            {{ title }}
+                            {% if link %}
+                                <a target="_blank" class="icon external-link" href="{{ link }}" title="{{ link }}" rel="noopener noreferrer">
+                                    <span class="ic-ic-external"></span>
+                                    <span class="text">{{ link }}</span>
+                                </a>
+                            {% endif %}
+                        </th>
+                    </tr>
+                    {% if entries and entries|length > 0 %}
+                        <tr>
+                            {% for head in header %}
+                                <th>{{ head }}</th>
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
+                </thead>
+                {% for items in entries %}
+                    <tr>
+                        {% for item in items %}
+                            {{ _self.render_table_entry_value(item) }}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
     {% endif %}
 {% endmacro %}

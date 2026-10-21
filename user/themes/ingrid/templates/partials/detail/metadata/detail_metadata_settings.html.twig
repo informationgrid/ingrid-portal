@@ -130,6 +130,23 @@
         {% set infoRefs = addKeyValue(infoRefs, "processStepDescriptions", hit.processStepDescriptions) %}
         {% set infoRefs = addKeyValue(infoRefs, "sourceDescriptions", hit.sourceDescriptions) %}
         {% set infoRefs = addKeyValue(infoRefs, "supplementalInformation", hit.supplementalInformation) %}
+    {% case '7' %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmType", hit.algorithmType) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmTypeOfUse", hit.algorithmTypeOfUse) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmExplanation", hit.algorithmExplanation) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmMethods", hit.algorithmMethods) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmTrainingData", hit.algorithmTrainingData) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmDataBias", hit.algorithmDataBias) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmErrorBias", hit.algorithmErrorBias) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmMonitoring", hit.algorithmMonitoring) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmInputData", hit.algorithmInputData) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmOutputData", hit.algorithmOutputData) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmApiUrl", hit.algorithmApiUrl) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmSourceCodeUrl", hit.algorithmSourceCodeUrl) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmWebsiteUrl", hit.algorithmWebsiteUrl) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmExampleUrl", hit.algorithmExampleUrl) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmPubliccodeUrl", hit.algorithmPubliccodeUrl) %}
+        {% set infoRefs = addKeyValue(infoRefs, "algorithmAdditionalUrls", hit.algorithmAdditionalUrls) %}
 {% endswitch %}
 
 {% set infoRefs_additional = {} %}

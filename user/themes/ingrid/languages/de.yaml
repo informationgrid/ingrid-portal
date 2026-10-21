@@ -345,6 +345,7 @@ SEARCH_DETAIL:
     TECHNICAL_INFORMATION: Informationen zum Datensatz
     TECHNICAL_INFORMATION_3: Informationen zum Datensatz
     TECHNICAL_INFORMATION_6: Informationen zum Datensatz
+    TECHNICAL_INFORMATION_7: Informationen zum Algorithmus
     ADDITIONAL_INFORMATION: Zusatzinformationen
     SEARCH_TERMS: Suchbegriffe
     INSPIRE_THEMES: INSPIRE-Themen
@@ -579,6 +580,26 @@ SEARCH_DETAIL:
     T011_OBJ_SERV_URL_NAME: Name
     T011_OBJ_SERV_URL_URL: Url
     T011_OBJ_SERV_URL_DESCRIPTION: Beschreibung
+    ALG_TYPE: Art des Algorithmus
+    ALG_TYPE_OF_USE: Art der Verwendung des Algorithmus
+    ALG_EXPLANATION: Erklärung
+    ALG_METHODS: Methoden und Modelle
+    ALG_TRAINING_DATA: Trainingsdaten
+    ALG_INPUT_DATA: Input-Daten
+    ALG_OUTPUT_DATA: Output-Daten
+    ALG_ATTRIBUTE_NAME: Attributname
+    ALG_ATTRIBUTE_UNIT: Einheit
+    ALG_ATTRIBUTE_SPATIAL_RESOLUTION: Räumliche Auflösung
+    ALG_ATTRIBUTE_TEMPORAL_RESOLUTION: Zeitliche Auflösung
+    ALG_DATA_BIAS: Daten-Bias
+    ALG_ERROR_BIAS: Fehler/Bias
+    ALG_MONITORING: Performance-Monitoring
+    ALG_API_URL: Link zur API
+    ALG_SOURCE_CODE_URL: Quellcode URL
+    ALG_WEBSITE_URL: Webseite
+    ALG_EXAMPLE_URL: Link zur Beispielanwendung
+    ALG_PUBLICCODE_URL: URL zu publiccode.yml
+    ALG_LINKS: Links
     T011_OBJ_SERV_VERSION_OBJ_ID: Object-ID
     T011_OBJ_SERV_VERSION_LINE: Zeilennummer
     T011_OBJ_SERV_VERSION_VERSION: Version
