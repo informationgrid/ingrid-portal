@@ -116,14 +116,58 @@ pipeline {
 
                 script {
                     def version = computeVersion()
+                    def baseImageToScan = "php:8.3-fpm-trixie"
                     def imageToScan = "registry.opencode.de/informationgrid/ingrid-portal:${version}"
                     def sbomFilename = "ingrid-portal-${determineVersion()}.sbom.json"
 
                     docker.withRegistry('https://registry.opencode.de', 'registry-opencode') {
                         sh """
-                            docker run --rm --pull=always --volumes-from jenkins anchore/syft:latest ${imageToScan} --output cyclonedx-json=${WORKSPACE}/build/${sbomFilename}
+                            # Clean up any previous extraction
+                            rm -rf ${WORKSPACE}/build/app-extracted
+                            mkdir -p ${WORKSPACE}/build/app-extracted
+
+                            # Extract application directory from container image
+                            CONTAINER_ID=\$(docker create ${imageToScan})
+                            docker cp \${CONTAINER_ID}:/usr/share/grav-admin ${WORKSPACE}/build/app-extracted/
+                            docker rm \${CONTAINER_ID}
+
+                            # Run Syft specifically against the extracted application directory
+                            docker run --rm --pull=always --volumes-from jenkins \\
+                                anchore/syft:latest dir:${WORKSPACE}/build/app-extracted/grav-admin \\
+                                --output cyclonedx-json=${WORKSPACE}/build/${sbomFilename}
+
+                            # Cleanup extracted files to save disk space
+                            rm -rf ${WORKSPACE}/build/app-extracted
+
+                            # Create SBOM for base image
+                            docker run --rm --pull=always --volumes-from jenkins anchore/syft:latest ${imageToScan} --output cyclonedx-json=${WORKSPACE}/build/sbom-docker-image.json
                         """
                     }
+                }
+            }
+        }
+
+        stage ('Merge SBOMs') {
+            when {
+                anyOf {
+                    branch 'main'
+                    buildingTag()
+                }
+            }
+            agent {
+                docker {
+                    image 'cyclonedx/cyclonedx-cli:latest'
+                    // CRITICAL: Overrides the entrypoint so Jenkins can run it as a regular shell agent
+                    args '-u root --entrypoint=""'
+                    reuseNode true
+                }
+            }
+            steps {
+                script {
+                    sh """
+                        mkdir -p build/reports
+                        cyclonedx merge --input-files build/ingrid-portal-${determineVersion()}.sbom.json build/sbom-docker-image.json --output-file build/sbom-docker-final.json --output-format json --output-version v1_6 --hierarchical --group de.ingrid --name ingrid-editor --version ${determineVersion()}
+                    """
                 }
             }
         }
@@ -137,11 +181,22 @@ pipeline {
             }
             steps {
                 script {
+                    def parentId = '6acb0635-1981-4688-aa32-fa36cbf6d116'
+                    def componentName = 'ingrid-portal'
+
                     withCredentials([string(credentialsId: 'api-token-dependency-track', variable: 'API_KEY')]) {
-                        //dependencyTrackPublisher artifact: 'build/reports/sbom.json', projectName: 'ingrid-portal', projectVersion: determineVersion(), synchronous: true, dependencyTrackApiKey: API_KEY, projectProperties: [group: 'InGrid', parentId: '6acb0635-1981-4688-aa32-fa36cbf6d116',tags: ['ingrid', 'deps_prod']]
-                        //dependencyTrackPublisher artifact: 'build/reports/sbom-dev.json', projectName: 'ingrid-portal', projectVersion: determineVersion() + '-dev', synchronous: true, dependencyTrackApiKey: API_KEY, projectProperties: [group: 'InGrid', parentId: '6acb0635-1981-4688-aa32-fa36cbf6d116',tags: ['ingrid', 'deps_dev']]
-                        dependencyTrackPublisher artifact: "build/ingrid-portal-${determineVersion()}.sbom.json", projectName: 'ingrid-portal', projectVersion: determineVersion() + '-docker-image', synchronous: true, dependencyTrackApiKey: API_KEY, projectProperties: [group: 'InGrid', parentId: '6acb0635-1981-4688-aa32-fa36cbf6d116',tags: ['ingrid', 'deps_docker']]
+                        def baseVersion = determineVersion()
+                        def sbomConfigs = [
+                            [artifact: "build/ingrid-portal-${baseVersion}.sbom.json", suffix: '', tag: 'ingrid_deps_prod'],
+                            [artifact: 'build/sbom-docker-final.json', suffix: '-docker-image', tag: 'ingrid_deps_docker']
+                        ]
+
+                        sbomConfigs.each { cfg ->
+                            def props = [group: 'InGrid', parentId: parentId, tags: ['ingrid', cfg.tag]]
+                            dependencyTrackPublisher(artifact: cfg.artifact, projectName: componentName, projectVersion: baseVersion + cfg.suffix, synchronous: true, dependencyTrackApiKey: API_KEY, projectProperties: props)
+                        }
                     }
+
                     def repoType = env.TAG_NAME ? "rpm-ingrid-releases" : "rpm-ingrid-snapshots"
                     withCredentials([usernamePassword(credentialsId: '9623a365-d592-47eb-9029-a2de40453f68', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         sh '''
