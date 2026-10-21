@@ -1,4 +1,11 @@
 
+## 8.4.1.2 (21.10.2026)
+
+
+### Bugfixes
+
+* Verbesserung der Sicherheit im InGrid Portal (#9345)
+    
 ## 8.4.1 (04.09.2026)
 
 ### Features
