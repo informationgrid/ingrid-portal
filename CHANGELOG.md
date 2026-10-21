@@ -1,4 +1,12 @@
 
+## 8.4.2 (21.10.2026)
+
+
+### Bugfixes
+
+* OpenData "Datensatz" erscheint nicht in der Übersicht, wenn ich nach Open Data filtere (#9462)
+* Verbesserung der Sicherheit im InGrid Portal (#9345)
+    
 ## 8.4.1 (04.09.2026)
 
 ### Features
