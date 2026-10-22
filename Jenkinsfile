@@ -87,6 +87,8 @@ pipeline {
                             rm -rf ${WORKSPACE}/build/app-extracted
 
                             # Create SBOM for base image
+                            docker run --rm --pull=always --volumes-from jenkins anchore/syft:latest ${baseImageToScan} --output cyclonedx-json=${WORKSPACE}/build/sbom-docker-base-image.json
+                            # Create SBOM for whole image (to compare with merged version)
                             docker run --rm --pull=always --volumes-from jenkins anchore/syft:latest ${imageToScan} --output cyclonedx-json=${WORKSPACE}/build/sbom-docker-image.json
                         """
                     }
@@ -113,7 +115,7 @@ pipeline {
                 script {
                     sh """
                         mkdir -p build/reports
-                        cyclonedx merge --input-files build/ingrid-portal-${determineVersion()}.sbom.json build/sbom-docker-image.json --output-file build/sbom-docker-final.json --output-format json --output-version v1_6 --hierarchical --group de.ingrid --name ingrid-editor --version ${determineVersion()}
+                        cyclonedx merge --input-files build/ingrid-portal-${determineVersion()}.sbom.json build/sbom-docker-base-image.json --output-file build/sbom-docker-final.json --output-format json --output-version v1_6 --hierarchical --group de.ingrid --name ingrid-editor --version ${determineVersion()}
                     """
                 }
             }
@@ -135,7 +137,8 @@ pipeline {
                         def baseVersion = determineVersion()
                         def sbomConfigs = [
                             [artifact: "build/ingrid-portal-${baseVersion}.sbom.json", suffix: '', tag: 'ingrid_deps_prod'],
-                            [artifact: 'build/sbom-docker-final.json', suffix: '-docker-image', tag: 'ingrid_deps_docker']
+                            [artifact: 'build/sbom-docker-final.json', suffix: '-docker-image', tag: 'ingrid_deps_docker'],
+                            [artifact: 'build/sbom-docker-image.json', suffix: '-docker-image-direct', tag: 'ingrid_deps_docker']
                         ]
 
                         sbomConfigs.each { cfg ->
