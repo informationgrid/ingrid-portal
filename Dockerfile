@@ -27,7 +27,7 @@ RUN groupadd --system foo; \
     useradd --no-log-init --system --gid foo --create-home foo; \
     \
     apt update; \
-    apt install -qq -y --no-install-recommends \
+    apt install -qq -y --no-install-recommends -o Dpkg::Progress-Fancy="0" -o Dpkg::Use-Pty="0" \
         git \
         unzip \
         yq \
@@ -38,7 +38,7 @@ RUN groupadd --system foo; \
         wget \
         logrotate
 
-RUN apt install -qq -y --no-install-recommends \
+RUN apt install -qq -y --no-install-recommends -o Dpkg::Progress-Fancy="0" -o Dpkg::Use-Pty="0" \
     libfreetype6-dev \
     libzip-dev \
     libpng-dev \

@@ -22,6 +22,8 @@ pipeline {
 
                         /* Push the container to the custom Registry */
                         customImage.push()
+                        env.IMAGE_DIGEST = sh(script: "docker inspect --format='{{index .RepoDigests 0}}' registry.opencode.de/informationgrid/ingrid-portal:${version} | cut -d'@' -f2", returnStdout: true).trim()
+                        echo "IMAGE_DIGEST: ${env.IMAGE_DIGEST}"
                     }
                 }
             }
@@ -86,37 +88,10 @@ pipeline {
                             # Cleanup extracted files to save disk space
                             rm -rf ${WORKSPACE}/build/app-extracted
 
-                            # Create SBOM for base image
-                            docker run --rm --pull=always --volumes-from jenkins anchore/syft:latest ${baseImageToScan} --output cyclonedx-json=${WORKSPACE}/build/sbom-docker-base-image.json
                             # Create SBOM for whole image (to compare with merged version)
                             docker run --rm --pull=always --volumes-from jenkins anchore/syft:latest ${imageToScan} --output cyclonedx-json=${WORKSPACE}/build/sbom-docker-image.json
                         """
                     }
-                }
-            }
-        }
-
-        stage ('Merge SBOMs') {
-            when {
-                anyOf {
-                    branch 'main'
-                    buildingTag()
-                }
-            }
-            agent {
-                docker {
-                    image 'cyclonedx/cyclonedx-cli:latest'
-                    // CRITICAL: Overrides the entrypoint so Jenkins can run it as a regular shell agent
-                    args '-u root --entrypoint=""'
-                    reuseNode true
-                }
-            }
-            steps {
-                script {
-                    sh """
-                        mkdir -p build/reports
-                        cyclonedx merge --input-files build/ingrid-portal-${determineVersion()}.sbom.json build/sbom-docker-base-image.json --output-file build/sbom-docker-final.json --output-format json --output-version v1_6 --hierarchical --group de.ingrid --name ingrid-editor --version ${determineVersion()}
-                    """
                 }
             }
         }
@@ -133,12 +108,34 @@ pipeline {
                     def parentId = '6acb0635-1981-4688-aa32-fa36cbf6d116'
                     def componentName = 'ingrid-portal'
 
+                    // Attach SBOM to Docker Image
+                    withCredentials([
+                            file(credentialsId: 'cosign-private-key', variable: 'COSIGN_KEY_FILE'),
+                            string(credentialsId: 'cosign-key-password', variable: 'COSIGN_PASSWORD'),
+                            usernamePassword(credentialsId: 'registry-opencode', usernameVariable: 'REG_USER', passwordVariable: 'REG_PASS')
+                        ]) {
+                        def imageDigest = env.IMAGE_DIGEST
+                        def imageToScan = "registry.opencode.de/informationgrid/${componentName}@${imageDigest}"
+                        sh """
+                            docker run -u 0:0 --rm \
+                              -e COSIGN_PASSWORD \
+                              --volumes-from jenkins \
+                              ghcr.io/sigstore/cosign/cosign:v3.1.3 attest \
+                              --type cyclonedx \
+                              --predicate \${WORKSPACE}/build/sbom-docker-image.json \
+                              --key "\$COSIGN_KEY_FILE" \
+                              --registry-username "\$REG_USER" \
+                              --registry-password "\$REG_PASS" \
+                              ${imageToScan}
+                        """
+                    }
+
+                    // Dependency Track
                     withCredentials([string(credentialsId: 'api-token-dependency-track', variable: 'API_KEY')]) {
                         def baseVersion = determineVersion()
                         def sbomConfigs = [
                             [artifact: "build/ingrid-portal-${baseVersion}.sbom.json", suffix: '', tag: 'ingrid_deps_prod'],
-                            [artifact: 'build/sbom-docker-final.json', suffix: '-docker-image', tag: 'ingrid_deps_docker'],
-                            [artifact: 'build/sbom-docker-image.json', suffix: '-docker-image-direct', tag: 'ingrid_deps_docker']
+                            [artifact: 'build/sbom-docker-image.json', suffix: '-docker-image', tag: 'ingrid_deps_docker']
                         ]
 
                         sbomConfigs.each { cfg ->
