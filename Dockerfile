@@ -94,6 +94,7 @@ COPY user/blueprints /usr/share/grav-admin/user/blueprints
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN cd /usr/share/grav-admin/user/plugins/ingrid-grav && composer update
 RUN cd /usr/share/grav-admin/user/plugins/ingrid-grav-utils && composer update
+RUN cd /usr/share/grav-admin/user/plugins/altcha && composer update
 
 # Install yq
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 \

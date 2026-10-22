@@ -97,6 +97,7 @@ cp -R /var/www/grav-admin/system/* /var/www/html/system
 cp -R /var/www/grav-admin/user/plugins/* /var/www/html/user/plugins
 cd /var/www/html/user/plugins/ingrid-grav && composer update
 cd /var/www/html/user/plugins/ingrid-grav-utils && composer update
+cd /var/www/html/user/plugins/altcha && composer update
 
 # Install mvis
 cd /var/www
