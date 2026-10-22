@@ -41,6 +41,7 @@
     "Explorer >= 10"
   ],
   "scripts": {
+    "watch": "sass --source-map --watch scss:css-compiled",
     "dev": "gulp watch",
     "build": "gulp build"
   },
