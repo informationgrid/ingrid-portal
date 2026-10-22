@@ -7559,8 +7559,6 @@ div.accordion-item.is-active > .more .plus {
 .input-search {
   position: relative;
 }
-.input-search .input-search-fielition: relative;
-}
 .input-search .input-search-field {
   height: 56px;
   font-size: 18px;
@@ -11047,6 +11045,20 @@ ul#select2-location-results {
 }
 .switch.tiny input:checked ~ .switch-paddle::after {
   left: 16px;
+}
+
+/* altcha - checkbox */
+.form-field .altcha {
+  margin-bottom: 40px;
+  --altcha-border-radius: 32px;
+  --altcha-padding: .8rem 1.3rem;
+  --altcha-color-success: #0E8637;
+  --altcha-border-color: #c6cfe2;
+  --altcha-color-base-content: #3A566D;
+  font-size: 0.8888888889rem;
+}
+.form-field .altcha .altcha-main {
+  box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.1);
 }
 
 /* XSMALL mobile screens only 559 max */
