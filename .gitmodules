@@ -6,3 +6,6 @@
     path = user/plugins/ingrid-grav-utils
     url = https://github.com/informationgrid/ingrid-grav-plugin-utils.git
     branch = main
+[submodule "user/plugins/altcha"]
+	path = user/plugins/altcha
+	url = https://github.com/informationgrid/grav-plugin-altcha.git
