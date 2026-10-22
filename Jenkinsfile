@@ -2,26 +2,14 @@ pipeline {
     agent any
     triggers{ cron( getCronParams() ) }
 
-    environment {
-        SYFT_VERSION = 'latest'
-    }
-
     stages {
-        stage('Update submodule') {
-            when { expression { return shouldBuildDevOrRelease() } }
-            steps {
-                // get latest version of submodules
-                withCredentials([gitUsernamePassword(credentialsId: 'ae3a7670-c4c8-413c-9df2-45373f1723a2', gitToolName: 'git')]) {
-                    sh 'git submodule update --init --remote --recursive'
-                }
-            }
-        }
-
         stage('Build image') {
-            when { expression { return shouldBuildDevOrRelease() && shouldBuildDockerImage() } }
+            when { not { buildingTag() } }
             steps {
-                echo 'Starting to build docker image'
-
+                // get submodules with commit id
+                withCredentials([gitUsernamePassword(credentialsId: 'ae3a7670-c4c8-413c-9df2-45373f1723a2', gitToolName: 'git')]) {
+                    sh 'git submodule update --init --recursive'
+                }
                 script {
                     def versions = readProperties file: 'versions.props'
                     // remove build dir containing previous RPM
@@ -58,47 +46,6 @@ pipeline {
 
                         /* Push the container to the custom Registry */
                         customImage.push()
-                    }
-                }
-            }
-        }
-
-        stage('Build RPM') {
-            when { expression { return shouldBuildRPM() } }
-            agent {
-                docker {
-                    image 'docker-registry.wemove.com/ingrid-rpmbuilder-php8'
-                    reuseNode true
-                }
-            }
-            steps {
-                echo 'Starting to build RPM package'
-
-                script {
-                    def versions = readProperties file: 'versions.props'
-                    sh "sed -i 's/^Version:.*/Version: ${determineVersion()}/' rpm/ingrid-portal.spec"
-                    sh "sed -i 's/^Release:.*/Release: ${determineRpmReleasePart()}/' rpm/ingrid-portal.spec"
-                    sh "sed -i 's/^%define version_grav .*/%define version_grav ${versions['GRAV_VERSION']}/' rpm/ingrid-portal.spec"
-                    sh "sed -i 's/^%define version_mvis .*/%define version_mvis ${versions['MVIS_VERSION']}/' rpm/ingrid-portal.spec"
-
-                    sh """
-                        cp ${WORKSPACE}/rpm/ingrid-portal.spec /root/rpmbuild/SPECS/ingrid-portal.spec &&
-                        rpmbuild -bb /root/rpmbuild/SPECS/ingrid-portal.spec
-                    """
-
-                    withCredentials([
-                        file(credentialsId: 'ingrid-rpm-public', variable: 'RPM_PUBLIC_KEY'),
-                        file(credentialsId: 'ingrid-rpm-private', variable: 'RPM_PRIVATE_KEY'),
-                        string(credentialsId: 'ingrid-rpm-passphrase', variable: 'RPM_SIGN_PASSPHRASE')
-                    ]) {
-                        sh 'gpg --batch --import $RPM_PUBLIC_KEY'
-                        sh 'gpg --batch --import $RPM_PRIVATE_KEY'
-                        sh "mkdir -p ./build"
-                        sh "mkdir -p ./build/ingrid"
-                        sh "cp -r /root/rpmbuild/RPMS/noarch/* ${WORKSPACE}/build/ingrid/"
-                        sh "expect /rpm-sign.exp ${WORKSPACE}/build/ingrid/*.rpm"
-
-                        archiveArtifacts artifacts: 'build/ingrid/ingrid-portal-*.rpm', fingerprint: true
                     }
                 }
             }
@@ -202,6 +149,47 @@ pipeline {
                         sh '''
                             curl -f --user $USERNAME:$PASSWORD --upload-file build/*.sbom.json https://nexus.informationgrid.eu/repository/''' + repoType + '''/
                         '''
+                    }
+                }
+            }
+        }
+
+        stage('Build RPM') {
+            when { expression { return shouldBuildRPM() } }
+            agent {
+                docker {
+                    image 'docker-registry.wemove.com/ingrid-rpmbuilder-php8'
+                    reuseNode true
+                }
+            }
+            steps {
+                echo 'Starting to build RPM package'
+
+                script {
+                    def versions = readProperties file: 'versions.props'
+                    sh "sed -i 's/^Version:.*/Version: ${determineVersion()}/' rpm/ingrid-portal.spec"
+                    sh "sed -i 's/^Release:.*/Release: ${determineRpmReleasePart()}/' rpm/ingrid-portal.spec"
+                    sh "sed -i 's/^%define version_grav .*/%define version_grav ${versions['GRAV_VERSION']}/' rpm/ingrid-portal.spec"
+                    sh "sed -i 's/^%define version_mvis .*/%define version_mvis ${versions['MVIS_VERSION']}/' rpm/ingrid-portal.spec"
+
+                    sh """
+                        cp ${WORKSPACE}/rpm/ingrid-portal.spec /root/rpmbuild/SPECS/ingrid-portal.spec &&
+                        rpmbuild -bb /root/rpmbuild/SPECS/ingrid-portal.spec
+                    """
+
+                    withCredentials([
+                            file(credentialsId: 'ingrid-rpm-public', variable: 'RPM_PUBLIC_KEY'),
+                            file(credentialsId: 'ingrid-rpm-private', variable: 'RPM_PRIVATE_KEY'),
+                            string(credentialsId: 'ingrid-rpm-passphrase', variable: 'RPM_SIGN_PASSPHRASE')
+                        ]) {
+                        sh 'gpg --batch --import $RPM_PUBLIC_KEY'
+                        sh 'gpg --batch --import $RPM_PRIVATE_KEY'
+                        sh "mkdir -p ./build"
+                        sh "mkdir -p ./build/ingrid"
+                        sh "cp -r /root/rpmbuild/RPMS/noarch/* ${WORKSPACE}/build/ingrid/"
+                        sh "expect /rpm-sign.exp ${WORKSPACE}/build/ingrid/*.rpm"
+
+                        archiveArtifacts artifacts: 'build/ingrid/ingrid-portal-*.rpm', fingerprint: true
                     }
                 }
             }
