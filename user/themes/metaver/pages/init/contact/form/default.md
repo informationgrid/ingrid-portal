@@ -6,15 +6,6 @@ forms:
   contact-form:
     fields:
 
-      - name: message
-        type: honeypot
-
-      - name: name
-        type: honeypot
-
-      - name: email
-        type: honeypot
-
       - name: user_subject
         label: CONTACT.FORM_SUBJECT
         placeholder: CONTACT.FORM_SUBJECT
@@ -70,6 +61,9 @@ forms:
         placeholder: CONTACT.FORM_NAME
         type: text
         outerclasses: form-element
+        
+      - name: altcha
+        type: altcha
 
     buttons:
       - type: submit
@@ -78,6 +72,7 @@ forms:
         classes: button
 
     process:
+      - altcha: true
       - email:
           from: "{{ config.plugins.email.from }}"
           to:

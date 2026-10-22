@@ -102,6 +102,9 @@ forms:
         accept:
           - '*'
 
+      altcha:
+        type: altcha
+
     buttons:
       - type: submit
         value: COMMON.FORM_BUTTON_SUBMIT
@@ -109,6 +112,7 @@ forms:
         classes: button
 
     process:
+      - altcha: true
       - email:
           from: "{{ config.plugins.email.from }}"
           to:
