@@ -165,7 +165,7 @@ COMMON:
     RESULT_TO_FIRST_PAGE: Zur ersten Seite
     RESULT_TO_LAST_PAGE: Zur letzten Seite
     RESULT_TO_NEXT_PAGE: Nächste Seite
-    RESULT_TO_PREVIOUS_PAGE: Letzte Seite
+    RESULT_TO_PREVIOUS_PAGE: Vorherige Seite
     MAPS_PAGE_TITLE: Karten
     MAPS_ERROR_NOFRAMES: Leider kann Ihr Browser keine iframes darstellen.
     MAPS_LOAD_WMC: Karte laden
@@ -931,19 +931,19 @@ SEARCH_DETAIL:
       HELP:
         CREATION:
           TITLE: Hinweis
-          MESSAGE: Wann wurde der Datensatz ursprünglich erstellt?
+          MESSAGE: 'Der Datensatz wurde ursprünglich am <b>%s</b> erstellt.'
         PUBLICATION:
           TITLE: Hinweis
-          MESSAGE: Wann wurde der Datensatz erstmalig veröffentlicht?
+          MESSAGE: 'Der Datensatz wurde am <b>%s</b> erstmalig veröffentlicht.'
         REVISION:
           TITLE: Hinweis
-          MESSAGE: Wann wurde der Datensatz zuletzt geändert?
+          MESSAGE: 'Der Datensatz wurde am <b>%s</b> zuletzt geändert.'
         STATUS:
           TITLE: Hinweis
-          MESSAGE: In welchem Bearbeitungsstadium befindet sich der Datensatz?
+          MESSAGE: 'Der Datensatz hat den Status <b>%s</b>.'
         PERIOD:
           TITLE: Hinweis
-          MESSAGE: Wie oft wird der Datensatz aktualisiert?
+          MESSAGE: 'Der Datensatz wird <b>%s</b> aktualisiert.'
         INTERVAL:
           TITLE: Hinweis
           MESSAGE: Wenn ein Intervall angegeben werden kann, geben Sie das Intervall an, in dem der Datensatz aktualisiert wird.

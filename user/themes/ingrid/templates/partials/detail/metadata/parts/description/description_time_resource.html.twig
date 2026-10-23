@@ -5,15 +5,15 @@
         <a class="anchor" {% if isTimeInDescription %}id="{{ hash_description }}_time_reference_record"{% else %}id="{{ hash_time }}_time_reference_record"{% endif %}></a>
         {{ hit_macros.render_group_title("SEARCH_DETAIL.TIME_REFERENCE_RECORD"|t) }}
 {# Erstellung #}
-        {{ hit_macros.render_label_text_row(getValueFromCodelist("502", "creation", lang), timeRefs.timeCreation ? timeRefs.timeCreation|date("d.m.Y")|e, null, null, null, "SEARCH_DETAIL.TIME.HELP.CREATION.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.CREATION.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row(getValueFromCodelist("502", "creation", lang), timeRefs.timeCreation ? timeRefs.timeCreation|date("d.m.Y")|e, null, null, null, "SEARCH_DETAIL.TIME.HELP.CREATION.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.CREATION.MESSAGE"|t(timeRefs.timeCreation|date("d.m.Y")|e)) }}
 {# Publikation #}
-        {{ hit_macros.render_label_text_row(getValueFromCodelist("502", "publication", lang), timeRefs.timePublication ? timeRefs.timePublication|date("d.m.Y")|e, null, null, null, "SEARCH_DETAIL.TIME.HELP.PUBLICATION.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.PUBLICATION.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row(getValueFromCodelist("502", "publication", lang), timeRefs.timePublication ? timeRefs.timePublication|date("d.m.Y")|e, null, null, null, "SEARCH_DETAIL.TIME.HELP.PUBLICATION.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.PUBLICATION.MESSAGE"|t(timeRefs.timePublication|date("d.m.Y")|e)) }}
 {# letzte Änderung #}
-        {{ hit_macros.render_label_text_row(getValueFromCodelist("502", "revision", lang), timeRefs.timeRevision ? timeRefs.timeRevision|date("d.m.Y")|e, null, null, null, "SEARCH_DETAIL.TIME.HELP.REVISION.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.REVISION.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row(getValueFromCodelist("502", "revision", lang), timeRefs.timeRevision ? timeRefs.timeRevision|date("d.m.Y")|e, null, null, null, "SEARCH_DETAIL.TIME.HELP.REVISION.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.REVISION.MESSAGE"|t(timeRefs.timeRevision|date("d.m.Y")|e)) }}
 {# Status #}
-        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.T01_OBJECT_TIME_STATUS"|t, timeRefs.timeStatus, null, "text-capitalize", null, "SEARCH_DETAIL.TIME.HELP.STATUS.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.STATUS.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.T01_OBJECT_TIME_STATUS"|t, timeRefs.timeStatus, null, "text-capitalize", null, "SEARCH_DETAIL.TIME.HELP.STATUS.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.STATUS.MESSAGE"|t(timeRefs.timeStatus)) }}
 {# Periodizität #}
-        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.T01_OBJECT_TIME_PERIOD"|t, timeRefs.timePeriod, null, "text-capitalize", null, "SEARCH_DETAIL.TIME.HELP.PERIOD.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.PERIOD.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.T01_OBJECT_TIME_PERIOD"|t, timeRefs.timePeriod, null, "text-capitalize", null, "SEARCH_DETAIL.TIME.HELP.PERIOD.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.PERIOD.MESSAGE"|t(timeRefs.timePeriod)) }}
 {# Intervall der Erhebung #}
         {{ hit_macros.render_label_text_row("SEARCH_DETAIL.T01_OBJECT_TIME_INTERVAL"|t, timeRefs.timeInterval, null, null, null, "SEARCH_DETAIL.TIME.HELP.INTERVAL.TITLE"|t, "SEARCH_DETAIL.TIME.HELP.INTERVAL.MESSAGE"|t) }}
 {# Erläuterung zum Zeitbezug #}

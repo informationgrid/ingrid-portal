@@ -161,6 +161,11 @@ COMMON:
     RESULT_SEARCH_FOR: Search for
     RESULT_SHOWSERVICE: Link to Service
     RESULT_SHOWCOUPLEDRESOURCE: Link to Map
+    RESULT_PAGE: Page %d
+    RESULT_TO_FIRST_PAGE: First page
+    RESULT_TO_LAST_PAGE: Last page
+    RESULT_TO_NEXT_PAGE: Next page
+    RESULT_TO_PREVIOUS_PAGE: Previous past
     MAPS_PAGE_TITLE: Maps
     MAPS_ERROR_NOFRAMES: Your browser cannot display iframes_
     MAPS_LOAD_WMC: Load Map
@@ -235,10 +240,6 @@ COMMON:
     TIME_UNTILUNKNOWN: , current actuality unknown
     TIME_AT: ' '
 
-HOME:
-    HITS:
-        TITLE: Current data
-
 SEARCH:
     TITLE_SEARCH: Search
     TITLE_RESULT: Search Results
@@ -249,6 +250,10 @@ SEARCH:
     PORTLET_TITLE_1: InGrid
     PORTLET_TITLE_2: Indexieren, Recherchieren, Visualisieren und Teilen
     PORTLET_TITLE_3: von Datenquellen, Metadaten und Kartendiensten
+
+HOME:
+    HITS:
+        TITLE: Current data
 
 SEARCH_RESULT:
     RESULTS_REQUESTED: Your search is being processed.
@@ -291,6 +296,8 @@ SEARCH_RESULT:
         TITLE: Resources
       CATEGORIES:
         TITLE: Categories
+      CLASS:
+        TITLE: Data set
 
 CATEGORIES:
     TITLE: Search in categories
@@ -924,19 +931,19 @@ SEARCH_DETAIL:
       HELP:
         CREATION:
           TITLE: Hint
-          MESSAGE: Wann wurde der Datensatz ursprünglich erstellt?
+          MESSAGE: 'Der Datensatz wurde ursprünglich am <b>%s</b> erstellt.'
         PUBLICATION:
           TITLE: Hint
-          MESSAGE: Wann wurde der Datensatz erstmalig veröffentlicht?
+          MESSAGE: 'Der Datensatz wurde am <b>%s</b> erstmalig veröffentlicht.'
         REVISION:
           TITLE: Hint
-          MESSAGE: Wann wurde der Datensatz zuletzt geändert?
+          MESSAGE: 'Der Datensatz wurde am <b>%s</b> zuletzt geändert.'
         STATUS:
           TITLE: Hint
-          MESSAGE: In welchem Bearbeitungsstadium befindet sich der Datensatz?
+          MESSAGE: 'Der Datensatz hat den Status <b>%s</b>.'
         PERIOD:
           TITLE: Hint
-          MESSAGE: Wie oft wird der Datensatz aktualisiert?
+          MESSAGE: 'Der Datensatz wird <b>%s</b> aktualisiert.'
         INTERVAL:
           TITLE: Hint
           MESSAGE: Wenn ein Intervall angegeben werden kann, geben Sie das Intervall an, in dem der Datensatz aktualisiert wird.
