@@ -231,7 +231,7 @@ COMMON:
     LINK_COPY: Link in die Zwischenablage kopieren
     LINK_COPY_HELP: Um eine verlinkte Datei direkt im Dateiexplorer zu öffnen, können Sie über die Icons <img src="%s" width="25"> (Windows) <img src="%s" width="25"> (Linux) den Dateipfad zu der Datei im Langfristspeicher in die Zwischenablage kopieren. Um die Datei über den Browser herunterzuladen, klicken Sie einfach den Link.
     LINK_COPY_SUCCESS: Link kopiert!
-    TIME_TYPE: Aktualität der Daten
+    TIME_TYPE: Zeitbezug der Daten im Datensatz
     TIME_FROM: ' '
     TIME_TO: '-'
     TIME_UNTIL: bis
@@ -337,7 +337,7 @@ SEARCH_DETAIL:
     TIME_REFERENCE: Zeitbezug
     TIME_REFERENCE_ENTRY: Zeitbezug
     TIME_REFERENCE_CONTENT: Zeitbezug der Daten im Datensatz
-    TIME_REFERENCE_CONTENT_ENTRY: Zeitbezug der Daten
+    TIME_REFERENCE_CONTENT_ENTRY: Zeitbezug der Daten im Datensatz
     TIME_REFERENCE_RECORD: Aktualität des Datensatzes
     AVAILABILITY: Verfügbarkeit
     DATA_FORMAT: Datenformat
@@ -399,9 +399,9 @@ SEARCH_DETAIL:
     T01_OBJECT_TIME_FROM: Durch die Ressource abgedeckte Zeitspanne > von
     T01_OBJECT_TIME_TO: Durch die Ressource abgedeckte Zeitspanne > bis
     T01_OBJECT_TIME_TYPE: 'Zeitbezug: am, seit (bis: Zeitpunkt des Abrufs), seit (bis: unbekannter Zeitpunkt), von'
-    T01_OBJECT_TIME_DESCR: Erläuterung zum Pflegeintervall
+    T01_OBJECT_TIME_DESCR: Erläuterungen
     T01_OBJECT_TIME_PERIOD: Pflege- und Aktualisierungsintervall
-    T01_OBJECT_TIME_INTERVAL: Benutzerdefiniertes Intervall der Erhebung
+    T01_OBJECT_TIME_INTERVAL: Benutzerdefiniertes Intervall
     T01_OBJECT_TIME_ALLE: Intervall (alle)
     T01_OBJECT_TIME_STATUS: Status
     T01_OBJECT_AVAIL_ACCESS_NOTE: Nutzungsanmerkung
@@ -946,20 +946,20 @@ SEARCH_DETAIL:
           MESSAGE: 'Der Datensatz wird <b>%s</b> aktualisiert.'
         INTERVAL:
           TITLE: Hinweis
-          MESSAGE: Wenn ein Intervall angegeben werden kann, geben Sie das Intervall an, in dem der Datensatz aktualisiert wird.
+          MESSAGE: 'Wenn ein Intervall angegeben werden kann, geben Sie das Intervall an, in dem der Datensatz aktualisiert wird.'
         TIME_AT:
           TITLE: Hinweis
-          MESSAGE: Die Daten beziehen sich auf den %s.
+          MESSAGE: 'Die Daten beziehen sich auf den <b>%s</b>.'
         TIME_SINCE:
           TITLE: Hinweis
-          MESSAGE: Die Daten beziehen sich auf eine Zeitspanne ab dem %s (Ende unbekannt).
-          MESSAGE_NOW: Die Daten beziehen sich auf eine fortlaufende Zeitspanne seit dem %s.
+          MESSAGE: 'Die Daten beziehen sich auf eine Zeitspanne ab dem <b>%s</b> (Ende unbekannt).'
+          MESSAGE_NOW: 'Die Daten beziehen sich auf eine fortlaufende Zeitspanne seit dem <b>%s</b>.'
         TIME_UNTIL:
           TITLE: Hinweis
-          MESSAGE: Die Daten beziehen sich auf eine Zeitspanne bis %s (Beginn unbekannt).
+          MESSAGE: 'Die Daten beziehen sich auf eine Zeitspanne bis <b>%s</b> (Beginn unbekannt).'
         TIME_FROM:
           TITLE: Hinweis
-          MESSAGE: Die Daten beziehen sich auf eine Zeitspanne vom %s bis %s.
+          MESSAGE: 'Die Daten beziehen sich auf eine Zeitspanne vom <b>%s bis %s</b>.'
 
 SITEMAP:
     AREA_MAIN: Hauptbereich

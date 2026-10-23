@@ -946,20 +946,20 @@ SEARCH_DETAIL:
           MESSAGE: 'Der Datensatz wird <b>%s</b> aktualisiert.'
         INTERVAL:
           TITLE: Hint
-          MESSAGE: Wenn ein Intervall angegeben werden kann, geben Sie das Intervall an, in dem der Datensatz aktualisiert wird.
+          MESSAGE: 'Wenn ein Intervall angegeben werden kann, geben Sie das Intervall an, in dem der Datensatz aktualisiert wird.'
         TIME_AT:
           TITLE: Hint
-          MESSAGE: Die Daten beziehen sich auf den %s.
+          MESSAGE: 'Die Daten beziehen sich auf den <b>%s</b>.'
         TIME_SINCE:
           TITLE: Hint
-          MESSAGE: Die Daten beziehen sich auf eine Zeitspanne ab dem %s (Ende unbekannt).
-          MESSAGE_NOW: Die Daten beziehen sich auf eine fortlaufende Zeitspanne seit dem %s.
+          MESSAGE: 'Die Daten beziehen sich auf eine Zeitspanne ab dem <b>%s</b> (Ende unbekannt).'
+          MESSAGE_NOW: 'Die Daten beziehen sich auf eine fortlaufende Zeitspanne seit dem <b>%s</b>.'
         TIME_UNTIL:
           TITLE: Hint
-          MESSAGE: Die Daten beziehen sich auf eine Zeitspanne bis %s (Beginn unbekannt).
+          MESSAGE: 'Die Daten beziehen sich auf eine Zeitspanne bis <b>%s</b> (Beginn unbekannt).'
         TIME_FROM:
           TITLE: Hint
-          MESSAGE: Die Daten beziehen sich auf eine Zeitspanne vom %s bis %s.
+          MESSAGE: 'Die Daten beziehen sich auf eine Zeitspanne vom <b>%s bis %s</b>.'
 
 SITEMAP:
     AREA_MAIN: Main menu
