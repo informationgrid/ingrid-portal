@@ -10574,6 +10574,13 @@ div.description {
   font-size: 14px;
 }
 
+.notices {
+  padding: 8px 8px 8px 30px !important;
+}
+.notices p {
+  margin: 0;
+}
+
 /* colors */
 /* UVP colors */
 .form-element .control {
@@ -11050,12 +11057,12 @@ ul#select2-location-results {
 /* altcha - checkbox */
 .form-field .altcha {
   margin-bottom: 40px;
+  font-size: 0.8888888889rem;
   --altcha-border-radius: 32px;
   --altcha-padding: .8rem 1.3rem;
   --altcha-color-success: #0E8637;
   --altcha-border-color: #c6cfe2;
   --altcha-color-base-content: #3A566D;
-  font-size: 0.8888888889rem;
 }
 .form-field .altcha .altcha-main {
   box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.1);
