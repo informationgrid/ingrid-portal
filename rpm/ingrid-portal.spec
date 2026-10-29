@@ -65,7 +65,7 @@ yq -i '.timezone = "Europe/Berlin"' %{system_yaml}
 yq -i '.cache.enabled = true' %{system_yaml}
 
 # SET INGRID VERSION
-yq -i '.ingrid.version = "%{version_grav}"' %{versions_yaml}
+yq -i '.ingrid.version = "%{version_ingrid}"' %{system_yaml}
 
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 cd %{buildroot}%{install_root}/user/plugins/ingrid-grav && composer update

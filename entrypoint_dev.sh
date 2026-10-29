@@ -119,3 +119,10 @@ runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-uvp-zip-i
 service cron start
 
 exec "$@"
+
+
+
+
+
+
+
