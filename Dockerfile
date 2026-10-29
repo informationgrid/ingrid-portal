@@ -5,9 +5,11 @@ SHELL [ "/bin/bash", "-exo", "pipefail", "-c" ]
 # ATTENTION: versions must be managed in versions.props!
 ARG GRAV_VERSION
 ARG MVIS_VERSION
+ARG INGRID_VERSION
 
 ENV GRAV_VERSION=${GRAV_VERSION}
 ENV MVIS_VERSION=${MVIS_VERSION}
+ENV INGRID_VERSION=${INGRID_VERSION}
 
 # renovate: datasource=github-tags depName=krakjoe/apcu versioning=semver
 ENV PHP_APCU_VERSION=v5.1.28

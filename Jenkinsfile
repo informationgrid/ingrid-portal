@@ -18,7 +18,7 @@ pipeline {
                     def version = computeVersion()
 
                     docker.withRegistry('https://registry.opencode.de', 'registry-opencode') {
-                        def customImage = docker.build("registry.opencode.de/informationgrid/ingrid-portal:${version}", "--pull --build-arg GRAV_VERSION=${versions['GRAV_VERSION']} --build-arg MVIS_VERSION=${versions['MVIS_VERSION']} .")
+                        def customImage = docker.build("registry.opencode.de/informationgrid/ingrid-portal:${version}", "--pull --build-arg GRAV_VERSION=${versions['GRAV_VERSION']} --build-arg MVIS_VERSION=${versions['MVIS_VERSION']} --build-arg INGRID_VERSION=${version} .")
 
                         /* Push the container to the custom Registry */
                         customImage.push()
@@ -44,7 +44,7 @@ pipeline {
                 script {
                     def versions = readProperties file: 'versions.props'
                     docker.withRegistry('https://registry.opencode.de', 'registry-opencode') {
-                        def customImage = docker.build("registry.opencode.de/informationgrid/ingrid-portal:${env.TAG_NAME}", "--pull --build-arg GRAV_VERSION=${versions['GRAV_VERSION']} --build-arg MVIS_VERSION=${versions['MVIS_VERSION']} .")
+                        def customImage = docker.build("registry.opencode.de/informationgrid/ingrid-portal:${env.TAG_NAME}", "--pull --build-arg GRAV_VERSION=${versions['GRAV_VERSION']} --build-arg MVIS_VERSION=${versions['MVIS_VERSION']} --build-arg INGRID_VERSION=${version} .")
 
                         /* Push the container to the custom Registry */
                         customImage.push()
@@ -169,6 +169,7 @@ pipeline {
                     def versions = readProperties file: 'versions.props'
                     sh "sed -i 's/^Version:.*/Version: ${determineVersion()}/' rpm/ingrid-portal.spec"
                     sh "sed -i 's/^Release:.*/Release: ${determineRpmReleasePart()}/' rpm/ingrid-portal.spec"
+                    sh "sed -i 's/^%define version_ingrid .*/%define version_ingrid ${determineVersion()}/' rpm/ingrid-portal.spec"
                     sh "sed -i 's/^%define version_grav .*/%define version_grav ${versions['GRAV_VERSION']}/' rpm/ingrid-portal.spec"
                     sh "sed -i 's/^%define version_mvis .*/%define version_mvis ${versions['MVIS_VERSION']}/' rpm/ingrid-portal.spec"
 

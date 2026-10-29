@@ -113,6 +113,15 @@ else
 fi
 
 #####################
+# INGRID_VERSION
+#####################
+VERSIONS_YAML=/var/www/"$GRAV_FOLDER"/user/config/versions.yaml
+
+if [ ! -f "$VERSIONS_YAML" ]; then
+  yq -i '.ingrid.version = env(INGRID_VERSION)' "$VERSIONS_YAML"
+fi
+
+#####################
 # Default admin config
 #####################
 ACCOUNTS_CONFIG_FOLDER=/var/www/"$GRAV_FOLDER"/user/accounts

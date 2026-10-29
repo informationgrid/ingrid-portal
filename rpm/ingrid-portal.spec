@@ -14,7 +14,10 @@ Requires:       php-dom php-gd php-mbstring php-xml php-zip
 %define context_path ingrid-portal
 %define install_root /var/www/%{context_path}
 %define system_yaml %{buildroot}%{install_root}/user/config/system.yaml
-# the versions are replaced during build with versions.props
+%define versions_yaml %{buildroot}%{install_root}/user/config/versions.yaml
+# the versions are replaced during build
+%define version_ingrid 0.0.0
+# with versions.props
 %define version_grav 1.7.52
 %define version_mvis 2.0.11
 
@@ -60,6 +63,9 @@ yq -i '.languages.include_default_lang = false' %{system_yaml}
 yq -i '.pages.theme = "ingrid"' %{system_yaml}
 yq -i '.timezone = "Europe/Berlin"' %{system_yaml}
 yq -i '.cache.enabled = true' %{system_yaml}
+
+# SET INGRID VERSION
+yq -i '.ingrid.version = "%{version_grav}"' %{versions_yaml}
 
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 cd %{buildroot}%{install_root}/user/plugins/ingrid-grav && composer update
