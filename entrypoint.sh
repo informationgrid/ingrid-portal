@@ -133,12 +133,21 @@ if [ ! -f "$ADMIN_YAML" ] && [ "$ADMIN_PASSWORD" ]; then
 fi
 
 #####################
+# InGrid config
+#####################
+INGRID_YAML=/var/www/"$GRAV_FOLDER"/user/config/ingrid.yaml
+
+if [ ! -f "$INGRID_YAML" ]; then
+  touch "$INGRID_YAML"
+fi
+
+# Add ingrid version
+yq -i '.ingrid.version = env(INGRID_VERSION)' "$INGRID_YAML"
+
+#####################
 # Default system config
 #####################
 SYSTEM_YAML=/var/www/"$GRAV_FOLDER"/user/config/system.yaml
-
-# Add ingrid version
-yq -i '.ingrid.version = env(INGRID_VERSION)' "$SYSTEM_YAML"
 
 # Add languages
 yq -i '.languages.supported = ["de"]' "$SYSTEM_YAML"

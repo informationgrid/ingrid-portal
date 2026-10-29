@@ -14,7 +14,7 @@ Requires:       php-dom php-gd php-mbstring php-xml php-zip
 %define context_path ingrid-portal
 %define install_root /var/www/%{context_path}
 %define system_yaml %{buildroot}%{install_root}/user/config/system.yaml
-%define versions_yaml %{buildroot}%{install_root}/user/config/versions.yaml
+%define ingrid_yaml %{buildroot}%{install_root}/user/config/ingrid.yaml
 # the versions are replaced during build
 %define version_ingrid 0.0.0
 # with versions.props
@@ -64,9 +64,6 @@ yq -i '.pages.theme = "ingrid"' %{system_yaml}
 yq -i '.timezone = "Europe/Berlin"' %{system_yaml}
 yq -i '.cache.enabled = true' %{system_yaml}
 
-# SET INGRID VERSION
-yq -i '.ingrid.version = "%{version_ingrid}"' %{system_yaml}
-
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 cd %{buildroot}%{install_root}/user/plugins/ingrid-grav && composer update
 cd %{buildroot}%{install_root}/user/plugins/ingrid-grav-utils && composer update
@@ -82,6 +79,11 @@ cd %{buildroot}%{install_root}/user/plugins/ingrid-grav-utils && composer update
 
 ################################################################################
 %post
+
+# SET INGRID VERSION
+touch %{ingrid_yaml}
+yq -i '.ingrid.version = "%{version_ingrid}"' %{ingrid_yaml}
+
 WEB_USER="nginx"
 WEB_GROUP="nginx"
 
