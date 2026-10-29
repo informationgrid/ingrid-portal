@@ -113,15 +113,6 @@ else
 fi
 
 #####################
-# INGRID_VERSION
-#####################
-VERSIONS_YAML=/var/www/"$GRAV_FOLDER"/user/config/versions.yaml
-
-if [ ! -f "$VERSIONS_YAML" ]; then
-  yq -i '.ingrid.version = env(INGRID_VERSION)' "$VERSIONS_YAML"
-fi
-
-#####################
 # Default admin config
 #####################
 ACCOUNTS_CONFIG_FOLDER=/var/www/"$GRAV_FOLDER"/user/accounts
@@ -145,6 +136,9 @@ fi
 # Default system config
 #####################
 SYSTEM_YAML=/var/www/"$GRAV_FOLDER"/user/config/system.yaml
+
+# Add ingrid version
+yq -i '.ingrid.version = env(INGRID_VERSION)' "$SYSTEM_YAML"
 
 # Add languages
 yq -i '.languages.supported = ["de"]' "$SYSTEM_YAML"
