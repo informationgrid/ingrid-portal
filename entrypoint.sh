@@ -473,6 +473,10 @@ if [ "$THEME" = "uvp" ]; then
   runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-uvp-zip-index
 fi
 
+# Run migration
+runuser -u www-data -- /usr/local/bin/php bin/plugin ingrid-grav migrate
+runuser -u www-data -- /usr/local/bin/php bin/plugin ingrid-grav migrate --status
+
 ##########################
 # Migration theme settings
 ##########################
