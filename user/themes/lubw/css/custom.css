@@ -817,10 +817,6 @@ a.teaser-data:nth-last-of-type(2) {
   border-radius: 0;
 }
 
-.control__indicator {
-  border-color: var(--color-default);
-}
-
 .accordion-item:first-child > :first-child, :last-child:not(.is-active) > .accordion-title, .accordion-title {
   border-radius: 0;
 }
@@ -948,6 +944,10 @@ a[class*="js-expander"] span.text {
   font-family: var(--font-family-sans);
 }
 
+a[class*=js-expander] [class*=ic-] {
+  background-color: var(--color-background);
+}
+
 .teaser-data.search .js-expander-content a.icon .text {
   font-family: var(--font-family-sans);
 }
@@ -1071,9 +1071,10 @@ a[class*="js-expander"] span.text {
   margin-left: 10px;
 }
 
-.detail .banner-noimage .helper.icon .text-normal {
+.detail .banner-noimage .page-wrapper a.helper.icon {
   font-weight: normal;
   font-family: var(--font-family-sans);
+  color: var(--color-default);
 }
 
 .detail .teaser-data {
@@ -1188,9 +1189,8 @@ a[class*="js-expander"] span.text {
 }
 
 .catalog span.icon [class^=ic-] {
-  background: white;
   color: var(--color-default);
-  border-color: var(--color-default);
+  background-color: var(--color-background);
 }
 
 .accordion-content .boxes a.icon {
