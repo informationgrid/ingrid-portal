@@ -2,32 +2,25 @@ enabled: true
 header:
   title_extend: 'LUBW'
   logo_enabled: true
-  logo_class: 'xsmall-7 small-7 medium-8 large-7 xlarge-9'
-  menu_class: 'xsmall-16 small-15 medium-15 large-13 xlarge-10'
+  logo_class:
+  menu_class:
   menu_dropdown: true
   shrink: true
   logo_default:
-    user/themes/lubw/images/logo/bw-wappen.png:
-      name: bw-wappen.png
-      full_path: bw-wappen.png
-      type: image/png
+    user/themes/lubw/images/logo/wappen.svg:
+      name: wappen.svg
+      full_path: wappen.svg
+      type: image/svg
       size: 5898
-      path: user/themes/lubw/images/logo/bw-wappen.png
+      path: user/themes/lubw/images/logo/wappen.svg
 footer:
   logo_enabled: true
   copyright:
     text: '- Landesanstalt für Umwelt Baden-Württemberg'
-    class: 'xsmall-24 small-24 medium-24 large-24 xlarge-10'
+    class:
     show_year: true
-  menu_class: 'xsmall-24 small-24 medium-24 large-24 xlarge-14'
+  menu_class:
   hr_line: true
-  logo_default:
-    user/themes/lubw/images/logo/bw-wappen.png:
-      name: bw-wappen.png
-      full_path: bw-wappen.png
-      type: image/png
-      size: 5898
-      path: user/themes/lubw/images/logo/bw-wappen.png
   share:
     enabled: true
     enabled_x: false
