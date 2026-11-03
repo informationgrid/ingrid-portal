@@ -44,8 +44,6 @@ class BawDoi extends Theme
 
         $hit->bwastr_name = ElasticsearchHelper::getValueArray($content, "bwstr-bwastr_name");
         $hit->bwastrs = self::getBwaStrs($content);
-        $hit->bawauftragsnummer = ElasticsearchHelper::getValue($content, "bawauftragsnummer");
-        $hit->bawauftragstitel = ElasticsearchHelper::getValue($content, "bawauftragstitel");
         $hit->data_category = ElasticsearchHelper::getValue($content, "data_category");
         $hit->citation = ElasticsearchHelper::getValue($content, "additional_html_citation_quote");
 
