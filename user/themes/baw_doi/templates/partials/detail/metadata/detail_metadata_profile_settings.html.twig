@@ -133,6 +133,8 @@
 {% set hasSimulation = (simulation|length > 0) %}
 {% set hasSimulationBautechnik = (simulationBautechnik|length > 0) %}
 {% set hasSimulationCFD = (simulationCFD|length > 0) %}
+{% set hasAnySimulation = hasSimulation or hasSimulationBautechnik or hasSimulationCFD %}
+
 {% set hasMeasurement = (measurement|length > 0) %}
 {% set hasMeasurementHydraulic = (measurementHydraulic|length > 0) %}
 {% set hasInfo = (infoRefs|length > 0 or infoRefs_additional|length > 0 or infoRefs_keyword|length > 0) %}

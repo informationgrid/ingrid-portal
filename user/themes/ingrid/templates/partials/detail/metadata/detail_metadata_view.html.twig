@@ -108,7 +108,7 @@
             {% if hasMeasurement %}
                 {% include 'partials/detail/metadata/parts/measurement/measurement.html.twig' ignore missing %}
             {% endif %}
-            {% if hasSimulation %}
+            {% if hasAnySimulation %}
                 {% include 'partials/detail/metadata/parts/simulation/simulation.html.twig' ignore missing %}
             {% endif %}
 {# Datenqualität #}
