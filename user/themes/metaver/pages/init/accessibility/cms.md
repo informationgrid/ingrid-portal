@@ -18,15 +18,22 @@ routes:
 Der MetadatenVerbund (MetaVer) ist bemüht, das gemeinsame Metadatenportal der Länder Brandenburg, Freie Hansestadt Bremen, Freie und Hansestadt Hamburg, Hessen, Mecklenburg-Vorpommern, Saarland, Sachsen und Sachsen-Anhalt [metaver.de](https://metaver.de "MetaVer - Metadatenverbund") barrierefrei zugänglich zu machen.
 Rechtsgrundlage<sup>1</sup> ist das Hamburgische Behindertengleichstellungsgesetzes (HmbBGG) und die Barrierefreie Informationstechnik-Verordnung (BITV 2.0) in ihrer jeweils gültigen Fassung.
 
-Diese Erklärung wurde am 30.09.2020 erstellt und zuletzt am 22.05.2023 aktualisiert. Die Einschätzung basiert auf einer Selbstbewertung.
+Diese Erklärung wurde am 30.09.2020 erstellt und zuletzt am 01.11.2026 aktualisiert. Die Einschätzung basiert auf einer Selbstbewertung.
 
 <sup>1</sup> Im Rahmen der Kooperation bei Konzeptionen und Entwicklungen von Software für Umweltinformationssysteme (KoopUIS), Projektdatenblatt 52 MetaVer; tritt der Landesbetrieb Geoinformation und Vermessung als [Betreiber](/imprint "MetaVer - Impressum") von MetaVer auf.
 
 ## Stand der Vereinbarkeit mit den Anforderungen
 
-Diese Webseiten sind mit den Vorgaben der harmonisierten europäischen Norm EN 301 549 V2.1.2 (08-2018) größtenteils vereinbar.
+Diese Website ist wegen der folgenden Unvereinbarkeiten bzw. Ausnahmen teilweise mit den Anforderungen der HmbBITVO in Verbindung mit der harmonisierten europäischen Norm EN 301 549 V3.2.1 (2021-03) vereinbar.
+
+### Nicht barrierefreie Inhalte
+Die nachstehend aufgeführten Inhalte sind aus folgenden Gründen nicht barrierefrei:
 
 Die Webanwendung im Bereich 'Karte' ist grafisch basiert. Eine barrierefreie Umsetzung ist derzeit nicht möglich.
+* Kartenanwendung (Bereich „Karte“): Die Kartenanwendung ist grafisch aufgebaut. Sie ist mit Screenreadern nur eingeschränkt nutzbar und nicht vollständig per Tastatur bedienbar.
+* Überschriftenstruktur: Auf einigen Seiten ist die Hierarchie der Überschriften nicht durchgängig korrekt verschachtelt.
+* Layouttabellen mit Strukturauszeichnung: Auf einigen Seiten werden Tabellen ausschließlich zur visuellen Anordnung von Inhalten eingesetzt.
+* Lesereihenfolge: Auf einigen Seiten weicht die Reihenfolge, in der Inhalte beim linearen Lesen mit einem Screenreader ausgegeben werden, von der visuellen Anordnung ab.
 
 ## Feedback und Kontakt
 
@@ -52,4 +59,4 @@ Tel: 040 428 23 2057
 Mo.: 10.00 – 11.00 Uhr
 
 
-LGV-F36.022-05.23
+LGV-F36.023-10.25
