@@ -2,8 +2,8 @@
     <h3>{{ title }}</h3>
 {% endmacro %}
 
-{% macro render_group_title (title) %}
-    <h4>{{ title }}</h4>
+{% macro render_group_title (title, helpTitle, helpMessage) %}
+    <h4>{{ title }}{% if helpTitle and helpMessage %} <span class="info--right ic-ic-info js-popup" data-title="{{ helpTitle }}" data-content="{{ helpMessage }}"></span>{% endif %}</h4>
 {% endmacro %}
 
 {% macro render_fact_title (title, class) %}
@@ -709,7 +709,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_label_link (title, linkTitle, link, type, css) %}
+{% macro render_label_link (title, linkTitle, link, type, css, helpTitle, helpMessage) %}
     {% if link %}
         <div class="table table--lined">
             <table>
@@ -718,6 +718,9 @@
                         <th>{{ title }}</th>
                     {% endif %}
                     <td>
+                        {% if helpTitle and helpMessage %}
+                            <span class="info--right ic-ic-info js-popup" data-title="{{ helpTitle }}" data-content="{{ helpMessage }}"></span>
+                        {% endif %}
                         <div {% if type == "download" %}class="download"{% endif %}>
                             <a target="_blank" class="icon external-link" href="{% if type == "mail" %}mailto:{% endif %}{{ link }}" title="{{ linkTitle }}" rel="noopener noreferrer">
                                 {% if type == "external" %}
@@ -800,7 +803,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_label_text_list_row (title, entries, listPreset, css, expandable, entryPerRow) %}
+{% macro render_label_text_list_row (title, entries, listPreset, css, expandable, entryPerRow, helpTitle, helpMessage) %}
     {% if entries and entries|length > 0 %}
         {% set isSingleEntry = entries|length == 1 %}
         <div class="table table--lined">
@@ -816,6 +819,9 @@
                             </th>
                         {% endif %}
                         <td>
+                        {% if loop.index0 == 0 and helpTitle and helpMessage %}
+                            <span class="info--right ic-ic-info js-popup" data-title="{{ helpTitle }}" data-content="{{ helpMessage }}"></span>
+                        {% endif %}
                         {% if expandable %}
                         <div class="js-expand-box js-expand-text js-non-expand-text {{ css }}">
                             <div class="js-expand-text-content">
@@ -867,6 +873,9 @@
                     <th>{{ title|raw }}</th>
                 {% endif %}
                     <td>
+                        {% if helpTitle and helpMessage %}
+                            <span class="info--right ic-ic-info js-popup" data-title="{{ helpTitle }}" data-content="{{ helpMessage }}"></span>
+                        {% endif %}
                         {% if expandable %}
                         <div class="js-expand-box js-expand-text js-non-expand-text">
                             <div class="js-expand-text-content">

@@ -5,14 +5,14 @@
     <div class="sub-section">
         <a class="anchor" id="{{ hash_info }}_technical_information"></a>
         {{ hit_macros.render_group_title("SEARCH_DETAIL.TECHNICAL_INFORMATION_7"|t) }}
-        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_TYPE"|t, infoRefs.algorithmType) }}
-        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_TYPE_OF_USE"|t, infoRefs.algorithmTypeOfUse) }}
-        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_EXPLANATION"|t, infoRefs.algorithmExplanation) }}
-        {{ hit_macros.render_label_text_list_row("SEARCH_DETAIL.ALG_METHODS"|t, infoRefs.algorithmMethods) }}
-        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_TRAINING_DATA"|t, infoRefs.algorithmTrainingData) }}
-        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_DATA_BIAS"|t, infoRefs.algorithmDataBias) }}
-        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_ERROR_BIAS"|t, infoRefs.algorithmErrorBias) }}
-        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_MONITORING"|t, infoRefs.algorithmMonitoring) }}
+        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_TYPE"|t, infoRefs.algorithmType, null, null, null, "SEARCH_DETAIL.ALG_HELP.TYPE.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.TYPE.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_TYPE_OF_USE"|t, infoRefs.algorithmTypeOfUse, null, null, null, "SEARCH_DETAIL.ALG_HELP.TYPE_OF_USE.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.TYPE_OF_USE.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_EXPLANATION"|t, infoRefs.algorithmExplanation, null, null, null, "SEARCH_DETAIL.ALG_HELP.EXPLANATION.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.EXPLANATION.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_list_row("SEARCH_DETAIL.ALG_METHODS"|t, infoRefs.algorithmMethods, null, null, null, null, "SEARCH_DETAIL.ALG_HELP.METHODS.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.METHODS.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_TRAINING_DATA"|t, infoRefs.algorithmTrainingData, null, null, null, "SEARCH_DETAIL.ALG_HELP.TRAINING_DATA.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.TRAINING_DATA.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_DATA_BIAS"|t, infoRefs.algorithmDataBias, null, null, null, "SEARCH_DETAIL.ALG_HELP.DATA_BIAS.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.DATA_BIAS.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_ERROR_BIAS"|t, infoRefs.algorithmErrorBias, null, null, null, "SEARCH_DETAIL.ALG_HELP.ERROR_BIAS.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.ERROR_BIAS.MESSAGE"|t) }}
+        {{ hit_macros.render_label_text_row("SEARCH_DETAIL.ALG_MONITORING"|t, infoRefs.algorithmMonitoring, null, null, null, "SEARCH_DETAIL.ALG_HELP.MONITORING.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.MONITORING.MESSAGE"|t) }}
     </div>
 {% endif %}
 {# Input-Daten #}
@@ -25,7 +25,7 @@
 {% if infoRefs.algorithmInputData and infoRefs.algorithmInputData|length > 0 %}
     <div class="sub-section">
         <a class="anchor" id="{{ hash_info }}_alg_input_data"></a>
-        {{ hit_macros.render_group_title("SEARCH_DETAIL.ALG_INPUT_DATA"|t) }}
+        {{ hit_macros.render_group_title("SEARCH_DETAIL.ALG_INPUT_DATA"|t, "SEARCH_DETAIL.ALG_HELP.INPUT_DATA.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.INPUT_DATA.MESSAGE"|t) }}
         {% for data in infoRefs.algorithmInputData %}
             {{ hit_macros.render_entry_table(data.name, data.url, algorithmAttributeHeader, data.attributes) }}
         {% endfor %}
@@ -35,7 +35,7 @@
 {% if infoRefs.algorithmOutputData and infoRefs.algorithmOutputData|length > 0 %}
     <div class="sub-section">
         <a class="anchor" id="{{ hash_info }}_alg_output_data"></a>
-        {{ hit_macros.render_group_title("SEARCH_DETAIL.ALG_OUTPUT_DATA"|t) }}
+        {{ hit_macros.render_group_title("SEARCH_DETAIL.ALG_OUTPUT_DATA"|t, "SEARCH_DETAIL.ALG_HELP.OUTPUT_DATA.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.OUTPUT_DATA.MESSAGE"|t) }}
         {% for data in infoRefs.algorithmOutputData %}
             {{ hit_macros.render_entry_table(data.name, data.url, algorithmAttributeHeader, data.attributes) }}
         {% endfor %}
@@ -47,11 +47,11 @@
     <div class="sub-section">
         <a class="anchor" id="{{ hash_info }}_alg_links"></a>
         {{ hit_macros.render_group_title("SEARCH_DETAIL.ALG_LINKS"|t) }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_API_URL"|t, infoRefs.algorithmApiUrl, infoRefs.algorithmApiUrl) }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_SOURCE_CODE_URL"|t, infoRefs.algorithmSourceCodeUrl, infoRefs.algorithmSourceCodeUrl) }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_WEBSITE_URL"|t, infoRefs.algorithmWebsiteUrl, infoRefs.algorithmWebsiteUrl) }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_EXAMPLE_URL"|t, infoRefs.algorithmExampleUrl, infoRefs.algorithmExampleUrl) }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_PUBLICCODE_URL"|t, infoRefs.algorithmPubliccodeUrl, infoRefs.algorithmPubliccodeUrl) }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_API_URL"|t, infoRefs.algorithmApiUrl, infoRefs.algorithmApiUrl, null, null, "SEARCH_DETAIL.ALG_HELP.API_URL.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.API_URL.MESSAGE"|t) }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_SOURCE_CODE_URL"|t, infoRefs.algorithmSourceCodeUrl, infoRefs.algorithmSourceCodeUrl, null, null, "SEARCH_DETAIL.ALG_HELP.SOURCE_CODE_URL.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.SOURCE_CODE_URL.MESSAGE"|t) }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_WEBSITE_URL"|t, infoRefs.algorithmWebsiteUrl, infoRefs.algorithmWebsiteUrl, null, null, "SEARCH_DETAIL.ALG_HELP.WEBSITE_URL.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.WEBSITE_URL.MESSAGE"|t) }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_EXAMPLE_URL"|t, infoRefs.algorithmExampleUrl, infoRefs.algorithmExampleUrl, null, null, "SEARCH_DETAIL.ALG_HELP.EXAMPLE_URL.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.EXAMPLE_URL.MESSAGE"|t) }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_PUBLICCODE_URL"|t, infoRefs.algorithmPubliccodeUrl, infoRefs.algorithmPubliccodeUrl, null, null, "SEARCH_DETAIL.ALG_HELP.PUBLICCODE_URL.TITLE"|t, "SEARCH_DETAIL.ALG_HELP.PUBLICCODE_URL.MESSAGE"|t) }}
         {% for data in infoRefs.algorithmAdditionalUrls %}
             {{ hit_macros.render_label_link(data.name, data.url, data.url) }}
         {% endfor %}

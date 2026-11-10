@@ -600,6 +600,52 @@ SEARCH_DETAIL:
     ALG_EXAMPLE_URL: Link zur Beispielanwendung
     ALG_PUBLICCODE_URL: URL zu publiccode.yml
     ALG_LINKS: Links
+    ALG_HELP:
+        TYPE:
+            TITLE: Hinweis
+            MESSAGE: 'Der Algorithmus ist einer von drei Kategorien zugeordnet: selbstlernend, regelbasiert oder hybrid. Selbstlernend bedeutet, dass das Verfahren aus Daten lernt; regelbasiert bedeutet, dass festgelegte Regeln die Verarbeitung bestimmen; hybrid kombiniert beide Ansätze.'
+        TYPE_OF_USE:
+            TITLE: Hinweis
+            MESSAGE: 'Die Art der Verwendung beschreibt, welche Funktion der Algorithmus im konkreten Einsatz erfüllt: beschreibend (beschreibt oder fasst bestehende Sachverhalte zusammen), diagnostisch (untersucht Zusammenhänge, Muster oder mögliche Ursachen für beobachtete Sachverhalte), prädiktiv (schätzt oder prognostiziert zukünftige bzw. noch unbekannte Zustände, Ereignisse oder Ergebnisse) oder präskriptiv (leitet auf Basis von Daten mögliche oder empfohlene Maßnahmen bzw. Entscheidungen ab).'
+        EXPLANATION:
+            TITLE: Hinweis
+            MESSAGE: 'Die Erklärung beschreibt verständlich, wie der Algorithmus von den Eingabedaten zum Ergebnis gelangt – einschließlich der wesentlichen Verarbeitungsschritte und Entscheidungslogiken sowie relevanter Annahmen, Schwellenwerte oder Bedingungen. Sie ist so detailliert, dass fachkundige Dritte die Funktionsweise und den Einfluss des Algorithmus auf die Ergebnisse nachvollziehen können.'
+        METHODS:
+            TITLE: Hinweis
+            MESSAGE: 'Hier sind die wesentlichen mathematischen, statistischen oder technischen Methoden und Modelle aufgeführt, die der Algorithmus verwendet, inklusive der konkreten Modell- oder Verfahrensklasse (z. B. ROC-Kurve, neuronales Netz, lineare Regression).'
+        TRAINING_DATA:
+            TITLE: Hinweis
+            MESSAGE: 'Angabe, welche Daten zum Trainieren des Algorithmus verwendet wurden und aus welchen Quellen und Zeiträumen sie stammen (z. B. historische Verkehrsdaten der Jahre 2020–2024 zur Erkennung typischer Verkehrsmuster).'
+        DATA_BIAS:
+            TITLE: Hinweis
+            MESSAGE: 'Beschreibung bekannter oder vermuteter Bias (Verzerrungen) in den Trainingsdaten, z. B. entstanden durch die Datenerhebung oder Stichprobenauswahl, sowie der Maßnahmen zu deren Erkennung, Bewertung oder Verringerung. Falls kein relevanter Bias bekannt ist, wird dies ebenfalls angegeben.'
+        ERROR_BIAS:
+            TITLE: Hinweis
+            MESSAGE: 'Beschreibung bekannter oder relevanter Fehlerquellen, systematischer Abweichungen und Einschränkungen des Algorithmus – einschließlich der Bedingungen, unter denen sie auftreten können, und ihrer Auswirkungen auf die Ergebnisse.'
+        MONITORING:
+            TITLE: Hinweis
+            MESSAGE: 'Beschreibung der erwarteten Leistung des Algorithmus, wie sie gemessen und wie häufig sie überprüft wird sowie wer dafür verantwortlich ist – inklusive der wichtigsten Kennzahlen bzw. Qualitätskriterien und, sofern vorhanden, Schwellenwerte, bei deren Überschreitung Maßnahmen ergriffen werden (z. B. Genauigkeit, Fehlerrate, Laufzeit, Aktualität).'
+        INPUT_DATA:
+            TITLE: Hinweis
+            MESSAGE: 'Beschreibung aller Daten, die der Algorithmus bei einer Ausführung benötigt – mit den jeweiligen Parametern und Einheiten sowie räumlicher und zeitlicher Auflösung. Die URL verweist auf konkrete Datensätze für die Ausführung. Die Attribute eines Datensatzes können unterschiedliche räumliche und zeitliche Auflösungen haben; die URL gilt für alle Attribute eines Datensatzes.'
+        OUTPUT_DATA:
+            TITLE: Hinweis
+            MESSAGE: 'Beschreibung aller Daten, die der Algorithmus erzeugt – mit den jeweiligen Parametern und Einheiten sowie räumlicher und zeitlicher Auflösung. Die URL verweist auf veröffentlichte Datensätze aus der Ausführung des Algorithmus. Die Attribute eines Datensatzes können unterschiedliche räumliche und zeitliche Auflösungen haben; die URL gilt für alle Attribute eines Datensatzes.'
+        API_URL:
+            TITLE: Hinweis
+            MESSAGE: 'Link zur Programmierschnittstelle (API), über die der Algorithmus angesprochen werden kann (z. B. eine OGC API Processes Schnittstelle).'
+        SOURCE_CODE_URL:
+            TITLE: Hinweis
+            MESSAGE: 'Link zum Quellcode des Algorithmus, sofern dieser öffentlich verfügbar ist. Bei mehreren Komponenten wird möglichst das zentrale Repository verlinkt (z. B. ein GitHub-Repository).'
+        WEBSITE_URL:
+            TITLE: Hinweis
+            MESSAGE: 'Öffentlich zugängliche Webseite mit weiterführenden Informationen zu diesem Algorithmus oder seinem konkreten Einsatz.'
+        EXAMPLE_URL:
+            TITLE: Hinweis
+            MESSAGE: 'Link zu einer öffentlich zugänglichen Anwendung, einem Portal oder einer Demonstration, in der der beschriebene Algorithmus eingesetzt wird und deren konkreter Einsatz veranschaulicht wird.'
+        PUBLICCODE_URL:
+            TITLE: Hinweis
+            MESSAGE: 'URL zur zentralen Produktinformation bzw. zur publiccode.yml des Algorithmus.'
     T011_OBJ_SERV_VERSION_OBJ_ID: Object-ID
     T011_OBJ_SERV_VERSION_LINE: Zeilennummer
     T011_OBJ_SERV_VERSION_VERSION: Version

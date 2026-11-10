@@ -600,6 +600,52 @@ SEARCH_DETAIL:
     ALG_EXAMPLE_URL: Link to Example Application
     ALG_PUBLICCODE_URL: URL to publiccode.yml
     ALG_LINKS: Links
+    ALG_HELP:
+        TYPE:
+            TITLE: Hint
+            MESSAGE: 'The algorithm is assigned to one of three categories: self-learning, rule-based or hybrid. Self-learning means the procedure learns from data; rule-based means fixed rules determine the processing; hybrid combines both approaches.'
+        TYPE_OF_USE:
+            TITLE: Hint
+            MESSAGE: 'The type of use describes which function the algorithm fulfils in its concrete application: descriptive (describes or summarises existing facts), diagnostic (examines relationships, patterns or possible causes of observed facts), predictive (estimates or forecasts future or still unknown states, events or outcomes) or prescriptive (derives possible or recommended measures or decisions from data).'
+        EXPLANATION:
+            TITLE: Hint
+            MESSAGE: 'The explanation describes in an understandable way how the algorithm gets from the input data to the result – including the essential processing steps and decision logic as well as relevant assumptions, thresholds or conditions. It is detailed enough that knowledgeable third parties can understand how the algorithm works and how it influences the results.'
+        METHODS:
+            TITLE: Hint
+            MESSAGE: 'The essential mathematical, statistical or technical methods and models used by the algorithm are listed here, including the concrete model or procedure class (e.g. ROC curve, neural network, linear regression).'
+        TRAINING_DATA:
+            TITLE: Hint
+            MESSAGE: 'Information on which data was used to train the algorithm and from which sources and periods it originates (e.g. historical traffic data from 2020-2024 for recognising typical traffic patterns).'
+        DATA_BIAS:
+            TITLE: Hint
+            MESSAGE: 'Description of known or suspected biases in the training data, e.g. caused by data collection or sampling, and of the measures taken to detect, assess or reduce them. If no relevant bias is known, this is likewise stated.'
+        ERROR_BIAS:
+            TITLE: Hint
+            MESSAGE: 'Description of known or relevant sources of error, systematic deviations and limitations of the algorithm – including the conditions under which they can occur and their effects on the results.'
+        MONITORING:
+            TITLE: Hint
+            MESSAGE: 'Description of the expected performance of the algorithm, how it is measured and how often it is reviewed as well as who is responsible for it – including the most important metrics or quality criteria and, where available, thresholds at whose exceedance measures are taken (e.g. accuracy, error rate, runtime, timeliness).'
+        INPUT_DATA:
+            TITLE: Hint
+            MESSAGE: 'Description of all data the algorithm needs for an execution – with the respective parameters and units as well as spatial and temporal resolution. The URL refers to concrete datasets for the execution. The attributes of a dataset can have different spatial and temporal resolutions; the URL applies to all attributes of a dataset.'
+        OUTPUT_DATA:
+            TITLE: Hint
+            MESSAGE: 'Description of all data the algorithm produces – with the respective parameters and units as well as spatial and temporal resolution. The URL refers to published datasets resulting from the execution of the algorithm. The attributes of a dataset can have different spatial and temporal resolutions; the URL applies to all attributes of a dataset.'
+        API_URL:
+            TITLE: Hint
+            MESSAGE: 'Link to the programming interface (API) through which the algorithm can be accessed (e.g. an OGC API Processes interface).'
+        SOURCE_CODE_URL:
+            TITLE: Hint
+            MESSAGE: 'Link to the source code of the algorithm, if publicly available. If several components are relevant, the central repository is linked where possible (e.g. a GitHub repository).'
+        WEBSITE_URL:
+            TITLE: Hint
+            MESSAGE: 'Publicly accessible website with further information on this algorithm or its concrete use.'
+        EXAMPLE_URL:
+            TITLE: Hint
+            MESSAGE: 'Link to a publicly accessible application, portal or demonstration in which the described algorithm is used and its concrete use is illustrated.'
+        PUBLICCODE_URL:
+            TITLE: Hint
+            MESSAGE: 'URL to the central product information or to the publiccode.yml of the algorithm.'
     T011_OBJ_SERV_VERSION_OBJ_ID: Object-ID
     T011_OBJ_SERV_VERSION_LINE: Line-Number
     T011_OBJ_SERV_VERSION_VERSION: Service Version
