@@ -43,7 +43,9 @@
         title="{{ title }}"
     {% endif %}
     ></span>
-    <span class="text">{{ title }}</span>
+    {% if title %}
+        <span class="text">{{ title }}</span>
+    {% endif %}
 {% endmacro %}
 
 {% macro render_hit_types (types, isTeaser, isMobile) %}
@@ -1667,7 +1669,15 @@
                     <span class="icon">
                         <a id="{{ linkId }}" href="#{{ linkId }}" onclick="updateLeaf('{{ linkId }}', true, event)" {% if isFreeAdresse == false %}hx-get="{{ nodeRequest }}" hx-trigger="click once" hx-target="#replace-{{ linkId }}" {% endif %}class="ic-ic-plus" title="{{ nodeTitle|t }}" aria-expanded="false"></a>
                         {% if node.type != "1000" %}
-                            <a href="{{ nodeUrl }}" title="{{ nodeTitle }}">
+                            <a class="icon-link" {% if openOnNewTab %}target="_blank"{% endif %} href="{{ nodeUrl }}" title="{{ nodeTitle }}">
+                                {% if node.isAddress %}
+                                    {% set type_name = "COMMON.UDK_ADR_CLASS_NAME_" ~ node.type_name %}
+                                    {{ _self.render_address_icon(node.type, '', type_name|t) }}
+                                {% else %}
+                                    {{ _self.render_metadata_icon(node.type, '', node.type_name) }}
+                                {% endif %}
+                            </a>
+                            <a {% if openOnNewTab %}target="_blank"{% endif %} href="{{ nodeUrl }}" title="{{ nodeTitle }}">
                                 <span>{{ nodeTitle }}</span>
                             </a>
                         {% else %}
