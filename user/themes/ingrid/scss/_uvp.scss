@@ -3365,15 +3365,22 @@ header {
       border: 1px solid $blue-light;
     }
 
-    // doctype icon link on expandable nodes: plain icon style like leaf rows (no chip circle)
-    a.icon-link [class^="ic-"] {
-      font-size: 16px;
-      background: none;
-      margin: 4px 12px 0 4px;
-      border-radius: 0;
+    // open-link on expandable nodes (doctype icon + title): leaf-row link markup,
+    // reset the row-level a.icon box styles and the chip circle
+    a.icon {
+      display: flex;
+      align-items: center;
       padding: 0;
-      border: none;
-      height: 24px;
+      margin: 0;
+
+      [class^="ic-"] {
+        font-size: 16px;
+        background: none;
+        margin: 4px 12px 0 4px;
+        border-radius: 0;
+        padding: 0;
+        border: none;
+      }
     }
   }
 
