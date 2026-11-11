@@ -3364,6 +3364,32 @@ header {
       padding: 6px;
       border: 1px solid $blue-light;
     }
+
+    // open-link on expandable nodes (doctype icon + title): leaf-row link markup,
+    // reset the row-level a.icon box styles and the chip circle
+    a.icon {
+      display: flex;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+
+      // the global "span.icon span" color rule pins the children – they must
+      // inherit again to follow the link's hover color change like leaf rows
+      span.text {
+        color: inherit;
+        margin-right: 0;
+      }
+
+      [class^="ic-"] {
+        font-size: 16px;
+        background: none;
+        margin: 4px 12px 0 4px;
+        border-radius: 0;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+    }
   }
 
   div > span.icon {

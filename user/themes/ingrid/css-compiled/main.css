@@ -10132,6 +10132,25 @@ header .row .columns:last-of-type {
   padding: 6px;
   border: 1px solid #c6cfe2;
 }
+.catalog span.icon a.icon {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+.catalog span.icon a.icon span.text {
+  color: inherit;
+  margin-right: 0;
+}
+.catalog span.icon a.icon [class^=ic-] {
+  font-size: 16px;
+  background: none;
+  margin: 4px 12px 0 4px;
+  border-radius: 0;
+  padding: 0;
+  border: none;
+  color: inherit;
+}
 .catalog div > span.icon {
   display: flex;
   white-space: unset;
