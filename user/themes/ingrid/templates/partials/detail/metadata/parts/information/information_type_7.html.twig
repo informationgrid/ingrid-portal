@@ -47,13 +47,13 @@
     <div class="sub-section">
         <a class="anchor" id="{{ hash_info }}_alg_links"></a>
         {{ hit_macros.render_group_title("SEARCH_DETAIL.ALG_LINKS"|t) }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_API_URL"|t, infoRefs.algorithmApiUrl, infoRefs.algorithmApiUrl, "external") }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_SOURCE_CODE_URL"|t, infoRefs.algorithmSourceCodeUrl, infoRefs.algorithmSourceCodeUrl, "external") }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_WEBSITE_URL"|t, infoRefs.algorithmWebsiteUrl, infoRefs.algorithmWebsiteUrl, "external") }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_EXAMPLE_URL"|t, infoRefs.algorithmExampleUrl, infoRefs.algorithmExampleUrl, "external") }}
-        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_PUBLICCODE_URL"|t, infoRefs.algorithmPubliccodeUrl, infoRefs.algorithmPubliccodeUrl, "external") }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_API_URL"|t, infoRefs.algorithmApiUrl, infoRefs.algorithmApiUrl) }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_SOURCE_CODE_URL"|t, infoRefs.algorithmSourceCodeUrl, infoRefs.algorithmSourceCodeUrl) }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_WEBSITE_URL"|t, infoRefs.algorithmWebsiteUrl, infoRefs.algorithmWebsiteUrl) }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_EXAMPLE_URL"|t, infoRefs.algorithmExampleUrl, infoRefs.algorithmExampleUrl) }}
+        {{ hit_macros.render_label_link("SEARCH_DETAIL.ALG_PUBLICCODE_URL"|t, infoRefs.algorithmPubliccodeUrl, infoRefs.algorithmPubliccodeUrl) }}
         {% for data in infoRefs.algorithmAdditionalUrls %}
-            {{ hit_macros.render_label_link(data.name, data.url, data.url, "external") }}
+            {{ hit_macros.render_label_link(data.name, data.url, data.url) }}
         {% endfor %}
     </div>
 {% endif %}

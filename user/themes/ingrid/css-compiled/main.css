@@ -9015,6 +9015,24 @@ footer .footer-top-link:hover {
 .search-filtered .table.table--lined ~ .table:not(.table--lined) {
   margin-top: 24px;
 }
+.search-filtered .table.table--entry {
+  margin-bottom: 16px;
+}
+.search-filtered .table.table--entry table thead tr:first-child th {
+  border-bottom: 2px solid #FFFFFF;
+}
+.search-filtered .table.table--entry table thead tr:first-child a {
+  font-size: 14px;
+  line-height: 20px;
+}
+.search-filtered .table.table--entry table thead tr.entry-header th {
+  padding-bottom: 2px;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: "Roboto-Medium";
+  font-weight: normal;
+  color: #3A566D;
+}
 .search-filtered .table.no-background {
   padding: 0 10px;
 }

@@ -2146,6 +2146,35 @@ footer {
     }
   }
 
+  // Table box representing a single entry (title row + optional attribute table), e.g. algorithm input/output data.
+  .table.table--entry {
+    margin-bottom: 16px;
+
+    table {
+      thead {
+        tr:first-child {
+          th {
+            border-bottom: 2px solid #FFFFFF;
+          }
+
+          a {
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+
+        tr.entry-header th {
+          padding-bottom: 2px;
+          font-size: 14px;
+          line-height: 20px;
+          font-family: 'Roboto-Medium';
+          font-weight: normal;
+          color: $blue-prov;
+        }
+      }
+    }
+  }
+
   .table.no-background {
     padding: 0 10px;
 
