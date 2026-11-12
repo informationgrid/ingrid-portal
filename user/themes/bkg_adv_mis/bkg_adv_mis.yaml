@@ -124,8 +124,15 @@ hit_search:
     - content^0.2
     - content.ngram^0.1
   sort:
-    enabled: false
-    sortOption:
+    enabled: true
+    options:
+      - score_asc
+      - score_desc
+      - title_asc
+      - title_desc
+      - date_asc
+      - date_desc
+    sortOption: score_asc
     emptyQuerySortOption: date_asc
   expandable:
     enabled: true
