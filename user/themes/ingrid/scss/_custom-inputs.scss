@@ -307,9 +307,9 @@ ul.select2-selection__rendered li::before { content: ""; }
 .select2-container--default .select2-results__option--highlighted[aria-selected],
 .select2-container--default .select2-results__option[aria-selected=true] {
   background-color: $white;
-  font-size: 16px;
+  font-size: 14px;
   color: $blue-prov;
-  padding: 8px 16px;
+  padding: 4px 16px;
 }
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: $blue-sky;
