@@ -7,6 +7,63 @@ home:
                 - content
                 - idf
         query_string_operator: AND
+        sort:
+            options:
+                queries:
+                    score_asc:
+                        sort:
+                            - _score:
+                                order: asc
+                    score_desc:
+                        sort:
+                            - _score:
+                                order: desc
+                    title_asc:
+                        sort:
+                            - title.keyword:
+                                order: asc
+                    title_desc:
+                        sort:
+                            - title.keyword:
+                                order: desc
+                    date_asc:
+                        sort:
+                            - _script:
+                                type: number
+                                order: asc
+                                script:
+                                    lang: painless
+                                    source: |
+                                        long maxDate = 0;
+                                        for (def field : ['creation', 'publication', 'revision', 'modified', 'metadata.modified']) {
+                                            if (doc.containsKey(field) && doc[field].size() > 0) {
+                                                for (def date : doc[field]) {
+                                                    if (date != null && date.toInstant().toEpochMilli() > maxDate) {
+                                                        maxDate = date.toInstant().toEpochMilli();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return maxDate;
+                    date_desc:
+                        sort:
+                            - _script:
+                                type: number
+                                order: desc
+                                script:
+                                    lang: painless
+                                    source: |
+                                        long maxDate = 0;
+                                        for (def field : ['creation', 'publication', 'revision', 'modified', 'metadata.modified']) {
+                                            if (doc.containsKey(field) && doc[field].size() > 0) {
+                                                for (def date : doc[field]) {
+                                                    if (date != null && date.toInstant().toEpochMilli() > maxDate) {
+                                                        maxDate = date.toInstant().toEpochMilli();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return maxDate;
     categories:
         facet_config: [
             {
@@ -405,6 +462,63 @@ hit_search:
             - content
             - idf
     query_string_operator: AND
+    sort:
+        options:
+            queries:
+                score_asc:
+                    sort:
+                        - _score:
+                            order: asc
+                score_desc:
+                    sort:
+                        - _score:
+                            order: desc
+                title_asc:
+                    sort:
+                        - title.keyword:
+                            order: asc
+                title_desc:
+                    sort:
+                        - title.keyword:
+                            order: desc
+                date_asc:
+                    sort:
+                        - _script:
+                            type: number
+                            order: asc
+                            script:
+                                lang: painless
+                                source: |
+                                    long maxDate = 0;
+                                    for (def field : ['creation', 'publication', 'revision', 'modified', 'metadata.modified']) {
+                                        if (doc.containsKey(field) && doc[field].size() > 0) {
+                                            for (def date : doc[field]) {
+                                                if (date != null && date.toInstant().toEpochMilli() > maxDate) {
+                                                    maxDate = date.toInstant().toEpochMilli();
+                                                }
+                                            }
+                                        }
+                                    }
+                                    return maxDate;
+                date_desc:
+                    sort:
+                        - _script:
+                            type: number
+                            order: desc
+                            script:
+                                lang: painless
+                                source: |
+                                    long maxDate = 0;
+                                    for (def field : ['creation', 'publication', 'revision', 'modified', 'metadata.modified']) {
+                                        if (doc.containsKey(field) && doc[field].size() > 0) {
+                                            for (def date : doc[field]) {
+                                                if (date != null && date.toInstant().toEpochMilli() > maxDate) {
+                                                    maxDate = date.toInstant().toEpochMilli();
+                                                }
+                                            }
+                                        }
+                                    }
+                                    return maxDate;
 hit_detail:
     requested_fields:
         - partner

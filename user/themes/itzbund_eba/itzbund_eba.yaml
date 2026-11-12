@@ -95,8 +95,8 @@ hit_search:
     - content.ngram^0.1
   sort:
     enabled: false
-    sortByDate: false
-    emptyQuerySortByDate: false
+    sortOption:
+    emptyQuerySortOption:
   expandable:
     enabled: true
   summary_replace_newline: ' '

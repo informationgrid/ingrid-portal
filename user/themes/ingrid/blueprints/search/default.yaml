@@ -38,27 +38,26 @@ form:
       validate:
         type: bool
 
-    hit_search.sort.emptyQuerySortByDate:
-      type: toggle
+    hit_search.sort.options:
+        type: selectize
+        label: THEME.ADMIN.HIT_SEARCH.SORT.OPTIONS.LABEL
+        help: THEME.ADMIN.HIT_SEARCH.SORT.OPTIONS.HELP
+        selectize:
+            data-options@: '\Grav\Plugin\InGridGravPlugin::getAdminDetailSortSearchResultOptions'
+        validate:
+            type: commalist
+
+    hit_search.sort.emptyQuerySortOption:
+      type: select
       label: THEME.ADMIN.HIT_SEARCH.SORT.EMPTYQUERYSORTBYDATE.LABEL
       help: THEME.ADMIN.HIT_SEARCH.SORT.EMPTYQUERYSORTBYDATE.HELP
-      highlight: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
+      data-options@: '\Grav\Plugin\InGridGravPlugin::getAdminDetailSortSearchResultOptionsSelect'
 
-    hit_search.sort.sortByDate:
-      type: toggle
+    hit_search.sort.sortOption:
+      type: select
       label: THEME.ADMIN.HIT_SEARCH.SORT.SORTBYDATE.LABEL
       help: THEME.ADMIN.HIT_SEARCH.SORT.SORTBYDATE.HELP
-      highlight: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
+      data-options@: '\Grav\Plugin\InGridGravPlugin::getAdminDetailSortSearchResultOptionsSelect'
 
     hit_search.expandable.enabled:
       type: toggle

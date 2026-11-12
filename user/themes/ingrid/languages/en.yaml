@@ -280,9 +280,6 @@ SEARCH_RESULT:
     VIEW: View
     VIEW_COLLAPSE: Collapse all
     VIEW_EXPAND: Expand all
-    SORT: Sort by
-    SORT_SCORE: Score
-    SORT_TIME: Time
     CITATION: Citation for this dataset
     EXPORT_CSV_HEADER:
     EXPORT_CSV_BUTTON_TILTE:
@@ -298,6 +295,17 @@ SEARCH_RESULT:
         TITLE: Categories
       CLASS:
         TITLE: Data set
+    SORT:
+        TITLE: Sortieren nach
+        OPTIONS:
+            LABEL: Sortierungsoptionen
+            HELP: Sortierungsoptionen
+            SCORE_ASC: Relevanz aufsteigend
+            SCORE_DESC: Relevanz absteigend
+            TITLE_ASC: Titel aufsteigend
+            TITLE_DESC: Titel absteigend
+            DATE_ASC: Datum aufsteigend
+            DATE_DESC: Datum absteigend
 
 CATEGORIES:
     TITLE: Search in categories
@@ -1347,11 +1355,20 @@ THEME:
                     LABEL: Suchergebnis-Sortierung
                     HELP: Suchergebnis-Sortierung darstellen
                 SORTBYDATE:
-                    LABEL: Suchergebnisse nach Datum sortiert (modtime)
-                    HELP: Treffer sortiert nach Datum
+                    LABEL: Suchergebnisse mit Suchbegriff sortiert
+                    HELP: Treffer sortiert nach
                 EMPTYQUERYSORTBYDATE:
-                    LABEL: Suchergebnisse ohne Suchbegriff nach Datum sortiert (modtime)
-                    HELP: Treffer sortiert nach Datum
+                    LABEL: Suchergebnisse ohne Suchbegriff sortiert
+                    HELP: Treffer sortiert nach
+                OPTIONS:
+                    LABEL: Sortierungsoptionen
+                    HELP: Sortierungsoptionen
+                    SCORE_ASC: Relevanz aufsteigend
+                    SCORE_DESC: Relevanz absteigend
+                    TITLE_ASC: Titel aufsteigend
+                    TITLE_DESC: Titel absteigend
+                    DATE_ASC: Datum aufsteigend
+                    DATE_DESC: Datum absteigend
             EXPANDABLE:
                 ENABLED:
                     LABEL: Suchergebnisse aufklappbar

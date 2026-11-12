@@ -84,27 +84,17 @@ form:
       validate:
         type: commalist
 
-    home.hits.sort.emptyQuerySortByDate:
-      type: toggle
+    home.hits.sort.emptyQuerySortOption:
+      type: select
       label: THEME.ADMIN.HOME.HITS.SORT.EMPTYQUERYSORTBYDATE.LABEL
       help: THEME.ADMIN.HOME.HITS.SORT.EMPTYQUERYSORTBYDATE.HELP
-      highlight: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
+      data-options@: '\Grav\Plugin\InGridGravPlugin::getAdminDetailSortSearchResultOptionsSelect'
 
-    home.hits.sort.sortByDate:
-      type: toggle
+    home.hits.sort.sortOption:
+      type: select
       label: THEME.ADMIN.HOME.HITS.SORT.SORTBYDATE.LABEL
       help: THEME.ADMIN.HOME.HITS.SORT.SORTBYDATE.HELP
-      highlight: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
+      data-options@: '\Grav\Plugin\InGridGravPlugin::getAdminDetailSortSearchResultOptionsSelect'
 
     home.rss:
       type: section
