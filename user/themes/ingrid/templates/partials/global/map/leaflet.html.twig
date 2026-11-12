@@ -114,7 +114,20 @@
 
 function addLayerBWaStr(map, bwastrs, restUrlBWaStr, bboxes) {
     var promises = [];
+    var specialFeatures = [];
     bwastrs.forEach(function(bwastr){
+        // Special BWaStr (e.g. 7000 - Nordsee) are unknown to the BWaStr-Locator, use the bounding box from the codelist
+        if (bwastr.bbox) {
+            var bbox = bwastr.bbox;
+            var rectangle = L.rectangle([[bbox.lat1, bbox.lon1], [bbox.lat2, bbox.lon2]]);
+            rectangle.bindTooltip('<b>' + $('<div>').text(bwastr.name + ' (' + bwastr.id + ')').html() + '</b>', {direction: 'center'});
+            specialFeatures.push(rectangle);
+            return;
+        }
+        if (bwastr.name) {
+            // special BWaStr without bounding box
+            return;
+        }
         var request =  $.ajax({
             url: restUrlBWaStr + '?id=' + bwastr.id + '&von=' + bwastr.from + '&bis=' + bwastr.to,
             dataType: 'json',
@@ -124,10 +137,11 @@ function addLayerBWaStr(map, bwastrs, restUrlBWaStr, bboxes) {
         });
         promises.push(request);
     });
-    if(promises.length > 0) {
+    if(promises.length > 0 || specialFeatures.length > 0) {
         map.spin(true);
-        Promise.all(promises).then((values) => {
-            var features = [];
+        Promise.allSettled(promises).then((results) => {
+            var features = specialFeatures.slice();
+            var values = results.filter((result) => result.status === 'fulfilled' && result.value).map((result) => result.value);
             values.forEach(function(data){
                 var geometry = data.geometry;
                 if (geometry) {
