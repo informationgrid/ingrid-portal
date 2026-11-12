@@ -1,4 +1,11 @@
 
+## 8.5.2 (12.11.2026)
+
+
+### Bugfixes
+
+* unvollständige Katalogsicht (#9667)
+    
 ## 8.5.1 (21.10.2026)
 
 ### Features
