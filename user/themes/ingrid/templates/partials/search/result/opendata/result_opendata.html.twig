@@ -51,7 +51,7 @@
             <span class="ic-ic-dataset" title="{{ "SEARCH_RESULT.OPENDATA.CLASS.TITLE"|t }}"></span>
             <span class="text">{{ "SEARCH_RESULT.OPENDATA.CLASS.TITLE"|t }}</span>
         </div>
-        {{ hit_macros.render_hit_searchterm(isInspire, isOpendata, hasAccessConstraint, isHVD) }}
+        {{ hit_macros.render_hit_searchterm(isInspire, isOpendata, hasAccessConstraint, isHVD, isIZG) }}
         <a href="{{ detailLink }}" title="{{ removeHashLocale(hit.title) }}">
             <h2 class="header">{{ removeHashLocale(hit.title) }}</h2>
         </a>

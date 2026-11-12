@@ -294,6 +294,7 @@
   mask-size: cover;
   background-color: currentColor;
 }
+
 .ic-ic-dataset:before {
   display: block;
   width: 20px;
@@ -449,4 +450,10 @@
 }
 .ic-ic-algorithmus:before {
   content: "\e977";
+}
+.ic-ic-izg:before {
+  content: "\e978";
+}
+.ic-ic-izg + span.text {
+  margin-left: 18px !important;
 }

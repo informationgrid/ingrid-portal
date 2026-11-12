@@ -605,6 +605,14 @@
   content: "\e977";
 }
 
+.ic-ic-izg:before {
+  content: "\e978";
+}
+
+.ic-ic-izg + span.text {
+  margin-left: 18px !important;
+}
+
 /**
  * Foundation for Sites by ZURB
  * Version 6.4.3
