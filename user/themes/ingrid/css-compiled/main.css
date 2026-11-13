@@ -11572,6 +11572,9 @@ ul#select2-location-results {
     box-shadow: none;
     border-radius: 0;
   }
+  .search-filtered .accordion.accordion-filter-group.fixed .accordion-content.filter-wrapper {
+    max-height: 75vh;
+  }
   .teaser-data {
     min-height: 420px;
   }

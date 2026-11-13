@@ -146,6 +146,7 @@ hit_search:
   sns:
     similar_terms:
       enabled: false
+  facet_fixed: true
 provider:
   query:
   hits_num:

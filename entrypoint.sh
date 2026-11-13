@@ -2,6 +2,7 @@
 
 THEME=${THEME:-ingrid}
 GRAV_FOLDER=${GRAV_FOLDER:-html}
+ENABLE_SEARCH_FACET_FIXED=${ENABLE_SEARCH_FACET_FIXED:-''}
 ENABLE_MVIS=${ENABLE_MVIS:-true}
 ENABLE_CACHE=${ENABLE_CACHE:-true}
 THEME_COPY_PAGES_INIT=${THEME_COPY_PAGES_INIT:-false}
@@ -377,6 +378,10 @@ fi
 
 if [ "$MAP_IS_MASTERPORTAL" ]; then
   yq -i '.map.is_masterportal = env(MAP_IS_MASTERPORTAL)' "$INGRID_GRAV_THEME_YAML"
+fi
+
+if [ "$ENABLE_SEARCH_FACET_FIXED" ]; then
+  yq -i '.hit_search.facet_fixed = env(ENABLE_SEARCH_FACET_FIXED)' "$INGRID_GRAV_THEME_YAML"
 fi
 
 #####################
