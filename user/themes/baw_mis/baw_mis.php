@@ -3,7 +3,7 @@ namespace Grav\Theme;
 
 use Grav\Common\File\CompiledYamlFile;
 use Grav\Common\Theme;
-use Grav\Plugin\CodelistHelper;
+use Grav\Plugin\BwastrHelper;
 use Grav\Plugin\ElasticsearchHelper;
 use Grav\Plugin\IdfHelper;
 use RocketTheme\Toolbox\Event\Event;
@@ -43,7 +43,7 @@ class BawMis extends Theme
         $lang = $event['lang'];
 
         $hit->bwastr_name = ElasticsearchHelper::getValueArray($content, "bwstr-bwastr_name");
-        $hit->bwastrs = self::getBwaStrs($content);
+        $hit->bwastrs = self::getBwaStrs($content, $lang);
         $hit->bawauftragsnummer = ElasticsearchHelper::getValue($content, "bawauftragsnummer");
         $hit->bawauftragstitel = ElasticsearchHelper::getValue($content, "bawauftragstitel");
         $hit->data_category = ElasticsearchHelper::getValue($content, "data_category");
@@ -51,25 +51,17 @@ class BawMis extends Theme
 
     }
 
-    private static function getBwaStrs(\stdClass $esHit): array
+    private static function getBwaStrs(\stdClass $esHit, string $lang): array
     {
         $array = [];
         $ids = ElasticsearchHelper::getValueArray($esHit, "bwstr-bwastr-id");
         $froms = ElasticsearchHelper::getValueArray($esHit, "bwstr-strecken_km_von");
         $tos = ElasticsearchHelper::getValueArray($esHit, "bwstr-strecken_km_bis");
-        if (!empty($ids) && !empty($froms) && !empty($tos)) {
-            for ($i = 0; $i < count($ids); $i++) {
-                $id = $ids[$i];
-                if (str_ends_with($id, '00')) {
-                    $id = substr($id, 0, -2);
-                    $id = $id . '01';
-                }
-                $array[] = [
-                    "id" => $id,
-                    "from" => $froms[$i],
-                    "to" => $tos[$i],
-                ];
+        foreach ($ids as $i => $id) {
+            if (empty($id)) {
+                continue;
             }
+            $array[] = BwastrHelper::resolve((string)$id, (string)($froms[$i] ?? ''), (string)($tos[$i] ?? ''), $lang);
         }
         return $array;
     }
@@ -519,22 +511,15 @@ class BawMis extends Theme
             $item = [];
             $title = IdfHelper::getNodeValue($tmpNode, "./gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString");
             if (isset($title)) {
-                $values = preg_replace('/[^-?0-9.0-9]+/', '', $title);
-                $values = str_replace('-', ' ', $values);
-                $values = explode(' ', trim($values));
-                if (!empty(reset($values))) {
-                    $id = $values[0];
-                    $from = $values[1] ?? '';
-                    $to = $values[2] ?? '';
+                $code = BwastrHelper::parseCode($title);
+                if ($code) {
+                    $id = $code['id'];
+                    $from = $code['from'];
+                    $to = $code['to'];
 
                     if ($id) {
-                        if (str_ends_with($id, '00')) {
-                            $id = substr($id, 0, -2);
-                            $id = $id . '01';
-                        }
-
                         $item[] = array(
-                            "value" => CodelistHelper::getCodelistEntry(["3950010"], (int)$id, $lang),
+                            "value" => BwastrHelper::getName($id, $lang),
                             "type" => "text"
                         );
                     }

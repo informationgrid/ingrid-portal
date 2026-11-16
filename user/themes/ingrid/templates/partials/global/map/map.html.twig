@@ -36,7 +36,8 @@
         })
         if (features.length > 0) {
             bounds = L.featureGroup(features).getBounds();
-            {{ mapId }}.fitBounds(bounds);
+            // without animation, an animated zoom never finishes on a hidden map (collapsed search hit)
+            {{ mapId }}.fitBounds(bounds, {animate: false});
         }
         {% if displayControls %}
             addLeafletHomeControl({{ mapId }}, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', {{ mapId }}.getBounds(), '', '23px');
