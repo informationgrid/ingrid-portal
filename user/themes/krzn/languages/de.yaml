@@ -17,5 +17,7 @@ SEARCH_DETAIL:
   TECHNICAL_INFORMATION_6: Informationen zur Anwendung
 
 FACETS:
+  TYPE:
+    OPENDATA_METADATA: Datensatz
   FACET_LABEL:
     BBOX: In Kartenausschnitt suchen

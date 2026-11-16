@@ -1,0 +1,53 @@
+<script>
+$('.filter-down').click(function(event){
+    event.preventDefault();
+    var elems = $(".filter .filter-wrapper");
+    if(elems.length > 0) {
+      var elem = elems[0];
+      elem.scrollBy(0,200);
+    }
+});
+
+$('.filter-up').click(function(event){
+    event.preventDefault();
+    var elems = $(".filter .filter-wrapper");
+    if(elems.length > 0) {
+      var elem = elems[0];
+      elem.scrollBy(0,-200);
+    }
+});
+
+function checkFilter() {
+  var elems = $(".filter .filter-wrapper");
+  if(elems.length > 0) {
+    var elem = elems[0];
+    if(elem.scrollTop === elem.scrollHeight - elem.clientHeight && elem.scrollTop === 0) {
+      $(".filter .paging").addClass('is-hidden');
+      $(".filter-up").addClass('disabled');
+      $(".filter-down").addClass('disabled');
+    }else if(elem.scrollTop === elem.scrollHeight - elem.clientHeight) {
+      $(".filter .paging").removeClass('is-hidden');
+      $(".filter-up").removeClass('disabled');
+      $(".filter-down").addClass('disabled');
+    }else if(elem.scrollTop === 0) {
+      $(".filter .paging").removeClass('is-hidden');
+      $(".filter-up").addClass('disabled');
+      $(".filter-down").removeClass('disabled');
+    }else {
+      $(".filter .paging").removeClass('is-hidden');
+      $(".filter-up").removeClass('disabled');
+      $(".filter-down").removeClass('disabled');
+    }
+  }
+}
+
+$( ".filter .filter-wrapper" ).on( "scroll", function() {
+  checkFilter();
+});
+
+$( ".filter .filter-wrapper" ).ready(function() {
+  checkFilter();
+});
+
+new ResizeObserver(checkFilter).observe(document.querySelector(".filter-wrapper > .boxes"));
+</script>

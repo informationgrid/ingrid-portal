@@ -1070,6 +1070,7 @@ CATALOG_HIERARCHY:
     LOADING: Loading ...
 
 FACETS:
+    TITLE: Filter
     FACET_LABEL:
         TYPE: Datatypes
         METADATA_GROUP: Meta data
@@ -1110,6 +1111,10 @@ FACETS:
             FROM: '> '
             TO: '< '
             UNTIL: ' - '
+    SCROLL:
+        UP: Scroll up
+        DOWN: Scroll down
+
 SHARE:
     TITLE: Share
     X: X
@@ -1398,6 +1403,9 @@ THEME:
                 SIMILAR_TERMS:
                     LABEL: SNS "Ähnliche Begriffe" aktivieren
                     HELP: Aktivieren Sie die Darstellung der "Ähnliche Begriffe" auf der Suchseite.
+            FACET_FIXED:
+                LABEL: Filter beim scrollen fixieren
+                HELP: Filter bleibt beim scrollen der Sucheseite sichtbar.
         HIT_DETAIL:
             TITLE: Detaildarstellung
             DISPLAY_USE_CONSTRAINTS_JSON:

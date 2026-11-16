@@ -107,8 +107,8 @@ home:
       - '-isfolder:true'
     hits_num: 0
     sort:
-      sortOption: date_asc
-      emptyQuerySortOption: date_asc
+      sortOption: date_desc
+      emptyQuerySortOption: date_desc
 hit_search:
   hits_num: 10
   add_to_search:
@@ -125,8 +125,8 @@ hit_search:
     - content.ngram^0.1
   sort:
     enabled: false
-    sortOption:
-    emptyQuerySortOption: date_asc
+    sortOption: score_desc
+    emptyQuerySortOption: date_desc
   expandable:
     enabled: true
   summary_replace_newline: ' '

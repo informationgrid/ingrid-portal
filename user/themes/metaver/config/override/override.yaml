@@ -454,8 +454,29 @@ hit_search:
                                 "datatype": "www"
                             }
                         }
-                    },
+                    }
                 },
+                "izg": {
+                    "label": "IZG-relevant",
+                    "query": {
+                        "filter": {
+                            "bool": {
+                                "should": [
+                                    {
+                                        "term": {
+                                            "t04_search.searchterm": "izg-relevant"
+                                        }
+                                    },
+                                    {
+                                        "term": {
+                                            "t04_search.searchterm": "IZG-relevant"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
             }
         },
         {

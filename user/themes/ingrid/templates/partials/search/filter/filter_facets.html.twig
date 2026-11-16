@@ -1,12 +1,15 @@
 {# @var facets_config \Grav\Plugin\FacetConfig[] #}
 {# @var search_result \Grav\Plugin\SearchResult #}
 
+{% set facet_fixed = theme_var('hit_search.facet_fixed')|default(false) %}
+{% if facet_fixed == false %}
 <div id="facets">
-    <div class="accordion accordion-filter-group filter" data-allow-all-closed="true" role="tablist" data-accordion>
+{% endif %}
+    <div class="accordion accordion-filter-group filter {% if facet_fixed %}fixed{% endif %}" data-allow-all-closed="true" role="tablist" data-accordion>
         <div class="accordion-item accordion-item-filter-group" data-accordion-item>
             <a id="facet-content-accordion-label" href="#" class="accordion-title accordion-title-filter-group hide-for-large"
                role="tab" aria-expanded="false" aria-selected="false" aria-controls="facet-content-accordion">
-                <span>Filter</span>
+                <span>{{ "FACETS.TITLE"|t }}</span>
             </a>
             <div id="facet-content-accordion" class="accordion-content filter-wrapper filter-wrapper-shadowless" role="tabpanel"
                  aria-labelledby="facet-content-accordion-label" tabindex="1" data-tab-content>
@@ -243,8 +246,15 @@
                 </div>
             </div>
         </div>
+        {% if facet_fixed %}
+            {% include 'partials/search/filter/facet_scroll.html.twig' %}
+        {% endif %}
     </div>
+{% if facet_fixed == false %}
 </div>
+{% else %}
+    {% include 'partials/search/filter/facet_scroll_script.html.twig' %}
+{% endif %}
 
 {% include 'partials/global/side-menu/nicescroll.html.twig' %}
 

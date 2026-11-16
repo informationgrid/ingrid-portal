@@ -147,3 +147,14 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+
+    hit_search.facet_fixed:
+        type: toggle
+        label: THEME.ADMIN.HIT_SEARCH.FACET_FIXED.LABEL
+        help: THEME.ADMIN.HIT_SEARCH.FACET_FIXED.HELP
+        highlight: 1
+        options:
+            1: PLUGIN_ADMIN.ENABLED
+            0: PLUGIN_ADMIN.DISABLED
+        validate:
+            type: bool

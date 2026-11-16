@@ -537,6 +537,12 @@
         border-radius: 0;
       }
     }
+
+    .accordion.accordion-filter-group.fixed {
+      .accordion-content.filter-wrapper {
+        max-height: 75vh;
+      }
+    }
   }
 
   .teaser-data {

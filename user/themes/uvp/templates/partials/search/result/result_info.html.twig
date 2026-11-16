@@ -1,7 +1,7 @@
 {% set hasSort = theme_var('hit_search.sort.enabled') %}
 
 {% if hasSort %}
-    {% if search_ranking == 'date' %}
+    {% if search_ranking in ['date_asc', 'date_desc'] %}
     <div class="caption">
         <div class="icon check">
             <span class="ic-ic-info"></span>
