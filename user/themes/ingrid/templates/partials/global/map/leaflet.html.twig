@@ -137,10 +137,14 @@ function addLayerBWaStr(map, bwastrs, restUrlBWaStr, bboxes) {
         });
         promises.push(request);
     });
-    if(promises.length > 0 || specialFeatures.length > 0) {
+    if (specialFeatures.length > 0) {
+        // add synchronously, so the map is zoomed to them like to bounding boxes
+        L.featureGroup(specialFeatures).addTo(map);
+    }
+    if(promises.length > 0) {
         map.spin(true);
         Promise.allSettled(promises).then((results) => {
-            var features = specialFeatures.slice();
+            var features = [];
             var values = results.filter((result) => result.status === 'fulfilled' && result.value).map((result) => result.value);
             values.forEach(function(data){
                 var geometry = data.geometry;
@@ -162,11 +166,17 @@ function addLayerBWaStr(map, bwastrs, restUrlBWaStr, bboxes) {
                 }
             });
             if(features.length > 0) {
-                var featureGroup = L.featureGroup(features).addTo(map);
-                map.fitBounds(featureGroup.getBounds());
+                L.featureGroup(features).addTo(map);
+                // the map size may be outdated when the features are added asynchronously,
+                // but keep the size of a hidden map (e.g. collapsed search hit), it would become 0
+                if (map.getContainer().offsetWidth > 0) {
+                    map.invalidateSize();
+                }
+                // without animation, an animated zoom never finishes on a hidden map
+                map.fitBounds(L.featureGroup(features.concat(specialFeatures)).getBounds(), {animate: false});
                 map.spin(false);
             } else {
-                if (bboxes) {
+                if (bboxes && specialFeatures.length === 0) {
                     addLayerBounds(map, bboxes, false);
                 }
                 map.spin(false);
