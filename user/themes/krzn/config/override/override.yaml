@@ -146,7 +146,6 @@ hit_search:
             "open": true,
             "facets": {
                 "application": {
-                    "icon": "ic-chemie",
                     "codelist": "8000",
                     "codelist_entry_id": "6",
                     "query": {
@@ -158,7 +157,6 @@ hit_search:
                     }
                 },
                 "map": {
-                    "icon": "ic-map",
                     "codelist": "8000",
                     "codelist_entry_id": "1",
                     "query": {
@@ -170,7 +168,6 @@ hit_search:
                     }
                 },
                 "geoservice": {
-                    "icon": "ic-dienste",
                     "codelist": "8000",
                     "codelist_entry_id": "3",
                     "query": {
@@ -182,7 +179,6 @@ hit_search:
                     }
                 },
                 "opendata": {
-                    "icon": "ic-opendata",
                     "query": {
                         "filter": {
                             "bool": {
@@ -208,6 +204,26 @@ hit_search:
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "literature": {
+                    "codelist": "8000",
+                    "codelist_entry_id": "2",
+                    "query": {
+                        "filter": {
+                            "term": {
+                                "t01_object.obj_class": "2"
+                            }
+                        }
+                    }
+                },
+                "opendata_metadata": {
+                    "query": {
+                        "filter": {
+                            "term": {
+                                "keywords.source": "THEMES"
                             }
                         }
                     }
