@@ -1549,6 +1549,9 @@ THEME:
                         HELP: Geocoder-Dienst
         MEASURE:
             TITLE: Messwerte
+            CLIENT:
+                INCLUDED:
+                    TITLE: Weitere Einstellungen nur für integrierten Messwerte-Client (nicht Masterportal) relevant
             URL:
                 LABEL: URL zum MVIS-Client
                 HELP: Trage die URL zum MVIS-Client

@@ -10,6 +10,11 @@ form:
       label: THEME.ADMIN.MEASURE.URL.LABEL
       help: THEME.ADMIN.MEASURE.URL.HELP
 
+    measure.measure.client.included:
+        type: section
+        title: THEME.ADMIN.MEASURE.CLIENT.INCLUDED.TITLE
+        underline: true
+
     measure.elastic:
       type: text
       label: THEME.ADMIN.MEASURE.ELASTIC.LABEL
