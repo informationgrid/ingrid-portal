@@ -75,390 +75,391 @@ class BawDoi extends Theme
         $objClass = ElasticsearchHelper::getValue($esHit, 't01_object.obj_class');
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
+        if ($node) {
+            // Add theme specific variables
+            switch ($objClass) {
+                case '4':
+                    #$xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]';
+                    #$hit->bawauftragsnummer = IdfHelper::getNodeValue($node, $xpathExpression);
+                    #$xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor]';
+                    #$hit->bawauftragstitel = IdfHelper::getNodeValue($node, $xpathExpression);
+                    break;
+                case '6':
+                    #$xpathExpression = './gmd:identificationInfo/*/software/einsatzzweck';
+                    #$hit->einsatzzweck = IdfHelper::getNodeValue($node, $xpathExpression);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/ErgaenzungsModul/ergaenzungsModul/gco:Boolean';
+                    #$hit->ergaenzungsModul = IdfHelper::getNodeValue($node, $xpathExpression);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/ErgaenzungsModul/ergaenzteSoftware';
+                    #$hit->ergaenzteSoftware = IdfHelper::getNodeValue($node, $xpathExpression);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Programmiersprache/programmiersprache';
+                    #$hit->programmiersprache = IdfHelper::getNodeValueList($node, $xpathExpression);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Entwicklungsumgebung/entwicklungsumgebung';
+                    #$hit->entwicklungsumgebung = IdfHelper::getNodeValueList($node, $xpathExpression);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Bibliotheken';
+                    #$hit->bibliotheken = IdfHelper::getNodeValueList($node, $xpathExpression);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/installationsMethode';
+                    #$hit->installationsMethode = IdfHelper::getNodeValue($node, $xpathExpression);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Nutzerkreis';
+                    #$hit->nutzerkreis = self::getTableSymbolInfo(
+                    #    $node,
+                    #    $xpathExpression,
+                    #    ["", "./baw/gco:Boolean", "./wsv/gco:Boolean", "./extern/gco:Boolean"],
+                    #    [1, 2, 3],
+                    #    './anmerkungen'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/ProduktiverEinsatz';
+                    #$hit->produktiverEinsatz = self::getTableSymbolInfo(
+                    #    $node,
+                    #    $xpathExpression,
+                    #    ["", "./wsvAuftrag/gco:Boolean", "./fUndE/gco:Boolean", "./andere/gco:Boolean"],
+                    #    [1, 2, 3],
+                    #    './anmerkungen'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Betriebssystem';
+                    #$hit->betriebssystem = self::getTableSymbolInfo(
+                    #    $node,
+                    #    $xpathExpression,
+                    #    ["", "./windows/gco:Boolean", "./linux/gco:Boolean"],
+                    #    [1, 2],
+                    #    './anmerkungen'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/lokal/gco:Boolean';
+                    #$hit->installationsortlokal = array(
+                    #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
+                    #    'type' => 'bool'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/HLR/hlr/gco:Boolean';
+                    #$hit->installationsorthlr = array(
+                    #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
+                    #    'type' => 'bool'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/HLR/hlrName';
+                    #$hit->installationsorthlrName = array(
+                    #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
+                    #    'type' => 'text'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/Server/server/gco:Boolean';
+                    #$hit->installationsortserver = array(
+                    #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
+                    #    'type' => 'bool'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/Server/servername/text';
+                    #$hit->installationsortservername = array(
+                    #    'values' => IdfHelper::getNodeValueList($node, $xpathExpression),
+                    #    'type' => 'text'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Erstellungsvertrag/vertragsNummer';
+                    #$hit->erstellungsvertragsnummer = array(
+                    #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
+                    #    'type' => 'text'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Erstellungsvertrag/datum';
+                    #$hit->erstellungsvertragsdatum = array(
+                    #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
+                    #    'type' => 'date'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Supportvertrag/vertragsNummer';
+                    #$hit->supportvertragsnummer = array(
+                    #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
+                    #    'type' => 'text'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Supportvertrag/datum';
+                    #$hit->supportvertragsdatum = array(
+                    #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
+                    #    'type' => 'date'
+                    #);
+                    #$xpathExpression = './gmd:identificationInfo/*/software/Supportvertrag/anmerkungen';
+                    #$hit->supportvertragsinfo = array(
+                    #    'value' => IdfHelper::getNodeValueList($node, $xpathExpression),
+                    #    'type' => 'text'
+                    #);
+                    break;
+                default:
+                    #$xpathExpression = './gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]';
+                    #$hit->bawauftragsnummer = IdfHelper::getNodeValue($node, $xpathExpression);
+                    #$xpathExpression = './gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[not(./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = "crossReference")]/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor]';
+                    #$hit->bawauftragstitel = IdfHelper::getNodeValue($node, $xpathExpression);
+                    break;
+            }
+            #$hit->sourceCodeRights = self::getBoolInfoValue($node, './gmd:identificationInfo/*/software/QuellCodeRechte[./baw/gco:Boolean]', './baw/gco:Boolean', './anmerkungen');
+            #$hit->useRights = self::getBoolInfoValue($node, './gmd:identificationInfo/*/software/NutzungsRechte[./dritte/gco:Boolean]', './dritte/gco:Boolean', 'anmerkungen');
+            $hit->doi = self::getDoi($node);
+            $hit->citations = self::getCitations($node);
+            $hit->bibliographies = self::getBibliographies($node);
 
-        // Add theme specific variables
-        switch ($objClass) {
-            case '4':
-                #$xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]';
-                #$hit->bawauftragsnummer = IdfHelper::getNodeValue($node, $xpathExpression);
-                #$xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor]';
-                #$hit->bawauftragstitel = IdfHelper::getNodeValue($node, $xpathExpression);
-                break;
-            case '6':
-                #$xpathExpression = './gmd:identificationInfo/*/software/einsatzzweck';
-                #$hit->einsatzzweck = IdfHelper::getNodeValue($node, $xpathExpression);
-                #$xpathExpression = './gmd:identificationInfo/*/software/ErgaenzungsModul/ergaenzungsModul/gco:Boolean';
-                #$hit->ergaenzungsModul = IdfHelper::getNodeValue($node, $xpathExpression);
-                #$xpathExpression = './gmd:identificationInfo/*/software/ErgaenzungsModul/ergaenzteSoftware';
-                #$hit->ergaenzteSoftware = IdfHelper::getNodeValue($node, $xpathExpression);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Programmiersprache/programmiersprache';
-                #$hit->programmiersprache = IdfHelper::getNodeValueList($node, $xpathExpression);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Entwicklungsumgebung/entwicklungsumgebung';
-                #$hit->entwicklungsumgebung = IdfHelper::getNodeValueList($node, $xpathExpression);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Bibliotheken';
-                #$hit->bibliotheken = IdfHelper::getNodeValueList($node, $xpathExpression);
-                #$xpathExpression = './gmd:identificationInfo/*/software/installationsMethode';
-                #$hit->installationsMethode = IdfHelper::getNodeValue($node, $xpathExpression);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Nutzerkreis';
-                #$hit->nutzerkreis = self::getTableSymbolInfo(
-                #    $node,
-                #    $xpathExpression,
-                #    ["", "./baw/gco:Boolean", "./wsv/gco:Boolean", "./extern/gco:Boolean"],
-                #    [1, 2, 3],
-                #    './anmerkungen'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/ProduktiverEinsatz';
-                #$hit->produktiverEinsatz = self::getTableSymbolInfo(
-                #    $node,
-                #    $xpathExpression,
-                #    ["", "./wsvAuftrag/gco:Boolean", "./fUndE/gco:Boolean", "./andere/gco:Boolean"],
-                #    [1, 2, 3],
-                #    './anmerkungen'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Betriebssystem';
-                #$hit->betriebssystem = self::getTableSymbolInfo(
-                #    $node,
-                #    $xpathExpression,
-                #    ["", "./windows/gco:Boolean", "./linux/gco:Boolean"],
-                #    [1, 2],
-                #    './anmerkungen'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/lokal/gco:Boolean';
-                #$hit->installationsortlokal = array(
-                #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
-                #    'type' => 'bool'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/HLR/hlr/gco:Boolean';
-                #$hit->installationsorthlr = array(
-                #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
-                #    'type' => 'bool'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/HLR/hlrName';
-                #$hit->installationsorthlrName = array(
-                #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
-                #    'type' => 'text'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/Server/server/gco:Boolean';
-                #$hit->installationsortserver = array(
-                #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
-                #    'type' => 'bool'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Installationsort/Server/servername/text';
-                #$hit->installationsortservername = array(
-                #    'values' => IdfHelper::getNodeValueList($node, $xpathExpression),
-                #    'type' => 'text'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Erstellungsvertrag/vertragsNummer';
-                #$hit->erstellungsvertragsnummer = array(
-                #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
-                #    'type' => 'text'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Erstellungsvertrag/datum';
-                #$hit->erstellungsvertragsdatum = array(
-                #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
-                #    'type' => 'date'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Supportvertrag/vertragsNummer';
-                #$hit->supportvertragsnummer = array(
-                #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
-                #    'type' => 'text'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Supportvertrag/datum';
-                #$hit->supportvertragsdatum = array(
-                #    'value' => IdfHelper::getNodeValue($node, $xpathExpression),
-                #    'type' => 'date'
-                #);
-                #$xpathExpression = './gmd:identificationInfo/*/software/Supportvertrag/anmerkungen';
-                #$hit->supportvertragsinfo = array(
-                #    'value' => IdfHelper::getNodeValueList($node, $xpathExpression),
-                #    'type' => 'text'
-                #);
-                break;
-            default:
-                #$xpathExpression = './gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/*[self::gco:CharacterString or self::gmx:Anchor]';
-                #$hit->bawauftragsnummer = IdfHelper::getNodeValue($node, $xpathExpression);
-                #$xpathExpression = './gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[not(./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = "crossReference")]/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/*[self::gco:CharacterString or self::gmx:Anchor]';
-                #$hit->bawauftragstitel = IdfHelper::getNodeValue($node, $xpathExpression);
-                break;
+            #$xpathExpression = "//gmd:resourceFormat/gmd:MD_Format";
+            #$xpathExpressionSub = [
+            #    "./gmd:name/*[self::gco:CharacterString or self::gmx:Anchor]",
+            #    "./gmd:version/*[self::gco:CharacterString or self::gmx:Anchor]"
+            #];
+            #$hit->dataFormat = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);;
+            #$xpathExpression = "//gmd:DQ_DataQuality[./gmd:report/gmd:DQ_QuantitativeAttributeAccuracy]";
+            #$xpathExpressionSub = [
+            #    "./gmd:lineage//gmd:LI_Source/gmd:description/*[self::gco:CharacterString or self::gmx:Anchor]",
+            #    ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueType/gco:RecordType",
+            #    ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueUnit//gml:catalogSymbol",
+            #    ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:value/gco:Record"
+            #];
+            #$hit->dataQualities = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+            $hit->hierachyLevelName = IdfHelper::getNodeValue($node, "./gmd:hierarchyLevelName/*[self::gco:CharacterString or self::gmx:Anchor]");
+            $hit->areaHeight = self::getAreaHeight($node, $lang);
+
+            // Baugrunddynamik-Schlagworte
+            $xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/*/*/gco:CharacterString="Baugrunddynamik-Schlagwortkatalog"]/gmd:keyword/gco:CharacterString';
+            $hit->subsoilKeywords = IdfHelper::getNodeValueList($node, $xpathExpression);
+            // Bwstr Bezug (Name / Kennung)
+            $xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription';
+            $hit->references = IdfHelper::getNodeValue($node, $xpathExpression);
+
+            switch ($objClass) {
+                case '1':
+                    $simulationType = ElasticsearchHelper::getValue($esHit, 'simulation_data_type');
+                    switch ($simulationType) {
+                        case 'Messdaten':
+
+                            $xpathExpressionDefault = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/baw:BAW_Metadata/baw:measurement/baw:Measurement';
+
+                        // Messdaten
+
+                            // Messverfahren
+                            $xpathExpression = $xpathExpressionDefault . '/baw:measurementMethod/gco:CharacterString';
+                            $hit->measurementMethod = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Messgerät (Name/ID/Modell)
+                            $xpathExpression = $xpathExpressionDefault . '/baw:measurementDevice/baw:MeasurementDevice';
+                            $xpathExpressionSub = [
+                                "./baw:deviceName/gco:CharacterString",
+                                "./baw:deviceId/gco:CharacterString",
+                                "./baw:deviceModel/gco:CharacterString",
+                                "./baw:description/gco:CharacterString"
+                            ];
+                            $hit->measurementDevice = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+                            // Zielparameter
+                            $xpathExpression = $xpathExpressionDefault . '/baw:measurementParameter/baw:MeasurementParameter';
+                            $xpathExpressionSub = [
+                                "./baw:parameterName/gco:CharacterString",
+                                "./baw:parameterType/gco:CharacterString",
+                                "./baw:uom/gco:CharacterString",
+                                "./baw:parameterFunction/gco:CharacterString"
+                            ];
+                            $hit->measurementParameter = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+                            // Räumlichkeit
+                            $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:measurementSpatiality/gco:CharacterString';
+                            $hit->measurementSpatiality = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Messtiefe
+                            $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:measurementDepth/baw:MeasurementDepth[./*]';
+                            $xpathExpressionSub = [
+                                "./baw:measurementDepth/gco:Decimal",
+                                "./baw:verticalCRS/gmx:Anchor"
+                            ];
+                            $hit->measurementDepth = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+                            // Frequenz der Messung
+                            $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:measurementFrequency/gco:Decimal';
+                            $hit->measurementFrequency = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Gemittelter Wasserstand
+                            $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:meanWaterLevel/baw:MeanWaterLevel';
+                            $xpathExpressionSub = [
+                                "./baw:waterLevel/gco:Decimal",
+                                "./baw:uom/gco:CharacterString"
+                            ];
+                            $hit->meanWaterLevel = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+                            // Pegelnullpunkt
+                            $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:gaugeZeroPoint/baw:GaugeZeroPoint';
+                            $xpathExpressionSub = [
+                                "./baw:gaugeZeroPoint/gco:Decimal",
+                                "./baw:uom/gco:CharacterString",
+                                "./baw:verticalCRS/gco:CharacterString",
+                                "./baw:description/gco:CharacterString"
+                            ];
+                            $hit->gaugeZeroPoint = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+                            // Abfluss (min)
+                            $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:minDischarge/gco:Decimal';
+                            $hit->minDischarge = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Abfluss (max)
+                            $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:maxDischarge/gco:Decimal';
+                            $hit->maxDischarge = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Datenqualität (Beschreibung)
+                            $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:dataQualityDescription/gco:CharacterString';
+                            $hit->dataQualityDescription = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Zeitliche Genauigkeit
+                            $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:temporalAccuracy/gco:Decimal';
+                            $hit->temporalAccuracy = IdfHelper::getNodeValue($node, $xpathExpression);
+                            break;
+
+                        case 'Simulationsdaten':
+
+                            $xpathExpressionDefault = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/baw:BAW_Metadata/baw:simulation/baw:Simulation';
+
+                    // Simulationsdaten
+
+                            // Simulationsverfahren
+                            $xpathExpression = $xpathExpressionDefault . '/baw:simulationMethod/gco:CharacterString';
+                            $hit->simulationMethod = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Version
+                            $xpathExpression = $xpathExpressionDefault . '/baw:simulationMethodVersion/gco:CharacterString';
+                            $hit->simulationMethodVersion = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Erweiterung
+                            $xpathExpression = $xpathExpressionDefault . '/baw:simulationMethodDependency/gco:CharacterString';
+                            $hit->simulationMethodDependency = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Räumliche Dimensionalität
+                            $xpathExpression = $xpathExpressionDefault . '/baw:spatialDimensionality/gco:CharacterString';
+                            $hit->spatialDimensionality = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Zeitliche Genauigkeit
+                            $xpathExpression = $xpathExpressionDefault . '/baw:timeStepSize/gco:Decimal';
+                            $hit->timeStepSize = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Simulationsmodellart
+                            $xpathExpression = $xpathExpressionDefault . '/baw:simulationModelType/gco:CharacterString';
+                            $hit->simulationModelType = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Simulationsparameter
+                            $xpathExpression = $xpathExpressionDefault . '/baw:simulationParameter/baw:SimulationParameter';
+                            $xpathExpressionSub = [
+                                "./baw:parameterName/gco:CharacterString",
+                                "./baw:parameterType/gco:CharacterString",
+                                "./baw:parameterValues/gco:RecordType",
+                                "./baw:uom/gco:CharacterString"
+                            ];
+                            $hit->simulationParameter = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+
+                        // Bautechnik Simulationsdaten
+
+                            // Objekt
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:object/gco:CharacterString';
+                            $hit->object = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Objektteil
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:objectPart/gco:CharacterString';
+                            $hit->objectPart = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Untersuchungsziel
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:investigationGoal/gco:CharacterString';
+                            $hit->investigationGoal = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Räumliche Dimensionen
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:spatialDimensionality/gco:CharacterString';
+                            $hit->spatialDimensionalityStructuralEngineering = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Zeitliche Dimension (Checkbox)
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:timeDimension/gco:Boolean';
+                            $hit->timeDimension = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Level der Untersuchung
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:investigationLevel/gco:CharacterString';
+                            $hit->investigationLevel = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Untersuchungsstufe
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:investigationStage/gco:CharacterString';
+                            $hit->investigationStage = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Berechnungskonzepte (Materiell/Geometrisch linear, Imperfektionen)
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:materialConcept/gco:CharacterString';
+                            $hit->materialConcept = IdfHelper::getNodeValue($node, $xpathExpression);
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:geometryConcept/gco:CharacterString';
+                            $hit->geometryConcept = IdfHelper::getNodeValue($node, $xpathExpression);
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:imperfections/gco:CharacterString';
+                            $hit->imperfections = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Werkstoffe
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:materials/gco:CharacterString';
+                            $hit->materials = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Fließgrenze Bewehrung
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:reinforcementYieldStrength/gco:Decimal';
+                            $hit->reinforcementYieldStrength = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Fließgrenze Stahl
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:steelYieldStrength/gco:Decimal';
+                            $hit->steelYieldStrength = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Betondruckfestigkeit
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:concreteCompressiveStrength/baw:ConcreteCompressiveStrength';
+                            $xpathExpressionSub = [
+                                "./baw:concreteCompressiveStrength/gco:Decimal",
+                                "./baw:parameter/gco:CharacterString"
+                            ];
+                            $hit->concreteCompressiveStrength = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+                            // Materialmodell
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:materialModel/gco:CharacterString';
+                            $hit->materialModel = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Elementtypen
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:elementType/gco:CharacterString';
+                            $hit->elementType = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Einwirkung
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:impact/gco:CharacterString';
+                            $hit->impact = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Physik
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:physics/gco:CharacterString';
+                            $hit->physics = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Analysetyp
+                            $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:analysisType/gco:CharacterString';
+                            $hit->analysisType = IdfHelper::getNodeValueList($node, $xpathExpression);
+
+                        // CFD Simulationsdaten
+
+                            // BAW-Schiffsname
+                            $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:shipName/gco:CharacterString';
+                            $hit->shipName = IdfHelper::getNodeValueList($node, $xpathExpression);
+                            // Angaben zur Physik
+                            $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:statementAboutPhysics/gco:CharacterString';
+                            $hit->statementAboutPhysics = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Eigenschaften
+                            $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:constantCrossSection/gco:Boolean';
+                            $hit->constantCrossSection = IdfHelper::getNodeValue($node, $xpathExpression);
+                            $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:propulsion/gco:Boolean';
+                            $hit->propulsion = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Bewegungsarten
+                            $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:movementTypes/gco:CharacterString';
+                            $hit->movementTypes = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Trajektorie
+                            $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:trajectory/gco:CharacterString';
+                            $hit->trajectory = IdfHelper::getNodeValue($node, $xpathExpression);
+                            // Zellanzahl
+                            $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:cellCount/gco:Integer';
+                            $hit->cellCount = IdfHelper::getNodeValue($node, $xpathExpression);
+                            break;
+                        default:
+                            break;
+                    }
+                    $hit->simulationType = $simulationType;
+                    break;
+
+                default:
+                    break;
+            }
+
+            $xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString="BAW-Schlagwortkatalog"]/gmd:keyword/gco:CharacterString';
+            $hit->bawKeywords = IdfHelper::getNodeValueList($node, $xpathExpression);
+            if(!empty($hit->searchTerms)) {
+                if(!empty($hit->bawKeywords)) {
+                    foreach ($hit->bawKeywords as $bawKeyword) {
+                        if (($key = array_search($bawKeyword, $hit->searchTerms)) !== false) {
+                            unset($hit->searchTerms[$key]);
+                        }
+                    }
+                }
+                if(!empty($hit->subsoilKeywords)) {
+                    foreach ($hit->subsoilKeywords as $subsoilKeyword) {
+                        if (($key = array_search($subsoilKeyword, $hit->searchTerms)) !== false) {
+                            unset($hit->searchTerms[$key]);
+                        }
+                    }
+                }
+                if(!empty($hit->simulationModelType)) {
+                    foreach ($hit->simulationModelType as $simType) {
+                        if (($key = array_search($simType, $hit->searchTerms)) !== false) {
+                            unset($hit->searchTerms[$key]);
+                        }
+                    }
+                }
+                if(!empty($hit->spatialDimensionality)) {
+                    if (($key = array_search($hit->spatialDimensionality, $hit->searchTerms)) !== false) {
+                        unset($hit->searchTerms[$key]);
+                    }
+                }
+                if(!empty($hit->simulationMethod)) {
+                    if (($key = array_search($hit->simulationMethod, $hit->searchTerms)) !== false) {
+                        unset($hit->searchTerms[$key]);
+                    }
+                }
+                if(!empty($hit->measurementMethod)) {
+                    foreach ($hit->measurementMethod as $measureMethod) {
+                        if (($key = array_search($measureMethod, $hit->searchTerms)) !== false) {
+                            unset($hit->searchTerms[$key]);
+                        }
+                    }
+                }
+            }
+
+            $hit->geographicElement = self::getGeographicElements($node, $lang);
+            $hit->geographicElementBwaStr = self::getGeographicElementsBwaStr($node, $lang);
         }
-        #$hit->sourceCodeRights = self::getBoolInfoValue($node, './gmd:identificationInfo/*/software/QuellCodeRechte[./baw/gco:Boolean]', './baw/gco:Boolean', './anmerkungen');
-        #$hit->useRights = self::getBoolInfoValue($node, './gmd:identificationInfo/*/software/NutzungsRechte[./dritte/gco:Boolean]', './dritte/gco:Boolean', 'anmerkungen');
-        $hit->doi = self::getDoi($node);
-        $hit->citations = self::getCitations($node);
-        $hit->bibliographies = self::getBibliographies($node);
-
-        #$xpathExpression = "//gmd:resourceFormat/gmd:MD_Format";
-        #$xpathExpressionSub = [
-        #    "./gmd:name/*[self::gco:CharacterString or self::gmx:Anchor]",
-        #    "./gmd:version/*[self::gco:CharacterString or self::gmx:Anchor]"
-        #];
-        #$hit->dataFormat = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);;
-        #$xpathExpression = "//gmd:DQ_DataQuality[./gmd:report/gmd:DQ_QuantitativeAttributeAccuracy]";
-        #$xpathExpressionSub = [
-        #    "./gmd:lineage//gmd:LI_Source/gmd:description/*[self::gco:CharacterString or self::gmx:Anchor]",
-        #    ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueType/gco:RecordType",
-        #    ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueUnit//gml:catalogSymbol",
-        #    ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:value/gco:Record"
-        #];
-        #$hit->dataQualities = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
-        $hit->hierachyLevelName = IdfHelper::getNodeValue($node, "./gmd:hierarchyLevelName/*[self::gco:CharacterString or self::gmx:Anchor]");
-        $hit->areaHeight = self::getAreaHeight($node, $lang);
-
-        // Baugrunddynamik-Schlagworte
-        $xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/*/*/gco:CharacterString="Baugrunddynamik-Schlagwortkatalog"]/gmd:keyword/gco:CharacterString';
-        $hit->subsoilKeywords = IdfHelper::getNodeValueList($node, $xpathExpression);
-        // Bwstr Bezug (Name / Kennung)
-        $xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription';
-        $hit->references = IdfHelper::getNodeValue($node, $xpathExpression);
-
-        switch ($objClass) {
-            case '1':
-                $simulationType = ElasticsearchHelper::getValue($esHit, 'simulation_data_type');
-                switch ($simulationType) {
-                    case 'Messdaten':
-
-                        $xpathExpressionDefault = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/baw:BAW_Metadata/baw:measurement/baw:Measurement';
-
-                    // Messdaten
-
-                        // Messverfahren
-                        $xpathExpression = $xpathExpressionDefault . '/baw:measurementMethod/gco:CharacterString';
-                        $hit->measurementMethod = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Messgerät (Name/ID/Modell)
-                        $xpathExpression = $xpathExpressionDefault . '/baw:measurementDevice/baw:MeasurementDevice';
-                        $xpathExpressionSub = [
-                            "./baw:deviceName/gco:CharacterString",
-                            "./baw:deviceId/gco:CharacterString",
-                            "./baw:deviceModel/gco:CharacterString",
-                            "./baw:description/gco:CharacterString"
-                        ];
-                        $hit->measurementDevice = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
-                        // Zielparameter
-                        $xpathExpression = $xpathExpressionDefault . '/baw:measurementParameter/baw:MeasurementParameter';
-                        $xpathExpressionSub = [
-                            "./baw:parameterName/gco:CharacterString",
-                            "./baw:parameterType/gco:CharacterString",
-                            "./baw:uom/gco:CharacterString",
-                            "./baw:parameterFunction/gco:CharacterString"
-                        ];
-                        $hit->measurementParameter = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
-                        // Räumlichkeit
-                        $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:measurementSpatiality/gco:CharacterString';
-                        $hit->measurementSpatiality = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Messtiefe
-                        $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:measurementDepth/baw:MeasurementDepth[./*]';
-                        $xpathExpressionSub = [
-                            "./baw:measurementDepth/gco:Decimal",
-                            "./baw:verticalCRS/gmx:Anchor"
-                        ];
-                        $hit->measurementDepth = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
-                        // Frequenz der Messung
-                        $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:measurementFrequency/gco:Decimal';
-                        $hit->measurementFrequency = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Gemittelter Wasserstand
-                        $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:meanWaterLevel/baw:MeanWaterLevel';
-                        $xpathExpressionSub = [
-                            "./baw:waterLevel/gco:Decimal",
-                            "./baw:uom/gco:CharacterString"
-                        ];
-                        $hit->meanWaterLevel = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
-                        // Pegelnullpunkt
-                        $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:gaugeZeroPoint/baw:GaugeZeroPoint';
-                        $xpathExpressionSub = [
-                            "./baw:gaugeZeroPoint/gco:Decimal",
-                            "./baw:uom/gco:CharacterString",
-                            "./baw:verticalCRS/gco:CharacterString",
-                            "./baw:description/gco:CharacterString"
-                        ];
-                        $hit->gaugeZeroPoint = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
-                        // Abfluss (min)
-                        $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:minDischarge/gco:Decimal';
-                        $hit->minDischarge = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Abfluss (max)
-                        $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:maxDischarge/gco:Decimal';
-                        $hit->maxDischarge = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Datenqualität (Beschreibung)
-                        $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:dataQualityDescription/gco:CharacterString';
-                        $hit->dataQualityDescription = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Zeitliche Genauigkeit
-                        $xpathExpression = $xpathExpressionDefault . '/baw:hydraulicEngineeringMeasurement/baw:HydraulicEngineeringMeasurement/baw:temporalAccuracy/gco:Decimal';
-                        $hit->temporalAccuracy = IdfHelper::getNodeValue($node, $xpathExpression);
-                        break;
-
-                    case 'Simulationsdaten':
-
-                        $xpathExpressionDefault = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/baw:BAW_Metadata/baw:simulation/baw:Simulation';
-
-                // Simulationsdaten
-
-                        // Simulationsverfahren
-                        $xpathExpression = $xpathExpressionDefault . '/baw:simulationMethod/gco:CharacterString';
-                        $hit->simulationMethod = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Version
-                        $xpathExpression = $xpathExpressionDefault . '/baw:simulationMethodVersion/gco:CharacterString';
-                        $hit->simulationMethodVersion = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Erweiterung
-                        $xpathExpression = $xpathExpressionDefault . '/baw:simulationMethodDependency/gco:CharacterString';
-                        $hit->simulationMethodDependency = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Räumliche Dimensionalität
-                        $xpathExpression = $xpathExpressionDefault . '/baw:spatialDimensionality/gco:CharacterString';
-                        $hit->spatialDimensionality = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Zeitliche Genauigkeit
-                        $xpathExpression = $xpathExpressionDefault . '/baw:timeStepSize/gco:Decimal';
-                        $hit->timeStepSize = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Simulationsmodellart
-                        $xpathExpression = $xpathExpressionDefault . '/baw:simulationModelType/gco:CharacterString';
-                        $hit->simulationModelType = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Simulationsparameter
-                        $xpathExpression = $xpathExpressionDefault . '/baw:simulationParameter/baw:SimulationParameter';
-                        $xpathExpressionSub = [
-                            "./baw:parameterName/gco:CharacterString",
-                            "./baw:parameterType/gco:CharacterString",
-                            "./baw:parameterValues/gco:RecordType",
-                            "./baw:uom/gco:CharacterString"
-                        ];
-                        $hit->simulationParameter = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
-
-                    // Bautechnik Simulationsdaten
-
-                        // Objekt
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:object/gco:CharacterString';
-                        $hit->object = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Objektteil
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:objectPart/gco:CharacterString';
-                        $hit->objectPart = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Untersuchungsziel
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:investigationGoal/gco:CharacterString';
-                        $hit->investigationGoal = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Räumliche Dimensionen
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:spatialDimensionality/gco:CharacterString';
-                        $hit->spatialDimensionalityStructuralEngineering = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Zeitliche Dimension (Checkbox)
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:timeDimension/gco:Boolean';
-                        $hit->timeDimension = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Level der Untersuchung
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:investigationLevel/gco:CharacterString';
-                        $hit->investigationLevel = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Untersuchungsstufe
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:investigationStage/gco:CharacterString';
-                        $hit->investigationStage = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Berechnungskonzepte (Materiell/Geometrisch linear, Imperfektionen)
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:materialConcept/gco:CharacterString';
-                        $hit->materialConcept = IdfHelper::getNodeValue($node, $xpathExpression);
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:geometryConcept/gco:CharacterString';
-                        $hit->geometryConcept = IdfHelper::getNodeValue($node, $xpathExpression);
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:imperfections/gco:CharacterString';
-                        $hit->imperfections = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Werkstoffe
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:materials/gco:CharacterString';
-                        $hit->materials = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Fließgrenze Bewehrung
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:reinforcementYieldStrength/gco:Decimal';
-                        $hit->reinforcementYieldStrength = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Fließgrenze Stahl
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:steelYieldStrength/gco:Decimal';
-                        $hit->steelYieldStrength = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Betondruckfestigkeit
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:concreteCompressiveStrength/baw:ConcreteCompressiveStrength';
-                        $xpathExpressionSub = [
-                            "./baw:concreteCompressiveStrength/gco:Decimal",
-                            "./baw:parameter/gco:CharacterString"
-                        ];
-                        $hit->concreteCompressiveStrength = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
-                        // Materialmodell
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:materialModel/gco:CharacterString';
-                        $hit->materialModel = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Elementtypen
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:elementType/gco:CharacterString';
-                        $hit->elementType = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Einwirkung
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:impact/gco:CharacterString';
-                        $hit->impact = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Physik
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:physics/gco:CharacterString';
-                        $hit->physics = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Analysetyp
-                        $xpathExpression = $xpathExpressionDefault . '/baw:structuralEngineeringSimulation/baw:StructuralEngineeringSimulation/baw:analysisType/gco:CharacterString';
-                        $hit->analysisType = IdfHelper::getNodeValueList($node, $xpathExpression);
-
-                    // CFD Simulationsdaten
-
-                        // BAW-Schiffsname
-                        $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:shipName/gco:CharacterString';
-                        $hit->shipName = IdfHelper::getNodeValueList($node, $xpathExpression);
-                        // Angaben zur Physik
-                        $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:statementAboutPhysics/gco:CharacterString';
-                        $hit->statementAboutPhysics = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Eigenschaften
-                        $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:constantCrossSection/gco:Boolean';
-                        $hit->constantCrossSection = IdfHelper::getNodeValue($node, $xpathExpression);
-                        $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:propulsion/gco:Boolean';
-                        $hit->propulsion = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Bewegungsarten
-                        $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:movementTypes/gco:CharacterString';
-                        $hit->movementTypes = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Trajektorie
-                        $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:trajectory/gco:CharacterString';
-                        $hit->trajectory = IdfHelper::getNodeValue($node, $xpathExpression);
-                        // Zellanzahl
-                        $xpathExpression = $xpathExpressionDefault . '/baw:shipCFD/baw:ShipCFD/baw:cellCount/gco:Integer';
-                        $hit->cellCount = IdfHelper::getNodeValue($node, $xpathExpression);
-                        break;
-                    default:
-                        break;
-                }
-                $hit->simulationType = $simulationType;
-                break;
-
-            default:
-                break;
-        }
-
-        $xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString="BAW-Schlagwortkatalog"]/gmd:keyword/gco:CharacterString';
-        $hit->bawKeywords = IdfHelper::getNodeValueList($node, $xpathExpression);
-        if(!empty($hit->searchTerms)) {
-            if(!empty($hit->bawKeywords)) {
-                foreach ($hit->bawKeywords as $bawKeyword) {
-                    if (($key = array_search($bawKeyword, $hit->searchTerms)) !== false) {
-                        unset($hit->searchTerms[$key]);
-                    }
-                }
-            }
-            if(!empty($hit->subsoilKeywords)) {
-                foreach ($hit->subsoilKeywords as $subsoilKeyword) {
-                    if (($key = array_search($subsoilKeyword, $hit->searchTerms)) !== false) {
-                        unset($hit->searchTerms[$key]);
-                    }
-                }
-            }
-            if(!empty($hit->simulationModelType)) {
-                foreach ($hit->simulationModelType as $simType) {
-                    if (($key = array_search($simType, $hit->searchTerms)) !== false) {
-                        unset($hit->searchTerms[$key]);
-                    }
-                }
-            }
-            if(!empty($hit->spatialDimensionality)) {
-                if (($key = array_search($hit->spatialDimensionality, $hit->searchTerms)) !== false) {
-                    unset($hit->searchTerms[$key]);
-                }
-            }
-            if(!empty($hit->simulationMethod)) {
-                if (($key = array_search($hit->simulationMethod, $hit->searchTerms)) !== false) {
-                    unset($hit->searchTerms[$key]);
-                }
-            }
-            if(!empty($hit->measurementMethod)) {
-                foreach ($hit->measurementMethod as $measureMethod) {
-                    if (($key = array_search($measureMethod, $hit->searchTerms)) !== false) {
-                        unset($hit->searchTerms[$key]);
-                    }
-                }
-            }
-        }
-
-        $hit->geographicElement = self::getGeographicElements($node, $lang);
-        $hit->geographicElementBwaStr = self::getGeographicElementsBwaStr($node, $lang);
     }
 
     private static function getGeographicElements(\SimpleXMLElement $node, string $lang): array

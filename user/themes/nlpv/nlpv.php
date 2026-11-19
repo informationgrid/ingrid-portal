@@ -50,8 +50,9 @@ class Nlpv extends Theme
         $lang = $event['lang'];
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-
-        $hit->geometryContext = self::getGeometryContext($node, $lang);
+        if ($node) {
+            $hit->geometryContext = self::getGeometryContext($node, $lang);
+        }
     }
 
     private static function getGeometryContext(\SimpleXMLElement $node, string $lang): array

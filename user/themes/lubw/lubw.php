@@ -47,15 +47,15 @@ class Lubw extends Theme
         $objClass = ElasticsearchHelper::getValue($esHit, 't01_object.obj_class');
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-
-
-        // Sachattributen
-        $xpathExpression = "./idf:objectAttribute[./idf:transmissionLevel[contains(text(),'0 -') or contains(text(),'1 -')]]";
-        $xpathExpressionSub = [
-            "./idf:designation",
-            "./idf:description"
-        ];
-        $hit->objectAttribute = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+        if ($node) {
+            // Sachattributen
+            $xpathExpression = "./idf:objectAttribute[./idf:transmissionLevel[contains(text(),'0 -') or contains(text(),'1 -')]]";
+            $xpathExpressionSub = [
+                "./idf:designation",
+                "./idf:description"
+            ];
+            $hit->objectAttribute = IdfHelper::getNodeValueListWithSubEntries($node, $xpathExpression, $xpathExpressionSub);
+        }
     }
 
     public function onThemeDetailHitMetadataWithOtherParamsEvent(Event $event): void

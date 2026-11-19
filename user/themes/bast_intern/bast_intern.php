@@ -50,11 +50,11 @@ class BastIntern extends Theme
         $lang = $event['lang'];
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-
-        $xpathExpression = './idf:additionalDataSection[@id="projectInfo"]';
-        $hit->projectNumber = IdfHelper::getNodeValue($node, $xpathExpression . '/idf:projectNumber');
-        $hit->projectTitle = IdfHelper::getNodeValue($node, $xpathExpression . '/idf:projectTitle');
-
+        if ($node) {
+            $xpathExpression = './idf:additionalDataSection[@id="projectInfo"]';
+            $hit->projectNumber = IdfHelper::getNodeValue($node, $xpathExpression . '/idf:projectNumber');
+            $hit->projectTitle = IdfHelper::getNodeValue($node, $xpathExpression . '/idf:projectTitle');
+        }
     }
 
 }

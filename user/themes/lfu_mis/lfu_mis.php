@@ -53,13 +53,14 @@ class LfuMis extends Theme
         $lang = $event['lang'];
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-
-        $xpathExpression = './gmd:dataSetURI/*[self::gco:CharacterString or self::gmx:Anchor]';
-        $hit->geodataLink = IdfHelper::getNodeValue($node, $xpathExpression);
-        $xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/*[self::gco:CharacterString or self::gmx:Anchor]';
-        $hit->internalNotes = IdfHelper::getNodeValue($node, $xpathExpression);
-        $xpathExpression = './idf:treePath/gco:CharacterString';
-        $hit->folderNames = IdfHelper::getNodeValue($node, $xpathExpression);
+        if ($node) {
+            $xpathExpression = './gmd:dataSetURI/*[self::gco:CharacterString or self::gmx:Anchor]';
+            $hit->geodataLink = IdfHelper::getNodeValue($node, $xpathExpression);
+            $xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/*[self::gco:CharacterString or self::gmx:Anchor]';
+            $hit->internalNotes = IdfHelper::getNodeValue($node, $xpathExpression);
+            $xpathExpression = './idf:treePath/gco:CharacterString';
+            $hit->folderNames = IdfHelper::getNodeValue($node, $xpathExpression);
+        }
     }
 
 
