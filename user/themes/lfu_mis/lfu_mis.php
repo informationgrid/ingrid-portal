@@ -53,7 +53,7 @@ class LfuMis extends Theme
         $lang = $event['lang'];
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-        if ($node) {
+        if (isset($node)) {
             $xpathExpression = './gmd:dataSetURI/*[self::gco:CharacterString or self::gmx:Anchor]';
             $hit->geodataLink = IdfHelper::getNodeValue($node, $xpathExpression);
             $xpathExpression = './gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/*[self::gco:CharacterString or self::gmx:Anchor]';

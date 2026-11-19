@@ -54,7 +54,7 @@ class Metaver extends Theme
         $lang = $event['lang'];
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-        if ($node) {
+        if (isset($node)) {
             $hit->links = self::getLinkRefs($node, $hit->links ?? [], $lang, $hit->metaClass ?? "");
         }
 

@@ -75,7 +75,7 @@ class BawDoi extends Theme
         $objClass = ElasticsearchHelper::getValue($esHit, 't01_object.obj_class');
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-        if ($node) {
+        if (isset($node)) {
             // Add theme specific variables
             switch ($objClass) {
                 case '4':

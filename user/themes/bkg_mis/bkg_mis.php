@@ -41,7 +41,7 @@ class BkgMis extends Theme
         $content = $event['content'];
         $hit = $event['hit'];
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-        if ($node) {
+        if (isset($node)) {
 
         }
     }

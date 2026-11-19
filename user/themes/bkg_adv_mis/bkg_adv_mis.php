@@ -54,7 +54,7 @@ class BkgAdvMis extends Theme
         $lang = $event['lang'];
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-        if ($node) {
+        if (isset($node)) {
             $hit->hierarchyLevelKey = IdfHelper::getNodeValue($node, "./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue");
         }
     }

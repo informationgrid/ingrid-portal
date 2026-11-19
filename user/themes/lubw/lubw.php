@@ -47,7 +47,7 @@ class Lubw extends Theme
         $objClass = ElasticsearchHelper::getValue($esHit, 't01_object.obj_class');
 
         $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
-        if ($node) {
+        if (isset($node)) {
             // Sachattributen
             $xpathExpression = "./idf:objectAttribute[./idf:transmissionLevel[contains(text(),'0 -') or contains(text(),'1 -')]]";
             $xpathExpressionSub = [
