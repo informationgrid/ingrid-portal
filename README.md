@@ -11,6 +11,12 @@ User-friendly search across the InGrid data space and services — catalog brows
 
 Just start up the development container and develop your pages, plugins and themes.
 
+Checkout:
+
+```
+git clone --recursive https://github.com/informationgrid/ingrid-portal.git
+```
+
 ```shell
 docker login docker-registry.wemove.com
 docker compose up -d --build grav
@@ -176,7 +182,7 @@ Open http://localhost:8000/example
 
 The filename cms.md selects the InGrid theme’s cms template. The development container mounts user/pages, so local changes are available to Grav.
 
-For more details, see Grav’s page creation documentation.
+For more details, see Grav’s page creation documentation on https://learn.getgrav.org/17/basics.
 
 #### Themes
 
@@ -186,12 +192,6 @@ Enter the docker container by executing the command via the console:
 
 ```
 docker compose exec grav bash
-```
-Install the devtools inside the container:
-
-```
-cd html
-bin/gpm install devtools
 ```
 Now you can add a new theme by using:
 
@@ -231,7 +231,30 @@ Please choose a theme template [Basic Theme using Pure.css]:
 [daisyui    ] Basic Theme using Tailwind CSS and daisyUI components
 [inheritance] Inherit from another theme
 [copy       ] Copy another theme
-> pure-blank
+> inheritance
+
+ Please choose a theme to extend:
+  [0 ] bast
+  [1 ] bast_intern
+  [2 ] baw_doi
+  [3 ] baw_mis
+  [4 ] bkg_adv_mis
+  [5 ] bkg_mis
+  [6 ] hmdk
+  [7 ] ingrid
+  [8 ] itzbund_eba
+  [9 ] itzbund_wsv
+  [10] itzbund_zdm
+  [11] krzn
+  [12] lfu_mis
+  [13] lubw
+  [14] metaver
+  [15] nlpv
+  [16] numis
+  [17] rlp_portalu
+  [18] up_sh
+  [19] uvp
+ > 7
 
  ------------- -----------------------------------
   Setting       Value
@@ -248,7 +271,159 @@ Please choose a theme template [Basic Theme using Pure.css]:
 
  [OK] THEME Example created successfully
 ```
+
+Fix the theme YAML file:
+```
+sed -i "s/&#039;/\'/g" /var/www/html/user/themes/example/example.yaml
+```
+
+Change the owner of the new theme:
+
+```
+chown -R  www-data:www-data /var/www/html/user/themes/example
+```
+And exit the container:
+
+´´´
+exit
+```
+
 http://localhost:8000/admin/themes
+
+#### Edit new theme
+
+Copy the following directories/files from the `user/themes/ingrid` directory to the new theme folder `user/themes/example:
+
+* File for css changes: css/custom.css
+* Directory with configs:config
+  * Folder with help content: config/help
+  * Folder with facet config: config/override
+
+Copy the `form` configuration from `user/themes/ingrid/blueprints.yaml` to `user/themes/example/blueprints.yaml`.
+This allows configuration to be changed via the admin GUI:
+
+http://localhost:8000/admin/themes/example
+
+Now active your new theme by edit the `develop/config/system.yaml` and changing to:
+
+```
+...
+pages:
+    theme: example
+...
+´´´
+
+On http://localhost:8000/ you are now seeing the look of the InGrid theme, but you have your own theme that you can customize to your liking.
+
+#### Add init theme pages
+
+Add the folder `user/themes/example/pages/init` to create new pages for initial installation.
+
+For development add this configuration to the `develop/config/system.yaml`:
+
+```
+pages:
+    ...
+    dirs:
+        - page://
+        - theme://pages/init
+```
+
+So the created pages will be available in the frontend.
+
+Note:
+
+This pages are not available in the admin GUI.
+
+On initial server installation per docker the pages under `user/themes/example/pages/init` will be copied to the `user/pages` folder.
+It will be created a file names `initialized` under `/user/config/` to mark an initial server installation.
+
+#### Theme twig content for search and detail
+
+The file `user/themes/example/example.php` will be important to add twig vars for search and detail hits.
+
+Change the file to:
+
+```
+<?php
+namespace Grav\Theme;
+
+use Grav\Common\Theme;
+use Grav\Plugin\IdfHelper;
+use RocketTheme\Toolbox\Event\Event;
+
+class Example extends Ingrid
+{
+    public function addThemeSearchHitMetadataContent(Event $event): void
+    {
+        // Get variables from event
+        $content = $event['content'];
+        $hit = $event['hit'];
+        $lang = $event['lang'];
+
+        $hit->newIndexField = ElasticsearchHelper::getValue($content, '<NEW-INDEX-FIELD>');
+    }
+
+    public function addThemeDetailMetadataContent(Event $event): void
+    {
+        // Get variables from event
+        $content = $event['content'];
+        $hit = $event['hit'];
+        $esHit = $event['esHit'];
+        $lang = $event['lang'];
+
+        $objClass = ElasticsearchHelper::getValue($esHit, 't01_object.obj_class');
+
+        $node = IdfHelper::getNode($content, '//gmd:MD_Metadata | //idf:idfMdMetadata');
+        if (isset($node)) {
+            $xpathExpression = '<NEW-XPATH-VALUE>';
+            $hit->newXPathValue = IdfHelper::getNodeValue($node, $xpathExpression);
+        }
+    }
+}
+```
+
+On detail: 
+
+Now add a twig template under `user/themes/example/templates/partials/detail/metadata/detail_metadata_profile_settings.html.twig`.
+
+Note:
+File `user/themes/example/templates/partials/detail/metadata/detail_metadata_profile_settings.html.twig` override the default twig template `user/themes/ingrid/templates/partials/detail/metadata/detail_metadata_profile_settings.html.twig`.
+
+Add this content to the file:
+
+```
+{% set newXPathValue = hit.newXPathValue %}
+
+{{ vardump(newXPathValue) }}
+
+{% include 'partials/detail/metadata/detail_metadata_view.html.twig' %}
+```
+
+An on the detail page it will be displayed the value of `newXPathValue`.
+
+On search:
+
+It is the same like on detail. The var `hit.newIndexField` is now available on the twig templates under `user\themes\ingrid\templates\partials\search` or `user\themes\example\templates\partials\search`(if you override a default twig template on the new theme).
+
+#### Theme Overriding mechanism
+
+All files under `user/themes/ingrid` can be overridden by `user/themes/example`, 
+* if the file name and folder structure is the same
+* if the file is not reference by file path in the theme YAML.
+
+Note:
+Don't override a twig template with large content if you want to add a snippet content.
+Use the twig `include` function on the InGrid theme twig:
+
+```
+...
+{% include 'partials/footer/example.html.twig' ignore missing %}
+```
+
+and add this file only to your theme. The content of the new theme twig template will only be displayed in your new theme.
+
+The `ignore missing` setting prevents an error message from appearing in the InGrid theme.
 
 For theme development, go to the theme directory, e.g. "user/themes/ingrid" and run
 

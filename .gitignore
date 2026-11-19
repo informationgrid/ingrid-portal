@@ -23,6 +23,7 @@
 /data/scheduler/
 /data/mvis/
 /develop/config/plugins/
+/develop/config/themes/
 /develop/config/system.yaml
 /system
 **/vendor
