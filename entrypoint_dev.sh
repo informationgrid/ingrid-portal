@@ -95,6 +95,14 @@ cp -R /var/www/grav-admin/system/* /var/www/html/system
 
 # recover base plugins
 cp -R /var/www/grav-admin/user/plugins/* /var/www/html/user/plugins
+if [ -d /var/www/html/user/plugins/devtools ]; then
+  echo "Devtools exists."
+else
+  cd /var/www/html && bin/gpm install devtools
+fi
+if [ -f /var/www/html/user/plugins/devtools/classes/DevToolsCommand.php ]; then
+  sed -i 's/fg=gray/fg=default/g' /var/www/html/user/plugins/devtools/classes/DevToolsCommand.php
+fi
 cd /var/www/html/user/plugins/ingrid-grav && composer update
 cd /var/www/html/user/plugins/ingrid-grav-utils && composer update
 cd /var/www/html/user/plugins/altcha && composer update
@@ -119,3 +127,7 @@ runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-uvp-zip-i
 service cron start
 
 exec "$@"
+
+
+
+
