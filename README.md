@@ -284,7 +284,7 @@ chown -R  www-data:www-data /var/www/html/user/themes/example
 ```
 And exit the container:
 
-´´´
+```
 exit
 ```
 
@@ -311,7 +311,7 @@ Now active your new theme by edit the `develop/config/system.yaml` and changing 
 pages:
     theme: example
 ...
-´´´
+```
 
 On http://localhost:8000/ you are now seeing the look of the InGrid theme, but you have your own theme that you can customize to your liking.
 
