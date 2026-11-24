@@ -1979,7 +1979,9 @@ footer {
         font-family: $input-font-family;
         display: block;
       }
-
+      a:not(:first-child) {
+        display: inline-block;
+      }
       th:first-child {
         width: $table-column-first;
         min-width: $table-column-first;

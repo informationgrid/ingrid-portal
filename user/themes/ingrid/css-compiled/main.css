@@ -8898,6 +8898,9 @@ footer .footer-top-link:hover {
   font-family: "Roboto-Regular";
   display: block;
 }
+.search-filtered .table table a:not(:first-child) {
+  display: inline-block;
+}
 .search-filtered .table table th:first-child {
   width: 210px;
   min-width: 210px;
