@@ -668,7 +668,7 @@
                         <span class="text">{{ removeHashLocale(entryToJson.name) }}</span>
                     </a>
                     {%  if entryToJson.quelle %}
-                        {{ "SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle) }}
+                        {{ ("SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle))|raw }}
                     {% endif %}
                 </p>
             {% elseif entryToJson.name is not empty %}
@@ -848,13 +848,13 @@
                                         <span class="text">{{ removeHashLocale(entryToJson.name) }}</span>
                                     </a>
                                     {%  if entryToJson.quelle %}
-                                        {{ "SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle) }}
+                                        {{ ("SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle))|raw }}
                                     {% endif %}
                               </p>
                             {% elseif entryToJson.name is not empty %}
                                 <p class="list-item">{{ removeHashLocale(entryToJson.name) }}</p>
                                     {% if entryToJson.quelle is not empty %}
-                                        {{ "SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle) }}
+                                        {{ ("SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle))|raw }}
                                     {% endif %}
                             {% else %}
                                 <p class="list-item">{{ convertUrlInText(removeHashLocale(entry))|raw }}</p>
@@ -903,13 +903,13 @@
                                         <span class="text">{{ removeHashLocale(entryToJson.name) }}</span>
                                     </a>
                                     {%  if entryToJson.quelle %}
-                                        {{ "SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle) }}
+                                        {{ ("SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle))|raw }}
                                     {% endif %}
                                 </p>
                             {% elseif entryToJson.name is not empty %}
                                 <p class="list-item">{{ removeHashLocale(entryToJson.name) }}</p>
                                 {%  if entryToJson.quelle is not empty %}
-                                    {{ "SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle) }}
+                                    {{ ("SEARCH_DETAIL.CONSTRAINTS_USE_CONSTRAINTS_SOURCE"|t ~ " " ~ removeHashLocale(entryToJson.quelle))|raw }}
                                   {% endif %}
                             {% else %}
                               <p class="list-item">{{ convertUrlInText(removeHashLocale(entry))|raw }}</p>
