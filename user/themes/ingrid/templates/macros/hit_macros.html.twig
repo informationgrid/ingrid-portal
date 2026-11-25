@@ -1651,7 +1651,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_catalog_node (node, detailPath, catalogLeafPath, openOnNewTab) %}
+{% macro render_catalog_node (node, detailPath, catalogLeafPath, openOnNewTab, showExpandableNodeIcon) %}
     {% set nodeLevel = node.level %}
     {% set nodeId = node.id %}
     {% set nodeUuid = node.uuid %}
@@ -1684,11 +1684,15 @@
                         <a id="{{ linkId }}" href="#{{ linkId }}" onclick="updateLeaf('{{ linkId }}', true, event)" {% if isFreeAdresse == false %}hx-get="{{ nodeRequest }}" hx-trigger="click once" hx-target="#replace-{{ linkId }}" {% endif %}class="ic-ic-plus" title="{{ nodeTitle|t }}" aria-expanded="false"></a>
                         {% if node.type != "1000" %}
                             <a class="icon" {% if openOnNewTab %}target="_blank"{% endif %} href="{{ nodeUrl }}" title="{{ nodeTitle }}">
-                                {% if node.isAddress %}
-                                    {% set type_name = "COMMON.UDK_ADR_CLASS_NAME_" ~ node.type_name %}
-                                    {{ _self.render_address_icon(node.type, nodeTitle, type_name|t) }}
+                                {% if showExpandableNodeIcon %}
+                                    {% if node.isAddress %}
+                                        {% set type_name = "COMMON.UDK_ADR_CLASS_NAME_" ~ node.type_name %}
+                                        {{ _self.render_address_icon(node.type, nodeTitle, type_name|t) }}
+                                    {% else %}
+                                        {{ _self.render_metadata_icon(node.type, nodeTitle, node.type_name) }}
+                                    {% endif %}
                                 {% else %}
-                                    {{ _self.render_metadata_icon(node.type, nodeTitle, node.type_name) }}
+                                    <span class="text">{{ nodeTitle }}</span>
                                 {% endif %}
                             </a>
                         {% else %}
@@ -1708,7 +1712,7 @@
                     {% endif %}
             {% if node.children %}
                 {% for childNode in node.children %}
-                    {{ _self.render_catalog_node(childNode, detailPath, catalogLeafPath, openOnNewTab) }}
+                    {{ _self.render_catalog_node(childNode, detailPath, catalogLeafPath, openOnNewTab, showExpandableNodeIcon) }}
                 {% endfor %}
             {% endif %}
                 </div>
