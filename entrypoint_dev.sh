@@ -118,20 +118,16 @@ rm mvis.zip
 ln -s /usr/local/bin/php /usr/bin/php
 (echo "* * * * * cd /var/www/$GRAV_FOLDER;/usr/local/bin/php bin/grav scheduler 1>> /dev/null 2>&1") | crontab -u www-data -
 
-# sync on startup
 cd /var/www/"$GRAV_FOLDER"
+
+# Chmod folder
+chmod -R o+w .
+
+# sync on startup
 runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-codelist-index
 runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-rss-index
 runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-uvp-zip-index
 
-chown -R www-data:www-data cache
-chown -R www-data:www-data logs
-chown -R www-data:www-data user/data
-
 service cron start
 
 exec "$@"
-
-
-
-

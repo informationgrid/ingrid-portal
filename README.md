@@ -18,6 +18,7 @@ git clone --recursive https://github.com/informationgrid/ingrid-portal.git
 ```
 
 ```shell
+cd ingrid-portal
 docker login docker-registry.wemove.com
 docker compose up -d --build grav
 ```
@@ -54,9 +55,11 @@ For example, add this content to
 
 ```
 home:
-    alias: '/home'               <-- To change startpage
+    alias: '/home'
 pages:
-    theme: ingrid                <-- To change active theme
+    theme: ingrid
+cache:
+    enabled: false
 ```
 
 #### Plugin-Configuration
@@ -196,7 +199,8 @@ docker compose exec grav bash
 Now you can add a new theme by using:
 
 ```
-bin/plugin devtools new-theme
+cd html
+runuser -u www-data -- /usr/local/bin/php bin/plugin devtools new-theme
 
 Enter Theme Name:
 >  Example
