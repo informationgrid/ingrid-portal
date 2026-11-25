@@ -124,7 +124,9 @@ runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-codelist-
 runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-rss-index
 runuser -u www-data -- /usr/local/bin/php bin/grav scheduler -r ingrid-uvp-zip-index
 
-chown -R www-data:www-data .
+chown -R www-data:www-data cache
+chown -R www-data:www-data logs
+chown -R www-data:www-data user/data
 
 service cron start
 
