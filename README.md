@@ -22,7 +22,7 @@ docker login docker-registry.wemove.com
 docker compose up -d --build grav
 ```
 
-The website will be available on http://localhost:8000 and the admin pages on http://localhost:8000/admin
+The website will be available on http://localhost:8100 and the admin pages on http://localhost:8100/admin
 
 ### Configuration
 
@@ -154,7 +154,7 @@ Changes to the settings are immediately visible upon reloading the browser.
 
 Add a page in InGrid Portal using the `Grav Admin panel`:
 
-1. Open http://localhost:8000/admin and sign in.
+1. Open http://localhost:8100/admin and sign in.
 2. Select Pages → Add Page.
 3. Enter a title and folder name, choose a parent page, and select the cms display template for a standard content page.
 4. Set Visible to Yes, select Continue, and write the content in Markdown.
@@ -178,7 +178,7 @@ This is the page content.
 [Visit InGrid](https://ingrid-oss.eu?target=_blank)
 ```
 
-Open http://localhost:8000/example
+Open http://localhost:8100/example
 
 The filename cms.md selects the InGrid theme’s cms template. The development container mounts user/pages, so local changes are available to Grav.
 
@@ -188,7 +188,7 @@ For more details, see Grav’s page creation documentation on https://learn.getg
 
 ##### Add theme
 
-Enter the docker container by executing the command via the console: 
+Enter the docker container by executing the command via the console:
 
 ```
 docker compose exec grav bash
@@ -209,7 +209,7 @@ Enter Developer Name:
 >  Example Developer
 
 Enter GitHub ID (can be blank):
->  
+>
 
 Enter Developer Email:
 >  example@developer.com
@@ -288,7 +288,7 @@ And exit the container:
 exit
 ```
 
-http://localhost:8000/admin/themes
+http://localhost:8100/admin/themes
 
 #### Edit new theme
 
@@ -302,7 +302,7 @@ Copy the following directories/files from the `user/themes/ingrid` directory to 
 Copy the `form` configuration from `user/themes/ingrid/blueprints.yaml` to `user/themes/example/blueprints.yaml`.
 This allows configuration to be changed via the admin GUI:
 
-http://localhost:8000/admin/themes/example
+http://localhost:8100/admin/themes/example
 
 Now active your new theme by edit the `develop/config/system.yaml` and changing to:
 
@@ -313,7 +313,7 @@ pages:
 ...
 ```
 
-On http://localhost:8000/ you are now seeing the look of the InGrid theme, but you have your own theme that you can customize to your liking.
+On http://localhost:8100/ you are now seeing the look of the InGrid theme, but you have your own theme that you can customize to your liking.
 
 #### Add init theme pages
 
@@ -383,7 +383,7 @@ class Example extends Ingrid
 }
 ```
 
-On detail: 
+On detail:
 
 Now add a twig template under `user/themes/example/templates/partials/detail/metadata/detail_metadata_profile_settings.html.twig`.
 
@@ -408,7 +408,7 @@ It is the same like on detail. The var `hit.newIndexField` is now available on t
 
 #### Theme Overriding mechanism
 
-All files under `user/themes/ingrid` can be overridden by `user/themes/example`, 
+All files under `user/themes/ingrid` can be overridden by `user/themes/example`,
 * if the file name and folder structure is the same
 * if the file is not reference by file path in the theme YAML.
 

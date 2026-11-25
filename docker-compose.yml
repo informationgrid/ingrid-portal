@@ -9,7 +9,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - "8000:80"
+      - "8100:80"
     network_mode: bridge
     volumes:
       - ./develop/admin.yaml:/var/www/html/user/accounts/admin.yaml
@@ -43,7 +43,7 @@ services:
       a2enmod proxy proxy_fcgi rewrite &&
       a2enconf php8.3-fpm &&
       cp /install-rpm/000-default.conf /etc/apache2/sites-enabled/ &&
-      service apache2 start && 
+      service apache2 start &&
       service php8.3-fpm start &&
       rpm -i install-rpm/noarch/ingrid-portal-0.1.0-dev.noarch.rpm &&
       cp /install-rpm/admin.yaml /var/www/ingrid-portal/user/accounts/ &&
